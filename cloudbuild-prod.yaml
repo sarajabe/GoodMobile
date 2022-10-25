@@ -1,0 +1,62 @@
+steps:
+  # Decrypt the encrypted files 
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'kms'
+      - 'decrypt'
+      - '--ciphertext-file=$_ENV_FILE_NAME'
+      - '--plaintext-file=$_DEC_ENV_FILE_NAME'
+      - '--location=global'
+      - '--keyring=$_KEY_RING'
+      - '--key=$_KEY'
+      - '--project=ztar-mgmt-security-kms-prod'
+
+  # Build the docker image using the Dockerfile in the repository, PROJECT_ID and COMMIT_SHA are provided by CloudBuild itself
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/$_IMAGE:$COMMIT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
+      - '--build-arg'
+      - '_NPM_USER=$_NPM_USERNAME'
+      - '--build-arg'
+      - '_NPM_PASS=$_NPM_PASSWORD'
+      - '--build-arg'
+      - '_NPM_EMAIL=$_NPM_EMAIL'
+      - '--build-arg'
+      - '_NPM_TOKEN=$_NPM_TOKEN'
+      - '--build-arg'
+      - '_VERSION=$_VERSION'
+      - '.'
+
+  # Push the image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
+
+  # Deploy image to App Engine
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'app'
+      - 'deploy'
+      - '$_APP_YAML_FILE'
+      - '--image-url'
+      - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
+    timeout: 1500s
+
+timeout: 2500s
+images:
+  - gcr.io/$PROJECT_ID/$_IMAGE:latest
+
+substitutions:
+  _REGION: 'us-central1'
+  _KEY_RING: 'goodwill-web'
+  _KEY: 'cloudbuild-env'
+  _ENV_FILE_NAME: '.env.prod'
+  _DEC_ENV_FILE_NAME: 'src/environments/environment.prod.ts'
+  _IMAGE: 'goodwill-prod'
+  _APP_YAML_FILE: 'app.prod.yaml'
+  _VERSION: 'prod'

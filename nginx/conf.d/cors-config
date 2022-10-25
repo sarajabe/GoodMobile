@@ -1,0 +1,35 @@
+
+    map $http_origin $cors_origin {
+        default "";
+        "~^https?://(zwp.ztarmobile.io|www.zwp.ztarmobile.io|zwp-manager-ikfynyviaa-uc.a.run.app|www.zwp-manager-ikfynyviaa-uc.a.run.app)$" "$http_origin";
+    }
+
+    map $http_origin $cors_cred {
+        default "";
+        "~^https?://(zwp.ztarmobile.io|www.zwp.ztarmobile.io|zwp-manager-ikfynyviaa-uc.a.run.app|www.zwp-manager-ikfynyviaa-uc.a.run.app)$" true;
+    }
+
+    map $http_origin $cors_headers {
+        default "";
+        "~^https?://(zwp.ztarmobile.io|www.zwp.ztarmobile.io|zwp-manager-ikfynyviaa-uc.a.run.app|www.zwp-manager-ikfynyviaa-uc.a.run.app)$" "Cookie,Set-Cookie,reCaptcha,Authorization,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range";
+    }
+
+    map $request_method $cors_age {
+        default "";
+        "OPTIONS" 1728000;
+    }
+
+    map $request_method $cors_content {
+        default "";
+        "OPTIONS" "text/plain; charset=utf-8";
+    }
+
+    map $request_method $cors_length {
+        default "";
+        "OPTIONS" 0;
+    }
+
+    map $request_method $cors_methods {
+        default "";
+        "OPTIONS" "OPTIONS, GET";
+    }

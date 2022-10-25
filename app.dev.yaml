@@ -1,0 +1,36 @@
+runtime: custom
+env: flex
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 1
+  cool_down_period_sec: 180
+  cpu_utilization:
+    target_utilization: 0.6
+  target_concurrent_requests: 100
+
+resources:
+  cpu: 0.6
+  memory_gb: 0.6
+  disk_size_gb: 10
+
+network:
+  instance_tag: goodwill-web-dev
+  name: projects/ztar-network-shared-vpc-1-dev/global/networks/ztar-dev-shared-vpc-1
+  subnetwork_name: ztar-product-goodwill-us-cent1-test-subnet
+  session_affinity: true
+
+liveness_check:
+  path: "/liveness_check"
+  check_interval_sec: 60
+  timeout_sec: 5
+  failure_threshold: 3
+  success_threshold: 3
+  
+readiness_check:
+  path: "/readiness_check"
+  check_interval_sec: 60
+  timeout_sec: 5
+  failure_threshold: 3
+  success_threshold: 3
+  app_start_timeout_sec: 600
