@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run start:local",
+    "start:local": "ng serve -c local --port 4000",
+    "start:dev": "ng serve -c dev  --port 3000",
+    "start:test": "ng serve -c test",
+    "start:prod": "ng serve -c production",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build:local": "ng build -c local",
+    "build:dev": "ng build -c dev --crossOrigin=use-credentials",
+    "build:test": "ng build -c test --crossOrigin=use-credentials",
+    "build:stage": "ng build -c stage",
+    "build:prod": "ng build -c production",
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
