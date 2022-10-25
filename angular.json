@@ -57,13 +57,62 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "dev": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "test": {
+              "index": {
+                "input": "src/index.test.html",
+                "output": "index.html"
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "stage": {
+              "index": {
+                "input": "src/index.test.html",
+                "output": "index.html"
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.stage.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "local": {
+              "index": {
+                "input": "src/index.test.html",
+                "output": "src/index.html"
+              },
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": "production"
@@ -74,8 +123,17 @@
             "production": {
               "browserTarget": "goodMobile:build:production"
             },
-            "development": {
-              "browserTarget": "goodMobile:build:development"
+            "dev": {
+              "browserTarget": "goodMobile:build:dev"
+            },
+            "test": {
+              "browserTarget": "goodMobile:build:test"
+            },
+            "stage": {
+              "browserTarget": "goodMobile:build:stage"
+            },
+            "local": {
+              "browserTarget": "goodMobile:build:local"
             }
           },
           "defaultConfiguration": "development"
