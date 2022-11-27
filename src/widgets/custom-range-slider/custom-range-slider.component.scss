@@ -1,0 +1,185 @@
+$larger-than-mobile: "min-width: 426px" !default;
+$track-color: transparent;
+$thumb-color: #ffffff;
+
+$thumb-radius: 7px;
+$thumb-height: 20px;
+$thumb-width: 20px;
+$thumb-shadow-size: 0px;
+$thumb-shadow-blur: 0px;
+$thumb-shadow-color: #111;
+$thumb-border-width: 1px;
+$thumb-border-color: #707070;
+
+$track-width: 100%;
+$track-height: 10px;
+$track-shadow-size: 0px;
+$track-shadow-blur: 0px;
+$track-shadow-color: #222;
+$track-border-width: 3px;
+$track-border-color: black;
+
+$track-radius: 0px;
+$contrast: 5%;
+
+$assets-path: "/assets/img/" !default;
+
+@mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color,
+    0px 0px $shadow-size lighten($shadow-color, 5%);
+}
+
+@mixin track() {
+  width: $track-width;
+  height: $track-height;
+  cursor: pointer;
+  animate: 0.2s;
+}
+
+@mixin track-bg() {
+  background-image: image-url("range-input-bg.png");
+  background-repeat: repeat-x;
+  background-position-x: 0;
+  background-position-y: 0;
+  background-size: 99%;
+  @media (#{$larger-than-mobile}) {
+    background-size: auto 21.15px;
+  }
+}
+
+@mixin thumb() {
+  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+  border: $thumb-border-width solid $thumb-border-color;
+  height: $thumb-height;
+  width: $thumb-width;
+  border-radius: $thumb-radius;
+  background: $thumb-color;
+  cursor: pointer;
+}
+
+@function image-url($url) {
+  @return url($assets-path + $url);
+}
+
+.range-slider {
+  padding: 0px;
+  position: relative;
+  width: 100%;
+
+  &:after {
+    position: absolute;
+    color: $track-border-color;
+    content: "$10 $50"; // need to find a way to make this an entry from the component or override it by styles seems like an easy solution
+    padding: 40px 0;
+    left: 0;
+    top: 0;
+    z-index: -1;
+
+    word-spacing: 270px;
+    @media (#{$larger-than-mobile}) {
+      word-spacing: 155px;
+    }
+
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    margin: calc($thumb-height/2) 0;
+    width: $track-width;
+
+    &:focus {
+      /*outline: none;*/
+      @include track();
+      @include track-bg();
+      margin: 1+ ($thumb-height) 0;
+    }
+
+    &::-webkit-slider-runnable-track {
+      @include track();
+      @include track-bg();
+
+      @include shadow(
+        $track-shadow-size,
+        $track-shadow-blur,
+        $track-shadow-color
+      );
+      /*background: $track-color;*/
+      border-radius: $track-radius;
+      border-bottom: $track-border-width solid $track-border-color;
+    }
+
+    &::-webkit-slider-thumb {
+      @include thumb();
+      -webkit-appearance: none;
+      margin-top: calc(calc($track-height) / 2) - calc($thumb-height / 2);
+    }
+
+    &:focus::-webkit-slider-runnable-track {
+      background: lighten($track-color, $contrast);
+    }
+
+    &::-moz-range-track {
+      @include track();
+      @include track-bg();
+
+      @include shadow(
+        $track-shadow-size,
+        $track-shadow-blur,
+        $track-shadow-color
+      );
+      /*background: $track-color;*/
+      border-radius: $track-radius;
+      border-bottom: $track-border-width solid $track-border-color;
+    }
+    &::-moz-range-thumb {
+      @include thumb();
+    }
+
+    &::-ms-track {
+      @include track();
+      @include track-bg();
+
+      background: transparent;
+      border-color: transparent;
+      border-width: $thumb-width 0;
+      color: transparent;
+    }
+
+    &::-ms-fill-lower {
+      /*background: darken($track-color, $contrast);*/
+      border-bottom: $track-border-width solid $track-border-color;
+      border-radius: $track-radius * 2;
+      @include shadow(
+        $track-shadow-size,
+        $track-shadow-blur,
+        $track-shadow-color
+      );
+    }
+    &::-ms-fill-upper {
+      /*background: $track-color;*/
+      border-bottom: $track-border-width solid $track-border-color;
+      border-radius: $track-radius * 2;
+      @include shadow(
+        $track-shadow-size,
+        $track-shadow-blur,
+        $track-shadow-color
+      );
+    }
+    &::-ms-thumb {
+      @include thumb();
+    }
+    &:focus::-ms-fill-lower {
+      /*background: $track-color;*/
+    }
+    &:focus::-ms-fill-upper {
+      background: lighten($track-color, $contrast);
+    }
+  }
+}
+
+.track-value-indicator {
+  position: absolute;
+  top: -10px;
+}

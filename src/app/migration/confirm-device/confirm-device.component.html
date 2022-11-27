@@ -1,0 +1,17 @@
+<section class="container-flex confirm-device">
+    <div class="container-flex-row flex-center margin-bottom-20">
+        <div class="text-center">
+            <h1 class="header">Let’s check your phone and coverage</h1>
+            <p class="description">We need to check your phone’s compatibility before migrating your number to the new service. </p>
+            <p class="description">Can you verify the below information?</p>
+            <div class="device-info">
+                <p class="details"> Your phone: {{userPlan?.planDevice?.model}}</p>
+                <p class="details">Your phone’s IMEI: {{userPlan?.planDevice?.id}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="actions-container">
+        <button class="button primary" id="yes" (click)="goToCheckDevice(true)">Yes</button>
+        <button class="button secondary" id="no" (click)="goToCheckDevice(false)">No</button>
+    </div>
+</section>

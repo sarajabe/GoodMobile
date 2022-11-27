@@ -1,0 +1,46 @@
+<section class="faqs-container">
+    <div class="container-flex">
+        <div class="header-section">
+            <div class="col-md-12 col-sm-12 col-12">
+                <h2>Got Questions?</h2>
+                <p class="subtitle">
+                    We understand - when small things don't work... you just want an answer
+                </p>
+                <p class="subtitle">Chances are we've got you covered.</p>
+            </div>
+        </div>
+        <div class="categories">
+            <div class="row">
+                <div *ngFor="let cat of faqsCategories">
+                    <div *ngFor="let item of cat?.fields?.g2gFaqs">
+                        <h1 class="two cat" [class.active]="item?.fields?.categoryId === activeCategory"
+                            (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
+                            <a>{{item?.fields?.category}}</a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="content-section">
+    <div class="container-flex">
+        <app-covid *ngIf="!!isCovid"></app-covid>
+        <app-support *ngIf="!!isSupport"></app-support>
+        <div class="questions-category" *ngIf="!isSupport">
+            <div class="row">
+                <div class="twelve questions">
+                    <div *ngFor="let item of questions | async">
+                        <div *ngFor="let qst of item?.fields?.questions">
+                           <a class="copy-icon-link" (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img src="/assets/icon/Copy icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a> 
+                            <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                                [isActive]="qst?.fields?.questionId == questionIdParam"
+                                (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                                <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+                            </app-question-answer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>

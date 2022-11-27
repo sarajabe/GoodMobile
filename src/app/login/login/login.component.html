@@ -1,0 +1,42 @@
+<section class="container-flex login-section">
+  <div class="header-section">
+    <h1 class="title">Sign in to your GoodMobile account</h1>
+    <p class="subhead">
+      If you used to log-in with a phone number and a PIN, please follow this link in order to manage your account:
+    </p>
+    <a class="link" (click)="goToLegacyLogin()">Phone/PIN Log in</a>
+  </div>
+  <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
+    <div class="card-container">
+      <fieldset class="form-section">
+        <label for="email">Email Address</label>
+        <input id="loginEmail" data-cy="loginEmail" type="email" name="loginEmail" required [(ngModel)]="email" autocomplete="email"
+          #loginEmail="ngModel" ngvemail>
+        <label class="validation-message alert" *ngIf="loginEmail?.errors?.required && loginEmail?.touched"
+          id="required-email-msg" data-cy="required-email-msg">Email is required</label>
+        <label class="validation-message alert" *ngIf="loginEmail?.errors?.email" id="invalid-email-msg" data-cy="invalidEmailMsg">
+          Please enter a valid email
+        </label>
+      </fieldset>
+      <fieldset class="form-section">
+        <label for="password">Password</label>
+        <input id="loginPassword" data-cy="loginPassword" type="password" name="loginPassword" required [(ngModel)]="password"
+          autocomplete="current-password" class="passInput" #loginPassword="ngModel">
+        <label class="validation-message alert" *ngIf="loginPassword?.errors?.required && loginPassword?.touched"
+          id="required-password-msg">Password is required</label>
+        <a class="forget" (click)="goToForgotPassword()">Forgot Password?</a>
+      </fieldset>
+    </div>
+    <div class="actions-section">
+      <fieldset class="primary-actions">
+        <button class="button primary" type="submit" [disabled]="loginForm.invalid" [uiBlockButton]="processingRequest"
+          id="sign-in-button" data-cy="sign-in-button">Sign in</button>
+      </fieldset>
+      <fieldset class="secondary-actions">
+        <p class="secondary-text">Don’t have an account?</p>
+        <a class="secondary-text" (click)="goToSignUp()" id="signup-link" data-cy="signup-link"><b>Sign up for an account</b></a>
+      </fieldset>
+    </div>
+  </form>
+</section>
+<!-- #account-login -->

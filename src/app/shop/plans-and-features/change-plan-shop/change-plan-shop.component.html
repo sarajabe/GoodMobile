@@ -1,0 +1,20 @@
+  <div class="container-flex" *ngIf="!this.isPlanSelected">
+    <div class="t-center">
+    <h2 class="h2-size">Need a replacement plan?</h2>
+    <p class="p-text bottom">It has never been easier to switch.</p>
+    <p class="p-text">Pick a plan that works best for you, activate and you’re good to go!</p>
+  </div>
+      <div class="container-flex-row card-width">
+          <div class="col-12 ">
+              <div class="plan-details">
+                  <p class="plan-details2">Current Plan Details</p>
+            <div class="plan-details highlight-card highlight-card1" *ngIf="!!selectedPlanInfo" [@fadeInOut]="'out'">
+              <div class="title-text one-liner t1">Your custom GoodMobile plan:</div>
+              <div class="title-text one-liner margin-bottom-20 t1">{{selectedPlanInfo?.basePlan?.title}}, {{selectedPlanInfo?.basePlan?.subtitle}}</div>
+              <span class="title-info one-liner t2" (click)="toggleEditMode()">{{selectedPlanInfo?.basePlan?.price | currency:'USD':'symbol':0}}/month</span>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      

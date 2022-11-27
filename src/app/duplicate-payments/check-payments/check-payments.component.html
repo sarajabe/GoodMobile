@@ -1,0 +1,17 @@
+<section class="payments-check">
+    <div class="container-flex">
+        <div class="attention-banner">
+            <img src="assets/icon/red-alert.svg" alt="red alert">
+            <p class="note">Urgent - Action Required</p>
+        </div>
+        <div class="content">
+            <h1 class="header">Your payment methods need attention</h1>
+            <p class="description">{{!!numberOfDuplicatePayments && numberOfDuplicatePayments > 1 ? '(' + numberOfDuplicatePayments + ')' : 'One'}} of your payment methods need attention. Please update your payment methods as soon as possible to prevent service loss.</p>
+        </div>
+    </div>
+    <div class="page-footer">
+        <div class="container-flex">
+            <button class="button primary" aria-label="next" (click)="goToPaymentsList()">Next</button>
+        </div>
+    </div>
+</section>

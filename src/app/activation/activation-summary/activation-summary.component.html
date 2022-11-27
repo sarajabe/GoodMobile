@@ -1,0 +1,81 @@
+<section class="activate-plan-summary">
+    <div class="activation-part" *ngIf="isNewNumber">
+        <h1 class="header">Plan successfully activated!</h1>
+        <img class="image" src="assets/img/friends group-01.svg" />
+        <div class="banner">
+            <h2 class="title"><img src="assets/icon/green-check.svg">Successfully activated!</h2>
+            <p class="banner-note">Your <b>2GB Premium 5G LTE Data</b> Unlimited Talk, Text & Data plan is now
+                activated!</p>
+        </div>
+        <div class="key-value-part">
+            <p class="key">Your Number:</p>
+            <p class="value">{{mdn | phone}}</p>
+        </div>
+        <div class="key-value-part" *ngIf="!!userAccount?.mslCode">
+            <p class="key">Your MSL code:</p>
+            <p class="value">{{userAccount?.mslCode}}</p>
+        </div>
+        <div class="key-value-part" *ngIf="!!userAccount?.msid">
+            <p class="key">Your MS-ID:</p>
+            <p class="value">{{userAccount?.msid}}</p>
+        </div>
+        <div class="content-actions-part" *ngIf="!!iseSIM">
+            <p class="desc bottom">Your <b>eSIM</b> is now ready for <b>activation</b>, you can activate
+                anytime, anywhere at your convenience.</p>
+            <p class="desc">You may proceed with scanning your QR code and setting up your eSIM <b>now</b>, or
+                at anytime through your <b>Account Summary.</b></p>
+            <div class="actions">
+                <button class="button primary" (click)="setupEsim()">Setup your eSIM</button>
+                <a (click)="goToAccountSummary()">Account Summary</a>
+            </div>
+        </div>
+        <div class="content-actions-part" *ngIf="!isTmoNetwork">
+            <p class="desc bottom">Make sure to insert your GoodMobile <b>SIM</b> into your device and turn it on. If your
+                device was already on, please turn it off and back on to recieve important network programming. Your
+                data
+                will be setup automatically. If not, you can setup your device data manually through the <b>Setup
+                    Page.</b>
+            </p>
+            <p class="desc">To know more about your plan details visit your <b>Account Summary</b> at anytime!</p>
+            <div class="actions">
+                <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
+                <a (click)="setUpPhoneData()">Setup your Device Data</a>
+            </div>
+        </div>
+        <div class="content-actions-part" *ngIf="!!isTmoNetwork && !iseSIM">
+            <p class="desc">Make sure to insert your GoodMobile SIM into your device and turn it on. If your device was
+                already
+                on, please turn it off and back on to recieve important network programming.</p>
+            <p class="desc bottom">As for your <b>data</b>, It may take anywhere from a few minutes, up to 2 hours for
+                network to complete provisioning of your data services. You may receive a message indicating your phone
+                does
+                not have the correct settings for Internet or MMS. Don’t worry! We will <b>automatically</b> send the
+                settings to your phone. If not, you can <b>setup your device data</b> manually through the Setup Page.
+            </p>
+            <p class="desc">To know more about your plan details visit your <b>Account Summary</b> at anytime!</p>
+            <div class="actions">
+                <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
+                <a (click)="setUpPhoneData()">Setup your Device Data</a>
+            </div>
+        </div>
+    </div>
+    <div class="activation-part" *ngIf="!isNewNumber">
+        <h1 class="header">Number Transfer In Progress!</h1>
+        <img class="image sloth" src="assets/img/sloth-image.svg" />
+        <div class="banner primary">
+            <h2 class="title"><img src="assets/icon/timer-icon.svg">Please be patient</h2>
+            <p class="banner-note">These things take time, it might take from a few minutes to a few hours depending on
+                your previous carrier.</p>
+        </div>
+        <div class="content-actions-part">
+            <p class="desc">We will send you an email as soon as your current provider responds to the number transfer
+                request.</p>
+            <p class="desc">You visit the <b>Account Summary</b> for further details. If you need help, please call our
+                customer care line.</p>
+            <div class="actions width">
+                <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
+                <button class="button secondary" (click)="goToContactUs()">Contact Us</button>
+            </div>
+        </div>
+    </div>
+</section>

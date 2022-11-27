@@ -1,0 +1,8 @@
+<div class="container-flex no-padding padding-bot plan-list-viewer">
+    <div class="container-flex-row">
+      <div class="twelve extra-padding-left" *ngIf="!showPlanSummary" [@fadeInOut]="'out'">
+        <app-plans-cards-list (mobilePlanSelected)="mobilePlanSelected.emit($event)" [isChangePlan]="isChangePlan" (selectPlan)="selectMobilePlan($event)"></app-plans-cards-list>
+      </div>
+    </div>
+  </div>
+  

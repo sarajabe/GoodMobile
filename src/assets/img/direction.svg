@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #863399;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-miterlimit: 10;
+        stroke-width: 1.5px;
+      }
+    </style>
+  </defs>
+  <g id="anchor_icon" data-name="anchor icon" transform="translate(-30 -735)">
+    <rect id="Rectangle_1544" data-name="Rectangle 1544" class="cls-1" width="45" height="45" transform="translate(30 735)"/>
+    <path id="Path_208" data-name="Path 208" class="cls-2" d="M10.838,17.6l-1-7.238-7.238-1L17.6,2.6Z" transform="translate(42.9 747.9)"/>
+  </g>
+</svg>

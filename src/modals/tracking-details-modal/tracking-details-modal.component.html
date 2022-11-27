@@ -1,0 +1,33 @@
+<div class="container model-container {{context.customClass}}" (keypress.esc)="onKeydown($event)">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{context.title}}</h2>
+      <button class="modal-close modal-toggle" (click)="closeDialog()"><i
+          class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <div class="id-section">
+            <p class="id">Tracking ID: {{context.trackingNumber}}</p>
+        </div>
+        <div class="dates" *ngFor="let dateStatus of trackingStatuses">
+            <div class="details" *ngFor="let step of dateStatus; let j = index">
+                <div class="date-title" *ngIf="j === 0">
+                    <img class="icon" src="assets/icon/circle-check.svg">
+                    <p class="title">{{step?.eventDate | date}}</p>
+                </div>
+                <div class="step">
+                    <p class="time">{{step?.eventTime | date: 'h:mm a'}}</p>
+                    <div class="time-details">
+                        <p class="status">{{step?.event}}</p>
+                        <p class="location"><i>{{step?.eventCity}}, {{step?.eventState}} {{step?.eventCountry}}</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row modal-actions">
+          <button class="button primary" (click)="closeDialog(true)"
+            id="modal--primary-url-button">Done</button>
+        </div>
+      </div>
+    </div>
+</div>

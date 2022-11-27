@@ -1,0 +1,16 @@
+<section class="not-found-section">
+    <div class="header">
+        <h1 class="title">Page Not Found</h1>
+        <h2 class="subtitle">We can't seem to find the page you're looking for.</h2>
+    </div>
+    <div class="details">
+        <p class="description"> Check out our <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/'+SUPPORT_ROUTE_URLS.FAQS]" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">FAQs</a> Page we might have an answer for what you are looking for,
+            also feel free to <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/'+SUPPORT_ROUTE_URLS.CONTACT_US]" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">Contact Us</a> our support team is always available to answer your questions.
+        </p>
+        <p class="description">
+            Alternatively you can go back to our <a [routerLink]="['/' + ROUTE_URLS.HOME]">Home Page</a>.
+        </p>
+    </div>
+</section>

@@ -1,0 +1,128 @@
+<section class="shop-phones" id="shop-phones">
+  <div class="main-section">
+    <div class="banner-section">
+      <div class="text-side">
+        <h1 class="title">Refurbished iPhones</h1>
+        <p class="desc">Get the phone you love for less</p>
+      </div>
+      <div class="images-side">
+        <div class="image">
+          <picture>
+            <source  srcset='assets/img/guy-with-phone.webp' media="(min-width: 320px)" type="image/webp">
+            <source srcset='assets/img/guy-with-phone.png' media="(min-width: 320px)" type="image/png">
+            <img class="guy-image" src="assets/img/guy-with-phone.png" alt="a guy holding a phone" [width]="imageWidth" [height]="imageHeight"/>
+          </picture>
+        </div>
+        <div class="image">
+          <picture>
+            <source srcset='assets/img/girl-with-phone-2.webp' media="(min-width: 320px)" type="image/webp">
+            <source  srcset='assets/img/girl-with-phone-2.png' media="(min-width: 320px)" type="image/png">
+            <img src="assets/img/girl-with-phone-2.png" alt="a girl holding a phone" [width]="imageWidth" [height]="imageHeight"/>
+          </picture>
+        </div>
+        <div class="image">
+          <picture>
+            <source srcset='assets/img/girl-with-phone-1.webp' media="(min-width: 320px)" type="image/webp">
+            <source  srcset='assets/img/girl-with-phone-1.png' media="(min-width: 320px)" type="image/png">
+            <img class="extra-image" src="assets/img/girl-with-phone-1.png" alt="a girl holding a phone" [width]="imageWidth" [height]="imageHeight"/>
+          </picture>
+        </div>
+      </div>
+    </div>
+    <div class="infographics-section">
+      <div class="infographics purple">
+        <div class="icon-side">
+          <picture>
+            <source srcset='assets/img/battery-health.svg' media="(min-width: 320px)" type="image/svg">
+            <img  src="assets/img/battery-health.svg" alt="battery health" [width]="iconsWidth" [height]="iconsHeight"/>
+          </picture>
+        </div>
+        <div class="info-side">
+          <p class="info-title">80% battery health</p>
+          <p class="info">or even better!</p>
+        </div>
+      </div>
+      <div class="infographics pink">
+        <div class="icon-side">
+          <picture>
+            <source srcset='assets/img/warranty.svg' media="(min-width: 320px)" type="image/svg">
+            <img  alt="warranty" src="assets/img/warranty.svg" [width]="iconsWidth" [height]="iconsHeight"/>
+          </picture>
+        </div>
+        <div class="info-side">
+          <p class="info-title">90-day warranty</p>
+          <p class="info">{{warrantyMessage}}</p>
+        </div>
+      </div>
+      <div class="infographics orange">
+        <div class="icon-side">
+          <picture>
+            <source srcset='assets/img/return-phone.svg' media="(min-width: 320px)" type="image/svg">
+            <img alt="return phone"  src="assets/img/return-phone.svg" [width]="iconsWidth" [height]="iconsHeight"/>
+          </picture>
+        </div>
+        <div class="info-side">
+          <p class="info-title">14-day returns</p>
+          <p class="info">{{returnMessage}}</p>
+        </div>
+      </div>
+      <div class="infographics blue">
+        <div class="icon-side">
+          <picture>
+            <source srcset='assets/img/friendlier.svg' media="(min-width: 320px)" type="image/svg">
+            <img alt="friendlier" src="assets/img/friendlier.svg" [width]="iconsWidth" [height]="iconsHeight"/>
+          </picture>
+        </div>
+        <div class="info-side">
+          <p class="info-title">Friendlier for the planet</p>
+          <p class="info">Give a phone a second life </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phones">
+    <h2 class="section-title">Our very best refurbished Smartphones</h2>
+    <p class="section-description">If you’re after an affordable and reliable iPhone you can trust, look no further than our phone catalog!</p>
+    <div class="logo">
+      <img class="logo-icon" src="assets/img/apple-logo.svg" alt="Apple logo">
+    </div>
+    <div class="phones-models" *ngIf="!showPhoneSwiper">
+      <div class="phone-card" *ngFor="let model of phoneModels">
+        <div class="phone-image">
+          <img src="https://{{model?.fields?.phoneImage.fields?.file.url}}" alt="phone-image">
+        </div>
+        <div class="phone-info">
+          <p class="phone-name">{{model?.fields?.phoneName}}</p>
+          <div class="details">
+            <p class="display">{{model?.fields?.phoneDisplay}}</p>
+            <p class="price"> {{model?.fields?.defaultPrice | currency}}</p>
+          </div>
+          <button class="button primary"
+        (click)="viewPhoneDetails(model?.fields?.phoneId)" id="selectPhone" data-cy="selectPhone">Select phone</button>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-container" [swiper]="config" (slideChangeEnd)="slideChanged($event)" [(index)]="index" *ngIf="showPhoneSwiper">
+      <div class="swiper-wrapper phones-models">
+        <div class="swiper-slide" *ngFor="let model of phoneModels">
+          <div  class="phone-card">
+            <div class="phone-image">
+              <img src="https://{{model?.fields?.phoneImage.fields?.file.url}}" [alt]="phone-image">
+            </div>
+            <div class="phone-info">
+                <p class="phone-name">{{model?.fields?.phoneName}}</p>
+                <div class="details">
+                  <p class="display">{{model?.fields?.phoneDisplay}}</p>
+                  <p class="price"> {{model?.fields?.defaultPrice | currency}}</p>
+                </div>
+                <button class="button primary" id="selectPhone" data-cy="selectPhone"
+                  (click)="viewPhoneDetails(model?.fields?.phoneId, model?.fields?.availability)">Select phone</button>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-black"></div>
+      </div>
+    </div>
+</div>
+</section>

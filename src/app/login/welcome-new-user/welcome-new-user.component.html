@@ -1,0 +1,28 @@
+<section class="container-flex welcome-section">
+    <div class="header-section">
+        <h1 class="title">Welcome onboard!</h1>
+        <p class="subhead">
+          With GoodMobile you can purchase plans with a competitive price
+          and high speed data starting at $10/month.
+        </p>
+    </div>
+    <div class="image-section col-sm-8 col-10">
+        <img src="assets/img/girl-walking.png"
+             srcset="assets/img/girl-walking@2x.png 2x,
+               assets/img/girl-walking@3x.png 3x"
+             class="girl-walking" alt="walking girl">
+    </div>
+    <div class="actions-section">
+      <div class="secondary action">
+          <button class="button secondary" (click)="goToPlans()" title="Shop plans" id="shop-plans-button" data-cy="shop-plans-button">
+            Shop plans
+          </button>
+      </div>
+      <div class="primary action">
+          <button class="button primary" (click)="goToCompatibility()" title="Bring phone" id="bring-phone-button">
+            Bring phone
+          </button>
+      </div>
+    </div>
+  </section>
+  

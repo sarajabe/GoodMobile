@@ -1,0 +1,51 @@
+<section class="container-flex internal-page-margins device-setup">
+    <div class="container-flex-row margin-bottom-20">
+        <div class="col-xl-12 col-sm-12 col-12">
+            <h1 class="header">Let’s set up your phone and get you started!</h1>
+            <div class="subhead compatability">
+                <h2 class="subtitle">Let’s find out if your phone is compatible with GoodMobile:</h2>
+                <p class="help-text">This will ensure we provide the correct data settings information for your device</p>
+                <form #formCtrl="ngForm" class="compatibility-form">
+                    <div class="compatability-card">
+                        <fieldset>
+                            <label class="label" for="phoneNumber">Enter your GoodMobile phone number:</label>
+                            <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber"
+                                id="phoneNumber" data-cy="phoneNumber" restrictNumbers maxlength="10">
+                            <label class='validation-message'
+                            *ngIf="(phoneNumber.hasError('pattern') && (phoneNumber.dirty))">
+                                The field should be filled out with a valid GoodMobile number.
+                            </label>
+                            <label id='phoneNumber-invalid-msg' class='validation-message'
+                            *ngIf="(phoneNumber.dirty && phoneNumber.hasError('minlength'))" translate>
+                            Phone number must be 10 digits
+                        </label>
+                        </fieldset>
+                    </div>
+                    <div class="recaptcha-section margin-top-20">
+                        <fieldset class="re-captcha--resizing ">
+                            <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+                            </app-re-captcha>
+                        </fieldset>
+                    </div>
+                    <div class="twelve actions-container no-padding">
+                        <div class="form-actions">
+                            <button type="button" class="button primary"
+                                [disabled]="!formCtrl.form.valid || (!isLoggedIn && !captchaValid)"
+                                [uiBlockButton]="processingRequest" (click)="os='android';checkPhoneCompatibility()"
+                                id="android-button" data-cy="android-button">Android</button>
+                            <button type="button" class="button secondary"
+                                [disabled]="!formCtrl.form.valid || (!isLoggedIn && !captchaValid)"
+                                [uiBlockButton]="processingRequestIos"
+                                (click)="os='ios';isIos=true;checkPhoneCompatibility()" id="ios-button" data-cy="ios-button">iPhone</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <section *ngIf="!userPlan && compatibilityChecked">
+    <app-ios-gsm (backToMain)="reset(event)" *ngIf="os == 'ios' && !!isAtt"></app-ios-gsm>
+    <app-android-gsm (backToMain)="reset(event)" *ngIf="os == 'android' && !!isAtt"></app-android-gsm>
+    <app-t-mobile [isIos]="isIos" *ngIf="!!isTmo"></app-t-mobile>
+</section> -->

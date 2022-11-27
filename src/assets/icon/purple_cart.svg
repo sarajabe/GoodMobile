@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.036" height="17.547" viewBox="0 0 22.036 17.547">
+    <defs>
+        <style>
+            .cls-1{fill:#863399}
+        </style>
+    </defs>
+    <g id="Group_824" data-name="Group 824" transform="translate(-.025)">
+        <path id="Path_20" d="M52.415 0h-2.84a.87.87 0 0 0-.821.625q-1.989 6.044-3.978 12.1h-9.823a.856.856 0 0 0 0 1.711H45.39a.87.87 0 0 0 .821-.625q2-6.044 3.987-12.1h2.224A.856.856 0 0 0 52.415 0z" class="cls-1" data-name="Path 20" transform="translate(-31.183)"/>
+        <path id="Path_21" d="M138.169 180.1a1.069 1.069 0 1 0 1.069 1.069 1.07 1.07 0 0 0-1.069-1.069z" class="cls-1" data-name="Path 21" transform="translate(-125.347 -164.691)"/>
+        <path id="Path_22" d="M50.669 180.1a1.069 1.069 0 1 0 1.069 1.069 1.07 1.07 0 0 0-1.069-1.069z" class="cls-1" data-name="Path 22" transform="translate(-45.334 -164.691)"/>
+        <path id="Path_23" d="M14.037 46.5H.853a.856.856 0 0 0 0 1.711h13.184a.856.856 0 0 0 0-1.711z" class="cls-1" data-name="Path 23" transform="translate(0 -42.522)"/>
+        <path id="Path_24" d="M22.326 80.7H10.853a.856.856 0 0 0 0 1.711h11.473a.856.856 0 0 0 0-1.711z" class="cls-1" data-name="Path 24" transform="translate(-9.144 -73.796)"/>
+        <path id="Path_25" d="M31.775 115h-9.522a.856.856 0 0 0 0 1.711h9.522a.856.856 0 0 0 0-1.711z" class="cls-1" data-name="Path 25" transform="translate(-19.569 -105.161)"/>
+    </g>
+</svg>

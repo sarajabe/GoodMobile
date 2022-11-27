@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.605" height="14.477" viewBox="0 0 13.605 14.477">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:none;stroke:#fff;stroke-linecap:square;stroke-miterlimit:10;stroke-width:1.4px}
+        </style>
+    </defs>
+    <g id="prefix__account_summary_icon" data-name="account summary icon" transform="translate(-1.3 -.3)">
+        <path id="prefix__Path_6073" d="M14.205 23.435a1.738 1.738 0 0 0-1.146-1.635A14.619 14.619 0 0 0 8.1 21a14.62 14.62 0 0 0-4.957.8A1.738 1.738 0 0 0 2 23.435v1.924h12.205z" class="prefix__cls-1" data-name="Path 6073" transform="translate(0 -11.282)"/>
+        <path id="prefix__Path_6074" d="M12.051 7.974A3.051 3.051 0 0 1 9 4.923v-.872A3.051 3.051 0 0 1 12.051 1 3.051 3.051 0 0 1 15.1 4.051v.872a3.051 3.051 0 0 1-3.049 3.051z" class="prefix__cls-1" data-name="Path 6074" transform="translate(-3.949)"/>
+    </g>
+</svg>

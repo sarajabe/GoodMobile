@@ -1,0 +1,69 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.choose-sim {
+    .header {
+        font-size: rem-calc(38px);
+        line-height: 50px;
+        margin-bottom: 15px;
+    }
+    .subhead {
+        font-size: rem-calc(30px);
+        line-height: 39px;
+    }
+    .actions-container {
+        text-align: center;
+        margin-top: 40px;
+        .button {
+            width: 246px;
+            padding: 11px;
+            font-size: rem-calc(20px);
+            &.primary {
+                margin-right: 50px;
+            }
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        .flex-center {
+            margin-top: 30px;
+        }
+        .header {
+            font-size: rem-calc(28px);
+            line-height: 37px;
+        }
+        .subhead {
+            font-size: rem-calc(20px);
+            line-height: 27px;
+        }
+        .actions-container {
+            .button {
+                width: 216px;
+                font-size: rem-calc(15px);
+            }
+        }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        .flex-center {
+            margin-top: 15px;
+        }
+        .header {
+            font-size: rem-calc(26px);
+            line-height: 30px;
+        }
+        .subhead {
+            font-size: rem-calc(20px);
+            line-height: 30px;
+        }
+        .actions-container {
+            .button {
+                width: 241px;
+                font-size: rem-calc(20px);
+                display: block;
+                margin: 15px auto;
+                &.primary {
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+}

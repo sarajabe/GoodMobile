@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <clipPath id="clip-Artboard_3">
+      <rect width="18" height="18"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_3" data-name="Artboard – 3" clip-path="url(#clip-Artboard_3)">
+    <rect width="18" height="18" fill="#fff"/>
+    <g id="inquiry_icon" data-name="inquiry icon" transform="translate(-1402 -768)">
+      <circle id="Ellipse_269" data-name="Ellipse 269" cx="9" cy="9" r="9" transform="translate(1402 768)" fill="#f2e8f4"/>
+      <text id="_" data-name="?" transform="translate(1407 782)" fill="#383838" font-size="14" font-family="Helvetica"><tspan x="0" y="0">?</tspan></text>
+    </g>
+  </g>
+</svg>

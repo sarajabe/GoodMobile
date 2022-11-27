@@ -1,0 +1,68 @@
+<section class="return-reason rma">
+    <div class="progress-banner">
+        <div class="step">
+            <picture>
+                <source srcset='assets/img/return-reason.svg' media="(min-width: 320px)">
+                <img src="assets/img/return-reason.svg" alt="return reason" class="step-image">
+            </picture>
+        </div>
+        <div class="progress">
+            <div class="rma-progress half"></div>
+        </div>
+        <div class="step">
+            <picture>
+                <source srcset='assets/img/disabled-return-form.svg' media="(min-width: 320px)">
+                <img src="assets/img/disabled-return-form.svg" alt="return form" class="step-image">
+            </picture>
+        </div>
+        <div class="progress">
+            <div class="rma-progress disabled"></div>
+        </div>
+        <div class="step">
+            <picture>
+                <source srcset='assets/img/disabled-return-label.svg' media="(min-width: 320px)">
+                <img src="assets/img/disabled-return-label.svg" alt="return label" class="step-image">
+            </picture>
+        </div>
+    </div>
+    <div class="process-content">
+        <h1 class="title">Device Return Reason</h1>
+        <div class="reasons">
+            <p class="selection-title">Please choose a reason for your return:</p>
+            <div class="selection-area">
+                <div class="select-option">
+                    <a id="defective-device" (click)="selectReturnReason(REASONS.WARRANTY)" class="reason-container">
+                        <img [src]="returnReason === REASONS.WARRANTY ? '/assets/icon/enabled-radio.svg':'/assets/icon/disabled-radio.svg'"
+                            alt="radio" class="radio-img">
+                        <span class="reason-link">Defective Device</span>
+                    </a>
+                    <div class="info" *ngIf="canReturnDevice && returnReason === REASONS.WARRANTY">
+                        <h3 class="heads-up">
+                            <img src="assets/icon/info-purple-circle.svg" alt="info"/>
+                            Heads Up!
+                        </h3>
+                        <p class="note">You will be receiving an identical exchange device (subject to item availability)</p>
+                    </div>
+                </div>
+                <div class="select-option">
+                    <a id="defective-device" (click)="selectReturnReason(REASONS.CHANGE)" class="reason-container">
+                        <img [src]="returnReason === REASONS.CHANGE && canChange ?'/assets/icon/enabled-radio.svg':'/assets/icon/disabled-radio.svg'"
+                            alt="radio" class="radio-img" [class.disabled]="!canChange">
+                        <span class="reason-link" [class.disabled]="!canChange">Change of Mind</span>
+                    </a>
+                    <p class="not-allowed" *ngIf="!canChange">Return window closed on {{lastChangeDay | date}}. <a (click)="goToFAQs()">Learn More</a> </p>
+                </div>
+                <div class="validation" *ngIf="reasonRequired">
+                    <p class="validation-message">Please select a reason for your return.</p>
+                </div>
+            </div>
+        </div>
+        <div class="help-note">
+            <p class="note">If you need further assistance, feel free to call Customer Care at {{CUSTOMER_CARE_NUMBER | phone}} (7AM to 1AM EST - Monday-Sunday) </p>
+        </div>
+    </div>
+    <div class="component-footer">
+        <p class="cancel" data-cy="cancelBtn" (click)="goToReportIssue()">Cancel</p>
+        <button class="button primary" data-cy="nextButton" aria-label="next" (click)="next()">Next</button>
+    </div>
+</section>

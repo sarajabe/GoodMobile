@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12.2" height="18.2" viewBox="0 0 12.2 18.2">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:none;stroke:#fff;stroke-linecap:square;stroke-linejoin:round;stroke-width:1.2px}
+        </style>
+    </defs>
+    <g id="prefix__manage_devices_icon" data-name="manage devices icon" transform="translate(-505.4 -96.4)">
+        <rect id="prefix__Rectangle_2016" width="11" height="17" class="prefix__cls-1" data-name="Rectangle 2016" rx="4" transform="translate(506 97)"/>
+        <circle id="prefix__Ellipse_322" cx=".5" cy=".5" r=".5" class="prefix__cls-1" data-name="Ellipse 322" transform="translate(511 111)"/>
+        <path id="prefix__Line_511" d="M0 0L3 0" class="prefix__cls-1" data-name="Line 511" transform="translate(510 100)"/>
+    </g>
+</svg>

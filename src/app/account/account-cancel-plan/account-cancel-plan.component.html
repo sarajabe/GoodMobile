@@ -1,0 +1,69 @@
+<section class="account-section cancel-plan margin-left-8p">
+    <div class="container-flex section-container no-padding">
+        <div class="container-flex-row account-info ">
+            <ng-container *ngIf="!planCanceling && !planCanceled">
+                <div class="col-xl-11 col-12 col-offset-0">
+                    <h1 class="header">Are you sure you want to cancel?</h1>
+                    <p class="account-section-title">By clicking yes, you agree on canceling the following plan:</p>
+                    <h4 class="account-section-title mobile-shown">Plan details</h4>
+                    <ng-container *ngIf="!!selectedPlan">
+                        <div class="card-container plan-container cancel margin-bottom-50">
+                            <div class="title main-title"
+                                [class.last-element]="!userAccount">
+                                <span class="title-text one-liner Top">Your GoodMobile plan:</span><br>
+                                <span class="title-text one-liner Top" data-cy="planTitle">{{selectedPlan.basePlan.title}}</span>
+                                <span class="title-info one-liner Top"><b
+                                        class="right">{{selectedPlan.basePlan.price | currency:'USD':'symbol':0}}/month</b></span>
+                            </div>
+                            <ng-container *ngIf="!!userAccount && !!selectedPlan">
+                                <div class="title split cancel-split">
+                                    <div class="six no-padding">
+                                        <span class="title-text cancel-title">Minutes remaining</span>
+                                        <span class="title-info cancel-info"
+                                            *ngIf="selectedPlan.basePlan?.unlimited">Unlimited</span>
+                                        <span class="title-info"
+                                            *ngIf="!selectedPlan.basePlan?.unlimited">{{!!userAccount.minutes?.balance ? userAccount.minutes?.balance : ' _ '}}</span>
+                                    </div>
+                                    <div class="six no-padding">
+                                        <span class="title-text cancel-title">Texts remaining</span>
+                                        <span class="title-info cancel-info"
+                                            *ngIf="selectedPlan.basePlan?.unlimited">Unlimited</span>
+                                        <span class="title-info"
+                                            *ngIf="!selectedPlan.basePlan?.unlimited">{{!!userAccount.messages?.balance ? userAccount.messages?.balance: ' _ '}}</span>
+                                    </div>
+                                </div>
+                                <div class="title last-element data">
+                                    <span class="title-text">Data remaining</span>
+                                    <span class="title-info"
+                                        *ngIf="!!userAccount.dataRemaining?.balance">{{userAccount.dataRemaining?.balance| mobileDataFormat}}</span>
+                                    <span class="title-info" *ngIf="!userAccount.dataRemaining?.balance"> &ndash;
+                                    </span>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="actions-container">
+                            <button class="button secondary" data-cy="backToSummaryBtn" aria-label="back to summary"
+                                [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]">Back to
+                                summary</button>
+                            <button class="button primary" (click)="cancelPlan()" aria-label="yes, cancel plan"
+                                [uiBlockButton]="processingRequest">Yes, cancel plan</button>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="planCanceled">
+                <div class="col-xl-11 col-12 col-offset-0 cancel-plan-form-container">
+                    <h1 class="title">Your plan
+                        {{!!cancelDate?'cancellation will be effective on:':'has been successfully cancelled'}}</h1>
+                    <div class="account-section-title" *ngIf="!!cancelDate">Effective on: {{cancelDate | date}}</div>
+                    <br>
+                    <a>
+                        <button class="button primary margin-bottom-100" aria-label="view summary"
+                            [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]">View
+                            summary</button>
+                    </a>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>

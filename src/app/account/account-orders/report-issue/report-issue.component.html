@@ -1,0 +1,18 @@
+<section class="report-issue">
+    <div class="back-section">
+        <a class="back-link" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]" >Your Orders
+            &nbsp;<img src="/assets/icon/back-arrow.svg"></a>
+        <a class="back-link" (click)="goToOrderDetail()" >Order #{{orderId}} &nbsp;<img src="/assets/icon/back-arrow.svg"></a>
+        <p class="id" data-cy="reportAnIssue">Report an Issue</p>
+    </div>
+    <div class="info">
+        <h1 class="header">How can we help?</h1>
+        <p class="description">Please choose one of the options below:</p>
+    </div>
+    <div class="options-container">
+        <div class="report-option" [id]="item?.id" [attr.data-cy]="item?.id" *ngFor="let option of reportOptions" (click)="setSelectedOption(option)" [class.disabled]="option?.isDisabled">
+            <img class="option-img" [src]="!option?.isDisabled ? option?.icon : option?.disabledIcon" [alt]="option?.title">
+            <p class="option-title">{{option?.title}}</p>
+        </div>
+    </div>
+</section>

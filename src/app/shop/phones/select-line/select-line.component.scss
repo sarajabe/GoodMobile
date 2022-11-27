@@ -1,0 +1,103 @@
+@import "../../../../styles/modules/variables";
+@import "../../../../styles/modules/mixins";
+
+.select-option {
+  .info {
+    font-size: rem-calc(24px);
+    line-height: 36px;
+    margin-bottom: 40px;
+    @media (max-width: $phablet-min-width-minus) {
+      font-size: rem-calc(18px);
+      line-height: 28px;
+      margin-bottom: 16px;
+    }
+  }
+  margin-bottom: 20px;
+  .wireless-links-container {
+    display: flex;
+    .wireless-links {
+      color: $black;
+      cursor: pointer;
+      font-size: rem-calc(18px);
+      line-height: 28px;
+      font-family: $base-font-family;
+      font-weight: bold;
+      padding-left: 14px;
+      margin-bottom: 4px;
+      &.disabled {
+        color: $disabled-grey;
+      }
+    }
+  }
+  .radio-img {
+    height: 28px;
+  }
+  .current-mobile-number-section {
+    padding-left: 44px;
+    .p-label {
+      font-family: $base-font-family;
+      font-size: rem-calc(18px);
+      line-height: 28px;
+      margin-bottom: 12px;
+      color: #a5a3a3;
+    }
+    .floating-label {
+      position: relative;
+      margin-bottom: 0px;
+      margin-top: 7px;
+      max-width: 259px;
+      .floating-select {
+        font-size: rem-calc(16px);
+        padding: 4px 4px;
+        display: block;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        color: #00000099;
+        border-radius: 4px;
+        caret-color: $primary-color;
+        outline: none;
+        border: 2px solid $primary-color;
+        label {
+          width: 50%;
+          top: -6px;
+          font-size: 12px;
+          color: $primary-color;
+          width: 83px;
+          background-color: #fff;
+          &.long {
+            width: 168px;
+          }
+        }
+        &.dirty {
+          &:valid {
+            ~ {
+              label {
+                top: -6px;
+                font-size: rem-calc(12px);
+                background-color: white;
+                width: 83px;
+                color: #00000099;
+                &.long {
+                  width: 168px;
+                }
+              }
+            }
+          }
+        }
+      }
+      label {
+        color: #00000099;
+        font-size: rem-calc(16px);
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 14px;
+        top: 18px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+      }
+    }
+  }
+}

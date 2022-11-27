@@ -1,0 +1,120 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+::ng-deep {
+    .acp-disabled {
+
+        .outlined-label-input input:disabled, input:disabled {
+            background-color: #95959530;
+            cursor: not-allowed;
+        }
+        .floating-label {
+            background-color: #95959530;
+            cursor: not-allowed;
+        }
+        .form-control{
+            opacity: .5;
+            cursor: not-allowed;
+        }
+        span, input[type=radio] {
+            cursor: not-allowed;
+        }
+    }
+    .signatureForm {
+        display: flex;
+        flex-direction: column;
+        @media (max-width: $desktop-min-width-minus) {
+            padding: 0 20px;
+            margin-bottom: 54.2px;
+        }
+        .captcha {
+            margin-bottom: 60px;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 16px;
+            background: rgba(134, 51, 153, 0.05);
+            border-radius: 10px;
+            padding: 16px;
+            align-items: flex-start;
+            max-width: 1000px;
+            input {
+                width: 46px;
+                height: 46px;
+                border: 1px solid #a5a3a3;
+                border-radius: 4px;
+                background: #ffffff;
+                opacity: 0.4;
+                text-transform: uppercase;
+                padding: 7.5px 9px;
+                &:focus {
+                    opacity: 1;
+                }
+                &.ng-dirty {
+                    opacity: 1;
+                }
+            }
+            .label {
+                font-size: rem-calc(16px);
+                line-height: 24px;
+                font-family: $lato-font-family;
+                font-weight: 400;
+                margin-left: 16px;
+                margin-bottom: 0;
+                @media (max-width: $phablet-min-width-minus) {
+                    font-size: rem-calc(14px);
+                }
+            }
+            span {
+                color: #383838;
+            }
+        }
+        .note {
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            font-family: $base-font-family-bold;
+            font-weight: 700;
+            margin-bottom: 2px;
+            margin-top: 24px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(16px);
+                line-height: 24px;
+                margin-top: 16px;
+            }
+        }
+        .sub-note {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #a5a3a3;
+            margin-bottom: 23px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(14px);
+                margin-bottom: 19.8px;
+            }
+        }
+        .hint {
+            font-size: rem-calc(12px);
+            line-height: 20px;
+            color: #A5A3A3;
+            margin-top: 12px;
+        }
+        .signed-name {
+            width: 60%;
+            margin-bottom: 40px;
+            @media (max-width: $desktop-min-width-minus) {
+                width: 100%;
+                margin-bottom: 0;
+            }
+            .outlined-label-input {
+                max-width: 316px;
+                width: 100%;
+                &.disabled {
+                    input {
+                        background-color: white;
+                    }
+                }
+            }
+        }
+    }
+}

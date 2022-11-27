@@ -1,0 +1,196 @@
+/*.mobile-hidden {
+  display: none;
+  @media (#{$larger-than-tablet}) {
+    display: initial;
+  }
+}
+
+.mobile-shown {
+  @media (#{$larger-than-tablet}) {
+    display: none;
+  }
+}*/
+
+.store-locator-validation {
+  color: $alert;
+  text-transform: capitalize;
+  letter-spacing: normal;
+  font-family: $header-font-family;
+  font-size: rem-calc(20px);
+  font-weight: $header-font-weight;
+}
+
+#toast-container.toast-bottom-center > div, #toast-container.toast-top-center > div {
+  text-align: left;
+  width: 100%;
+
+  @media (#{$larger-than-tablet}) {
+    width: 75%;
+    margin: 25px auto auto;
+  }
+
+  @media (#{$larger-than-desktop}) {
+    width: 50%;
+    margin: 25px auto auto;
+  }
+
+}
+
+#toast-container > .toast-error{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Dialog-error.svg/1024px-Dialog-error.svg.png')!important ;
+}
+
+.internal-page-margins {
+  margin-top: 60px;
+  @media (#{$larger-than-tablet}) {
+  margin-top: 80px;
+  }
+  }
+
+.content-section {
+  padding: 10px 0;
+  @media (#{$larger-than-tablet}) {
+    padding: 60px 0;
+  }
+}
+
+hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  @media (#{$larger-than-tablet}) {
+    margin-top: 76px;
+    margin-bottom: 76px;
+  }
+}
+
+hr.primary {
+  border-top: 1px solid $primary-color;
+}
+
+hr.secondary {
+  border-top: 1px solid $secondary-color;
+}
+
+hr.thirdly {
+  border-top: 1px solid $third-color;
+}
+
+hr.gray {
+  border-top: 1px solid $grey;
+}
+
+$right-space-vars: (
+  5 right right, 10 right right, 15 right right, 20 right right, 25 right right, 30 right right, 35 right right, 40 right right, 45 right right, 50 right right, 55 right right, 60 right right, 65 right right, 70 right right, 75 right right, 80 right right, 85 right right, 90 right right, 95 right right, 100 right right
+);
+
+$top-space-vars: (
+  5 top top, 10 top top, 15 top top, 20 top top, 25 top top, 30 top top, 35 top top, 40 top top, 45 top top, 50 top top, 55 top top, 60 top top, 65 top top, 70 top top, 75 top top, 80 top top, 85 top top, 90 top top, 95 top top, 100 top top
+);
+
+$bottom-space-vars: (
+  5 bottom bottom, 10 bottom bottom, 15 bottom bottom, 20 bottom bottom, 25 bottom bottom, 30 bottom bottom, 35 bottom bottom, 40 bottom bottom, 45 bottom bottom, 50 bottom bottom, 55 bottom bottom, 60 bottom bottom, 65 bottom bottom, 70 bottom bottom, 75 bottom bottom, 80 bottom bottom, 85 bottom bottom, 90 bottom bottom, 95 bottom bottom, 100 bottom bottom
+);
+
+@include generate-spacing-classes(); // left comes by default
+@include generate-spacing-classes($right-space-vars);
+@include generate-spacing-classes($top-space-vars);
+@include generate-spacing-classes($bottom-space-vars);
+
+.loading-hidden {
+  background: #fff slick-image-url("ajax-loader.gif") center center no-repeat;
+  div {
+    visibility: hidden;
+  }
+}
+
+.loading-hidden-transparent {
+  height: 70px;
+  margin-top: -10px;
+  background: transparent image-url("ajax-loader-transparent.gif");
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  background-position: center center;
+  div {
+    visibility: hidden;
+  }
+}
+
+.flip-vertical {
+  -moz-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+
+label {
+  &.validation-message {
+    @extend .validation-message;
+    margin-top: 6px;
+  }
+}
+
+.validation-message {
+  color: $alert;
+  text-transform: capitalize;
+  letter-spacing: normal;
+  font-family: $header-font-family;
+  font-size: rem-calc(14px);
+  font-weight: $header-font-weight;
+}
+
+.alt-bg {
+  background-color: $light-grey;
+}
+
+.primary-bg {
+  background-color: $primary-color;
+}
+
+/*
+
+.blinking-border {
+  label {
+    background-color: #828282;
+    -webkit-animation-name: blinking-border-text; !* Safari 4.0 - 8.0 *!
+    -webkit-animation-duration: 5s; !* Safari 4.0 - 8.0 *!
+    animation-name: blinking-border-text;
+    animation-duration: 5s;
+  }
+
+  .checkbox-label {
+    color: $black;
+    -webkit-animation-name: blinking-border-text; !* Safari 4.0 - 8.0 *!
+    -webkit-animation-duration: 10s; !* Safari 4.0 - 8.0 *!
+    animation-name: blinking-border-text;
+    animation-duration: 10s;
+  }
+}
+
+!* Safari 4.0 - 8.0 *!
+@-webkit-keyframes blinking-border-text {
+  from {
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+  to {
+    border-color: #828282;
+    color: $black;
+  }
+}
+
+!* Standard syntax *!
+@keyframes blinking-border-text {
+  from {
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+  to {
+    border-color: #828282;
+    color: $black;
+  }
+}
+*/
+.leaflet-bottom.leaflet-left {
+  bottom: 3.5em;
+}

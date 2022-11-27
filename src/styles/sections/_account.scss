@@ -1,0 +1,2996 @@
+.account-card {
+  border: 1px solid $grey;
+  padding: 28px;
+  margin-bottom: 15px;
+  display: inline-block;
+  margin-right: 10px;
+  width: 50%;
+  &.full {
+    width: 100%;
+  }
+  &.last {
+    margin-right: 0;
+  }
+  &.single {
+    width: 49.5%;
+  }
+  @media (max-width: $desktop-min-width-minus) {
+    margin-right: 50px;
+    &.full {
+      width: 47%;
+    }
+    &.single {
+      width: 47%;
+    }
+  }
+  @media(max-width: 833.9px) {
+    width: 100%;
+    &.full {
+      width: 100%;
+    }
+    &.single {
+      width: 100%;
+    }
+  }
+  .card-title {
+    font-size: rem-calc(33px);
+    line-height: 43px;
+    margin-bottom: 25px;
+    @media(max-width: $desktop-min-width-minus) {
+      font-size: rem-calc(22px);
+      line-height: 28px;
+    }
+  }
+  .card-subtitle {
+    font-size: rem-calc(17px);
+    line-height: 20px;
+    font-family: $base-font-family-bold;
+    margin-bottom: 30px;
+  }
+  .card-content {
+    .title {
+      font-size: rem-calc(22px);
+      font-family: $base-font-family-bold;
+      line-height: 40px;
+      margin-bottom: 0;
+      &.toggled {
+        margin: 15px 0;
+      }
+      @media(max-width: $desktop-min-width-minus) {
+        font-size: rem-calc(14px);
+      }
+    }
+    .info {
+      font-size: rem-calc(17px);
+      line-height: 30px;
+      @media(max-width: $desktop-min-width-minus) {
+        font-size: rem-calc(12px);
+        line-height: 14px;
+      }
+    }
+    @media(max-width: $desktop-min-width-minus) {
+      &.block {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .card-action {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    .action {
+      cursor: pointer;
+      display: inline-block;
+      .action-icon {
+        background-color: $primary-color;
+        padding: 6px;
+        border-radius: 50%;
+      }
+      .action-title {
+        color: $primary-color;
+        font-size: rem-calc(20px);
+        line-height: 30px;
+        font-family: $secondary-font-family;
+        font-weight: bold;
+        display: inline;
+        padding-left: 5px;
+        &.secondary {
+          color: $secondary-color;
+          padding-left: 10px;
+        }
+        &.disabled {
+          color: $disabled-grey;
+          cursor: not-allowed;
+        }
+      }
+      .button {
+        width: 137px;
+        &.secondary {
+          margin-top: 10px;
+        }
+        &.large {
+          width: 216px;
+          font-size: rem-calc(18px);
+          padding: 11px;
+        }
+        @media(min-width: 1230px) {
+          &.secondary {
+            margin-left: 10px;
+            margin-top: 0;
+          }
+        }
+      }
+      @media(max-width: $desktop-min-width-minus) {
+        color: white;
+        padding: 3px;
+        text-align: center;
+        background-color: $primary-color;
+        &.editing {
+          background-color: transparent;
+        }
+        &.toggle {
+          background-color: transparent;
+          .action-title {
+            display: none;
+          }
+        }
+        .action-title {
+          font-size: rem-calc(12px);
+          line-height: 24px;
+          color: white;
+        }
+        .button {
+          &.large {
+            width: 180px;
+            font-size: rem-calc(16px);
+          }
+        }
+      }
+    }
+  }
+  .preferredPayments {
+    .info-details {
+      .info {
+        font-size: rem-calc(15px);
+        line-height: 17px;
+        &.noPayment {
+          color: $primary-color;
+          cursor: pointer;
+        }
+      }
+    }
+    .action {
+      font-size: rem-calc(15px);
+      line-height: 17px;
+      color: $primary-color;
+      cursor: pointer;
+    }
+  }
+  @media (max-width: $desktop-min-width-minus) {
+    padding: 30px;
+    .card-title {
+      font-size: rem-calc(22px);
+      line-height: 28px;
+    }
+    .action {
+      font-size: rem-calc(17px);
+      line-height: 30px;
+    }
+  }
+  @media (max-width: $phablet-min-width-minus) {
+    padding: 30px 20px 20px;
+    .card-title {
+      font-size: rem-calc(22px);
+      line-height: 28px;
+    }
+    .action {
+      font-size: rem-calc(17px);
+      line-height: 30px;
+    }
+  }
+}
+.margin-left-8p{
+  @media (min-width: $desktop-min-width){
+    margin-left: 8%;
+  }
+}
+.account-section {
+  .subhead {
+    font-size: rem-calc(22px);
+    line-height: 1.27;
+    a {
+      font-size: rem-calc(18px);
+      line-height: 1.56;
+      margin-top: 15px;
+      display: inline-block;
+    }
+  }
+  .expected-device-container{
+    border: 20px solid #EAEAEA;
+    .device-info{
+      width: auto;
+      margin-bottom: 15px;
+      display: flex;
+    }
+    .buttons-container {
+      padding: initial;
+      text-align: center;
+      padding-bottom: 1em;
+      @media (#{$larger-than-desktop}) {
+        text-align: center;
+        padding-bottom: 1em;
+        padding: 10px 0px 25px 35px;
+      }
+    }
+    .device-info .phone-details{
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .title {
+    line-height: 1;
+  }
+
+  .no-account-status-message {
+    @media (#{$larger-than-desktop}) {
+    //  margin-top: -45px;
+    }
+  }
+
+  h2 {
+    font-size: rem-calc(28px);
+    margin-bottom: 30px;
+  }
+}
+.report-page {
+  padding-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-bottom: 173px;
+    &.space {
+        margin-bottom: 0;
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        padding-top: 32px;
+        margin-bottom: 60px;
+        &.space {
+            margin-bottom: 0;
+        }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        padding-left: 16px;
+        padding-right: 16px;
+        margin-bottom: 40px;
+        &.space {
+            margin-bottom: 0;
+        }
+    }
+    .back-section {
+        display: flex;
+        font-family: $base-font-family;
+        font-size: rem-calc(16px);
+        line-height: 24px;
+        margin-bottom: 32px;
+        align-items: center;
+        flex-wrap: wrap;
+        .back-link {
+            cursor: pointer;
+            color: $primary-color;
+            margin-bottom: 0;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+            margin-top: 24px;
+        }
+    }
+    .title {
+        font-size: rem-calc(32px);
+        line-height: 40px;
+        margin-bottom: 40px;
+        @media(max-width: $desktop-min-width-minus) {
+            margin-bottom: 32px;
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+            font-size: rem-calc(24px);
+            line-height: 32px;
+        }
+    }
+    .note-banner {
+        background: #8633991A;
+        box-shadow: 0px 3px 4px 0px #EAEAEA40;
+        padding: 24px;
+        border-radius: 8px 8px 10px 10px;
+        .note {
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            margin-bottom: 0;
+            font-weight: 400;
+            max-width: 775px;
+            margin-bottom: 15px;
+            .newLine {
+              display: block;
+              font-weight: bold;
+              margin-bottom: 16px;
+              font-size: rem-calc(16px);
+          }
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          padding: 16px;
+          .note {
+              align-items: flex-start;
+              font-size: rem-calc(14px);
+              line-height: 24px;
+          }
+          .notes-list {
+            padding-inline-start: 16px;
+          }
+      }
+    }
+    .link {
+        color: $primary-color;
+        cursor: pointer;           
+    }
+}
+.section-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 0px;
+  margin-bottom: 2px;
+  box-shadow: 0px 1px 0px 0px #E2E2E2 inset;
+  background-color: white;
+  &.sticky {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 0;
+}
+  .transparent {
+      background-color: transparent;
+      border: none;
+      color: $primary-color;
+      font-family: $secondary-font-family-bold;
+      font-size: rem-calc(16px);
+      margin-bottom: 0;
+      &.hidden {
+          visibility: hidden;
+      }
+  }
+  .secondary {
+    margin-right: 5px;
+  }
+  .primary {
+      width: 100px;
+      font-size: rem-calc(16px);
+      line-height: 16px;
+      padding: 8px;
+      font-family: $secondary-font-family-bold;
+  }
+  .btn-container {
+    max-width: 1360px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 50px;
+    padding-left: 50px;
+    .transparent {
+        padding-left: 0;
+        text-align: left;
+    }
+  }
+  @media (max-width: $desktop-min-width-minus) {
+    .btn-container {
+      .transparent {
+        padding: 0;
+      }
+    }
+  }
+  @media (max-width: $phablet-min-width-minus) {
+    .btn-container {
+      padding-left: 16px;
+      padding-right: 16px;
+      .transparent {
+        padding: 0;
+      }
+    }
+  }
+}
+.resetSuccess {
+  @media (#{$larger-than-phablet}) {
+    min-height: 300px;
+  }
+}
+.expected-device-container {
+  background-color: $sg-light-grey;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  @media (max-width: 640px) {
+    margin-bottom: 40px;
+  }
+  .device-info {
+    width: 100%;
+    display: -webkit-inline-box;
+    margin: 10px 20px 10px 38px;
+    @media (max-width : 1024px) {
+      margin: 10px 20px;
+    }
+    .phone-image {
+      width: 60px;
+      margin-right: 2%;
+      img {
+        width: 65px;
+      }
+    }
+    .phone-details {
+      width: 80%;
+      margin-top: 10px;
+      .phone-title {
+        font-size: rem-calc(20px);
+        font-weight: bold;
+        font-family: $secondary-font-family-bold;
+      }
+      .price {
+        color: $primary-color;
+        float: right;
+        font-family: $base-font-family;
+      }
+      .market {
+        width: 100%;
+        font-size: rem-calc(15px);
+        font-family: $base-font-family;
+      }
+      .specs {
+        font-size: rem-calc(14px);
+        .properties {
+          display: -webkit-inline-box;
+          width: auto;
+          @media (min-width: 1024px) {
+            width: auto;
+          }
+        }
+        .skip {
+          cursor: pointer;
+          margin-top: 25px;
+          @media (min-width: 1024px){
+            min-width: max-content;
+          }
+          .button {
+            padding: 10px 20px;
+            font-size: rem-calc(14px);
+            margin-left: 5px;
+            margin-bottom: 7px;
+            width: 212px;
+          }
+          #button-width{
+            width: max-content;
+            min-width: max-content;
+          }
+
+          #button-padding{
+            width: max-content;
+            min-width: max-content;
+            padding-left: 55px;
+            padding-right: 55px;
+          }
+          #button-padding-2{
+            width: max-content;
+            min-width: max-content;
+            padding-left: 50px;
+            padding-right: 50px;
+          }
+        }
+        .color {
+          border: 1px solid $input-border;
+          padding: 2px 6px;
+          margin-right: 10px;
+          background-color: white;
+          .color-swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 15px;
+            display: inline-block;
+          }
+        }
+        .capacity {
+          border: 1px solid $input-border;
+          background-color: white;
+          padding: 2px 6px;
+        }
+      }
+      @media (max-width : 1133px) {
+        .phone-title {
+          font-size: rem-calc(20px);
+        }
+        .price {
+          float: none;
+          display: block;
+          margin-top: 10px;
+        }
+        .market {
+          font-size: rem-calc(14px);
+        }
+        .specs {
+          font-size: rem-calc(13px);
+          .color {
+            .color-swatch {
+              width: 11px;
+              height: 11px;
+            }
+          }
+        }
+      }
+      @media (max-width : 639px) {
+        width: 76%;
+        .phone-title {
+          font-size: rem-calc(20px);
+        }
+        .market {
+          font-size: rem-calc(11px);
+        }
+        .specs {
+          font-size: rem-calc(12px);
+          .properties {
+            @media (max-width: 425px) and (min-width: 320px) {
+              width: auto;
+              @media(max-width: 350px) and (min-width: 320px){
+                margin-left: -30px;
+              }
+            }
+          }
+          .display-flex{
+            @media (max-width: 425px) and (min-width: 320px) {
+              display: flex;
+            }
+          }
+          .skip {
+            margin-top: 25px;
+            float: none;
+            @media (min-width: 320px) and (max-width: 350px){
+              margin-left: -50px;
+            }
+            @media (min-width: 350px) and (max-width: 380px){
+              margin-left: -25px;
+            }
+            .transparent {
+              display: block;
+              font-size: rem-calc(14px);
+              text-align: center;
+              margin-bottom: 7px;
+            }
+          }
+          .color {
+            padding: 5px 8px;
+            .color-swatch {
+              width: 9px;
+              height: 9px;
+            }
+          }
+          .capacity {
+            padding: 5px 6px;
+          }
+        }
+      }
+      @media (max-width : 426px) {
+        width: 75%;
+        .title {
+          width: 100%;
+        }
+        .price {
+          float: none;
+        }
+        .skip {
+          float: none;
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  .buttons-container {
+    padding: 10px 0px 25px 35px;
+    @media (max-width : 425px) {
+      button {
+        width: 70%;
+        min-width: max-content;
+        &:first-child {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+.pending-container {
+  .title {
+    margin-bottom: 15px;
+    font-size: rem-calc(22px);
+  }
+}
+.device-container {
+  margin-bottom: 25px;
+  padding: 0;
+  width: 100%;
+  .validation-message {
+    font-family: $secondary-font-family-bold;
+    font-size: rem-calc(18px);
+    margin-bottom: 15px;
+  }
+  .info {
+    font-size: rem-calc(17px);
+  }
+  .title {
+    padding-bottom: 15px;
+    font-size: rem-calc(22px);
+    font-weight: normal;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+
+    @include account-border(bottom);
+    @media (#{$larger-than-desktop}) {
+      font-weight: bold;
+
+    }
+    .title-text, .title-info {
+      float: left;
+    }
+
+    .title-text {
+      width: 50%;
+      @media (max-width: 639px) and (min-width: 420px) {
+        margin-left: 3px;
+      }
+      @media (max-width: 418px) and (min-width: 320px){
+        margin-left: 0px;
+      }
+      &.one-liner {
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 7px;
+        @media (#{$larger-than-desktop}) {
+          /*width: 50%;*/
+          width: 75%;
+          margin: 0;
+        }
+      }
+
+      @media (#{$larger-than-desktop}) {
+        width: 75%;
+        padding: 2px 0;
+      }
+    }
+  }
+  .device-info {
+    .title-text {
+      font-weight: bold;
+      //margin-left: 5px;
+    }
+    .removeBorder{
+      @media(max-width: 420px)and (min-width: 320px) {
+        border-right: 0px solid #B1B1B1 !important;
+      }
+    }
+    .marginLeft{
+      margin-left: 4px;
+    }
+    .data {
+      font-weight: normal;
+    }
+    .info-list {
+      list-style: none;
+      width: 50%;
+      font-size: rem-calc(17px);
+      border-bottom: 0px;
+      padding: 0px;
+      line-height: 1;
+      @media(min-width:1025px) {
+        line-height: 1.2;
+        }
+      display: inline-block;
+      @media (max-width: 419px) {
+        width: 100%;
+        margin: 0;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid $grey;
+        font-size: rem-calc(15px);
+        p {
+          width: 100%;
+          &:not(:last-child) {
+            border-right: 1px solid $grey;
+          }
+        }
+      }
+      @media (min-width: 420px) and (max-width: 639px) {
+        width: 100%;
+        margin: 0;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid $grey;
+        font-size: rem-calc(15px);
+        p {
+          float: left;
+          width: 50%;
+          padding-left: 0px;
+          &:not(:last-child) {
+            border-right: 1px solid $grey;
+            padding-left: 5px;
+          }
+          &:not(:first-child) {
+            padding-left: 5px;
+          }
+        }
+      }
+      @media (#{$larger-than-desktop}) {
+        width: 65%;
+        margin: 0;
+        &.info-new-property {
+          width: 37%;
+        }
+      }
+      @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+        &.info-new-property {
+          width: 44%;
+          font-size: rem-calc(15px);
+        }
+      }
+    }
+    .id-list {
+      list-style: none;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      font-size: rem-calc(17px);
+      width: 25%;
+      @media (#{$larger-than-desktop}) {
+        &.id-new-property {
+          width: 36%;
+        }
+      }
+      @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+        &.id-new-property {
+          width: 31%;
+          font-size: rem-calc(13px);
+        }
+      }
+      @media (max-width: 419px) {
+        width: 100%;
+        margin: 0;
+        padding: 20px 0 0 0;
+        border-bottom: 1px solid $grey;
+        font-size: rem-calc(15px);
+
+        p {
+          width: 100%;
+        }
+      }
+      @media (min-width: 420px) and (max-width: 639px) {
+        width: 100%;
+        margin: 0;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid $grey;
+        font-size: rem-calc(15px);
+        margin-top: 15px;
+        p {
+          float: left;
+          width: 50%;
+          padding-left: 0px;
+        }
+      }
+      .data {
+        display: block;
+      }
+    }
+    .ms-list {
+      list-style: none;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      font-size: rem-calc(17px);
+      width: 25%;
+      @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+          font-size: rem-calc(13px);
+      }
+      @media (max-width: 419px) {
+        width: 100%;
+        margin: 0;
+        padding: 20px 0 0 0;
+        border-bottom: 1px solid $grey;
+        font-size: rem-calc(15px);
+
+        p {
+          width: 100%;
+        }
+      }
+      @media (min-width: 420px) and (max-width: 639px) {
+        width: 100%;
+        margin: 0;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid $grey;
+        font-size: rem-calc(15px);
+        margin-top: 15px;
+        p {
+          float: left;
+          width: 50%;
+          padding-left: 0px;
+        }
+      }
+      .data {
+        display: block;
+      }
+    }
+  }
+  .device-actions-row {
+    margin-top: 25px;
+    margin-bottom: 20px;
+  }
+}
+.sim-replacement-container {
+  background-color: #efefef;
+  border: 1px solid $primary-color;
+  border-radius: 11px;
+  padding: 20px 12px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  .info-section {
+    .title {
+      font-size: rem-calc(25px);
+      font-family: $secondary-font-family;
+      line-height: 33px;
+      font-weight: bold;
+    }
+    .details {
+      font-size: rem-calc(20px);
+      font-family: $secondary-font-family;
+      line-height: 27px;
+    }
+  }
+  .action-section {
+    text-align: right;
+    margin: auto;
+    .button {
+      width: 299px;
+      font-size: rem-calc(22px);
+      padding: 10px;
+      font-weight: 500;
+    }
+    @media(max-width: 1200px) {
+      padding: 0;
+    }
+  }
+  @media (max-width: 1025px) {
+    .info-section {
+      .title {
+        font-size: rem-calc(20px);
+        font-family: $secondary-font-family;
+        line-height: 33px;
+        font-weight: bold;
+      }
+      .details {
+        font-size: rem-calc(16px);
+        font-family: $secondary-font-family;
+        line-height: 27px;
+      }
+    }
+    .action-section {
+      .button {
+        width: 214px;
+        font-size: rem-calc(16px);
+      }
+    }
+  }
+  @media (max-width: 750px) {
+    display: inline-block;
+  }
+  @media (max-width: 640px) {
+    text-align: center;
+    .info-section {
+      .title {
+        font-size: rem-calc(17px);
+      }
+      .details {
+        font-size: rem-calc(14px);
+      }
+    }
+    .action-section {
+      text-align: center;
+    }
+  }
+}
+.trial-plan-container {
+  border: 1px solid $primary-color;
+  border-radius: 11px;
+  padding: 20px 35px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  .info-section {
+    width: 100%;
+    .title {
+      font-size: rem-calc(30px);
+      font-family: $secondary-font-family-bold;
+      line-height: 38px;
+    }
+    .details {
+      font-size: rem-calc(22px);
+      font-family: $secondary-font-family;
+      line-height: 38px;
+    }
+    .note {
+      color: $secondary-color;
+      font-size: rem-calc(20px);
+    }
+  }
+  .action-section {
+    width: 260px;
+    .button {
+      width: 213px;
+      padding: 11px;
+      font-size: rem-calc(20px);
+    }
+  }
+  @media(max-width: $desktop-min-width-minus) {
+    .info-section {
+      .title {
+        font-size: rem-calc(22px);
+        line-height: 33px;
+      }
+      .details {
+        font-size: rem-calc(18px);
+        line-height: 33px;
+      }
+    }
+  }
+  @media(max-width: $tablet-min-width-minus) {
+    flex-direction: column;
+    justify-content: center;
+    .info-section {
+      text-align: center;
+      .title {
+        font-size: rem-calc(22px);
+        line-height: 33px;
+      }
+      .details {
+        font-size: rem-calc(18px);
+        line-height: 33px;
+      }
+    }
+    .action-section {
+      width: 100%;
+      text-align: center;
+      .button {
+        width: 202px;
+      }
+    }
+  }
+}
+.cancel-plan-container {
+  background-color: #efefef;
+  border: 1px solid $warning;
+  border-radius: 11px;
+  padding: 20px 12px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  .info-section {
+    .title {
+      font-size: rem-calc(25px);
+      font-family: $secondary-font-family;
+      line-height: 33px;
+      font-weight: bold;
+    }
+    .details {
+      font-size: rem-calc(20px);
+      font-family: $secondary-font-family;
+      line-height: 27px;
+    }
+  }
+  .action-section {
+    text-align: right;
+    margin: auto;
+    .button {
+      width: 299px;
+      font-size: rem-calc(22px);
+      padding: 10px;
+      font-weight: 500;
+    }
+    @media(max-width: 1200px) {
+      padding: 0;
+    }
+  }
+  @media (max-width: 1025px) {
+    .info-section {
+      .title {
+        font-size: rem-calc(20px);
+        font-family: $secondary-font-family;
+        line-height: 33px;
+        font-weight: bold;
+      }
+      .details {
+        font-size: rem-calc(16px);
+        font-family: $secondary-font-family;
+        line-height: 27px;
+      }
+    }
+    .action-section {
+      .button {
+        width: 214px;
+        font-size: rem-calc(16px);
+      }
+    }
+  }
+  @media (max-width: 750px) {
+    display: inline-block;
+  }
+  @media (max-width: 640px) {
+    text-align: center;
+    .info-section {
+      .title {
+        font-size: rem-calc(17px);
+      }
+      .details {
+        font-size: rem-calc(14px);
+      }
+    }
+    .action-section {
+      text-align: center;
+    }
+  }
+}
+
+.plan-portIn-container {
+  background-color: #efefef;
+  border: 1px solid $primary-color;
+  border-radius: 11px;
+  padding: 22px 25px;
+  margin-bottom: 20px;
+  .portIn-title {
+    font-family: $secondary-font-family-bold;
+    font-size: rem-calc(25px);
+    line-height: 33px;
+  }
+  .portIn-details {
+    .detail {
+      font-size: rem-calc(20px);
+      font-family: $secondary-font-family;
+      line-height: 27px;
+      font-weight: 500;
+      max-width: 775px;
+    }
+    .status {
+      font-size: rem-calc(22px);
+      font-family: $secondary-font-family;
+      line-height: 28px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+  }
+  .portIn-action {
+    .button {
+      width: 225px;
+      padding: 8px;
+      font-size: rem-calc(22px);
+      margin-right: 15px;
+    }
+  }
+  @media(max-width: 1025px) {
+    .portIn-title {
+      font-size: rem-calc(19px);
+      line-height: 26px;
+    }
+    .portIn-details {
+      .detail {
+        font-size: rem-calc(16px);
+        line-height: 21px;
+        max-width: 630px;
+      }
+      .status {
+        font-size: rem-calc(17px);
+        line-height: 21px;
+      }
+    }
+    .portIn-action {
+      .button {
+        width: 213px;
+        padding: 10px;
+        font-size: rem-calc(17px);
+      }
+    }
+  }
+  @media(max-width: 834px) {
+    .portIn-details {
+      .detail {
+        display: inline-block;
+        font-size: rem-calc(14px);
+        line-height: 20px;
+        max-width: 416px;
+      }
+    }
+  }
+  @media(max-width: 640px) {
+    text-align: center;
+    padding: 15px 15px 25px;
+    .portIn-title {
+      font-size: rem-calc(20px);
+      line-height: 27px;
+    }
+    .portIn-details {
+      .detail {
+        font-size: rem-calc(15px);
+        line-height: 22px;
+        max-width: 285px;
+      }
+      .status {
+        font-size: rem-calc(18px);
+        line-height: 24px;
+      }
+    }
+    .portIn-action {
+      .button {
+        padding: 8px;
+        font-size: rem-calc(20px);
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+.billing-details-section{
+  &.plan-containter{
+    padding-bottom: 50px;
+  }
+}
+.zero-point{
+  margin-top: 52px;
+}
+.line-split{
+  margin-top:100px;
+  @media(max-width: 1025){
+    
+  }
+}
+.plan-container {
+  margin-bottom: 25px;
+  //padding: 0.5em;
+  width: 100%;
+  @media (max-width:639px) {
+    padding: 0.5em;
+  }
+  // @media (max-width:639px ) {
+  //   padding: 0.25em;
+  // }
+  @media (min-width: $phablet-min-width-plus-one) {
+    padding: 25px 22px 25px 22px;
+  }
+  .pin {
+    width: 50px;
+  }
+  .title {
+    padding-bottom: 15px;
+    font-size: rem-calc(17px);
+    font-weight: normal;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+
+    &.main-title {
+      height: 60px;
+    }
+   
+    @include account-border(bottom);
+    @media (#{$larger-than-desktop}) {
+     // padding-bottom: 29px;
+      height: 40px;
+      font-weight: bold;
+      &.main {
+        height: 170px;
+      }
+      &.make-payment-split {
+        height: 20px;
+      }
+      &.payment {
+        height: 80px;
+        &.higher {
+          height: 110px;
+        }
+      }
+    }
+    @media (max-width: $phablet-min-width) {
+      &.cancel {
+        margin-bottom: 5px;
+      }
+    }
+    .title-text, .title-info {
+      float: left;
+    }
+
+    .title-text {
+      width:50%;
+      font-weight: bold;
+      @media (max-width: 375px) and (min-width: 320px) {
+        width: 60%;
+      }
+      @media (max-width: 640px) and (min-width: 594px) {
+        width: 59%;
+      }
+      @media (max-width: 696px) and (min-width: 640px) {
+        width: 67%;
+        font-size:14px;
+      }
+      @media (max-width: 784px) and (min-width: 697px) {
+        width: 59%;
+      }
+      &.title-size {
+        @media (max-width: 426px) and (min-width: 320px) {
+          height: 0px;
+          font-size: 15px;
+          width: 54%;
+          white-space: nowrap;
+        }
+        @media(min-width: 426px) {
+          //height: 0px;
+          font-size: 15px;
+          width: 54%;
+          white-space: nowrap;
+        }
+      }
+      &.one-liner {
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 7px;
+        @media (#{$larger-than-desktop}) {
+          /*width: 50%;*/
+          width: 75%;
+          margin: 0;
+        }
+      }
+      &.promo {
+        background-color: #f58520;
+        color: white;
+        padding: 10px;
+        margin: 10px 0;
+        max-width: 345px;
+        @media (max-width: 1024.9px) {
+          margin: 0 0 20px;
+        }
+      }
+      &.pastDue {
+        color: $alert;
+      }
+      &.addon-text {
+        width: 100%;
+        margin-bottom: 16px;
+      }
+      @media (#{$larger-than-desktop}) {
+        width: 75%;
+        padding: 2px 0;
+        &.addon-text {
+          width: 70%;
+        }
+        &.long-text {
+          width: 50%;
+        }
+      }
+      @media (min-width: 1210px) {
+        &.titleText-new-property {
+          width: 52%;
+        }
+      }
+      @media (min-width: 1025px) and (max-width: 1209.9px) {
+        &.titleText-new-property {
+          width: 38%;
+        }
+      }
+    }
+
+    #fullWidth{
+      @media (min-width: 320px) and (max-width: 640px){
+        width: 100%;
+      }
+    }
+
+    .pin--padding{
+      @media (min-width: 320px) and (max-width: 426px) {
+        padding-left: 0;
+      }
+      @media (min-width: 426px) and (max-width: 640px) {
+        max-width: max-content;
+      }
+    }
+    .title-info {
+      width: 50%;
+      text-align: right;
+      @media (max-width: 375px) and (min-width: 320px) {
+        width: 40%;
+       
+      }
+      @media (max-width: 640px) and (min-width: 594px) {
+        width: 41%;
+      }
+      @media (max-width: 696px) and (min-width: 640px) {
+        width: 33%;
+        font-size:15px;
+      }
+      @media (max-width: 784px) and (min-width: 697px) {
+        width: 41%;
+      }
+      .ms-info {
+        @media (min-width: 1025px) {
+          margin-left: 10%;
+        }
+        @media (min-width: 641px) and (max-width: 1024.9px) {
+          margin-left: 36px;
+        }
+      }
+      &.t-info1{
+        @media (max-width:639.9px) and (min-width: 320px) {
+          margin-top:20px;
+          //margin-left: -155px;
+          display:block;
+          text-align:left;
+          width:100%;
+        }
+      }
+      &.t-info2{
+        @media (max-width:639.9px) and (min-width: 320px) {
+          margin-top:20px;
+          //margin-left: -155px;
+          display:block;
+          text-align:left;
+          width:100%;
+        }
+      }
+      &.addon-info {
+        width: 100%;
+        line-height: 1.18;
+        text-align: left;
+      }
+      &.one-liner {
+        font-weight: bold;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 7px;
+        margin-top: 7px;
+        .red-line {
+          width: 25.9px;
+          height: 10.4px;
+          border-bottom: solid 3px #d33333;
+          -webkit-transform: skewY(-25deg);
+          transform: skewY(-25deg);
+          position: absolute;
+        }
+        @media (#{$larger-than-desktop}) {
+          width: 25%;
+          text-align: right;
+          margin: 0;
+        }
+        @media (max-width:1024px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 635px;
+          margin-top: -15px;
+        }
+        @media (max-width:994px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 597px;
+          margin-top: -15px;
+        }
+        @media (max-width:960px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 577px;
+          margin-top: -15px;
+        }
+        @media (max-width:914px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 546px;
+          margin-top: -15px;
+        }
+        @media (max-width:891px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 536px;
+          margin-top: -15px;
+        }
+        @media (max-width:861px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 515px;
+          margin-top: -15px;
+        }
+        @media (max-width:834px) {
+          width: 25%;
+          text-align: right;
+          margin-top: -15px;
+          &.account-plan-price{
+            @media (max-width:834px) {
+            margin-left:472px;
+            }
+            @media (max-width:794px) {
+              margin-left:474px;
+              }
+            @media (max-width:782px) {
+              margin-left:434px;
+              }
+          }
+          &.plan-renewal-date{ 
+            @media (max-width:834px) {
+            margin-left:472px;
+            }
+            @media (max-width:794px) {
+              margin-left:474px;
+              }
+            @media (max-width:782px) {
+              margin-left:434px;
+              }
+          }
+        }
+        @media (max-width:746px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 369x;
+          margin-top: -15px;
+          &.account-plan-price{
+            margin-left:418px;
+          }
+          &.plan-renewal-date{
+            margin-left:418px;
+          }
+        }
+        @media (max-width:711px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 386x;
+          margin-top: -15px;
+          &.account-plan-price{
+            margin-left:394px;
+          }
+          &.plan-renewal-date{
+            margin-left:394px;
+          }
+        }
+        @media (max-width:690px) {
+          width: 25%;
+          text-align: right;
+          margin-left: 386x;
+          margin-top: -15px;
+          &.account-plan-price{
+            @media (max-width:690px) {
+            margin-left:374px;
+            margin-top: -23px;
+            margin-bottom: 30px;
+          }
+          @media (max-width:571px) {
+            margin-left:350px;
+            margin-top: -23px;
+            margin-bottom: 30px;
+          }
+          @media (max-width:541px) {
+            margin-left:330px;
+            margin-top: -23px;
+            margin-bottom: 30px;
+          }
+          @media (max-width:510px) {
+            margin-left:321px;
+            margin-top: -23px;
+            margin-bottom: 30px;
+          }
+          @media (max-width:478px) {
+            margin-left:271px;
+            margin-top: -23px;
+            margin-bottom: 30px;
+          }
+          @media (max-width:455px) {
+            margin-left:240px;
+            margin-top: -23px;
+            margin-bottom: 30px;
+          }
+          @media (max-width:425px) {
+            margin-left:0px;
+            margin-top:5px;
+            margin-bottom: 24px;
+          }
+         }
+         &.plan-renewal-date{
+          @media (max-width:690px) {
+          margin-left:374px;
+          margin-top: -23px;
+          margin-bottom: 24px;
+        }
+        @media (max-width:571px) {
+          margin-left:350px;
+          margin-top: -23px;
+          margin-bottom: 24px;
+        }
+        @media (max-width:541px) {
+          margin-left:330px;
+          margin-top: -23px;
+          margin-bottom: 24px;
+        }
+        @media (max-width:510px) {
+          margin-left:321px;
+          margin-top: -23px;
+          margin-bottom: 24px;
+        }
+        @media (max-width:478px) {
+          margin-left:271px;
+          margin-top: -23px;
+          margin-bottom: 24px;
+        }
+        @media (max-width:455px) {
+          margin-left:240px;
+          margin-top: -23px;
+          margin-bottom: 24px;
+        }
+        @media (max-width:425px) {
+          margin-left:-4px;
+          margin-top:5px;
+          width: 100px;
+        }
+       }
+        }
+      }
+
+      @media (#{$larger-than-desktop}) {
+        width: 25%;
+        text-align: right;
+        &.addon-info {
+          width: 30%;
+          text-align: right;
+        } //@GH
+        &.long-info {
+          width: 50%;
+        }
+      }
+      font-weight: normal;
+
+      &.compact {
+        text-align: left;
+        font-size: rem-calc(15px);
+        @media (min-width:1025px) and (max-width:1209px) {
+          font-size: rem-calc(16px);
+        }
+        @media (min-width: 1210px) {
+          &.titleInfo-new-property {
+            display: flex;
+            margin-top: -12px;
+            width: 48%;
+            justify-content: flex-end;
+          }
+        }
+        @media (min-width: 1025px) and (max-width: 1209.9px) {
+          &.titleInfo-new-property {
+            display: flex;
+            margin-top: -12px;
+            width: 62%;
+            justify-content: flex-end;
+          }
+        }
+        @media (min-width: 641px) and (max-width: 859.9px) {
+          display: flex;
+          width: 70%;
+        }
+        @media (min-width: 860px) and (max-width: 1024.9px) {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
+   
+    .shipping-info{
+      @media(max-width: 376px){
+        margin-top: -8px;
+        margin-left: -21px;
+      }
+      @media(max-width: 369px){
+        margin-top: -8px;
+        margin-left: -14px;
+      }
+      @media(max-width: 359px){
+        margin-top: -8px;
+        margin-left: -11px;
+      }
+      @media(max-width: 355px){
+        margin-top: -8px;
+        margin-left: -6px;
+      }
+      @media(max-width: 340px){
+        margin-top: -8px;
+        margin-left: 0px;
+      }
+      @media(max-width: 330px){
+        margin-top: -8px;
+        margin-left: -67px;
+        width: 200px;
+      }
+    }
+    .alert {
+      color: $alert;
+      margin: 10px 0px 10px 30px;
+      font-weight: bold;
+    }
+    .details {
+      width: 100%;
+      font-size: rem-calc(15px);
+      padding-top: 20px;
+      font-weight: normal;
+      display: inline-block;
+    //  text-transform: capitalize;
+      .checkbox-label {
+        font-size: rem-calc(15px);
+        text-transform: none;
+        &.disabled {
+          cursor: not-allowed;
+          color: $grey;
+        }
+        @media (max-width:1024px) {
+          width: 256px;
+        }
+        @media (max-width:370px) {
+          width: 220px;
+        }
+      }
+      .custom-checkbox {
+        .checkbox input[type="checkbox"] {
+          &.disabled {
+            cursor: not-allowed;
+            color: $grey;
+          }
+        }
+      }
+      &.no-padding{
+        border-bottom: 1px solid #B1B1B1;
+        margin-bottom: 1em;
+        .edit-action {
+          margin: 15px 0 10px 15px;
+        }
+      }
+      .padding-right-20{
+        padding-right: 0;
+        @media (#{$larger-than-mobile}) {
+          padding-right: 20px;
+        }
+      }
+
+      .fullWidth{
+        @media (min-width: 320px) and (max-width: 640px){
+          width:100%;
+          margin-top: 10px;
+          text-align: right;
+          
+        }
+        @media (min-width: 641px) and (max-width: 1024px){
+          width:100%;
+          margin-top: -20px;
+          text-align: right;
+          margin-left:190px;
+        }
+      }
+     
+      .edit-action {
+        margin-left: 15px;
+        float: right;
+        cursor: pointer;
+        color: $primary-color;
+        margin-bottom: 5px;
+        // @media (min-width: 320px) and (max-width: 340px){
+        //   margin-top:-100px;
+        
+        // }
+        &.change1{
+          @media (min-width: 320px) and (max-width:374.9px){
+             margin-top:-100px;
+           }
+           @media (min-width: 375px) and (max-width:455px){
+            margin-top:-102px;
+          }
+           @media (min-width:455px) and (max-width:482px){
+            margin-top:-86px;
+          }
+           @media (min-width:482px) and (max-width:639.9px){
+            margin-top:-87px;
+          }
+        }
+        &.change2{
+          @media (min-width: 320px) and (max-width:344px){
+             margin-top:-117px;
+           }
+           @media (min-width: 344px) and (max-width:374.9px){
+            margin-top:-103px;
+          }
+          @media (min-width: 375px) and (max-width:482px){
+            margin-top:-102px;
+          }
+          @media (min-width:482px) and (max-width:639.9px){
+            margin-top:-87px;
+          }
+        }
+         &.payment-method-change{
+          margin-right:-425px;
+         }
+
+        &.disabled {
+          opacity: .4;
+          filter: alpha(opacity=40);
+          pointer-events: none;
+        }
+        &.in-input{
+          right: 6px;
+          top: -39px;
+          position: relative;
+        }
+        img{
+          width: 15.2px;
+          height: 17.2px;
+        }
+        &.edit-payment-method{
+          // &.change1{
+          //   @media (min-width: 320px) and (max-width: 376px){
+          //      margin-top:-108px;
+          //    }
+          //   }
+          // @media(max-width: 376px){
+          //   margin-top: 13px;
+          //  }
+          //  @media(max-width: 375px){
+          //   margin-top: -117px;
+          //  }
+          //  @media(max-width: 340px){
+          //   margin-top: -117px;
+          //  }
+      }
+      &.edit-shipping-method{
+         
+        @media(max-width: 376px){
+          margin-top: -41px;
+         }
+    }
+      &.no-padding {
+        padding: 0;
+        padding-bottom: 15px;
+      }
+      .alignment {
+        color: red;
+      }
+    }
+    
+    &.last-element {
+      padding-bottom: 14px;
+      margin-bottom: 40px;
+      @media (#{$larger-than-mobile}) {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border-bottom: none;
+      }
+
+    }
+    
+    .shipping-elements{
+      border-bottom: none;
+    }
+  }
+    &.special-header {
+      #title-hide{
+        @media (max-width: 639px){
+          display: none;
+
+        }
+      }
+      .title-text {
+        display: inline-block;
+        height: 45px;
+        background-color: rgba(222, 222, 222, 0.53);
+        width: 100%;
+        padding: 12px 15px;
+        font-size: rem-calc(20px);
+        font-family: $secondary-font-family-bold;
+        @media (#{$larger-than-mobile}) {
+          height: auto;
+          background-color: transparent;
+          width: 75%;
+          padding: 2px 0;
+          font-size: rem-calc(17px);
+          font-family: $base-font-family;
+        }
+      }
+
+      #pin--align{
+        @media(min-width: 425px) and (max-width: 639px){
+          text-align: left;
+        }
+      }
+
+      .title-info {
+        width: 50%;
+        text-align: left;
+        padding-top: 14px;
+        @media (#{$larger-than-mobile}) {
+          padding-top: 0;
+          text-align: right;
+          width: 25%;
+        }
+      }
+
+      .details {
+        width: 50%;
+        padding-top: 14px;
+        @media (#{$larger-than-mobile}) {
+          padding-top: 25px;
+          width: 100%;
+        }
+      }
+    }
+
+    &.split {
+      padding: 0;
+      margin-top: -10px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      @media (#{$larger-than-mobile}) {
+        height: 60px;
+        flex-direction: row;
+        margin-top: -16px;
+        span {
+          padding: 20px 0;
+        }
+        &.balance {
+          height: 75px;
+          margin-top: -24px;
+          span {
+            @media (max-width:639.9px){
+              padding: 30px 0 20px;
+            }
+          
+          }
+        }
+      }
+      &.cancel-split {
+        @media (min-width: 425px) and (max-width: 580.9px) {
+          height: 86px;
+        }
+      }
+      &.make-payment-split{
+      @media (max-width:1024px) {
+        height: 70px;
+        flex-direction: row;
+        margin-top: -20px;
+      }
+    }
+      div {
+        height: 100%;
+        &:first-child {
+          @include account-border(bottom);
+          @media (#{$larger-than-mobile}) {
+            border-bottom: none;
+            @include account-border(right);
+            padding-right: 20px;
+          }
+        }
+
+        &:last-child {
+          @media (#{$larger-than-mobile}) {
+            padding-left: 20px;
+          }
+        }
+      }
+
+      span {
+        height: 100%;
+        padding: 15px 0;
+       &.span1{
+        @media (#{$larger-than-mobile}) {
+          padding: 20px 0;
+        }
+        }
+        @media (#{$larger-than-mobile}) {
+          padding: 29px 0;
+        }
+      }
+
+      &.line-split{
+        height:13px;
+      }
+    }
+
+    .widthAdjustments{
+      @media(min-width: 320px ) and (max-width: 390px){
+        font-weight: 700;
+        text-align: center;
+        @media (min-width: 320px) and (max-width: 330px)   {
+          font-size :rem-calc(12px);
+        }
+
+        @media (min-width: 330px) and (max-width: 350px)   {
+          font-size: rem-calc(12px);
+        }
+
+        @media (min-width: 350px) and (max-width: 370px)   {
+          font-size : rem-calc(13px);
+        }
+
+        @media (min-width: 370px) and (max-width: 390px)   {
+          font-size : rem-calc(14px);
+        }
+      }
+    }
+
+    .actions-links {
+      font-size: rem-calc(15px);
+      font-weight: normal;
+      width: 100%;
+      text-align: left;
+      float: left;
+      padding: 20px 0 0 0;
+      display: inline-block;
+      .disabled {
+        cursor: not-allowed;
+        color: $sg-steel;
+      }
+      @media (max-width: 1024px)   {
+        text-align: right;
+      }
+      @media (#{$larger-than-desktop}) {
+        text-align: right;
+        .widthAdjustments{
+          @media (max-width: 1024px)   {
+            text-align: right;
+          }
+
+          @media(min-width: 320px ) and (max-width: 390px){
+            font-weight: 700;
+            text-align: center;
+            @media (min-width: 320px) and (max-width: 330px)   {
+              font-size: rem-calc(11px);
+            }
+
+            @media (min-width: 330px) and (max-width: 350px)   {
+              font-size: rem-calc(12px);
+            }
+
+            @media (min-width: 350px) and (max-width: 370px)   {
+              font-size: rem-calc(13px);
+            }
+
+            @media (min-width: 370px) and (max-width: 390px)   {
+              font-size: rem-calc(14px);
+            }
+          }
+        }
+      }
+
+      &.disabled {
+        opacity: .4;
+        filter: alpha(opacity=40);
+        pointer-events: none;
+        a {
+          cursor: default;
+          color: $sg-steel;
+        }
+      }
+      &.view-plan{
+        margin-top:-38px;
+      }
+    }
+    &.first-title{
+      border-bottom:none;
+    }
+    &.billing-details-title{
+      border-bottom:none;
+      margin-bottom: 0;
+    }
+    &.last-element{
+          padding-bottom: 0;
+          margin-bottom: 0;
+          border-bottom: none;
+  }
+}
+  &.canceled {
+    .title-info {
+      color: $sg-steel !important;
+      a {
+        color: $sg-steel !important;
+      }
+    }
+  }
+}
+
+.maxWidth{
+  @media (min-width: 320px) and (max-width: 639.9px){
+    max-width: max-content;
+  }
+}
+.account-info {
+  h4.account-section-title {
+    display: inline-block;
+    height: auto;
+    background-color: rgba(222, 222, 222, 0.53);
+    width: 100%;
+    padding: 12px 15px;
+    @media (min-width:400px) and (max-width:639px){
+    margin-bottom: 17px;
+    }
+    @media (#{$larger-than-phablet}) {
+      display: block;
+      height: unset;
+      background: transparent;
+      width: auto;
+      padding: 0;
+    }
+
+    @media (#{$larger-than-desktop}) {
+      font-size: rem-calc(22px);
+    }
+  }
+
+  h4.title-margin-display{
+    @media (min-width: 320px) and (max-width: 426px){
+      padding-left: 8px;
+    }
+    @media (min-width: 426px) and (max-width: 640px){
+      padding-left: 21px;
+    }
+  }
+
+  h4.title-hide{
+    @media (min-width: 639px) {
+      display: none;
+
+    }
+  }
+
+  .page-description {
+    font-family: $base-font-family;
+    @media (#{$larger-than-desktop}) {
+      margin-bottom: 70px;
+    }
+    @media (max-width: 640px) {
+      font-size: rem-calc(17px);
+    }
+    &.plan-selector-space {
+      padding-bottom: 16px;
+      font-family: $base-font-family;
+      @media (#{$larger-than-desktop}) {
+        padding-bottom: 70px;
+      }
+      @media (max-width:640px) {
+        font-size: rem-calc(17px);
+      }
+    }
+  }
+
+  .actions-row {
+    div {
+      display: inline;
+      padding: 0 10px;
+      @media (#{$larger-than-desktop}) {
+        padding: 0;
+      }
+
+      &.left-action, &.right-action {
+        width: 100%;
+        float: left;
+        @media (#{$larger-than-desktop}) {
+          width: 50%;
+        }
+      }
+
+      &.left-action {
+        text-align: center;
+        margin-bottom: 20px;
+        @media (#{$larger-than-phablet}) {
+          text-align: left;
+          margin-bottom: 0px;
+        }
+      }
+
+      &.right-action {
+        text-align: center;
+        padding: 0;
+        @media (#{$larger-than-phablet}) {
+          text-align: right;
+        }
+      }
+
+      .pagination {
+        margin: 0;
+        float: none;
+        padding: 0;
+        margin-top: 1em;
+        @media (#{$larger-than-phablet}) {
+          float: right;
+        }
+      }
+    }
+    margin-bottom: 150px;
+  }
+
+  .account-sub-details-header {
+    .pay-refill-title{
+      line-height:1.75;
+      @media(max-width:$phablet-min-width-minus){
+        line-height: 1.2;
+        margin-bottom: 14px;
+      }
+    }
+    .details {
+      font-size: rem-calc(17px);
+    }
+
+  }
+  .no-data {
+    font-size: rem-calc(17px);
+    margin-top: 15px;
+  }
+}
+
+.account-summary-section {
+
+  .side-menu {
+    @media (max-width: $desktop-min-width) {
+      padding: 0px 10px;
+      width: 100%;
+      @media (max-width: $phablet-min-width-plus-one) {
+        width: 99%;
+      }
+    }
+  }
+  .justify-center{
+    justify-content: center;
+  }
+  .main-content {
+    /*flex-basis: auto;*/
+    flex-basis: 100%;
+
+    @media (#{$larger-than-mobile}) {
+      flex-basis: 74%;
+      padding: 0 10px;
+    }
+
+    @media (#{$larger-than-desktop}) {
+      width: 80%;
+    }
+
+    &.full {
+      flex-basis: 100%;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+  @media (max-width: $desktop-min-width) {
+    .container-flex-row {
+      display: block;
+    }
+  }
+  //Paddings in the bellow media queries must be removed after header refactoring
+  //they are now overriding extra-internal-page-padding
+  @media (max-width: $phablet-min-width) {
+    padding-top: 0;
+  }
+  @media (min-width: $phablet-min-width-plus-one) and (max-width: 750px) {
+    padding-top: 100px;
+  }
+}
+
+.account-section--padding{
+  @media (max-width: $phablet-min-width) {
+    padding-top: 0;
+  }
+  @media (min-width: $phablet-min-width-plus-one) and (max-width: 750px) {
+    padding-top: 100px;
+  }
+}
+
+.account-section--display{
+  @media (max-width: $desktop-min-width) {
+    .container-flex-row {
+      display: block;
+    }
+  }
+}
+
+
+.section-container {
+  margin-bottom: 13px;
+  @media (max-width: 749px) {
+    // margin-top: 55px;
+    .container-flex-row {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
+  }
+}
+.pending-section {
+  @media (max-width: 640px) {
+    margin-top: 0;
+  }
+}
+
+.plan-selector-container {
+  @media (#{$larger-than-desktop}) {
+    //margin-top: -90px;
+  }
+
+  &.no-account-status-message {
+    @media (#{$larger-than-desktop}) {
+      //margin-top: -130px;
+    }
+  }
+}
+// todo make this a shared class along with the shared classes
+.plan-selector-override {
+  width: 56%;
+  margin-right: -66px;
+  display: inline-block;
+  @media(max-width:$ipad-min-width-minus) and (min-width:$phablet-min-width){
+    width: 43%;
+  }
+  @media(max-width: $phablet-min-width-minus){
+    flex-basis: 20%;
+    width: unset;
+   }
+  @media (#{$larger-than-mobile}) {
+    display: inline;
+  }
+  @media (max-width: 641px) {
+    hr.gray{
+      display: none;
+    }
+  }
+
+  .account-status-message {
+    font-family: $secondary-font-family;
+    font-size: rem-calc(17px);
+    width: 100%;
+    @media (#{$larger-than-desktop}) {
+      font-size: rem-calc(22px);
+      // width: 60%;
+    }
+
+    line-height: 28px;
+    font-weight: bold;
+    .activate {
+      margin-left: 1%;
+    }
+  }
+  div {
+
+    &.six {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      width:100%;
+      max-width: 491px;
+      &:first-child {
+        width: 100%;
+        @media (#{$larger-than-desktop}) {
+          width: 29%;
+        }
+      }
+
+      &:last-child {
+        width: 100%;
+        @media (#{$larger-than-desktop}) {
+          width: 62%;
+        }
+
+        a {
+          float: right;
+          margin-left:7px;
+          margin-top:4px;
+          padding-right:24px;
+          font-size: rem-calc(20px); // font will be smaller by 20% due the small tag in the widget = 15px
+          color: $primary-color;
+          padding-bottom: 20px;
+          font-weight: bold;
+          @media(max-width:$desktop-min-width-minus){
+            font-size:rem-calc(17px);
+          }
+          @media(max-width:$ipad-min-width-minus) and (min-width:$phablet-min-width){
+            padding-right:19px;
+          }
+        }
+      }
+
+      .select {
+        padding-left: 13px;
+        //max-width:490px;
+        max-width: 100%;
+        select {
+          height: 30px;
+          padding: 5px 16px;
+          font-size: rem-calc(16px);
+          @media (#{$larger-than-desktop}) {
+            font-size: rem-calc(17px);
+          }
+        }
+        .select-arrow {
+          top: 0px;
+          border-color: $black;
+          border-width: 0px 2px 2px 0;
+          display: inline-block;
+          padding: 2px;
+          margin-bottom: 3px;
+          margin-top: 11px;
+          margin-right: 5px;
+          margin-left: 5px;
+          transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+        }
+      }
+    }
+  }
+
+  label {
+    height: 19px;
+    font-family: $secondary-font-family-bold;
+    font-size: rem-calc(22px);
+    @media(min-width:$phablet-min-width) and (max-width:$ipad-min-width-minus){
+      margin-bottom: 18px;
+    }
+    line-height: 1.27;
+    letter-spacing: normal;
+    text-align: left;
+    color: $black;
+  }
+
+  select {
+    color: #000;
+  }
+}
+
+// todo refactor and combine both selectors together
+.plan-selector-override {
+  display: inline;
+  width: 56%;
+  margin-right: -66px;
+  @media(max-width:$ipad-min-width-minus) and (min-width:$phablet-min-width){
+    width: 43%;
+  }
+  @media(max-width: $phablet-min-width-minus){
+   flex-basis: 20%;
+   width: unset;
+  }
+  div {
+    &.six {
+      &:first-child {
+        width: unset;
+      }
+      &:last-child {
+        @media (#{$larger-than-phablet}) {
+          width: 95% !important;
+        }
+        width: 100% !important;
+        a{
+          @media (#{$larger-than-phablet}) {
+            font-size: rem-calc(12px);
+            line-height: rem-calc(14px);
+            display: inline-block;
+          }
+          @media (#{$larger-than-desktop}) {
+            font-size: rem-calc(15px);
+            line-height: rem-calc(17px);
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+  .flex {
+    display: flex;
+    @media(max-width:$ipad-min-width-minus) and (min-width:$phablet-min-width){
+      flex-direction: column;
+    }
+    @media(max-width:$desktop-min-width-minus) and (min-width:$phablet-min-width){
+      margin-top: 60px;
+    }
+    div {
+      .acivation-link-container{
+        @media(min-width:$phablet-min-width-minus){
+          display: contents;
+        }
+        @media(max-width: $phablet-min-width-minus){
+          display: flex;
+          flex-direction: row;
+          background-color: $primary-color;
+          height:30px;
+          justify-content: center;
+          text-align: center;
+        }
+      }
+      &.six {
+        padding: 0;
+        margin: 0;
+
+        &:first-child {
+          width: unset;
+        }
+
+        &:last-child {
+          display: flex;
+          width: 95%;
+            @media(max-width:$phablet-min-width-minus){
+              flex-direction: column;
+            }
+          a {
+            margin-left:7px;
+            padding-right:24px;
+            float: right;
+            margin-top:4px;
+            font-size: rem-calc(20px); // font will be smaller by 20% due the small tag in the widget = 15px
+            color: $primary-color;
+            padding-bottom: 20px;
+            font-weight: bold;
+            @media(max-width:$desktop-min-width-minus){
+            font-size:rem-calc(17px);
+          }
+           @media(max-width:$ipad-min-width-minus) and (min-width:$phablet-min-width){
+             padding-right: 19px;
+           }
+           @media(max-width: $phablet-min-width-minus){
+            color:white;
+            white-space: nowrap;
+            padding-right: 100px;
+            margin:5px auto;
+          }
+          }
+        }
+        .select {
+          // max-width:490px;
+          max-width: 100%;
+          padding-left: 13px;
+          @media(max-width:$ipad-min-width-minus){
+            padding-left: 0px;
+          }
+          select {
+            height: 30px;
+            padding: 5px 16px;
+            font-size: rem-calc(16px);
+            font-family: $base-font-family-bold;
+            font-size: rem-calc(17px);
+            line-height: rem-calc(20px);
+            font-weight: bold;
+            @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+              font-size: rem-calc(16px);
+              line-height: rem-calc(15px);
+            }
+            @media (#{$larger-than-phablet}) {
+              height: 25px;
+            }
+            @media (#{$larger-than-desktop}) {
+              font-size: rem-calc(17px);
+              height: 30px;
+            }
+            &.mdn-size {
+              @media (max-width: 375px) {
+                font-size: rem-calc(16px);
+              }
+            }
+            option{
+              font-family: $base-font-family-bold;
+              font-size: rem-calc(17px);
+              line-height: rem-calc(20px);
+              font-weight: bold;
+              @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+                font-size: rem-calc(16px);
+                line-height: rem-calc(15px);
+              }
+            }
+          }
+          .select-arrow {
+            top: 0px;
+            border-color: $black;
+            border-width: 0px 2px 2px 0;
+            display: inline-block;
+            padding: 2px;
+            margin-bottom: 3px;
+            margin-top: 11px;
+            margin-right: 5px;
+            margin-left: 5px;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+              top: -3px !important;
+            }
+          }
+        }
+      }
+      .title{
+        color: #008630;
+      }
+      .add-account-button {
+        width: 34px;
+        height: 25px;
+        background-color: $primary-color;
+        cursor: pointer;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        @media (#{$larger-than-phablet}) {
+          background-color: $primary-color;
+          border-radius: 31px;
+          margin-left: 7px;
+        }
+        @media(min-width:$phablet-min-width-minus) and (max-width:$desktop-min-width-minus){
+          width: 28px;
+          height: 20px;
+        }
+        @media(max-width: $phablet-min-width-minus){
+          background: none;
+        }
+      }
+    }
+    .add-account-text {
+      margin-bottom:0px;
+      font-size: 22px;
+      color: white;
+      @media (#{$larger-than-phablet}) {
+        color: white;
+        font-size: rem-calc(35px);
+        padding-bottom: 6px;
+      }
+      @media(min-width:$phablet-min-width-minus) and (max-width:$desktop-min-width-minus){
+        font-size:rem-calc(30px);
+      }
+    }
+
+    label {
+      width: max-content;
+      font-family: $secondary-font-family-bold;
+      text-align: left;
+      color: $black;
+      display: none;
+      margin-bottom: 13px;
+      font-size: rem-calc(22px);
+      @media(min-width:$phablet-min-width) and (max-width:$ipad-min-width-minus){
+        margin-bottom: 18px;
+      }
+      @media (#{$larger-than-phablet}) {
+        line-height: rem-calc(21px);
+        display: block;
+      }
+      @media (#{$larger-than-desktop}) {
+        line-height: rem-calc(28px);
+        display: block;
+      }
+    }
+
+    select {
+      color: #000;
+    }
+  }
+}
+.history-section {
+  margin-bottom: 90px;
+  .categories {
+    width: 100%;
+    display: inline-block;
+    padding: 0;
+    list-style: none;
+    margin-top: 0;
+    li {
+      border: 1px solid #7cbadb;
+      padding: 6px 0;
+      float: left;
+      font-size: rem-calc(18px);
+      color: $black;
+      width: 100%;
+      text-align: center;
+      margin-right: 4%;
+      @media (#{$larger-than-mobile}) {
+        width: 44%;
+      }
+      span {
+        background-color: transparent;
+        padding: 0;
+        cursor: pointer;
+        font-size: rem-calc(18px);
+      }
+      &.active {
+        background-color: #7cbadb;
+        color: white;
+      }
+    }
+  }
+  .right-action {
+    width: 100%;
+    float: right;
+    text-align: center;
+    @media (#{$larger-than-phablet}) {
+      width: auto;
+      text-align: right;
+    }
+  }
+  .responsive-table {
+    thead {
+      tr {
+        th {
+          text-transform: none;
+        }
+      }
+    }
+    tbody {
+      tr {
+        width: 100%;
+        td {
+          font-weight: bold;
+          // font-size: rem-calc(17px);
+        }
+      }
+      @media (max-width: $desktop-min-width) {
+        tr {
+          td {
+            &:first-child {
+              height: 100px;
+              justify-content: center;
+            }
+          }
+        }
+      }
+      @media (max-width: $phablet-min-width) {
+        tr {
+          margin-left: 0;
+          td {
+            max-width: calc(100% - 75px);
+          }
+        }
+      }
+    }
+  }
+}
+.account-address-details-container {
+
+  &.highlight-card {
+    cursor: pointer;
+  }
+  .custom-checkbox {
+    width: auto;
+    white-space: nowrap;
+
+    .checkbox-label {
+      width: calc(100% - 30px);
+      text-transform: capitalize;
+    }
+  }
+  &.empty {
+    position: absolute;
+    right: 0;
+    top: 35px;
+  }
+
+  .details {
+    padding: 0;
+    width: 100%;
+    text-align: right;
+
+    &.address-expanded {
+      @include account-border(bottom);
+      padding-bottom: 10px;
+      font-weight: bold;
+      /*margin-bottom: 25px;*/
+    }
+  }
+
+  .account-address-details {
+    overflow: hidden;
+    .details {
+      &.address-expanded {
+        font-weight: bold;
+      }
+    }
+    .actions {
+      text-align: right;
+      padding: 15px;
+      display: inline-block;
+      width: 100%;
+    }
+    fieldset {
+      &.address-lookup {
+        @media (#{$larger-than-mobile}) {
+          margin-bottom: 0;
+          padding-left: 0;
+          padding-right: 15px;
+        }
+
+        fieldset {
+          margin-bottom: 0;
+          padding-left: 0;
+          padding-right: 30px;
+
+          &:last-child {
+            padding-right: 0;
+          }
+        }
+        .address-lookup {
+          padding-right: 0;
+          &.eight {
+            @media (#{$larger-than-mobile}) {
+              padding-right: 30px;
+            }
+          }
+          i.icon-search.input-search-icon {
+            position: absolute;
+            top: 37px;
+            left: 5px;
+          }
+          .ngui-auto-complete {
+            font-size: rem-calc(18px);
+          }
+        }
+      }
+    }
+  }
+
+  &.highlight-card {
+    .details {
+      padding-left: 30px;
+    }
+  }
+  .details {
+    padding-top: 10px;
+    &.address-expanded {
+      margin-bottom: 20px;
+    }
+    .add-address {
+      padding-top: 15px;
+      text-transform: none;
+      &.disabled {
+        a {
+          cursor: default;
+          color: $sg-steel;
+        }
+      }
+    }
+  }
+}
+.refill-page, .payment-page, .manage-page {
+  @media (max-width: $phablet-min-width-minus) {
+    padding: 0;
+  }
+}
+.pay-and-renew-section {
+  .section-container {
+    margin-top: 0;
+  }
+  .validation-message {
+    text-transform: none;
+    max-width: 606px;
+  }
+  .preset-payment-row {
+    padding: 30px 0;
+
+    .one-lined {
+      display: inline;
+      float: left;
+      margin-right: 50px;
+    }
+    .input-line {
+      display: inline;
+      width: 50%;
+      label {
+        font-size: rem-calc(17px);
+        width: auto;
+        float: left;
+        margin-right: 20px;
+      }
+      input {
+        max-width: 150px;
+        margin-top: -5px;
+        display: block;
+      }
+    }
+  }
+  p {
+    font-size: rem-calc(20px);
+    font-family: $base-font-family;
+  }
+  .account-status-message {
+    p {
+      font-size: rem-calc(22px);
+      font-family: $secondary-font-family;
+    }
+  }
+  .methods-list {
+    @media (#{$larger-than-desktop}) {
+      width: 60%;
+    }
+  }
+  .tab-nav {
+   padding-top:15px;
+    @media (max-width: $mobile-min  ) {
+      ul {
+        li {
+          width: 100%;
+          margin-bottom: 15px;
+          span {
+            padding: 12px 15px;
+            display: inline-block;
+            width: 100%;
+            background-color: rgba(222, 222, 222, 0.53);
+            font-weight: bold;
+            color: $black;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-left: 0px;
+          &.active {
+            background-color: $primary-color;
+            color: white;
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: 426px) and (min-width: 426px) {
+      ul {
+        li {
+          width: 100%;
+          margin-bottom: 15px;
+          span {
+            padding: 12px 15px;
+            display: inline-block;
+            width: 100%;
+            background-color: rgba(222, 222, 222, 0.53);
+            font-weight: bold;
+            color: $black;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-left: -20px;
+          &.active {
+            background-color: $primary-color;
+            color: white;
+          }
+            &.fet {
+                padding: 12px 15px;
+                display: inline-block;
+                width: 94%;
+                background-color: rgba(222, 222, 222, 0.53);
+                font-weight: bold;
+                color: $black;
+                border-radius: 15px;
+                cursor: pointer;
+                margin-left: 0px;
+              &.active {
+                  background-color: $primary-color;
+                  color: white;
+                }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.Device-Name {
+  font-size: rem-calc(14px);
+  font-weight: normal;
+  width: 80%;
+  @media (max-width: 1024.9px) {
+    white-space: nowrap;
+  }
+}
+.floatRight {
+  @media (min-width: 697px) {
+    float: right;
+  }
+  @media (min-width: 320px) and (max-width: 640.9px) {
+    &.idInfo-new-property {
+      border-bottom: 1px solid #B1B1B1;
+      height: 106px;
+    }
+  }
+  @media (min-width: 697px) {
+    &.idInfo-new-property {
+      float: unset;
+    }
+  }
+}
+.alert-top-banner{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  border: solid 1px #f58520;
+  background-color: #efefef;
+  object-fit: contain;
+  font-family: $secondary-font-family;
+  text-align: left;
+  .alert-action-style{
+  font-size: rem-calc(22px);
+  font-weight: bold;
+  line-height: 1.32;
+  color: #f58520;
+  margin-left: 30px;
+  margin-top:20px;
+  @media (max-width:$phablet-min-width){
+    font-size: rem-calc(19px);
+    margin-left: 10px;
+    margin-top:11px;
+    margin-bottom: 22px;
+    padding-right:12px;
+  }
+  }
+  .alert-sub-title{
+    font-size: rem-calc(18px);
+    font-weight: 500;
+    line-height: 1.75;
+    color: #383838;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    padding-right:20px;
+    @media (max-width:$phablet-min-width){
+      font-size: rem-calc(13px);
+      margin-left: 10px;
+      margin-bottom:11px;
+    }
+     @media (min-width:$phablet-min-width-plus-one)and (max-width:$desktop-min-width-minus){
+      font-size: rem-calc(18px);
+     }
+  }
+  .alert-payment{
+    font-family: 'Sansation';
+    font-size: rem-calc(14px);
+    font-weight: normal;
+    line-height: 1.13;
+    color: #863399;
+    float: right;
+    padding-right: 30px;
+    margin-bottom: 20px;
+  }
+
+}
+
+.title-height{
+   height:40px;
+}
+.title-info-width{
+  width: 25%;
+}
+.padding-16px {
+  @media (max-width: $phablet-min-width-minus) {
+    padding: 16px;
+  }
+}
+.font-size-17 {
+  @media (max-width: $phablet-min-width-minus) {
+    font-size: rem-calc(17px);
+  }
+}
+.table-align {
+  @media (max-width: 1209.9px) and (min-width: 1025px) {
+    margin-right: 42px;
+    margin-left: 37px;
+  }
+  @media (min-width: 1210px) {
+    width: 100%;
+    margin-left: 100px;
+    margin-right: 40px;
+
+  }
+}
+.left-align {
+  @media (max-width: 1209.9px) and (min-width: 1025px) {
+    margin-left: -41px;
+  }
+}
+.nowrap {
+  white-space: nowrap;
+  .promo {
+    color: #f58520;
+  }
+}
+.red-note {
+  color: red;
+}

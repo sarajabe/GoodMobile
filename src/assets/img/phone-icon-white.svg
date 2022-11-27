@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.963" height="29.979" viewBox="0 0 17.963 29.979">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #fff;
+        stroke-width: 0.4px;
+      }
+    </style>
+  </defs>
+  <g id="phone_icon" data-name="phone icon" transform="translate(0.2 0.2)">
+    <g id="Group_1012" data-name="Group 1012" transform="translate(0 0)">
+      <g id="Group_1008" data-name="Group 1008">
+        <path id="Path_1612" data-name="Path 1612" class="cls-1" d="M558.395,454.143h-14.27a1.523,1.523,0,0,1-1.646-1.35v-5.4h1.1v5.4a.507.507,0,0,0,.548.45h14.27a.507.507,0,0,0,.549-.45V425.915a.507.507,0,0,0-.549-.45h-14.27a.507.507,0,0,0-.548.45v22.2h-1.1v-22.2a1.523,1.523,0,0,1,1.646-1.351h14.27a1.523,1.523,0,0,1,1.647,1.351v26.877A1.523,1.523,0,0,1,558.395,454.143Z" transform="translate(-542.479 -424.564)"/>
+      </g>
+      <g id="Group_1009" data-name="Group 1009" transform="translate(7.135 26.286)">
+        <rect id="Rectangle_1472" data-name="Rectangle 1472" class="cls-1" width="3.293" height="1.098"/>
+      </g>
+      <g id="Group_1010" data-name="Group 1010" transform="translate(0.549 24.091)">
+        <rect id="Rectangle_1473" data-name="Rectangle 1473" class="cls-1" width="16.465" height="1.098"/>
+      </g>
+      <g id="Group_1011" data-name="Group 1011" transform="translate(0.549 3.293)">
+        <rect id="Rectangle_1474" data-name="Rectangle 1474" class="cls-1" width="16.465" height="1.098"/>
+      </g>
+    </g>
+  </g>
+</svg>

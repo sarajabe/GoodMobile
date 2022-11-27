@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12.401" height="15.983" viewBox="0 0 12.401 15.983">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:none;stroke:#fff;stroke-linecap:square;stroke-linejoin:round;stroke-width:1.4px}
+        </style>
+    </defs>
+    <g id="prefix__purchased_plans_icon" data-name="purchased plans icon" transform="translate(-304.453 -625.3)">
+        <path id="prefix__Path_6071" d="M314.965 633h-8.623a.429.429 0 0 0-.427.4l-.759 10.262a.857.857 0 0 0 .854.921h9.29a.857.857 0 0 0 .854-.921l-.759-10.262a.429.429 0 0 0-.43-.4z" class="prefix__cls-1" data-name="Path 6071" transform="translate(0 -3.998)"/>
+        <path id="prefix__Path_6072" d="M317.289 629H313l.5-1.765a1.706 1.706 0 0 1 1.64-1.237 1.706 1.706 0 0 1 1.64 1.237z" class="prefix__cls-1" data-name="Path 6072" transform="translate(-4.491)"/>
+    </g>
+</svg>

@@ -1,0 +1,112 @@
+@import '../../styles/modules/variables';
+@import '../../styles/modules/mixins';
+
+.mdn-selector {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 35px;
+    .title {
+      max-width: 244px;
+      width: 100%;
+      .select-label {
+        font-size: rem-calc(22px);
+        font-family: $secondary-font-family-bold;
+        font-weight: bold;
+        margin-top:4px;
+      }
+    }
+    .selector {
+      display: inline-flex;
+      width: 100%;
+      .menu {
+        width: 100%;
+        margin-top: -8px;
+        .select-arrow-mdn{
+          border-color: black transparent transparent transparent;
+          border-style: solid;
+          border-width: 8px 5px 0 5px;
+          height: 0;
+          pointer-events: none;
+          position: relative;
+          right: 15px;
+          top: 20px;
+          float: right;
+          width: 0;
+        }
+        select {
+          height: 34px;
+          padding: 5px 10px 5px 8px;
+          font-size: 1.0625rem;
+          font-weight: bold;
+          width: 100%;
+          -webkit-appearance: none;
+        }
+      }
+      .add-link-container {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 6px;
+        width: 100%;
+        @media(max-width:1024.9px){
+          margin-bottom: 0px;
+          margin-top:2px;
+        }
+        .add-icon {
+          background-color: $primary-color;
+          padding: 2px;
+          border-radius: 50%;
+          color: white;
+          font-size: rem-calc(15px);
+          margin-right: 7px;
+          margin-left: 15px;
+          margin-bottom: 3px;
+        }
+        .add-text {
+          color: $primary-color;
+          cursor: pointer;
+          font-size: rem-calc(17px);
+          line-height: 20px;
+          font-weight: bold;
+          width: 175px;
+          margin-bottom: 0;
+        }
+        .plus-img {
+          width: 18px;
+          height: 10px;
+          padding-bottom: 2px;
+        }
+      }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+      flex-direction: column;
+      margin: 25px 0;
+      .title {
+        line-height: 28px;
+      }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+      margin-bottom: 20px;
+      .title {
+        display: none;
+      }
+      .selector {
+        flex-direction: column;
+        .menu {
+          .select-arrow {
+            display: none;
+          }
+        }
+        .add-link-container {
+          background-color: $primary-color;
+          color: white;
+          justify-content: center;
+          margin-top: 10px;
+          padding: 5px;
+          .add-text {
+            color: white;
+            font-size: rem-calc(13px);
+          }
+        }
+      }
+    }
+}

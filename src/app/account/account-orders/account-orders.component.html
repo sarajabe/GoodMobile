@@ -1,0 +1,181 @@
+<section class="orders-section col-xl-offset-1" #container>
+   
+    <div class="filter-actions">
+        <div class="search-side">
+            <input class="search-input" data-cy="ID" placeholder="Search by order ID" type="search" [(ngModel)]="orderId" (keyup.enter)="searchOrderByID()">
+            <div class="clear-action" *ngIf="!!orderId"><i class="icon-close"  data-cy="closeIcon" (click)="resetOrderId()"></i></div>
+            <img class="icon-search" data-cy="searchBtn"  src="assets/icon/search-purple.svg" alt="search" (click)="searchOrderByID()"/>
+        </div>
+        <div class="filters">
+            <div class="sorting" #sort>
+                <p class="sort-title" data-cy="sortByDate" [class.focus]="showSortMenu" (click)="toggleSort()">Sort By: Date <img class="sort-icon" [src]="sortValue === 'desc' ? 'assets/icon/desc.svg' : 'assets/icon/asc.svg'" alt="sort"/></p>
+                <div class="sort-section" [class.shown]="showSortMenu">
+                    <form [formGroup]="sortForm" class="form-options">
+                        <div class="radioBtn">
+                            <label class="form-control">
+                                <input type="radio" value="desc"
+                                    formControlName="option" id="desc-sort" (change)="onOptionChange()">Newest First
+                            </label>
+                        </div>
+                        <div class="radioBtn">
+                            <label class="form-control">
+                                <input type="radio" value="asc"
+                                    formControlName="option" id="asc-sort" (change)="onOptionChange()">Oldest First
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="filter" #filterMenu>
+                <p class="filter-title" data-cy="filter"  [class.focus]="showFilter || (filterCount > 0)" (click)="toggleFilter()"> <img class="filter-icon" alt="filter" src="assets/icon/filter.svg" /> Filter <span class="countr" *ngIf="filterCount > 0">{{filterCount}}</span></p>
+                <div class="filter-view" [class.shown]="!!showFilter">
+                    <div class="close-section">
+                        <img class="close-button" src="assets/icon/purple-close-circle.svg" alt="close" (click)="closeFilters()">
+                    </div>
+                    <div class="filter-section date" (click)="showFilter=true;">
+                        <h3 class="filter-section-title">Date <span class="clear-title" (click)="clearDates()" [class.show]="canClearDate">Clear</span></h3>
+                        <div class="calender">
+                            <form [formGroup]="range" #rangeDOM>
+                                <div>
+                                    <mat-form-field>
+                                        <mat-label>Start Date</mat-label>
+                                        <input data-cy="startDate" matInput [min]="minStart | date:'yyyy-MM-dd'" [max]="maxStart | date:'yyyy-MM-dd'" [matDatepicker]="picker" formControlName="start" (dateChange)="dateChange('start')" #startDate>
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                            <mat-icon matDatepickerToggleIcon>
+                                                <img src="assets/icon/calendar.svg">
+                                               </mat-icon>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #picker (closed)="calendarClosed()"></mat-datepicker>
+                                    </mat-form-field>
+                                    <label class="validation-message" *ngIf="(range.controls.start.invalid || !validStartInput) && range.controls.start.dirty">Invalid start date</label>
+                                </div>
+                                <div>
+                                    <mat-form-field>
+                                        <mat-label>End Date</mat-label>
+                                        <input data-cy="endDate" matInput [min]="minEnd | date:'yyyy-MM-dd'" [max]="maxDate | date:'yyyy-MM-dd'" [matDatepicker]="pickerend" formControlName="end" (dateChange)="dateChange('end')"  #endDate>
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matSuffix [for]="pickerend">
+                                            <mat-icon matDatepickerToggleIcon>
+                                                <img src="assets/icon/calendar.svg">
+                                               </mat-icon>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #pickerend (closed)="calendarClosed()"></mat-datepicker>
+                                    </mat-form-field>
+                                    <label class="validation-message" *ngIf="(range.controls.end.invalid || !validEndInput) && range.controls.end.dirty">Invalid end date</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h3 class="filter-section-title">Order Status<span class="clear-title" (click)="resetFormArray('status')" [class.show]="totalStatusFilter > 0">Clear</span></h3>
+                        <form [formGroup]="statusForm" novalidate class="filter-form">
+                            <div *ngFor="let status of orderStatuses; let i=index" class="holder" >
+                              <label class="filter-label" >
+                                <input type="checkbox"  [value]="status.value" (change)="onCheckboxChange($event, 'statusForm')" [checked]="status.checked" />
+                                {{status.name}}
+                              </label>
+                            </div>
+                          </form>
+                    </div>
+                    <div class="filter-section">
+                        <h3 class="filter-section-title">Order Type<span class="clear-title" (click)="resetFormArray('intent')" [class.show]="totalIntentFilter > 0">Clear</span></h3>
+                        <form [formGroup]="intentForm" novalidate class="filter-form">
+                            <div *ngFor="let intent of orderIntents; let i=index" class="holder">
+                              <label class="filter-label">
+                                  <input type="checkbox"  [value]="intent.value" (change)="onCheckboxChange($event, 'intentForm')" [checked]="intent.checked" />
+                                  {{intent.name}}
+                              </label>
+                            </div>
+                          </form>
+                    </div>
+                    <div class="filter-section actions">
+                        <p class="clear" data-cy="clearFilters" (click)="clearFilters()">Clear All</p>
+                        <button class="button primary" data-cy="apply" aria-label="Apply" (click)="applyFilters()">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="no-orders result" *ngIf="!!viewedOrders && viewedOrders?.length === 0 && !searchByID" [class.expand]="!!showFilter">
+        <p class="title" [class.noBorder]="!filterApplied">{{!!filterApplied ? 'No orders found that match your filter criteria' : 'No Orders Found'}}</p>
+        <p class="reset" (click)="clearFilters()" *ngIf="!!filterApplied">Reset Filters</p> 
+    </div>
+    <div class="no-orders result" *ngIf="!!viewedOrders && viewedOrders?.length === 0 && !!searchByID" [class.expand]="!!showFilter">
+        <p class="title">No orders found for your search</p>
+        <p class="reset" (click)="clearFilters()">Clear Searches</p> 
+    </div>
+    <div class="result" *ngIf="!!viewedOrders && viewedOrders?.length > 0 && (!!searchByID || !!filterApplied)  && filterCount > 0" [class.expand]="!!showFilter">
+        <p class="title">{{!!searchByID ? 'Your Search Results': (config?.totalItems + ' order(s) found matching your filter criteria')}}</p> 
+        <p class="reset" (click)="clearFilters()">{{!!searchByID ? 'Clear Searches' : 'Reset Filters'}}</p> 
+    </div>
+    <div class="order-cards-container">
+        <div class="order-card" *ngFor="let order of viewedOrders | paginate: config">
+            <div class="order-card-container">
+                <div class="card-header-section">
+                    <h2 class="card-header" data-cy="orderId">Order ID: {{order?.id}}</h2>
+                    <p class="order-info"  [class.action-status]="order?.status ===  ORDER_STATUS.UPDATE_NEEDED">Status:  
+                        <img class="help-icon" src="assets/icon/warning-circle.svg" alt="warning" *ngIf="order?.status ===  ORDER_STATUS.UPDATE_NEEDED">
+                        <span class="status"  data-cy="status" [ngClass]="{ 'cancled': order?.status ===  ORDER_STATUS.CANCELED || order?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[order?.status] === STATUS_TITLE.PENDING, 'help': order?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{STATUS_TITLE[order?.status]}}</span>
+                    </p>
+                    <p class="order-info">Order placed on: {{order?.createdDate | date }}</p>
+                    <p class="order-info">Total: {{order?.payment?.totalPrice }}</p>
+                    <div class="actions">
+                        <div class="action"  (click)="goToOrderDetail(order?.id)">
+                            <p class="description" data-cy="orderDetails" >Order Details</p>
+                            <img src="assets/icon/arrow_circle.svg" alt="arrow" class="rotate">
+                        </div>
+                        <div class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(order?.id)" *ngIf="!!order?.paymentSuccessful">
+                            <img src="assets/icon/purple-invoice.svg" alt="invoice" class="invoice">
+                            <p class="description" >View Invoice</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content-section">
+                    <div class="main-header" >
+                        <p class="section-title">Items <span class="help" data-cy="needHelp"  (click)="goToFAQs()">Need Help?</span></p>
+                    </div>
+                        <div class="sub-section" >
+                            <div class="sub-section-header" [class.canceled]="order?.status === ORDER_STATUS.CANCELED">
+                                <p class="line">Line {{!!order.mdn ? (order?.mdn | phone) : '#1' }}</p>
+                            </div>
+                            <div class="sub-content" >
+                                <ng-container *ngIf="!!order?.plans && order?.plans?.length > 0">
+                                    <div class="item-details plan" *ngFor="let plan of order?.plans; let i = index">
+                                        <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="g2g-plan" *ngIf="!plan?.promotionCode" >
+                                        <img class="thumbnail" [src]="promoDetails[plan?.promotionCode].img" alt="g2g-plan" *ngIf="!!plan?.promotionCode && order?.intent === ORDER_INTENT.NEW"/>
+                                        <div class="details">
+                                            <p class="title"><b>{{plan?.subtitle}}</b></p>
+                                            <p class="description" [class.promo]="!!plan?.promotionTitle && order?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && order?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
+                                            <p class="category" ><b>({{order?.intent === ORDER_INTENT.NEW ? 'new' : (order?.intent === ORDER_INTENT.REFILL ? 'Refill' : 'Change')}} plan)</b></p>
+                                        </div>
+                                    </div>
+                                    <hr *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'" [class.indent]="order?.intent === ORDER_INTENT.NEW && !order.devices">
+                                </ng-container>
+                                <div class="item-details" [class.multiple]="!!order?.planAddOns && !!order?.cards">
+                                    <img class="item sim" [class.indent]="order?.intent === ORDER_INTENT.NEW && !order.devices" [class.esim]="order?.skuNumber === 'TE'" [src]="(order?.intent === ORDER_INTENT.NEW || order?.intent === ORDER_INTENT.NEW_SIM) ?
+                                         (!!order?.skuNumber && order?.skuNumber === 'TE' ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg') : 'assets/icon/replacement-sim.svg'" alt="g2g SIM" *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'">
+                                    <div class="image-container" *ngIf="!!order?.devices && order?.devices?.length > 0">
+                                        <img class="item device" [src]="phonesImages[order.id]" alt="Mobile">
+                                        <div class="colored-icon"  [class.canceled]="order?.status === ORDER_STATUS.CANCELED"></div>
+                                    </div>
+                                    <ng-container *ngIf="!!order?.planAddOns && order?.planAddOns?.length > 0; let i = index">
+                                        <div class="addon-container">
+                                            <p class="plus" *ngIf="!!order?.planAddOns && !!order?.cards">+</p>
+                                            <div class="addon" *ngFor="let addon of order?.planAddOns">
+                                                <img class="item" [src]="addon?.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : (addon?.addOnId === 'GOODMOBILE-UNLIMITED-INTERNATIONAL' ? 'assets/icon/International.svg' : 'assets/icon/Pay_Go.svg')" alt="addon">
+                                                <p class="quantity">{{addon?.quantity}}</p>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination-section" *ngIf="!!viewedOrders && viewedOrders?.length> 0">
+        <app-custom-pagination [config]="config" (configChange)="pageChanged($event)"></app-custom-pagination>
+    </div>
+</section>

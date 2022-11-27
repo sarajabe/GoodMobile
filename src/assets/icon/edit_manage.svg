@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="edit_manage" width="25" height="25" data-name="edit/manage" viewBox="0 0 25 25">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.4px}
+        </style>
+    </defs>
+    <circle id="Ellipse_314" cx="12.5" cy="12.5" r="12.5" fill="#863399" data-name="Ellipse 314"/>
+    <g id="Group_1369" data-name="Group 1369" transform="translate(4.121 3.539)">
+        <g id="Group_12" data-name="Group 12" transform="translate(2.7 2.687)">
+            <path id="Path_49" d="M33.2 10.135l3.464-3.464 1.14-1.14a1.507 1.507 0 0 0 .252-2.087L37.612 3a1.522 1.522 0 0 0-2.087.252" class="cls-2" data-name="Path 49" transform="translate(-28.685 -2.687)"/>
+            <path id="Line_26" d="M2.147 0L0 2.132" class="cls-2" data-name="Line 26" transform="translate(3.213 2.06)"/>
+            <path id="Path_50" d="M4.921 38.2l-1.57 3.3-.651 1.245 1.318-.711 2.975-1.554c-.341.148.207-.1.207-.1-.74.352-2.723-1.203-2.279-2.18z" class="cls-2" data-name="Path 50" transform="translate(-2.7 -32.942)"/>
+        </g>
+        <path id="Line_27" d="M0 0L6.114 0" class="cls-2" data-name="Line 27" transform="translate(4.847 13.674)"/>
+    </g>
+</svg>

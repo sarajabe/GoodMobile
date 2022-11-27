@@ -1,0 +1,27 @@
+<div class="newsletter">
+    <div class="newsletterDesc">
+        <h2 class="newsletterTitle">Do you like saving money?</h2>
+        <div class="newsletterInfo">
+        <p>Sign up for our promotional emails to receive news, offers and giveaways we don’t share anywhere else.</p>
+        <p>Don’t worry, we won’t spam you, we’ll never sell your information and you can always opt out anytime.</p>
+        <a class="newsletterLink"  [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS + '/' + SUPPORT_ROUTE_URLS.PRIVACY_NOTICE]"
+        >Read our privacy policy.</a>
+       </div>
+    </div>
+    <div class="second-section">
+    <form class="newsletterForm" [formGroup]="newsletterForm">
+        <input id="email" data-cy="email" type="email" formControlName="email" required
+        autocomplete="email" placeholder="Email address"/>
+        <label class='validation-message' *ngIf="newsletterForm.controls.email.touched && newsletterForm.controls.email.hasError('required')">
+            Email address is required.
+        </label>
+        <label class='validation-message' *ngIf="newsletterForm.controls.email.hasError('email')">
+            Email address is invalid.
+        </label>
+    </form>
+    <div class="newsletterAction">
+      <button id="submit-newsletter-form" data-cy="submitBtn" [uiBlockButton]="processingRequest" class="button primary" (click)="submitEmail()">Submit</button>
+      <app-invisible-recaptcha  (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha ></app-invisible-recaptcha>
+    </div>
+</div>
+</div>

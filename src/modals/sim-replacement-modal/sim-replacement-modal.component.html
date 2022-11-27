@@ -1,0 +1,43 @@
+<div class="container model-container {{context.customClass}}">
+  <div class="modal-header">
+    <h2 class="modal-heading">{{context.title}}</h2>
+    <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <form #userInputForm="ngForm">
+      <div class="container modal-content">
+
+        <div class="row">
+          <div class="twelve">
+            <div class="row">
+              <div class="twelve">
+                {{context.message}}
+              </div>
+            </div>
+            <div class="row">
+              <fieldset class="twelve">
+                <label class="label" for="userInputField">{{context.labelText}}</label>
+                <input id="userInputField" type="text" name="userInputField" [(ngModel)]="userInputValue" #userInput
+                  required autocomplete="user-input" [minLength]="checkLength()" [maxlength]="checkLength()">
+                <div class="primary-col"><a (click)="showIccidModal()">What is an ICCID number?</a></div>
+              </fieldset>
+              <fieldset class="twelve captcha" *ngIf="!!showRecaptcha">
+                <div class="re-captcha--resizing">
+                  <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+                  </app-re-captcha>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="row modal-actions">
+          <div class="twelve">
+            <button class="button {{context.okBtnClass}}" (click)="submitUserInput()"
+              [class.disabled]="userInputValue?.length < validLength || !captchaValid"
+              [disabled]="userInputValue?.length < validLength || !captchaValid">{{context.okText}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

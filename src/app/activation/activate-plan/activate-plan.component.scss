@@ -1,0 +1,157 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.activate-plan {
+    .adjustwidth {
+        @media (min-width: 390px) and(max-width: 725px) {
+            width: 84%;
+        }
+    }
+
+    font-size: rem-calc(18px);
+
+    h1 {
+        font-size: rem-calc(26px);
+        margin-bottom: 25px;
+        min-width: max-content;
+        line-height: 1;
+        @media (max-width: 725px) and (min-width: 320px) {
+            margin-bottom: 15px;
+        }
+        @media (max-width: 560px) and (min-width: 425px) {
+            flex-basis: 100%;
+        }
+        @media (#{$larger-than-mobile}) {
+            font-size: rem-calc(28px);
+        }
+
+        @media (#{$larger-than-desktop}) {
+            font-size: rem-calc(38px);
+        }
+    }
+
+    h4.subhead {
+        font-size: rem-calc(17px);
+        @media (#{$larger-than-mobile}) {
+            font-size: rem-calc(18px);
+        }
+
+        @media (#{$larger-than-desktop}) {
+            font-size: rem-calc(22px);
+            margin-bottom: 30px;
+        }
+    }
+
+    .card-container {
+        padding: 22px 0 0;
+        @media (#{$larger-than-mobile}) {
+            padding: 25px 22px 25px 22px;
+        }
+    }
+
+    .field-center {
+        @media (min-width: 320px) and (max-width: 725px) {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .actions-container {
+        text-align: center;
+        button {
+            padding: 10px 57px;
+            font-size: rem-calc(20px);
+        }
+        @media (#{$larger-than-desktop}) {
+            text-align: left;
+        }
+        @media (max-width: 725px) and (min-width: 320px) {
+            text-align: center;
+        }
+    }
+
+    .subhead {
+        margin-bottom: 25px;
+        display: inline-block;
+        p {
+            font-size: rem-calc(22px);
+            font-family: $base-font-family;
+            margin-bottom: 0;
+            @media (max-width: 725px) and (min-width: 320px) {
+                font-size: rem-calc(17px);
+                line-height: rem-calc(22px);
+            }
+        }
+    }
+
+    .plan-info {
+        order: 1;
+        display: none;
+        @media (#{$larger-than-desktop}) {
+            display: inline-block;
+        }
+    }
+
+    .content-holder {
+        order: 2;
+        font-family: $base-font-family;
+        @media (#{$larger-than-desktop}) {
+            order: 1;
+        }
+        @media (max-width: 426px) {
+            .tab-nav {
+                ul {
+                    width: 100%;
+                    li {
+                        width: 100%;
+                        background-color: rgba(222, 222, 222, 0.31);
+                        padding: 10px 0px;
+                        margin-bottom: 10px;
+                        &.active {
+                            background-color: rgba(134, 51, 153, 0.11);
+                        }
+                        span {
+                            padding: 10px 20px;
+                            &.active {
+                                background-color: transparent;
+                                color: $black;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .highlight-card {
+        padding: 27px 29px;
+        font-size: rem-calc(17px);
+        display: inline-block;
+
+        &.plan-details,
+        &.device-info {
+            width: 100%;
+
+            .feature-section {
+                margin-bottom: 14px;
+                text-transform: capitalize;
+            }
+
+            b.feature-section {
+                margin-bottom: 7px;
+                display: inline-block;
+            }
+
+            .text-right {
+                text-align: left;
+                @media (#{$larger-than-desktop}) {
+                    text-align: right;
+                }
+            }
+
+            .imei-info {
+                font-size: rem-calc(15px);
+            }
+        }
+    }
+}

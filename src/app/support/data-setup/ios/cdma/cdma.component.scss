@@ -1,0 +1,93 @@
+@import "../../../../../styles/modules/variables";
+@import "../../../../../styles/modules/mixins";
+
+.ios-cdma {
+    .header {
+      font-size: rem-calc(25px);
+      line-height: 33px;
+      max-width: 953px;
+      margin-bottom: 40px;
+    }
+    .list-title {
+      font-size: rem-calc(20px);
+      line-height: 27px;
+    }
+    .subtitle {
+      font-size: rem-calc(18px);
+      line-height: 30px;
+    }
+    .details-content {
+      .list-steps {
+        padding-left: 0px;
+        max-width: 812px;
+        margin-bottom: 30px;
+        margin-top: 7px;
+        list-style: none;
+        li {
+          &:before {
+            content: url("/assets/img/tick.svg");
+            padding-right: 7px;
+          }
+          font-size: rem-calc(18px);
+          line-height: 27px;
+          padding: 10px 0;
+          // img {
+          //   margin-right: 8px;
+          // }
+          &.sub {
+            .sub-content {
+              padding-left: 17px;
+              margin-bottom: 0;
+            }
+            @media (max-width: 750px) {
+              .sub-content {
+                display: inline;
+                padding-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    .note {
+      margin-bottom: 30px;
+      font-size: rem-calc(13px);
+      font-weight: normal;
+      line-height: 22px;
+      max-width: 424px;
+      padding-left: 20px;
+    }
+    .action {
+      margin-bottom: 50px;
+      .button {
+        width: 200px;
+        padding: 11px;
+        font-size: rem-calc(18px);
+      }
+    }
+    @media (max-width: 750px) {
+      .header {
+        font-size: 22px;
+        line-height: 33px;
+      }
+      .list-title {
+        font-size: 18px;
+        line-height: 27px;
+      }
+      .details-content {
+        .list-steps {
+          li {
+            font-size: rem-calc(15px);
+            line-height: 22px;
+            padding: 5px 0;
+          }
+        }
+      }
+      .note {
+        font-size: rem-calc(13px);
+      }
+      .action {
+        text-align: center;
+      }
+    }
+  }

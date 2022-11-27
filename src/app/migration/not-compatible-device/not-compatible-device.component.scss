@@ -1,0 +1,72 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+.incompatible-device {
+    padding-top: 70px;
+    @media(max-width:$desktop-min-width-minus){
+        padding-top: 50px;
+    }
+    .header {
+        font-size: rem-calc(38px);
+        line-height: 50px;
+        margin-bottom: 22px;
+    }
+    .description {
+        font-size: rem-calc(22px);
+        line-height: 30px;
+        max-width: 620px;
+        margin: auto auto 35px;
+    }
+    .device-info {
+        .details {
+            font-size: rem-calc(18px);
+            line-height: 30px;
+            font-family: $base-font-family-bold;
+            margin-bottom: 30px;
+        }
+    }
+    .actions-container {
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 60px;
+        .button {
+            width: 170px;
+            padding: 11px;
+            font-size: rem-calc(20px);
+            &.primary {
+                margin-right: 50px;
+            }
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        .header {
+            font-size: rem-calc(28px);
+            line-height: 37px;
+        }
+        .description {
+            font-size: rem-calc(20px);
+            line-height: 30px;
+        }
+        .device-info {
+            .details {
+                font-size: rem-calc(18px);
+                line-height: 30px;
+            }
+        }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        .header {
+            font-size: rem-calc(26px);
+            line-height: 30px;
+        }
+        .actions-container {
+            .button {
+                display: block;
+                margin: 15px auto;
+                &.primary {
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+}

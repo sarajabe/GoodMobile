@@ -1,0 +1,54 @@
+<div class="container model-container full {{context.customClass}}">
+    <div class="modal-header">
+      <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+      <h2 class="modal-heading"> Select your preferred shipping Address</h2>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <ng-container>
+          <p class="note" *ngIf="addressesList?.length > 0">Choose a different shipping Address below:</p>
+          <div class="account-address-details-container highlight-card" *ngFor="let address of addressesList"
+               (click)="selectedMethodId = address.id">
+            <div class="custom-checkbox">
+              <div class="checkbox">
+                <input title="{{!!address.name ? address.name : address.alias}}" type="radio"
+                       [checked]="address.id == selectedMethodId" name="shippingAddress"
+                       [id]="address.id" [value]="methodItem">
+                <label [for]="address.id"></label>
+              </div>
+              <div class="checkbox-label">
+                {{!!address.name ? address.name : address.alias}}
+              </div>
+            </div>
+            <div class="details">
+            <p>
+              {{address.address1}} <span *ngIf="!!address.address2">#{{address.address2}}</span> 
+            </p>
+            <p>{{address.city}}, {{address.state}} {{address.postalCode}}</p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!!context.isManage">
+          <div class="row">
+            <div class="twelve ">
+              <h2>Add Address to Address Book </h2>
+              <div class="form-section">
+                <app-address-lookup [showAlias]="true" [displayedAddress]="address" (isValid)="setValidAddress($event)"
+                                (addressChange)="addressChanged($event)"></app-address-lookup>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="row modal-actions">
+          <span class="modal-hint">You can also add another shipping Address in <a (click)="goToSettings()">Profile Settings</a></span>
+          <button *ngIf="!context.isManage" class="button primary" data-cy="save" (click)="setDefaultShippingAddress(selectedMethodId)"
+                  [class.disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"
+                  [disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"
+                  [uiBlockButton]="processingRequest || setDefaultRequest">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

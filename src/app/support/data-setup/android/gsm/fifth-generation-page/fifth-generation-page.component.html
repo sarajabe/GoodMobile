@@ -1,0 +1,130 @@
+<section class="container-flex android-gsm-container device-setup">
+  <div class="tabbed-content">
+    <h1 class="title">5G PHONE INSTRUCTIONS:</h1>
+    <div class="purple-warning"><img class="icon" src="/assets/icon/purple_info.svg" alt="purple info sign" />
+      <p class="bolded">5G MUST be enabled to use this Data Setting and get 5G services.</p>
+    </div>
+    <div class="list-item first-list">
+      <div class="item-content">
+        <ul class="main-list">
+          <li>
+            <div class="bullet">
+              <span class="big-dot">&bull;</span>
+              <p class="content unbold">Press "Menu" button on your device</p>
+            </div>
+          </li>
+          <li>
+            <div class="bullet">
+              <span class="big-dot">&bull;</span>
+              <p class="content unbold">Tap "Settings" > "Wireless Controls" or "Wireless and Network" > "Mobile
+                Networks"</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <p class="primary-color-title">Make sure “Data Roaming” and “Use Only 2G Networks” are both UNCHECKED</p>
+    </div>
+    <div class="list-item">
+      <div class="item-content">
+        <ul class="sub-list">
+          <li>
+            <div class="bullet">
+              <span class="big-dot">&bull;</span>
+              <p class="content unbold">Tap Access Point Names</p>
+            </div>
+          </li>
+          <li>
+            <div class="bullet">
+              <span class="big-dot">&bull;</span>
+              <p class="content unbold">Press Menu button and select New APN</p>
+            </div>
+          </li>
+          <li class="short">
+            <div class="bullet">
+              <span class="big-dot">&bull;</span>
+              <p class="content unbold sub">Enter the following information</p>
+            </div>
+            <ul class="sub-list border">
+              <li>
+                <p class="content">Name:</p>
+                <p class="content unbold">GoodMobile</p>
+              </li>
+              <li>
+                <p class="content">APN:</p>
+                <p class="content  unbold">eRESELLER</p>
+              </li>
+              <li>
+                <p class="content">Proxy:</p>
+                <p class="content unbold">Not set</p>
+              </li>
+              <li>
+                <p class="content">Port:</p>
+                <p class="content unbold">Not set</p>
+              </li>
+              <li>
+                <p class="content">Username:</p>
+                <p class="content unbold">Not set</p>
+              </li>
+              <li>
+                <p class="content">Password:</p>
+                <p class="content unbold">Not set</p>
+              </li>
+              <li>
+                <p class="content">Server:</p>
+                <p class="content unbold">Not set</p>
+              </li>
+              <li>
+                <p class="content">MMSC:</p>
+                <p class="content unbold">http://mmsc.mobile.att.net</p>
+              </li>
+              <li>
+                <p class="content">MMS Proxy:</p>
+                <p class="content unbold">proxy.mobile.att.net</p>
+              </li>
+              <li>
+                <p class="content">MMS Port:</p>
+                <p class="content unbold">80</p>
+              </li>
+              <li>
+                <p class="content">MCC:</p>
+                <p class="content unbold">310</p>
+              </li>
+              <li>
+                <p class="content">MNC:</p>
+                <p class="content unbold">410</p>
+              </li>
+              <li>
+                <p class="content">Authentication Type:</p>
+                <p class="content unbold">None</p>
+              </li>
+              <li>
+                <p class="content">APN Type:</p>
+                <p class="content unbold">default,mms,supl</p>
+              </li>
+              <li>
+                <p class="content">APN protocol:</p>
+                <p class="content unbold">IPv4</p>
+              </li>
+              <li>
+                <p class="content">Bearer:</p>
+                <p class="content unbold">Unspecified</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bullet">
+    <span class="big-dot">&bull;</span>
+    <p class="content shortSub"> Press the "Menu" button on your device and then "Save" on the screen.</p>
+  </div>
+  <button class="button primary" (click)="done()" id="done-button">Done</button>
+  <div class="manage">
+    <p class="manage-account">To make sure 5G is enabled go to </p>
+    <a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE+'/'+ACCOUNT_ROUTE_URLS.SUMMARY]" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}">Account Summary
+      <span class="thicker"> &#10230;</span></a>
+  </div>
+  
+</section>

@@ -1,0 +1,107 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.activation {
+    font-family: $secondary-font-family-bold;
+    text-align: center;
+    @media (#{$larger-than-mobile}) {
+        text-align: left;
+    }
+    .subhead {
+        p,
+        span {
+            font-size: 17px;
+            line-height: 1.29;
+            font-family: $base-font-family;
+            text-align: center;
+            @media (#{$larger-than-mobile}) {
+                font-size: rem-calc(22px);
+                font-family: inherit;
+                text-align: left;
+            }
+        }
+    }
+    .error {
+        color: #d94a47;
+    }
+    .iccid-section {
+        max-width: 720px;
+        margin-bottom: 50px;
+        .note {
+            font-size: rem-calc(22px);
+            line-height: 26px;
+            font-family: $base-font-family;
+        }
+        .details {
+            margin-bottom: 20px;
+            .label {
+                font-size: rem-calc(15px);
+                line-height: 17px;
+                font-family: $base-font-family;
+            }
+            input {
+                height: 45px;
+            }
+            .question {
+                font-size: rem-calc(18px);
+                line-height: 21px;
+                font-family: $base-font-family;
+            }
+        }
+        @media (max-width: 640px) {
+            margin-bottom: 30px;
+            .note {
+                font-size: rem-calc(17px);
+                line-height: 22px;
+                text-align: center;
+                margin-bottom: 25px;
+            }
+            .details {
+                .label {
+                    font-size: rem-calc(13px);
+                    line-height: 15px;
+                }
+                input {
+                    height: 45.3px;
+                    margin-bottom: 0;
+                }
+                .question {
+                    font-size: rem-calc(13px);
+                    line-height: 17px;
+                }
+            }
+            .action {
+                text-align: right;
+            }
+        }
+    }
+    .margin-top-40 {
+        margin-top: 30px;
+        @media (#{$larger-than-mobile}) {
+            margin-top: 40px;
+        }
+    }
+
+    .button {
+        @media (#{$larger-than-mobile}) {
+            width: 314px;
+            padding: 10px 40px;
+            font-size: rem-calc(19px);
+        }
+        width: auto;
+        padding: 10px 17px;
+        font-size: rem-calc(17px);
+        &.check {
+            width: 214px;
+            padding: 10px;
+        }
+    }
+    @media (max-width: 640px) {
+        .subhead {
+            font-size: rem-calc(17px);
+        }
+        .centered {
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,71 @@
+<section class="side-nav" *ngIf="!!isAccountMenuVisible">
+        <ul class="my-account-menu">
+                <li class="menu-item item-pending-activations" (click)="resetAll()">
+                        <a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS'"
+                                routerLinkActive="active" class="items-link">Purchased Plans <span
+                                        class="item-plans-count" *ngIf="!!pendingPlans && pendingPlans.length >= 1">
+                                        <span class="item-parenthese">&nbsp;(</span>{{pendingPlans?.length}}<span
+                                                class="item-parenthese">)</span>
+                                </span></a>
+                </li>
+                <li class="menu-item item-top-radius" (click)="resetAll()"><a
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SUMMARY]"
+                                routerLinkActive="active" [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.SUMMARY'"
+                                [routerLinkActiveOptions]="{exact: true}" class="items-link link-border-bottom">Account
+                                summary</a></li>
+                <li *ngIf="!!displayAcpSection" class="menu-item" (click)="resetAll();isAcp = true;"><a class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.ACP_APPLICATION'"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">ACP application</a>
+                </li>
+                <li class="menu-item" (click)="resetAll(); isPayRefill = true;" [class.disabled]="!!isPortIn"><a
+                                class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PAY_AND_RENEW'"
+                                routerLinkActive="active"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                [routerLinkActiveOptions]="{exact: true}">Pay &
+                                refill your account</a></li>
+                <li class="menu-item" (click)="resetAll(); isRefer = true;">
+                        <a class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.REFER_FRIEND'"
+                                routerLinkActive="active"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.REFER_FRIEND]"
+                                [routerLinkActiveOptions]="{exact: true}">Refer a friend</a>
+                </li>
+                <li class="menu-item" (click)="resetAll(); isPlanAddOns = true;"
+                        [class.disabled]="!!isExpiredAccount || !!isPortIn"><a class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS'"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS]">Plan
+                                add-ons</a></li>
+                <li class="menu-item" (click)="resetAll();isOrders = true;"><a class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.ORDERS'"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.ORDERS]"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Your
+                                orders</a></li>
+                <li class="menu-item" (click)="resetAll();isPaymentHistory= true;" [class.disabled]="!!isPortIn"><a
+                                class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PAYMENTS'" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAYMENTS]">Payment
+                                history</a></li>
+                <li class="menu-item" (click)="resetAll();isUsageHistory = true;" [class.disabled]="!!isPortIn"><a
+                                class="items-link link-border-bottom"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.USAGE'" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.USAGE]">Plan
+                                & usage history</a></li>
+                <li class="menu-item" (click)="resetAll()"><a class="items-link link-border-bottom"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
+                                routerLinkActive="active"
+                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.MANAGE_DEVICES'"
+                                [routerLinkActiveOptions]="{exact: true}">Manage device & SIM</a></li>
+                <li class="menu-item item-bottom-radius" (click)="resetAll()"><a class="items-link"
+                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
+                                routerLinkActive="active" [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.SETTINGS'"
+                                [routerLinkActiveOptions]="{exact: true}">Profile
+                                settings</a></li>
+        </ul>
+</section>

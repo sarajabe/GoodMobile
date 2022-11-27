@@ -1,0 +1,37 @@
+<section class="content-section" *ngIf="!acpSuccess && !acpError">
+  <h2 class="header">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
+  <h3 class="sub-header">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h3>
+  <p class="extra-desc" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}
+  </p>
+  <section class="stepper">
+    <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step" [class.done]="activeStep > step">
+      <div class="circle">{{step}}</div>
+      <div class="border" *ngIf="step < steps.length"></div>
+    </div>
+  </section>
+  <app-personal-info *ngIf="activeStep === 1" (goToNext)="next($event)" (setUserInfo)="setPersonalInfo($event)"
+    [savedInfo]="acpData?.user" [disable]="!!enrolled || !!is609ErrorCode" [userId]="userProfile?.id">
+  </app-personal-info>
+  <app-child-info *ngIf="activeStep === 2" (goToNext)="next($event)" (setChildInfo)="setBqpUserInfo($event)"
+    [userInfo]="acpData?.bqpUser" [internalData]="acpData" [userId]="userProfile?.id" [schoolName]="acpData?.schoolName"
+    [publicHousingCode]="acpData?.publicHousingCode" [eligableCode]="acpData?.eligibilityCode" [disable]="!!enrolled || !!is609ErrorCode"></app-child-info>
+  <app-address-info *ngIf="activeStep === 3" (goToNext)="next($event)" (setAddresses)="setUserAddresses($event)"
+    [primary]="primaryAddress" [userId]="userProfile?.id" [mailing]="mailAddress"
+    [disable]="!!enrolled || !!is609ErrorCode">
+  </app-address-info>
+  <app-signature-info *ngIf="activeStep === 4" (goToNext)="next($event)" [fName]="acpData.user.firstName"
+    [lName]="acpData.user.lastName" [signed]="userSignedAgreement" (setSignature)="setSignedValue($event)"
+    [disable]="!!enrolled"></app-signature-info>
+</section>
+<app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
+<app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
+<section class="navigation-section" *ngIf="!acpSuccess && !acpError">
+  <div class="left">
+    <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
+  </div>
+  <div class="right">
+    <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
+    <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
+      'Verify'}}</button>
+  </div>
+</section>

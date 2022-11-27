@@ -1,0 +1,87 @@
+<div class="package-tracking-page">
+    <h1 *ngIf="orderInfo?.status !== 'DELIVERED'">Estimated to arrive in 1 - 2 days</h1>
+    <h1 *ngIf="orderInfo?.status === 'DELIVERED'">Delivered</h1>
+    <div class="content-section">
+        <div class="order-info-section">
+            <div class="delivered-order" *ngIf="orderInfo?.status === 'DELIVERED'">
+                <div class="check-title">
+                    <p><img src="assets/icon/delivered-check.svg"></p>
+                    <p class="text">Your order has been delivered to the below address:</p>
+                </div>
+                <div class="shipping-info">
+                    <p>{{orderInfo?.shippingInfo?.shippingAddress?.shippingName}}<br>
+                        {{orderInfo?.shippingInfo?.shippingAddress?.address1 | titlecase}}<br>
+                        {{orderInfo?.shippingInfo?.shippingAddress?.city | titlecase}},
+                        {{orderInfo?.shippingInfo?.shippingAddress?.state}},
+                        {{orderInfo?.shippingInfo?.shippingAddress?.postalCode}}
+                    </p>
+                </div>
+            </div>
+            <div class="estimated-order" *ngIf="orderInfo?.status !== 'DELIVERED'">
+                <div class="check-title">
+                    <p class="border-down"></p>
+                    <p><img src="assets/icon/shopping icon.svg"></p>
+                    <p class="text">Order placed {{orderInfo?.createdDate | date:'MMM dd, yyyy'}}</p>
+                </div>
+                <div class="check-title">
+                    <p class="border-down not-active"></p>
+                    <p><img src="assets/icon/tracking icon.svg"></p>
+                    <p class="text">Order in Transit</p>
+                </div>
+                <div class="check-title position-relative">
+                    <p class="border-down last-border"></p>
+                    <p><img src="assets/icon/disabled check icon.svg"></p>
+                    <p class="text">Completed</p>
+                </div>
+            </div>
+            <div class="view-updates-button">
+                <button class="button primary rectangle-button" aria-label="View updates"
+                    (click)="viewUpdatesPopUp(orderInfo?.shippingInfo?.trackingNumber)"><img
+                        src="/assets/icon/fullscreen-view-updates.svg">View
+                    updates</button>
+            </div>
+        </div>
+        <div class="order-box-section">
+            <div class="order-container">
+                <div class="box-title">
+                    <p>One order in this package:</p>
+                </div>
+                <div class="box-description">
+                    <p class="id-title tracking-id">Tracking Number: <span
+                            class="id-value">{{orderInfo?.shippingInfo?.trackingNumber}}</span></p>
+                    <p class="id-title order-id">Order ID: <span class="id-value">{{orderInfo?.id}}</span></p>
+                    <div class="view-order-details-button">
+                        <button class="rectangle-button" (click)="showOrderDetails = !showOrderDetails" aria-label="order details"><img
+                                [src]="!showOrderDetails? '/assets/icon/view-details-arrow.svg' :'/assets/icon/hide-details-arrow.svg'">View
+                            order details</button>
+                    </div>
+                    <div class="view-order-details" *ngIf="!!showOrderDetails">
+                        <div class="order-summary-info">
+                            <p><b>Order summary:</b></p>
+                            <div class="flex-info">
+                                <p class="key-basis"><b>Subtotal:</b></p>
+                                <p class="value-basis">{{orderInfo?.payment?.itemsPrice}}</p>
+                            </div>
+                            <div class="flex-info">
+                                <p class="key-basis"><b>Government Taxes & fees</b></p>
+                                <p class="value-basis">{{orderInfo?.payment?.taxes}}</p>
+                            </div>
+                            <div class="flex-info">
+                                <p class="key-basis"><b>Surcharges taxes & fees</b></p>
+                                <p class="value-basis">{{orderInfo?.payment?.fees}}</p>
+                            </div>
+                            <div class="flex-info">
+                                <p class="key-basis"><b>Shipping fees</b></p>
+                                <p class="value-basis">{{orderInfo?.payment?.shippingCost}}</p>
+                            </div>
+                            <div class="flex-info">
+                                <p class="key-basis"><b>Grand Total:</b></p>
+                                <p class="value-basis">{{orderInfo?.payment?.totalPrice}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

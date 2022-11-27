@@ -1,0 +1,313 @@
+<section class="change-payment">
+  <div class="container-flex">
+    <div class="content">
+      <h1 class="header" id="headerId">Change payment method:</h1>
+      <h2 class="sub-header" *ngIf="!!associatedPlans && associatedPlans?.length > 0">To keep your Auto Pay discount, you’ll need to switch the payment method then delete the current card linked to the following numbers:</h2>
+      <div class="alert banner" id="alert-note" *ngIf="!!totalPayments && totalPayments?.length >= 10">
+        <img class="alert" alt="alert" src="assets/icon/red-alert.svg">
+        <div class="banner-note">
+          <p class="title"><b>You have reached the maximum number of saved credit cards</b></p>
+          <p class="note">You could:</p>
+          <p class="note">Choose an existing card <b>OR</b> update your saved cards in your Profile Settings</p>
+          <button class="button primary" aria-label="Profile settings" (click)="goToProfileSettings()">Profile settings</button>
+        </div>
+      </div>
+      <div class="success banner" id="success-note" [ngClass]="{'fade-in': !!showSuccessBanner, 'hidden': !showSuccessBanner}">
+        <img class="alert" alt="success" src="assets/icon/purple-circle-check.svg">
+        <div class="banner-note">
+          <p class="title">Great job! You've set your Auto Pay discount payment card for: </p>
+          <p class="note"><b>{{updatedPlan}}</b></p>
+          <p class="note">(Your discount will remain active!)</p>
+        </div>
+      </div>
+      <ng-container *ngIf="!!associatedPlans && associatedPlans?.length > 0">
+        <div class="payment-container">
+          <div class="payment-details" *ngFor="let plan of associatedPlans; let i=index">
+            <h3 class="brand">Mobile Number:</h3>
+            <p class="info">{{plan?.mdn | phone}}</p>
+            <div class="attention-banner">
+                <img src="assets/icon/red-alert.svg" alt="red alert">
+                <p class="note">{{!!totalPayments && totalPayments?.length < 10 ? 'Select or add another preferred payment method' : 'Select your preferred payment method'}}</p>
+            </div>
+            <div class="showMethods">
+                <h3 (click)="togglePaymentsList(i)">Show saved payment methods <i class="arrow down" [class.rotate]="!!showSavedMethods[i]"></i></h3>
+            </div>
+            <div class="methods-list" *ngIf="showSavedMethods[i]">
+                <label class="form-control" *ngFor="let method of paymentMethods; let j=index">
+                  <div class="radio-container">
+                    <input type="radio" [value]="method?.id"
+                       [(ngModel)]="selectedPayments[i]" (ngModelChange)="checkSelectedPayments(i)">
+                  </div>
+                    <div class="details">
+                        <p class="type">Payment Card</p>
+                        <p>{{!!method?.brand ? method?.brand : 'Card'}} ending in {{method?.last4}}</p>
+                        <p>{{method?.fullName}}</p>
+                        <p>{{method?.address1}}{{!!method?.address2 ? ',' + method?.address2 : ''}}</p>
+                        <p>{{method?.city}}, {{method?.state}} {{method?.postalCode}}</p>
+                    </div>
+                </label>
+            </div>
+            <div class="add-card">
+              <p class="add" (click)="toggleAddPayment(i, 'mdn')"><span>{{!!showAddPayment[i] ? '-' : '+'}}</span> Add a new card</p>
+            </div>
+            <div class="card-form" *ngIf="!!showAddPayment[i]">
+              <h3 class="form-header">Credit Card Details</h3>
+              <form [formGroup]="paymentInfoForm" class="credit-card-form">
+                  <fieldset class="half">
+                      <label class="font-size-12" for="fullName">Name on card <span
+                          class="form-text error validation-message">*</span></label>
+                      <input id="fullName" data-cy="fullName" type="text" name="fullName" formControlName="fullName" 
+                         autocomplete="cc-given-name" minlength="1" maxlength="30">
+                      <label class="validation-message"
+                        *ngIf="paymentInfoForm.controls.fullName.touched && paymentInfoForm.controls.fullName.hasError('required')">Name
+                        on card is required. </label>
+                      <label class="validation-message"
+                        *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
+                        name. </label>
+                  </fieldset>
+                  <fieldset class="flex-display">
+                      <div class="half">
+                          <label class="font-size-12" for="cardNumber">Card Number <span
+                              class="form-text error validation-message">*</span></label>
+                          <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber"  maxlength="19" autocomplete="cc-number">
+                          <label class="validation-message" *ngIf="paymentInfoForm.controls.cardNumber.touched && paymentInfoForm.controls.cardNumber.hasError('required')">Card number is required. </label>
+                          <label class="validation-message" *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid">Invalid Credit Card Number. </label>
+                        </div>
+                        <div class="half">
+                            <label class="font-size-12" for="cardCode">CVV <span
+                                class="form-text error validation-message">*</span></label>
+                            <input id="cardCode"  data-cy="cardCode" type="password" name="cardCode" restrictNumbers formControlName="cardCode"
+                              minlength="3" maxlength="4"  autocomplete="cc-csc">
+                            <label class="validation-message"
+                              *ngIf="paymentInfoForm.controls.cardCode.touched && !paymentInfoForm.controls.cardCode.value">CVV
+                              is
+                              required field. </label>
+                            <label class="validation-message"
+                              *ngIf="paymentInfoForm.controls.cardCode.dirty && paymentInfoForm.controls.cardCode.value && !paymentInfoForm.controls.cardCode.valid">CVV
+                              is invalid. </label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="expiry">
+                      <label class="font-size-12" for="cardExpirationMonth">Expiration date <span
+                          class="form-text error validation-message">*</span></label>
+                      <div class="flex-display">
+                        <div class="half no-margin-left select">
+                          <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
+                            autocomplete="cc-exp-month" >
+                            <option value="" selected disabled >MM</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                          </select>
+                          <div class="select-bg">
+                            <div class="select-arrow"></div>
+                          </div>
+                        </div>
+                        <div class="half select no-margin-left">
+                          <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
+                            autocomplete="cc-exp-year"  aria-placeholder="Year">
+                            <option value="" selected disabled>YY</option>
+                            <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}
+                            </option>
+                          </select>
+                          <div class="select-bg">
+                            <div class="select-arrow"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <label class="validation-message no-wrap"
+                        *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
+                        Expiration month is required
+                      </label>
+                      <label class="validation-message no-wrap"
+                        *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
+                        Expiration year is required
+                      </label>
+                      <label class="validation-message no-wrap"
+                        *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
+                        Expiration date must be valid
+                      </label>
+                    </fieldset>
+                  </form>
+                  <h3 class="form-header">Billing address</h3>
+                  <div class="address-lookup credit-card-form3">
+                    <app-address-lookup [displayedAddress]="billingAddress" (isValid)="setValidAddress($event)" [resetForm]="resetAddressForm"
+                      (addressChange)="addressLookUpChanged($event)" [touchForm]="touchAddressForm" [showAlias]="true">
+                    </app-address-lookup>
+                </div>
+                <div class="form-actions">
+                    <p class="transparent"  data-cy="cancelBtn" (click)="toggleAddPayment(i, 'mdn')">Cancel</p>
+                    <button class="button primary" aria-label="Save" (click)="saveCard(i, 'mdn')">Save</button>
+                </div>
+            </div>
+            <div class="validation">
+              <p class="validation-message" *ngIf="!!showValidation[i]">Please select {{(!!totalPayments && totalPayments?.length < 10) ? 'or add' : ''}} a preferred payment method</p>
+            </div>
+            <div class="card-action">
+              <button class="button primary" aria-label="Switch Card" (click)="switchCard(i,'mdn')">Switch Card</button>
+            </div>
+          </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!!associatedPendingPlans && associatedPendingPlans?.length > 0">
+      <h2 class="sub-header">For the following Pending Plans:</h2>
+      <div class="payment-container">
+          <div class="payment-details" *ngFor="let plan of associatedPendingPlans; let i=index">
+            <h3 class="brand">{{plan?.basePlan?.subtitle}}</h3>
+            <p class="info">{{plan?.basePlan?.title}}</p>
+            <div class="attention-banner">
+                <img src="assets/icon/red-alert.svg" alt="red alert">
+                <p class="note">{{!!totalPayments && totalPayments?.length < 10 ? 'Select or add another preferred payment method' : 'Select your preferred payment method'}}</p>
+            </div>
+            <div class="showMethods">
+                <h3 (click)="togglePendingPaymentsList(i)">Show saved payment methods <i class="arrow down" [class.rotate]="!!showSavedMethodsForPending[i]"></i></h3>
+            </div>
+            <div class="methods-list" *ngIf="showSavedMethodsForPending[i]">
+                <label class="form-control" *ngFor="let method of paymentMethods; let j=index">
+                  <div class="radio-container">
+                    <input type="radio" [value]="method?.id"
+                       [(ngModel)]="selectedPaymentsForPending[i]" (ngModelChange)="checkSelectedPayments(i)">
+                  </div>
+                    <div class="details">
+                        <p class="type">Payment Card</p>
+                        <p>{{method?.brand}} ending in {{method?.last4}}</p>
+                        <p>{{method?.fullName}}</p>
+                        <p>{{method?.address1}}{{!!method?.address2 ? ',' + method?.address2 : ''}}</p>
+                        <p>{{method?.city}}, {{method?.state}} {{method?.postalCode}}</p>
+                    </div>
+                  </label>
+                </div>
+                <div class="add-card">
+                  <p class="add" (click)="toggleAddPayment(i, 'pending')"><span>{{!!showAddPaymentForPending[i] ? '-' : '+'}}</span> Add a new card</p>
+                </div>
+                <div class="card-form" *ngIf="!!showAddPaymentForPending[i]">
+                  <h3 class="form-header">Credit Card Details</h3>
+                  <form [formGroup]="paymentInfoForm" class="credit-card-form">
+                    <fieldset class="half">
+                      <label class="font-size-12" for="fullName">Name on card <span class="form-text error validation-message">*</span></label>
+                          <input id="fullName" data-cy="fullName" type="text" name="fullName" formControlName="fullName" 
+                             autocomplete="cc-given-name" minlength="1" maxlength="30">
+                          <label class="validation-message"
+                            *ngIf="paymentInfoForm.controls.fullName.touched && paymentInfoForm.controls.fullName.hasError('required')">Name
+                            on card is required. </label>
+                            <label class="validation-message"
+                              *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
+                              name. </label>
+                      </fieldset>
+                      <fieldset class="flex-display">
+                            <div class="half">
+                              <label class="font-size-12" for="cardNumber">Card Number <span
+                                  class="form-text error validation-message">*</span></label>
+                              <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber"
+                                 maxlength="19" autocomplete="cc-number">
+                                 <label class="validation-message"
+                                *ngIf="paymentInfoForm.controls.cardNumber.touched && paymentInfoForm.controls.cardNumber.hasError('required')">Card number is required. </label>
+                              <label class="validation-message"
+                                *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid">Invalid
+                                Credit Card Number. </label>
+                              
+                          </div>
+                          <div class="half">
+                            <label class="font-size-12" for="cardCode">CVV <span
+                                class="form-text error validation-message">*</span></label>
+                            <input id="cardCode"  data-cy="cardCode" type="password" name="cardCode" restrictNumbers formControlName="cardCode"
+                              minlength="3" maxlength="4"  autocomplete="cc-csc">
+                            <label class="validation-message"
+                              *ngIf="paymentInfoForm.controls.cardCode.touched && !paymentInfoForm.controls.cardCode.value">CVV
+                              is
+                              required field. </label>
+                            <label class="validation-message"
+                              *ngIf="paymentInfoForm.controls.cardCode.dirty && paymentInfoForm.controls.cardCode.value && !paymentInfoForm.controls.cardCode.valid">CVV
+                              is invalid. </label>
+                        </div>
+                    </fieldset>
+                  
+                    <fieldset class="expiry">
+                      <label class="font-size-12" for="cardExpirationMonth">Expiration date <span
+                          class="form-text error validation-message">*</span></label>
+                      <div class="flex-display">
+                        <div class="half no-margin-left select">
+                          <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
+                            autocomplete="cc-exp-month" >
+                            <option value="" selected disabled>MM</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                          </select>
+                          <div class="select-bg">
+                            <div class="select-arrow"></div>
+                          </div>
+                        </div>
+                        <div class="half select no-margin-left">
+                          <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
+                            autocomplete="cc-exp-year"  aria-placeholder="Year">
+                            <option value="" selected disabled>YY</option>
+                            <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}
+                            </option>
+                          </select>
+                          <div class="select-bg">
+                            <div class="select-arrow"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <label class="validation-message no-wrap"
+                        *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
+                        Expiration month is required
+                      </label>
+                      <label class="validation-message no-wrap"
+                        *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
+                        Expiration year is required
+                      </label>
+                      <label class="validation-message no-wrap"
+                        *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
+                        Expiration date must be valid
+                      </label>
+                    </fieldset>
+                  </form>
+                  <h3 class="form-header">Billing address</h3>
+                  <div class="address-lookup credit-card-form3">
+                    <app-address-lookup [displayedAddress]="billingAddress" (isValid)="setValidAddress($event)" [resetForm]="resetAddressForm"
+                      (addressChange)="addressLookUpChanged($event)" [touchForm]="touchAddressForm" [showAlias]="true">
+                    </app-address-lookup>
+                </div>
+                <div class="form-actions">
+                    <p class="transparent" data-cy="cancelBtn" (click)="toggleAddPayment(i, 'pending')">Cancel</p>
+                    <button class="button primary" aria-label="Save" (click)="saveCard(i, 'pending')">Save</button>
+                </div>
+              </div>
+              <div class="validation">
+                <p class="validation-message" *ngIf="!!showValidationForPending[i]">Please select {{(!!totalPayments && totalPayments?.length < 10) ? 'or add' : ''}} a preferred payment method</p>
+              </div>
+              <div class="card-action">
+                <button class="button primary" aria-label="Switch Card" (click)="switchCard(i,'pending')">Switch Card</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  <div class="page-footer">
+    <div class="container-flex">                  
+      <button class="button primary" aria-label="next" [disabled]="associatedPlans?.length > 0 || associatedPendingPlans?.length > 0" (click)="backToPayments()">Next</button>
+    </div>
+  </div>
+</section>
+<app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-invisible-recaptcha>

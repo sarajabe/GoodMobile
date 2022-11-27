@@ -1,0 +1,35 @@
+import { PageObjects } from '../../../support/pageObjects'
+import { CONSTANT } from '../../../fixtures/constants'
+
+
+
+
+describe('Lets Talk as a Order Support :', () => {
+     before(() => {
+          PageObjects.BeforeAll.executeBeforeAll();
+     });
+     it('Should click on contact us from home page', () => {
+          PageObjects.HomePage.clickOnContactUs();
+     });
+     it('Should choose Order Support option successfully', () => {
+          PageObjects.Contact.clickOnOrderSupportOption();
+     });
+     it('Should insert all the information successfully', () => {
+          PageObjects.Contact.contactNC(CONSTANT.CONTACT_US.LETS_TALK_DATA.VALID2.NAME,
+               CONSTANT.CONTACT_US.LETS_TALK_DATA.VALID2.EMAIL,
+               CONSTANT.CONTACT_US.LETS_TALK_DATA.VALID2.PHONE_NUMBER,
+               CONSTANT.CONTACT_US.LETS_TALK_DATA.VALID2.MESSAGE);
+     });
+     it('Should check recaptcha', () => {
+          PageObjects.Recaptcha.checkRecaptcha();
+     });
+     it('Should click on "Submit" button successfully', () => {
+          PageObjects.Contact.clickOnSubmit();
+     });
+     it('Should click on "Back To Support" button successfully', () => {
+          PageObjects.HomePage.clickOnBackToSupport();
+     });
+     it('Should go back to contact page', () => {
+          PageObjects.TitleExpectations.goToContactUsPage();
+     });
+});

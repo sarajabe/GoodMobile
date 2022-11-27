@@ -1,0 +1,19 @@
+@import "../../styles/modules/variables";
+@import "../../styles/modules/mixins";
+
+.flex-display {
+    display: flex;
+}
+.sperator {
+    color: #898383;
+    padding-left: 2px;
+    padding-top: 0px;
+    font-size: rem-calc(40px);
+    width: 12px;
+    @media (max-width: 374.9px) {
+        padding-right: 16px;
+    }
+}
+.no-wrap {
+    white-space: nowrap;
+}

@@ -1,0 +1,141 @@
+<section class="usage-history-section">
+    <ng-container *ngIf="!!userHasActivePlans">
+        <app-activated-plan-selector [user]="user" (userPlanSelected)="userPlanSelected($event)"
+            [selectedPlan]="selectedPlan">
+        </app-activated-plan-selector>
+    </ng-container>
+    <ng-container *ngIf="!userHasActivePlans">
+        <div class="plan-selector-override">
+            <div class="usage-history-message">
+                <p>You have no active phone number at the moment
+                    <small class="text-color-primary" (click)="addActivatedAccount()">Add activated
+                        phone&nbsp;number?</small>
+                </p>
+                <p *ngIf="userHasPendingPlans">Proceed to <a
+                        [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased
+                        plans</a> to
+                    activate your plan</p>
+            </div>
+            <hr class="gray margin-top-30 margin-bottom-30">
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!!userHasActivePlans">
+        <ul class="categories-buttons-container">
+            <li class="categories-buttons" [class.active]="showUsage" (click)="showUsage=true;showPlans=false">
+                <span class="buttons-text">Your usage history</span>
+            </li>
+            <li class="categories-buttons" [class.active]="showPlans" (click)="showPlans=true;showUsage=false;">
+                <span class="buttons-text">Your plan history</span>
+            </li>
+        </ul>
+        <section *ngIf="showUsage">
+            <h4 class="table__title">Your usage history</h4>
+            <table class="responsive-table primary" cellpadding="0" cellspacing="0">
+                <thead>
+
+                    <tr>
+                        <th (click)="sortUsageHistory(USAGE_SORT_FIELDS.DATETIME)">
+                            <span>Date & time<span class="head-arrow"
+                                    [ngClass]="sortArrow(USAGE_SORT_FIELDS.DATETIME, 'usage')"></span></span>
+                        </th>
+                        <th (click)="sortUsageHistory(USAGE_SORT_FIELDS.TYPE)">
+                            <span>Type</span>
+                        </th>
+                        <th>
+                            <span>Calling mdn</span>
+                        </th>
+                        <th>
+                            <span>Called mdn</span>
+                        </th>
+                        <th (click)="sortUsageHistory(USAGE_SORT_FIELDS.TYPE)">
+                            <span>Direction<span
+                                    [ngClass]="sortArrow(USAGE_SORT_FIELDS.DIRECTION, 'usage')"></span></span>
+                        </th>
+                        <th (click)="sortUsageHistory(USAGE_SORT_FIELDS.AMOUNT)">
+                            <span>Amount<span [ngClass]="sortArrow(USAGE_SORT_FIELDS.AMOUNT, 'usage')"></span></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="!!usageHistory && !!usageHistory.usage && usageHistory.usage.length > 0">
+                    <tr *ngFor="let usage of usageHistory.usage | paginate: config" class="rectangle-container">
+                        <td *ngIf=" innerWidth >= 1025" data-th="Date & time">
+                            {{usage.dateTime | date: 'MM-dd-yy' }}<br>{{usage.dateTime | date: 'h:mm:ss a' }}</td>
+                        <td *ngIf=" innerWidth < 1025" data-th="Date & time" class="date-time-height">
+                            <p><br><span class="year-size">{{usage.dateTime | date: 'MM-dd-yy' }}<br>{{usage.dateTime |
+                                    date: 'h:mm:ss a' }}</span>
+                            </p>
+                        </td>
+                        <td data-th="Type">{{usage.type | camelize}}</td>
+                        <td data-th="Calling mdn" *ngIf="usage.type.toLowerCase() === 'voice'">{{usage.callingMdn}}</td>
+                        <td data-th="Called mdn" *ngIf="usage.type.toLowerCase() === 'voice'">{{usage.calledMdn}}</td>
+                        <td data-th="Directing"><span *ngIf="usage.direction == 'Gprs'">__</span>
+                            <span *ngIf="usage.direction != 'Gprs'">{{usage.direction | camelize}}</span>
+                        </td>
+                        <td data-th="Amount">{{usage.amount}}<span class="lower" *ngIf="usage.type == 'voice'">
+                                min</span>
+                            <span class="lower" *ngIf="usage.type == 'text'"> sms</span><span
+                                *ngIf="usage.type == 'data'"> MB</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination-container"
+                *ngIf="!!usageHistory && !!usageHistory.usage && usageHistory.usage.length > 0">
+                <app-custom-pagination [config]="config" (configChange)="pageChanged($event,'usage')">
+                </app-custom-pagination>
+            </div>
+
+            <h4 class="message-no-data" *ngIf="!usageHistory || !usageHistory.usage || usageHistory.usage.length === 0">
+                You have no usage at the
+                moment.</h4>
+
+        </section>
+
+        <section *ngIf="showPlans">
+            <h4 class="table__title">Your plan history</h4>
+            <table class="responsive-table primary" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            <span (click)="sortPlanHistory('billing_status')">Status<span
+                                    [ngClass]="sortArrow('billing_status', 'plans')"></span></span>
+                        </th>
+                        <th>
+                            <span (click)="sortPlanHistory('rate_plan')">Rate plan<span class="head-arrow"
+                                    [ngClass]="sortArrow('rate_plan', 'plans')"></span></span>
+                        </th>
+                        <th>
+                            <span (click)="sortPlanHistory('billing_start_date')">Start date<span
+                                    [ngClass]="sortArrow('billing_start_date', 'plans')"></span></span>
+                        </th>
+                        <th>
+                            <span (click)="sortPlanHistory('billing_renewal_date')">End date<span
+                                    [ngClass]="sortArrow('billing_renewal_date', 'plans')"></span></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="!!planHistory && !!planHistory.plans && planHistory.plans.length > 0">
+                    <tr *ngFor="let plan of planHistory.plans | paginate: configPlans" class="rectangle-container2">
+                        <td ng data-th="Status" class="Status-height"><span
+                                *ngIf="plan.planStatus != 'CANCELED'">{{plan.planStatus | camelize}}</span>
+                            <span *ngIf="plan.planStatus == 'CANCELED'">Renewed</span>
+                        </td>
+                        <td data-th="Rate plan" class="plan rate">{{plan.ratePlan }}</td>
+                        <td data-th="Start date" class="plan">{{plan.planStartDate | date: 'MM-dd-yy'}}<span
+                                class="time">{{plan.planStartDate | date: 'h:mm:ss a'}}</span></td>
+                        <td data-th="End date" class="plan">{{plan.planRenewalDate | date: 'MM-dd-yy'}}<span
+                                class="time">{{plan.planStartDate | date: 'h:mm:ss a'}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination-container"
+                *ngIf="!!planHistory && !!planHistory.plans && planHistory.plans.length > 0">
+                <app-custom-pagination [config]="configPlans" (configChange)="pageChanged($event,'plans')">
+                </app-custom-pagination>
+            </div>
+            <p class="message-no-data" *ngIf="!planHistory || !planHistory.plans || planHistory.plans.length === 0">You
+                have no plans at the moment.</p>
+        </section>
+    </ng-container>
+</section>

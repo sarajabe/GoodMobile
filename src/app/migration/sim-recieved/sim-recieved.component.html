@@ -1,0 +1,29 @@
+<section class="sim-page container-flex">
+    <div class="back-section"(click)="back()">
+        <img src="assets/icon/back-arrow-icon.svg">
+        <p class="text">Back</p>
+    </div>
+    <div class="sim-received-page">
+        <h1 class="header">Let’s start your service migration</h1>
+        <div *ngIf="!verifyFlow">
+            <section class="header-section">
+              <p class="sub-header">Please confirm if this is the phone you are using?</p>
+            </section>
+            <section class="device-info-section" *ngIf="!!selectedPlan?.planDevice">
+                <img src="assets/img/iphone-12.svg" alt="iPhone">
+                <p class="info"><b>IMEI: </b>{{phoneImei}}</p>
+            </section>
+            <section class="options-section">
+              <div class="buttons-part">
+                  <button class="button primary" (click)="verifyFlow = true" id="yes" aria-label="yes">Yes, this is my phone</button>
+                  <button class="button secondary" id="No" aria-label="No" (click)="goToCheckDevice()">No, I have another phone</button>
+              </div>
+              <div class="not-sure-part">
+                  <a (click)="showWhatIsIMEI()">I'm not sure</a>
+              </div>
+          </section>
+      </div>
+      <app-verified-flow *ngIf="!!verifyFlow" (verifyFlow)="getVerifiedValue($event)" [planMdn]="mdn"
+          [selectedPlan]="selectedPlan" [phoneImei]="phoneImei" [selectedPlanId]="planId"></app-verified-flow>
+  </div>
+</section>

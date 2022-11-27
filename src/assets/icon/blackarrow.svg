@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17" height="28" viewBox="0 0 17 28">
+  <defs>
+    <clipPath id="clip-blackarrow">
+      <rect width="17" height="28"/>
+    </clipPath>
+  </defs>
+  <g id="blackarrow" clip-path="url(#clip-blackarrow)">
+    <g id="ic_keyboard_arrow_left_48px" transform="translate(-15 -9.5)">
+      <path id="Path_1627" data-name="Path 1627" d="M30.83,32.67,21.66,23.5l9.17-9.17L28,11.5l-12,12,12,12Z" fill="#111"/>
+    </g>
+  </g>
+</svg>

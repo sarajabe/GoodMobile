@@ -1,0 +1,100 @@
+@import "../../../../styles/modules/_variables.scss";
+@import "../../../../styles/modules/_mixins.scss";
+
+.flow-indicator {
+  margin: 20px 20px 15px 20px;
+  @media (min-width: 834px) {
+    margin: 50px 20px 0 20px;
+  }
+  @media (min-width: 750px) and (max-width: $ipad-min-width-minus) {
+    margin: 50px 20px 15px 20px;
+  }
+  @media (max-width: 640px) {
+    margin: 20px 20px 25px;
+  }
+
+  .bullets-container {
+    width: calc(100% + 40px);
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: -20px;
+    .bullet {
+      padding: 1px;
+      .bullet-content {
+        @include push--auto;
+      }
+      .bullet-text {
+        font-size: rem-calc(9px);
+        line-height: 10px;
+
+        @media (#{$larger-than-desktop}) {
+          font-size: rem-calc(15px);
+        }
+        @media (max-width: 834px) {
+          font-size: rem-calc(11px);
+          line-height: 12px;
+        }
+        width: 55px;
+      }
+      .bullet-button {
+        border: 1px solid $primary-color;
+        background-color: white;
+        height: 20px;
+        width: 20px;
+        justify-self: flex-end;
+        margin-top: 12px;
+        margin-bottom: -16.5px;
+        border-radius: 17px;
+        position: relative;
+        @include push--auto();
+      }
+      &.first-bullet {
+        .bullet-text {
+          margin-left: -15px;
+          text-align: center;
+        }
+        .bullet-button {
+          float: left;
+        }
+      }
+      &.last-bullet {
+        margin-top: -10px;
+        .bullet-text {
+          margin-right: -15px;
+        }
+        .bullet-button {
+          float: right;
+        }
+      }
+
+      &.current {
+        color: $primary-color;
+        .button-state {
+          border: 1px solid $secondary-color;
+          background-color: $secondary-color;
+          border-radius: 17px;
+          height: 16px;
+          width: 16px;
+          margin: 1px;
+        }
+      }
+      &.done {
+        .bullet-button {
+          background-color: $primary-color;
+        }
+        .button-state {
+          margin: 3px 2px 4px 5px;
+          font-family: "hero-mobile" !important;
+          font-size: 10px;
+          color: white;
+          transform: rotate(15deg);
+        }
+        .button-state:before {
+          content: "\2713";
+        }
+      }
+    }
+  }
+}

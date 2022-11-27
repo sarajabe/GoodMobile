@@ -1,0 +1,256 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.activate-sim {
+    margin-bottom: 60px;
+    .header {
+        font-family: $secondary-font-family-bold;
+        font-size: rem-calc(38px);
+        line-height: 50px;
+        margin-bottom: 35px;
+        @media (max-width: 1025px) {
+            font-size: rem-calc(27px);
+            line-height: 35px;
+        }
+        @media (max-width: 640px) {
+            font-size: rem-calc(26px);
+            line-height: 30px;
+        }
+    }
+    .content-holder {
+        &.port-bottom {
+            margin-bottom: 30px;
+        }
+        &.new {
+            @media (#{$larger-than-phablet}) {
+                margin-bottom: 200px;
+            }
+        }
+        .subhead {
+            font-size: rem-calc(18px);
+            font-family: $base-font-family-bold;
+            font-weight: bold;
+            line-height: 21px;
+            margin-bottom: 25px;
+        }
+        .port-note {
+            font-size: rem-calc(18px);
+            font-family: $base-font-family-bold;
+            font-weight: 400;
+            line-height: 21px;
+            max-width: 693px;
+            margin-bottom: 1px;
+            @media (max-width: 639.9px) {
+                font-size: rem-calc(16px);
+                max-width: 100%;
+                padding-right: 28px;
+                margin-bottom: 6px;
+            }
+            @media (min-width: 640px) and (max-width: 833.9px) {
+                font-size: rem-calc(17px);
+                max-width: 523px;
+                margin-bottom: 8px;
+            }
+            @media (min-width: 834px) and (max-width: 1024.9px) {
+                font-size: rem-calc(17px);
+                max-width: 703px;
+                margin-bottom: 7px;
+            }
+        }
+        .activate-video {
+            width: 325px;
+            font-family: "Sansation";
+            font-size: rem-calc(15px);
+            line-height: 1.13;
+            @media (max-width: 639.9px) {
+                max-width: 325px;
+                padding-right: 19px;
+            }
+        }
+        .activation-video-container {
+            background-color: #6c696980;
+            z-index: 9999999999;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            padding-top: 188px;
+            .boxclose {
+                float: right;
+                padding-right: 12px;
+                color: black;
+                cursor: pointer;
+                font-size: 22px;
+                position: fixed;
+                margin-top: 8px;
+                margin-left: 616px;
+                @media (max-width: 610.9px) {
+                    margin-left: 275px;
+                    margin-top: 4px;
+                    font-size: 18px;
+                }
+                @media (min-width: 611px) and (max-width: 833.9px) {
+                    margin-left: 566px;
+                }
+            }
+            iframe {
+                width: 656px;
+                height: 369px;
+                object-fit: cover;
+                @media (max-width: 610.9px) {
+                    width: 300px;
+                    height: 169px;
+                }
+                @media (min-width: 611px) and (max-width: 833.9px) {
+                    width: 600px;
+                    height: 338px;
+                }
+            }
+        }
+    }
+    .tab-nav {
+        font-size: rem-calc(18px);
+        margin-bottom: 25px;
+        @media (max-width: 639.9px) {
+            margin-bottom: 6px;
+        }
+        .tab-list {
+            display: inline-block;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            .tab-title {
+                float: left;
+                @media (#{$larger-than-phablet}) {
+                    padding: 0;
+                    &:first-child {
+                        padding-left: 0;
+                        margin-right: 30px;
+                    }
+                }
+
+                .tab-content {
+                    cursor: default;
+                    background-color: #fff;
+                    color: $primary-color;
+                    border: 1px solid $primary-color;
+                    cursor: pointer;
+                    padding: 10px 15px;
+                    &.active {
+                        background-color: $primary-color;
+                        color: white;
+                        border: 1px solid $primary-color;
+                        cursor: pointer;
+                        border-radius: 0;
+                    }
+                    &.disabled {
+                        cursor: not-allowed;
+                    }
+                }
+                @media (max-width: 639.9px) {
+                    display: block;
+                    width: 100%;
+                    margin-bottom: 15px;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+    .account-actions {
+        margin-bottom: 100px;
+        .button {
+            padding: 8px;
+            width: 213px;
+            font-size: rem-calc(22px);
+            line-height: 28px;
+            &.long {
+                width: 240px;
+                font-size: rem-calc(17px);
+            }
+        }
+    }
+    .activate-sim-form {
+        input:read-only {
+            cursor: not-allowed;
+            background-color: $light-grey;
+        }
+        .critical {
+            .message {
+                color: $red;
+                font-family: $secondary-font-family;
+                font-size: rem-calc(18px);
+                font-weight: bold;
+                @media (max-width: 640px) {
+                    font-size: rem-calc(16px);
+                }
+            }
+        }
+        .warning {
+            font-size: rem-calc(13px);
+            font-family: $base-font-family;
+            font-weight: normal;
+            line-height: 15px;
+            color: $secondary-color;
+            text-transform: none;
+        }
+        @media (min-width: 1025px) {
+            .five {
+                input {
+                    max-width: 238.8px;
+                }
+            }
+            .ten {
+                input {
+                    max-width: 506px;
+                }
+            }
+            .address-lookup {
+                &.eight {
+                    input {
+                        max-width: 346.2px;
+                    }
+                }
+            }
+            .four {
+                input {
+                    max-width: 149.8px;
+                }
+            }
+        }
+        .form-part {
+            .contact {
+                .title {
+                    font-size: rem-calc(18px);
+                    font-family: $base-font-family-bold;
+                    line-height: 21px;
+                    margin-bottom: 25px;
+                    font-weight: bold;
+                }
+                .description {
+                    font-size: rem-calc(18px);
+                    font-family: $base-font-family;
+                    line-height: 21px;
+                    font-weight: normal;
+                }
+                input {
+                    max-width: 238.8px;
+                }
+            }
+        }
+    }
+    .account-actions {
+        .button {
+            padding: 10px;
+            width: 213px;
+            font-size: rem-calc(22px);
+            line-height: 28px;
+            font-family: $secondary-font-family;
+        }
+    }
+}

@@ -1,0 +1,195 @@
+<section class="acp-section col-xl-offset-1">
+    <p class="summary-title">ACP Summary</p>
+    <div class="actions-top" *ngIf="!showAcpApplicationCard">
+        <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
+        <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
+    </div>
+    <div class="approved-banner" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
+        [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
+        <div class="action-required">
+            <img src="assets/icon/success-nv-icon.svg" alt="note icon">
+            <div class="action-required-content">
+                <p class="desc">Your application with GoodMobile was successfully approved.</p>
+            </div>
+        </div>
+    </div>
+    <div class="acp-application-card" *ngIf="!!showAcpApplicationCard">
+        <div class="card-header-part">
+            <div class="header-flex no-margin">
+                <div class="title-app-id">
+                    <p class="title">ACP Application<span><img *ngIf="!showAlert" src="assets/icon/pending-dot.svg"
+                                alt="dot icon"></span>
+                    </p>
+                    <div class="app-id" *ngIf="!showAlert">
+                        <p>G2G APP ID:</p>
+                        <p>{{acpAppDetails?.data?.applicationId}}</p>
+                    </div>
+                </div>
+                <div class="status-date" *ngIf="!showAlert">
+                    <p class="key bottom">Status: <span class="value status bold">{{appStatus}}</span></p>
+                    <p class="key">Date: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-content-part">
+            <div class="action-required" [class.alert-background]="!!showAlert">
+                <img [src]="!!showAlert ? 'assets/icon/alert-note.svg' : 'assets/icon/secondary-note-icon.svg'"
+                    alt="note icon">
+                <div class="action-required-content" *ngIf="!!ACP_DESCS[appStatus]">
+                    <p class="title" *ngIf="ACP_DESCS[appStatus]?.title">{{ACP_DESCS[appStatus]?.title}}</p>
+                    <p class="desc" *ngIf="!!ACP_DESCS[appStatus]?.desc1" [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
+                    <p class="desc" *ngIf="!!ACP_DESCS[appStatus]?.desc2" [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
+                    <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
+                        <button class="button primary" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
+                            *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
+                            (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
+                            [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
+                            [class.disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]">{{ACP_DESCS[appStatus]?.buttonName}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="acp-application-card" *ngIf="!!showAcpPlanActivationCard">
+        <div class="card-header-part" [class.border-radius]="hideCardContentNV === true">
+            <div class="header-flex">
+                <p class="title">ACP Plan Activation<span><img
+                            [src]="(!!planActivationStatus && planActivationStatus === 'ENROLLED') ? 'assets/icon/green-dot.svg' : 'assets/icon/pending-dot.svg'"
+                            alt="dot icon"></span></p>
+                <div class="status-date">
+                    <p class="key bottom">Status: <span class="value status bold"
+                            [class.complete-status]="(!!planActivationStatus && planActivationStatus === 'ENROLLED')">{{ACP_PLAN_STATUS_TITLE[planActivationStatus]}}</span>
+                    </p>
+                    <p class="key">Date: <span class="value">{{!!appDetails ? (appDetails?.updatedAt | date) :
+                            'N/A'}}</span></p>
+                </div>
+            </div>
+            <div class="collapse-icon">
+                <img [src]="hideCardContentPA ? 'assets/icon/path-down-icon.svg' : 'assets/icon/path-up-icon.svg'"
+                    alt="arrow icon" (click)="hideCardContentPA = !hideCardContentPA">
+            </div>
+        </div>
+        <div class="card-content-part" *ngIf="!hideCardContentPA">
+            <div class="action-required"
+                [class.success-background]="(!!planActivationStatus && planActivationStatus === 'ENROLLED')">
+                <img [src]="(!!planActivationStatus && planActivationStatus === 'ENROLLED') ? 'assets/icon/success-nv-icon.svg' : 'assets/icon/secondary-note-icon.svg'"
+                    alt="note icon">
+                <div class="action-required-content" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]">
+                    <p class="title" *ngIf="ACP_PLAN_DESCS[planActivationStatus]?.title">
+                        {{ACP_PLAN_DESCS[planActivationStatus]?.title}}</p>
+                    <p class="desc" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc1"
+                        [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc1"></p>
+                    <p class="desc" [class.top-bottom]="!!ACP_PLAN_DESCS[planActivationStatus]?.topBottomClass"
+                        *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc2"
+                        [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
+                    <p class="desc" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
+                        [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
+                    <div class="actions"
+                        *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.linkName">
+                        <button class="button primary"
+                            [class.pending-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.pendingWidth"
+                            [class.hold-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.onHoldWidth"
+                            [class.long]="!!ACP_PLAN_DESCS[planActivationStatus]?.longClass"
+                            *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName"
+                            (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonAction]()"
+                            [disabled]="!!this[ACP_PLAN_DESCS[planActivationStatus]?.disabledCondition]"
+                            [class.disabled]="!!this[ACP_PLAN_DESCS[planActivationStatus]?.disabledCondition]">{{ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName}}</button>
+                        <button class="button secondary"
+                            [class.pending-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.pendingWidth"
+                            [class.hold-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.onHoldWidth"
+                            [class.long]="!!ACP_PLAN_DESCS[planActivationStatus]?.longClass"
+                            *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName"
+                            (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonAction]()"
+                            [disabled]="!!this[ACP_PLAN_DESCS[planActivationStatus]?.disabledCondition]"
+                            [class.disabled]="!!this[ACP_PLAN_DESCS[planActivationStatus]?.disabledCondition]">{{ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName}}</button>
+                        <a (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.linkAction]()"
+                            *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.linkName">{{ACP_PLAN_DESCS[planActivationStatus]?.linkName}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="acp-application-card" *ngIf="!!showSPCard">
+        <div class="card-header-part" [class.border-radius]="hideCardContentSP === true">
+            <div class="header-flex">
+                <p class="title">Service Provider<span><img src="assets/icon/green-dot.svg" alt="dot icon"></span></p>
+                <div class="status-date">
+                    <p class="key bottom">Status: <span class="value complete-status bold">Complete</span></p>
+                    <p class="key">Date: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
+                            date) : 'N/A'}}</span></p>
+                </div>
+            </div>
+            <div class="collapse-icon">
+                <img [src]="hideCardContentSP ? 'assets/icon/path-down-icon.svg' : 'assets/icon/path-up-icon.svg'"
+                    alt="arrow icon" (click)="hideCardContentSP = !hideCardContentSP">
+            </div>
+        </div>
+        <div class="card-content-part" *ngIf="!hideCardContentSP">
+            <div class="action-required success-background">
+                <img src="assets/icon/success-nv-icon.svg" alt="note icon">
+                <div class="action-required-content">
+                    <p class="desc">Your application with GoodMobile was successfully approved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="acp-application-card" *ngIf="!!showNVCard">
+        <div class="card-header-part" [class.border-radius]="hideCardContentNV === true">
+            <div class="header-flex">
+                <p class="title">National Verifier<span><img
+                            *ngIf="!showNVErrorSection && !showExpiredSection && !showGenericError"
+                            [src]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE) ? 'assets/icon/green-dot.svg': (!!showNVOnHoldSection? 'assets/icon/red-dot.svg' : 'assets/icon/pending-dot.svg')"
+                            alt="dot icon"></span></p>
+                <div class="status-date" *ngIf="!showNVErrorSection && !showExpiredSection && !showGenericError">
+                    <p class="key bottom">Status: <span class="value status bold"
+                            [class.complete-status]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE)"
+                            [class.alert-status]="!!showNVOnHoldSection">{{STATUS_TITLE[nvStatus]}}</span>
+                    </p>
+                    <p class="key">Date: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
+                            date) : 'N/A'}}</span></p>
+                </div>
+            </div>
+            <div class="collapse-icon">
+                <img [src]="hideCardContentNV ? 'assets/icon/path-down-icon.svg' : 'assets/icon/path-up-icon.svg'"
+                    alt="arrow icon" (click)="hideCardContentNV = !hideCardContentNV">
+            </div>
+        </div>
+        <div class="card-content-part" *ngIf="!hideCardContentNV">
+            <p class="description" *ngIf="!!showCardDesc">
+                Applicants must complete the ACP application via GoodMobile. Upon completion,
+                applicants will be redirected to the National Verifier to <b>{{verificationDetails?.status ===
+                    ACP_STATUS.PENDING_CERT ? 'complete the ACP Qualification.' : 'upload necessary documents to certify
+                    their eligibility.'}}</b></p>
+            <div class="action-required" [class.alert-background]="!!showAlert"
+                [class.success-background]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE">
+                <img [src]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE) ? 'assets/icon/success-nv-icon.svg' : (!!showAlert ? 'assets/icon/alert-note.svg' : 'assets/icon/secondary-note-icon.svg')"
+                    alt="note icon">
+                <div class="action-required-content" *ngIf="!!NV_DESCS[nvStatus]">
+                    <p class="title" *ngIf="NV_DESCS[nvStatus]?.title">{{NV_DESCS[nvStatus]?.title}}</p>
+                    <p class="desc" *ngIf="!!NV_DESCS[nvStatus]?.desc1" [innerHTML]="NV_DESCS[nvStatus]?.desc1"></p>
+                    <p class="desc" *ngIf="!!NV_DESCS[nvStatus]?.desc2" [innerHTML]="NV_DESCS[nvStatus]?.desc2"></p>
+                    <p class="desc top-bottom" *ngIf="!!NV_DESCS[nvStatus]?.desc3"
+                        [innerHTML]="NV_DESCS[nvStatus]?.desc3"></p>
+                    <p class="desc" *ngIf="!!NV_DESCS[nvStatus]?.desc4" [innerHTML]="NV_DESCS[nvStatus]?.desc4"></p>
+                    <div class="actions" *ngIf="!!NV_DESCS[nvStatus]?.buttonName || !!NV_DESCS[nvStatus]?.linkName">
+                        <button class="button primary" [class.long]="!!NV_DESCS[nvStatus]?.longClass"
+                            *ngIf="!!NV_DESCS[nvStatus]?.buttonName" (click)="this[NV_DESCS[nvStatus]?.buttonAction]()"
+                            [disabled]="!!this[NV_DESCS[nvStatus]?.disabledCondition]"
+                            [class.disabled]="!!this[NV_DESCS[nvStatus]?.disabledCondition]">{{NV_DESCS[nvStatus]?.buttonName}}</button>
+                        <a (click)="this[NV_DESCS[nvStatus]?.linkAction]()"
+                            *ngIf="!!NV_DESCS[nvStatus]?.linkName">{{NV_DESCS[nvStatus]?.linkName}}</a>
+                    </div>
+                    <p class="refresh-note"
+                        *ngIf="!!NV_DESCS[nvStatus]?.note && !!this[NV_DESCS[nvStatus]?.noteCondition]"
+                        [innerHTML]="NV_DESCS[nvStatus]?.note"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

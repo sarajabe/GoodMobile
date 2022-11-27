@@ -1,0 +1,203 @@
+@import "../../../../../../styles/modules/variables";
+@import "../../../../../../styles/modules/mixins";
+
+
+
+.thicker {
+  display: inline-block;
+  transform: scale(1.2, 1.5);
+  margin-left: 10px;
+}
+
+.device-setup {
+  padding: 0 10%;
+
+  @media (max-width: $desktop-min-width-minus) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: $phablet-min-width-minus) {
+    padding: 0 16px;
+  }
+}
+
+.ios-gsm-container {
+  margin: 80px 0;
+
+  @media (max-width: $desktop-min-width-minus) {
+    margin: 62px 0;
+  }
+
+  @media (max-width: $phablet-min-width-minus) {
+    margin: 30px 0;
+  }
+
+  .submission-item {
+    display: flex;
+    flex-direction: column;
+
+    b {
+      margin-bottom: 24px;
+      font-size: 24px;
+      line-height: 36px;
+
+      @media (max-width: $phablet-min-width-minus) {
+        font-size: 20px;
+      }
+    }
+
+    .item-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      @media (max-width: $phablet-min-width-minus) {
+        &:last-child {
+          margin-right: 0;
+        }
+
+      }
+
+      button {
+        margin-right: 16px;
+        font-weight: 700;
+        margin-bottom: 0;
+        padding: 8px 16px;
+        height: 41px;
+        width: 100%;
+        max-width: 150px;
+        font-size: 14px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          margin-bottom: 0;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .title {
+    font-size: rem-calc(36px);
+    line-height: 43px;
+    font-family: $secondary-font-family-bold;
+    margin-bottom: 40px;
+
+    @media (max-width: $phablet-min-width-minus) {
+      font-size: rem-calc(32px);
+      line-height: 38px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .subtitle {
+    font-size: 22px;
+    line-height: 33px;
+    margin-bottom: 8px;
+
+    @media (max-width: $phablet-min-width-minus) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .content,
+  b {
+    font-size: 22px;
+    line-height: 33px;
+    margin-bottom: 40px;
+
+    &.short {
+      margin-bottom: 8px;
+    }
+
+    &.flexing {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: $phablet-min-width-minus) {
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 24px;
+
+      &.short {
+        margin-bottom: 8px;
+      }
+
+      &.flexing {
+        display: flex;
+      }
+    }
+  }
+
+  .note {
+    font-size: rem-calc(18px);
+    line-height: 27px;
+    font-family: $base-font-family;
+    margin-bottom: 20px;
+  }
+
+  .icon-image {
+    width: 34px;
+    height: 24px;
+    padding-right: 10px;
+
+    @media (max-width: $phablet-min-width-minus) {
+      height: 32px;
+    }
+
+  }
+
+  .link {
+    a {
+      line-height: unset;
+      height: 34px;
+    }
+
+    b {
+      font-size: rem-calc(22px);
+      line-height: 33px;
+      font-family: $base-font-family;
+
+      @media (max-width: $phablet-min-width-minus) {
+        font-size: rem-calc(20px);
+        line-height: 30px;
+        font-family: $base-font-family;
+      }
+    }
+  }
+
+  .actions-container {
+    margin-top: 0;
+    text-align: left;
+    margin-bottom: 80px;
+    font-family: $base-font-family-bold;
+    font-size: rem-calc(16px);
+    line-height: 40px;
+
+    .download-link {
+      font-size: rem-calc(20px);
+      font-family: $secondary-font-family-bold;
+      font-weight: 500;
+      border-bottom: 1px solid $primary-color;
+    }
+
+    .button {
+      display: block;
+      margin-top: 30px;
+    }
+  }
+
+  @media (max-width: $phablet-min-width-minus) {
+    .actions-container {
+      margin-top: 0;
+      margin-bottom: 50px;
+
+      font-family: $base-font-family-bold;
+
+      .button {
+        margin-top: 22px;
+      }
+    }
+  }
+}

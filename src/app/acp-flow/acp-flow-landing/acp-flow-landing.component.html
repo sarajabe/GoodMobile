@@ -1,0 +1,68 @@
+<section class="acp-flow" *ngIf="!showAcpComponents && !acpSuccess && !acpError">
+  <h2 class="header">Before we begin...</h2>
+  <h3 class="sub-header" data-cy="id-decision">Do you have an
+    ACP application ID?</h3>
+  <form [formGroup]="acpFlowForm" class="acp-form-flow" [class.acp-disabled]="!!enrolled">
+    <div class="radioBtn" *ngFor="let item of acpOptions">
+      <label class="form-control" [for]="item?.id">
+        <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id" [data-cy]="item?.id"
+          (change)="onOptionChange()">{{item?.value}}
+      </label>
+    </div>
+    <label class="validation-message" *ngIf="!!showAcpValidationMsg">Please select one of the options above to
+      continue</label>
+  </form>
+  <div class="note-container">
+    <img src="/assets/icon/Information-sec.svg" alt="info-icon">
+    <div class="notes">
+      <p class="head-note">You have an application ID if you were previously verified for the ACP via: </p>
+      <div class="sub-note">
+        <img src="/assets/icon/check-icon.svg" alt="check icon">
+        <p>Lifeline</p>
+      </div>
+      <div class="sub-note">
+        <img src="/assets/icon/check-icon.svg" alt="check icon">
+        <p> The National Verifier</p>
+      </div>
+      <div class="sub-note">
+        <img src="/assets/icon/check-icon.svg" alt="check icon">
+        <p>A School</p>
+      </div>
+      <div class="sub-note last">
+        <img src="/assets/icon/check-icon.svg" alt="check icon">
+        <p>Or any other alternative verification process</p>
+      </div>
+    </div>
+  </div>
+  <div class="illustration-section">
+    <picture class="picture">
+      <source srcset='/assets/img/first-step-illu.webp' media="(max-width: 1759.9px)" type="image/webp">
+      <source srcset='/assets/img/first-step-illu.svg' media="(max-width: 1759.9px)" type="image/svg">
+      <source srcset='/assets/img/first-step-1760.webp' media="(min-width: 1760px)" type="image/webp">
+      <source srcset='/assets/img/first-step-illu-1760.svg' media="(min-width: 1760px)" type="image/svg">
+      <img src="assets/img/first-step-illu.svg" alt="illustration">
+    </picture>
+  </div>
+</section>
+<section *ngIf="!!showAcpComponents && !acpSuccess && !acpError">
+  <app-acp-validation *ngIf="!!newApplication" [acpData]="acpData" [customerId]="customerId" (back)="back($event)"
+    [applicationId]="applicationId" [userProfileId]="userId" [enrolled]="enrolled" [userPlans]="userPlans"
+    [ebbId]="ebbId"></app-acp-validation>
+  <app-not-existing-app-validation *ngIf="!!yesWithNonExistingApp" [acpData]="acpData" [customerId]="customerId"
+    [applicationId]="applicationId" [userProfileId]="userId" [enrolled]="enrolled" (back)="back($event)">
+  </app-not-existing-app-validation>
+  <app-app-id-validation *ngIf="!!yesExistingAppId" [acpData]="acpData" [customerId]="customerId"
+    [applicationId]="applicationId" [userProfileId]="userId" [enrolled]="enrolled" (back)="back($event)">
+  </app-app-id-validation>
+</section>
+<app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
+<app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
+<section class="navigation-section" *ngIf="!showAcpComponents && !acpSuccess && !acpError">
+  <div class="left">
+    <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
+  </div>
+  <div class="right">
+    <button class="button primary" data-cy="nextButton" aria-label="Next" (click)="goNext()"
+      *ngIf="!enrolled">Next</button>
+  </div>
+</section>

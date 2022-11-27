@@ -1,0 +1,25 @@
+<div class="container model-container {{context.customClass}}">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{context.title}}</h2>
+      <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <div class="row">
+          <p class="message">
+            {{context.message}}
+          </p>
+        </div>
+        <div class="col-md-12 first">
+            <button class="button primary" (click)="goToFirstPage()">{{context.yesButtonText}}</button>
+        </div>
+        <div class="col-md-12 second">
+            <button class="button primary" (click)="goToSecondPage()">{{context.noButtonText}}</button>
+        </div>
+        <div class="col-md-12 third">
+            <button class="button secondary" (click)="goToThirdPage()">{{context.skipButtonText}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

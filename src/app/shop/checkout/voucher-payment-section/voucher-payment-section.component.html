@@ -1,0 +1,47 @@
+<div class="voucher-form-container">
+    <form>
+      <div class="voucher-form">
+        <div (click)="showHideVoucherForm()" class="toggle-arrow-header not-card pay-voucher">
+          <span class="primary-text">Do you have a voucher?</span>
+          <div class="toggle-arrow-button" [class.flip-vertical]="showVoucherForm">
+            <i class="icon-chevron-thin-down"></i>
+          </div>
+        </div>
+        <ng-container *ngIf="showVoucherForm">
+          <div class="card-container mobile-card-only no-padding-bottom-important">
+            <div class="code-field">
+             <div class="input-container"> 
+                <input id="voucherCode" data-cy="voucherCode" class="voucher-input" placeholder="Enter voucher code" type="tel" name="voucherCode" required [(ngModel)]="voucherCode" autocomplete="voucher-code" minlength="12" maxlength="12" restrictNumbers>
+                <a class="help-icon" (click)="showVoucherModal()">?</a>
+              </div>
+              <label class="no-padding-left validation-message tablet-alert" *ngIf="invalidVoucherCode">
+                  Invalid voucher code entered, you can call customer care on {{ customerCareNumber | phone }}
+              </label>
+              <div class="action-container">
+                <button (click)="checkVoucherCode()" class="button secondary validate-btn" [uiBlockButton]="processingVoucherRequest" [disabled]="!voucherCode">Validate</button>
+              </div>
+            </div>
+            <label class="no-padding-left validation-message desktop-alert" *ngIf="invalidVoucherCode">
+                Invalid voucher code entered, you can call customer care on {{ customerCareNumber | phone }}
+            </label>
+            <div class="warning-section no-padding-left margin-bottom-30 " *ngIf="!!currentCart?.voucherData && !!isVoucherPaymentSufficient && !(currentCart?.cartType == CART_TYPES.PLAN_ITEMS && currentCart?.simsQuantity > 0 && !currentCart?.addOns)">
+              <span class="warning text-color-secondary">
+                The voucher amount you entered does not cover your order purchase.
+                Please enter Credit Card information in order to place your order.
+              </span>
+            </div>
+            <div class="note">
+              <fieldset class="card-container" [@fadeInOut]="'in'" *ngIf="currentCart?.cartType != CART_TYPES.PLAN_ITEMS">
+                <p class="voucher-note">The $5 discount is not applicable with any voucher payments</p>
+              </fieldset>
+              <p class="remove padding-top-10 padding-bottom-10 text-color-secondary" (click)="removeVoucher()" [class.disabled]="!currentCart?.voucherData">Remove voucher</p>
+              <fieldset class="card-container" [@fadeInOut]="'in'" *ngIf="currentCart?.cartType == CART_TYPES.PLAN_ITEMS && currentCart?.simsQuantity > 0">
+                <p>The SIM price is not applicable with any voucher payments</p>
+              </fieldset>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+  

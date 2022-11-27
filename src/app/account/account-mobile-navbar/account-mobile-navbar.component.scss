@@ -1,0 +1,164 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+@import "../../../styles/partials/_grid.scss";
+
+.hide-on-larger-phablet {
+    display: block;
+    width: 100%;
+    height: 0;
+    z-index: 9999;
+    &.menu-shown {
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        position: fixed;
+        height: 100%;
+        overscroll-behavior: contain;
+    }
+
+    @media (#{$larger-than-phablet}) {
+        display: none;
+    }
+}
+.display-flex {
+    display: flex;
+}
+.display-block {
+    display: block;
+}
+.display-grid {
+    display: grid;
+}
+
+.grid-two-row {
+    grid-template-rows: auto auto;
+}
+
+.justify-self-center {
+    justify-self: center;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-end {
+    justify-content: end;
+}
+
+.justify-self-end {
+    justify-self: end;
+}
+
+.align-self-end {
+    align-self: end;
+}
+.margin-right-10p {
+    margin-right: 10%;
+}
+
+.title {
+    display: block;
+    color: $primary-color;
+    cursor: pointer;
+    font-size: rem-calc(17px);
+    line-height: 20px;
+    font-family: $secondary-font-family-bold;
+    font-weight: bold;
+    padding: 30px 30px 10px;
+    .arrow {
+        padding-right: 5px;
+    }
+    &.menu-shown {
+        display: none;
+    }
+    @media (min-width: $phablet-min-width) {
+        display: none;
+    }
+}
+.mob-list--container {
+    width: 100%;
+    height: 570px;
+    margin-top: 60px;
+    border-radius: 0px 0px 0px 10px;
+    background-color: #7cbadb;
+    z-index: 999;
+    overflow-y: scroll;
+    .user-container {
+        margin-left: 40px;
+        margin-top: 0px;
+        margin-right: 40px;
+        border-bottom: 1px solid white;
+        .close {
+            text-align: right;
+            color: white;
+            padding-top: 25px;
+            .icon {
+                font-size: rem-calc(24px);
+            }
+        }
+        .name {
+            font-size: rem-calc(15px);
+            line-height: 20px;
+            color: white;
+        }
+        .mdn {
+            font-size: rem-calc(13px);
+            line-height: 20px;
+            color: white;
+            font-family: $secondary-font-family;
+            margin-bottom: 20px;
+        }
+    }
+}
+.mob-list__button {
+    background-color: $secondary-color;
+    height: 80px;
+    width: 60px;
+    border-radius: 40px;
+}
+
+.container {
+    width: 275px;
+}
+
+.mob-list {
+    list-style: none;
+    margin-top: 30px;
+    li {
+        width: 85%;
+        margin-bottom: 15px;
+        .icon {
+            padding-right: 10px;
+        }
+        &.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            color: $sg-steel;
+        }
+        a {
+            display: block;
+            font-family: $secondary-font-family-bold;
+            color: white;
+            font-weight: bold;
+            font-size: rem-calc(15px);
+            line-height: rem-calc(18px);
+            padding-bottom: 15px;
+            &.disabled {
+                cursor: not-allowed;
+                color: $sg-steel;
+            }
+        }
+    }
+}
+
+.arrow.down,
+.arrow.up {
+    border-width: 0 2px 2px 0;
+    padding: 5px;
+    border-color: white;
+    width: 10px;
+    height: 10px;
+    margin-bottom: 20px;
+}

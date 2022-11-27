@@ -1,0 +1,32 @@
+<div class="container model-container {{context.customClass}}">
+    <div class="modal-header">
+        <h2 class="modal-heading">{{context.title}}</h2>
+        <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle" (click)="closeDialog()"><i
+                class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content">
+            <div class="row">
+                <div class="tmo-skip-content">
+                    <p class="desc mobile-width"><span *ngIf="!context.notBeforeSkipping">Before skipping, </span>please make sure your phone is 4G/5G VoLTE compatible, and
+                        if it accepts an <b data-cy="content-esim">eSIM.</b><span class="tooltip">
+                            <img src="assets/icon/Information-sec.svg" class="info" alt="Info icon" />
+                            <span class="tooltiptext">
+                                <img src="assets/icon/why-arrow.svg" alt="Info icon" />
+                                <p>You should be aware that if your device wasn’t eSIM compatible, you will have to wait
+                                    for the physical SIM delivery once ordered and you will be charged for the SIM
+                                    replacement.</p>
+                            </span>
+                        </span></p>
+                    <div class="actions">
+                        <button class="button primary" data-cy="yesIamSure" (click)="skipModalOption(true)">Yes, I’m sure</button>
+                        <button class="button secondary" data-cy="checkDeviceForESim" (click)="skipModalOption()">Check device for eSIM</button>
+                    </div>
+                    <p class="desc note">If you’re <b>not sure</b> that your device is <b>eSIM compatible</b> we can
+                        send you <b>a physical SIM!</b></p>
+                    <a data-cy="sendMePhysicalSIM" (click)="skipModalOption(false)">Send me a physical SIM</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

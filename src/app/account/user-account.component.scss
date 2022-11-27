@@ -1,0 +1,115 @@
+@import "../../styles/modules/_variables.scss";
+@import "../../styles/modules/_mixins.scss";
+@import "../../styles/partials/_grid.scss";
+
+.container-flex {
+    padding: 0px 25px;
+}
+.my-account-padding {
+    padding-top: 60px;
+    @media (max-width: $phablet-min-width) {
+        padding-top: 0px;
+    }
+    @media (min-width: $phablet-min-width) and (max-width: 750px) {
+        padding-top: 35px;
+    }
+    @media (#{$larger-than-desktop}) {
+        padding-top: 100px;
+    }
+    &.removeSpace {
+        padding: 0;
+    }
+}
+.my-account-container {
+    overflow: hidden;
+    max-width: 1360px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    &.removeSpace {
+        padding: 0;
+        margin:  0 0;
+        max-width: 100%;
+    }
+    @media (min-width: $desktop-min-width) {
+        margin-bottom: 173px;
+    }
+    @media (min-width: $phablet-min-width) {
+        padding-left: 50px;
+        padding-right: 50px;
+        &.removeSpace {
+            padding: 0;
+        }
+    }
+    @media (max-width: $phablet-min-width) {
+        padding-left: 20px;
+        padding-right: 20px;
+        &.removeSpace {
+            padding: 0;
+        }
+    }
+    
+}
+.account-greetings-container {
+    @media (min-width: $desktop-min-width) {
+        margin-bottom: 70px;
+    }
+    @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width) {
+        margin-bottom: 16px;
+    }
+    @media (max-width: $phablet-min-width-plus-one) {
+        margin-bottom: 13px;
+    }
+}
+
+.greetings-title {
+    @media (min-width: $desktop-min-width) {
+        font-size: rem-calc(38px);
+        line-height: rem-calc(26px);
+        margin-bottom: 50px;
+        &.mobile {
+            display: none;
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        font-size: rem-calc(27px);
+        line-height: rem-calc(35px);
+        &.desktop {
+            display: none;
+        }
+    }
+    @media (max-width: $phablet-min-width) {
+        font-size: rem-calc(26px);
+        line-height: rem-calc(30px);
+    }
+}
+
+.my-account__message {
+    @media (min-width: $desktop-min-width) {
+        width: 82%;
+        font-size: rem-calc(22px);
+        line-height: rem-calc(26px);
+    }
+    @media (max-width: $phablet-min-width) {
+        width: 97%;
+        font-size: rem-calc(18px);
+        line-height: rem-calc(20px);
+    }
+    @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width) {
+        width: 94%;
+        font-size: rem-calc(18px);
+        line-height: rem-calc(22px);
+    }
+}
+
+.my-account-main-content {
+    display: block;
+    @media (min-width: $desktop-min-width) {
+        display: flex;
+    }
+}
+
+.my-account-sections-container {
+    width: 100%;
+}

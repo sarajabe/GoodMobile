@@ -1,0 +1,129 @@
+<section class="check-compatibility">
+    <div class="back-section"
+      (click)="back()">
+      <img src="assets/icon/back-arrow-icon.svg">
+      <p class="text">Back</p>
+    </div>
+    <div class="stepper-part">
+      <div class="step-circle">
+        <circle-progress id="circleBar" class="circle-progress-bar" [percent]="circlePercentage" [radius]="40"
+          [titleColor]="'#863399'" [outerStrokeWidth]="5" [innerStrokeWidth]="0" [outerStrokeColor]="'#FF9811'"
+          [innerStrokeColor]="'#FF9811'" [outerStrokeGradientStopColor]="'#FF9811'" [title]="activeStep + '/2'"
+          [animation]="true" [animationDuration]="300" [backgroundColor]="'#863399'" [backgroundOpacity]="0.1"
+          [backgroundPadding]="-10" [outerStrokeGradient]="true" [startFromZero]="false">
+        </circle-progress>
+      </div>
+      <div class="step-details">
+        <p class="step">Step <span> {{activeStep}}</span></p>
+        <h1 class="title">{{stepsDetails[activeStep - 1]?.title}}</h1>
+      </div>
+    </div>
+    <div class="text-part" *ngIf="activeStep === 1">
+      <p class="desc">GoodMobile rides on America’s largest 5G LTE wireless networks.</p>
+      <p class="desc">Let’s See where you're covered</p>
+    </div>
+    <div class="text-part" *ngIf="activeStep === 2">
+      <p class="desc">Let’s find out if your <a (click)="showUnlockedPopup()">Unlocked Device</a> is compatible with the
+        best coverage in your area.</p>
+    </div>
+    <div class="input-action-part" *ngIf="activeStep === 1 && !showAddressResultBanner">
+      <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+      </app-invisible-recaptcha>
+      <form (ngSubmit)="checkAddressCompatibility()" #addressCompatibilityForm="ngForm">
+        <fieldset>
+          <label for="address" class="input-label">
+            <p class="p-label">Enter your full address</p>
+            <p class="p-note">Street Number, Address Line, City, State, ZIP Code</p>
+          </label>
+          <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" #addressRef="ngModel" type="search"
+            class="geolocate" ngui-auto-complete [source]="findPlace.bind(this)" list-formatter="description"
+            display-property-name="main_text" (valueChanged)="addressDetails($event)" [tab-to-select]="false"
+            placeholder="Enter your full address" (focus)="setFoucs = true" (blur)="setFoucs = false" name="addressRef"
+            (input)="changedAddress()" required />
+          <label class="validation-message" *ngIf="!address && addressRef.touched" id="required-address-msg">Address is a
+            Required Field</label>
+          <label class="validation-message" *ngIf="!displayedAddressModel && !!address" id="required-address-msg">Please
+            select address from the autocomplete list</label>
+        </fieldset>
+        <div class="action">
+          <button type="submit" class="button primary" id="check-phone-button" data-cy="check-phone-button">Check
+            Coverage</button>
+        </div>
+        
+      </form>
+    </div>
+    <div class="result-banner" *ngIf="!!showAddressResultBanner"
+      [ngClass]="{'success-background': !!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success, 'fail-background': !ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success}">
+      <div class="flex">
+        <img
+          [src]="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success ? 'assets/icon/green-check.svg' : 'assets/icon/alert-note.svg'"
+          alt="note icon">
+        <div class="banner-content">
+          <p class="title" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.title">
+            {{ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.title}}</p>
+          <p class="desc" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"
+            [innerHTML]="ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"></p>
+          <p class="address-text" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"
+            [innerHTML]="ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"></p>
+          <p class="desc check" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"
+            [innerHTML]="ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"></p>
+          <div class="actions" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName">
+            <button class="button primary" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName"
+              (click)="this[ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonAction]()">{{ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="input-action-part" *ngIf="activeStep === 2 && !showDeviceResultBanner">
+      <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+      </app-invisible-recaptcha>
+      <form (ngSubmit)="checkDeviceCompatibility()" #equipmentCompatibilityForm="ngForm">
+        <fieldset>
+          <label for="address" class="input-label">
+            <p class="p-label">Enter your device’s <a (click)="showWhatIsIMEI()">IMEI<img
+                  src="assets/icon/Information.svg"></a></p>
+            <p class="p-note">Dial: *#06# on your device to get your IMEI/MEID</p>
+          </label>
+          <input type="tel" required [(ngModel)]="equipment" name="equipmentNumber" id="equipmentNumber"
+            data-cy="equipmentNumber" restrictNumbers minlength="11" maxlength="18" #equipmentNumber="ngModel"
+            placeholder="Enter your device’s IMEI" #imei>
+          <label class='validation-message' id="required-equipment-msg"
+            *ngIf="(equipmentNumber.errors || invalidIMEI) && !equipment && equipmentNumber.touched">
+            This field is required
+          </label>
+          <label class='validation-message' *ngIf="equipmentNumber.hasError('minlength')" id="invalid-equipment-msg"
+            data-cy="invalid-equipmentNumber-msg">
+            Invalid serial, it should be between 11-18 digits
+          </label>
+          <p class="disclaimer"><span class="astryic">*</span>5G LTE where available. 5G compatible device required.</p>
+        </fieldset>
+        <div class="action">
+          <button type="submit" class="button primary mobile-padding" id="check-phone-button"
+            data-cy="check-phone-button">Check your device</button>
+        </div>
+      </form>
+    </div>
+    <div class="result-banner fail-background" *ngIf="!!showDeviceResultBanner">
+      <div class="flex">
+        <img src="assets/icon/alert-note.svg" alt="note icon">
+        <div class="banner-content device">
+          <p class="title" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.title">
+            {{DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.title}}</p>
+          <p class="desc" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"
+            [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"></p>
+          <p class="desc" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"
+            [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"></p>
+          <p class="desc" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"
+            [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"></p>
+          <div class="actions" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName">
+            <button class="button primary" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName"
+              (click)="this[DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonAction]()">{{DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName}}</button>
+          </div>
+          <p class="desc top-bottom" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc4"
+            [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc4"></p>
+          <a (click)="this[DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.linkAction]()"
+            *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.linkName">{{DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.linkName}}</a>
+        </div>
+      </div>
+    </div>
+  </section>

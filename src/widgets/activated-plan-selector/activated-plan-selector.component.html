@@ -1,0 +1,29 @@
+<div class="mdn-selector">
+    <div class="title" *ngIf="!showOnlyDropdown">
+      <label for="phonePlan" *ngIf="userPlans?.length" class="select-label">
+        Select mobile number
+      </label>
+    </div>
+    <div class="selector">
+      <div class="menu">
+          <span class="select-arrow-mdn"></span>
+        <ng-container *ngIf="userPlans?.length">
+          <select class="mdn-size" id="phonePlan" name="phonePlan" [(ngModel)]="selectedPlan" (ngModelChange)="setSelectedPlan($event)" [compareWith]="planCompare" [disabled]="disabled">
+            <option *ngFor="let plan of userPlans" [ngValue]="plan">
+                {{getSelectorTitle(plan)}}
+            </option>
+            </select>
+        </ng-container>
+        <ng-container *ngIf="!userPlans?.length">
+          <select title="No Plan">
+              <option> - </option>
+          </select>
+        </ng-container>
+      </div>
+      <div class="add-link-container" *ngIf="!showOnlyDropdown">
+        <p class="add-icon icon" (click)="addActivatedAccount()"><img class="plus-img" src="../../assets/icon/white-plus.svg" alt="plus"></p>
+        <p class="add-text" (click)="addActivatedAccount()">Add phone number</p>
+      </div>
+    </div>
+  </div>
+  

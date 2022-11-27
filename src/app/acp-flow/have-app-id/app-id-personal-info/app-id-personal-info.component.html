@@ -1,0 +1,218 @@
+<form [formGroup]="personalInfoForm" class="personalInfoFormAppID" [class.acp-disabled]="!!disable">
+  <div class="form-row bottom">
+    <p class="fields-title">What’s your App ID? <span class="red">*</span></p>
+    <p class="fields-note">Example: B12345-67890</p>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="applicationId" type="text" id="applicationId" data-cy="applicationId" />
+        <span>Your Application ID</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.applicationId.hasError('required') && personalInfoForm.controls.applicationId.touched"
+        id="required-applicationId-msg" data-cy="required-applicationId-msg">
+        Application ID is required
+      </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.applicationId.hasError('pattern')"
+        id="invalid-applicationId-msg" data-cy="invalid-applicationId-msg">
+        Application ID is invalid
+      </label>
+    </div>
+  </div>
+  <div class="form-row bottom">
+    <p class="fields-title">What’s your Full Name? <span class="red">*</span></p>
+    <p class="fields-note">The name you use on official documents, like your Social Security Card or State ID.
+      Not a nickname.
+    </p>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="firstName" maxlength="50" type="text" id="firstName"
+          data-cy="firstName" />
+        <span>First Name</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.firstName.hasError('required') && personalInfoForm.controls.firstName.touched"
+        id="required-fname-msg" data-cy="required-fname-msg">
+        First name is required
+      </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.firstName.hasError('pattern')"
+        id="invalid-fname-msg" data-cy="invalid-fname-msg">
+        First name is invalid
+      </label>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="middleName" maxlength="50" type="text" id="middleName"
+          data-cy="middleName" />
+        <span>Middle Name (Optional)</span>
+      </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.middleName.hasError('pattern')"
+        id="invalid-mname-msg">
+        Middle name is invalid
+      </label>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="lastName" maxlength="50" type="text" id="lastName" data-cy="lastName" />
+        <span>Last Name</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.lastName.hasError('required') && personalInfoForm.controls.lastName.touched"
+        id="required-lname-msg" data-cy="required-lname-msg">
+        Last name is required
+      </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.lastName.dirty && !!personalInfoForm.controls.lastName.value && !personalInfoForm.controls.lastName.valid"
+        id="invalid-lname-msg" data-cy="invalid-lname-msg">
+        Last name is invalid
+      </label>
+    </div>
+  </div>
+  <div class="form-row bottom">
+    <p class="fields-title">What’s your Date of Birth? <span class="red">*</span></p>
+    <div class="form-row half-row">
+      <div class="three-fields">
+        <div class="form-field">
+          <div class="floating-label">
+            <select id="month" data-cy="month" name="monthOfBirth" formControlName="month" autocomplete="cc-exp-month"
+              class="floating-select" #monthOfBirth [class.dirty]="!!monthOfBirth.value" value=""
+              (change)="checkMonth()">
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <label [class.dirty]="!!monthOfBirth.value">MM</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="floating-label">
+            <select id="day" data-cy="day" name="dayOfBirth" formControlName="day" autocomplete="cc-exp-day"
+              class="floating-select" #dayOfBirth [class.dirty]="!!dayOfBirth.value" value="" (change)="checkMonth()">
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30" [class.disabled]="
+                    !!personalInfoForm.controls.month &&
+                    personalInfoForm.controls.month.value &&
+                    personalInfoForm.controls.month.value === '02'
+                  " [disabled]="
+                    !!personalInfoForm.controls.month &&
+                    personalInfoForm.controls.month.value &&
+                    personalInfoForm.controls.month.value === '02'
+                  ">
+                30
+              </option>
+              <option value="31" [class.disabled]="
+                    (!!monthOfBirth &&
+                      monthOfBirth.value &&
+                      personalInfoForm.controls.month.value === '02') ||
+                    personalInfoForm.controls.month.value === '04' ||
+                    personalInfoForm.controls.month.value === '06' ||
+                    personalInfoForm.controls.month.value === '09' ||
+                    personalInfoForm.controls.month.value === '11'
+                  " [disabled]="
+                    (!!personalInfoForm.controls.month &&
+                      personalInfoForm.controls.month.value &&
+                      personalInfoForm.controls.month.value === '02') ||
+                    personalInfoForm.controls.month.value === '04' ||
+                    personalInfoForm.controls.month.value === '06' ||
+                    personalInfoForm.controls.month.value === '09' ||
+                    personalInfoForm.controls.month.value === '11'
+                  ">
+                31
+              </option>
+            </select>
+            <label class="day-width" [class.dirty]="!!dayOfBirth.value">DD</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="floating-label">
+            <select id="year" data-cy="year" name="yearOfBirth" formControlName="year" autocomplete="cc-exp-year"
+              class="floating-select" #yearOfBirth [class.dirty]="!!yearOfBirth.value" value="" (change)="checkMonth()">
+              <option [value]="elm" *ngFor="let elm of years">{{elm}}</option>
+            </select>
+            <label class="year-width" [class.dirty]="!!yearOfBirth.value">YYYY</label>
+          </div>
+        </div>
+      </div>
+      <label class="validation-message" *ngIf="(personalInfoForm.controls.month.hasError('required') && personalInfoForm.controls.month.touched) ||
+             (personalInfoForm.controls.day.hasError('required') && personalInfoForm.controls.day.touched)
+             || (personalInfoForm.controls.year.hasError('required') && personalInfoForm.controls.year.touched)"
+        id="required-month-msg" data-cy="required-month-msg">
+        Date of Birth is required
+      </label>
+      <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg">
+        Date is invalid
+      </label>
+    </div>
+  </div>
+  <div class="form-row bottom">
+    <p class="fields-title extra-space">What State do you live in? <span class="red">*</span></p>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="state" type="text" maxlength="2" id="state" data-cy="state" minlength="2"/>
+        <span>State</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.state.hasError('required') && personalInfoForm.controls.state.touched"
+        id="required-state-msg" data-cy="required-state-msg">
+        State is required
+      </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.state.invalid && personalInfoForm.controls.state.dirty &&  !personalInfoForm.controls.state.hasError('required')"
+      id="invalid-state-msg" data-cy="invalid-state-msg">
+      State is invalid
+    </label>
+    </div>
+  </div>
+  <div class="form-row bottom">
+    <p class="fields-title extra-space">Email address used in your application: <span class="red">*</span></p>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="email" maxlength="50" type="text" id="email" data-cy="email" />
+        <span>Email address</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.email.hasError('required') && personalInfoForm.controls.email.touched"
+        id="required-email-msg" data-cy="required-email-msg">
+        Email Address is required
+      </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('email')" id="invalid-email-msg"
+        data-cy="invalid-email-msg">
+        Email Address is invalid. Hint: watch out for extra spaces
+      </label>
+    </div>
+  </div>
+</form>

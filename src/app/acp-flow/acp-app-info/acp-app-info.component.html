@@ -1,0 +1,94 @@
+<section class="acp-application">
+    <div class="container-flex">
+        <div class="breadcrumbs">
+            <p class="page"><i class="arrow left" ></i><b (click)="goToAcpSummary()">ACP Summary</b> </p>
+        </div>
+        <h1 class="title">Your ACP Application Details</h1>
+        <div class="info-container" *ngIf="!!acpData">
+            <div class="main">
+                <div class="info-section">
+                    <h2 class="subtitle" *ngIf="!!acpData?.bqpUser && !!acpData?.bqpUser.firstName">Personal Information:</h2>
+                    <ul class="info-list">
+                        <li *ngIf="!!yesFlow">
+                            <p class="name">Application ID:</p>
+                            <p class="value id">{{acpData?.providerApplicationId}}</p>
+                        </li>
+                        <li>
+                            <p class="name">Full Name:</p>
+                            <p class="value">{{acpData?.user?.firstName}} {{acpData?.user?.lastName}}</p>
+                        </li>
+                        <li>
+                            <p class="name">Date of birth:</p>
+                            <p class="value">{{acpData?.user?.dob}}</p>
+                        </li>
+                        <li *ngIf="!!yesFlow">
+                            <p class="name">State:</p>
+                            <p class="value">{{acpData?.user?.address?.primary?.state | uppercase}}</p>
+                        </li>
+                        <li *ngIf="!!yesWithoutFlow || !!noFlow">
+                            <p class="name" >Full Address:</p>
+                            <p class="value">{{acpData?.user?.address?.primary?.address1}}{{!!acpData?.user?.address?.primary?.address2 ? ',' + acpData?.user?.address?.primary?.address2 : ''}}</p>
+                            <p class="value">{{acpData?.user?.address?.primary?.city}}{{!!acpData?.user?.address?.primary?.city? ',': ''}} {{acpData?.user?.address?.primary?.state}} {{acpData?.user?.address?.primary?.zipCode}}</p>
+                        </li>
+                        <li *ngIf="!!noFlow">
+                            <p class="name">Mailing Address:</p>
+                            <p class="value">{{acpData?.user?.address?.mail?.address1}}{{!!acpData?.user?.address?.mail?.address2 ? ',' + acpData?.user?.address?.mail?.address2 : ''}}</p>
+                            <p class="value">{{acpData?.user?.address?.mail?.city}}{{!!acpData?.user?.address?.mail?.city? ',': ''}} {{acpData?.user?.address?.mail?.state}} {{acpData?.user?.address?.mail?.zipCode}}</p>
+                        </li>
+                        <li *ngIf="!!acpData?.user?.identityVerification">
+                            <p class="name">{{acpData?.user?.identityVerification === 'ssn' ? 'Last 4 SSN:' : 'Tribal ID:'}}</p>
+                            <p class="value">{{acpData?.user?.identityVerification === 'ssn' ? acpData?.user?.last4ssn : acpData?.user?.tribalId}}</p>
+                        </li>
+                        <li>
+                            <p class="name">Email Address:</p>
+                            <p class="value">{{acpData?.user?.consumerEmail}}</p>
+                            <p class="check" *ngIf="!!noFlow"><img src="assets/icon/disabled-check.svg" alt="checkbox"> <span>Receive email regarding the ACP enrollment status.</span></p>
+                        </li>
+                        <li *ngIf="!!acpData?.user?.contactPhoneNumber">
+                            <p class="name">Contact Phone Number:</p>
+                            <p class="value">{{acpData?.user?.contactPhoneNumber}}</p>
+                            <p class="check"><img src="assets/icon/disabled-check.svg" alt="checkbox"> <span>Receive phone calls or text on it about the ACP enrollment status.</span></p>
+                        </li>
+                    </ul>
+                    <ng-container *ngIf="!!acpData?.bqpUser && !!acpData?.bqpUser.firstName ">
+                        <h2 class="subtitle" >I qualify through my child or dependent:</h2>
+                        <ul class="info-list">
+                            <li>
+                                <p class="name">BQP Full Name:</p>
+                                <p class="value">{{acpData?.bqpUser?.firstName}} {{acpData?.bqpUser?.lastName}}</p>
+                            </li>
+                            <li>
+                                <p class="name">Date of birth:</p>
+                                <p class="value">{{acpData?.bqpUser?.dob}}</p>
+                            </li>
+                            <li>
+                                <p class="name">{{acpData?.bqpUser?.identityVerification === 'ssn' ? 'Last 4 SSN:' : 'Tribal ID:'}}</p>
+                                <p class="value">{{acpData?.bqpUser?.identityVerification === 'ssn' ? acpData?.bqpUser?.last4ssn : acpData?.bqpUser?.tribalId}}</p>
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-container *ngIf="!!acpData?.eligibilityCode">
+                        <h2 class="subtitle" >Qualifying program(s):</h2>
+                        <ul class="programs-list">
+                            <li *ngFor="let code of mappedCodes">
+                                <p class="name">{{code?.program}}</p>
+                                <p class="subValue" *ngIf="!!code?.relatedValue">{{code?.relatedValue}}</p>
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <div class="notice responsive">
+                        <p class="check large" *ngIf="!!noFlow && !acpData?.bqpUser"><img src="assets/icon/disabled-check.svg" alt="checkbox"> <span>I qualify as an individual</span></p>
+                        <p class="check large"><img src="assets/icon/disabled-check.svg" alt="checkbox"> <span>I acknowledge I understand and agree to these terms and conditions</span></p>
+                    </div>
+                </div>
+                <div class="gif-section">
+                    <img src="assets/img/acp-app.gif" alt="animated application">
+                </div>
+            </div>
+            <div class="notice desktop">
+                <p class="check large" *ngIf="!!noFlow && !acpData?.bqpUser"><img src="assets/icon/disabled-check.svg" alt="checkbox"> <span>I qualify as an individual</span></p>
+                <p class="check large"><img src="assets/icon/disabled-check.svg" alt="checkbox"> <span>I acknowledge I understand and agree to these terms and conditions</span></p>
+            </div>
+        </div>
+    </div>
+</section>

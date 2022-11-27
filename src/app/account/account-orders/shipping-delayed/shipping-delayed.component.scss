@@ -1,0 +1,124 @@
+@import "../../../../styles/modules/_variables.scss";
+@import "../../../../styles/modules/_mixins.scss";
+
+.shipping-delayed {
+    margin-top: 53px;
+    .tracking-details {
+        display: flex;
+        margin-bottom: 10px;
+        p {
+            font-size: rem-calc(22px);
+            line-height: 26px;
+            font-family: $secondary-font-family-bold;
+        }
+        .circle {
+            background-color: $secondary-color;
+            border-radius: 50%;
+            width: 27px;
+            height: 27px;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: -2px;
+            margin-right: 10px;
+            padding-top: 2px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            p {
+                font-size: rem-calc(18px);
+                line-height: 22px;
+                flex-basis: 80%;
+            }
+            .circle {
+                margin-top: -4px;
+            }
+        }
+    }
+    .inform {
+        font-size: rem-calc(22px);
+        font-weight: bold;
+        line-height: 33px;
+        font-family: $base-font-family-bold;
+        margin-bottom: 17px;
+        @media (max-width: $phablet-min-width-minus) {
+            line-height: 22px;
+            font-size: rem-calc(18px);
+            margin-bottom: 27px;
+        }
+    }
+    .tracking-button {
+        margin-top: 26px;
+        margin-bottom: 29px;
+    }
+    .content {
+        margin-left: 35px;
+        .shipping-delayed-form {
+            display: flex;
+            flex-direction: column;
+            font-size: rem-calc(22px);
+            font-family: $secondary-font-family-bold;
+            line-height: 23px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(16px);
+                line-height: 20px;
+            }
+            .custom-input {
+                margin-bottom: 14px;
+                input {
+                    width: 20px;
+                    height: 20px;
+                    cursor: pointer;
+                    @media (max-width: $phablet-min-width-minus) {
+                        width: 17px;
+                        height: 17px;
+                    }
+                }
+                input[type="radio"]:after {
+                    justify-content: center;
+                    align-items: center;
+                    height: 14px;
+                    width: 14px;
+                    border-radius: 15px;
+                    top: 3px;
+                    right: -3px;
+                    position: relative;
+                    background-color: #d3d2d2;
+                    content: "";
+                    display: flex;
+                    visibility: visible;
+                    text-align: center;
+                    align-content: center;
+                    @media (max-width: $phablet-min-width-minus) {
+                        height: 11px;
+                        width: 11px;
+                        right: 0px;
+                        left: 3px;
+                    }
+                }
+                input[type="radio"]:checked:after {
+                    background-color: $secondary-color;
+                }
+            }
+            .buttons-section {
+                margin-top: 29px;
+                margin-bottom: 50px;
+                .primary {
+                    margin-right: 20px;
+                }
+                @media (max-width: $phablet-min-width-minus) {
+                    display: flex;
+                    flex-direction: column;
+                    .primary {
+                        margin-bottom: 19px;
+                        width: 201px;
+                    }
+                    .secondary {
+                        width: 145px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+yarn.lock -diff
+* text=auto
+/docker/* text eol=lf
+/nginx/* text eol=lf
+/ci/* text eol=lf
+/sbt text eol=lf
+/Dockerfile text eol=lf
+/sbt-dist/bin/*.bash text eol=lf
+/sbt-dist/bin/sbt text eol=lf

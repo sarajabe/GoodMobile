@@ -1,0 +1,12 @@
+<div class="range-slider {{customClass}}">
+    <input type="range" [attr.min]="min" [attr.max]="max" [attr.step]="step" class="slider" [id]="id" [(ngModel)]="valueModel" (ngModelChange)="valueChanged($event)"
+           list="datalist-numbers">
+    <datalist id="datalist-numbers">
+      <option *ngFor="let rangeTick of rangeTicks" [label]="rangeTick" [value]="rangeTick">{{rangeTick}}</option>
+    </datalist>
+    <span class="track-value-indicator text-color-primary"
+          [ngStyle]="trackValueStyle()">{{valueModel}}$</span>
+  </div>
+  
+  
+  

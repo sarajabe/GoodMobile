@@ -1,0 +1,241 @@
+@import "../../../../styles/modules/_variables.scss";
+@import "../../../../styles/modules/_mixins.scss";
+
+.package-tracking-page {
+    @media (max-width: $phablet-min-width-minus) {
+        margin-top: 20px;
+    }
+    p {
+        margin-bottom: 0;
+    }
+    h1 {
+        font-size: rem-calc(38px);
+        margin-bottom: 0;
+        @media (max-width: $desktop-min-width-minus) {
+            font-size: rem-calc(27px);
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: rem-calc(26px);
+        }
+        @media (min-width: $tablet-min-width) {
+            line-height: 0;
+        }
+        @media (max-width: $tablet-min-width-minus) {
+            margin-bottom: 30px;
+        }
+    }
+    .content-section {
+        display: flex;
+        width: 100%;
+        @media (max-width: $desktop-min-width-minus) {
+            flex-direction: column;
+            margin-bottom: 84px;
+            .rectangle-button {
+                max-width: 500px;
+                width: 100%;
+                border: none;
+                border-radius: unset;
+                padding-right: 30px;
+                background-color: $primary-color;
+                font-family: $secondary-font-family;
+                color: white;
+                padding: 3px;
+                text-align: center;
+                height: 34px;
+                margin: 15px auto 0;
+                font-size: rem-calc(14px);
+            }
+        }
+        .order-info-section {
+            flex-basis: 58%;
+            .check-title {
+                display: flex;
+                @media (min-width: 1045px) and (max-width: 1100.9px) {
+                    max-width: 514px;
+                }
+                .border-down {
+                    position: relative;
+                    border-left: 4px solid #7dd0de;
+                    height: 80px;
+                    left: 14px;
+                    top: 13px;
+                    z-index: -999;
+                    &.not-active {
+                        border-color: #e2e2e2;
+                    }
+                    &.last-border {
+                        height: 0;
+                        border: none;
+                    }
+                }
+                .text {
+                    margin-left: 7px;
+                    font-size: rem-calc(22px);
+                    line-height: 28px;
+                }
+                &.position-relative {
+                    position: relative;
+                    left: 3.7px;
+                }
+            }
+            .delivered-order {
+                .shipping-info {
+                    max-width: 230px;
+                    margin-top: 30px;
+                    font-size: rem-calc(18px);
+                    @media (max-width: $desktop-min-width-minus) {
+                        font-size: rem-calc(16px);
+                        margin-left: 34px;
+                        margin-top: 32px;
+                    }
+                }
+            }
+            .view-updates-button {
+                margin-top: 76px;
+                button {
+                    img {
+                        display: none;
+                        @media (max-width: $desktop-min-width-minus) {
+                            display: unset;
+                            margin-right: 6px;
+                            margin-top: -3px;
+                        }
+                    }
+                }
+                @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+                    margin-top: 42px;
+                    margin-left: 0px;
+                    margin-bottom: 58px;
+                }
+                @media (max-width: $phablet-min-width-minus) {
+                    text-align: left;
+                    margin-top: 21px;
+                    margin-bottom: 61px;
+                }
+            }
+        }
+        .order-box-section {
+            display: flex;
+            justify-content: center;
+            flex-basis: 42%;
+            @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+                justify-content: unset;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                display: block;
+            }
+            .order-container {
+                max-width: 500px;
+                width: 100%;
+                height: 100%;
+                border: 1px solid #d3d2d2;
+                padding-bottom: 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding-bottom: 39px;
+                }
+                .box-title {
+                    font-size: rem-calc(22px);
+                    font-weight: 500;
+                    height: 64px;
+                    background-color: #e2e2e2;
+                    padding-top: 20px;
+                    padding-left: 33px;
+                    @media (max-width: $phablet-min-width-minus) {
+                        font-size: rem-calc(18px);
+                        padding-top: 23px;
+                        padding-left: 20px;
+                    }
+                }
+                .box-description {
+                    padding-top: 30px;
+                    padding-left: 33px;
+                    @media (max-width: $phablet-min-width-minus) {
+                        padding-top: 20px;
+                        padding-left: 20px;
+                    }
+                    .id-title {
+                        font-size: rem-calc(18px);
+                        font-weight: bold;
+                        @media (max-width: $desktop-min-width-minus) {
+                            font-size: rem-calc(16px);
+                        }
+                    }
+                    .tracking-id {
+                        margin-bottom: 37px;
+                        color: #863399;
+                        @media (max-width: $desktop-min-width-minus) {
+                            margin-bottom: 12px;
+                        }
+                    }
+                    .order-id {
+                        margin-bottom: 27px;
+                        @media (max-width: $desktop-min-width-minus) {
+                            margin-bottom: 25px;
+                        }
+                    }
+                    .id-value {
+                        font-weight: normal;
+                    }
+                    .view-order-details-button {
+                        @media (min-width: $desktop-min-width) {
+                            button {
+                                cursor: pointer;
+                                padding: 0;
+                                border: none;
+                                background-color: unset;
+                                color: #863399;
+                                font-size: rem-calc(20px);
+                                font-weight: bold;
+                                font-family: $secondary-font-family;
+                                img {
+                                    margin-top: -3px;
+                                    margin-right: 7px;
+                                }
+                            }
+                        }
+                        @media (max-width: $desktop-min-width-minus) {
+                            max-width: 460px;
+                            width: 100%;
+                            padding-right: 20px;
+                        }
+                    }
+                    .view-order-details {
+                        font-size: rem-calc(18px);
+                        line-height: 28px;
+                        margin-top: 32px;
+                        padding-left: 34px;
+                        @media (max-width: $desktop-min-width-minus) {
+                            font-size: rem-calc(14px);
+                            line-height: 20px;
+                        }
+                        @media (max-width: $phablet-min-width) {
+                            padding-left: 0px;
+                        }
+                        .billing-address-info {
+                            max-width: 230px;
+                            margin-bottom: 20px;
+                        }
+                        .payment-method-info {
+                            margin-bottom: 20px;
+                            @media (max-width: $phablet-min-width-minus) {
+                                max-width: 142px;
+                            }
+                        }
+                        .order-summary-info {
+                            .flex-info {
+                                display: flex;
+                                width: 100%;
+                                .key-basis {
+                                    flex-basis: 69%;
+                                }
+                                .value-basis {
+                                    flex-basis: 31%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

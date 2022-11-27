@@ -1,0 +1,57 @@
+@import '../../../../styles/modules/mixins';
+@import '../../../../styles/modules/variables';
+@import '../order-rma.component.scss';
+
+.return-reason {
+    position: relative;
+    .info {
+        border-left: 4px solid #DAD0DC;
+        padding: 10px 20px;
+        margin-left: 40px;
+        .heads-up {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: rem-calc(20px);
+            line-height: 20px;
+        }
+        .note {
+            font-weight: 400;
+            padding-left: 35px;
+            margin-bottom: 0;
+            font-size: rem-calc(18px);
+            line-height: 28px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            padding: 10px 15px;
+            .heads-up {
+                gap: 5px;
+                font-size: rem-calc(16px);
+                line-height: 24px;
+            }
+            .note {
+                padding-left: 0px;
+                font-size: rem-calc(14px);
+                line-height: 24px;
+            }
+        }
+    }
+    .help-note {
+        border-top: 1px solid #DAD0DC;
+        padding-top: 8px;
+        margin-top: 100px;
+        .note {
+            font-size: rem-calc(14px);
+            line-height: 24px;
+            font-weight: 400;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-top: 60px;
+            padding: 8px 16px;
+            .note {
+                font-size: rem-calc(12px);
+                line-height: 20px;
+            }
+        }
+    }
+}

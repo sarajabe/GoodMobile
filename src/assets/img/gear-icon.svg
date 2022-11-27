@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30.472" height="30.766" viewBox="0 0 30.472 30.766">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#863399;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="gear_icon" data-name="gear icon" transform="translate(-1.8 -1.6)">
+        <g id="Group_195" data-name="Group 195" transform="translate(2.8 2.6)">
+            <path id="Path_202" d="M33.72 34.178a4.306 4.306 0 1 1-.042-6.089 4.309 4.309 0 0 1 .042 6.089z" class="cls-1" data-name="Path 202" transform="translate(-16.46 -16.666)"/>
+            <g id="Group_194" data-name="Group 194">
+                <path id="Path_203" d="M31.272 14.484h-2.561a11.664 11.664 0 0 0-1.638-4.031l1.806-1.806-3.486-3.527-1.806 1.805a11.289 11.289 0 0 0-4.031-1.68V2.684L14.6 2.6v2.562A11.664 11.664 0 0 0 10.569 6.8L8.763 4.994 5.236 8.479l1.806 1.806a11.289 11.289 0 0 0-1.68 4.031H2.8v5.334h2.562a12.1 12.1 0 0 0 1.68 4.031l-1.806 1.806 3.528 3.486 1.806-1.806A12.367 12.367 0 0 0 14.6 28.8v2.562l4.955-.042v-2.557a12.1 12.1 0 0 0 4.031-1.68l1.806 1.806 3.486-3.528-1.806-1.806a12.367 12.367 0 0 0 1.638-4.031h2.562z" class="cls-1" data-name="Path 203" transform="translate(-2.8 -2.6)"/>
+            </g>
+        </g>
+    </g>
+</svg>

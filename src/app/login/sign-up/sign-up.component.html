@@ -1,0 +1,91 @@
+<section class="container-flex signup-section">
+  <div class="header-section">
+    <h1 class="title">Create your GoodMobile account</h1>
+    <p class="subhead">
+      Your GoodMobile account allows you to purchase plans with a competitive price and high speed data starting at
+      $10/month. Let’s get you signed up!
+    </p>
+  </div>
+  <form [formGroup]="userForm" class="sign-up-form">
+    <div class="card-container">
+      <div class="form-section">
+        <fieldset class="left">
+          <label for="firstName">First name</label>
+          <input id="firstName" data-cy= "firstName" type="text" formControlName="firstName" required autocomplete="given-name" />
+          <label class="validation-message alert"
+            *ngIf="userForm.controls.firstName.hasError('required') && userForm.controls.firstName.touched"
+            id="required-firstName-msg" data-cy="firstNameRequiredMsg">
+            First name is required </label>
+          <label class="validation-message alert" *ngIf="userForm.controls.firstName.hasError('pattern')"
+            id="invalid-firstName-msg" data-cy="invalidFirstNameMsg">
+            First name is invalid </label>
+        </fieldset>
+        <fieldset class="right">
+          <label for="lastName">Last name</label>
+          <input id="lastName" data-cy="lastName" type="text" formControlName="lastName" required autocomplete="family-name" />
+          <label class="validation-message alert"
+            *ngIf="userForm.controls.lastName.hasError('required') && userForm.controls.lastName.touched"
+            id="required-lastName-msg" data-cy="lastNameRequiredMsg">
+            Last name is required </label>
+          <label class="validation-message alert" *ngIf="userForm.controls.lastName.hasError('pattern')"
+            id="invalid-lastName-msg" data-cy="invalidLastNameMsg">
+            Last name is invalid </label>
+        </fieldset>
+      </div>
+      <div class="form-section">
+        <fieldset class="full">
+          <label for="email">Email address</label>
+          <input id="email" data-cy="email" data-cy="email" type="email" formControlName="email" required autocomplete="email" />
+          <label class='validation-message alert' *ngIf="userForm.controls.email.hasError('email')"
+            id="invalid-email-msg" data-cy="nvalidEmailMsg">
+            Email address is invalid.
+          </label>
+          <label class='validation-message alert'
+            *ngIf="userForm.controls.email.hasError('required') && userForm.controls.email.touched"
+            id="required-email-msg" data-cy="required-email-msg">
+            Email address is required.
+          </label>
+        </fieldset>
+      </div>
+      <div class="form-section">
+        <fieldset class="left">
+          <label for="password">Password</label>
+          <input id="password"  data-cy="password"type="password" formControlName="password" required autocomplete="new-password" />
+        </fieldset>
+
+        <fieldset class="right">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" data-cy= "confirmPassword" type="password" formControlName="confirmPassword" required
+            autocomplete="new-password" />
+        </fieldset>
+      </div>
+      <div class="form-section">
+        <fieldset class="full" *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid">
+          <label class="validation-message alert" id="password-validation-msg" data-cy="passRequireddMsg">
+            Password must be between 6 and 12 characters with at least one capital letter, one small letter, and one
+            digit. </label>
+        </fieldset>
+        <fieldset class="full"
+          *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords')">
+          <label class="validation-message alert" id="confirmPassword-validation-msg" data-cy="mismatchedPassMsg">
+            Passwords do not match </label>
+        </fieldset>
+      </div>
+      <div class="form-section">
+        <fieldset class="left">
+          <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
+        </fieldset>
+      </div>
+    </div>
+    <div class="actions-section">
+      <fieldset class="form-actions primary-actions">
+        <button type="button" class="button primary" id="verifyButton" data-cy="submitBtn" [disabled]="!userForm.valid || !captchaValid"
+          [uiBlockButton]="processingRequest" (click)="signUp()">Submit</button>
+      </fieldset>
+      <fieldset class="form-actions secondary-actions">
+        Already have an account?<br>
+        <a (click)="goToLogin()" id="sign-in-legacy">Sign in</a>
+      </fieldset>
+    </div>
+  </form>
+</section>

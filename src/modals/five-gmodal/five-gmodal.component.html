@@ -1,0 +1,19 @@
+<div class="container model-container {{context.customClass}}">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{context.title}}</h2>
+      <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <div class="row">
+          <div *ngIf="!!context.customHTML" [innerHTML]="context.customHTML"></div>
+        </div>
+        <div class="row modal-actions" *ngIf="!!context.linkText">
+          <a [href]="context.linkRoute" (click)="download()">
+           {{context.linkText}} <img class="arrow" src="../../assets/icon/5g-download-arrow.svg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,205 @@
+// Typography
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+
+h1, h2, h3, h4, h5, h6 {
+  color: $black;
+  font-family: $header-font-family;
+  font-weight: $regular;
+  margin-top: 0;
+}
+
+h1, .h1 {
+  font-size: rem-calc(28px);
+  line-height: 1;
+  $font-family: $header-font-family;
+
+  @media (#{$larger-than-mobile}) {
+    font-size: rem-calc(28px);
+    font-weight: bold;
+    line-height: 0.79;
+  }
+
+  @media (#{$larger-than-desktop}) {
+    font-size: rem-calc(38px);
+    font-weight: bold;
+  }
+}
+
+h2, .h2 {
+  font-size: rem-calc(26px);
+  font-weight: 700;
+  line-height: 1.15;
+
+  @media (#{$larger-than-mobile}) {
+    font-size: rem-calc(25px);
+    font-weight: bold;
+    line-height: 0.8;
+  }
+
+  @media (#{$larger-than-desktop}) {
+    font-size: rem-calc(34px);
+    margin-bottom: 10px;
+    font-weight: 700;
+    line-height: 0.76;
+  }
+}
+
+h3, .h3 {
+  font-size: rem-calc(23px);
+  margin-bottom: 10px;
+  font-weight: 700;
+
+  @media (#{$larger-than-mobile}) {
+    font-size: rem-calc(25px);
+    font-weight: bold;
+    line-height: 0.8;
+  }
+
+  @media (#{$larger-than-desktop}) {
+    font-size: rem-calc(27px);
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 0.96;
+  }
+}
+
+h4, .h4 {
+  font-size: rem-calc(20px);
+  font-weight: 700;
+  margin-bottom: 12px;
+
+  @media (#{$larger-than-mobile}) {
+    font-size: rem-calc(17px);
+    line-height: 1.35;
+  }
+
+  @media (#{$larger-than-desktop}) {
+    font-size: rem-calc(23px);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+}
+
+h5, .h5 {
+  font-size: rem-calc(13px);
+  @media (#{$larger-than-desktop}) {
+    font-size: rem-calc(14px);
+  }
+}
+
+h6, .h6 {
+  font-size: rem-calc(12px);
+  @media (#{$larger-than-desktop}) {
+    font-size: rem-calc(12px);
+  }
+}
+
+p {
+  margin-top: 0;
+}
+
+// Pre
+pre {
+  line-height: 1.6;
+  margin: 8px 16px;
+  white-space: pre-wrap;
+}
+
+// Text format helpers
+.text-italic {
+  font-style: italic;
+}
+
+.text-semibold {
+  font-weight: 600;
+}
+
+.text-bold, strong {
+  font-weight: 700;
+}
+
+.text-strike {
+  text-decoration: line-through;
+}
+
+.text-super {
+  vertical-align: super;
+}
+
+.text-sub {
+  vertical-align: sub;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+// Text align helpers
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.primary-font {
+  font-family: $base-font-family !important;
+}
+
+.primary-font-bold {
+  font-family: $base-font-family-bold !important;
+}
+
+.secondary-font {
+  font-family: $secondary-font-family !important;
+}
+
+.secondary-font-bold{
+  font-family: $secondary-font-family-bold !important;
+}
+
+.text-color-primary {
+  color: $primary-color;
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.text-color-secondary {
+  color: $secondary-color;
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+.text-color-thridly {
+  color: $third-color;
+  &:hover {
+    color: $third-color;
+  }
+}
+
+.text-color-alert {
+  color: $alert;
+}
+
+.text-color-warning {
+  color: $warning;
+}
+
+.text-color-success {
+  color: $success;
+}

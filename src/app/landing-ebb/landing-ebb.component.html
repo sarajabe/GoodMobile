@@ -1,0 +1,174 @@
+<div class="landing-ebb-page">
+  <section class="banner-section">
+    <div class="banner-container">
+      <div class="banner-text-content">
+        <p class="title"><img src="assets/img/government-icon.svg" alt="goverment">GOVERNMENT BENEFIT PROGRAM</p>
+        <h1>FREE Government Cell Phone Service</h1>
+        <h2 class="header">Free Unlimited Talk, Text <span>& Data</span> </h2>
+        <h3 class="data">with 6GB<span class="month"><span> of high speed data<sup>1</sup></span></span></h3>
+        <p class="description">Get Free cellular service every month when you qualify for the Federal Affordable Connectivity Program</p>
+        <button class="button primary" data-cy="bannerApplyNowBtn" aria-label="apply now" (click)="goToACPForm()">Apply Now</button>
+      </div>
+      <div class="banner-img">
+        <picture>
+          <source srcset='assets/img/acp-banner-mobile.svg' media="(max-width: 639.9px)" type="image/svg">
+          <source srcset='assets/img/acp-banner-desktop.svg' media="(min-width: 1025px)" type="image/svg">
+          <img src="assets/img/acp-banner-desktop.svg" alt="6GB Free ACP plan" height="556">
+        </picture>
+      </div>
+    </div>
+   <div class="sup-container">
+     <p class="banner-note"><span class="sup">1</span> After high-speed data allowance is used, data speeds are slowed to a maximum of 128Kbps for the rest of the term.</p>
+   </div>
+  </section>
+  <section class="about-acp">
+    <div class="img-side">
+      <img src="assets/img/about-acp.svg" alt="about acp"/>
+    </div>
+    <div  class="content-side">
+      <h2 class="section-header">Affordable Connectivity Program</h2>
+      <p class="section-description">We are excited to bring you the Affordable Connectivity Program (ACP), 
+        a federal government program that provides temporary relief to 
+        eligible households, or those facing financial difficulties, to lower the 
+        cost of wireless service up to $30/mo, or up to $75/mo on Tribal lands.</p>
+      <div class="phone-section">
+        <h3 class="subtitle">With GoodMobile, you can:</h3>
+        <div class="options">
+          <p class="option"><img src="assets/img/bring-device.svg" alt="Bring your own Phone"/><span>Bring Your Own Phone</span></p>
+          <p class="option"><img src="assets/img/keep-device.svg" alt="Keep your phone number, or request a new one."/><span>Keep your phone number, or request a new one.</span></p>
+        </div>
+      </div>
+      <a class="link" data-cy="getStartedBtn" [routerLink]="['/' + ROUTE_URLS.ACP_DETAILS_LONG]" fragment="what-is-needed">Get Started <img class="arrow" src="assets/icon/arrow_circle.svg" alt="arrow"/></a>
+    </div>
+  </section>
+  <section class="icons-row" id="icons">
+    <img src="assets/img/medicaid-logo.svg" alt="medicaid-logo">
+    <img src="assets/img/SNAP-logo.svg" alt="SNAP-logo">
+    <img src="assets/img/WIC-logo.svg" alt="WIC-logo" class="desktop-only">
+    <img src="assets/img/SSI-logo.svg" alt="SSI-logo">
+    <img src="assets/img/FPHA.svg" alt="FPHA-logo">
+    <img src="assets/img/lifeLine-logo.svg" alt="lifeLine-logo">
+  </section>
+  <section #acpDiscount id="acpDiscount" class="acp-condition">
+    <div class="content-side">
+      <h2 class="section-header" data-cy="whoIsEligibleHeader">Who Is Eligible for the Affordable Connectivity Program?</h2>
+      <p class="section-note">Household is eligible for the Affordable Connectivity Program benefit if:</p>
+      <div class="condition">
+        <img class="check" src="assets/icon/circle-check.svg" alt="checkmark">
+        <p class="condition-description">
+          The household income is at or below 200% of the <a [routerLink]="['/' + ROUTE_URLS.ACP_DETAILS_LONG]" fragment="house-hold-income"><b>Federal Poverty Guidelines</b></a>.
+          <span class="or">OR</span>
+        </p>
+      </div>
+      <div class="condition">
+        <img class="check" src="assets/icon/circle-check.svg" alt="checkmark">
+        <p class="condition-description long">If a member of the household participates in one of these programs below:</p>
+      </div>
+      <ul class="sub-condition">
+          <li><span>Medicaid</span></li>
+          <li><span>Supplemental Nutrition Assistance Program <b> (SNAP)</b></span></li>
+          <li><span>The National School Lunch Program or the School Breakfast Program, including through the USDA Community Eligibility Provision, and <b>WIC</b></span></li>
+          <li><span>Supplemental Security Income <b>(SSI)</b></span></li>
+          <li><span>Federal Public Housing Assistance</span></li>
+          <li><span class="text-color-primary"><a href="https://www.fcc.gov/lifeline-consumers"
+            target="_blank"><b>Lifeline</b></a></span></li>
+          <li><span>Veterans and Survivors Pension Benefits Fund</span></li>
+          <li><span>Received a Federal Pell Grant during the current award year</span></li>
+          <li><span>Meets the eligibility criteria for a participating provider's existing low-income internet program;</span></li>
+          <div class="or"><b>OR</b></div>
+      </ul>
+      <div class="condition">
+        <img class="check" src="assets/icon/circle-check.svg" alt="checkmark">
+        <p class="condition-description"><span>Participates in one of these assistance programs and lives on <a href="https://www.affordableconnectivity.gov/do-i-qualify/enhanced-tribal-benefit/#qualifying-lands"
+          target="_blank"><b class="text-color-primary">Qualifying Tribal lands:</b></a></span></p>
+      </div>
+      <ul class="sub-condition">
+          <li><span>Bureau of Indian Affairs General Assistance,</span></li>
+          <li><span>Tribal Head Start (only households meeting the 
+            relevant income qualifying standard),</span></li>
+          <li><span>Tribal Temporary Assistance for Needy Families (Tribal TANF), or</span></li>
+          <li><span>Food Distribution Program on Indian Reservations.</span></li>
+      </ul>
+      <div class="action">
+        <button class="button secondary" data-cy="startHere" (click)="goToACPForm()">Start Here</button>
+      </div>
+      <img src="assets/img/acp-condition.svg" alt="acp conditions" class="responsive-image"/>
+      <div class="important">
+        <p class="important-note"><b>Important:</b> ACP eligibility is determined through the National Verifier, the federal government’s application and approval
+          for determining eligibility. GoodMobile does not determine customer ACP eligibility.</p>
+      </div>
+    </div>
+    <div class="img-side">
+      <img src="assets/img/acp-condition.svg" alt="acp conditions"/>
+    </div>
+  </section> 
+  <section class="steps-section">
+    <h2 class="title">Just 3 steps to sign up</h2>
+    <div class="cards-container">
+      <div class="acp-card">
+        <div class="header">
+          <img class="step-image" src="assets/img/acp-step1.svg" alt="step1">
+        </div>
+        <p class="card-title">Apply for the Program</p>
+        <div class="card-desc">
+          <p>Fill out the Affordable Connectivity Program
+          form and sign the consent.</p>
+          <button class="button primary"  data-cy="applyNow3StepsSection" (click)="goToACPForm()">Apply Now</button>
+        </div>
+      </div>
+      <div class="acp-card">
+        <div class="header">
+          <img class="step-image" src="assets/img/acp-step2.svg" alt="step2">
+        </div>
+        <p class="card-title">Finalize Your Application</p>
+        <div class="card-desc"><p>You must finalize your application with the National Verifier. You will then be redirected back
+          to GoodMobile.</p></div>
+      </div>
+      <div class="acp-card">
+        <div class="header">
+          <img class="step-image" src="assets/img/acp-step3.svg" alt="step3">
+        </div>
+        <p class="card-title">Activate & enjoy your plan</p>
+        <div class="card-desc"><p>Receive confirmation of your ACP enrollment. 
+          We will contact you to confirm your enrollment. It may take 
+          24 to 48 hours to process your application.</p></div>
+      </div>
+    </div>
+    <div class="notes">
+      <p class="disc">Enjoy unlimited talk and text. Bring your own device get free shipping with all orders and a free 
+        SIM. Plus, if you live in an eligible household on a Tribal land you can get any eligible plan for free.</p>
+      <p class="disc">See <a
+        [routerLink]="SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS +'/'+'mobile-broadband-disclosure'">goodmobile.org/broadband</a> for details of network management policies.</p>
+    </div>
+  </section>
+  <section class="faqs-section">
+    <div class="faqs-content">
+      <h2 class="title">We are here to help you</h2>
+      <div class="ebb-questions">
+        <div class="row">
+          <div class="twelve questions">
+            <div *ngFor="let qst of firstThreeQuestions">
+              <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                [isActive]="qst?.fields?.questionId == questionIdParam"
+                (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+              </app-question-answer>
+            </div>
+            <div *ngIf="!!showMore">
+              <div *ngFor="let qst of restQuestions">
+                <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                  [isActive]="qst?.fields?.questionId == questionIdParam"
+                  (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                  <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+                </app-question-answer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="more-or-less-faqs" *ngIf="!showMore"><a (click)="showMore = true">More FAQs</a></p>
+      <p class="more-or-less-faqs" *ngIf="!!showMore"><a (click)="showMore = false; questionId = 'q0'">Less
+          FAQs</a>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,27 @@
+.map-button {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+  }
+  
+  .on-map {
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+  }
+  
+  #add-marker {
+    margin: 20px 0 0 370px;
+    @extend .map-button;
+  }
+  
+  #remove-marker {
+    margin: 20px 0 0 410px;
+    @extend .map-button;
+  }
+  
+  #toggle-layer {
+    margin: 20px 0 0 450px;
+    @extend .map-button;
+  }
+  

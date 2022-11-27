@@ -1,0 +1,92 @@
+<div class="container-flex payment-page">
+    <div class="container-flex-row left-align">
+        <div class="col-xl-11 col-xl-offset-1 col-12 col-offset-0 no-padding plan-selector-container">
+            <ng-container *ngIf="!!userHasActivePlans">
+                <app-activated-plan-selector [user]="user" (userPlanSelected)="userPlanSelected($event)"
+                    [selectedPlan]="selectedPlan"></app-activated-plan-selector>
+            </ng-container>
+            <ng-container *ngIf="!userHasActivePlans">
+                <div class="plan-selector-override">
+                    <div class="account-status-message">
+                        <p>You have no active phone number at the moment <span class="activate"> <a
+                                    (click)="addActivatedAccount()">
+                                    <small class="text-color-primary">Add activated phone number?</small>
+                                </a></span></p>
+                        <p *ngIf="userHasPendingPlans">Proceed to <a
+                                [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased
+                                plans</a> to
+                            activate your plan</p>
+                    </div>
+                    <hr class="gray margin-top-30 margin-bottom-30">
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="!!userHasActivePlans">
+    <section class="account-section">
+        <div class="container-flex section-container no-padding">
+            <div class="container-flex-row account-info flex-center">
+                <div class="table-align width-95">
+                    <h4 class="account-section-title">Your payment history</h4>
+                    <table class="responsive-table primary alignment-data" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th (click)="sortPaymentHistory(PAYMENT_SORT_FIELDS.PAYMENT_DATE)">
+                                    <span class="th">Payment Date<span
+                                            [ngClass]="sortArrow(PAYMENT_SORT_FIELDS.PAYMENT_DATE)"></span></span></th>
+                                <th (click)="sortPaymentHistory(PAYMENT_SORT_FIELDS.STATUS)">
+                                    <span class="th">Status<span
+                                            [ngClass]="sortArrow(PAYMENT_SORT_FIELDS.STATUS)"></span></span></th>
+                                <th (click)="sortPaymentHistory(PAYMENT_SORT_FIELDS.METHOD)">
+                                    <span class="th">Payment Method<span
+                                            [ngClass]="sortArrow(PAYMENT_SORT_FIELDS.METHOD)"></span></span></th>
+                                <th (click)="sortPaymentHistory(PAYMENT_SORT_FIELDS.CONFIRMATION_NUMBER)">
+                                    <span class="th">Confirmation Number<span
+                                            [ngClass]="sortArrow(PAYMENT_SORT_FIELDS.CONFIRMATION_NUMBER)"></span></span>
+                                </th>
+                                <th (click)="sortPaymentHistory(PAYMENT_SORT_FIELDS.AMOUNT)">
+                                    <span>Amount<span [ngClass]="sortArrow(PAYMENT_SORT_FIELDS.AMOUNT)"></span></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody
+                            *ngIf="!!paymentHistory && !!paymentHistory.payments && paymentHistory.payments.length > 0">
+                            <tr *ngFor="let payment of paymentHistory.payments | paginate: config"
+                                class="rectangle-container style-responsive">
+                                <td class="date" data-th="Payment Date">
+                                    {{payment.dateTime | date: 'MM-dd-yy' }}<br>{{payment.dateTime | date: 'HH:MM a' }}
+                                </td>
+                                <td data-th="Status" style="text-transform: capitalize;"><span
+                                        class="full-line status-color">{{payment.status | camelize}}</span></td>
+                                <td class="full-line" data-th="Payment Method">
+                                    {{payment.type === 'CC' ? 'Card ending in ' : ''}}
+                                    {{payment.type ==='VOUCHER'? 'Voucher #': ''}}{{payment.method}}
+                                </td>
+                                <td class="full-line mobile-width" data-th="Confirmation No">
+                                    {{payment.confirmationNumber}}</td>
+                                <td class="full-line desktop-style" data-th="Amount">{{payment.amount | currency}} <a
+                                        (click)="goToReceiptDetails(payment?.orderId)" class="view-receipt"><img
+                                            src="/assets/icon/view-receipt-icon.svg" class="view-receipt-icon"><span
+                                            class="tool-tip-text">View Receipt</span>
+                                        <span class="view-receipt-text">View Receipt</span></a></td>
+                            </tr>
+                        </tbody>
+                        <tbody
+                            *ngIf="!paymentHistory || !paymentHistory.payments || paymentHistory.payments.length === 0">
+                            <tr>
+                                <td class="width-120" data-th="Datetime" colspan="5"> No Payment History Yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="right-action"
+                        *ngIf="!paymentHistory || !paymentHistory.payments || paymentHistory.payments.length > 0">
+                        <app-custom-pagination [config]="config" (configChange)="pageChanged($event)">
+                        </app-custom-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>

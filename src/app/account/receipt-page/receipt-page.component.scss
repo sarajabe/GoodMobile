@@ -1,0 +1,444 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.receipt-details-page {
+    max-width: 821px;
+    margin: 0 auto;
+    @media (max-width: $desktop-min-width-minus) {
+        margin-bottom: 65px;
+    }
+    .back-link {
+        font-size: rem-calc(12px);
+        line-height: 12px;
+        font-family: $base-font-family;
+        margin-bottom: 30px;
+        .bold {
+            font-weight: bold;
+        }
+    }
+    .title-receipt-options-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        .title {
+            font-family: $base-font-family;
+            font-size: rem-calc(32px);
+            line-height: 32px;
+            margin-bottom: 0;
+        }
+    }
+    .receipt-options {
+        text-align: right;
+        button {
+            background-color: unset;
+            border: none;
+            cursor: pointer;
+        }
+        .option-text {
+            font-family: $base-font-family-bold;
+            font-size: rem-calc(16px);
+            color: $primary-color;
+            margin-left: 6px;
+            &.secondary {
+                color: $secondary-color;
+            }
+        }
+        .email-option {
+            margin-left: 16px;
+        }
+        &.mobile-display {
+            @media (max-width: 399.9px) {
+                display: flex;
+                flex-direction: column;
+                .email-option {
+                    margin-left: 0;
+                    margin-top: 12px;
+                }
+            }
+        }
+    }
+    .receipt-details-section {
+        display: flex;
+        width: 100%;
+        margin-bottom: 25px;
+        @media (max-width: 699.9px) {
+            flex-direction: column;
+        }
+        .details-part-one, .details-part-two{
+            flex-basis: 50%;
+        }
+        .key-value {
+            display: flex;
+            p {
+                margin-bottom: 10px;
+            }
+            .max-width {
+                max-width: 90%;
+                line-height: 24px;
+                @media(max-width:699.9px){
+                    max-width: 100%;
+                }
+            }
+            .key {
+                font-family: $base-font-family-bold;
+                font-weight: bold;
+                font-size: rem-calc(16px);
+                line-height: 19px;
+                white-space: nowrap;
+            }
+            .value {
+                font-family: $base-font-family;
+                font-size: rem-calc(16px);
+                line-height: 19px;
+                margin-left: 8px;
+                word-break: break-word;
+              
+            }
+        }
+    }
+    .receipt-details-container {
+        .title-part {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            background-color: $primary-color;
+            padding: 0 8px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            .title {
+                font-family: $base-font-family-bold;
+                font-size: rem-calc(18px);
+                margin-bottom: 0;
+                color: white;
+            }
+        }
+        .receipt-details-box {
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+            border-top: none;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+            margin-bottom: 55px;
+            padding: 16px 8px;
+            .line-info-part {
+                .border {
+                    border-bottom: 0.25px solid #000000;
+                    margin-bottom: 24px;
+                    &.no-border {
+                        border-bottom: none;
+                        margin-bottom: 0px;
+                    }
+                }
+                &:last-child {
+                    border-top: none;
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+                .sub-total {
+                    display: flex;
+                    justify-content: flex-end;
+                    .value {
+                        font-size: rem-calc(16px);
+                        font-family: $base-font-family-bold;
+                        line-height: 19px;
+                    }
+                }
+                .name {
+                    font-size: rem-calc(18px);
+                    line-height: 22px;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    margin-top: 0px;
+                    font-family: $base-font-family-bold;
+                }
+                .unit-price {
+                    font-size: rem-calc(16px);
+                    line-height: 19px;
+                    font-family: $base-font-family;
+                    margin-bottom: 24px;
+                }
+                .imei {
+                    font-size: rem-calc(16px);
+                    font-family: $base-font-family-bold;
+                    line-height: 19px;
+                    margin-bottom: 8px;
+                }
+                .notes {
+                    font-size: rem-calc(16px);
+                    font-family: $base-font-family-bold;
+                    line-height: 19px;
+                    margin-bottom: 29px;
+                }
+                .key-value {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 24px;
+                    padding-left: 8px;
+                    .key,
+                    .value {
+                        font-size: rem-calc(16px);
+                        font-family: $base-font-family-bold;
+                        line-height: 19px;
+                        margin-bottom: 13px;
+                    }
+                }
+            }
+        }
+    }
+    .taxes-fees-box {
+        width: 100%;
+        max-width: 820px;
+        margin: 0 auto;
+        margin-top: 52px;
+        margin-bottom: 36px;
+        .title-part {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            background-color: #f6f6f6;
+            padding: 0 8px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            &.no-border-radius {
+                border-radius: unset;
+            }
+            .title {
+                font-family: $base-font-family-bold;
+                font-size: rem-calc(18px);
+                margin-bottom: 0;
+            }
+        }
+        .taxes-desc-part {
+            border: 1px solid #f0eded;
+            border-top: unset;
+            border-bottom: unset;
+            padding: 24px 8px;
+            .key-value {
+                display: flex;
+                justify-content: space-between;
+                font-size: rem-calc(16px);
+                .bottom {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        .total-part {
+            font-family: $base-font-family-bold;
+            font-size: rem-calc(18px);
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f6f6f6;
+            padding: 0 8px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            .value {
+                font-size: rem-calc(16px);
+            }
+            .bottom {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+@media print {
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .receipt-details-page {
+        max-width: 821px;
+        margin: 0 auto;
+    }
+
+    #div {
+        break-inside: avoid;
+        margin-top: 20px;
+        max-width: 820px;
+        margin: 0 auto;
+    }
+    .back-link {
+        display: none;
+    }
+    .receipt-options {
+        display: none;
+    }
+    .receipt-details-section {
+        display: flex;
+        width: 100%;
+        @media (max-width: 499.9px) {
+            flex-direction: column;
+        }
+        .details-part-one, .details-part-two{
+            flex-basis: 50%;
+        }
+        .key-value {
+            display: flex;
+            .max-width {
+                max-width: 90%;
+                line-height: 24px;
+            }
+            .key {
+                font-family: $base-font-family-bold;
+                font-weight: bold;
+                font-size: rem-calc(16px);
+                line-height: 19px;
+            }
+            .value {
+                font-family: $base-font-family;
+                font-size: rem-calc(16px);
+                line-height: 19px;
+                margin-left: 8px;
+                word-break: break-word;
+            }
+        }
+    }
+    .receipt-details-container {
+        margin-top: 12px;
+        .title-part {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            background-color: #863399;
+            padding: 0 16px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            .title {
+                font-family: $base-font-family-bold;
+                font-size: rem-calc(18px);
+                margin-bottom: 0;
+                color: white;
+            }
+        }
+        .receipt-details-box {
+            max-width: 820px;
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 52px;
+            margin-bottom: 36px;
+            .line-info-part {
+                border: 1px solid rgba(0, 0, 0, 0.25);
+                padding: 24px 16px;
+                .border:first-child {
+                    border-top: none;
+                }
+                .border {
+                    border-top: 0.25px solid #000000;
+                    padding-bottom: 13px;
+                }
+                &:last-child {
+                    border-top: none;
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+                .sub-total {
+                    display: flex;
+                    justify-content: flex-end;
+                    .value {
+                        font-size: rem-calc(16px);
+                        font-family: $base-font-family-bold;
+                        line-height: 19px;
+                    }
+                }
+                .name {
+                    font-size: rem-calc(18px);
+                    line-height: 22px;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    margin-top: 0px;
+                    font-family: $base-font-family-bold;
+                }
+                .unit-price {
+                    font-size: rem-calc(16px);
+                    line-height: 19px;
+                    font-family: $base-font-family;
+                    margin-bottom: 24px;
+                }
+                .imei {
+                    font-size: rem-calc(16px);
+                    font-family: $base-font-family-bold;
+                    line-height: 19px;
+                    margin-bottom: 8px;
+                }
+                .notes {
+                    font-size: rem-calc(16px);
+                    font-family: $base-font-family-bold;
+                    line-height: 19px;
+                    margin-bottom: 29px;
+                }
+                .key-value {
+                    display: flex;
+                    justify-content: space-between;
+                    .key,
+                    .value {
+                        font-size: rem-calc(16px);
+                        font-family: $base-font-family-bold;
+                        line-height: 19px;
+                        margin-bottom: 13px;
+                    }
+                }
+            }
+        }
+    }
+    .taxes-fees-box {
+        width: 100%;
+        max-width: 820px;
+        margin: 0 auto;
+        margin-top: 52px;
+        margin-bottom: 36px;
+        .title-part {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            background-color: #f6f6f6;
+            padding: 0 16px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            &.no-border-radius {
+                border-radius: unset;
+            }
+            .title {
+                font-family: $base-font-family-bold;
+                font-size: rem-calc(18px);
+                margin-bottom: 0;
+            }
+        }
+        .taxes-desc-part {
+            border: 1px solid #f0eded;
+            border-top: unset;
+            border-bottom: unset;
+            padding: 24px 16px;
+            .key-value {
+                display: flex;
+                justify-content: space-between;
+                font-size: rem-calc(16px);
+                .bottom {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        .total-part {
+            font-family: $base-font-family-bold;
+            font-size: rem-calc(18px);
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f6f6f6;
+            padding: 0 16px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            .value {
+                font-size: rem-calc(16px);
+            }
+            .bottom {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+<div class="internal-page-margins terms-container margin-bottom-50">
+    <div class="container">
+        <h1 class="margin-top-30">GoodMobile terms & conditions</h1>
+        <div class="container-flex-row">
+            <div class="display-flex">
+                <div class="col-xl-3 col-12 terms-list-container" id="listContainer" name="listContainer"
+                    #listContainer>
+                    <ul class="terms-list" *ngFor="let cat of categories">
+                        <li *ngFor="let item of cat?.fields?.termsAndSectionCategories">
+                            <a [class.active]="item?.fields?.categoryId === activeCategory"
+                                (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
+                                {{item?.fields?.category}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xl-8 col-12 col-offset-0 terms-data" id="dataContainer" name="dataContainer">
+                        <div *ngIf="!!isShowFirst">
+                            <p id="rich-text-desc-1"></p>
+                            <div *ngIf="!isShowSecond && !!isDesc2Exist" class="text-right">
+                                <a class="next-btn btn-arrow" (click)="goSecond()"></a>
+                            </div>
+                        </div>
+                        <div *ngIf="!!isShowSecond && !!isDesc2Exist">
+                            <p id ="rich-text-desc-2"></p>
+                            <div class="text-right">
+                                <a class="prev-btn btn-arrow" (click)="backFirst()"></a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

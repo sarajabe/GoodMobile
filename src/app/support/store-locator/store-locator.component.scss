@@ -1,0 +1,329 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+.stores-container {
+    .stores {
+      @media (#{$larger-than-phablet}) {
+        margin-bottom: 3em;
+      }
+    }
+    @media (max-width: 750px) {
+      padding-top: 100px;
+    }
+    .pagination ul.pagination {
+      width: 55%;
+      @media (#{$larger-than-desktop}) {
+        width: auto;
+      }
+      @media (max-width: 640px) {
+        margin: 0 auto;
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .container-flex {
+      max-width: 1255px;
+      .title {
+        h1 {
+          @media (#{$larger-than-phablet}) {
+            font-size: rem-calc(38px);
+            line-height: 50px;
+          }
+          font-size: rem-calc(26px);
+          line-height: 30px;
+          font-family: $secondary-font-family-bold;
+        }
+      }
+      .subtitle {
+        font-size: rem-calc(17px);
+        line-height: 20px;
+        @media (#{$larger-than-phablet}) {
+          font-weight: bold;
+        }
+      }
+      .form-holder {
+        margin-top: 40px;
+        margin-bottom: 50px;
+        min-height: 100px;
+        .search-store-form {
+          h2 {
+            font-family: $base-font-family-bold;
+            font-size: rem-calc(17px);
+            font-weight: bold;
+          }
+          label {
+            font-family: $base-font-family;
+            font-size: rem-calc(15px);
+            @media (#{$larger-than-mobile}) {
+              font-weight: bold;
+              line-height: 20px;
+              font-size: rem-calc(17px);
+            }
+          }
+          input {
+            font-size: rem-calc(15px);
+            font-family: $base-font-family;
+            height: 40px;
+            @media (#{$larger-than-mobile}) {
+              height: 30px;
+              width: 100%;
+            }
+          }
+          .select-arrow {
+            position: absolute;
+            right: 12px;
+            border-color: #383838;
+            border-width: 0 2px 2px 0;
+            padding: 2px;
+            margin-top: 21px;
+            margin-right: 10px;
+            width: 10px;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            height: 10px;
+            display: block;
+            @media (#{$larger-than-mobile}) {
+              height: 8px;
+              width: 8px;
+              margin-top: 20px;
+            }
+          }
+          select {
+            width: 100%;
+            height: 40px;
+            font-size: rem-calc(16px);
+            font-family: $base-font-family;
+            border-radius: 0px;
+            padding: 0px 15px;
+            color: #a4a4a4;
+            margin-bottom: 15px;
+            -webkit-appearance: none;
+            @media (#{$larger-than-mobile}) {
+              color: #383838;
+              height: 30px;
+              font-size: rem-calc(15px);
+            }
+          }
+          .search-button {
+            background-color: $primary-color;
+            color: white;
+            padding: 2px 7px;
+            border: 0;
+            cursor: pointer;
+            @media (min-width: 640px) and (max-width: 1024px) {
+              padding: 6.5px 10px;
+            }
+          }
+        }
+        @media (#{$larger-than-desktop}) {
+          div.two {
+            width: 15%;
+            margin-right: 25px;
+          }
+        }
+        @media (#{$larger-than-phablet}) {
+          .two {
+            width: 28%;
+            padding-right: 10px;
+            padding-left: 0;
+            &:last-child {
+              width: 8%;
+            }
+          }
+          .search-button {
+            img {
+              transition: all 0.3s ease;
+            }
+            &:hover {
+              img {
+                transform: scale(1.1);
+              }
+            }
+            span {
+              display: none;
+            }
+          }
+        }
+        @media (max-width: 639.9px) {
+          .two {
+            margin-bottom: 5px;
+          }
+          .search-section {
+            .search-button {
+              margin-top: 0;
+              height: 30px;
+              border-radius: 23px;
+              font-weight: 300;
+              font-family: $secondary-font-family;
+              letter-spacing: 0.05em;
+              font-size: rem-calc(17px);
+              padding: 3px 50px;
+              height: 43px;
+              margin-top: -20px;
+              img {
+                display: none;
+                @media (#{$larger-than-phablet}) {
+                  display: block;
+                }
+              }
+            }
+          }
+        }
+      }
+      .content-holder {
+        min-height: 432px;
+        .label {
+          h3 {
+            font-size: rem-calc(17px);
+            font-family: $base-font-family;
+          }
+          @media (max-width: 639px) {
+            display: none;
+            &.no-result {
+              display: block;
+              margin-top: 30px;
+            }
+          }
+        }
+        .stores {
+          .store-icon {
+            background: $primary-color;
+            height: 26px;
+            position: relative;
+            display: inline-block;
+            width: 26px;
+            line-height: 26px;
+            text-align: center;
+            border-radius: 50%;
+            top: -1px;
+            margin-right: 10px;
+            @media (#{$larger-than-phablet}) {
+              top: -1px;
+            }
+            img {
+              margin-top: -2px;
+              @media (#{$larger-than-phablet}) {
+                padding-top: 0;
+                margin-top: -4px;
+              }
+            }
+          }
+          .direction-link {
+            display: none;
+            font-size: rem-calc(15px);
+            font-weight: bold;
+            color: $primary-color;
+            @media (#{$larger-than-phablet}) {
+              display: block;
+            }
+            span {
+              margin-right: 10px;
+              margin-left: -10px;
+            }
+            a {
+              transition: all 0.4s ease-in;
+              img {
+                transition: all 0.4s ease-in;
+              }
+              &:hover {
+                color: #7d4f88;
+                img {
+                  transform: scale(1.15);
+                }
+              }
+            }
+          }
+  
+          .name {
+            h4 {
+              font-family: $base-font-family;
+              font-size: rem-calc(16px);
+              color: $primary-color;
+              @media (#{$larger-than-phablet}) {
+                font-size: rem-calc(18px);
+                line-height: 1.4;
+              }
+            }
+            .diff-color {
+              font-family: $base-font-family;
+              color: $secondary-color;
+              @media (min-width: 639px) {
+                display: block;
+                margin-left: 2em;
+              }
+              @media (min-width: 800px) {
+                display: inline-block;
+                margin-left: 0;
+              }
+            }
+          }
+          .address {
+            p {
+              font-size: rem-calc(16px);
+              font-family: $base-font-family;
+              line-height: 1.4;
+              color: #383838;
+              @media (#{$larger-than-phablet}) {
+                font-size: rem-calc(15px);
+              }
+            }
+          }
+          .telephone {
+            a {
+              font-size: rem-calc(15px);
+              margin-right: 10px;
+            }
+          }
+        }
+        @media (#{$larger-than-desktop}) {
+          div.four {
+            width: 25%;
+            padding: 0;
+          }
+        }
+        .no-result {
+          padding: 0;
+        }
+        .mobile-hide {
+          display: none;
+        }
+        @media (#{$larger-than-phablet}) {
+          .four {
+            width: 33.333333%;
+            .mobile-shown {
+              display: none;
+            }
+            .mobile-hide {
+              display: block;
+            }
+          }
+          .stores {
+            .address {
+              p {
+                padding-right: 15%;
+              }
+            }
+          }
+        }
+        @media (max-width: 639px) {
+          margin-bottom: 70px;
+          .stores {
+            .row {
+              padding: 30px 0;
+              border-bottom: 1px solid #707070;
+              margin-right: 40px;
+              .name {
+                padding-bottom: 10px;
+              }
+            }
+            :last-child {
+              .row {
+                border-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }

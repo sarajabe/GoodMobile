@@ -1,0 +1,36 @@
+<div class="upgrade-confirmation">
+    <h1 class="header">{{upgradedPlans?.length}} OUT OF {{upgradedPlans?.length + plansToUpgrade?.length}}</h1>
+    <section *ngIf="plansToUpgrade && plansToUpgrade?.length > 0">
+        <h2 class="sub-header">YOUR UPGRADE IS PROCESSING</h2>
+        <p class="plan-info">Your <b>{{upgradedPlanDetails?.data / 1024}}GB</b> plan for <b>${{!!upgradedPlan?.autoRenewPlan ? upgradedPlan?.basePlan?.price - 5 : upgradedPlan?.basePlan?.price}}/month</b> is being upgraded for a 6-months plan at <b>${{!!upgradedPlan?.autoRenewPlan ? ((newPlanDetails?.subscriptionPrice - 5)/ newPlanDetails?.subscriptionCycles): (((newPlanDetails?.price * newPlanDetails?.subscriptionCycles * 100 / 100) / newPlanDetails?.subscriptionCycles)  | number: '2.0-1')}}/month</b>.
+            Meanwhile, you can choose to Upgrade another plan on your account.</p>
+        <h3 class="question" *ngIf="plansToUpgrade && plansToUpgrade?.length > 0">Do you want to upgrade the below?</h3>
+        <div class="plan" [@fadeInOut]="'in'" *ngIf="plansToUpgrade && plansToUpgrade?.length > 0">
+            <p class="mdn">Mobile number: <span class="secondary-text-color">{{plansToUpgrade[0]?.mdn | phone}}</span></p>
+            <p class="existing-label">Existing plan:</p>
+            <p class="current-plan">{{nextPlanUpgradeDetails?.data / 1024}}<span class="gb">GB</span><span class="for"> for</span>  ${{!!plansToUpgrade[0]?.autoRenewPlan ? (plansToUpgrade[0]?.basePlan?.price - 5) : plansToUpgrade[0]?.basePlan?.price}}/mo</p>
+            <div class="upgrade-card">
+                <h5 class="head">Unlimited Talk and Text</h5>
+                <div class="body">
+                    <p class="data">{{newUpgradeDetails?.data / 1024}}<span class="gb">GB</span></p>
+                    <p class="for">for</p>
+                    <p class="price"><span class="currency">$</span>{{newUpgradePrice}}</p>
+                    <p class="month">Per month</p>
+                    <button class="button primary" aria-label="upgrade now" type="button" id="upgrade-button" (click)="upgradePlan()"  [uiBlockButton]="processingRequest" >Upgrade now</button>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <p class="dis-note">If you’re enrolled with Auto Pay your credit card will not be charged at the moment,
+                    changes will take effect in your next billing cycle.</p>
+            </div>
+        </div>
+    </section>
+    <section *ngIf="upgradedPlans?.length == (upgradedPlans?.length + plansToUpgrade?.length)">
+        <h2 class="sub-header">YOU'VE DONE IT</h2>
+        <img class="image" src="/assets/img/Done-graphic.png" alt="done" />
+        <p class="plan-info finish" >Your plan upgrade for mobile number: <b>{{upgradedPlan?.mdn | phone}}</b> to be a 6-months plan will take effect {{!isChangeNow ? 'on the next billing cycle' : 'immediately'}}:</p>
+        <p class="date" *ngIf="!isChangeNow">{{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MM/dd/yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}</p>
+    </section>
+    
+    <button class="button primary summary" type="button" aria-label="go to account summary" (click)="goToAccountSummary()" *ngIf="!plansToUpgrade || (!!plansToUpgrade && plansToUpgrade?.length == 0)">Go to account summary</button>
+</div>

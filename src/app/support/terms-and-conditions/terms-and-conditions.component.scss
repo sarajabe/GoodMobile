@@ -1,0 +1,102 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+::ng-deep{
+.terms-container {
+    .btn-arrow {
+      background-color: $primary-color;
+      height: 30px;
+      width: 30px;
+      right: 7%;
+      z-index: 1;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 22px;
+      background-size: 28%;
+      background-position: 44% 47%;
+      background-repeat: no-repeat;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23ffffff'%2F%3E%3C%2Fsvg%3E");
+    }
+    .prev-btn.btn-arrow {
+      background-color: #f58520;
+      transform: rotate(180deg);
+    }
+    .col-12 {
+      order: 2;
+    }
+    @media (min-width: $desktop-min-width) {
+      .display-flex {
+        display: flex;
+        width: 100%;
+        .terms-list-container {
+          position: sticky;
+          top: 90;
+          height: fit-content;
+        }
+        .terms-data {
+          margin-left: 0;
+        }
+      }
+    }
+    .terms-list-container {
+      order: 1;
+      top: 230px;
+      @media (#{$larger-than-desktop}) {
+        position: fixed;
+      }
+      .terms-list {
+        list-style: none;
+        font-size: rem-calc(19px);
+        padding: 0;
+        @media (#{$larger-than-desktop}) {
+          width: 276px;
+        }
+        &:first-child {
+          @media (#{$larger-than-phablet}) {
+            border-top: 1px solid $grey;
+          }
+        }
+        li {
+          border-bottom: 1px solid $grey;
+          padding: 10px 0px;
+          :hover {
+            color: $dark-grey;
+          }
+          .active {
+            color: $black;
+          }
+        }
+      }
+    }
+    .terms-data {
+      order: 3;
+      .fontSize20 {
+        font-size: rem-calc(20px);
+      }
+      .fontWeightNormal {
+        font-weight: normal;
+      }
+      @media (#{$larger-than-desktop}) {
+        margin-left: 30%;
+        margin-top: 30px;
+      }
+      h3 {
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: rem-calc(20px);
+        margin-bottom: 20px;
+      }
+      p,
+      li {
+        font-size: rem-calc(15px);
+        line-height: 17px;
+      }
+      table {
+        td {
+          border: 1px solid $light-grey;
+        }
+      }
+    }
+  }
+}

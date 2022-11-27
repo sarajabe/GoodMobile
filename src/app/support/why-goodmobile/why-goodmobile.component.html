@@ -1,0 +1,126 @@
+<section class="padding-banner" *ngFor="let item of whyGoodmobile | async">
+    <section class="why-goodmobile__banner">
+      <div class="banner__background" title="{{item?.fields?.bannerImageAlt}}" *ngIf="innerWidth >= 1025; else TabletBanner"
+           [ngStyle]="{'background-image':
+           'linear-gradient(rgba(20,20,20,0.3),rgba(20,20,20,0.3)),url('+ item?.fields?.desktopImage.fields.file.url + ')'}">
+        <div class="banner__text white-color">
+          <p class="banner__title secondary-font-bold">
+            {{item?.fields?.bannerTitleOne}}
+            <br>
+            {{item?.fields?.bannerTitleTwo}}
+          </p>
+          <div class="banner__paragraphs primary-font">
+            <p>
+              {{item?.fields?.bannerFirstParagraph}}
+            </p>
+            <p>
+              {{item?.fields?.bannerSecondParagraph}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <ng-template #TabletBanner>
+        <div class="banner__background" title="{{item?.fields?.bannerImageAlt}}" *ngIf="innerWidth >= 640; else PhoneBanner"
+             [ngStyle]="{'background-image': 'linear-gradient(rgba(20,20,20,0.3),rgba(20,20,20,0.3)),url('+ item?.fields?.tabletImage.fields.file.url + ')'}">
+          <div class="banner__text white-color">
+            <p class="banner__title secondary-font-bold">
+              {{item?.fields?.bannerTitleOne}}
+              <br>
+              {{item?.fields?.bannerTitleTwo}}
+            </p>
+            <div class="banner__paragraphs primary-font">
+              <p>
+                {{item?.fields?.bannerFirstParagraph}}
+              </p>
+              <p>
+                {{item?.fields?.bannerSecondParagraph}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #PhoneBanner>
+      <div class="banner__background" title="{{item?.fields?.bannerImageAlt}}"
+           [ngStyle]="{'background-image': 'linear-gradient(rgba(20,20,20,0.3),rgba(20,20,20,0.3)),url('+ item?.fields?.phoneImage.fields.file.url + ')'}">
+        <div class="banner__text white-color">
+          <p class="banner__title secondary-font-bold">
+            {{item?.fields?.bannerTitleOne}}
+            <br>
+            {{item?.fields?.bannerTitleTwo}}
+          </p>
+          <div class="banner__paragraphs primary-font">
+            <p>
+              {{item?.fields?.bannerFirstParagraph}}
+            </p>
+            <p>
+              {{item?.fields?.bannerSecondParagraph}}
+            </p>
+          </div>
+        </div>
+      </div>
+      </ng-template>
+    </section>
+    <section class="why-goodmobile__promises">
+      <div class="promises__container promises--layout display-grid">
+        <div class="promise__container">
+          <div class="image__container">
+          <img class="promise__img-one display-block center-left-right" src="{{item?.fields?.promiseOneImage.fields.file.url}}"
+               alt="{{item?.fields?.promiseOneImageAlt}}">
+          </div>
+          <hr class="promise__sparator">
+          <div class="text__container-one margin-sides-center">
+            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseOneTitle}}</p>
+            <p class="text-align-center container__paragraph primary-font">{{item?.fields?.promiseOneParagraph}}</p>
+          </div>
+        </div>
+        <div class="promise__container">
+          <div class="image__container">
+            <img class="promise__img-two display-block center-left-right" src="{{item?.fields?.promiseTwoImage.fields.file.url}}"
+                 alt="{{item?.fields?.promiseTwoImageAlt}}">
+          </div>
+          <hr class="promise__sparator">
+          <div class="text__container-two margin-sides-center">
+            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseTwoTitle}}</p>
+            <p class="text-align-center container__paragraph primary-font">{{item?.fields?.promiseTwoParagraph}}</p>
+          </div>
+        </div>
+        <div class="promise__container">
+          <div class="image__container">
+            <img class="promise__img-three display-block center-left-right" src="{{item?.fields?.promiseThreeImage.fields.file.url}}"
+                 alt="{{item?.fields?.promiseThreeImageAlt}}">
+          </div>
+          <hr class="promise__sparator">
+          <div class="text__container-three margin-sides-center">
+            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseThreeTitle}}</p>
+            <p class="text-align-center container__paragraph primary-font">{{item?.fields?.promiseThreeParagraph}}</p>
+          </div>
+        </div>
+        <div class="promise__container">
+          <div class="image__container">
+            <img class="promise__img-four display-block center-left-right" src="{{item?.fields?.promiseFourImage.fields.file.url}}"
+                 alt="{{item?.fields?.promiseFourImageAlt}}">
+          </div>
+          <hr class="promise__sparator">
+          <div class="text__container-four margin-sides-center">
+            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseFourTitle}}</p>
+            <p class="text-align-center container__paragraph primary-font margin-bottom-0">{{item?.fields?.promiseFourParagraphOne}}</p>
+            <p class="text-align-center container__paragraph primary-font bold">{{item?.fields?.promiseFourParagraphTwo}}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="why-goodmobile-last-section">
+      <div class="container-flex">
+        <div class="container-flex-row flex-center">
+          <div class="description">
+            <span> {{item?.fields?.proceedToPlansParagraphOne}}</span><br>
+            <span>{{item?.fields?.proceedToPlansParagraphTwo}}</span>
+          </div>
+          <div class="col-md-3">
+            <button class="button primary" data-cy="goToPlans" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES">{{item?.fields?.goToPlansButton}}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+  

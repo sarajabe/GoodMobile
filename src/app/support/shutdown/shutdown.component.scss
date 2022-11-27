@@ -1,0 +1,1091 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+::ng-deep {
+  .shutdown-container {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    flex-direction: column;
+    background-color: #f2f3f5;
+
+    .banner-image-container {
+      position: relative;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 396px;
+        object-position: 69%;
+
+        @media (max-width: $desktop-min-width-minus) {
+          height: 376px;
+          object-position: center;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          height: 238px;
+          object-position: 44%;
+        }
+      }
+    }
+
+    .all-cards-container {
+      position: relative;
+      height: 100%;
+      top: -60px;
+      padding: 0 36px;
+
+      @media (max-width: $desktop-min-width-minus) {
+        top: -53px;
+        padding: 0 20px;
+      }
+
+      @media (max-width: $phablet-min-width-minus) {
+        top: -48px;
+        padding: 0 16px;
+      }
+
+      .card-container {
+        background: #ffffff;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        padding: 36px 26px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: auto;
+
+        @media (max-width: $phablet-min-width-minus) {
+          margin: 16px 0;
+          border-radius: 4px;
+          padding: 20px 8px;
+        }
+      }
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media (max-width: $phablet-min-width-minus) {
+        font-size: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      padding: 8px 0;
+    }
+
+    .button-check {
+      padding: 13px 11px;
+      width: 140px;
+      height: 41px;
+      font-family: $secondary-font-family;
+      font-size: rem-calc(14px);
+      line-height: rem-calc(16px);
+
+      @media (max-width: $desktop-min-width-minus) {
+        width: 120px;
+      }
+
+      @media (max-width: $phablet-min-width-minus) {
+        width: 206px;
+      }
+    }
+
+    .networks-Shutdown-card-content {
+      h1 {
+        font-size: 40px;
+        line-height: 48px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 32px;
+          line-height: 40px;
+          margin-bottom: 5px;
+        }
+      }
+
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 32px;
+          line-height: 48px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+
+      }
+    }
+
+    .what-it-means-for-me-card-content {
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px !important;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px !important;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px !important;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+      }
+
+      ul {
+        padding-left: 21px;
+        margin-block-end: 0;
+        margin-top: 0;
+
+
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        li {
+          margin-bottom: 10px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          @media (max-width: $desktop-min-width-minus) {
+            margin-bottom: 4px;
+          }
+
+          @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+
+    .new-phones-and-VoLTE-card-content {
+
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+        margin-top: 24px;
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-top: 16px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 0;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 0;
+        }
+      }
+
+      ol {
+        margin-block-end: 0;
+        margin-top: 0;
+        padding-left: 21px;
+
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          padding-left: 16px;
+
+          &:last-child {
+            margin-bottom: 0 !important;
+          }
+        }
+
+        li {
+          margin-bottom: 10px;
+          font-size: 16px;
+          line-height: 24px;
+
+          &:last-child {
+            margin-bottom: 0 !important;
+          }
+
+          @media (max-width: $desktop-min-width-minus) {
+            margin-bottom: 4px;
+          }
+
+          @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 5px;
+            font-size: 14px;
+            line-height: 24px;
+          }
+
+          p {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 0 !important;
+
+            @media (max-width: $phablet-min-width-minus) {
+              font-size: 14px;
+              line-height: 24px;
+
+              &:last-child {
+                margin-bottom: 0 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .phone-not-working-card-content {
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+      ol {
+        padding-inline-start: 13px;
+        font-size: rem-calc(18px);
+        margin-block-start: 0;
+        li {
+          p {
+            margin-bottom: 10px;
+          }
+          &:first-child {
+            b {
+              margin-bottom: 10px;
+              line-height: 32px;
+            }
+            p {
+              margin-bottom: 16px;
+            }
+          }
+        }
+        ul {
+          padding-left: 21px;
+          margin-block-end: 0;
+          margin-top: 0;
+          list-style-type: disc;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          li {
+            margin-bottom: 10px;
+            p {
+              margin-bottom: 0;
+            }
+            &:first-child {
+              p {
+                margin-bottom: 0px;
+              }
+            }
+            &:last-child {
+              margin-bottom: 24px;
+            }
+            @media (max-width: $desktop-min-width-minus) {
+              margin-bottom: 4px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+              margin-bottom: 5px;
+              &:last-child {
+                margin-bottom: 16px;
+              }
+            }
+          }
+        }
+      }
+     
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+      
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+        &:last-child {
+          margin-bottom: 0px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+    .verifying-Your-4g-Phone-content {
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+
+    .what-about-my-SIM-card-content {
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+
+    .triple-sim {
+      width: 100%;
+      margin-bottom: 24px;
+      max-width: 502px;
+      img {
+        width: 100%;
+      }
+
+      @media (max-width: $phablet-min-width-minus) {
+        margin-bottom: 16px;
+      }
+    }
+
+    .how-To-Switch-Your-Sim-Card-content {
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .special {
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .what-to-Look-For-Buying-card-content {
+
+      h2 {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 5px;
+        }
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+
+          margin-bottom: 10px;
+
+          @media (max-width: $desktop-min-width-minus) {
+            margin-bottom: 4px;
+          }
+
+          @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 5px;
+
+          }
+        }
+      }
+    }
+
+    .primary-col {
+      a {
+        color: $primary-color;
+        font-size: 16px;
+      }
+    }
+
+    .validation-message,
+    .primary-col {
+      margin: 0;
+      margin-top: 8px !important;
+    }
+
+    a {
+      color: #5590ff;
+    }
+
+    .re-captcha--resizing {
+      @media (min-width: 1025px) {
+        margin-top: 18px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .checkForm {
+      .form-label {
+        margin-bottom: 0px !important;
+        line-height: 32px !important;
+        font-size: 24px !important;
+        font-family: $secondary-font-family-bold;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 0px !important;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 20px !important;
+          line-height: 28px !important;
+          margin-bottom: 0px !important;
+        }
+        @media (max-width: 333px) {
+          max-width: 273px;
+        }
+      }
+
+      input,
+      select {
+        height: 56px;
+      }
+
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        width: 590px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          margin-bottom: 10px;
+          width: 260px;
+        }
+
+        .full {
+          flex-basis: 100%;
+
+          @media (max-width: $desktop-min-width-minus) {
+            flex-basis: 90%
+          }
+
+          @media (max-width: $phablet-min-width-minus) {
+            flex-basis: 100%;
+          }
+        }
+      }
+
+      .flex-responsive {
+        @media (max-width: $phablet-min-width-minus) {
+          display: flex;
+
+          .form-row {
+            flex-basis: 100%;
+
+            .half {
+              flex-basis: 100%;
+
+              &.state {
+                margin-left: 16px;
+              }
+            }
+          }
+        }
+      }
+
+      .outlined-label-input {
+        position: relative;
+        display: inline-block;
+        padding-top: 6px;
+        font-size: 16px;
+        line-height: 1.5;
+        overflow: hidden;
+        margin-bottom: 0;
+
+        select {
+          box-sizing: border-box;
+          margin: 0;
+          border: solid 1px;
+          /* Safari */
+          border-color: #dadada;
+          border-top-color: transparent;
+          border-radius: 4px;
+          padding: 15px 13px 15px;
+          width: 100%;
+          height: inherit;
+          color: #000000de;
+          background-color: transparent;
+          box-shadow: none;
+          /* Firefox */
+          font-family: inherit;
+          font-size: inherit;
+          line-height: inherit;
+          caret-color: $primary-color;
+          transition: border 0.2s, box-shadow 0.2s;
+
+          &:not(:focus) {
+            border-top-color: #dadada;
+
+            + {
+              span {
+                font-size: 14px;
+                line-height: 68px;
+
+                &:before {
+                  border-top-color: transparent;
+                }
+              }
+            }
+          }
+
+          &.dirty {
+            border-color: $primary-color;
+            border-top-color: transparent;
+            box-shadow: inset 1px 0 $primary-color, inset -1px 0 $primary-color, inset 0 -1px $primary-color;
+            outline: none;
+
+            + {
+              span {
+                color: $primary-color;
+
+                &:before {
+                  border-top-color: $primary-color !important;
+                  box-shadow: inset 0 1px $primary-color;
+                }
+
+                &:after {
+                  border-top-color: $primary-color !important;
+                  box-shadow: inset 0 1px $primary-color;
+                }
+              }
+            }
+          }
+        }
+
+        input {
+          box-sizing: border-box;
+          margin: 0;
+          border: solid 1px;
+          /* Safari */
+          border-color: #dadada;
+          border-top-color: transparent;
+          border-radius: 4px;
+          padding: 15px 13px 15px;
+          width: 100%;
+          height: inherit;
+          color: #000000de;
+          background-color: transparent;
+          box-shadow: none;
+          /* Firefox */
+          font-family: inherit;
+          font-size: inherit;
+          line-height: inherit;
+          caret-color: $primary-color;
+          transition: border 0.2s, box-shadow 0.2s;
+
+          &:not(:focus):placeholder-shown {
+            border-top-color: #dadada;
+
+            + {
+              span {
+                font-size: 14px;
+                line-height: 68px;
+
+                &:before {
+                  border-top-color: transparent;
+                }
+              }
+            }
+          }
+
+          &:focus {
+            border-color: $primary-color;
+            border-top-color: transparent;
+            box-shadow: inset 1px 0 $primary-color, inset -1px 0 $primary-color, inset 0 -1px $primary-color;
+            outline: none;
+
+            + {
+              span {
+                color: $primary-color;
+
+                &:before {
+                  border-top-color: $primary-color !important;
+                  box-shadow: inset 0 1px $primary-color;
+                }
+
+                &:after {
+                  border-top-color: $primary-color !important;
+                  box-shadow: inset 0 1px $primary-color;
+                }
+              }
+            }
+          }
+        }
+
+        span {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex;
+          border-color: #dadada;
+          width: 100%;
+          max-height: 100%;
+          color: #00000099;
+          font-size: 75%;
+          line-height: 15px;
+          cursor: text;
+          transition: color 0.2s, font-size 0.2s, line-height 0.2s;
+
+          &:before,
+          &:after {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            margin-top: 6px;
+            border-top: solid 1px;
+            border-top-color: #dadada;
+            min-width: 10px;
+            height: 8px;
+            pointer-events: none;
+            box-shadow: inset 0 1px transparent;
+            transition: border-color 0.2s, box-shadow 0.2s;
+          }
+
+          &:before {
+            margin-right: 4px;
+            border-left: solid 1px transparent;
+            border-radius: 4px 0;
+          }
+
+          &:after {
+            flex-grow: 1;
+            margin-left: 4px;
+            border-right: solid 1px transparent;
+            border-radius: 0 4px;
+          }
+        }
+      }
+    }
+
+    .download-link {
+      margin-bottom: 0;
+      margin-left: 16px;
+      font-size: rem-calc(15px);
+      white-space: nowrap;
+    }
+
+    .cc-device-header {
+      margin-top: 24px;
+      margin-bottom: 0px;
+      display: flex;
+      align-items: baseline;
+      p {
+        font-family: $secondary-font-family-bold;
+        font-size: rem-calc(24px);
+        line-height: 32px;
+        margin-bottom: 0 !important;
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: rem-calc(20px) !important;
+          line-height: 28px !important;
+        }
+      }
+    }
+
+    .floating-label {
+      max-width: 590px;
+      width: 100%;
+
+      .floating-select {
+        &:focus {
+          ~ {
+            label {
+              height: unset;
+              margin-bottom: unset;
+              display: unset;
+
+              &.long {
+                width: 120px;
+              }
+            }
+          }
+        }
+
+        &.dirty {
+          &:valid {
+            ~ {
+              label {
+                height: unset;
+                margin-bottom: unset;
+                display: unset;
+
+                &.long {
+                  width: 120px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      label {
+        height: 50px;
+        margin-bottom: 0;
+        top: 0;
+        display: flex;
+        width: 100%;
+        align-items: center;
+      }
+    }
+
+    .available-devices-section {
+      width: 100%;
+      margin-top: 45px;
+
+      @media (max-width: $phablet-min-width-minus) {
+        margin-top: 20px;
+      }
+
+      .title {
+        font-family: $secondary-font-family;
+        font-size: rem-calc(25px);
+        line-height: 24px;
+        font-weight: 400;
+        margin-bottom: 10px;
+
+        @media (max-width: $desktop-min-width-minus) {
+          margin-bottom: 4px;
+        }
+
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: rem-calc(15px);
+          line-height: 28px;
+          margin-bottom: 5px;
+        }
+      }
+
+      .devices-box {
+        max-width: 882px;
+        width: 100%;
+        padding: 21px 10px 21px 20px;
+        margin-top: 24px;
+        border: 1px solid #e3e3e3;
+        border-radius: 10px;
+        max-height: 254px;
+        height: 100%;
+
+        &.scroll {
+          overflow-y: scroll;
+        }
+
+        .phone-model {
+          font-size: rem-calc(13px);
+          line-height: 24px;
+          margin-bottom: 23px;
+          font-weight: 600;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .scrollbar-primary::-webkit-scrollbar {
+        width: 13px;
+        background-color: transparent;
+      }
+
+      .scrollbar-primary::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: #c4c4c4;
+      }
+    }
+  }
+}

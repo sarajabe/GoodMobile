@@ -1,0 +1,167 @@
+@import '../../../styles/modules/mixins';
+@import '../../../styles/modules/variables';
+
+//:host ::ng-deep is used to apply the common styles on all child router-outlet components
+:host ::ng-deep .rma {
+    .progress-banner {
+        background: #8633990D;
+        box-shadow: 0px -1px 4px 0px #CED3D640 inset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60px;
+        padding: 30px;
+        gap: 25px;
+        .step-image {
+          width: 60px;
+          height: 60px;
+        }
+        .progress {
+          background: #E2E2E2;
+          border-radius: 6px;
+          width: 146px;
+          .rma-progress {
+            height: 3px;
+            border-radius: 6px;
+            &.half {
+              width: 50%;
+              background-color: $secondary-color;
+            }
+            &.full {
+              width: 100%;
+              background-color: #0EB864;
+            }
+          }
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            gap: 8px;
+            margin-top: 40px;
+            .step-image {
+                width: 40px;
+                height: 40px;
+                max-width: 104px;
+                width: 100%;
+                min-width: 44px;
+            }
+        }
+    }
+    .process-content {
+        padding: 44px 8%;
+        .title {
+            font-size: rem-cacl(40px);
+            line-height: 48px;
+            margin-bottom: 32px;
+        }
+        .selection-title {
+            font-weight: 700;
+            font-size: rem-calc(24px);
+            line-height: 36px;
+            margin-bottom: 30px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            padding: 32px 16px;
+            .title {
+                font-size: rem-cacl(32px);
+                line-height: 40px;
+                margin-bottom: 24px;
+            }
+            .selection-title {
+                font-size: rem-calc(18px);
+                line-height: 28px;
+                margin-bottom: 22px;
+            }
+        }
+    }
+    .component-footer {
+        // position: sticky;
+        padding: 24px 8%;
+        box-shadow: 0px 1px 0px 0px #E2E2E2 inset;
+        border-top: 1px solid #e3e3ea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        .button {
+            width: 121px;
+            font-weight: 700;
+            font-size: rem-calc(20px);
+            padding: 8px;
+        }
+        .secondary {
+            margin-right: 15px;
+        }
+        .cancel {
+            cursor: pointer;
+            color: $primary-color;
+            font-size: rem-calc(20px);
+            line-height: 20px;
+            margin-bottom: 0;
+            font-family: $secondary-font-family-bold;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            padding: 16px;
+            .button {
+                width: 94px;
+                font-size: rem-calc(16px);
+            }
+            .cancel {
+                font-size: rem-calc(16px);
+                line-height: 16px;
+            }
+        }
+    }
+    .select-option {
+        margin-bottom: 25px;
+        .reason-container {
+          display: flex;
+          .reason-link {
+            color: $black;
+            cursor: pointer;
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            font-family: $base-font-family;
+            padding-left: 14px;
+            margin-bottom: 4px;
+            &.disabled {
+              color: $disabled-grey;
+              cursor: not-allowed;
+            }
+          }
+        }
+        .radio-img {
+          height: 28px;
+          &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+        .not-allowed {
+            color: #D22119;
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            display: block;
+            padding-left: 43px;
+            a {
+                font-weight: 700;
+            }
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 16px;
+            .reason-container {
+                .reason-link {
+                    font-size: rem-calc(16px);
+                    line-height: 24px;
+                    padding-left: 10px;
+                    margin-bottom: 4px;
+                }
+            }
+            .radio-img {
+                height: 24px;
+            }
+            .not-allowed {
+                font-size: rem-calc(14px);
+            }
+        }
+    }
+    
+}

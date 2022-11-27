@@ -1,0 +1,318 @@
+<section class="missing-items report-page" [class.space]="!!showContactForm" id="parent">
+    <div class="back-section">
+        <img src="/assets/icon/back-arrow.svg">
+        <a class="back-link" (click)="goToReportIssue()">Report an Issue</a>
+    </div>
+    <h1 class="title" id="title">Wrong or missing item(s)</h1>
+    <p class="desc" *ngIf="!showContactForm">Please let us know which item(s) you need help with:</p>
+    <div class="red-banner" *ngIf="!!showValidationError">
+        <img src="assets/icon/red-alert.svg" alt="alert">
+        <p class="validation" data-cy="itemsValidationMsg">Please select at least one item to proceed</p>
+    </div>
+    <div class="order-cards-container" *ngIf="!showContactForm">
+        <div class="order-card" id="details-card">
+            <div class="order-card-container">
+                <div class="card-header-section">
+                    <h2 class="card-header">Order Details</h2>
+                </div>
+                <div class="card-tab">
+                    <input type="checkbox" id="items" [(ngModel)]="items">
+                    <label class="tab-label" for="items">Items</label>
+                    <div class="tab-content">
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.NEW">
+                            <input type="checkbox" id="lines" [(ngModel)]="line">
+                            <label class="sub-label new" for="lines">
+                                <span>Line #1</span><img class="icon" data-cy="arrowIcon"
+                                    src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content">
+                                <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox" [value]="plan?.itemId" [(ngModel)]="selectedItem" (ngModelChange)="showValidationError=false">
+                                        <label [for]="plan?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail">
+                                        <div class="details">
+                                            <p class="item-title"><b>{{plan?.subtitle}}</b></p>
+                                            <p class="description">Unlimited Talk, Text & Data</p>
+                                            <p class="category"><b>(New plan)</b></p>
+                                            <p class="id" *ngIf="plan?.itemId">Item # {{plan?.itemId}}</p>
+                                            <p class="code" *ngIf="plan?.redemptionCode">Redemption Code:
+                                                {{plan?.redemptionCode}}</p>
+                                            <p class="quantity">Quantity: {{ plan?.quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>${{plan?.price}}</b></p>
+                                    </div>
+                                </div>
+                                <div class="sub-item-section">
+                                    <hr>
+                                    <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                            <div class="details">
+                                                <p class="item-title"><b>SIM Card</b></p>
+                                                <p class="category"><b>(New)</b></p>
+                                                <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                <p class="quantity">Quantity: 1</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>${{sim?.price}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr *ngIf="!!orderInfo?.devices">
+                                <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox" [value]="device?.itemId" [(ngModel)]="selectedDevice" (ngModelChange)="showValidationError=false">
+                                            <label [for]="device?.itemId" class="checkbox-label">
+                                            </label>
+                                        <div class="phone-image-container">
+                                            <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                        </div>
+                                        <div class="details">
+                                            <p class="item-title"><b>{{device?.description}}</b></p>
+                                            <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                            <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>${{device?.price}}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.MIGRATION">
+                            <input type="checkbox" id="lines" [(ngModel)]="line">
+                            <label class="sub-label new" for="lines">
+                                <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                    src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content">
+                                <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox" [value]="sim?.itemId" [(ngModel)]="selectedSIM" (ngModelChange)="showValidationError=false">
+                                        <label [for]="sim?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                        <div class="details">
+                                            <p class="item-title"><b>SIM Card</b></p>
+                                            <p class="category"><b>(Migration)</b></p>
+                                            <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                            <p class="quantity">Quantity: 1</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>${{sim?.price}}</b></p>
+                                    </div>
+                                </div>
+                                <hr *ngIf="!!orderInfo?.devices">
+                                <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox" [value]="device?.itemId" [(ngModel)]="selectedDevice" (ngModelChange)="showValidationError=false">
+                                        <label [for]="device?.itemId" class="checkbox-label">
+                                        </label>
+                                        <div class="phone-image-container">
+                                            <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                        </div>
+                                        <div class="details">
+                                            <p class="item-title"><b>{{device?.description}}</b></p>
+                                            <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                            <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>${{device?.price}}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.ADDON">
+                            <input type="checkbox" id="addon" [(ngModel)]="line">
+                            <label class="sub-label new" for="addon">
+                                <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                    src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content" *ngFor="let addon of orderInfo?.planAddOns; let i = index">
+                                <div class="item-details">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="addon?.itemId" type="checkbox" [value]="addon?.itemId" [(ngModel)]="selectedAddon" (ngModelChange)="showValidationError=false">
+                                        <label [for]="addon?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail"
+                                            [src]="addon.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : 'assets/icon/International.svg'"
+                                            alt="thumbnail">
+                                        <div class="details">
+                                            <p class="item-title"><b>{{addon?.subtitle}}</b></p>
+                                            <p class="category"><b>(Addon)</b></p>
+                                            <p class="id" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
+                                            <p class="quantity">Quantity: {{ addon?.quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
+                                    </div>
+                                </div>
+                                <hr *ngIf="i < (orderInfo?.planAddOns.length - 1)">
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.REFILL">
+                            <input type="checkbox" id="lines" [(ngModel)]="line">
+                            <label class="sub-label new" for="lines">
+                                <span translate>Line {{plan?.mdn | phone }}</span><img class="icon"
+                                    data-cy="arrowIcon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content">
+                                <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox" [value]="plan?.itemId" [(ngModel)]="selectedItem" (ngModelChange)="showValidationError=false">
+                                        <label [for]="plan?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail">
+                                        <div class="details">
+                                            <p class="item-title"><b>{{plan?.subtitle}}</b></p>
+                                            <p class="description">Unlimited Talk, and Text</p>
+                                            <p class="category"><b>(Refill Plan)</b></p>
+                                            <p class="quantity">Quantity: {{ plan?.quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>{{plan?.price | currency:'USD':'symbol':0}}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.CHANGE">
+                            <input type="checkbox" id="lines" [(ngModel)]="line">
+                            <label class="sub-label new" for="lines">
+                                <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                    src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content">
+                                <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox" [value]="plan?.itemId" [(ngModel)]="selectedItem" (ngModelChange)="showValidationError=false">
+                                        <label [for]="plan?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="plan">
+                                        <div class="details">
+                                            <p class="item-title"><b>{{plan?.subtitle}}</b></p>
+                                            <p class="description">Unlimited Talk, and Text</p>
+                                            <p class="category"><b>(Change Plan)</b></p>
+                                            <p class="quantity">Quantity: {{ plan?.quantity}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>{{plan?.price | currency:'USD':'symbol':0}}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.REPLACEMENT">
+                            <input type="checkbox" id="lines" [(ngModel)]="line">
+                            <label class="sub-label new" for="lines">
+                                <span translate>Line {{orderInfo?.mdn | phone }}</span><img class="icon"
+                                    data-cy="arrowIcon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content">
+                                <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox" [value]="device?.itemId" [(ngModel)]="selectedDevice" (ngModelChange)="showValidationError=false">
+                                        <label [for]="device?.itemId" class="checkbox-label">
+                                        </label>
+                                        <div class="phone-image-container">
+                                            <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                        </div>
+                                        <div class="details">
+                                            <p class="item-title"><b>{{device?.description}}</b></p>
+                                            <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                            <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr *ngIf="orderInfo?.cards && orderInfo?.devices">
+                                <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox" [value]="sim?.itemId" [(ngModel)]="selectedSIM" (ngModelChange)="showValidationError=false">
+                                        <label [for]="sim?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                        <div class="details">
+                                            <p class="item-title"><b>SIM Card</b></p>
+                                            <p class="category"><b>(Replacement)</b></p>
+                                            <p class="id" *ngIf="sim?.itemId">Item #{{ sim?.itemId}}</p>
+                                            <p class="quantity">Quantity: 1</p>
+                                            <hr *ngIf="!!orderInfo?.planAddOns">
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
+                                    </div>
+                                </div>
+                                <div *ngIf="!!orderInfo?.planAddOns">
+                                    <div class="item-details"
+                                        *ngFor="let addon of orderInfo?.planAddOns; let i = index">
+                                        <div class="details-side">
+                                            <input class="styled-checkbox" [id]="addon?.itemId" type="checkbox" [value]="addon?.itemId" [(ngModel)]="selectedAddon" (ngModelChange)="showValidationError=false">
+                                            <label [for]="addon?.itemId" class="checkbox-label">
+                                            </label>
+                                            <img class="thumbnail"
+                                                [src]="addon.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : 'assets/icon/International.svg'"
+                                                alt="thumbnail">
+                                            <div class="details">
+                                                <p class="item-title"><b>{{addon?.subtitle}}</b></p>
+                                                <p class="category"><b>(Addon)</b></p>
+                                                <p class="id" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
+                                                <p class="quantity">Quantity: {{ addon?.quantity }}</p>
+                                                <hr *ngIf="i < (orderInfo?.planAddOns.length - 1)">
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.NEW_SIM">
+                            <input type="checkbox" id="lines" [(ngModel)]="line">
+                            <label class="sub-label new" for="lines">
+                                <span>Line #1</span><img class="icon" data-cy="arrowIcon"
+                                    src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                            </label>
+                            <div class="sub-content">
+                                <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                    <div class="details-side">
+                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox" [value]="sim?.itemId" [(ngModel)]="selectedSIM" (ngModelChange)="showValidationError=false">
+                                        <label [for]="sim?.itemId" class="checkbox-label">
+                                        </label>
+                                        <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                        <div class="details">
+                                            <p class="item-title"><b>SIM Card</b></p>
+                                            <p class="category"><b>(New)</b></p>
+                                            <p class="id" *ngIf="sim?.itemId">Item # {{sim?.itemId}}</p>
+                                            <p class="quantity">Quantity: 1</p>
+                                        </div>
+                                    </div>
+                                    <div class="price-side">
+                                        <p class="price"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-footer" *ngIf="!showContactForm">
+    <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="goToReportIssue()">Cancel</button>
+    <button class="button primary" aria-label="next" data-cy="nextBtn" (click)="setItems()">Next</button>
+</section>
+<app-contact-form (backToMain)="goToReportIssue()" (backOneStep)="showContactForm=false" [orderInfo]="orderInfo" [hasBack]=true *ngIf="!!showContactForm">
+</app-contact-form>

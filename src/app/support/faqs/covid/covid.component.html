@@ -1,0 +1,55 @@
+<div class="covid-banner">
+    <h2 class="covid-header">We’re committed to supporting our customers.</h2>
+    <h2 class="covid-header">Learn more about how we are responding to COVID 19.</h2>
+  </div>
+  <div class="container-flex">
+    <div class="details-section">
+        <p class="details">
+            From all of us at GoodMobile, we hope you and the people you care about are healthy and safe.
+        </p>
+        <p class="details">
+            Like you, we are continuing to follow the rapidly changing news about the coronavirus (COVID-19) outbreak. We understand your connectivity is critical – our networks and support centers remain fully operational as GoodMobile takes our responsibility as a vital communications provider seriously.
+        </p>
+        <p class="details common">
+            All GoodMobile cellphone plans include unlimited talk and text. Effective immediately, we’re extending free double high-speed data to our existing customers.
+        </p>
+        <p class="details common">
+            Given high call volumes, you may experience longer waits than usual when trying to reach our customer service team by phone or email. We will respond to each inquiry; it just might take a while longer than usual.
+        </p>
+    </div>
+    <div class="thumbnails-section">
+        <div class="thumbnail">
+            <div class="icon-container">
+                <img src="assets/img/manage-account.svg">
+            </div>
+            <div class="details">
+                <h2 class="title">Manage your account online</h2>
+                <p class="description">Check data use, change plans, add data, pay your bill, etc. can all be done online.</p>
+                <button class="button primary" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE+'/'+ACCOUNT_ROUTE_URLS.SUMMARY]">Manage Account</button>
+            </div>
+        </div>
+        <div class="thumbnail">
+            <div class="icon-container">
+                <img class="larger" src="assets/img/data-setup.png">
+            </div>
+            <div class="details">
+                <h2 class="title split">New customers trying to set up data </h2>
+                <p class="description">it’s easy to set up data and you’ll find everything you need.</p>
+                <button class="button primary" [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]">Data Setup</button>
+            </div>
+        </div>
+        <div class="thumbnail">
+            <div class="icon-container">
+                <img src="assets/img/FAQ-icon.svg">
+            </div>
+            <div class="details">
+                <h2 class="title split">Frequently Asked Questions</h2>
+                <p class="description">Got questions? Chances are we got you covered. Learn more</p>
+                <button class="button primary" [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS]">FAQs</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p class="other">Other questions</p>
+    </div>
+  </div>

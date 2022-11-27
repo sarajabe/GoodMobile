@@ -1,0 +1,88 @@
+@import "../../../../styles/modules/variables";
+@import "../../../../styles/modules/mixins";
+
+.verified-flow-page {
+    .header-section {
+        margin-bottom: 22px;
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 25px;
+        }
+        .sub-header {
+            margin: 0 auto;
+            max-width: 685px;
+            font-size: rem-calc(20px);
+            line-height: 30px;
+            @media (max-width: $phablet-min-width-minus) {
+                width: 312px;
+                font-size: rem-calc(18px);
+                line-height: 30px;
+                color: #383838;
+            }
+        }
+    }
+    .activation-code-section {
+        margin-bottom: 28px;
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 30px;
+        }
+        .activation-form {
+            label {
+                font-size: rem-calc(15px);
+                margin-bottom: 10px;
+                color: $black;
+            }
+            input {
+                width: 200px;
+                height: 45px;
+                text-align: center;
+                padding-bottom: 5px;
+                &::placeholder {
+                    font-family: $base-font-family;
+                    font-size: rem-calc(12px);
+                    color: $disabled-grey;
+                }
+            }
+            .validation-message {
+                color: $alert;
+            }
+        }
+    }
+    .device-info-section {
+        font-size: rem-calc(16px);
+        margin-bottom: 32px;
+        .title {
+            font-family: $base-font-family;
+            margin-bottom: 16px;
+        }
+        .info {
+            font-family: $base-font-family-bold;
+            margin-bottom: 12px;
+            @media (max-width: 369.9px) {
+                font-size: rem-calc(13px);
+            }
+            &.margin-0 {
+                margin-bottom: 0;
+            }
+        }
+    }
+    .options-section {
+        .start-migration-button {
+            margin-bottom: 28px;
+            button {
+                font-size: rem-calc(20px);
+                font-weight: bold;
+                width: 272px;
+                padding: 8px;
+                &.disabled {
+                    color: white;
+                    background-color: $primary-color;
+                }
+            }
+        }
+        .back {
+            font-family: $secondary-font-family-bold;
+            font-size: rem-calc(20px);
+            margin-bottom: 40px;
+        }
+    }
+}

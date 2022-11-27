@@ -1,0 +1,50 @@
+@import '../../styles/modules/variables';
+
+.not-found-section {
+    padding: 60px;
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .title {
+           font-size: 38px;
+           line-height: 50px;
+        }
+        .subtitle {
+            font-size: 30px;
+            line-height: 39px;
+        }
+    }
+    .details {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        margin-top: 45px;
+        .description {
+            max-width: 900px;
+            text-align: center;
+            font-size: 22px;
+        }
+    }
+    @media( max-width: $desktop-min-width-minus) {
+        padding: 30px 40px 50px;
+        .header {
+            .title {
+                font-size: 28px;
+                line-height: 37px;  
+            }
+            .subtitle {
+                font-size: 20px;
+                line-height: 27px;
+                text-align: center;
+            }
+        }
+        .details {
+            margin-top: 30px;
+            .description {
+                font-size: 16px;
+                line-height: 23px;  
+            }
+        }
+    } 
+}

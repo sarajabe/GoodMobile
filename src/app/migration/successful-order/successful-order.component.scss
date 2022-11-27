@@ -1,0 +1,58 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+.order-result {
+    padding-top: 70px;
+    @media(max-width:$desktop-min-width-minus){
+        padding-top: 50px;
+    }
+    .header {
+        font-size: rem-calc(38px);
+        line-height: 50px;
+        margin-bottom: 22px;
+    }
+    .description {
+        font-size: rem-calc(22px);
+        line-height: 30px;
+        max-width: 825px;
+        margin: 30px auto;
+    }
+    .image {
+        img {
+          width: 200.6px;
+          height: 98px;
+        }
+      }
+    .actions-container {
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 60px;
+        .button {
+            width: 180px;
+            padding: 11px;
+            font-size: rem-calc(20px);
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        .header {
+            font-size: rem-calc(28px);
+            line-height: 37px;
+        }
+        .description {
+            font-size: rem-calc(20px);
+            line-height: 30px;
+        }
+        .image {
+            img {
+              width: 164.1px;
+              height: 80.2px;
+            }
+        }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        .header {
+            font-size: rem-calc(26px);
+            line-height: 30px;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="preferences" width="39" height="39" viewBox="0 0 39 39">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#111;stroke-linecap:square;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <path id="Line_520" d="M0 0L18 0" class="cls-1" transform="translate(20 6)"/>
+    <path id="Line_521" d="M0 0L5 0" class="cls-1" transform="translate(1 6)"/>
+    <path id="Rectangle_2587" d="M0 0H7V10H0z" class="cls-1" transform="translate(6 1)"/>
+    <path id="Line_522" d="M0 0L1 0" class="cls-1" transform="translate(37 20)"/>
+    <path id="Line_523" d="M0 0L22 0" class="cls-1" transform="translate(1 20)"/>
+    <path id="Rectangle_2588" d="M0 0H6V9H0z" class="cls-1" transform="translate(23 15)"/>
+    <path id="Line_524" d="M0 0L18 0" class="cls-1" transform="translate(20 33)"/>
+    <path id="Line_525" d="M0 0L5 0" class="cls-1" transform="translate(1 33)"/>
+    <path id="Rectangle_2589" d="M0 0H7V10H0z" class="cls-1" transform="translate(6 28)"/>
+</svg>

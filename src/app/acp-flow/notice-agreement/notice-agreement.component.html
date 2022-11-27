@@ -1,0 +1,90 @@
+<div [class.acp-disabled]="!!disable">
+    <form [formGroup]="signForm" class="signForm">
+      <div class="form-row">
+        <input type="text" formControlName="firstCheck" data-cy="firstCheck" placeholder="AA" maxlength="2"
+          oninput="this.value = this.value.toUpperCase()" />
+        <p class="label">
+          The ACP Program is a government program that reduces the consumer’s
+          broadband Internet access Service bill by the amount of the Federal
+          Affordable Connectivity made available to an eligible consumer .
+        </p>
+      </div>
+      <div class="form-row">
+        <input type="text" formControlName="secondCheck" data-cy="secondCheck" placeholder="AA" maxlength="2"
+          oninput="this.value = this.value.toUpperCase()" />
+        <p class="label">
+          The ACP Program is temporary in nature and is limited to one supported
+          service plan per household. Your household will be subject to the
+          provider’s undiscounted rates and general terms and conditions at the end
+          of the ACP Program if you continue to receive service.
+        </p>
+      </div>
+      <div class="form-row">
+        <input type="text" formControlName="thirdCheck" data-cy="thirdCheck" placeholder="AA" maxlength="2"
+          oninput="this.value = this.value.toUpperCase()" />
+        <p class="label">
+          You may obtain ACP-supported broadband service from any participating
+          provider of your choosing, and you can transfer their Federal Affordable
+          Connectivity program to another provider at any time.
+        </p>
+      </div>
+      <div class="form-row">
+        <input type="text" formControlName="forthCheck" data-cy="forthCheck" placeholder="AA" maxlength="2"
+          oninput="this.value = this.value.toUpperCase()" />
+        <p class="label">
+          Please indicate that you have read and understood these disclosures and
+          that you affirmatively consent to providing your Federal Affordable
+          Connectivity program to GoodMobile by clicking the following box:
+        </p>
+      </div>
+      <label class="validation-message" *ngIf="
+        (signForm.controls.firstCheck.touched &&
+          signForm.controls.firstCheck.hasError('required')) ||
+        (signForm.controls.secondCheck.touched &&
+          signForm.controls.secondCheck.hasError('required')) ||
+        (signForm.controls.thirdCheck.touched &&
+          signForm.controls.thirdCheck.hasError('required')) ||
+        (signForm.controls.forthCheck.touched &&
+          signForm.controls.forthCheck.hasError('required'))
+      ">
+        Initials are required , please make sure you filled all of them
+      </label>
+      <label class="validation-message" *ngIf="
+        signForm.controls.firstCheck.hasError('pattern') ||
+        signForm.controls.secondCheck.hasError('pattern') ||
+        signForm.controls.thirdCheck.hasError('pattern') ||
+        signForm.controls.forthCheck.hasError('pattern')
+      ">
+        Mismatching initials with your first charecter of your first name and first
+        charecter of your last name
+      </label>
+      <p class="note">
+        By signing my name below, I acknowledge that I have read, understand, and
+        agree to these terms and conditions.
+      </p>
+      <div class="signed-name">
+        <label class="outlined-label-input">
+          <input placeholder=" " formControlName="name" type="text" id="name" data-cy="name" oninput="this.value = this.value.toUpperCase()"/>
+          <span>Enter first & last name</span>
+        </label>
+        <p class="hint">{{fullName | uppercase}}</p>
+        <label class="validation-message" *ngIf="
+          signForm.controls.name.hasError('required') &&
+          signForm.controls.name.touched
+        ">
+          Full name is required
+        </label>
+        <label class="validation-message" *ngIf="
+          !!signForm.controls.name.value &&
+          signForm.hasError('mismatchedFullName')
+        ">
+          Your full name does not match the previous registered one
+        </label>
+      </div>
+      <div class="captcha">
+        <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
+        <label class="validation-message" *ngIf="showCaptchaError">Please verify that you are not a robot</label>
+      </div>
+    </form>
+    
+  </div>

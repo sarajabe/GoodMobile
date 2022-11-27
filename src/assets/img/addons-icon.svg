@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.348" height="13" viewBox="0 0 13.348 13">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:none;stroke:#fff;stroke-linejoin:bevel;stroke-miterlimit:10}
+        </style>
+    </defs>
+    <g id="prefix__plan_addons_icon" data-name="plan addons icon" transform="translate(-758.09 -427.5)">
+        <g id="prefix__Group_1577" data-name="Group 1577" transform="translate(758.09 428)">
+            <path id="prefix__Path_6078" d="M760.3 430.038h10.3a.339.339 0 0 1 .335.4l-.811 4.867a1.019 1.019 0 0 1-1.005.852h-7.109a1.019 1.019 0 0 1-1.005-.852l-1.17-7.017a.339.339 0 0 0-.335-.288h-1.41" class="prefix__cls-1" data-name="Path 6078" transform="translate(-758.09 -428)"/>
+            <circle id="prefix__Ellipse_320" cx="1" cy="1" r="1" class="prefix__cls-1" data-name="Ellipse 320" transform="translate(4 10)"/>
+            <circle id="prefix__Ellipse_321" cx="1" cy="1" r="1" class="prefix__cls-1" data-name="Ellipse 321" transform="translate(9 10)"/>
+        </g>
+        <path id="prefix__Path_6079" d="M.5.592v2.945" data-name="Path 6079" transform="translate(765.09 431)" style="fill:none;stroke:#fff"/>
+        <path id="prefix__Line_510" d="M0 0L3 0" data-name="Line 510" transform="translate(764.09 433)" style="stroke-miterlimit:10;fill:none;stroke:#fff"/>
+    </g>
+</svg>

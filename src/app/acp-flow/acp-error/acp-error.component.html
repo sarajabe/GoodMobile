@@ -1,0 +1,51 @@
+<section class="acp-error">
+    <div class="error-container">
+        <img src="/assets/icon/error-icon.svg" alt="error-icon">
+        <div class="notes">
+            <p class="head-note">We are sorry!</p>
+            <p class="desc" *ngIf="!!acpStatus && acpStatus === 'review'">Your ACP application is currently <b data-cy="underReviewStatus">Under
+                    Review.</b></p>
+            <p class="desc bold" data-cy="acpAPPNotFound" *ngIf="!!acpStatus && acpStatus === 'not-found'">Your ACP application is not found.</p>
+            <p class="desc" data-cy="acpAPPNotComplete" *ngIf="!!acpStatus && acpStatus === 'not-complete'"> It seems like you have not completed
+                your ACP
+                application with the National Verifier yet.</p>
+            <p class="informative-desc" *ngIf="!!acpStatus && acpStatus === 'review'">
+                Please contact <a href="https://www.affordableconnectivity.gov/" target="_blank">ACPbenefit.org</a> to check on your application status
+                before finish the enrollment with GoodMobile.</p>
+            <p class="informative-desc" *ngIf="!!acpStatus && acpStatus === 'not-found'"> It may have already been
+                expired because it is too old, you have not qualified
+                through the National Verifier on <a href="https://www.affordableconnectivity.gov/" target="_blank">ACPbenefit.org</a> yet, or the data you provided doesn’t match your
+                details
+                with the National Verifier.</p>
+            <p class="informative-desc" *ngIf="!!acpStatus && acpStatus === 'not-complete'">
+                Please visit <a href="https://www.affordableconnectivity.gov/" target="_blank">ACPbenefit.org</a> to complete your application before finish the enrollment with
+                GoodMobile.</p>
+            <div class="extra-details bottom" *ngIf="acpStatus === 'not-found'">
+                <p>Would you like to edit your details and try again?</p>
+                <div class="actions">
+                    <button class="button primary" (click)="goToLanding()">Yes</button>
+                    <button class="button secondary" (click)="goToAcp()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="illustration-section">
+        <picture class="picture">
+            <source srcset='/assets/img/error-default.webp' media="(max-width: 1759.9px)" type="image/webp">
+            <source srcset='/assets/img/error-default.svg' media="(max-width: 1759.9px)" type="image/svg">
+            <source srcset='/assets/img/error-default-1760.webp' media="(min-width: 1760px)" type="image/webp">
+            <source srcset='/assets/img/Error-1920.svg' media="(min-width: 1760px)" type="image/svg">
+            <img src="assets/img/error-default.svg" alt="illustration">
+        </picture>
+    </div>
+    <div class="extra-note">
+        <p>If you need further assistance, feel free to call Customer Care at (800) 416-3003 (7AM to 1AM EST -
+            Monday-Sunday) </p>
+    </div>
+</section>
+
+<section class="navigation-section" *ngIf="acpStatus !== 'not-found'">
+    <div class="left">
+      <button class="button primary" aria-label="Next" (click)="goToAcp()">Done</button>
+    </div>
+  </section>

@@ -1,0 +1,71 @@
+<section class="esim-setup-section container-flex" *ngIf="!!device">
+    <div class="top-section"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SUMMARY]"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Account Summary</a><img
+            src="/assets/icon/black-next-arrow.svg" alt="arrow"><span>Setting Up</span></div>
+    <div class="esim-device-setup">
+        <h3 class="title">Setting up your eSIM:</h3>
+        <div class="desc-container" *ngIf="!!device && !!categoriesDescs[device][activeStep] && activeStep !== 4">
+            <p class="step-title" *ngIf="!!categoriesDescs[device][activeStep]?.title">
+                {{categoriesDescs[device][activeStep]?.title}}</p>
+            <p class="step-sub-title" *ngIf="!!categoriesDescs[device][activeStep]?.subTitle">
+                {{categoriesDescs[device][activeStep]?.subTitle}}</p>
+            <div *ngIf="!!categoriesDescs[device][activeStep]?.desc"
+                [innerHTML]="categoriesDescs[device][activeStep]?.desc"></div>
+            <div class="qr-code" *ngIf="activeStep===2"><img [src]="qr" alt="qr"></div>
+            <div *ngIf="activeStep === 2">
+                <form #qrScanForm="ngForm" class="qr-desc">
+                    <input type="checkbox" [(ngModel)]="qrCode" [class.checked]="!!qrCode" name="qr" required
+                        #qrCodeVal="ngModel">
+                    <label class="label">By checking this box, you confirm you have <b>successfully</b> scanned the QR
+                        code.</label>
+                </form>
+                <p class="validation-message left" *ngIf="qrCodeVal.touched && !qrCode">Please confirm that you have
+                    successfully scanned your QR code.</p>
+            </div>
+        </div>
+    </div>
+    <div class="steps-done-container" *ngIf="activeStep === 4">
+        <div class="flex">
+            <img src="assets/icon/green-check.svg" alt="check icon">
+            <div class="container-content">
+                <p class="title">Awesome!</p>
+                <p class="desc">Your eSIM is now <b>activated and set!</b></p>
+                <p class="desc">Enjoy your GoodMobile Service.</p>
+                <p class="desc">You can refer back to your <a
+                        [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
+                        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Account Summary</a> for your
+                    QR code and any additional details.</p>
+                <p class="desc">Your phone data will be set up automatically, if not, you can <a
+                        (click)="setupData()">Set Up your Phone Data</a> manually.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="navigation-section">
+    <div class="container-flex navs">
+        <div class="left">
+            <p class="no-border" (click)="goToAccountSummary()">Cancel</p>
+        </div>
+        <div class="right">
+            <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()"
+                *ngIf="activeStep !== 1">Back</button>
+            <button class="button primary" aria-label="Next" (click)="goToNextStep()"
+                *ngIf="activeStep !== 4">Next</button>
+            <button class="button primary" aria-label="Next" (click)="goToAccountSummary()"
+                *ngIf="activeStep === 4">Done</button>
+        </div>
+    </div>
+</section>
+<!-- <section class="navigation-section">
+    <div class="left">
+        <p class="no-border" (click)="goToAccountSummary()">Cancel</p>
+    </div>
+    <div class="right">
+        <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()"
+            *ngIf="activeStep !== 1">Back</button>
+        <button class="button primary" aria-label="Next" (click)="goToNextStep()" *ngIf="activeStep !== 4">Next</button>
+        <button class="button primary" aria-label="Next" (click)="goToAccountSummary()"
+            *ngIf="activeStep === 4">Done</button>
+    </div>
+</section> -->

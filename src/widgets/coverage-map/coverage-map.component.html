@@ -1,0 +1,76 @@
+<div class="col-md-12">
+    <div id="map">
+        <input id="place-input" class="on-map" type="text" placeholder="Enter a place to go..." [(ngModel)]="address" (keyup.enter)="goTo()">
+        <button id="goTo" class="btn btn-primary on-map" title="GoTo Place" (click)="goTo()">Go</button>
+    </div>
+    <div class="map-legend">
+        <ul class="color-options" *ngIf="networkType != 'tmo'">
+            <li class="selected">
+                <div class="color-swatch cov-lte"></div>
+                <div class="name">LTE Coverage</div>
+            </li>
+            <li>
+                <div class="color-swatch cov-4g"></div>
+                <div class="name">4G Coverage</div>
+            </li>
+            <li>
+                <div class="color-swatch cov-3g"></div>
+                <div class="name">3G Coverage</div>
+            </li>
+            <li>
+                <div class="color-swatch cov-3rd"></div>
+                <div class="name">3rd Party Coverage</div>
+            </li>
+        </ul>
+        <ul class="color-options" *ngIf="networkType == 'tmo'">
+            <li class="selected">
+                <div class="color-swatch t-5g"></div>
+                <div class="name">5G</div>
+            </li>
+            <li>
+                <div class="color-swatch t-4g"></div>
+                <div class="name">4G LTE</div>
+            </li>
+            <li>
+                <div class="color-swatch t-3g"></div>
+                <div class="name">3G/4G</div>
+            </li>
+            <li>
+                <div class="color-swatch t-2g"></div>
+                <div class="name">2G</div>
+            </li>
+            <li>
+                <div class="color-swatch t-no"></div>
+                <div class="name">No Coverage</div>
+            </li>
+        </ul>
+    </div>
+</div>
+<section class="coverage-section padding-top-20">
+    <div class="container-flex details-section">
+        <div class="container-flex-row">
+            <div class="lte paragraph-section">
+                <h2 class="lte-title">What is LTE cell phone coverage?</h2>
+                <p class="lte-description">
+                    LTE stands for Long Term Evolution and is short for a very technical process for high-speed data for phones and other mobile devices. We got you covered with a reliable 4G LTE phone network. Compatible device required. 4G LTE not available everywhere.
+                </p>
+            </div>
+        </div>
+        <div class="container-flex-row disclaimer-container">
+            <div class="col-md-12 col-12 paragraph-section">
+                <p class="disclaimer">
+                    Important Information About This Coverage Map
+                </p>
+                <p class="disclaimer">
+                    These maps provide a predicted high-level approximation of wireless coverage. There are gaps in coverage that are not shown by this high-level approximation. Actual coverage may differ from map graphics and may be affected by terrain, weather, network changes, foliage, buildings, construction, signal strength, high-usage periods, customer equipment, and other factors. We cannot guarantee coverage. Our coverage maps are not intended to show actual customer performance on the network or future network needs or build requirements inside or outside of existing coverage areas. Coverage maps may include areas served by unaffiliated carriers. Arrangements with these carriers may change from time to time, and coverage is subject to change without notice. Charges will be based on the location of the site receiving and transmitting the call, not the subscriber’s location. Your phone’s display does not indicate the rate you will be charged.
+                </p>
+                <p class="disclaimer">
+                    These maps are subject to the Microsoft® Service Agreement and for informational purposes only. No guarantee is made regarding their completeness or accuracy. Construction projects, traffic, or other events may cause actual conditions to differ from these results. Map and traffic data 2013 NAVTEQ®
+                </p>
+                <p class="disclaimer primary-color">
+                    This map shows an approximation of wireless data coverage in the United States, Puerto Rico, and the U.S. Virgin Islands.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

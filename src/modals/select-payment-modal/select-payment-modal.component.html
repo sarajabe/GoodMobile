@@ -1,0 +1,24 @@
+<div class="container model-container full {{context.customClass}}">
+    <div class="modal-header">
+      <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+      <h2 class="modal-heading">{{context.title}}</h2>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content">
+            <div class="content">
+                <p class="mdn">Mobile Number: <b>{{context.mdn}}</b></p>
+            </div>
+            <div class="payments">
+                <select class="payments-list" [(ngModel)]="selectedCard" name="payment-list" id="payment-list" data-cy="payment-list">
+                    <option disabled *ngIf="!context.paymentList">No Credit Card Available</option>
+                    <option *ngFor="let card of context.paymentList" [ngValue]="card">
+                        {{getPaymentDetails(card.id)}}
+                    </option>
+                </select>
+                <div class="action">
+                    <button class="button primary" (click)="savePayment()"> {{context.buttonText}}</button>
+                </div>
+            </div>
+      </div>
+    </div>
+</div>

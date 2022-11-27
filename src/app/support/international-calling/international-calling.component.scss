@@ -1,0 +1,369 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.international-calling-container {
+  width: 100%;
+  background-position: center;
+  background-image: url(/assets/img/banners/peoplesunset-res.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  padding-top: 200px;
+  height: 497px;
+  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+    background-image: url(/assets/img/banners/peoplesunsettablet.jpg);
+  }
+  .content {
+    h1 {
+      font-size: rem-calc(46px);
+      font-family: $secondary-font-family-bold;
+      margin-bottom: 25px;
+      color: white;
+    }
+
+    img {
+      display: none;
+    }
+    p {
+      background-color: $secondary-color;
+      color: white;
+      font-weight: bold;
+      font-size: rem-calc(26px);
+      font-family: $secondary-font-family-bold;
+      padding: 5px 0;
+      margin: 15px 25px;
+      @media (min-width: $desktop-min-width) {
+        width: 560px;
+        margin: auto;
+        text-align: center;
+      }
+      @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+        margin: 15px 55px;
+      }
+    }
+    .hide-on-phone {
+      @media (max-width: $phablet-min-width) {
+        display: none;
+      }
+      display: block;
+    }
+    .hide-on-large {
+      @media (min-width: 641px) {
+        display: none;
+      }
+      display: block;
+      width: 280px;
+      margin: auto;
+    }
+  }
+
+  @media (#{$larger-than-desktop}) {
+    position: relative;
+    background-image: url(/assets/img/banners/peoplesunset.jpg);
+    height: 555px;
+    .content {
+      h1 {
+        font-size: rem-calc(81px);
+      }
+      p {
+        font-size: rem-calc(40px);
+      }
+    }
+  }
+}
+.international-calling-details {
+  margin-top: 75px;
+  @media (max-width: $phablet-min-width) {
+    margin-top: 50px;
+  }
+  .container-flex {
+    padding: 0 30px;
+    @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+      padding: 0 40px;
+    }
+    .title {
+      h2 {
+        font-size: rem-calc(30px);
+        font-family: $secondary-font-family-bold;
+        padding-bottom: 20px;
+        @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+          font-size: rem-calc(25px);
+          line-height: rem-calc(17px);
+        }
+        @media (min-width: $desktop-min-width) {
+          font-size: rem-calc(40px);
+          line-height: rem-calc(23px);
+        }
+      }
+      p {
+        font-size: rem-calc(20px);
+        line-height: rem-calc(30px);
+        font-family: $base-font-family;
+        @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+          font-size: rem-calc(15px);
+          line-height: rem-calc(17px);
+          font-family: $base-font-family;
+        }
+        @media (min-width: $desktop-min-width) {
+          font-size: rem-calc(20px);
+          line-height: rem-calc(23px);
+        }
+      }
+      .width-80 {
+        padding-bottom: 0px;
+        width: 80%;
+        @media (min-width: $desktop-min-width) {
+          padding-bottom: 40px;
+          width: 100%;
+        }
+      }
+    }
+
+    @media (#{$larger-than-desktop}) {
+      padding: 0 50px 0 5%;
+      .title {
+        h2 {
+          font-size: rem-calc(40px);
+        }
+      }
+    }
+  }
+  @media (#{$larger-than-desktop}) {
+    margin-top: 120px;
+  }
+}
+.international-calling-info {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  @media (max-width: 640px) {
+    padding-bottom: 0px;
+  }
+  .container-flex {
+    padding: 0 30px;
+  }
+  h3 {
+    font-size: rem-calc(20px);
+    font-family: $base-font-family-bold;
+    @media (max-width: $phablet-min-width) {
+      font-size: rem-calc(20px);
+      line-height: rem-calc(30px);
+      font-family: $secondary-font-family-bold;
+    }
+    @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+      font-size: rem-calc(18px);
+      line-height: rem-calc(17px);
+      font-family: $secondary-font-family-bold;
+    }
+    @media (min-width: $desktop-min-width) {
+      font-size: rem-calc(20px);
+      line-height: rem-calc(23px);
+      font-family: $secondary-font-family-bold;
+    }
+  }
+  p {
+    font-size: rem-calc(20px);
+    font-family: $base-font-family-bold;
+    @media (max-width: $phablet-min-width) {
+      font-size: rem-calc(20px);
+      line-height: rem-calc(30px);
+    }
+    @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
+      font-size: rem-calc(15px);
+      line-height: rem-calc(17px);
+    }
+    @media (min-width: $desktop-min-width) {
+      font-size: rem-calc(20px);
+      line-height: rem-calc(23px);
+    }
+  }
+  @media (#{$larger-than-desktop}) {
+    .container-flex {
+      padding-left: 5%;
+    }
+  }
+}
+.get-started {
+  color: white;
+  width: 100%;
+  background-color: $secondary-color;
+  margin-top: 35px;
+  padding: 80px 0;
+  @media (max-width: $phablet-min-width) {
+    padding: 35px 0;
+  }
+
+  .description {
+    @media (min-width: 1300px) {
+      flex-basis: 74.85%;
+      padding: 0 10px;
+    }
+    @media (max-width: 1300px) and (min-width: 690px) {
+      flex-basis: 51%;
+      padding: 0 10px;
+      margin-right: 100px;
+    }
+    span {
+      color: white;
+      font-size: rem-calc(34px);
+      line-height: rem-calc(40px);
+      font-family: $secondary-font-family-bold;
+      display: block;
+      @media (max-width: 1300px) and (min-width: 690px) {
+        font-size: rem-calc(25px);
+        line-height: rem-calc(33px);
+        display: inline;
+      }
+      @media (max-width: 690px) {
+        font-size: rem-calc(25px);
+        line-height: rem-calc(35px);
+      }
+    }
+    @media (max-width: 690px) {
+      text-align: center;
+      margin-bottom: 35px;
+      display: inline;
+      width: 89%;
+    }
+  }
+  .button {
+    padding: 13px 40px;
+    float: right;
+    width: 255px;
+    font-family: $secondary-font-family;
+    font-size: rem-calc(18px);
+    line-height: rem-calc(24px);
+    @media (max-width: 1024px) and (min-width: 640px) {
+      font-size: rem-calc(17px);
+      line-height: rem-calc(21px);
+      width: 200px;
+    }
+    @media (max-width: 690px) {
+      font-size: rem-calc(20px);
+      line-height: rem-calc(27px);
+      width: 226px;
+    }
+  }
+}
+.hint {
+  font-size: rem-calc(17px);
+}
+.categories {
+  width: 100%;
+  display: inline-block;
+  padding: 0;
+  list-style: none;
+  margin-top: 0;
+  li {
+    border: 1px solid #7cbadb;
+    padding: 6px 0;
+    float: left;
+    font-size: rem-calc(18px);
+    color: $black;
+    width: 223px;
+    text-align: center;
+    margin-right: 4%;
+    cursor: pointer;
+    span {
+      background-color: transparent;
+      padding: 0;
+      cursor: pointer;
+      font-size: rem-calc(18px);
+    }
+    &.active {
+      background-color: #7cbadb;
+      color: white;
+    }
+  }
+}
+.title {
+  font-size: rem-calc(20px);
+  font-family: $secondary-font-family-bold;
+}
+.sort-nav {
+  display: inline-block;
+  padding: 0;
+  list-style: none;
+  li {
+    border-right: 1px solid $grey;
+    padding: 5px 9px;
+    float: left;
+    width: 35px;
+    @media (max-width: 426px) {
+      margin-bottom: 11px;
+      padding: 3px 6px;
+    }
+    &:last-child {
+      border-right: none;
+    }
+    &.active {
+      a {
+        color: $primary-color;
+      }
+    }
+    a {
+      font-size: rem-calc(18px);
+      color: $black;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+.countriesList {
+  font-size: rem-calc(15px);
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  &.payGo {
+    max-height: none;
+    @media (#{$larger-than-desktop}) {
+      max-height: 570px;
+    }
+    &.long {
+      max-height: none;
+      @media (#{$larger-than-desktop}) {
+        max-height: 1025px;
+      }
+    }
+  }
+  &.unlimited {
+    li {
+      width: 40%;
+      @media (max-width: 1024px) {
+        width: 60%;
+      }
+      @media (max-width: 750px) {
+        width: 75%;
+      }
+      @media (max-width: 426px) {
+        width: 100%;
+      }
+      .rate {
+        padding-right: 10px;
+      }
+    }
+  }
+  li {
+    padding-bottom: 10px;
+    width: 65%;
+    height: 6%;
+    @media (#{$larger-than-desktop}) {
+      width: 44%;
+    }
+    @media (max-width: 426px) {
+      width: 100%;
+    }
+    .countryName {
+      font-size: rem-calc(15px);
+    }
+    .rate {
+      color: $primary-color;
+      font-size: rem-calc(15px);
+      float: right;
+      padding-right: 20px;
+    }
+  }
+}

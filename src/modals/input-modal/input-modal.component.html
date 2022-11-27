@@ -1,0 +1,36 @@
+<div class="container model-container {{context.customClass}}">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{context.title}}</h2>
+      <button class="modal-close modal-toggle" (click)="closeDialog()" *ngIf="!!context.isCancelable"><i class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <form #userInputForm="ngForm">
+        <div class="container modal-content">
+  
+          <div class="row">
+            <div class="twelve">
+              <div class="row">
+                <div class="twelve">
+                  {{context.message}}
+                </div>
+              </div>
+              <div class="row">
+                <fieldset class="twelve">
+                  <label class="label" for="userInputField" *ngIf="!!context.labelText">{{context.labelText}}</label>
+                  <input id="userInputField" type="text" name="userInputField" [(ngModel)]="userInputValue" #userInput
+                         required autocomplete="user-input" maxlength="30">
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <div class="row modal-actions">
+            <div class="twelve">
+              <button class="button {{context.okBtnClass}}" (click)="submitUserInput()">{{context.okText}}</button>
+              <button class="button {{context.cancelBtnClass}}" (click)="closeDialog()" *ngIf="!!context.isCancelable">{{context.cancelText}}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

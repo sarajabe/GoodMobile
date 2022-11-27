@@ -1,0 +1,26 @@
+<section class="container-flex internal-page-margins replace-sim">
+    <div class="container-flex-row flex-center margin-bottom-20">
+        <div class="text-center">
+            <h1 class="header" id="replace-sim-header">Choose a number to activate your replacement SIM with:</h1>
+        </div>
+    </div>
+    <div class="actions-container" *ngIf="!!userPlans && userPlans.length > 0">
+        <select class="mdn-size" id="phonePlan" name="phonePlan" [(ngModel)]="selectedPlan">
+            <option *ngFor="let plan of userPlans" [ngValue]="plan">
+                {{getSelectorTitle(plan)}}
+            </option>
+        </select>
+        <button class="button primary" id="swap-sim" (click)="swapSim()">Swap SIM</button>
+        <div class="note-section">
+            <p class="note">If you are looking into replacing your SIM card with a new phone number
+                Please call customer care at:<a href="tel:(800) 416-3003"> (800) 416-3003</a></p>
+        </div>
+    </div>
+    <div class="actions-container" *ngIf="!!userPlans && userPlans.length < 1">
+        <div class="note-section">
+            <p class="alert-note">Oops, we can't see an active Mobile Number on your account!</p>
+            <p class="note">If you are looking into replacing your SIM card with a new phone number
+                Please call customer care at:<a href="tel:(800) 416-3003"> (800) 416-3003</a> or <a (click)="goToActivationFlow()"> activate a new line</a></p>
+        </div>
+    </div>
+</section>

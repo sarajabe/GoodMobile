@@ -1,0 +1,253 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.side-nav {
+  margin-top: 30px;
+}
+.my-account-menu {
+  margin-block-start: 0px;
+  padding-inline-start: 0px;
+  margin-block-start: 0px;
+  list-style-type: none;
+  @media (min-width: $desktop-min-width) {
+    width: 255px;
+  }
+  @media (max-width: $phablet-min-width) {
+    margin-top: 0px;
+  }
+  @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin-top: 13px;
+  }
+}
+
+/* Microsoft Edge Browser 12+ (All) - @supports method */
+@supports (-ms-ime-align: auto) {
+  .my-account-menu {
+    @media (min-width: $desktop-min-width) {
+      width: 280px;
+    }
+    @media (max-width: $phablet-min-width) {
+      padding-left: 0;
+    }
+  }
+}
+
+/* Microsoft Edge Browser 15+ - @supports method */
+@supports (-ms-ime-align: auto) and (-webkit-text-stroke: initial) {
+  .my-account-menu {
+    @media (min-width: $desktop-min-width) {
+      width: 280px;
+    }
+    @media (max-width: $phablet-min-width) {
+      padding-left: 0;
+    }
+  }
+}
+
+/* Microsoft Edge Browser 14+ - @supports method */
+@supports (-ms-ime-align: auto) and (not (-ms-accelerator: true)) {
+  .my-account-menu {
+    @media (min-width: $desktop-min-width) {
+      width: 280px;
+    }
+    @media (max-width: $phablet-min-width) {
+      padding-left: 0;
+    }
+  }
+}
+
+/* Microsoft Edge Browser 14 - @supports method */
+@supports (-ms-ime-align: auto) and (not (-ms-accelerator: true)) and (not (-webkit-text-stroke: initial)) {
+  .my-account-menu {
+    @media (min-width: $desktop-min-width) {
+      width: 280px;
+    }
+    @media (max-width: $phablet-min-width) {
+      padding-left: 0;
+    }
+  }
+}
+
+/* Microsoft Edge Browser 14- - @supports method */
+@supports (-ms-ime-align: auto) and (not (-webkit-text-stroke: initial)) {
+  .my-account-menu {
+    @media (min-width: $desktop-min-width) {
+      width: 280px;
+    }
+    @media (max-width: $phablet-min-width) {
+      padding-left: 0;
+    }
+  }
+}
+
+.menu-item {
+  text-align: center;
+  &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: $sg-steel;
+    a {
+      cursor: not-allowed;
+      color: $sg-steel;
+    }
+  }
+  @media (min-width: $desktop-min-width) {
+    background-color: #f4f4f4;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+    flex-basis: 32%;
+    background-color: #f2f2f2;
+    height: 38px;
+    margin-right: 5px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    display: block;
+  }
+}
+
+.items-link {
+  font-family: $base-font-family-bold;
+  font-weight: bold;
+  display: block;
+  color: black;
+  @media (min-width: $desktop-min-width) {
+    font-size: rem-calc(17px);
+    line-height: rem-calc(20px);
+    text-align: left;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    &.active {
+      background-color: $primary-color;
+      margin-top: -2px;
+      color: white;
+      border-bottom-width: 0px;
+      width: 252px;
+      margin-left: -23px;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
+  @media (max-width: $phablet-min-width-minus) {
+    font-family: $secondary-font-family;
+    font-size: rem-calc(17px);
+    line-height: rem-calc(21px);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    display: none;
+    &.active {
+      display: block;
+      background-color: rgba(222, 222, 222, 0.53);
+      height: 30px;
+      text-align: center;
+    }
+  }
+  @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-family: $base-font-family-bold;
+    font-size: rem-calc(13px);
+    line-height: rem-calc(15px);
+    &.active {
+      background-color: $primary-color;
+      border-radius: 7px;
+      height: 38px;
+      color: white;
+    }
+  }
+}
+
+.item-plans-count {
+  display: inline-block;
+  font-weight: bold;
+  font-size: rem-calc(17px);
+  line-height: rem-calc(21px);
+  font-family: $secondary-font-family-bold;
+  @media (min-width: $phablet-min-width) {
+    display: inline-block;
+    height: 22px;
+    margin-left: 8px;
+    padding-top: 3px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 11px;
+    color: white;
+    font-weight: bold;
+    font-size: rem-calc(14px);
+    line-height: rem-calc(16px);
+    font-family: $base-font-family-bold;
+    background-color: $secondary-color;
+    margin-top: -3px;
+  }
+  @media (min-width: $desktop-min-width) {
+    font-size: rem-calc(14px);
+    line-height: rem-calc(16px);
+    margin-top: 0px;
+  }
+}
+
+.item-parenthese {
+  @media (#{$larger-than-phablet}) {
+    display: none;
+  }
+}
+
+.item-pending-activations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 2px;
+  a {
+    &.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $primary-color;
+      width: 100%;
+      color: white;
+      border-radius: 8px;
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-left: 0px;
+      @media (max-width: $phablet-min-width) {
+        margin-right: 5px;
+        background-color: rgba(222, 222, 222, 0.53);
+        color:black;
+        border-radius: 0px;
+      }
+    }
+  }
+  @media (min-width: $desktop-min-width) {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 0.5px solid $primary-color;
+    background-color: white;
+    a {
+      color: $secondary-color;
+    }
+  }
+  @media (max-width: $phablet-min-width-minus) {
+    display: none;
+  }
+}
+.link-border-bottom {
+  @media (min-width: $desktop-min-width) {
+    border-bottom: 0.5px solid;
+  }
+}
+.item-top-radius {
+  @media (min-width: $desktop-min-width) {
+    border-radius: 8px 8px 0px 0px;
+  }
+}
+.item-bottom-radius {
+  @media (min-width: $desktop-min-width) {
+    border-radius: 0px 0px 8px 8px;
+  }
+}

@@ -1,0 +1,131 @@
+@import '../../../../styles/modules/variables';
+@import '../../../../styles/modules/mixins';
+
+.check-coverage {
+    .info {
+        font-size: rem-calc(24px);
+        line-height: 36px;
+        margin-bottom: 40px;
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: rem-calc(18px);
+          line-height: 28px;
+          margin-bottom: 16px;
+        }
+      }
+    .form {
+        display: flex;
+        width: 100%;
+        @media (max-width: $phablet-min-width-minus) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .input-section {
+            max-width: 400px;
+            width: 100%;
+            label {
+                font-weight: bold;
+            }
+            input {
+                padding: 4px 12px;
+                height: 56px;
+            }
+        }
+        .button {
+            width: 195px;
+            height: 44px;
+            padding: 8px;
+            font-size: rem-calc(20px);
+            margin-left: 24px;
+            margin-top: 40px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(16px);
+                margin-left: 0px;
+                margin-top: 16px;
+                width: 165px;
+            }
+        }
+    }
+    .result-banner {
+        max-width: 812px;
+        padding: 32px;
+        border-radius: 8px;
+        margin-top: 12px;
+        margin-bottom: 10px;
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 40px;
+        }
+        .banner-title {
+            font-size: rem-calc(24px);
+            line-height: 32px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(20px);
+                line-height: 28px;
+            }
+        }
+        .banner-desc {
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(14px);
+                line-height: 24px;
+            }
+        }
+        &.success {
+            background-color: #E6F6EE;
+            .banner-title {
+                color: $primary-color;
+            }
+        }
+        &.alert {
+            background-color: #FFF3F2;
+            .banner-title {
+                color: #D22119;
+            }
+        }
+        &.limitation {
+            background: rgba(134, 51, 153, 0.1);
+            .options-container{
+                display: flex;
+                margin-top: 16px;
+                .option-links {
+                  color: $black;
+                  cursor: pointer;
+                  font-size: rem-calc(18px);
+                  line-height: 28px;
+                  font-family: $base-font-family;
+                  font-weight: bold;
+                  padding-left: 14px;
+                  margin-bottom: 4px;
+                  @media (max-width: $phablet-min-width-minus) {
+                    font-size: rem-calc(16px);
+                    line-height: 24px;
+                }
+                }
+                .radio-img {
+                    height: 28px;
+                  }
+            }
+            .custom-checkbox {
+                display: flex;
+                padding-left: 40px;
+                margin-top: 8px;
+                input {
+                  height: 24px;
+                  width: 24px;
+                }
+                .checkbox-label {
+                  font-size: rem-calc(16px);
+                  line-height: 21px;
+                  margin-left: 4px;
+                  font-family: $base-font-family;
+                  max-width: 624px;
+                  @media (max-width: $phablet-min-width-minus) {
+                    font-size: rem-calc(14px);
+                    line-height: 24px;
+                }
+                }
+              }
+        }
+        
+    }
+}

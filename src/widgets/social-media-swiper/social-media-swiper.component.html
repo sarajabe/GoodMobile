@@ -1,0 +1,68 @@
+<div class="customer-feedback-container">
+    <div class="common col-md-4">
+      <div class="testimonials" [class.testimonials-msp]="pageId === 'msp'">
+        <img *ngIf="pageId !== 'msp'" height="207" width="124" [src]="innerWidth >= 749 ? '/assets/img/testimonials-blue.svg' : '/assets/img/testimonials.svg'" alt="Customer Testimonials">
+        <img *ngIf="pageId === 'msp'" height="207" width="124" [src]="innerWidth >= 750 ? '/assets/img/testimonials-grey.svg' : '/assets/img/testimonials.svg'" alt="Customer Testimonials">
+        <div class="details">
+          <h3 class="header">Customer Testimonials</h3>
+          <p class="description">See what people have to say about Good2Go Mobile</p>
+        </div>
+      </div>
+    </div>
+    <div class="feedback-cards-container col-md-8 swiper-container desktop" [swiper]="socialswiperConfig" (indexChange)="resetSocialSwiper()" *ngIf="innerWidth >= 1025">
+      <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let i = index;let slide of slides">
+        <div *ngFor="let content of slide">
+        <div class="feedback-card" > 
+          <h3 class="name">{{content?.fields?.userDetails}}</h3>
+          <p class="content">{{content?.fields?.userMessage}}</p>
+        </div>
+        </div>
+    </div>
+      </div>
+      <div class="swiper-container-override social-media-slider-override" *ngIf="pageId === 'home'">
+        <div class="container ">
+          <div class="row">
+            <ul class="slick-dots slider-pagination"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="feedback-cards-container responsive swiper-container" [swiper]="socialswiperRespoConfig" (indexChange)="resetSocialSwiper()" *ngIf="innerWidth < 1025">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" *ngFor="let slide of responsiveSlides;let i = index" >
+            <div class="feedback-card"> 
+              <h3 class="name">{{slide?.fields?.userDetails}}</h3>
+              <p class="content">{{slide?.fields?.userMessage}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-container-override social-media-slider-override">
+          <div class="container">
+            <div class="row">
+              <ul class="slick-dots slider-pagination" [class.slick-dots-msp]="pageId === 'msp'" ></ul>
+            </div>
+          </div>
+        </div>
+  </div>
+  
+  </div>
+  <div class="feedback-content" [class.msp-background]="pageId === 'msp'">
+    <div class="swiper-container" [swiper]="socialswiperMobConfig" (indexChange)="resetSocialSwiper($event)">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let slide of responsiveSlides;let i = index">
+          <div class="feedback-card"> 
+            <h3 class="name">{{slide?.fields?.userDetails}}</h3>
+            <p class="content">{{slide?.fields?.userMessage}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-container-override social-media-slider-override">
+        <div class="container ">
+          <div class="row">
+            <ul class="slick-dots slider-pagination"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

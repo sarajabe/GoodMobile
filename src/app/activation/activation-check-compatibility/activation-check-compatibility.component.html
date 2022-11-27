@@ -1,0 +1,69 @@
+<section class="container-flex internal-page-margins check-compatibility">
+    <div class="container-flex-row container-padd margin-bottom-20">
+        <div class="col-xl-9 col-lg-10 col-12">
+            <h1 class="compatibility-head">GoodMobile rides on America’s largest and most
+                trusted 4G and 5G<span class="astryic">*</span> LTE wireless networks</h1>
+            <div class="subhead">
+                Let’s find out if your <a class="unlocked" (click)="showUnlockedPopup()"><b>Unlocked Phone</b></a> is
+                compatible with the best coverage in your area.
+            </div>
+            <div class="details-section">
+                <form (ngSubmit)="checkPhoneCompatibility()" #compatibilityForm="ngForm" class="compatibility-form">
+                    <div class="compatibility-flex-container">
+                        <fieldset class="padding-field-right">
+                            <label for="equipmentNumber" class="input-label">
+                                <p class="p-label">Enter device IMEI No.</p>
+                                <p class="p-note">Dial: *#06# on your phone to get your
+                                    IMEI{{!!userPlanId && !withDevice ? '' : '/MEID'}}</p>
+                            </label>
+                            <input type="tel" required [(ngModel)]="equipment" name="equipmentNumber"
+                                id="equipmentNumber" data-cy="equipmentNumber" #equipmentNumber="ngModel"
+                                restrictNumbers minlength="11" maxlength="18" placeholder="Enter device IMEI No.">
+                            <label class='validation-message' id="required-equipment-msg"
+                                *ngIf="(equipmentNumber.errors || invalidIMEI) && !equipment && equipmentNumber.touched">
+                                This field is required
+                            </label>
+                            <label class='validation-message' id="invalid-equipment-msg" data-cy="invalid-equipmentNumber-msg"
+                                *ngIf="equipmentNumber.hasError('minlength')">
+                                Invalid serial, it should be between 11-18 digits
+                            </label>
+                            <div class="primary-col"><a (click)="showWhatIsIMEI()">What is an
+                                    IMEI{{!!userPlanId && !withDevice ? '' : '/MEID'}} number?</a></div>
+                        </fieldset>
+                        <fieldset class="address-lookup">
+                            <label for="address" class="input-label">
+                                <p class="p-label">Enter your full address</p>
+                                <p class="p-note">Street Address, City, State, ZIP Code</p>
+                            </label>
+                            <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" autocomplete="on" #addressRef="ngModel" type="search"
+                                class="geolocate" ngui-auto-complete [source]="findPlace.bind(this)"
+                                list-formatter="description" display-property-name="main_text"
+                                (valueChanged)="addressDetails($event)" [tab-to-select]="false" placeholder="Enter your full address"
+                                (focus)="setFoucs = true" (blur)="setFoucs = false" name="addressRef" (input)="changedAddress()" />
+                            <label class="validation-message" *ngIf="!address && addressRef.touched"
+                                id="required-address-msg" data-cy="addressRequiredMsg">Address is a Required Field</label>
+                            <label class="validation-message" *ngIf="!displayedAddressModel && !!address"
+                                id="required-address-msg">Please select address from the autocomplete list</label>
+                        </fieldset>
+                    </div>
+                    <div class="flex-reverse">
+                        <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+                        </app-invisible-recaptcha>
+                        <div class="container-flex-row">
+                            <div class="col-sm-6 actions-container">
+                                <button type="submit" class="button primary"
+                                    [disabled]="!compatibilityForm.form.valid || !equipment || !address || !displayedAddressModel"
+                                    [uiBlockButton]="processingRequest" id="check-phone-button"
+                                    data-cy="check-phone-button">Check your phone</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="disclaimer-section">
+                        <p class="disclaimer"><span class="astryic">*</span>5G LTE where available. 5G compatible device
+                            required. </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

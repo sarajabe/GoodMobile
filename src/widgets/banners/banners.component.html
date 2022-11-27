@@ -1,0 +1,133 @@
+<div class="banner-container">
+  <div class="swiper-container" [swiper]="bannerSwiperConfig" (slideChangeEnd)="slideChanged()" [(index)]="index">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="banner-section">
+          <picture class="banner-image-container promo">
+            <source srcset='assets/img/banners/thanksgiving-banner-mobile.webp' media="(max-width: 639.9px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/thanksgiving-banner-mobile.png' media="(max-width: 639.9px)"
+              type="image/png">
+            <source srcset='assets/img/banners/thanksgiving-banner-tablet.webp' media="(max-width: 1024.9px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/thanksgiving-banner-tablet.png' media="(max-width: 1024.9px)"
+              type="image/png">
+            <source srcset='assets/img/banners/thanksgiving-banner-desktop.webp' media="(min-width: 1025px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/thanksgiving-banner-desktop.png' media="(min-width: 1025px)"
+              type="image/png">
+            <img src="assets/img/banners/thanksgiving-banner-desktop.png" alt="Thanksgiving Banner Image">
+          </picture>
+          <div class="banner-content-container promo">
+            <p class="title">Thanskgiving Surprises!</p>
+            <picture class="text-image">
+              <source srcset='assets/img/thanksgiving-plans-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+              <source srcset='assets/img/thanksgiving-plans-mobile.png' media="(max-width: 639.9px)" type="image/png">
+              <source srcset='assets/img/thanksgiving-plans.webp' media="(min-width: 640px)" type="image/webp">
+              <source srcset='assets/img/thanksgiving-plans.png' media="(min-width: 640px)" type="image/png">
+              <img src="assets/img/thanksgiving-plans.png" alt="Plans Image">
+            </picture>
+            <p class="description">Our BIGGEST ever data deals.</p>
+            <p class="description">Double your data today!</p>
+            <div class="actions">
+              <button class="button primary" id="grab-yours-today"
+                [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES]" fragment="promoPlans"
+                title="Grab Yours Today!" value="Grab Yours Today!" aria-label="Grab Yours Today!">Grab Yours
+                Today!</button>
+            </div>
+          </div>
+        </div>
+        <div class="banner-bottom-strip">
+          <p class="text">Disclaimer: Limited time offer for six active service cycles. New lines only.</p>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="banner-section">
+          <picture class="banner-image-container acp">
+            <source srcset='assets/img/banners/ACP-banner-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+            <source srcset='assets/img/banners/ACP-banner-mobile.png' media="(max-width: 639.9px)" type="image/png">
+            <source srcset='assets/img/banners/ACP-banner-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+            <source srcset='assets/img/banners/ACP-banner-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+            <source srcset='assets/img/banners/ACP-banner-desktop-1250.webp' media="(max-width: 1249.9px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/ACP-banner-desktop-1250.png' media="(max-width: 1249.9px)"
+              type="image/png">
+            <source srcset='assets/img/banners/ACP-banner-desktop-1850.webp' media="(max-width: 1849.9px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/ACP-banner-desktop-1850.png' media="(max-width: 1849.9px)"
+              type="image/png">
+            <source srcset='assets/img/banners/ACP-banner-desktop.webp' media="(min-width: 1850px)" type="image/webp">
+            <source srcset='assets/img/banners/ACP-banner-desktop.png' media="(min-width: 1850px)" type="image/png">
+            <img src="assets/img/banners/ACP-banner-desktop.png" alt="ACP Banner Image">
+          </picture>
+          <div class="banner-content-container acp">
+            <p class="title">Goverment Benefit Program</p>
+            <div class="header-part">
+              <h1 class="primary">How to Get</h1>
+              <h1 class="secondary">FREE</h1>
+              <h1 class="primary">Cell Phone Service Every Month?</h1>
+            </div>
+            <p class="description">Sign up with Good2Go through the Affordable Connectivity Program, offering UNLIMITED
+              monthly Data, Talk & Text<sup>1</sup> to eligible customers</p>
+            <div class="actions">
+              <button class="button primary" id="do-i-qualify" data-cy="do-i-qualify"
+                [routerLink]="['/' + ROUTE_URLS.ACP]" fragment="acpDiscount" title="Do I Qualify?" value="Do I Qualify?"
+                aria-label="Do I Qualify?">Do I Qualify?</button>
+            </div>
+          </div>
+        </div>
+        <div class="banner-bottom-strip acp">
+          <p class="text">1 After the 6GB high-speed data allowance is used, data speeds are slowed to a maximum of
+            128Kbps for the rest of the term.</p>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="banner-section">
+          <picture class="banner-image-container">
+            <source srcset='assets/img/banners/phone-banner-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+            <source srcset='assets/img/banners/phone-banner-mobile.png' media="(max-width: 639.9px)" type="image/png">
+            <source srcset='assets/img/banners/phone-banner-tablet-850.webp' media="(max-width: 849.9px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/phone-banner-tablet-850.png' media="(max-width: 849.9px)"
+              type="image/png">
+            <source srcset='assets/img/banners/phone-banner-tablet.webp' media="(max-width: 1024.9px)"
+              type="image/webp">
+            <source srcset='assets/img/banners/phone-banner-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+            <source srcset='assets/img/banners/phone-banner-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+            <source srcset='assets/img/banners/phone-banner-desktop.png' media="(min-width: 1025px)" type="image/png">
+            <img src="assets/img/banners/phone-banner-desktop.png" alt="Phone Banner Image">
+          </picture>
+          <div class="banner-content-container">
+            <p class="title">Best Refurbished Smartphones Deals!</p>
+            <picture class="text-image">
+              <source srcset='assets/img/get-your-iphone-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+              <source srcset='assets/img/get-your-iphone-mobile.png' media="(max-width: 639.9px)" type="image/png">
+              <source srcset='assets/img/get-your-iphone-tablet.webp' media="(max-width: 1399.9px)" type="image/webp">
+              <source srcset='assets/img/get-your-iphone-tablet.png' media="(max-width: 1399.9px)" type="image/png">
+              <source srcset='assets/img/get-your-iphone-desktop.webp' media="(min-width: 1400px)" type="image/webp">
+              <source srcset='assets/img/get-your-iphone-desktop.png' media="(min-width: 1400px)" type="image/png">
+              <img src="assets/img/get-your-iphone-desktop.png" alt="Get Your IPhone Image">
+            </picture>
+            <p class="description">Browse our collection of <b>Apple iPhones</b> & get yours at the best price!</p>
+            <div class="actions">
+              <button class="button primary" id="get-yours-now" data-cy="get-yours-now" (click)="goToPhones()"
+                title="Get Yours Now!" value="Get Yours Now!" aria-label="Get Yours Now!">Get Yours Now!</button>
+            </div>
+          </div>
+        </div>
+        <div class="banner-bottom-strip">
+          <p class="text">All devices come with up to 90-day Warrenty and FREE Delivery</p>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-container-override banner-slider-override">
+      <div class="container">
+        <div class="row">
+          <ul class="slick-dots slider-pagination"></ul>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  </div>
+</div>

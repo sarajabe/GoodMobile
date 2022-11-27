@@ -1,0 +1,60 @@
+<section class="container-flex internal-page-margins activate-sim">
+    <div class="container-flex-row">
+        <div class="col-xl-12 col-sm-12 col-12">
+            <h1 class="header">Activate | Port your number</h1>
+        </div>
+    </div>
+    <div *ngIf="!!userPlan && userPlan?.planDevice" class="container-flex-row form-holder">
+        <div class="content-holder col-xl-12">
+            <div class="tab-nav">
+                <ul class="tab-list">
+                    <li class="tab-title" [class.active]="isNewNumber" *ngIf="!isPortOnly"><span class="tab-content"
+                            [class.active]="isNewNumber" (click)="isNewNumber = true" id="activate-new-span">Activate
+                            with a new
+                            number</span></li>
+                    <li class="tab-title" [class.active]="!isNewNumber" *ngIf="!isNewOnly"><span class="tab-content"
+                            [class.active]="!isNewNumber" (click)="isNewNumber = false"
+                            id="keep-current-number-span">Keep your current number</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-holder port-bottom col-xl-8" *ngIf="!isNewNumber">
+            <p class="port-note">
+                In order to port your current number we need the information below. Please insure the fields are
+                complete and
+                correct before submitting. Any incorrect information may result in your number not porting to your new
+                GoodMobile account.
+            </p>
+        </div>
+    </div>
+    <div *ngIf="!!userPlan?.planDevice" class="container-flex-row form-holder">
+        <div class="content-holder col-xl-6">
+            <div class="tab-content">
+                <ng-container *ngIf="!!isNewNumber && !isPortOnly">
+                    <app-activate-new-number [userPlan]="userPlan"></app-activate-new-number>
+                </ng-container>
+                <ng-container *ngIf="!isNewNumber">
+                    <app-activate-current-number [user]="user" [userPlan]="userPlan"></app-activate-current-number>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!!userPlan && !userPlan?.planDevice" class="container-flex-row form-holder margin-bottom-90 activation">
+        <div class="col-12 ">
+            <div class="margin-bottom-20">
+                You need to register device?
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-5 col-12 margin-bottom-20">
+            <a (click)="registerDevice()">
+                <button class="button primary">Check Compatibility</button>
+            </a>
+        </div>
+        <div class="col-xl-3 col-sm-5 col-12">
+            <a (click)="goToPhonesShop()">
+                <button class="button secondary" data-cy="shopPhones">Shop Phones</button>
+            </a>
+        </div>
+    </div>
+</section>

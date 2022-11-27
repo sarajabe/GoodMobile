@@ -1,0 +1,348 @@
+// Buttons
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+
+.button {
+  @include font-size(20px);
+  background-image: none;
+  border: 0px solid transparent;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $secondary-font-family-bold;
+  font-weight: 700;
+  letter-spacing: normal;
+  margin: 0;
+  max-width: 100%;
+  outline: none;
+  min-width: 104px;
+  padding: 12px 24px;
+  
+  @media (max-width: $phablet-min-width-minus) {
+    padding: 12px;
+    font-size: rem-calc(16px);
+    min-width: 96px;
+  }
+
+  text-align: center;
+  vertical-align: middle;
+  word-wrap: break-word;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  i {
+    font-size: 21px;
+    line-height: 60px;
+  }
+
+  a {
+    font-family: $header-font-family;
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  @include button-theme($text-color);
+
+  &.primary {
+    border-color: transparent;
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+    &:focus {
+      background-color: $blue;
+    }
+    &:disabled {
+      background-color: $disabled;
+    }
+    &.disabled {
+      background-color: $disabled;
+    }
+  }
+
+  &.secondary {
+    border-color: $primary-color;
+    background-color: transparent;
+    color: $primary-color;
+    &:hover {
+      border-color: $hover-color;
+      color: $hover-color;
+      background: linear-gradient(0deg, #FDEEDE, #FDEEDE),
+linear-gradient(0deg, #FF972F, #FF972F);
+    }
+    &:focus {
+      border-color: $blue;
+      color: $blue;
+      background: linear-gradient(0deg, #74C0EB, #74C0EB),
+linear-gradient(0deg, #E3F2FB, #E3F2FB);
+
+    }
+    &:disabled {
+      border-color: $disabled;
+      background: linear-gradient(0deg, #F3F3F3, #F3F3F3),
+linear-gradient(0deg, #B0B0B0, #B0B0B0);
+
+    }
+    &.disabled {
+      background-color: $disabled;
+      background: linear-gradient(0deg, #F3F3F3, #F3F3F3),
+linear-gradient(0deg, #B0B0B0, #B0B0B0);
+
+    }
+  }
+
+  &.thirdly {
+    border: none;
+    color: $primary-color;
+    background-color: transparent;
+    &:hover {
+      color: $hover-color;
+    }
+    &:focus {
+      color: $blue;
+    }
+    &:disabled {
+      color: $disabled;
+    }
+    &.disabled {
+      color: $disabled;
+    }
+  }
+
+  &.black {
+    @include button-theme($black);
+  }
+
+  &.white {
+    border: 3px solid black;
+    color: #000000;
+    background-color: #FFFFFF;
+
+    &:hover {
+      background-color: #EFEFEF;
+    }
+
+    &:active {
+      background-color: #EFEFEF;
+    }
+  }
+
+  &.success {
+    @include button-theme($success);
+  }
+
+  &.warning {
+    @include button-theme($warning);
+  }
+
+  &.danger {
+    @include button-theme($alert);
+  }
+
+  &.disabled {
+    @include button-theme($light-grey);
+    color: $medium-grey;
+  }
+
+  &.ghost {
+    background-color: transparent;
+    border: 2px solid $primary-color;
+    font-weight: 600;
+    color: $primary-color;
+    padding: 15px 30px;
+
+    &.primary {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+
+    &.disabled {
+      border-color: $medium-grey;
+      color: $medium-grey;
+
+      &:hover {
+        background-color: $medium-grey;
+        color: white;
+      }
+    }
+
+    a {
+      font-family: $header-font-family;
+      color: $primary-color;
+      font-weight: 500;
+
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+    }
+
+    &:hover {
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+
+  /*
+  // who needs responsive buttons...
+  &.large {
+    padding: 15px 30px;
+    font-size: 12px;
+    height: auto;
+    letter-spacing: 2px;
+
+    @media (#{$larger-than-phablet}) {
+      padding: 20px 50px;
+      font-size: rem-calc(16px);
+    }
+  }
+  */
+
+  &.large {
+    padding: 13px 55px;
+    font-size: rem-calc(22px);
+  }
+
+  &.small {
+    padding: 15px 30px;
+    font-size: 12px;
+    height: auto;
+    letter-spacing: 2px;
+  }
+
+  &.extra-small {
+    padding: 5px 10px;
+    font-size: 10px;
+    height: auto;
+    line-height: 1.5;
+  }
+
+  &.wide {
+    padding: 20px 30px;
+    max-width: 100%;
+
+    @media (#{$larger-than-desktop}) {
+      padding: 20px 100px;
+    }
+  }
+
+  &.medium {
+    min-width: 187px;
+    font-size: rem-calc(20px);
+  }
+
+  &.full-wide {
+    width: 100%;
+    display: block;
+  }
+
+  &.with-icon {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 13px 20px;
+  }
+
+}
+
+input {
+  &[type="submit"],
+  &[type="reset"],
+  &[type="button"] {
+    display: inline-block;
+    padding: 15px 30px;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: 50px;
+    border: 1px solid $border-color;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+}
+
+input {
+  &[type="submit"]:hover,
+  &[type="reset"]:hover,
+  &[type="button"]:hover {
+    color: white;
+    border-color: lighten($dark-grey, 33.3%);
+    outline: 0;
+  }
+}
+
+input {
+  &[type="submit"]:focus,
+  &[type="reset"]:focus,
+  &[type="button"]:focus {
+    color: white;
+    border-color: lighten($dark-grey, 33.3%);
+    outline: 0;
+  }
+}
+
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.processing {
+  span {
+    font-size: 2em;
+    line-height: 0;
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+
+    &:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: .4s;
+    }
+  }
+}
+.font-size {
+  @media (max-width: 640px) {
+    font-size: 17px;
+    margin-top:-9px;
+  }
+  @media (min-width: 641px) {
+    margin-top:-9px;
+  }
+}
+.replace-size{
+  @media (max-width: 1124px) {
+    //font-size: 24px;
+    margin-top:46px;
+    line-height: 0;
+  }
+}
+.text-size1{
+  @media (max-width: 376px) {
+    font-size: 20px;
+    white-space: nowrap;
+  
+  }
+}

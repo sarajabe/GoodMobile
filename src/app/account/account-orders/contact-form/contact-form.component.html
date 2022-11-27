@@ -1,0 +1,40 @@
+<section class="report-form" *ngIf="!ticketSubmitted">
+    <div class="note-banner">
+        <p class="note"><img class="icon" src="assets/icon/Envelope.svg" alt="envelope"/> {{!isSomethingElse ? 'A support request will be submitted on your behalf.' : 'Let us know how we can improve your experience with GoodMobile!'}}</p>
+    </div>
+    <p class="description">Please provide a valid mobile number & leave a message. 
+        Our agents will get back to you as soon as possible.</p>
+    <form [formGroup]="contactForm" class="contact-form">
+        <fieldset class="field">
+            <label for="phoneNumber" class="input-label">Enter phone number:<span class="required"> Required</span></label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" data-cy="phoneNumber" formControlName="phoneNumber" restrictNumbers
+                maxlength="10" minlength="10" required data-cy="phoneNumber" class="phone">
+            <label class="validation-message" data-cy="phoneIsRequired"
+                *ngIf="contactForm.controls.phoneNumber.hasError('required') && contactForm.controls.phoneNumber.touched">Phone
+                number is required</label>
+            <label class="validation-message" data-cy="phoneNumberIsInvalid"
+                *ngIf="contactForm.controls.phoneNumber.hasError('pattern') || contactForm.controls.phoneNumber.hasError('minlength')">
+                Phone number is invalid </label>
+        </fieldset>
+        <fieldset class="field">
+            <label for="description" class="input-label">Issue description:<span class="required"> Required</span></label>
+            <textarea rows="6" class="description-input" id="description" name="description" data-cy="description" formControlName="description" required></textarea>
+            <label class="validation-message" data-cy="issueDescriptionIsRequired"
+                *ngIf="!contactForm.controls.description.valid &&contactForm.controls.description.touched">Issue description
+                is required</label>
+        </fieldset>
+    </form>
+</section>
+<section class="report-form" *ngIf="!!ticketSubmitted">
+    <div class="note-banner success">
+        <p class="note">Thank you for contacting us.</p>
+        <p class="note inline"> Your issue has been submitted and your reference ticket number is: <span class="text-color-primary"> {{ticketNumber}}</span></p>
+    </div>
+</section>
+<section class="section-footer">
+    <button class="button transparent"  data-cy="cancelBtn" aria-label="cancel" (click)="backToReportIssue()" [class.hidden]="!!ticketSubmitted">Cancel</button>
+    <div class="flex">
+        <button class="button secondary" data-cy="backBtn" aria-label="back" (click)="back()" *ngIf="hasBack && !ticketSubmitted">Back</button>
+        <button class="button primary" data-cy="submitBtn" aria-label="submit" (click)="submitUserIssue()">{{!!ticketSubmitted ? 'Done' : 'Submit'}}</button>
+    </div>
+</section>

@@ -1,0 +1,21 @@
+<div class="container model-container {{settings.customClass || ''}}">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{settings.title || ''}}</h2>
+      <button id="close-popup-btn"  data-cy="closeIcon" class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <div class="row">
+          <div *ngIf="!settings.enableHTML" class="twelve">
+            {{context.message}}
+          </div>
+          <div *ngIf="settings.enableHTML" [innerHTML]="context.message" class="twelve"></div>
+        </div>
+        <div class="row modal-actions">
+          <button id="confirm-btn" data-cy="confirm-btn" class="button primary" (click)="OK()">{{settings.okText || 'OK'}}</button>
+          <button id="cancel-btn" data-cy="cancel-btn" class="button" (click)="cancel()">{{settings.cancelText || 'Cancel'}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

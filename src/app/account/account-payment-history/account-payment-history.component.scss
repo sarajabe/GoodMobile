@@ -1,0 +1,211 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+tbody {
+    tr {
+        td {
+            &.width-120 {
+                @media (max-width: 389.9px) and (min-width: $old-mobile-min) {
+                    width: 120px;
+                }
+            }
+        }
+    }
+}
+.table-align {
+    @media (max-width: 1209.9px) and (min-width: 1025px) {
+        margin-right: 0;
+    }
+    &.width-95 {
+        @media (max-width: $desktop-min-width-minus) and (min-width: 749px) {
+            width: 95%;
+        }
+    }
+}
+.icon-caret-down {
+    border-color: white transparent transparent transparent;
+    border-style: solid;
+    border-width: 8px 5px 0 5px;
+    position: relative !important;
+    right: 1px !important;
+    top: 6px !important;
+    float: right;
+    width: 0;
+}
+.icon-caret-up {
+    border-color: white transparent transparent transparent;
+    border-style: solid;
+    border-width: 8px 5px 0 5px;
+    transform: rotate(58deg);
+    position: relative !important;
+    right: 1px !important;
+    top: 6px !important;
+    float: right;
+    width: 0;
+}
+.full-line {
+    text-align: center;
+    @media (max-width: $desktop-min-width-minus) {
+        text-align: left;
+        margin-top: 4px;
+        display: inline-block;
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        padding-right: 0 !important;
+    }
+    &.status-color {
+        @media (max-width: $desktop-min-width-minus) {
+            color: $primary-color;
+        }
+    }
+    &.mobile-width {
+        @media (min-width: 446px) and (max-width: $phablet-min-width-minus) {
+            width: 78% !important;
+        }
+    }
+    &.desktop-style {
+        @media (min-width: $desktop-min-width) {
+            padding: 0 !important;
+            height: 85px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 100px;
+            margin: 0 auto;
+        }
+        @media (min-width: $desktop-min-width) and (max-width: 1199.9px) {
+            max-width: 80px;
+        }
+    }
+    .view-receipt {
+        position: relative;
+        @media (min-width: 1252px) {
+            margin-left: 18px;
+        }
+        @media (min-width: $desktop-min-width) and (max-width: 1251.9px) {
+            margin-left: 7px;
+        }
+        @media (max-width: $desktop-min-width-minus) {
+            position: absolute;
+            right: 20px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            bottom: 12px;
+            left: 96px;
+            right: unset;
+        }
+        .view-receipt-icon {
+            position: relative;
+            bottom: 3px;
+        }
+        .tool-tip-text {
+            visibility: hidden;
+            font-size: rem-calc(10px);
+            width: 80px;
+            background-color: #876dab;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            margin-top: 0;
+            bottom: 100%;
+            @media (max-width: 1159px) {
+                bottom: 26px;
+                left: -33px;
+            }
+            @media (max-width: $desktop-min-width-minus) {
+                display: none;
+            }
+        }
+        .view-receipt-text {
+            font-family: $base-font-family-bold;
+            @media (min-width: $desktop-min-width) {
+                display: none;
+            }
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(15px);
+                color: $primary-color;
+                margin-left: 12px;
+            }
+        }
+    }
+    .view-receipt:hover .tool-tip-text {
+        @media (min-width: $desktop-min-width) {
+            visibility: visible;
+        }
+    }
+}
+.alignment-data {
+    thead {
+        background-color: $primary-color;
+        color: white;
+        font-family: $header-font-family;
+        font-size: rem-calc(10px);
+        letter-spacing: 2px;
+
+        tr {
+            th {
+                text-transform: none;
+                width: 20%;
+                border-right: 1px solid white;
+                padding: 5px;
+                text-align: center;
+                font-size: 1.0625rem;
+                line-height: 1.25rem;
+                span.th {
+                    display: inline-block;
+                    width: 100%;
+                    position: relative;
+                    border-right: unset;
+
+                    span {
+                        font-weight: normal;
+                        position: unset;
+                        top: 0;
+                        right: 5px;
+                    }
+                }
+            }
+
+            td {
+                font-size: rem-calc(17px);
+                font-weight: bold;
+            }
+        }
+    }
+}
+.rectangle-container {
+    width: 100%;
+    height: 100%;
+    @media (max-width: $desktop-min-width-minus) {
+        background-color: rgba(222, 222, 222, 0.56);
+        float: left;
+        max-width: 100%;
+        color: #000;
+        border-bottom: 0;
+        text-align: left;
+        width: calc(100%);
+        margin-right: 0;
+        .date {
+            width: 85px;
+            max-height: 200px;
+            padding: 44px 8px;
+            @media (max-width: $phablet-min-width-minus) {
+                padding: 60px 8px;
+            }
+        }
+    }
+    &.style-responsive {
+        @media (max-width: $desktop-min-width-minus) {
+            position: relative;
+        }
+        @media (max-width: 468.9px) {
+            height: 170px;
+        }
+        @media (max-width: 434.9px) {
+            height: 190px;
+        }
+    }
+}

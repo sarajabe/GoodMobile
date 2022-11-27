@@ -1,0 +1,78 @@
+<div class="container-flex featured-container">
+    <div class="description-section">
+      <h2 class="header">Best selling wireless plans</h2>
+      <p class="details">No data overage fees, plus <b>unlimited talk and text</b></p>
+      <p class="disclaimer"><i>Prices reflect $5.00 savings with Autopay.</i></p>
+      <p class="promo-note">5G where available. 5G compatible device required.</p>
+      <button class="button secondary" data-cy="viewAllPlans"  title="view all plans" aria-label="view all plans" (click)="viewAllPlans()" *ngIf="innerWidth > 1399.9">View all plans</button>
+    </div>
+    <ng-container *ngIf="innerWidth > 1024.9; else responsive ">
+      <div class="cards-section">
+        <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="goToPlans(plan)">
+          <div class="featured-plan-card" >
+            <div class="special-promo-banner" *ngIf="plan?.isSpecialPromotion">
+              <p class="special-promo-text">{{plan?.specialPromotion?.promotionTitle}}</p>
+            </div>
+            <div class="data-section">
+              <p class="oldData"><span class="border" *ngIf="plan?.specialPromotion?.promotionData"></span>{{plan?.data/1024 + 'GB'}}</p>
+              <p class="data">{{!!plan?.specialPromotion && plan?.specialPromotion?.promotionData > 0 ? (plan?.specialPromotion?.promotionData + plan?.data) / 1024 : (plan?.data / 1024)}}GB</p>
+              <p class="lte">4G/5G LTE</p>
+              <div class="border-line">
+              </div>
+            </div>
+            <div class="price-section">
+              <h3 class="price">${{plan?.isSpecialPromotion ? plan?.priceAfterSpecialPromoDiscount : plan?.price - plan?.promoPrice}}</h3>
+              <p class="month">per month</p>
+            </div>
+            <div class="action">
+              <button class="button primary" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
+            </div>
+            <div class="regular-price">
+              <p class="regular">Regular price ${{plan?.price}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navigate-container">
+        <button class="button secondary"  (click)="viewAllPlans()" title="view all plans" aria-label="view all plans">View all plans</button>
+      </div>
+    </ng-container>
+
+   <ng-template #responsive>
+    <div class="swiper-container featured swiper-width" [swiper]="config" (slideChangeEnd)="slideChanged($event)" [(index)]="index">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let plan of featuredPlans">
+          <div class="featured-plan-card" >
+            <div class="special-promo-banner" *ngIf="plan?.isSpecialPromotion">
+              <p class="special-promo-text">{{plan?.specialPromotion?.promotionTitle}}</p>
+            </div>
+            <div class="data-section">
+              <p class="oldData"><span class="border" *ngIf="plan?.specialPromotion?.promotionData"></span>{{plan?.data/1024 + 'GB'}}</p>
+              <p class="data">{{!!plan?.specialPromotion && plan?.specialPromotion?.promotionData > 0 ? (plan?.specialPromotion?.promotionData + plan?.data) / 1024 : (plan?.data / 1024)}}GB</p>
+              <p class="lte">4G/5G LTE</p>
+              <div class="border-line">
+              </div>
+            </div>
+            <div class="price-section">
+              <h3 class="price">${{plan?.isSpecialPromotion ? plan?.priceAfterSpecialPromoDiscount : plan?.price - plan?.promoPrice}}</h3>
+              <p class="month">per month</p>
+            </div>
+            <div class="action">
+              <button class="button primary" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
+            </div>
+            <div class="regular-price">
+              <p class="regular">Regular price ${{plan?.price}}</p>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="swiper-container-override featured-plans-slider-override">
+      <div class="container">
+        <div class="row">
+          <ul class="slick-dots slider-pagination" ></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+   </ng-template>
+  </div>

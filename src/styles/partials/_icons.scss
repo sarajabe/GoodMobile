@@ -1,0 +1,229 @@
+// hero-mobile for used icons
+@font-face {
+  font-family: 'hero-mobile';
+  src: url('/assets/fonts/hero-mobile.eot');
+  src: url('/assets/fonts/hero-mobile.eot?awqv3m#iefix') format('embedded-opentype'),
+  url('/assets/fonts/hero-mobile.woff2?awqv3m') format('woff2'),
+  url('/assets/fonts/hero-mobile.ttf?awqv3m') format('truetype'),
+  url('/assets/fonts/hero-mobile.woff?awqv3m') format('woff'),
+  url('/assets/fonts/hero-mobile.svg?awqv3m#freeup') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'bryant';
+  src: url('/assets/fonts/bryant-regular.ttf') format('opentype'),
+  url('/assets/fonts/bryant-light.ttf') format('opentype'),
+  url('/assets/fonts/bryant-medium.ttf') format('opentype'),
+  url('/assets/fonts/bryant-bold.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'bryant-bold';
+  src: url('/assets/fonts/bryant-bold.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sansation';
+  src: url('/assets/fonts/sansation_regular.ttf') format('opentype'),
+  url('/assets/fonts/sansation_italic.ttf') format('opentype'),
+  url('/assets/fonts/sansation_bold.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cookiesAndCream';
+  src: url('/assets/fonts/Cookiesandcream.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sansation-bold';
+  src:  url('/assets/fonts/sansation_bold.ttf') format('opentype');
+  font-weight: bold;
+  font-display: swap;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  &:not(.mydrpicon) {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'hero-mobile' !important;
+  }
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cart-2:before {
+  content: "\e900";
+}
+
+.icon-facebook:before {
+  content: "\e904";
+}
+
+.icon-twitter:before {
+  content: "\e905";
+}
+
+.icon-instagram:before {
+  content: "\e906";
+}
+
+.icon-left-arrow:before {
+  content: "\e908";
+}
+.icon-settings:before {
+  content: "\e90b";
+}
+
+.icon-credit-card:before {
+  content: "\e90c";
+}
+
+.icon-help-circle:before {
+  content: "\e90d";
+}
+
+.icon-info-circle:before {
+  content: "\e90e";
+}
+
+.icon-location:before {
+  content: "\e90f";
+}
+
+.icon-search:before {
+  content: "\e910";
+}
+
+.icon-menu:before {
+  content: "\e911";
+}
+
+.icon-minus:before {
+  content: "\e912";
+}
+
+.icon-mobile:before {
+  content: "\e913";
+}
+
+.icon-plus:before {
+  content: "\e914";
+}
+
+.icon-cart:before {
+  content: "\e915";
+}
+
+.icon-paypal:before {
+  content: "\e916";
+}
+
+.icon-chevron-thin-up:before {
+  content: "\e917";
+  // orient it 180 degrees
+}
+
+.icon-close:before {
+  content: "\2716";
+}
+
+.icon-check:before {
+  content: "\e919";
+}
+
+.icon-alert:before {
+  content: "\e91a";
+}
+
+.icon-sim-card:before {
+  content: "\e91b";
+}
+
+.icon-thin-left-arrow:before {
+  content: "\e91c";
+}
+
+.icon-thin-right-arrow:before {
+  content: "\e91d";
+}
+
+.icon-dot:before {
+  content: "\e91e";
+}
+
+.icon-bell:before {
+  content: "\e901";
+}
+
+.img-icon-arrow-down {
+  /* use on div */
+  display: inline-block;
+  width: 11px;
+  height: 10px;
+  background-image: url(/assets/img/arrow-down.svg);
+  background-repeat: no-repeat;
+  background-position-x: 45%;
+  background-position-y: 2px;
+}
+
+i.arrow {
+
+  border: solid black;
+
+  &.primary {
+    border: solid $primary-color;
+  }
+
+  &.secondary {
+    border: solid $secondary-color;
+  }
+
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 2px;
+  margin-bottom: 3px;
+
+  &.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  &.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+
+  &.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+
+  &.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+}
+

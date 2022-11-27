@@ -1,0 +1,19 @@
+<div class="container model-container {{context.customClass}}" (keypress.esc)="onKeydown($event)">
+  <div class="modal-header">
+    <h2 class="modal-heading">{{context.title}}</h2>
+    <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+  <div class="modal-body">
+    <div class="modal-content">
+      <div class="description">
+        <p>This card is used for <b>Auto Pay</b> for:</p>
+        <div class="mdns" *ngFor="let plan of plans">
+          <p class="mdn">{{!!plan?.mdn ? plan?.mdn : plan?.basePlan?.subtitle}}</p>
+        </div>
+        <p>Please choose another card or add a new one before deleting it.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="button primary" (click)="navigateToList()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

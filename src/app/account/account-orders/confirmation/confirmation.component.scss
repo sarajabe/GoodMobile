@@ -1,0 +1,35 @@
+@import "../../../../styles/modules/_variables.scss";
+@import "../../../../styles/modules/_mixins.scss";
+
+.confirmation-screen {
+    margin-bottom: 75px;
+    .back-section {
+        display: flex;
+        font-family: $secondary-font-family-bold;
+        font-size: rem-calc(18px);
+        line-height: 24px;
+        margin-bottom: 45px;
+        .back-link {
+            padding-right: 19.9px;
+            cursor: pointer;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: rem-calc(16px);
+            line-height: 20px;
+            margin-bottom: 32px;
+        }
+    }
+    .desc {
+        font-family: $secondary-font-family-bold;
+        font-size: rem-calc(28px);
+        line-height: 48px;
+        max-width: 750px;
+        .ticket-number {
+            color: $primary-color;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: rem-calc(20px);
+            line-height: 40px;
+        }
+    }
+}

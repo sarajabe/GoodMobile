@@ -1,0 +1,16 @@
+<div class="flow-indicator">
+    <div class="bullets-container border">
+        <div *ngFor="let step of flowSteps" class="bullet {{classFromState(step)}}">
+            <div class="bullet-text">
+                {{step?.title}}
+            </div>
+            <div class="bullet-button ">
+                <div class="button-state">
+                </div>
+
+            </div>
+            <div *ngIf=" flowSteps.length == 4" class="progress-bar {{classFromState(step)}}"></div>
+            <div *ngIf=" flowSteps.length == 3" class="progress-bar2 {{classFromState(step)}}"></div>
+        </div>
+    </div>
+</div>

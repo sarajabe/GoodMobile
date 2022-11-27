@@ -1,0 +1,228 @@
+@import "../../../../styles/modules/variables";
+
+.qualifying {
+    select option:disabled {
+        color: $disabled-grey;
+    }
+    &.acp-disabled {
+        .outlined-label-input input:disabled {
+            background-color: #95959530;
+            cursor: not-allowed;
+        }
+        .floating-label {
+            background-color: #95959530;
+        }
+        .form-control{
+            opacity: .5;
+            cursor: not-allowed;
+        }
+        span , input[type=radio]{
+            cursor: not-allowed;
+        }
+    }
+    margin-bottom: 194px;
+    .main-title {
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 28px;
+        font-family: $base-font-family;
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: 18px;
+            line-height: 28px;
+        }
+    }
+    .radioBtn {
+        &.child {
+            margin-left: 8px;
+        }
+    }
+    .childInfoFormNonExistingApp{
+        display: flex;
+        max-width: 809px;
+        margin-left: 27px;
+        @media (max-width: $phablet-min-width-minus) {
+            margin-left: 21px;
+        }
+    }
+    .border-section {
+        width: 0;
+        height: 602px;
+        border: 4px solid #dad0dc;
+        margin-right: 16px;
+        border-radius: 6px;
+        @media (max-width: $phablet-min-width-minus) {
+            height: 657.31px;
+            
+        }
+    }
+    .fields-title {
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 28px;
+        margin-bottom: 10.8px;
+        font-family: $base-font-family;
+        &.note{
+            margin-bottom: 2px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 2.8px;
+        }
+    }
+    .fields-note {
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 29.6px;
+        color: #a5a3a3;
+        max-width: 849px;
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: 14px;
+            line-height: 24px;
+            margin-bottom: 25.6px;
+        }
+    }
+    .red {
+        color: #d22119;
+    }
+    .bottom {
+        margin-bottom: 32.2px;
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 28.2px;
+        }
+    }
+    .form-field {
+        &.half {
+            max-width: 308px;
+            width: 100%;
+            @media (max-width: $phablet-min-width-minus) {
+                width: 231px;
+            }
+        }
+        &.quarter {
+            input,
+            span {
+                width: 120px;
+            }
+            margin-left: 28px;
+            margin-bottom: 22.2px;
+            @media (max-width: $phablet-min-width-minus) {
+                margin-bottom: 16.2px;
+            }
+        }
+        span {
+            color: #a5a3a3;
+        }
+    }
+    .three-fields {
+        display: flex;
+        justify-content: space-between;
+        max-width: 308px;
+        margin-top: 21px;
+        margin-bottom: 12px;
+        @media (max-width: $phablet-min-width-minus) {
+            width: 231px;
+        }
+        select {
+            width: 92px;
+            height: 44px;
+            @media (max-width: $phablet-min-width-minus) {
+                width: 70px;
+            }
+        }
+        label {
+            width: 20px;
+            top: 14px;
+            color: #a5a3a3;
+            &.dirty {
+                top: -6px;
+            }
+        }
+        .year-width {
+            width: 32px;
+        }
+    }
+    .form-control {
+        font-size: 20px;
+        line-height: 32px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        font-family: $base-font-family-bold;
+        @media (max-width: $phablet-min-width-minus) {
+            align-items: flex-start;
+            font-size: 16px;
+            line-height: 24px;
+        }
+        &.child {
+            font-size: 16px;
+            line-height: 24px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: 14px;
+            }
+        }
+    }
+    label {
+        margin-bottom: 0;
+    }
+    input[type="radio"] {
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        margin: 0 5px 0 0;
+        font: inherit;
+        color: #888888;
+        width: 24px;
+        height: 24px;
+        border: 2px solid #888888;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+        display: grid;
+        place-content: center;
+    }
+
+    input[type="radio"]:checked {
+        -webkit-appearance: none;
+        appearance: none;
+        margin: 0 5px 0 0;
+        font: inherit;
+        color: $primary-color;
+        width: 24px;
+        height: 24px;
+        border: 2px solid $primary-color;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+        display: grid;
+        place-content: center;
+    }
+
+    input[type="radio"]::before {
+        content: "";
+        width: 31px;
+        height: 29px;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+    }
+    input[type="radio"]:checked::before {
+        transform: scale(0.4);
+        background-color: $primary-color;
+    }
+    .form-section {
+        .bbq-info {
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 28px;
+            margin-bottom: 32px;
+            color: #383838;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: 16px;
+                line-height: 24px;
+                margin-bottom: 28px;
+            }
+        }
+    }
+}

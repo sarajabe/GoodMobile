@@ -1,0 +1,20 @@
+<div class="container model-container impacted-modal">
+  <div class="modal-header">
+    <h2 class="modal-heading">{{context.title}}</h2>
+    <button id="close-popup-btn" class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-content">
+      <div class="row">
+        <p class="message">
+          {{context.message}}
+        </p>
+      </div>
+      <div class="row modal-actions">
+      <button class="button primary" (click)="takeAction('summary')">Go to my Account Summary</button>
+      <button class="button secondary" (click)="takeAction()">Check another phone number</button>
+      <p class="not-working-link" (click)="takeAction('not-working')">My Phone is Not Working!</p>
+    </div>
+    </div>
+  </div>
+</div>

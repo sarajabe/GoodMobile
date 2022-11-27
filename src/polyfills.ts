@@ -8,15 +8,19 @@
  *      file.
  *
  * The current setup is for so-called "evergreen" browsers; the last versions of browsers that
- * automatically update themselves. This includes recent versions of Safari, Chrome (including
- * Opera), Edge on the desktop, and iOS and Chrome on mobile.
+ * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),
+ * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.
  *
  * Learn more in https://angular.io/guide/browser-support
  */
 
 /***************************************************************************************************
  * BROWSER POLYFILLS
- */
+ */  // Run `npm install --save classlist.js`.
+
+/** Evergreen browsers require these. */
+import 'core-js';
+import 'proxy-polyfill/proxy.min.js';
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
@@ -51,3 +55,9 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+declare module '@angular/core' {
+    interface ModuleWithProviders<T = any> {
+        ngModule: Type<T>;
+        providers?: Provider[];
+    }
+}

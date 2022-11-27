@@ -15,9 +15,9 @@ resources:
   disk_size_gb: 10
 
 network:
-  instance_tag: goodwill-test
+  instance_tag: goodwill-web-test
   name: projects/ztar-network-shared-vpc-1-test/global/networks/ztar-test-shared-vpc-1
-  subnetwork_name: ztar-product-goodwill-us-cent1-test-subnet
+  subnetwork_name: ztar-product-g2g-mobile-us-cent1-test-subnet
   session_affinity: true
 
 liveness_check:

@@ -1,0 +1,20 @@
+<ng-container *ngIf="innerWidth < 640 && !ownConatiner">
+    <app-account-mobile-navbar [pendingPlans]="pendingPlans" [user]="user" [title]="headerTitle">
+    </app-account-mobile-navbar>
+</ng-container>
+<section class="my-account-padding my-account-container padding-16px" [class.removeSpace]="removepadding"
+    *ngIf="!ownConatiner">
+    <!-- <progress-bar></progress-bar> -->
+    <div class="my-account-main-content">
+        <h1 class="col-xl-offset-1 greetings-title mobile" *ngIf="!!isAccountMenuVisible">Welcome, {{user?.firstName}}
+        </h1>
+        <app-account-navbar [pendingPlans]="pendingPlans" [isAccountMenuVisible]="isAccountMenuVisible">
+        </app-account-navbar>
+        <div class="my-account-sections-container">
+            <h1 class="col-xl-offset-1 greetings-title desktop" *ngIf="!!isAccountMenuVisible">Welcome,
+                {{user?.firstName}}</h1>
+            <router-outlet #outlet></router-outlet>
+        </div>
+    </div>
+</section>
+<router-outlet #outlet *ngIf="!!ownConatiner"></router-outlet>

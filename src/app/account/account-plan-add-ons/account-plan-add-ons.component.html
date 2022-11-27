@@ -1,0 +1,282 @@
+<ng-container>
+    <section class="account-section plan-addons-section">
+        <div class="container-flex section-container no-padding">
+            <div class="container-flex-row account-info flex-center">
+                <div class="col-xl-11 col-xl-offset-1 col-12 col-offset-0">
+                    <ng-container *ngIf="!!userHasActivePlans">
+                        <app-activated-plan-selector [user]="user" (userPlanSelected)="userPlanSelected($event);"
+                            [selectedPlan]="selectedPlan">
+                        </app-activated-plan-selector>
+                    </ng-container>
+                    <ng-container *ngIf="!userHasActivePlans">
+                        <div class="plan-selector-override">
+                            <div class="account-status-message">
+                                <p>You have no active phone number at the moment. <span class="activate"> <a
+                                            (click)="addActivatedAccount()">
+                                            <small class="text-color-primary">Add activated phone number?</small>
+                                        </a></span></p>
+                                <p *ngIf="userHasPendingPlans">Proceed to <a
+                                        [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased
+                                        plans</a> to activate your plan</p>
+                            </div>
+                            <hr class="gray margin-top-30 margin-bottom-30">
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!!userHasActivePlans">
+                        <div class="tab-nav">
+                            <ul class="add-on-tabs">
+                                <li><span [class.active]="isDataActive"
+                                        (click)="isDataActive = true; fromIntlCalling = false">Data add-ons</span></li>
+                                <li><span [class.active]="!isDataActive"
+                                        (click)="isDataActive = false; fromIntlCalling = false">International calls
+                                        add-ons</span></li>
+                            </ul>
+                        </div>
+                        <ng-container *ngIf="!!isDataActive">
+                            <div [@fadeInOut]="'in'">
+                                <div class="data-addOn-section">
+                                    <div class="container-flex section-container no-padding">
+                                        <div class="container-flex-row account-info flex-center">
+                                            <div class="twelve offset-one col-12 col-offset-0">
+                                                <h4 class="validation-message"
+                                                    *ngIf="selectedPlan?.canceled && !!userAccount && userAccount?.pastDue">
+                                                    Your plan is expired and canceled, <a
+                                                        [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                                        routerLinkActive="active"
+                                                        [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
+                                                <h4 class="validation-message"
+                                                    *ngIf="selectedPlan?.canceled && !userAccount?.pastDue">Your plan is
+                                                    CANCELED, <a
+                                                        [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                                        routerLinkActive="active"
+                                                        [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
+                                                <h4 class="validation-message"
+                                                    *ngIf="!!userAccount && userAccount?.pastDue && !selectedPlan?.canceled ">
+                                                    Your plan is EXPIRED, <a
+                                                        [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                                        routerLinkActive="active"
+                                                        [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
+                                                <h4 class="validation-message"
+                                                    *ngIf=" !isCompaitableWithGigAddon && !selectedPlan?.canceled">Your
+                                                    plan is NOT compatible with this add-on</h4>
+                                                <h4 class="validation-message"
+                                                    *ngIf=" !!isCompaitableWithGigAddon && !selectedPlan?.canceled && maxNumberOfGigs == 0">
+                                                    You have already purchased 5GB of data add-ons.</h4>
+                                                <p class="subtitle">Select the amount of Data add-on required:</p>
+                                                <ng-container>
+                                                    <div class="quantity-section">
+                                                        <span>Gigs: </span>
+                                                        <button
+                                                            [disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0"
+                                                            [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0"
+                                                            class="button secondary quantityBtn"
+                                                            (click)="decrementDataAddOn('gig')"> - </button>
+                                                        <input type="number" step="1" min="0" max="5" value="1"
+                                                            [disabled]="!isCompaitableWithGigAddon" class="quantityNum"
+                                                            [(ngModel)]="quantity" readonly/>
+                                                        <button class="button primary quantityBtn"
+                                                            (click)="incrementDataAddOn('gig')"
+                                                            [disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs"
+                                                            [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs">
+                                                            + </button>
+                                                    </div>
+                                                </ng-container>
+                                                <div class="total-section">
+                                                    <span>Total: </span>
+                                                    <span class="total">${{totalDataPrice}}</span>
+                                                </div>
+                                                <button class="button secondary addon" (click)="selectAddOn('Data')"
+                                                    [disabled]="(!userHasActivePlans || quantity == 0) || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Select
+                                                    add-on</button>
+                                                <button class="button primary addon"
+                                                    (click)="setSelectedAddonType('Data');goToCart()"
+                                                    [disabled]="(!userHasActivePlans || quantity == 0) || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed to Checkout
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!isDataActive">
+                            <div [@fadeInOut]="'in'">
+                                <div class="account-section">
+                                    <div class="container-flex section-container no-padding">
+                                        <div class="container-flex-row account-info flex-center">
+                                            <div class="twelve offset-one col-12 col-offset-0">
+                                                <h4 class="validation-message"
+                                                    *ngIf="selectedPlan?.canceled && !!userAccount && userAccount?.pastDue">
+                                                    Your plan is expired and canceled, <a
+                                                        [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                                        routerLinkActive="active"
+                                                        [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
+                                                <h4 class="validation-message"
+                                                    *ngIf="selectedPlan?.canceled && !userAccount?.pastDue">Your plan is
+                                                    CANCELED, <a
+                                                        [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                                        routerLinkActive="active"
+                                                        [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
+                                                <h4 class="validation-message"
+                                                    *ngIf="!!userAccount && userAccount?.pastDue && !selectedPlan?.canceled ">
+                                                    Your plan is EXPIRED, <a
+                                                        [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
+                                                        routerLinkActive="active"
+                                                        [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
+                                                <h4>Stay in touch with family & friends around the world!</h4>
+                                                <p class="hint">Which Calling service are you looking for:</p>
+                                                <ul class="categories">
+                                                    <li [class.active]="showUnlimited"><span
+                                                            (click)="showUnlimited=true;showPayGo=false">Unlimited
+                                                            Calling</span></li>
+                                                    <li [class.active]="showPayGo"><span
+                                                            (click)="showPayGo=true;showUnlimited=false;">Individual
+                                                            Country</span></li>
+                                                </ul>
+                                                <section *ngIf="showUnlimited">
+                                                    <h4 class="validation-message"
+                                                        *ngIf="!isCompaitableWithInternationalAddon && !selectedPlan?.canceled">
+                                                        Your plan is NOT compatible with this add-on</h4>
+                                                    <h4 class="validation-message"
+                                                        *ngIf="isCompaitableWithInternationalAddon && isILDSelected()">
+                                                        Unlimited international calling add-on has already been added to
+                                                        your shopping cart</h4>
+
+                                                    <p class="title">Unlimited Calling</p>
+                                                    <p class="subtitle">Get unlimited calling to over 60 countries from
+                                                        the U.S., including landline and cellular to Mexico and Canada,
+                                                        the UK, Germany, China, India, Colombia, and Israel. Below are
+                                                        the listed countries for International Calling, you can have
+                                                        unlimited minutes for ${{unlimitedCalls.price}} per month</p>
+                                                    <ul class="sort-nav">
+                                                        <li *ngFor="let letter of letters" value="{{letter}}"
+                                                            [class.active]="selected == letter"><a
+                                                                (click)="filterCountries(letter);selected=letter">{{letter}}</a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="countriesList unlimited">
+                                                        <li *ngFor="let country of filteredCountries"
+                                                            value={{country?.name}}>
+                                                            <span class="countryName">{{country?.name}}</span>
+                                                            <span class="rate"
+                                                                *ngIf="country?.isLandline">Landline</span><span
+                                                                class="rate"
+                                                                *ngIf="country?.isLandline && country?.isCellular">+</span><span
+                                                                class="rate" *ngIf="country?.isCellular">Cellular</span>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="totalCalls">
+                                                        <span>Total for unlimited minutes on {{countries?.length}}
+                                                            countries above</span>
+                                                        <span class="text-color-primary">
+                                                            TOTAL: ${{unlimitedCalls?.price}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="action">
+                                                        <button class="button secondary addon"
+                                                            (click)="selectAddOn('International')"
+                                                            [disabled]="!userHasActivePlans || !isCompaitableWithInternationalAddon || isILDSelected() || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Select
+                                                            add-on</button>
+                                                        <button class="button primary addon"
+                                                            (click)="setSelectedAddonType('International');goToCart()"
+                                                            [disabled]="!userHasActivePlans || !isCompaitableWithInternationalAddon || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed to checkout</button>
+                                                    </div>
+                                                </section>
+                                                <section *ngIf="showPayGo">
+                                                    <h4 class="validation-message" *ngIf="isPayGoSelected()">Pay Go
+                                                        International calling add-on has already been added to your
+                                                        shopping cart</h4>
+                                                    <h4 class="validation-message"
+                                                        *ngIf="!isCompaitableWithPayGo && !selectedPlan?.canceled">Your
+                                                        plan is NOT compatible with this add-on</h4>
+                                                    <p class="title"><strong>Pay Go International Calling</strong></p>
+                                                    <p>
+                                                        Need to call a country not on your Unlimited Calling Country
+                                                        list? You can purchase $5 of additional International minutes to
+                                                        call globally. Rates vary by destination.
+                                                    </p>
+                                                    <p>
+                                                        Check below on a specific destinations Rates
+                                                    </p>
+                                                    <ul class="sort-nav">
+                                                        <li *ngFor="let letter of letters" value="{{letter}}"
+                                                            [class.active]="selectedPayGoLetter == letter"><a
+                                                                (click)="filterCountries(letter,'payGo');selectedPayGoLetter=letter">{{letter}}</a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="countriesList payGo"
+                                                        [class.long]="selectedPayGoLetter == 'M' || selectedPayGoLetter == 'S' || selectedPayGoLetter == 'B' || selectedPayGoLetter == 'C'">
+                                                        <li *ngFor="let country of filteredPayGoCountries"
+                                                            value={{country?.name}}><span
+                                                                class="countryName">{{country?.name}}</span><span
+                                                                class="rate">{{country?.value | currency:'USD':'symbol':0}}</span>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="totalCalls">
+                                                        <span>International Calling Increment</span>
+                                                        <span class="text-color-primary">
+                                                            TOTAL: ${{unlimitedCalls?.price}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="action">
+                                                        <button class="button secondary addon"
+                                                            (click)="selectAddOn('payGo')"
+                                                            [disabled]="!userHasActivePlans || !isCompaitableWithPayGo || isPayGoSelected() || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Select
+                                                            add-on</button>
+                                                        <button class="button primary addon"
+                                                            (click)="setSelectedAddonType('payGo');goToCart()"
+                                                            [disabled]="!userHasActivePlans || !isCompaitableWithPayGo || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed to checkout</button>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div *ngIf="showTextForm" [@fadeInOut]="'in'">
+                            <div class="data-addOn-section">
+                                <div class="container-flex section-container no-padding">
+                                    <div class="container-flex-row account-info flex-center">
+                                        <div class="twelve offset-one col-12 col-offset-0">
+                                            <h4 class="validation-message"
+                                                *ngIf="!isCompaitableWith100MinsAddon && !isCompaitableWith500MinsAddon">
+                                                Your plan is NOT compatible with this add-on</h4>
+                                            <p>Select the type of Talk & Text add-on required:</p>
+                                            <span>Type: </span>
+                                            <select class="textAddOn" name="talkAndTextAddon"
+                                                (change)="updateTalkAndTextAddonType($event.target)">
+                                                <option value="" disabled>Select...</option>
+                                                <option *ngFor="let addon of talkAndTextAddonPlans" value="{{addon.id}}"
+                                                    [disabled]="!addon.compaitable">{{addon.subtitle}}</option>
+                                            </select>
+                                            <div class="quantity-section">
+                                                <span>Quantity: </span>
+                                                <button class="button secondary quantityBtn"
+                                                    (click)="updateTextAddonQuanity('decrement')"> - </button>
+                                                <input type="number" step="1" min="0" value="0" class="quantityNum"
+                                                    [ngModel]="talkAndTextQuantity" />
+                                                <button class="button primary quantityBtn"
+                                                    (click)="updateTextAddonQuanity('increment')"> + </button>
+                                            </div>
+                                            <div class="total-section">
+                                                <span>Total: </span>
+                                                <span class="total">${{totalTalkAndTextPrice}}</span>
+                                            </div>
+                                            <button class="button secondary addon" (click)="selectAddOn('Minutes')"
+                                                [disabled]="(!userHasActivePlans || talkAndTextQuantity == 0) || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Select
+                                                add-on</button>
+                                            <button class="button primary addon"
+                                                (click)="setSelectedAddonType('Minutes');goToCart()"
+                                                [disabled]="(!userHasActivePlans || talkAndTextQuantity == 0) || userAccount?.pastDue || selectedPlan?.portInRequestNumber">
+                                                Proceed to checkout </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>

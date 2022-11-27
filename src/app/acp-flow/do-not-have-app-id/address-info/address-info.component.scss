@@ -1,0 +1,99 @@
+@import "../../../../styles/modules/variables";
+
+.addressInfoFormNonAppExists{
+    &.acp-disabled {
+        .outlined-label-input input:disabled {
+            background-color: #95959530;
+            cursor: not-allowed;
+        }
+        .floating-label {
+            background-color: #95959530;
+            cursor: not-allowed;
+        }
+        .form-control{
+            opacity: .5;
+            cursor: not-allowed;
+        }
+        span , input[type=radio]{
+            cursor: not-allowed;
+        }
+    }
+    margin-bottom: 159px;
+    @media (max-width: $desktop-min-width-minus) {
+        margin-bottom: 49.59px;
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        margin-bottom: 55.59px;
+    }
+    .fields-title{
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 23.8px;
+        font-family: $base-font-family;
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: 18px;
+            line-height: 28px;
+            margin-bottom: 19.8px;
+        }
+    }
+    .red {
+        color: #D22119;
+    }
+    .form-field {
+        &.half {
+            max-width: 392px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        &.quarter{
+            input, span {
+            width: 120px;
+            }
+            margin-left: 28px;
+            margin-bottom: 22.2px;
+            @media (max-width: $phablet-min-width-minus) {
+                margin-bottom: 16.2px;
+            }
+        }
+        span {
+            color: #A5A3A3;
+        }
+    }
+    .three-fields{
+        display: flex;
+        justify-content: space-between;
+        max-width: 308px;
+        margin-top: 21px;
+        margin-bottom: 12px;
+        select {
+            width: 92px;
+            height: 44px;
+        }
+        label {
+            width: 20px;
+            top: 14px;
+            color: #A5A3A3;
+            &.dirty {
+                top: -6px;
+            }
+        }
+        .year-width{
+            width: 32px;
+        }
+    }
+    .outlined-label-input{
+        &.quarter {
+           width: 120px;
+        }
+    }
+    .flex-responsive {
+        display: flex;
+        max-width: 392px;
+        row-gap: 10px;
+        column-gap: 16px;
+        @media (max-width: $phablet-min-width-minus) {
+            flex-wrap: wrap;
+        }
+    }
+}

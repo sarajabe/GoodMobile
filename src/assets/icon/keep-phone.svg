@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="70" viewBox="0 0 77 70">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="Group_1301" transform="translate(-208 -210)">
+        <path id="Path_1744" d="M259.38 220.714v-4.857a4.89 4.89 0 0 0-4.922-4.857h-29.535a4.89 4.89 0 0 0-4.923 4.857v4.857" class="cls-1" transform="translate(6.81)"/>
+        <path id="Path_1745" d="M220 246v6.476a4.89 4.89 0 0 0 4.923 4.857h29.535a4.89 4.89 0 0 0 4.923-4.857V246" class="cls-1" transform="translate(6.81 21.667)"/>
+        <path id="Rectangle_1592" d="M0 0H38.523V47H0z" class="cls-1" transform="translate(227.238 221)"/>
+        <path id="Line_440" d="M0 0L10 0" class="cls-1" transform="translate(241.499 273)"/>
+        <path id="Path_1746" d="M217.793 244.146a12.953 12.953 0 0 1 0-18.318" class="cls-1" transform="translate(3.095 9.179)"/>
+        <path id="Path_1747" d="M214.691 250.477a19.427 19.427 0 0 1 0-27.477" class="cls-1" transform="translate(0 7.429)"/>
+        <path id="Path_1748" d="M247.657 244.146a12.953 12.953 0 0 0 0-18.318" class="cls-1" transform="translate(24.454 9.179)"/>
+        <path id="Path_1749" d="M251.485 250.477a19.427 19.427 0 0 0 0-27.477" class="cls-1" transform="translate(26.823 7.429)"/>
+    </g>
+</svg>

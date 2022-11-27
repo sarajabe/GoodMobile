@@ -1,0 +1,6 @@
+<input id="place-input" class="on-map" type="text" placeholder="Enter a place to go..."
+       [(ngModel)]="address" (keyup.enter)="goTo()">
+
+<button id="goTo" class="btn btn-primary on-map" title="GoTo Place" (click)="goTo()">
+  Go
+</button>

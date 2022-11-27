@@ -1,0 +1,53 @@
+<div class="upgrade-page">
+    <section class="banner-section">
+        <div class="banner-text-content">
+            <h1 class="header">DISCOUNT</h1>
+            <h2 class="sub-header">After securing your spot for the next six months!</h2>
+        </div>
+        <div class="banner-img">
+            <picture>
+                <source srcset='assets/img/banners/offer-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+                <source srcset='assets/img/banners/offer-mobile.jpg' media="(max-width: 639.9px)" type="image/jpg">
+                <source srcset='assets/img/banners/offer-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+                <source srcset='assets/img/banners/offer-tablet.jpg' media="(max-width: 1024.9px)" type="image/jpg">
+                <source srcset='assets/img/banners/offer-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+                <source srcset='assets/img/banners/offer-desktop.jpg' media="(min-width: 1025px)" type="image/jpg">
+                <img src="assets/img/banners/offer-desktop.jpg" alt="Upgrade plan offer">
+            </picture>
+        </div>
+    </section>
+    <section class="plans-section">
+        <p class="name">Hey {{user?.firstName}} {{user?.lastName}}</p>
+        <p class="info">Keep the savings  by switching to a 6 month plan</p>
+        <p class="note upgrade" *ngIf="!!upgradedPlans && upgradedPlans?.length > 0">You have already upgraded the following: 
+            <span *ngFor="let p of upgradedPlans; let i=index; last as isLast"><b>{{p.mdn | phone}}</b> {{!isLast ? '-' : ''}} </span>
+        </p>
+        <p class="count" *ngIf="!!allPlansToUpgradeCount && allPlansToUpgradeCount > 0">You have {{allPlansToUpgradeCount}} {{allPlansToUpgradeCount > 1 ? 'lines' : 'line'}} on this account, {{!!plansToUpgrade && plansToUpgrade?.length > 0 ? 'select the mobile number you wish to upgrade:' : 'but you skipped the upgrade process. You can go to your account summary at any time and select to upgrade'}}</p>
+        <div class="upgrade-section" [class.full]="!!plansToUpgrade && plansToUpgrade?.length < 2">
+            <div class="plan" *ngFor="let plan of plansToUpgrade; let i=index">
+                <p class="mdn">Mobile number: <span class="secondary-text-color">{{plan?.mdn | phone}}</span></p>
+                <p class="existing-label">Existing plan:</p>
+                <p class="current-plan">{{(upgradePlans[i]?.data) / 1024}}<span class="gb">GB</span><span class="for"> for</span>  ${{!!plan?.autoRenewPlan ? (plan?.basePlan?.price - 5) : plan?.basePlan?.price}}/mo</p>
+                <div class="upgrade-card">
+                    <h5 class="head">Unlimited Talk and Text</h5>
+                    <div class="body">
+                        <p class="data">{{upgradePlans[i]?.data / 1024}}<span class="gb">GB</span></p>
+                        <p class="for">for</p>
+                        <p class="price"><span class="currency">$</span>{{!!plan?.autoRenewPlan ? ((upgradePlans[i]?.subscriptionPrice  - upgradePlans[i]?.promoPrice) / upgradePlans[i]?.subscriptionCycles) : upgradePlans[i]?.price }}</p>
+                        <p class="month">Per month</p>
+                        <button class="button primary" aria-label="upgrade now" type="button" id="upgrade-button" (click)="upgradePlan(plan,upgradePlans[i]?.id)" >Upgrade now</button>
+                    </div>
+                </div>
+                <div class="disclaimer" *ngIf="innerWidth < 1024.9">
+                    <p class="dis-note">If you’re enrolled with Auto Pay your credit card will not be charged at the moment,
+                        changes will take effect in your next billing cycle.</p>
+                </div>
+            </div>
+        </div>
+        <div class="disclaimer" *ngIf="!!plansToUpgrade && plansToUpgrade?.length > 0 && innerWidth > 1024">
+            <p class="dis-note">If you’re enrolled with Auto Pay your credit card will not be charged at the moment,
+                changes will take effect in your next billing cycle.</p>
+        </div>
+        <button class="button primary summary" type="button" aria-label="go To Account Summary" (click)="goToSummary()" *ngIf="plansToUpgrade && plansToUpgrade?.length < 1">Go to account summary</button>
+    </section>
+</div>

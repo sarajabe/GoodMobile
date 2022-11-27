@@ -1,0 +1,122 @@
+@import "../../../../../styles/modules/variables";
+@import "../../../../../styles/modules/mixins";
+
+.ios-tmo-container {
+    margin-left: 8%;
+    margin-right: 8%;
+    @media (min-width: 1400px) {
+        margin-left: 18%;
+        margin-right: 10%;
+    }
+    .first-section {
+        margin-bottom: 31px;
+        @media (max-width: $desktop-min-width-minus) {
+            margin-bottom: 29px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 27px;
+        }
+        .ios-title {
+            font-size: rem-calc(20px);
+            line-height: 27px;
+            margin-bottom: 31px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(19px);
+                line-height: 34px;
+                margin-bottom: 29px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(18px);
+                line-height: 24px;
+                margin-bottom: 23px;
+            }
+        }
+        .ios-desc {
+            font-size: rem-calc(18px);
+            line-height: 45px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(16px);
+                line-height: 39px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(15px);
+                line-height: 38px;
+                margin-bottom: 28px;
+            }
+        }
+    }
+    .instructions-section {
+        .title {
+            font-weight: bold;
+            font-size: rem-calc(20px);
+            line-height: 27px;
+            margin-top: 31px;
+            margin-bottom: 31px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(19px);
+                line-height: 34px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(18px);
+                line-height: 24px;
+                margin-top: 28px;
+                margin-bottom: 28px;
+            }
+        }
+        .info{
+            font-size: rem-calc(18px);
+            line-height: 26px;
+            margin-bottom: 31px;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(16px);
+            }
+        }
+        .list {
+            max-width: 1186px;
+            font-size: rem-calc(18px);
+            line-height: 45px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(16px);
+                line-height: 39px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(15px);
+                line-height: 38px;
+            }
+            &.numbers {
+                list-style-type: decimal;
+                padding-left: 15px;
+            }
+            &.disc {
+                list-style-type: disc;
+                padding-left: 15px;
+            }
+            .margin-top {
+                margin-top: 35px;
+                @media (min-width: 1555px) {
+                    white-space: nowrap;
+                }
+            }
+            .word-break {
+                word-break: break-word;
+            }
+        }
+        .restart-iphone {
+            font-weight: bold;
+            font-size: rem-calc(18px);
+            line-height: 45px;
+            margin-top: 52px;
+            margin-bottom: 52px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(16px);
+                line-height: 39px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(15px);
+                line-height: 38px;
+                margin-top: 40px;
+                margin-bottom: 45px;
+            }
+        }
+    }
+}

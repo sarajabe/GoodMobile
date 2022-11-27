@@ -1,0 +1,128 @@
+<div class="container-flex refill-page">
+    <div class="container-flex-row">
+        <div class="col-xl-11 col-xl-offset-1 col-12 col-offset-0 no-padding plan-selector-container"
+            [class.no-account-status-message]="userHasActivePlans">
+            <ng-container *ngIf="!!userHasActivePlans">
+                <app-activated-plan-selector [user]="user" (userPlanSelected)="userPlanSelected($event)"
+                    [selectedPlan]="selectedPlan"></app-activated-plan-selector>
+            </ng-container>
+            <ng-container *ngIf="!userHasActivePlans">
+                <div class="plan-selector-override">
+                    <div class="account-status-message">
+                        <p>You have no active phone number at the moment. <span class="activate"> <a
+                                    (click)="addActivatedAccount()">
+                                    <small class="text-color-primary">Add activated phone number?</small>
+                                </a></span></p>
+                        <p *ngIf="userHasPendingPlans">Proceed to <a
+                                [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased
+                                plans</a> to
+                            activate your plan</p>
+                    </div>
+                    <hr class="gray margin-top-30 margin-bottom-30">
+                </div>
+            </ng-container>
+        </div>
+        <div *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)) "
+            class="col-xl-11 col-xl-offset-1 col-12 col-offset-0 no-padding">
+            <div class="alert-top-banner">
+                <h3 class="alert-action-style">Action required - Don’t lose your number</h3>
+                <p class="alert-sub-title">Please make a payment within 30 days after your past due date to avoid losing
+                    your number</p>
+                <div><a (click)="makePayment()" class="alert-payment">Make payment now</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+<section class="account-section pay-and-renew-section">
+    <div class="container-flex section-container no-padding">
+        <div class="container-flex-row account-info flex-center">
+            <div class="col-xl-11 col-xl-offset-1 col-12 col-offset-0"
+                [class.no-account-status-message]="userHasActivePlans">
+                <div class="account-sub-details-header" *ngIf="!!userAccount && !!selectedPlan && selectedPlan?.mdn">
+                    <h3 class="pay-refill-title">
+                        You can pay and refill your GoodMobile account
+                    </h3>
+                    <div class="details margin-bottom-35">
+                        With GoodMobile you can always pay due payment on your plan here, you can choose to pay through a
+                        GoodMobile voucher or
+                        through your credit card. The remaining un-used amount of your voucher will go directly to your
+                        account balance.
+                    </div>
+                </div>
+                <h4 class="account-section-title" *ngIf="!!selectedPlan && selectedPlan?.mdn">Your plan details</h4>
+                <ng-container *ngIf="!!selectedPlan && selectedPlan?.mdn">
+                    <div class="card-container plan-container">
+                        <div class="title last-element">
+                            <span class="title-text one-liner">Your custom GoodMobile plan:</span>
+                            <span class="title-text one-liner">{{selectedPlan?.basePlan?.title}}</span>
+                            <span
+                                class="title-info one-liner account-plan-price"><b>{{selectedPlan?.basePlan?.price | currency:'USD':'symbol':0}}/month</b></span>
+                        </div>
+                    </div>
+                </ng-container>
+                <h4 class="h4 account-section-title" *ngIf="!!selectedPlan && selectedPlan?.mdn">Payment details</h4>
+                <ng-container *ngIf="!!userAccount && !!selectedPlan && selectedPlan?.mdn">
+                    <div class="card-container plan-container">
+                        <div class="title split balance">
+                            <div class="six no-padding">
+                                <span class="title-text">Account Balance</span>
+                                <span class="title-info">{{userBalance | currency}}</span>
+                            </div>
+                            <div class="six no-padding">
+                                <span class="title-text">Payment Due</span>
+                                <span class="title-info">{{userAccount?.plan?.paymentAmount | currency}}</span>
+                            </div>
+                        </div>
+                        <div class="title last-element">
+                            <span class="title-text" *ngIf="!!userAccount && !userAccount?.pastDue">Next payment</span>
+                            <span class="title-text" *ngIf="!!userAccount && !!userAccount?.pastDue">Next payment date
+                                past due</span>
+                            <span
+                                class="title-info">{{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MMMM, dd': userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!userAccount && !!selectedPlan && selectedPlan?.mdn">
+                    <div class="card-container plan-container">
+                        <div class="title split">
+                            <div class="six no-padding">
+                                <span class="title-text">Account Balance</span>
+                                <span class="title-info">&ndash;</span>
+                            </div>
+                            <div class="six no-padding">
+                                <span class="title-text">Payment Due</span>
+                                <span class="title-info">&ndash;</span>
+                            </div>
+                        </div>
+                        <div class="title last-element">
+                            <span class="title-text">Next payment</span>
+                            <span class="title-info">&ndash;</span>
+                        </div>
+                    </div>
+                </ng-container>
+                <div *ngIf="!!userHasActivePlans">
+                    <h2 class="">
+                        Choose a payment method
+                    </h2>
+                    <div class="validation-message" *ngIf="!!selectedPlan?.pendingPlan && !selectedPlan?.canceled">We
+                        are currently processing a previously selected plan change or renewal of your current plan. No
+                        other changes to your plan can be made at this time.</div>
+                    <div class="validation-message" *ngIf="!!selectedPlan?.canceled">Your plan is cancelled.</div>
+                    <div>
+                        <div class="tab-nav">
+                            <ul>
+                                <li><span class="fet active"
+                                        [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                                        (click)="makePayment('voucher')">Pay with voucher</span></li>
+                                <li><span class="fet2 active"
+                                        [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                                        (click)="makePayment()">Pay with Card</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,65 @@
+<section class="shop-phones" id="phone-models">
+    <div class="container">
+      <div class="breadcrumbs">
+        <p class="page"><b (click)="goToPhonesPage()">Phones</b> <img src="assets/icon/black-arrow-back.svg" alt="right arrow"></p>
+        <p class="category">{{CATEGORIES[categoryId]}}</p>
+      </div>
+      <div class="row">
+        <div class="twelve text-center">
+          <h1>Choose your phone!</h1>
+          <div class="subhead">
+            <p>All phones are in very good cosmetic condition and may show scratches, scuffs,
+               and minor dents. All devices have passed a thorough item inspection process and
+                are 100% functional. Each phone will contain a brand new non-OEM, MFi certified power
+                 cable and an UL approved power adapter. All phones are compatible with GoodMobile service.</p>
+          </div>
+        </div>
+        <section class="phones mobile-hide" *ngFor="let model of phoneModel">
+          <div [class.out-of-stock]="model?.fields?.availability == OUT_OF_STOCK" [class.three]="phoneModel?.length > 3"
+            [class.four]="phoneModel?.length === 3 " [class.six]="phoneModel?.length < 3" class="phone">
+            <div class="phone-image">
+              <a (click)="viewPhoneDetails(model?.fields?.phoneId, model?.fields?.availability)">
+                <div>
+                  <img src="https://{{model?.fields?.phoneImage.fields?.file.url}}" alt="phone-image">
+                </div>
+              </a>
+              <div class="out-of-stock-img">
+                <img *ngIf="model?.fields?.availability == OUT_OF_STOCK" src="assets/img/out-of-stock.jpg">
+              </div>
+            </div>
+            <div class="phone-info">
+              <h3 class="cat-name-font-family">{{model?.fields?.phoneName}}</h3>
+              <div class="text-center">{{model?.fields?.phoneDisplay}}</div>
+              <div class="phone-price text-color-secondary"> {{model?.fields?.defaultPrice | currency}}</div>
+            </div>
+                <button class="button primary" [disabled]="model?.fields?.availability == OUT_OF_STOCK" 
+              [class.disabled]="model?.fields?.availability == OUT_OF_STOCK"
+              (click)="viewPhoneDetails(model?.fields?.phoneId, model?.fields?.availability)" id="selectPhone" data-cy="selectPhone">Select phone</button>
+          </div>
+        </section>
+        <section class="phones mobile-shown" *ngIf="phoneModel">
+          <div class="swiper-container" [swiper]="config" (slideChangeEnd)="slideChanged($event)" [(index)]="index">
+            <div class="swiper-wrapper">
+              <div *ngFor="let model of phoneModel" class="swiper-slide three phone">
+                <div [class.out-of-stock]="model?.fields?.availability == OUT_OF_STOCK">
+                  <div class="phone-image"><a
+                      (click)="viewPhoneDetails(model?.fields?.phoneId, model?.fields?.availability)"><img
+                        src="https://{{model?.fields?.phoneImage.fields?.file.url}}" [alt]="phone-image"></a></div>
+                  <div class="phone-info">
+                    <h3 class="cat-name-font-family">{{model?.fields?.phoneName}}</h3>
+                    <div class="text-center">{{model?.fields?.phoneDisplay}}</div>
+                    <div class="phone-price text-color-secondary"> {{model?.fields?.defaultPrice | currency}}</div>
+                  </div>
+                  <button class="button primary" id="selectPhone" data-cy="selectPhone" [disabled]="model?.fields?.availability == OUT_OF_STOCK"
+                    [class.disabled]="model?.fields?.availability == OUT_OF_STOCK"
+                    (click)="viewPhoneDetails(model?.fields?.phoneId, model?.fields?.availability)">{{model?.fields?.availability == OUT_OF_STOCK ? 'out of stock' : 'Select phone'}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-button-next swiper-button-white"></div>
+            <div class="swiper-button-prev swiper-button-black"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>

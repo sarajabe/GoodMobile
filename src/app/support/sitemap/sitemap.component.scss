@@ -1,0 +1,71 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+.sitemap-container {
+    .container-flex {
+      padding-left: 4%;
+      .title {
+        font-family: $secondary-font-family-bold;
+        margin-bottom: 80px;
+        h1 {
+          font-size: rem-calc(38px);
+        }
+      }
+      .sitemap-sections {
+        margin-bottom: 150px;
+        pointer-events: none;
+        .sitemap-section {
+          width: 33%;
+          height: 200px;
+          &.account {
+            height: 250px;
+          }
+          .section-title {
+            margin-bottom: 20px;
+            h3 {
+              font-size: rem-calc(20px);
+              font-family: $base-font-family-bold;
+            }
+          }
+          .section-list {
+            ul {
+              list-style: none;
+              padding: 0;
+              li {
+                a {
+                  pointer-events: all;
+                  font-size: rem-calc(18px);
+                  font-family: $base-font-family;
+                  color: $primary-color;
+                  &:hover {
+                    color: $primary-color;
+                  }
+                }
+              }
+            }
+          }
+        }
+        @media (min-width: 640px) and (max-width: 1024px) {
+          .sitemap-section {
+            width: 50%;
+          }
+        }
+        @media (max-width: 640px) {
+          margin-bottom: 100px;
+          .sitemap-section {
+            width: 100%;
+            text-align: center;
+            height: auto;
+            margin-bottom: 50px;
+            .section-list {
+              ul {
+                li {
+                  padding-bottom: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

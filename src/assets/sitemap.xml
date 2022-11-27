@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+   <url>
+
+      <loc>https://www.goodmobile.org</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/home</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/check-phone</loc>
+
+      <lastmod>2019-01-11</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/user/welcome</loc>
+
+      <lastmod>2019-01-11</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/plans</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>1.0</priority>
+
+   </url>
+ 
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/plans/change</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/check-phone</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/checkout/customerinfo/new</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+   
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/checkout/customerinfo/existing</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/checkout/shipping</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/checkout/billing</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/shop/checkout/order</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/why-goodmobile</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/aboutgoodmobile</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/contact</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/best-wireless-coverage</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/sitemap</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/how-it-works</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/privacy-policy</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/mobile-broadband-disclosure</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/unlocking-policy</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/network-managmenet</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/international-calling</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/acceptable-use-policy</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/terms-and-conditions/wifi-calling</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/hearing-aid-compatibility</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/3G_shutdown</loc>
+
+      <lastmod>2022-01-28</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/international-calling</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+   
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/general-questions</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/billing</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/phone-set-up</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/using-phone</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/pay-as-you-go</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/support</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/wifi-calling</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>1.0</priority>
+
+   </url>
+
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/faqs/hd-voice</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>1.0</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/data-setup</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/data-setup/android</loc>
+
+      <lastmod>2022-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+   <url>
+
+      <loc>https://www.goodmobile.org/support/data-setup/ios</loc>
+
+      <lastmod>2022-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/support/data-setup/tmo/ios</loc>
+
+      <lastmod>2022-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+   <url>
+
+      <loc>https://www.goodmobile.org/support/data-setup/tmo/android</loc>
+
+      <lastmod>2022-02-01</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/user/login</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/user/sign-up</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/user/legacy-login</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/user/forgot-password</loc>
+
+      <lastmod>2019-01-09</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.5</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/pending-activations</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/summary</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/pay-and-renew</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/plan-addons</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/payments</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/usage</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/orders</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.7</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/manage-devices</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/account/settings</loc>
+
+      <lastmod>2018-11-15</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+    <url>
+
+      <loc>https://www.goodmobile.org/account/acp-application</loc>
+
+      <lastmod>2022-08-16</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+   <url>
+
+      <loc>https://www.goodmobile.org/account/affordable-connectivity-program</loc>
+
+      <lastmod>2022-08-16</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+   <url>
+
+      <loc>https://www.goodmobile.org/account/free-cellphone-service-through-a-government-assistance-program-under-the-affordable-connectivity-program</loc>
+
+      <lastmod>2022-08-16</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/sim-check</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/sim-source</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/choose-sim</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/choose-plan</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/replace-sim</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/no-sim</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/sim-arrival</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/choose-activation</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/activation/activate-sim</loc>
+
+      <lastmod>2019-04-27</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/bring-your-phone</loc>
+
+      <lastmod>2021-02-01</lastmod>
+
+      <changefreq>weekly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/get-better-voice-quality-with-hd-voice-volte</loc>
+
+      <lastmod>2021-02-11</lastmod>
+
+      <changefreq>monthly</changefreq>
+
+      <priority>0.8</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/affordable-connectivity-program</loc>
+
+      <lastmod>2022-01-19</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+   <url>
+
+      <loc>https://www.goodmobile.org/acp</loc>
+
+      <lastmod>2022-08-09</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+   <url>
+
+      <loc>https://www.goodmobile.org/affordable-connectivity-program/enroll</loc>
+
+      <lastmod>2022-08-09</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+    <url>
+
+      <loc>https://www.goodmobile.org/shop/phones/apple/iPhones</loc>
+
+      <lastmod>2022-09-16</lastmod>
+
+      <changefreq>daily</changefreq>
+
+      <priority>0.9</priority>
+
+   </url>
+
+
+</urlset> 

@@ -1,0 +1,51 @@
+<section class="container-flex internal-page-margins device-setup">
+    <div class="android-cdma">
+      <h1 class="title">Sprint network LTE instructions</h1>
+      <div class="instructions-section">
+        <h2 class="header">PROFILE UPDATE – ANDROID</h2>
+        <p class="instruction">Please follow these instructions to complete data set up on your Android device:</p>
+        <p class="instruction">1. Power phone on, and make sure you are not connected to wifi.</p>
+        <p class="instruction">2. Look in your settings for Update Profile. Some possible menu configurations on Android
+          are:</p>
+        <ul class="sub-list">
+          <li class="sub">Settings -> About phone -> System Updates -> Update Profile</li>
+          <li class="sub">Settings -> About Phone -> Update Profile</li>
+        </ul>
+        <p class="instruction">3. Once you’ve selected to update the profile, all you need to do is wait until the update
+          completes and then reboot your phone.</p>
+        <p class="instruction">If you have a problem completing the update, make sure that Wi-FI is turned off, and that
+          you’re in an area with good coverage and a strong data signal.</p>
+      </div>
+  
+      <div class="instructions-section">
+        <h2 class="header">REMOVE YOUR PHONE’S OLD CARRIER INFORMATION</h2>
+        <p class="instruction">Go to the dial pad or phone app:</p>
+        <p class="instruction">1. Enter # # 72786 # into the dial pad. Don’t tap the call icon or try to connect.</p>
+        <p class="instruction">2. If prompted, enter your MSL.</p>
+        <p class="instruction">3. Confirm the reset.</p>
+        <p class="instruction">Allow the phone to restart and go through the activation process.</p>
+        <p class="note"><i>Note: Many LTE phones can perform a carrier reset over a Wi-Fi connection, but some phones
+            cannot update over Wi-Fi. If the steps above do not complete on your phone, disable Wi-Fi and enable data and
+            try again. </i></p>
+      </div>
+  
+      <div class="instructions-section">
+        <h2 class="header">OLDER PHONES, MANUAL PROGRAMMING INSTRUCTION</h2>
+        <p class="instruction">1. Power the phone on.</p>
+        <p class="instruction">2. Enter your MSL code like this: ##MSL# (If your MSL code is 123456, you would enter # #
+          123456#</p>
+        <p class="instruction">3. Click on Edit</p>
+        <p class="instruction">4. Type in your Phone Number (MDN)</p>
+        <p class="instruction">5. Click ‘OK’</p>
+        <p class="instruction">6. Type in your MSID (given at activation, or you can find this on your <a
+            [routerLink]="[ACCOUNT_ROUTE_URLS.BASE+'/'+ACCOUNT_ROUTE_URLS.SUMMARY]" routerLinkActive="active">MyAccount page</a></p>
+        <p class="instruction">7. Click ‘OK’</p>
+        <p class="instruction">8. Click ‘Done’</p>
+        <p class="instruction">9. The Phone will power cycle.</p>
+        <p class="instruction">10. The Phone is now successfully programmed!</p>
+      </div>
+      <div class="actions">
+        <button class="button primary" (click)="done()" id="done-button">Done</button>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,101 @@
+@import "../../styles/modules/variables";
+@import "../../styles/modules/mixins";
+
+.newsletter {
+  height: 361px;
+  padding: 53px 2%;
+  background: linear-gradient(99deg, $secondary-color 0%, #d84b0c 98%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  @media (max-width: 1137.9px) {
+    flex-direction: column;
+    text-align: center;
+    height: 464px;
+  }
+  @media (max-width: 640.9px) {
+    height: 583px;
+    padding: 22px 7%;
+  }
+  .newsletterDesc {
+    max-width: 630px;
+    margin-right: 6%;
+    @media (max-width: 1137.9px) {
+      margin-right: 0px;
+      margin-bottom: 48px;
+    }
+    .newsletterTitle {
+      font-family: $secondary-font-family-bold;
+      line-height: 40px;
+      font-size: rem-calc(34px);
+      color: #ffffff;
+      @media (max-width: 640.9px) {
+        font-size: rem-calc(26px);
+      }
+    }
+    .newsletterInfo {
+      margin-top: 22px;
+      font-family: $base-font-family;
+      line-height: 28px;
+      font-size: rem-calc(20px);
+      color: #ffffff;
+      .newsletterLink {
+        color: #ffffff;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      @media (max-width: 640.9px) {
+        font-size: rem-calc(16px);
+      }
+    }
+  }
+  .second-section {
+    display: flex;
+    @media (max-width: 1137.9px) {
+      margin-bottom: 28px;
+    }
+    @media (max-width: 640.9px) {
+      margin-bottom: 0px;
+      flex-direction: column;
+    }
+    .newsletterForm {
+      height: 55px;
+      input {
+        height: 55px;
+        width: 371px;
+        &::placeholder {
+          font-size: rem-calc(15px);
+          color: $disabled-grey;
+        }
+      }
+      .validation-message {
+        color: black;
+        text-align: left;
+        @media (max-width: 640.9px) {
+          margin-bottom: 17px;
+        }
+      }
+      @media (max-width: 640.9px) {
+        height: 100%;
+        input {
+          width: 290px;
+        }
+      }
+    }
+    .newsletterAction {
+        @media (max-width: 640.9px) {
+            margin-bottom: 20px;
+        }
+      button {
+        width: 198px;
+        height: 55px;
+        padding:20px;
+        border-radius: 0;
+        font-size: rem-calc(18px);
+        font-family: $secondary-font-family;
+        font-weight: 500;
+      }
+    }
+  }
+}

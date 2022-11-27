@@ -1,0 +1,30 @@
+// Modules and Variables
+@import "partials/base";
+// Partials
+@import "partials/normalize";
+@import "partials/typography";
+@import "partials/icons";
+@import "partials/grid";
+@import "partials/buttons";
+@import "partials/forms";
+@import "partials/tables";
+// @import "partials/header";
+// @import "partials/footer";
+@import "partials/banners";
+@import "partials/modal";
+@import "partials/pagination";
+@import "partials/slick";
+@import "partials/global";
+@import "partials/cards";
+//@import "partials/toastr";
+
+// Sections
+@import "sections/internal";
+@import "sections/shop";
+@import "sections/account";
+@import "sections/phones";
+// z-index ref:
+/*
+2 Header
+1 Banners
+ */

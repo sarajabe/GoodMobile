@@ -1,0 +1,119 @@
+<section class="checkout-result-page-section">
+  <div class="container-flex checkout-result">
+    <div class="container-flex-row">
+      <div class="col-12">
+        <h1 class="header">Purchase successful!</h1>
+        <div class="image">
+          <img src="assets/img/family-shoppers.svg" alt="successful purchased." />
+        </div>
+        <div class="success-banner"
+          [class.centered]="(!isChangePlanSummary && !isOrderSim && !!isPlanAddon) || (isOrderSim && !isPlanAddon && !isChangePlanSummary)">
+          <h2 class="title"><img src="assets/icon/green-check.svg">Your Order has been placed!</h2>
+          <p class="banner-note">Order ID is:</p>
+          <p class="banner-note"><b>{{orderId}}</b></p>
+        </div>
+        <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
+          <ng-container *ngIf="!!purchasedPlanId">
+            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM">Look out for your <b>new SIM card</b> in the
+              mail! Once your SIM card <b>arrives</b> in a couple of days,
+              we will help you get your SIM card <b>activated</b> with a brand new phone number, or transfer your
+              active number (port in) from another provider. You can view your plan details and
+              activate it through your<b> Purchased Plans</b> page. </p>
+            <p class="info" *ngIf="!!purchasedPlan && !!purchasedPlan?.eSIM && !!purchasedPlan?.phones">
+              Your <b>Plan</b> & <b>eSIM</b> can be found in your <b>Purchased Plans</b> section. And you can track your
+              Device's delivery progress in your Order Details.</p>
+            <p class="info extra" *ngIf="!!purchasedPlan && !!purchasedPlan?.eSIM && !!purchasedPlan?.phones">Your Plan
+              and eSIM are ready for activation at your convience. However, if the device purchased is intended for the
+              eSIM, we advise you wait for the device to <b>arrive</b> before proceeding to
+              activate your eSIM & Plan.</p>
+            <div class="result-actions">
+              <button class="button primary" data-cy="purchasedPlansBtn" (click)="goToPurchasedPlans()">
+                Purchased Plans
+              </button>
+              <button class="button secondary" (click)="goToPlans()" data-cy="continueShopping" >
+                Continue Shopping
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!!userPlanId && !!purchasedPlan && !!purchasedPlan.eSIM">
+            <p class="info">Your <b>Plan</b> & <b>eSIM</b> can be found in your <b>Purchased Plans</b> section. </p>
+            <p class="info">Both are ready for activation, anytime, anywhere at your convenience! </p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToPurchasedPlans()">
+                Purchased Plans
+              </button>
+              <button class="button secondary" (click)="goToPlans()">
+                Continue Shopping
+              </button>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="isChangePlanSummary && !isOrderSim && !isPlanAddon">
+          <p class="info">Your GoodMobile <b>plan</b> has been successfully changed.</p>
+          <p class="info">Note that It may take several minutes for the new plan services to fully set on the network.
+            Please refresh your account summary page in a few minutes to see the new data balances.</p>
+          <p class="info" *ngIf="nextCycle && !!selectedUserPlan?.basePlan">Effective on
+            {{selectedUserPlan.basePlan.renewDate | date}}</p>
+          <div class="result-actions">
+            <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
+              Account Summary
+            </button>
+            <button class="button secondary" (click)="goToPlans()">
+              Continue Shopping
+            </button>
+          </div>
+        </ng-container>
+        <div class="centered" *ngIf="!isChangePlanSummary && !isOrderSim && !!isPlanAddon">
+          <p class="info">Your GoodMobile plan <b>add-on</b> has been successfully added.</p>
+          <p class="info">You can refer to your Account Summary page for
+            your plan details.</p>
+          <div class="result-actions">
+            <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
+              Account Summary
+            </button>
+            <button class="button secondary" (click)="goToPlans()">
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+        <div class="centered top" *ngIf="isOrderSim && !isPlanAddon && !isChangePlanSummary">
+          <p class="info extra">Your <b>Replacement {{!!purchasedPlan?.eSimDetails ? 'e':''}}SIM</b> has been successfully purchased!.</p>
+          <p class="info noSpace" *ngIf="!purchasedPlan?.eSimDetails">Your <b>SIM</b> has been successfully ordered. Look out it’s arrival in the mail!</p>
+          <p class="info noSpace" *ngIf="!!purchasedPlan?.eSimDetails">Your eSIM is ready for activation at your convience from your Account Summary.</p>
+          <p class="info" *ngIf="!purchasedPlan?.eSimDetails">You may proceed to your <b>Account Summary</b> to set up your {{!!purchasedPlan?.eSimDetails ? 'e':''}}SIM.</p>
+          <div class="result-actions">
+            <button class="button primary" (click)="goToAccountSummary(true)" data-cy="goToSummaryBtn">
+              Account Summary
+            </button>
+            <button class="button secondary" (click)="goToPlans()">
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+        <ng-container *ngIf="!!isSuccessfulMultiplePurchases">
+          <h3>Plan add-on purchase successful!</h3>
+          <div class="margin-bottom-20">Your GoodMobile plan add-on has been successfully added.</div>
+          <br />
+          <h3 *ngIf="isSuccessfulMultiplePurchases == 'both'">New SIM purchase successful!</h3>
+          <div *ngIf="isSuccessfulMultiplePurchases == 'both'" class="margin-bottom-20">Your SIM has been successfully
+            ordered.</div>
+          <br />
+          <h3 *ngIf="isSuccessfulMultiplePurchases == 'addon'">New SIM purchase Failed!</h3>
+          <div *ngIf="isSuccessfulMultiplePurchases == 'addon'" class="margin-bottom-20">Your SIM has
+            <strong>NOT</strong> been successfully ordered, please try again
+          </div>
+          <br />
+          <a>
+            <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
+              Go to Summary
+            </button>
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-container *ngIf="!!isMoneySavingReferral">
+  <iframe [src]="trustedUrl | safe" frameborder="0" scrolling="no" width="1" height="1"
+    style="visibility:hidden;"></iframe>
+</ng-container>

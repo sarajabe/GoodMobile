@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="shopping_icon" width="25" height="25" data-name="shopping icon" viewBox="0 0 25 25">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#fff;stroke-linecap:square;stroke-linejoin:round;stroke-width:1.4px}
+        </style>
+    </defs>
+    <g id="history">
+        <circle id="Ellipse_318" cx="12.5" cy="12.5" r="12.5" fill="#7dd0de" data-name="Ellipse 318"/>
+    </g>
+    <g id="Group_1576" data-name="Group 1576" transform="translate(-297.152 -621)">
+        <path id="Path_6071" d="M313.845 633h-7.639a.38.38 0 0 0-.378.352l-.672 9.091a.759.759 0 0 0 .757.816h8.227a.759.759 0 0 0 .757-.816l-.672-9.091a.38.38 0 0 0-.38-.352z" class="cls-2" data-name="Path 6071" transform="translate(0 -4.34)"/>
+        <path id="Path_6072" d="M316.8 628.66H313l.447-1.564A1.511 1.511 0 0 1 314.9 626a1.511 1.511 0 0 1 1.453 1.1z" class="cls-2" data-name="Path 6072" transform="translate(-4.874)"/>
+    </g>
+</svg>

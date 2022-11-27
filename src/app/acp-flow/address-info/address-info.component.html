@@ -1,0 +1,172 @@
+<form [formGroup]="addressInfoForm" class="address-form" id="addressInfoForm" [class.acp-disabled]="!!disable">
+  <div class="form-row bottom">
+    <p class="fields-title" data-cy="addressTitle">What’s your Physical Address? <span class="red">*</span></p>
+    <p class="fields-note">Please provide a physical address or the exact address to be submitted to the national
+      verifier.</p>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="address1" maxlength="50" id="addressLookup" data-cy="addressLookup"
+          #addressLookup type="text" />
+        <span>Address Line 1</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="addressInfoForm.controls.address1.hasError('required') && addressInfoForm.controls.address1.touched"
+        id="required-address-one-msg">
+        Address Line 1 is required
+      </label>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="address2" maxlength="50" id="address2" data-cy="address2" #addressLookup
+          type="text" />
+        <span>Address Line 2 (Optional)</span>
+      </label>
+    </div>
+    <div class="flex-responsive">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="outlined-label-input quarter">
+            <input placeholder=" " formControlName="city" maxlength="50" id="city" data-cy="city" type="text" />
+            <span>City</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="addressInfoForm.controls.city.hasError('required') && addressInfoForm.controls.city.touched"
+            id="required-city-msg" data-cy="required-city-msg">
+            City is required
+          </label>
+          <label class="validation-message"
+            *ngIf="addressInfoForm.controls.city.hasError('pattern') && addressInfoForm.controls.city.dirty"
+            id="invalid-city-msg" data-cy="invalid-city-msg">
+            City is invalid
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="outlined-label-input quarter">
+            <input placeholder=" " formControlName="state" maxlength="2" id="state" data-cy="state" type="text"
+              minlength="2" />
+            <span>State</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="addressInfoForm.controls.state.hasError('required') && addressInfoForm.controls.state.touched"
+            id="required-state-msg" data-cy="required-state-msg">
+            State is required
+          </label>
+          <label class="validation-message"
+            *ngIf="addressInfoForm.controls.state.invalid && addressInfoForm.controls.state.dirty && !addressInfoForm.controls.state.hasError('required')"
+            id="invalid-state-msg" data-cy="invalid-state-msg">
+            State is invalid
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="outlined-label-input quarter">
+            <input placeholder=" " formControlName="zipCode" id="zipCode" data-cy="zipCode" type="text"
+              maxlength="10" />
+            <span>ZIP Code</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="addressInfoForm.controls.zipCode.hasError('required') && addressInfoForm.controls.zipCode.touched"
+            id="required-zipcode-msg" data-cy="required-zipcode-msg">
+            ZIP Code is required
+          </label>
+          <label class="validation-message" *ngIf="addressInfoForm.controls.zipCode.hasError('pattern')"
+            id="invalid-zipcode-msg" data-cy="invalid-zipcode-msg">
+            ZIP Code is invalid
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="checkbox">
+  <input title="useSameAddress" type="checkbox" name="useSameAddress" [(ngModel)]="useSameAddress" id="useSameAddress"
+    data-cy="useSameAddress" [disabled]="!!disable" (change)="checkMailingAddress()" />
+  <label class="toggle-label">
+    <span>Use Physical Address as Mailing Address</span>
+  </label>
+</div>
+<form [formGroup]="mailingAddressForm" class="address-form bottom" id="mailingAddressForm" *ngIf="!useSameAddress"
+  [class.acp-disabled]="!!disable">
+  <div class="form-row bottom">
+    <p class="fields-title">What’s your Mailing Address? <span class="red">*</span></p>
+    <p class="fields-note">Please provide a mailing address.</p>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="address1" maxlength="50" id="address1" data-cy="mailingAddress1"
+          type="text" />
+        <span>Address Line 1</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="mailingAddressForm.controls.address1.hasError('required') && mailingAddressForm.controls.address1.touched"
+        id="required-mailing-address-one-msg" data-cy="required-mailing-address-one-msg">
+        Address Line 1 is required
+      </label>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="address2" maxlength="50" id="mail-address2" data-cy="mailingAddress2"
+          #addressLookup type="text" />
+        <span>Address Line 2 (Optional)</span>
+      </label>
+    </div>
+    <div class="flex-responsive">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="outlined-label-input quarter">
+            <input placeholder=" " formControlName="city" maxlength="50" id="mail-city" data-cy="mail-city"
+              type="text" />
+            <span>City</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="mailingAddressForm.controls.city.hasError('required') && mailingAddressForm.controls.city.touched"
+            id="required-mailing-city-msg" data-cy="required-mailing-city-msg">
+            City is required
+          </label>
+          <label class="validation-message" *ngIf="mailingAddressForm.controls.city.hasError('pattern')"
+            id="invalid-mailing-city-msg" data-cy="invalid-mailing-city-msg">
+            City is invalid
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="outlined-label-input quarter">
+            <input placeholder=" " formControlName="state" maxlength="2" id="mail-state" data-cy="mail-state"
+              type="text" />
+            <span>State</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="mailingAddressForm.controls.state.hasError('required') && mailingAddressForm.controls.state.touched"
+            id="required-mailing-state-msg" data-cy="required-mailing-state-msg">
+            State is required
+          </label>
+          <label class="validation-message" *ngIf="mailingAddressForm.controls.state.hasError('pattern')"
+            id="invalid-mailing-state-msg" data-cy="invalid-mailing-state-msg">
+            State is invalid
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="outlined-label-input quarter">
+            <input placeholder=" " formControlName="zipCode" id="mail-zipCode" data-cy="mail-zipCode" type="text"
+              maxlength="10" />
+            <span>ZIP Code</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="mailingAddressForm.controls.zipCode.hasError('required') && mailingAddressForm.controls.zipCode.touched"
+            id="required-mailing-zipcode-msg" data-cy="required-mailing-zipcode-msg">
+            ZIP Code is required
+          </label>
+          <label class="validation-message" *ngIf="mailingAddressForm.controls.zipCode.hasError('pattern')"
+            id="invalid-mailing-zipcode-msg" data-cy="invalid-mailing-zipcode-msg">
+            ZIP Code is invalid
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

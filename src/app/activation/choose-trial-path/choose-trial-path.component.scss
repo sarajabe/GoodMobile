@@ -1,0 +1,105 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.choose-trial {
+    .header {
+        font-size: rem-calc(38px);
+        line-height: 50px;
+        margin-bottom: 5px;
+    }
+    .inquiry {
+        font-size: rem-calc(22px);
+        line-height: 28px;
+        font-family: $secondary-font-family;
+        cursor: pointer;
+        color: $primary-color;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .actions-container {
+        text-align: center;
+        margin-top: 25px;
+        .button {
+            width: 258px;
+            padding: 11px;
+            font-size: rem-calc(22px);
+            &.primary {
+                margin-right: 50px;
+            }
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        .flex-center {
+            margin-top: 30px;
+        }
+        .header {
+            font-size: rem-calc(28px);
+            line-height: 37px;
+            margin-bottom: 0;
+            &.second {
+                max-width: 500px;
+                margin: auto;
+            }
+        }
+        .inquiry {
+            font-size: rem-calc(15px);
+            line-height: 20px;
+        }
+        .actions-container {
+            .button {
+                width: 213px;
+                font-size: rem-calc(15px);
+            }
+        }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        .flex-center {
+            margin-top: 15px;
+        }
+        .header {
+            font-size: rem-calc(26px);
+            line-height: 33px;
+            display: inline;
+        }
+        .inquiry {
+            font-size: rem-calc(18px);
+            line-height: 24px;
+        }
+        .actions-container {
+            .button {
+                width: 243px;
+                font-size: rem-calc(20px);
+                display: block;
+                margin: 15px auto;
+                &.primary {
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+}
+.port-inquiry-modal {
+    .modal-header {
+        .modal-close {
+            background-color: transparent;
+        }
+    }
+    .modal-body {
+        .modal-content {
+            .row {
+                .info-section {
+                    .info {
+                        font-size: rem-calc(22px);
+                        line-height: 27px;
+                        font-family: $secondary-font-family-bold;
+                        margin-bottom: 15px;
+                        @media (max-width: $desktop-min-width-minus) {
+                            font-size: rem-calc(20px);
+                            line-height: 33px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

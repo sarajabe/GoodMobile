@@ -1,0 +1,188 @@
+@import "../../../styles/modules/variables";
+
+.acp-error {
+    margin-top: 60px;
+    padding: 0 10%;
+    @media (max-width: $desktop-min-width-minus) {
+        padding: 0 20px;
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        margin-top: 32px;
+        padding: 0 16px;
+    }
+    .error-container {
+        margin-bottom: 44px;
+        display: flex;
+        align-items: flex-start;
+        padding: 24px;
+        gap: 10px;
+        background: #ffefee;
+        box-shadow: 0px 3px 4px rgba(234, 234, 234, 0.25);
+        border-radius: 8px;
+        width: 100%;
+        @media (min-width: 1760px) {
+            position: relative;
+            max-width: 1000px;
+            z-index: 2;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 32px;
+        }
+        .notes {
+            img {
+                width: 26.67px;
+                height: 26.67px;
+            }
+            .head-note {
+                margin-bottom: 4px;
+                font-size: 22px;
+                line-height: 32px;
+                margin-right: 14.6px;
+                font-family: $secondary-font-family-bold;
+                @media (max-width: $phablet-min-width-minus) {
+                    font-size: 18px;
+                    line-height: 28px;
+                    margin-bottom: 4px;
+                }
+            }
+            .desc {
+                font-size: 18px;
+                line-height: 28px;
+                margin-bottom: 8px;
+                font-family: $base-font-family;
+                &.bold {
+                    font-family: $base-font-family-bold;
+                }
+                @media (max-width: $phablet-min-width-minus) {
+                    font-size: 14px;
+                    line-height: 24px;
+                    margin-bottom: 4px;
+                }
+            }
+            .informative-desc {
+                font-size: 16px;
+                line-height: 24px;
+                margin-bottom: 0px;
+                font-family: $base-font-family;
+                @media (max-width: $phablet-min-width-minus) {
+                    font-size: 14px;
+                    line-height: 24px;
+                }
+            }
+            .extra-details {
+                p {
+                    font-size: 18px;
+                    line-height: 28px;
+                    margin-bottom: 16px;
+                    font-family: $base-font-family;
+                    @media (max-width: $phablet-min-width-minus) {
+                        font-size: 14px;
+                        line-height: 24px;
+                    }
+                }
+                &.bottom {
+                    p {
+                        font-family: $base-font-family-bold;
+                    }
+                }
+            }
+            .actions {
+                display: flex;
+                button {
+                    font-size: 20px;
+                    line-height: 20px;
+                    padding: 8px 38px;
+                    @media (max-width: $phablet-min-width-minus) {
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+                    &.primary {
+                        margin-right: 16px;
+                    }
+                }
+            }
+        }
+    }
+    .illustration-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 22px;
+        margin-top: 0;
+        @media (min-width: 1760px) {
+            margin-top: 159px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 20px;
+        }
+        .picture {
+            position: relative;
+            @media (min-width: 1760px) {
+                width: 100%;
+            }
+            img {
+                width: 499px;
+                height: 331.82px;
+                object-fit: contain;
+                @media (min-width: 1760px) {
+                    position: absolute;
+                    width: 1488px;
+                    bottom: 0;
+                    left: 0;
+                    z-index: 1;
+                }
+                @media (max-width: $phablet-min-width-minus) {
+                    width: 320px;
+                    height: 211.82px;
+                }
+            }
+        }
+    }
+    .extra-note {
+        p {
+            font-size: 14px;
+            line-height: 24px;
+            margin-bottom: 292px;
+            text-align: center;
+            @media (min-width: 1760px) {
+                text-align: left;
+            }
+            @media (max-width: $desktop-min-width-minus) {
+                margin-bottom: 236px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                margin-bottom: 115px;
+            }
+        }
+    }
+}
+.navigation-section {
+    border-top: 1px solid #e3e3ea;
+    padding: 16px 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background-color: #ffffff;
+    position: sticky;
+    z-index: 2;
+    bottom: 0;
+    width: 100%;
+    .button {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 8px 35px;
+        font-family: $secondary-font-family-bold;
+        font-weight: 700;
+        cursor: pointer;
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: 16px;
+            line-height: 16px;
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        padding: 20px 20px 30px;
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        padding: 16px 16px 24px;
+    }
+}

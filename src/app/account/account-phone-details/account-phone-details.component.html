@@ -1,0 +1,173 @@
+<section class="account-section">
+    <div class="container-flex section-container no-padding">
+        <div class="container-flex-row flex-center phone-details-container">
+            <div class="col-xl-11 col-xl-offset-1 col-12 col-offset-0 manage-page">
+                <ng-container *ngIf="!deviceCheckComplete && !deviceChanged">
+                    <div class="three back no-padding-left-important">
+                        <a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE+'/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"><i
+                                class="icon-thin-left-arrow"></i> back</a>
+                    </div>
+                    <div class="twelve no-padding-left-important">
+                        <app-activated-plan-selector [user]="user" (userPlanSelected)="userPlanSelected($event);"
+                            [selectedPlan]="selectedPlan" *ngIf="!!userHasActivePlans">
+                        </app-activated-plan-selector>
+                        <ng-container *ngIf="!userHasActivePlans">
+                            <div class="plan-selector-override">
+                                <div class="account-status-message">
+                                    <p>You have no active phone number at the moment. <span class="activate"> <a
+                                                (click)="addActivatedAccount()">
+                                                <small class="text-color-primary">Add activated phone number?</small>
+                                            </a></span></p>
+                                    <p *ngIf="userHasPendingPlans">Proceed to <a
+                                            [routerLink]="[ACCOUNT_ROUTE_URLS.BASE+'/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Pending
+                                            activations</a> to activate your plan</p>
+                                </div>
+                                <hr class="gray margin-top-30 margin-bottom-30">
+                            </div>
+                        </ng-container>
+                    </div>
+                    <ng-container *ngIf="!!userHasActivePlans">
+                        <div class="twelve no-padding-left-important">
+                            <h4 class="margin-bottom-30">Current phone details</h4>
+                        </div>
+                        <div class="twelve details-container no-padding-left-important">
+                            <div class="seven info-list no-padding-left-important" *ngIf="!!userAccount?.deviceDetails">
+                                <p *ngIf="!!userAccount?.deviceDetails?.model"><span
+                                        class="title-text">{{userAccount?.deviceDetails?.model}}</span></p>
+                                <p *ngIf="!!userAccount?.deviceDetails?.manufacturer"><span
+                                        class="title-text">Manufacturer: <span
+                                            class="data">{{userAccount?.deviceDetails?.manufacturer}}</span></span></p>
+                                <p *ngIf="!!userAccount?.deviceDetails?.marketingName"><span
+                                        class="title-text">Marketing Name: <span
+                                            class="data">{{userAccount?.deviceDetails?.marketingName}}</span></span></p>
+                            </div>
+                            <div class="three id-list">
+                                <p class="title-text">{{selectedPlan.planDevice.network.toLowerCase() != 'sprint' ?
+                                    'IMEI' : 'MEID'}}<span class="data">{{selectedPlan.planDevice.id}} </span></p>
+                                <p class="title-text">SIM ICCID<span class="data">{{userAccount?.iccid || "---"}}
+                                    </span></p>
+
+                            </div>
+                        </div>
+                        <div class="twelve compatibility-container no-padding-left-important">
+                            <h4 class="title">Check your phone's compatibility </h4>
+                            <p class="nine description no-padding">Let’s find out if your phone is compatible with
+                                GoodMobile</p>
+                        </div>
+                        <form (ngSubmit)="checkPhoneCompatibility()" #compatibilityForm="ngForm">
+                            <div class="twelve compatibility-container no-padding-left-important">
+                                <div class="check-inputs-flex">
+                                    <div class="address-input">
+                                        <label for="equipment" class="input-label">
+                                            <p class="p-label">Enter device IMEI No.</p>
+                                            <p class="p-note">Dial: *#06# on your phone to get your IMEI</p>
+                                        </label>
+                                        <input type="tel" required #equipmentNumber="ngModel" [(ngModel)]="equipment" name="equipmentNumber"
+                                            id="equipmentNumber" data-cy="equipmentNumber" placeholder="Enter device IMEI No." restrictNumbers
+                                            minlength="11" (input)="sameTypeDevice = true" maxlength="18">
+                                        <label class='validation-message vm'
+                                            *ngIf="(equipmentNumber.errors || invalidIMEI) && (equipmentNumber.dirty || equipmentNumber.touched)">
+                                            Field should be filled out with correct IMEI/MEID Number.
+                                        </label>
+                                    </div>
+                                    <div class="address-input flex-action-container no-padding">
+                                        <label for="address" class="input-label">
+                                            <p class="p-label">Enter your full address</p>
+                                            <p class="p-note">Street Address, City, State, ZIP Code</p>
+                                        </label>
+                                        <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" autocomplete="on"
+                                            #addressRef="ngModel" type="search" class="geolocate" ngui-auto-complete
+                                            [source]="findPlace.bind(this)" list-formatter="description" display-property-name="main_text"
+                                            (valueChanged)="addressDetails($event)" [tab-to-select]="false"
+                                            placeholder="Enter your full address" (focus)="setFoucs = true" (blur)="setFoucs = false"
+                                            name="addressRef" (input)="changedAddress()" />
+                                        <label class="validation-message vm" *ngIf="!address && addressRef.touched"
+                                            id="required-address-msg">Address is a
+                                            Required Field</label>
+                                        <label class="validation-message vm" *ngIf="!displayedAddressModel && !!address"
+                                            id="required-address-msg">Please
+                                            select address from the autocomplete list</label>
+                                    </div>
+                                </div>
+                                <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+                                </app-invisible-recaptcha>
+                                <div class="twelve no-padding-left validation action-row">
+                                    <div class="five flex-action-container no-padding">
+                                        <button type="submit" class="button primary"
+                                            [disabled]="!equipmentNumber.valid || !address || !displayedAddressModel || !captchaValid"
+                                            [uiBlockButton]="processingRequest" aria-label="validate">Validate</button>
+                                    </div>
+                                </div>
+                                <div class="warningSection" *ngIf="!sameTypeDevice">
+                                    <p class="message">Changing a device might impact your service, please <a
+                                            [routerLink]="[SUPPORT_ROUTE_URLS.BASE+ '/'+SUPPORT_ROUTE_URLS.CONTACT_US]"
+                                            class="highlight">contact customer care</a> to ensure that your changes are
+                                        handled correctly.</p>
+                                </div>
+                                <div class="warningSection" *ngIf="!!differentSIM">
+                                    <p class="message">This device requires different SIM, please <a
+                                            [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.CONTACT_US]" class="highlight">contact
+                                            customer care</a> to ensure that your changes are
+                                        handled correctly.</p>
+                                </div>
+                                <div class="warningSection" *ngIf="!!alreadyActive">
+                                    <p class="message">This device is compatible, however its already ACTIVE and tied to a
+                                        number, please cancel it with your carrier first then try again.</p>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="deviceCheckComplete && !deviceChanged">
+                    <div class="twelve set-section">
+                        <h2 class="fontFamily">You're set!</h2>
+                        <p class="font_design"><b>Your phone is compatible with GoodMobile. The phone must also be
+                                unlocked.</b>
+                            <br>
+                            <br>Please move your GoodMobile SIM to your new phone, and restart the phone.
+                            <br>As long as the new phone is unlocked, network will automatically detect and register the
+                            device.
+                            <br>Once the phone registers on the network, it will update on the website and your new
+                            phone will be reflected on this page.
+                            <br>Please note, data settings for your new phone are required. <a
+                                [routerLink]=" [SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]">Click
+                                here</a> for data settings.
+                        </p>
+                    </div>
+                    <div class="twelve margin-bottom-50">
+                        <button class="button primary" (click)="deviceCheckComplete=false;">Ok</button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!deviceCheckComplete && deviceChanged">
+                    <div class="twelve no-padding-left-important">
+                        <h1>Your phone has been successfully changed</h1>
+                    </div>
+                    <div class="twelve details-container no-padding-left-important">
+                        <div class="three info-list no-padding-left-important" *ngIf="!!userAccount?.deviceDetails">
+                            <p *ngIf="!!userAccount?.deviceDetails?.model"><span
+                                    class="title-text">{{userAccount?.deviceDetails?.model}}</span></p>
+                            <p *ngIf="!!userAccount?.deviceDetails?.manufacturer"><span class="title-text">Manufacturer:
+                                    <span class="data">{{userAccount?.deviceDetails?.manufacturer}}</span></span></p>
+                            <p *ngIf="!!userAccount?.deviceDetails?.marketingName"><span class="title-text">Marketing
+                                    Name: <span class="data">{{userAccount?.deviceDetails?.marketingName}}</span></span>
+                            </p>
+                        </div>
+                        <div class="three id-list">
+                            <p class="title-text">{{selectedPlan.planDevice.network.toLowerCase() != 'sprint' ? 'IMEI' :
+                                'MEID'}}<span class="data">{{selectedPlan.planDevice.id}} </span></p>
+                            <p class="title-text">SIM ICCID<span class="data">{{userAccount?.iccid || "---"}} </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="twelve margin-top-30 margin-bottom-30 no-padding-left-important">
+                        <a>
+                            <button class="button primary" data-cy="goToSummaryBtn"
+                                [routerLink]="[ACCOUNT_ROUTE_URLS.BASE+'/'+ACCOUNT_ROUTE_URLS.SUMMARY]">Go to
+                                summary</button>
+                        </a>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</section>

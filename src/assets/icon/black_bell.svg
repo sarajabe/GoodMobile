@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.348" height="16.699" viewBox="0 0 16.348 16.699">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.7px}
+        </style>
+    </defs>
+    <g id="bell" transform="translate(-1.75 -1.75)">
+        <path id="Path_70" d="M15.6 11.544V8.328a5.716 5.716 0 1 0-11.432 0v3.4A5.156 5.156 0 0 1 2.6 15.253h14.648a4.86 4.86 0 0 1-1.648-3.709z" class="cls-1" data-name="Path 70"/>
+        <path id="Line_66" d="M0 0h2.723" class="cls-1" data-name="Line 66" transform="translate(8.562 17.6)"/>
+    </g>
+</svg>

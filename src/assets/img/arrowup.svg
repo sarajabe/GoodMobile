@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34" height="34" viewBox="0 0 34 34">
+  <defs>
+    <clipPath id="clip-Arrow_up">
+      <rect width="34" height="34"/>
+    </clipPath>
+  </defs>
+  <g id="Arrow_up" data-name="Arrow up" clip-path="url(#clip-Arrow_up)">
+    <rect width="34" height="34" fill="#fff"/>
+    <rect id="Rectangle_1575" data-name="Rectangle 1575" width="34.383" height="34.383" transform="translate(-0.383 34.383) rotate(-90)" fill="#d5d5d5"/>
+    <path id="Path_1729" data-name="Path 1729" d="M0,9.169,4.585,4.585,0,0" transform="translate(12.225 18.654) rotate(-90)" fill="none" stroke="#939191" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+  </g>
+</svg>

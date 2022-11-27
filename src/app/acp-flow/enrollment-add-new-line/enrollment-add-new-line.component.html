@@ -1,0 +1,282 @@
+<section class="enrollment-new-line-page">
+    <div *ngIf="!planPurchased" [class.blur]="!!showShippingForm">
+        <h1 class="title">ACP Enrollment</h1>
+        <div class="success-acp-banner" *ngIf="!successCehck && !errorCheck &&activeStep === 1">
+            <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+            <div class="descs">
+                <p class="congratulation">Congratulations!</p>
+                <p class="desc">You have been verified successfully into the ACP program!</p>
+                <p class="desc last">You are now eligible for our <b>FREE 6GB</b> Unlimited Talk & Text Plan!</p>
+            </div>
+        </div>
+        <section class="stepper" *ngIf="!isEsim">
+            <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step"
+                [class.done]="activeStep > step">
+                <div class="circle">{{ step }}</div>
+                <div class="border" *ngIf="step < steps.length"></div>
+            </div>
+        </section>
+        <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
+            <h4 class="main-title">Adding a New Line:</h4>
+            <form [formGroup]="newMobileServiceFrom" *ngIf="!successCehck && !errorCheck ">
+                <p class="sub-desc">Let's find out if the device, that you will use, is compatible with our network!</p>
+                <p class="sub-title">Check Compatibility:</p>
+                <div class="form-row">
+                    <div class="form-field">
+                        <p class="top-label">Enter your device’s IMEI number</p>
+                        <p class="serial-device-note">Dial: *#06# on your phone to get your IMEI/MEID</p>
+                        <label class="outlined-label-input">
+                            <input placeholder=" " required formControlName="imei" name="equipmentNumber"
+                                id="equipmentNumber" data-cy="equipmentNumber" restrictNumbers required
+                                maxlength="18" />
+                            <span>Enter your device’s IMEI number</span>
+                        </label>
+                        <a class="imei-link" (click)="showWhatIsIMEI()">What is an IMEI/MEID number?</a>
+                        <label class="validation-message"
+                            *ngIf="newMobileServiceFrom.controls.imei.hasError('required') && newMobileServiceFrom.controls.imei.touched">
+                            Device IMEI Number Is Required
+                        </label>
+                        <label class="validation-message"
+                            *ngIf="newMobileServiceFrom.controls.imei.hasError('minlength')">
+                            Device IMEI should be between 11-18 digits
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row last">
+                    <div class="form-field">
+                        <p class="top-label">Enter your full address </p>
+                        <label class="outlined-label-input flowed">
+                            <input type="text" formControlName="address" type="search" ngui-auto-complete
+                                [source]="findPlace.bind(this)" list-formatter="description"
+                                display-property-name="main_text" (valueChanged)="addressDetails($event);"
+                                [tab-to-select]="false" placeholder="  " (input)="changedAddress()"
+                                (focus)="setFoucs = true" (blur)="setFoucs = false">
+                            <span [class.focused]="!!setFoucs || !!newMobileServiceFrom.controls.address.touched"
+                                [class.not-focused]="!setFoucs && !newMobileServiceFrom.controls.address.value"
+                                [class.error]="!!newMobileServiceFrom.controls.address.touched && !!newMobileServiceFrom.controls.address.errors"
+                                [class.grayed]="!setFoucs && !!newMobileServiceFrom.controls.address.value">Enter your
+                                full
+                                address</span>
+                        </label>
+                        <label class="validation-message"
+                            *ngIf="newMobileServiceFrom.controls.address.touched && newMobileServiceFrom.controls.address.hasError('required')"
+                            id="required-zip-code-label">Address is required</label>
+                        <label class="validation-message"
+                            *ngIf="!displayedAddressModel && !!newMobileServiceFrom.controls.address.value"
+                            id="required-address-msg">Please select address from the autocomplete list</label>
+                    </div>
+                </div>
+            </form>
+            <div *ngIf="!!successCehck && !errorCheck" class="success-check-banner" [class.success-bottom]="!!isEsim">
+                <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+                <div class="notes" *ngIf="!isEsim">
+                    <p class="head-note">Your Phone is compatible!</p>
+                    <p class="sub-note">You can use the device you have with our network!</p>
+                </div>
+                <div class="notes" *ngIf="!!isEsim">
+                    <p class="head-note">Great news!</p>
+                    <p class="sub-note">Your phone is ready to join our network and it is <b>eSIM compatible</b>
+                        (Instant Activation!)</p>
+                </div>
+            </div>
+            <div class="esim-flow" *ngIf="!!successCehck && !errorCheck && !!isEsim">
+                <div class="esim-title">Are you happy with getting your <b>eSIM?</b>
+                    <div class="tooltip">
+                        <img src="/assets/icon/why-arrow.svg" alt="arrow" class="tooltip-arrow">
+                        <img src="/assets/icon/Information-sec.svg" alt="info" class="info-icon">
+                        <div class="tooltipInfo">
+                            <p class="text">An eSIM is an industry-standard digital SIM that allows you to activate a
+                                cellular plan from your carrier without having to use a physical SIM.
+                            </p>
+                            <p class="text">The activation process is immediate without having to wait around.</p>
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="simOptionsForm">
+                    <div *ngFor="let item of simOptions">
+                        <label class="radio-check esim" [for]="item?.id">
+                            <input type="radio" type="radio" [value]="item?.id" formControlName="option" [id]="item?.id"
+                                (change)="onOptionChange()">{{item?.value}}
+                        </label>
+                    </div>
+                    <label class="validation-message"
+                        *ngIf="simOptionsForm.controls.option.hasError('required') && simOptionsForm.controls.option.touched">Please
+                        select one of the options above to continue</label>
+                </form>
+            </div>
+            <div *ngIf="!!errorCheck && !successCehck" class="error-check-banner">
+                <img src="/assets/icon/error-enrollment.svg" alt="success-icon">
+                <div class="notes">
+                    <p class="head-note">Sorry!</p>
+                    <p class="sub-note-bold">Your Phone isn’t compatible with our network, BUT...!</p>
+                    <p class="sub-note">You can try and check another device or re-enter your information again.</p>
+                    <button class="button primary" (click)="tryAgain()">Try Again</button>
+                </div>
+            </div>
+        </section>
+        <section class="address-section" *ngIf="!!activeStep && activeStep === 2"
+            [class.disable-blur]="!!showShippingForm">
+            <p class="title">Shipping Address:</p>
+            <div *ngIf="!!addressWithIdSection">
+                <p class="sub-title">Enter your shipping address:</p>
+            </div>
+            <div *ngIf="!!addressNoOptionSection">
+                <p class="sub-title">Do you want to use the same address for shipping as the one entered in the ACP
+                    Application?</p>
+                <div class="address-selection-options" [class.bottom]="!!addressCard">
+                    <div class="radio-check">
+                        <input type="radio" [(ngModel)]="addressOption" name="mailaddress" value="mail"
+                            (change)="optionChanged()" id="mailaddress" />
+                        <div class="details">
+                            <label class="option-label" for="mailaddress"> Use this address: </label>
+                        </div>
+                    </div>
+                    <div class="current-address" *ngIf="!!verifiedAddress">
+                        <img src="/assets/icon/location.svg">
+                        <div class="address-details">
+                            <p class="alias">{{!!verifiedAddress?.name? verifiedAddress?.name : verifiedAddress?.alias}}
+                            </p>
+                            <p class="info">{{verifiedAddress?.address1}}</p>
+                            <p class="info" *ngIf="!!verifiedAddress?.address2">{{verifiedAddress?.address2}}</p>
+                            <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
+                                {{verifiedAddress?.postalCode}}</p>
+                        </div>
+                    </div>
+                    <div class="radio-check">
+                        <input type="radio" [(ngModel)]="addressOption" name="anotherAddress" value="another"
+                            (change)="optionChanged()" id="anotherAddress" />
+                        <div class="details">
+                            <label class="option-label" for="anotherAddress"> Select another address</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!!addressNoOptionNotVerfiedSection">
+                <div class="sub-title">The address you entered in the ACP application form couldn't be validated for
+                    shipping:
+                    <div class="address-tooltip">
+                        <img src="/assets/icon/why-arrow.svg" alt="arrow">
+                        <a class="info-link">Why?</a>
+                        <div class="tooltipInfo">
+                            <p class="tip-note">Possible typos or misspellings could have been made, or a conflict in
+                                the city, state and ZIP code.</p>
+                            <div class="address-details">
+                                <p class="top-info">Previously entered address:</p>
+                                <p class="info">{{!!verifiedAddress?.name? verifiedAddress?.name :
+                                    verifiedAddress?.alias}}</p>
+                                <p class="info">{{verifiedAddress?.address1}}</p>
+                                <p class="info" *ngIf="!!verifiedAddress?.address2">{{verifiedAddress?.address2}}</p>
+                                <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
+                                    {{verifiedAddress?.postalCode}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="sub-title">Please provide another address:</p>
+            </div>
+            <div *ngIf="!!isAdressAddedSuccessfully" class="address-added-banner"
+                [class.left-card]="addressOption === 'another'">
+                <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+                <p>Address added successfully!</p>
+            </div>
+            <div class="shipping-address-card" *ngIf="!!addressCard" [class.left-card]="addressOption === 'another'">
+                <div class="address" *ngFor="let address of addressesList; let i = index"
+                    [class.hidden]="i > 1 && !showAllAddresses"
+                    [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
+                    <div class="radio-check">
+                        <input title="{{ !!address.name ? address?.name : address?.alias }}" type="radio"
+                            [(ngModel)]="selectedShippingAddress" name="shippingAddress" [id]="address.id"
+                            [value]="address"
+                            (ngModelChange)="isAddressVerified=true;showShippingForm = false; isAdressAddedSuccessfully = false" />
+                        <div class="details">
+                            <label class="label" for="{{address.id}}">{{
+                                !!address?.name ?
+                                address?.name : address?.alias }}</label>
+                            <p class="info">
+                                {{ address?.address1 }}
+                                {{ !!address?.address2 ? ", " + address?.address2 : "" }}
+                                , {{ address?.city }} , {{ address?.state }} {{ address?.postalCode }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="border"
+                        *ngIf="i < addressesList.length -1 && ((i !== 1 && addressesList?.length > 2 && !showAllAddresses) ||  (addressesList?.length > 2 && !!showAllAddresses))">
+                    </div>
+                </div>
+                <div class="showMore" *ngIf="addressesList?.length > 2" (click)="showAllAddresses = !showAllAddresses">
+                    <a class="more">{{!!showAllAddresses ? 'Show less' : 'Show more'}}
+                        <i class="arrow down" [class.rotate]="!!showAllAddresses"></i>
+                    </a>
+                </div>
+                <div class="new-address">
+                    <div class="toggle-title" (click)="
+                showShippingForm = !showShippingForm;
+                selectedShippingAddress = null;
+                isAddressVerified = false;
+                touchShippingForm = false;
+              ">
+                        <p class="icon" [class.minus]="!!showShippingForm">
+                            <span>{{ !!showShippingForm ? "-" : "+" }}</span>
+                        </p>
+                        <p class="text"><b>Add New Address</b></p>
+                    </div>
+                    <form #shippingMethodForm="ngForm" *ngIf="!!showShippingForm" class="shipping-method-form">
+                        <fieldset class="address-lookup">
+                            <app-address-lookup [displayedAddress]="shippingAddress" (isValid)="setValidAddress($event)"
+                                (addressChange)="addressLookUpChanged($event)" [touchForm]="touchShippingForm"
+                                [showAlias]="true">
+                            </app-address-lookup>
+                        </fieldset>
+                        <div class="action">
+                            <a class="cancel-link" aria-label="cancel" (click)="showShippingForm = false;">
+                                Cancel
+                            </a>
+                            <button class="button primary" aria-label="Add address" (click)="addAddress()">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha
+            *ngIf="!!activeStep && activeStep === 1">
+        </app-invisible-recaptcha>
+    </div>
+    <div *ngIf="!!planPurchased && !isEsim" class="plan-purchased-banner">
+        <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+        <div class="descs">
+            <p class="top-desc">Purchase successful!</p>
+            <p class="sub-desc">Your ACP plan has been successfully purchased! Look out for your SIM card in the mail.
+                Once recieved, you may proceed with the activation process</p>
+        </div>
+    </div>
+    <div *ngIf="!!planPurchased && !!isEsim" class="plan-purchased-banner">
+        <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+        <div class="descs">
+            <p class="top-desc">Purchase successful!</p>
+            <p class="sub-desc">Your ACP plan has been successfully purchased! You May proceed to activate you eSIM and start enjoying your ACP benefits!</p>
+        </div>
+    </div>
+</section>
+<section class="navigation-section" [class.blur]="!!showShippingForm" [class.end]="!!planPurchased">
+    <div class="left" *ngIf="!planPurchased">
+        <p class="no-border" (click)="cancel()">Cancel</p>
+    </div>
+    <div class="right" *ngIf="!planPurchased">
+        <button class="button secondary" data-cy="backBtn" aria-label="Next"
+            (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
+        <button class="button primary" aria-label="Next" (click)="checkDevice()"
+            *ngIf="!successCehck && !errorCheck">Check</button>
+        <button class="button primary" aria-label="Next" (click)="goToStep2()"
+            *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
+            [disabled]="!!errorCheck">Next</button>
+        <button class="button primary" *ngIf="activeStep === 2"
+            [class.disabled]="!isAddressVerified || (!!addressNoOptionSection && !addressOption)"
+            [disabled]="!isAddressVerified || (!!addressNoOptionSection && !addressOption)"
+            (click)="purchasePlan()">Submit</button>
+    </div>
+    <div class="right" *ngIf="!!planPurchased">
+        <button class="button primary" (click)="goToAcpSummary()">Done</button>
+    </div>
+</section>

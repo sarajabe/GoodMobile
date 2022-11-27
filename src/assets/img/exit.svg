@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14.043" height="14.043" viewBox="0 0 14.043 14.043">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke-linecap:round;stroke-linejoin:round}.cls-2,.cls-3{stroke:none}.cls-3{fill:#383838}
+        </style>
+    </defs>
+    <g id="exit_pop_up" data-name="exit pop up" transform="translate(-325 -54)">
+        <g id="Union_8" class="cls-1" data-name="Union 8">
+            <path d="M5.521 5.521L0 11.043l5.521-5.522L0 0l5.521 5.521L11.043 0 5.521 5.521l5.521 5.521z" class="cls-2" transform="translate(326.5 55.5)"/>
+            <path d="M0 0l5.521 5.521L0 11.043l5.521-5.522L0 0m11.043 0L5.521 5.521 11.043 0M5.521 5.521l5.522 5.522-5.522-5.522M0-1.5c.384 0 .768.146 1.06.44L5.522 3.4l4.461-4.46c.293-.294.677-.44 1.061-.44a1.5 1.5 0 0 1 1.06 2.56l-4.46 4.461 4.46 4.461a1.5 1.5 0 1 1-2.12 2.122L5.52 7.643l-4.46 4.46c-.293.294-.677.44-1.061.44a1.5 1.5 0 0 1-1.06-2.56L3.4 5.52l-4.46-4.46A1.5 1.5 0 0 1 0-1.5z" class="cls-3" transform="translate(326.5 55.5)"/>
+        </g>
+    </g>
+</svg>

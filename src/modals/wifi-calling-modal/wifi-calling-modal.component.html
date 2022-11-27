@@ -1,0 +1,34 @@
+<div class="container model-container full {{context.customClass}}">
+    <div class="modal-header">
+        <button class="modal-close modal-toggle" (click)="closeDialog(false)"><i class="icon-close"></i></button>
+        <h2 class="modal-heading" >{{context.title}}</h2>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content">
+            <p class="form-header">Enter the new E911 address</p>
+            <p class="form-description">This address should be the primary place where you use the line.</p>
+            <div class="form-section">
+                <app-address-lookup [showAlias]="true"  [displayedAddress]="address" (isValid)="setValidAddress($event)" (addressChange)="addressChanged($event)"></app-address-lookup>
+            </div>
+            <div class="checks">
+                <div class="checkbox">
+                    <input type="checkbox" id="termsCheckbox" data-cy="termsCheckbox" name="termsCheckbox" [(ngModel)]="termsAgreed" />
+                    <label class="checkbox-label" for="termsCheckbox">I agree to the WiFi Calling
+                        <a class="terms-link" (click)="goToTerms()">Terms and Conditions</a></label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="updateCheckbox" data-cy="updateCheckbox" name="updateCheckbox" [(ngModel)]="updateConfirmed" />
+                    <label class="checkbox-label" for="updateCheckbox">I would like to update the Wi-Fi Calling E-911 Address for this phone number. I understand that this will update the Address where 911 Services would be dispatched, for this mobile number. If you have multiple phone numbers, each phone number using Wi-Fi Calling needs to have its own individual E-911 designation.</label>
+                </div>
+                <div class="warning" *ngIf="!updateConfirmed">
+                    <p class="note">An E911 address allows emergency services to determine the location of each phone or device, in case they need to call 911. Wi-Fi Calling and some other GoodMobile features require a valid E911 address to work. </p>
+                </div>
+            </div>
+            <div class="row modal-actions">
+                <button  class="button primary" (click)="saveAddress()" [disabled]="!isValidAddress || !termsAgreed || !updateConfirmed">
+                  Activate
+                </button>
+              </div>
+        </div>
+    </div>
+</div>

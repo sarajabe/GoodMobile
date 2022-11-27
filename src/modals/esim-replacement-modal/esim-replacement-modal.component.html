@@ -1,0 +1,16 @@
+<div class="container model-container {{context.customClass}}">
+  <div class="modal-header">
+    <h2 class="modal-heading">You are about to swap to eSIM <span>({{context.iccid}})</span>  on Phone Number <span>{{context.mdn}}</span></h2>
+    <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="content">
+      <div class="re-captcha--resizing">
+        <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+        </app-re-captcha>
+        <label class="validation-message" *ngIf="showValidation">Please confirm that to proceed with downloding your eSIM!</label>
+      </div>
+      <button class="button primary" (click)="confirm()" aria-label="proceed">Proceed</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="hide-on-larger-phablet" *ngIf="menuShown" [class.menu-shown]="menuShown">
+    <div class="display-block">
+        <div class="mob-list--container" [@slideInOut]="animationState">
+            <div class="user-container">
+                <p class="close"><i class="icon icon-close" (click)="toggleMenu()"></i></p>
+                <h4 class="name">{{user?.firstName}} {{user?.lastName}}</h4>
+                <p class="mdn" *ngIf="!!selectedPlan">{{selectedPlan?.mdn | phone}}</p>
+            </div>
+            <ul class="mob-list">
+                <li [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMenu()">
+                    <a><img class="icon" src="/assets/img/purchased-icon.svg" alt="purchased" />Purchased Plans
+                    </a>
+                </li>
+                <li [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SUMMARY]" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}" (click)="toggleMenu()">
+                    <a><img class="icon" src="/assets/img/account-icon.svg" alt="account icon"/>Account summary</a>
+                </li>
+                <li *ngIf="!!displayAcpSection" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMenu()"><a><img class="icon"
+                        src="/assets/icon/acp-icon.svg" /> ACP application</a>
+                </li>
+                <li (click)="goToPayAndRefill()" [class.disabled]="!!isPortIn">
+                    <a [class.disabled]="!!isPortIn"> <img class="icon" src="/assets/img/pay-icon.svg" alt="payment icon" /> Pay & refill
+                        your account</a>
+                </li>
+                <li (click)="goToReferFriend()" >
+                    <a > <img class="icon" src="/assets/icon/click-white.svg" style="width:24px" alt="payment icon" /> Refer a friend</a>
+                </li>
+                <li (click)="goToAddons($event)" [class.disabled]="!!isExpiredAccount || !!isPortIn">
+                    <a [class.disabled]="!!isExpiredAccount || !!isPortIn"><img class="icon"
+                            src="/assets/img/addons-icon.svg" alt="addons icon"/>Plan add-ons</a>
+                </li>
+                <li (click)="goToOrders()">
+                    <a [class.disabled]="!!isPortIn"><img class="icon" src="/assets/img/addons-icon.svg" alt="orders icon" />Your
+                        orders</a>
+                </li>
+                <li (click)="goToPaymentHistory()" [class.disabled]="!!isPortIn">
+                    <a [class.disabled]="!!isPortIn"><img class="icon" src="/assets/img/payment-icon.svg" alt="payment icon"/>Payment
+                        History</a>
+                </li>
+                <li (click)="goToUsageHistory()" [class.disabled]="!!isPortIn">
+                    <a [class.disabled]="!!isPortIn"><img class="icon" src="/assets/img/usage-icon.svg" />Plan & usage
+                        History</a>
+                </li>
+                <li [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMenu()">
+                    <a><img class="icon" src="/assets/img/device-icon.svg" />Manage Device & SIM</a>
+                </li>
+                <li [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMenu()">
+                    <a><img class="icon" src="/assets/img/settings-icon.svg" />Profile Settings</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="title" (click)="toggleMenu()" [class.menu-shown]="menuShown" *ngIf="!!title">
+    <p class="page-title">
+        <img class="arrow" src="/assets/img/purple-right-arrow.svg" />
+        {{title}}
+    </p>
+</div>

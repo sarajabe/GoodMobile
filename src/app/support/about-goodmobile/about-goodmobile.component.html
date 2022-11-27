@@ -1,0 +1,101 @@
+<div *ngIf="innerWidth >= 1024; else TabletDevices">
+    <section class="about-goodmobile-container" *ngFor="let item of aboutGoodmobile | async"
+      [ngStyle]="{'background-image': 'url('+ item?.fields?.bannerImage.fields.file.url + ')'}">
+      <div class="container-flex">
+        <div class="container-flex-row flex-center text-center">
+          <div class="content">
+            <h1 class="title">{{item?.fields?.bannerTitle}}</h1>
+            <h1 class="subtitle">{{item?.fields?.bannerSubTitle}}</h1>
+            <img class="hidden" src='{{item?.fields?.bannerImage.fields.file.url}}' alt="{{item?.fields?.bannerImage.fields.file.url}}">
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+    <ng-template #TabletDevices>
+    <div *ngIf="innerWidth >= 640; else PhoneDevices">
+      <section class="about-goodmobile-container" *ngFor="let item of aboutGoodmobile | async"
+        [ngStyle]="{'background-image': 'url('+ item?.fields?.bannerImageForTabletDevices.fields.file.url + ')'}">
+        <div class="container-flex">
+          <div class="container-flex-row flex-center text-center">
+            <div class="content">
+              <h1 class="title">{{item?.fields?.bannerTitle}}</h1>
+              <h1 class="subtitle">{{item?.fields?.bannerSubTitle}}</h1>
+              <img class="hidden" src='{{item?.fields?.bannerImage.fields.file.url}}' alt="{{item?.fields?.bannerImage.fields.file.url}}">
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    </ng-template>
+    <ng-template #PhoneDevices>
+      <section class="about-goodmobile-container " *ngFor="let item of aboutGoodmobile | async"
+        [ngStyle]="{'background-image': 'url('+ item?.fields?.bannerImageForSmallDev.fields.file.url + ')'}">
+        <div class="container-flex inherit-height">
+          <div class="container-flex-row flex-center text-center inherit-height">
+            <div class="content">
+              <h1 class="title">{{item?.fields?.bannerTitle}}</h1>
+              <h1 class="subtitle">{{item?.fields?.bannerSubTitle}}</h1>
+              <img class="hidden" src='{{item?.fields?.bannerImage.fields.file.url}}' alt="{{item?.fields?.bannerImage.fields.file.url}}">
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+    <section class="text-container" *ngFor="let item of aboutGoodmobile | async">
+      <div class="container-flex">
+        <div class="title">
+          <h2 class="main">{{item?.fields?.mainTitle}}</h2>
+          <h2 class="text-color-primary sub">{{item?.fields?.mainSubTitle}}</h2>
+          <h2 class="note">{{item?.fields?.mainSubTitleTwo}}</h2>
+        </div>
+        <div class="description">
+          <p><b>{{item?.fields?.subQuestion}}</b></p>
+          <p><b>{{item?.fields?.subStatement}}</b></p>
+          <p>{{item?.fields?.paragraphOne}}
+            <span class="span-for-res text-color-primary" (click)="readMore = !readMore" *ngIf="readMore">Read Less</span>
+            <span class="span-for-res text-color-primary" (click)="readMore = !readMore" *ngIf="!readMore">Read More</span>
+          </p>
+          <div class="block-for-res" *ngIf="readMore">
+            <p>{{item?.fields?.paragraphTwo}}</p>
+            <p>{{item?.fields?.paragraphThree}}</p>
+            <p>{{item?.fields?.paragraphFour}}</p>
+            <p>{{item?.fields?.paragraphFive}}</p>
+          </div>
+          <div class="block-for-large">
+            <p>{{item?.fields?.paragraphTwo}}</p>
+            <p>{{item?.fields?.paragraphThree}}</p>
+            <p>{{item?.fields?.paragraphFour}}</p>
+            <p>{{item?.fields?.paragraphFive}}</p>
+          </div>
+    
+          <h1>{{item?.fields?.mainTitleTwo}}</h1>
+          <p>{{item?.fields?.paragraphSix}}</p>
+          <p>{{item?.fields?.paragraphSeven}}</p>
+          <p class="hideonmob"><b>{{item?.fields?.boldSubStatement}}</b></p>
+          <p class="hideonlarge">
+            <b>{{item?.fields?.boldSubStatementOne}}</b>
+            <br>
+            <b>{{item?.fields?.boldSubStatementTwo}}</b>
+          </p>
+          <p><b>{{item?.fields?.subStatementHighlightedOne}}</b>{{item?.fields?.subStatementPartOne}}
+            <b>{{item?.fields?.subStatementHighlightedTwo}}</b>{{item?.fields?.subStatementPartTwo}}
+            <b>{{item?.fields?.subStatementHighlightedThree}}</b>{{item?.fields?.subStatementPartThree}}
+          </p>
+          <p>{{item?.fields?.lastSentence}}</p>
+        </div>
+      </div>
+    </section>
+    <section class="get-started">
+      <div class="container-flex">
+        <div class="container-flex-row flex-center">
+          <div class="description">
+            <span>Cheap phone plans shouldn’t mean sacrifice.</span><br>
+            <span>For the best cell phone deals, try GoodMobile</span>
+          </div>
+          <div class="col-md-3">
+            <button class="button primary" data-cy="goToPlans" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES]">Go to plans</button>
+          </div>
+        </div>
+      </div>
+    </section>

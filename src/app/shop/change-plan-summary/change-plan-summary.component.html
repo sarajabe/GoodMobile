@@ -1,0 +1,57 @@
+<section class="plan-and-features-section">
+    <div class="container-flex change-plan-summary-page">
+      <div class="container-flex-row flex-center" *ngIf="!!selectedMobilePlan">
+        <div class="col-12 margin-bottom-50">
+          <h1 class="replace-size">Replacing your plan</h1><br>
+          <p class="font-size">We are confirming your plan replacement.<br>
+          Please go through the changes made to your current plan, when<br> ready, you can proceed to checkout to purchase your new plan.</p>
+        </div>
+        <div class="col-12 margin-bottom-50">
+          <h3>Confirm plans change</h3>
+          <h4 *ngIf="!!selectedUserPlan && !!nextCycle">Effective on: {{selectedUserPlan.basePlan?.renewDate | date}}</h4>
+          <span>Your replacement plan details:</span>
+        </div>
+        <div class="col-12">
+          <div class="plan-container highlight-card margin-bottom-60">
+            <div class="title title-height">
+              <span class="title-text one-liner">Your custom GoodMobile plan:</span><br>
+              <span class="title-text title-size">{{selectedMobilePlan?.title}}</span>
+              <span class="title-info price ">{{selectedMobilePlan?.price | currency:'USD':'symbol':0}} / month</span>
+            </div>
+            <div class="title split last-element">
+              <div class="six no-padding">
+                <span class="title-text">Minutes</span>
+                <span class="title-info">{{selectedMobilePlan?.details.minutes > 9999 ? 'unlimited': selectedMobilePlan?.details?.minutes}}</span>
+              </div>
+              <div class="six no-padding">
+                <span class="title-text">Texts</span>
+                <span class="title-info">{{selectedMobilePlan?.details.minutes > 9999 ? 'unlimited': selectedMobilePlan?.details?.messages}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-flex-row " *ngIf="!!selectedMobilePlan">
+        <div class="col-12">
+          <div class="plan-summary">
+            <h3 class="text-size1">
+              You selected as a replacement:
+            </h3>
+            <span>
+              {{planCategory}} <span *ngIf="!!selectedMobilePlan?.details?.data">| {{(selectedMobilePlan?.details?.data * 1024)| mobileDataFormat:false}} </span>| {{selectedMobilePlan?.title}} | {{selectedMobilePlan.price | currency:'USD':'symbol':0}}
+          <br><br><br><br></span>
+          </div>
+        </div>
+        <div class="col-12 margin-bottom-60">
+          <div class="actions-container">
+            <a>
+              <button class="button secondary button-style" (click)="userConfirmed()">{{!!isCheckoutFlow ? 'Proceed to checkout' : 'Change plan'}}</button>
+            </a>
+            <a>
+              <button class="button primary button-style2" (click)="goToAccountSummary()">Cancel</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

@@ -1,0 +1,112 @@
+@import '../../../../styles/modules/mixins';
+@import '../../../../styles/modules/variables';
+@import '../order-rma.component.scss';
+
+.change-of-mind {
+    .reasons {
+        min-height: 340px;
+        @media(max-width: $phablet-min-width-minus) {
+            min-height: 300px;
+        }
+    }
+    .header {
+        display: flex;
+        gap: 12px;
+        @media (max-width: 414px) {
+            .selection-title {
+                max-width: 215px;
+            }
+        }
+    }
+    .selection-area {
+        margin-top: 18px;
+    }
+    .tooltip {
+        img {
+            cursor: pointer;
+        }
+        @media (max-width: $phablet-min-width) {
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+      
+    .tooltip .tooltipContent {
+        visibility: hidden;
+        border-radius: 10px;
+        position: absolute;
+        right: 7px;
+        top: 50px;
+        box-shadow: 0px 3px 4px 0px #EAEAEA40;
+        background: $primary-color-light;
+        padding: 24px;
+        text-align: left;
+        min-width: 80px;
+        z-index: 1;
+        font-weight: normal;
+        color: $black;
+        width: 500px;
+        object-fit: contain;
+        font-family: $base-font-family;
+        line-height: 28px;
+        font-size: rem-calc(18px);
+        @media (max-width: $phablet-min-width-minus) {
+            right: -11px;
+            top: 29px;
+            width: 392px;
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            padding: 21px;
+        }
+        @media (max-width: 414px) {
+            right: -94px;
+            top: 29px;
+            width: 288px;
+            font-size: rem-calc(14px);
+            line-height: 18px;
+            padding: 15px;
+        }
+    }
+      
+    .tooltip:hover .tooltipContent {
+        visibility: visible;
+    }
+    .red-alert {
+        padding: 32px;
+        background: #FFEFEE;
+        box-shadow: 0px 3px 4px 0px #EAEAEA40;
+        margin-left: 40px;
+        border-radius: 8px;
+        margin-top: 10px;
+        .alert-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #D22119;
+            font-family: $secondary-font-family-bold;
+            font-size: rem-calc(24px);
+            line-height: 32px;
+            margin-bottom: 8px;
+        }
+        .alert-description {
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            margin-bottom: 0;
+        }
+        @media (max-width: $phablet-min-width) {
+            padding: 24px;
+            margin-left: 30px;
+            .alert-title {
+                font-size: rem-calc(18px);
+                line-height: 28px;
+                margin-bottom: 8px;
+            }
+            .alert-description {
+                font-size: rem-calc(16px);
+                line-height: 24px;
+            }
+        }
+    }
+}

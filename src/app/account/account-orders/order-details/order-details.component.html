@@ -1,0 +1,517 @@
+<section class="order-details">
+    <div class="back-section">
+        <a class="back-link" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]">Your Orders
+            &nbsp;<img src="/assets/icon/back-arrow.svg"></a>
+        <p class="id">Order ID: {{orderId}}</p>
+    </div>
+    <div class="title-section">
+        <h1 class="order-id">Order ID: {{orderId}}</h1>
+        <p class="order-info">Order placed on: {{orderInfo?.createdDate | date }}</p>
+        <p class="order-info" [class.action-status]="orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED">Status:
+            <img class="help-icon" src="assets/icon/warning-circle.svg" alt="warning"
+                *ngIf="orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED">
+            <span class="status" data-cy="orderStatus"
+                [ngClass]="{ 'cancled': orderInfo?.status ===  ORDER_STATUS.CANCELED || orderInfo?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[orderInfo?.status] === STATUS_TITLE.PENDING, 'help': orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{STATUS_TITLE[orderInfo?.status]}}</span>
+        </p>
+        <p class="action-required"
+            (click)="editShippingAddress(orderInfo?.shippingInfo?.shippingAddress, orderInfo?.id)"
+            *ngIf="orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED">Update your address</p>
+        <p class="action" data-cy="reportAnIssue" (click)="reportIssue(orderInfo?.id)"
+            *ngIf="orderInfo?.status !== ORDER_STATUS.CANCELED">Report an issue</p>
+    </div>
+    <div class="order-cards-container">
+        <div class="left" [class.flex]="!orderInfo?.shippingInfo?.shippingAddress">
+            <div class="order-card" id="details-card" #details>
+                <div class="order-card-container">
+                    <div class="card-header-section">
+                        <h2 class="card-header">Order Details</h2>
+                    </div>
+                    <div class="card-tab">
+                        <input type="checkbox" id="items" [(ngModel)]="items">
+                        <label class="tab-label" for="items">{{orderInfo?.status !== ORDER_STATUS.CANCELED ? 'Items' :
+                            'Canceled Items'}}</label>
+                        <div class="tab-content">
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.NEW">
+                                <input type="checkbox" id="lines" [(ngModel)]="line">
+                                <label class="sub-label new" for="lines">
+                                    <span>Line #1</span><img class="icon" data-cy="arrowIcon"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail" *ngIf="!plan?.promotionCode" >
+                                            <img class="thumbnail" [src]="promoDetails[plan?.promotionCode].img" alt="g2g-plan" *ngIf="!!plan?.promotionCode && orderInfo?.intent === ORDER_INTENT.NEW"/>
+                                            <div class="details">
+                                                <p class="title"><b>{{plan?.subtitle}}</b></p>
+                                                <p class="description" [class.promo]="!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
+                                                <p class="category"><b>(New plan)</b></p>
+                                                <p class="id" *ngIf="plan?.itemId">Item # {{plan?.itemId}}</p>
+                                                <p class="code" *ngIf="plan?.redemptionCode">Redemption Code:
+                                                    {{plan?.redemptionCode}}</p>
+                                                <p class="quantity">Quantity: {{ plan?.quantity }}</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>${{plan?.price}}</b></p>
+                                        </div>
+                                    </div>
+                                    <div class="sub-item-section">
+                                        <hr>
+                                        <ng-container *ngIf="!!orderInfo?.cards">
+                                            <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                                <div class="details-side">
+                                                    <img class="thumbnail" [src]="(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'" alt="SIM card">
+                                                    <div class="details">
+                                                        <p class="title"><b>{{(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'e' : ''}}SIM Card</b></p>
+                                                        <p class="category"><b>(New)</b></p>
+                                                        <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                        <p class="quantity">Quantity: 1</p>
+                                                        <p class="action" (click)="scrollToDeliveryDetails()"
+                                                            *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
+                                                    </div>
+                                                </div>
+                                                <div class="price-side">
+                                                    <p class="price"><b>${{sim?.price}}</b></p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="!orderInfo?.cards && orderInfo?.skuNumber === 'TE'">
+                                            <div class="item-details">
+                                                <div class="details-side">
+                                                    <img class="thumbnail" src="assets/icon/e-sim.svg" alt="eSIM card">
+                                                    <div class="details">
+                                                        <p class="title"><b>eSIM Card</b></p>
+                                                        <p class="category"><b>(New)</b></p>
+                                                        <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                        <p class="quantity">Quantity: 1</p>
+                                                    </div>
+                                                </div>
+                                                <div class="price-side">
+                                                    <p class="price"><b>$0</b></p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <hr *ngIf="!!orderInfo?.devices">
+                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                        <div class="details-side">
+                                            <div class="phone-image-container">
+                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                            </div>
+                                            <div class="details">
+                                                <p class="title"><b>{{device?.description}}</b></p>
+                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>${{device?.price}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.MIGRATION">
+                                <input type="checkbox" id="lines" [(ngModel)]="line">
+                                <label class="sub-label new" for="lines">
+                                    <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                            <div class="details">
+                                                <p class="title"><b>SIM Card</b></p>
+                                                <p class="category"><b>(Migration)</b></p>
+                                                <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                <p class="quantity">Quantity: 1</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>${{sim?.price}}</b></p>
+                                        </div>
+                                    </div>
+                                    <hr *ngIf="!!orderInfo?.devices">
+                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                        <div class="details-side">
+                                            <div class="phone-image-container">
+                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                            </div>
+                                            <div class="details">
+                                                <p class="title"><b>{{device?.description}}</b></p>
+                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>${{device?.price}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.ADDON">
+                                <input type="checkbox" id="addon" [(ngModel)]="line">
+                                <label class="sub-label new" for="addon">
+                                    <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content" *ngFor="let addon of orderInfo?.planAddOns; let i = index">
+                                    <div class="item-details">
+                                        <div class="details-side">
+                                            <img class="thumbnail"
+                                                [src]="addon.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : 'assets/icon/International.svg'"
+                                                alt="thumbnail">
+                                            <div class="details">
+                                                <p class="title"><b>{{addon?.subtitle}}</b></p>
+                                                <p class="category"><b>(Addon)</b></p>
+                                                <p class="id" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
+                                                <p class="quantity">Quantity: {{ addon?.quantity }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
+                                        </div>
+                                    </div>
+                                    <hr *ngIf="i < (orderInfo?.planAddOns.length - 1)">
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.REFILL">
+                                <input type="checkbox" id="lines" [(ngModel)]="line">
+                                <label class="sub-label new" for="lines">
+                                    <span translate>Line {{plan?.mdn | phone }}</span><img class="icon"
+                                        data-cy="arrowIcon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail">
+                                            <div class="details">
+                                                <p class="title"><b>{{plan?.subtitle}}</b></p>
+                                                <p class="description">Unlimited Talk, and Text</p>
+                                                <p class="category"><b>(Refill Plan)</b></p>
+                                                <!-- <p class="id">{{ 'account-order-detail.item#' | translate : {val: plan?.title} }}</p> -->
+                                                <p class="quantity">Quantity: {{ plan?.quantity }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>{{plan?.price | currency:'USD':'symbol':0}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.CHANGE">
+                                <input type="checkbox" id="lines" [(ngModel)]="line">
+                                <label class="sub-label new" for="lines">
+                                    <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="plan">
+                                            <div class="details">
+                                                <p class="title"><b>{{plan?.subtitle}}</b></p>
+                                                <p class="description">Unlimited Talk, and Text</p>
+                                                <p class="category"><b>(Change Plan)</b></p>
+                                                <p class="quantity">Quantity: {{ plan?.quantity}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>{{plan?.price | currency:'USD':'symbol':0}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.REPLACEMENT">
+                                <input type="checkbox" id="lines" [(ngModel)]="line">
+                                <label class="sub-label new" for="lines">
+                                    <span translate>Line {{orderInfo?.mdn | phone }}</span><img class="icon"
+                                        data-cy="arrowIcon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                        <div class="details-side">
+                                            <div class="phone-image-container">
+                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                            </div>
+                                            <div class="details">
+                                                <p class="title"><b>{{device?.description}}</b></p>
+                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr *ngIf="orderInfo?.cards && orderInfo?.devices">
+                                    <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" [src]="orderInfo?.skuNumber === 'TE'? 'assets/icon/e-sim.svg': 'assets/icon/sim-image.svg'" alt="SIM card">
+                                            <div class="details">
+                                                <p class="title"><b>{{(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'e' : ''}}SIM Card</b></p>
+                                                <p class="category"><b>(Replacement)</b></p>
+                                                <p class="id" *ngIf="sim?.itemId">Item #{{ sim?.itemId}}</p>
+                                                <p class="quantity">Quantity: 1</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING && orderInfo?.skuNumber !== 'TE'"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                                <hr *ngIf="!!orderInfo?.planAddOns">
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!!orderInfo?.planAddOns">
+                                        <div class="item-details"
+                                            *ngFor="let addon of orderInfo?.planAddOns; let i = index">
+                                            <div class="details-side">
+                                                <img class="thumbnail"
+                                                    [src]="addon.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : 'assets/icon/International.svg'"
+                                                    alt="thumbnail">
+                                                <div class="details">
+                                                    <p class="title"><b>{{addon?.subtitle}}</b></p>
+                                                    <p class="category"><b>(Addon)</b></p>
+                                                    <p class="id" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
+                                                    <p class="quantity">Quantity: {{ addon?.quantity }}</p>
+                                                    <hr *ngIf="i < (orderInfo?.planAddOns.length - 1)">
+                                                </div>
+                                            </div>
+                                            <div class="price-side">
+                                                <p class="price"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.NEW_SIM">
+                                <input type="checkbox" id="lines" [(ngModel)]="line">
+                                <label class="sub-label new" for="lines">
+                                    <span>Line #1</span><img class="icon" data-cy="arrowIcon"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                        <div class="details-side">
+                                            <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                            <div class="details">
+                                                <p class="title"><b>SIM Card</b></p>
+                                                <p class="category"><b>(New)</b></p>
+                                                <p class="id" *ngIf="sim?.itemId">Item # {{sim?.itemId}}</p>
+                                                <p class="quantity">Quantity: 1</p>
+                                                <p class="action" (click)="scrollToDeliveryDetails()"
+                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="order-card summary" id="summary-card">
+                <div class="order-card-container">
+                    <div class="card-header-section">
+                        <h2 class="card-header">Order Summary</h2>
+                        <p class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(orderInfo?.id)"
+                            *ngIf="!!orderInfo?.paymentSuccessful"><img class="icon"
+                                src="assets/icon/purple-invoice.svg"><span>View Invoice</span></p>
+                    </div>
+                    <div class="card-tab">
+                        <input type="checkbox" id="summary" [(ngModel)]="summary">
+                        <label class="tab-label" for="summary">Summary</label>
+                        <div class="tab-content">
+                            <div class="info-section total-info">
+                                <div class="price-details">
+                                    <p class="price-title">Subtotal</p>
+                                    <p class="value">{{orderInfo?.payment?.itemsPrice}}</p>
+                                </div>
+                                <div class="price-details discount">
+                                    <p class="price-title">Discount total</p>
+                                    <p class="value">- {{orderInfo?.payment?.discountApplied}}</p>
+                                </div>
+                                <div class="price-details">
+                                    <p class="price-title">Shipping fees</p>
+                                    <p class="value">{{orderInfo?.payment?.shippingCost}}</p>
+                                </div>
+                                <div class="price-details">
+                                    <p class="price-title">Govt. taxes & fees </p>
+                                    <p class="value">{{orderInfo?.payment?.taxes}}</p>
+                                </div>
+                                <div class="price-details">
+                                    <p class="price-title">Surcharges & fees</p>
+                                    <p class="value">{{orderInfo?.payment?.fees}}</p>
+                                </div>
+                                <hr>
+                                <div class="total-details">
+                                    <p class="total">Total: {{ orderInfo?.payment?.totalPrice}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right" [class.none]="!orderInfo?.shippingInfo?.shippingAddress">
+            <div class="order-card" id="delivery-card"
+                *ngIf="orderInfo?.shippingInfo && orderInfo?.shippingInfo?.shippingAddress" #delivery>
+                <div class="order-card-container">
+                    <div class="card-header-section">
+                        <h2 class="card-header">Delivery Details</h2>
+                    </div>
+                    <div class="card-tab">
+                        <input type="checkbox" id="tracking" [(ngModel)]="shipping">
+                        <label class="tab-label track" for="tracking">
+                            <div>
+                                <p class="tab-title">Tracking Details <span class="title-action" *ngIf="!!trackingInfo"
+                                        (click)="showTrackingInfo()">Track it</span>
+                                </p>
+                                <div class="title-tracking" *ngIf="!shipping">
+                                    <img class="tracking-icon" src="assets/icon/pending-tracking.svg"
+                                        alt="pending shipment">
+                                    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots">
+                                    <img class="tracking-icon"
+                                        [src]="(orderInfo?.status !==  ORDER_STATUS.PENDING) ? 'assets/icon/Processing-tracking.svg' : 'assets/icon/Processing-disabled.svg'"
+                                        alt="processing shipment">
+                                    <img class="tracking-icon dots"
+                                        [src]="orderInfo?.status !==  ORDER_STATUS.SHIPPED && orderInfo?.status !==  ORDER_STATUS.DELIVERED ? 'assets/icon/tracking-dots-disabled.svg' : 'assets/icon/tracking-dots.svg'"
+                                        alt="dots">
+                                    <img class="tracking-icon"
+                                        [src]="(orderInfo?.status ===  ORDER_STATUS.SHIPPED || orderInfo?.status ===  ORDER_STATUS.DELIVERED) ? 'assets/icon/onTheWay.svg' : 'assets/icon/OnTheWay-disabled.svg'"
+                                        alt="on the way">
+                                    <img class="tracking-icon dots"
+                                        [src]="orderInfo?.status !==  ORDER_STATUS.SHIPPED && orderInfo?.status !==  ORDER_STATUS.DELIVERED ? 'assets/icon/tracking-dots-disabled.svg' : 'assets/icon/tracking-dots.svg'"
+                                        alt="dots">
+                                    <img class="tracking-icon"
+                                        [src]="(orderInfo?.status ===  ORDER_STATUS.DELIVERED) ? 'assets/icon/delivered.svg' : 'assets/icon/delivered-disable.svg'"
+                                        alt="shipped">
+                                </div>
+                            </div>
+                        </label>
+                        <div class="tab-content">
+                            <div class="info-section tracking">
+                                <img class="tracking-icon" src="assets/icon/pending-tracking.svg"
+                                    alt="pending shipment">
+                                <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots">
+                                <img class="tracking-icon"
+                                    [src]="(orderInfo?.status !==  ORDER_STATUS.PENDING) ? 'assets/icon/Processing-tracking.svg' : 'assets/icon/Processing-disabled.svg'"
+                                    alt="processing shipment">
+                                <img class="tracking-icon dots"
+                                    [src]="orderInfo?.status !==  ORDER_STATUS.SHIPPED && orderInfo?.status !==  ORDER_STATUS.DELIVERED ? 'assets/icon/tracking-dots-disabled.svg' : 'assets/icon/tracking-dots.svg'"
+                                    alt="dots">
+                                <img class="tracking-icon"
+                                    [src]="(orderInfo?.status ===  ORDER_STATUS.SHIPPED || orderInfo?.status ===  ORDER_STATUS.DELIVERED) ? 'assets/icon/onTheWay.svg' : 'assets/icon/OnTheWay-disabled.svg'"
+                                    alt="on the way">
+                                <img class="tracking-icon dots"
+                                    [src]="orderInfo?.status !==  ORDER_STATUS.SHIPPED && orderInfo?.status !==  ORDER_STATUS.DELIVERED ? 'assets/icon/tracking-dots-disabled.svg' : 'assets/icon/tracking-dots.svg'"
+                                    alt="dots">
+                                <img class="tracking-icon"
+                                    [src]="(orderInfo?.status ===  ORDER_STATUS.DELIVERED) ? 'assets/icon/delivered.svg' : 'assets/icon/delivered-disable.svg'"
+                                    alt="shipped">
+                            </div>
+                            <div>
+                                <input type="checkbox" id="addresses" [(ngModel)]="address">
+                                <label class="sub-label" (click)="open()">
+                                    <span data-cy="shippingAddress">Shipping Address <span class="title-action"
+                                            data-cy="changeShippingAddress"
+                                            (click)="editShippingAddress(orderInfo?.shippingInfo?.shippingAddress, orderInfo?.id);addresses=true;"
+                                            *ngIf="orderInfo?.status !== ORDER_STATUS.DELIVERED && orderInfo?.status !== ORDER_STATUS.SHIPPED && orderInfo?.status !== ORDER_STATUS.CANCELED">Change</span></span><img
+                                        class="icon" data-cy="arrowIconShippingAddress"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content shipping" *ngIf="!!address">
+                                    <p class="info">{{!!orderInfo?.shippingInfo?.shippingAddress?.shippingName ?
+                                        (orderInfo?.shippingInfo?.shippingAddress?.shippingName + ','): ''}}
+                                        {{orderInfo?.shippingInfo?.shippingAddress?.address1}}{{!!orderInfo?.shippingInfo?.shippingAddress?.address2
+                                        ? orderInfo?.shippingInfo?.shippingAddress?.address2 : ''}}</p>
+                                    <p class="info">{{orderInfo?.shippingInfo?.shippingAddress?.state}},
+                                        {{orderInfo?.shippingInfo?.shippingAddress?.postalCode}}
+                                        {{orderInfo?.shippingInfo?.shippingAddress?.city}}</p>
+                                    <div class="method"
+                                        *ngIf="!!orderInfo?.shippingInfo?.shipmentMethodId && orderInfo?.shippingInfo?.shipmentMethodId !== 'N/A'">
+                                        <h3 class="info-title">Shipping Method</h3>
+                                        <p class="info">{{!!orderShippingMethod ? orderShippingMethod.shippingMethod :
+                                            'N/A'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                *ngIf="(!!orderInfo?.devices && orderInfo?.devices?.length > 0) || (!!orderInfo?.cards && orderInfo?.cards?.length > 0)">
+                                <input type="checkbox" id="package" [(ngModel)]="packages">
+                                <label class="sub-label" for="package">
+                                    <span>Package Content</span><img class="icon" data-cy="arrowIconPackageContent"
+                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                </label>
+                                <div class="sub-content">
+                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                        <div class="details-side">
+                                            <div class="phone-image-container">
+                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                            </div>
+                                            <div class="details">
+                                                <p class="title"><b>{{device?.description}}</b></p>
+                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                                <p class="action" *ngIf="screenWidth < 1025"
+                                                    (click)="scrollToDetails()">
+                                                    Item Details</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr *ngIf="orderInfo?.devices && orderInfo?.cards && orderInfo?.skuNumber !== 'TE'">
+                                    <ng-container *ngIf="!!orderInfo?.cards && orderInfo?.cards.length > 0 && orderInfo?.skuNumber !== 'TE'">
+                                        <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                            <div class="details-side">
+                                                <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                                <div class="details">
+                                                    <p class="title"><b>SIM Card</b><b> {{orderInfo?.intent ===
+                                                            ORDER_INTENT.REPLACEMENT ? '(Replacement)' : (orderInfo?.intent
+                                                            ===
+                                                            ORDER_INTENT.NEW ? '(New)' : '(Migration')}}</b></p>
+                                                    <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                    <p class="id" *ngIf="sim?.deviceId">IMEI: {{sim?.deviceId}}</p>
+                                                    <p class="quantity">Quantity: 1</p>
+                                                    <p class="action" *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'"
+                                                        (click)="scrollToDetails()">
+                                                        Item Details</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

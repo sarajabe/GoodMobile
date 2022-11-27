@@ -1,0 +1,32 @@
+<section class="container-flex compatible-device">
+    <h1 class="header">Coverage and Device Summary</h1>
+    <div class="esim-networks-part">
+        <div class="success-banner">
+            <div class="flex">
+                <img src="assets/icon/green-check.svg" alt="note icon">
+                <div class="banner-content">
+                    <p class="title">Great News!</p>
+                    <p class="note">Your {{cart?.planDevice?.marketingName}} is eligible for migration {{!!cart?.eSIM ? 'and it is' : ''}} <b *ngIf="!!cart?.eSIM" class="flex no-gap">eSIM compatible <span class="tooltip">
+                        <img src="assets/icon/Information-sec.svg" class="info" alt="Info icon"/>
+                        <span class="tooltiptext">
+                        <img src="assets/icon/why-arrow.svg" alt="Info icon"/>
+                          <p>An eSIM is an industry-standard digital SIM that allows you to activate a cellular plan from your carrier without having to use a physical SIM.</p>
+                          <p>The activation process is immediate without having to wait around.</p>
+                        </span>
+                      </span></b> </p>
+                    <p class="desc" >{{!!cart?.eSIM ? 'To migrate the service, we will provide you a free eSIM. Once you are ready to activate it, just login to your account, and kick off the migration with one click. ' : 
+                        'To migrate the service, we will send you a free SIM. Once you receive the SIM, just login to your account, and kick off the migration with one click. '}}</p>
+                    <p class="desc att"><b>Your phone must also be unlocked to work on the preferred network.  If you are not sure if your phone is locked to AT&T, please visit <a href="https://www.att.com/deviceunlock" target="_blank">https://www.att.com/deviceunlock/</a> to check your unlock status, or request an unlock.</b></p>
+                    <p class="desc">Would you like to proceed with your free <b>{{!!cart?.eSIM ? 'e': ''}}SIM </b>order to start your service migration?</p>
+                    <div class="actions">
+                        <button class="button primary" id="yes" (click)="goToCart()">Proceed to checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="physical-flow" *ngIf="!!cart?.eSIM">
+            <p class="desc"><b>Want to use a physical SIM?</b></p>
+            <p class="action-link" data-cy="IWantPhysicalSim" (click)="SendTmoPhysicalSim()">Yes, I want a physical SIM</p>
+        </div>
+    </div>
+</section>

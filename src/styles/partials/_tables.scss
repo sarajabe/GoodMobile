@@ -1,0 +1,276 @@
+// Tables
+//––––––––––––––––––––––––––––––––––––––––––––––––––
+// todo rework when needed set tables with specific classes
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+
+  thead {
+    background-color: $light-grey;
+    color: $dark-grey;
+    font-weight: 300;
+    &.mat-calendar-table-header {
+      background-color: transparent;
+      tr {
+        th {
+          padding: 11px 0 5px 0!important;
+          &.mat-calendar-table-header-divider {
+            display: none;
+          }
+        }
+      }
+    }
+    tr {
+      th {
+        font-size: rem-calc(12px);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+    }
+  }
+  th,
+  td {
+    font-size: rem-calc(14px);
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid $light-grey;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 10px;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-left: 10px;
+  }
+}
+
+.responsive-table {
+  min-width: 300px; // adjust to your needs
+  tr {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    &:last-child {
+      border-bottom: 3px solid $light-grey;
+
+      @media (#{$larger-than-desktop}) {
+        border-bottom: 1px solid $light-grey;
+      }
+    }
+
+    &:before {
+      content: attr(data-th) ": ";
+      font-weight: bold;
+      width: 9.5em;
+      display: inline-block;
+
+      @media (#{$larger-than-desktop}) {
+        display: none;
+      }
+    }
+  }
+
+  th, td {
+    text-align: left;
+
+    @media (#{$larger-than-desktop}) {
+      display: table-cell;
+    }
+
+  }
+
+  &.primary {
+    thead {
+      background-color: $primary-color;
+
+      color: white;
+      font-family: $header-font-family;
+      font-size: rem-calc(10px);
+      letter-spacing: 2px;
+
+      tr {
+        th {
+          font-weight: 400;
+          font-family: Sansation;
+          font-size: rem-calc(17px);
+          padding: 12px 20px;
+          text-transform: capitalize;
+
+          span.th {
+            display: inline-block;
+            width: 100%;
+            border-right: 1px solid white;
+            position: relative;
+
+            span {
+              font-weight: normal;
+              position: absolute;
+              top: 0;
+              right: 5px;
+            }
+          }
+        }
+
+        td {
+          font-size: rem-calc(17px);
+          font-weight: bold;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        display: inline-block;
+        margin-bottom: 12px;
+        border: 0px;
+        margin-left: 0;
+        @media (max-width: 340px) {
+          width: 87%;
+        }
+
+        @media (#{$larger-than-phablet}) {
+          margin-left: 0;
+        }
+
+        @media (#{$larger-than-desktop}) {
+          border-bottom: 1px solid $black;
+          display: table-row;
+          height: 70px;
+        }
+
+        td {
+          text-transform: capitalize;
+          float: left;
+          max-width: 300px;
+          color: black;
+          border-bottom: 0;
+          text-align: center;
+
+          width: calc(70%);
+          margin-right: 0;
+
+          padding: 2px 10px;
+          @media (max-width: 358px) {
+            max-width: calc(67%);
+            width: calc(67%);
+          }
+          @media(max-width: $desktop-min-width-minus) {
+            max-width: 100%;
+            text-align: left;
+          }
+          &:first-child {
+            float: left;
+            height: 100%;
+            width: 100%;
+            vertical-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: baseline;
+            flex-wrap: wrap;
+            border-bottom: none;
+            margin-right: 0;
+            padding: 14px 12px;
+            text-align: center;
+            @media (#{$larger-than-desktop}) {
+              display: table-cell;
+              float: none;
+              height: auto;
+              width: auto;
+              text-align: left;
+            }
+          }
+
+          &:nth-child(2) {
+            padding-top: 10px;
+            font-size: 16px;
+          }
+
+          &:last-child {
+            padding-left: 10px;
+            border-bottom: 0;
+            padding-bottom: 10px;
+          }
+
+          &:before {
+            width: auto;
+            margin-right: 5px;
+          }
+
+          @media (#{$larger-than-desktop}) {
+            display: table-cell;
+            float: none;
+            height: auto;
+            width: auto;
+            font-size: 16px;
+            padding: 15px 20px;
+            background-color: transparent;
+          }
+         
+        }
+
+        &:nth-child(odd) {
+          td:first-child {
+            background-color: $primary-color;
+            color: white;
+            text-align: center;
+            &:before {
+              content: "";
+              display: none;
+            }
+          }
+        }
+
+        &:nth-child(even) {
+          td:first-child {
+            background-color: $secondary-color;
+            color: white;
+            text-align: center;
+            &:before {
+              content: "";
+              display: none;
+            }
+          }
+        }
+
+        @media (#{$larger-than-desktop}) {
+          &:nth-child(odd) {
+            td:first-child {
+              background-color: transparent;
+              color: $black;
+              font-size: 16px;
+            }
+          }
+
+          &:nth-child(even) {
+            td:first-child {
+              background-color: transparent;
+              color: $black;
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+
+    td {
+      &:last-child {
+        border-bottom: 3px solid $light-grey;
+
+        @media (#{$larger-than-desktop}) {
+          border-bottom: 1px solid $light-grey;
+        }
+      }
+    }
+  }
+}

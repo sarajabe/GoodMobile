@@ -1,0 +1,92 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.cancel-plan-form-container {
+    margin-bottom: 50px;
+    .title {
+        font-size: rem-calc(38px);
+        line-height: 50px;
+    }
+    .subtitle {
+        margin-bottom: 0;
+        font-size: rem-calc(20px);
+        font-family: $base-font-family-bold;
+        line-height: 1.15;
+        margin-bottom: 25px;
+    }
+    .note {
+        font-size: rem-calc(18px);
+        font-family: $base-font-family;
+        line-height: 1.39;
+        &.common {
+            margin-bottom: 30px;
+        }
+    }
+    .radio-checkbox {
+        input[type="radio"] {
+            + .radio-checkbox-label {
+                &:before {
+                    top: 14px;
+                    border-radius: 0;
+                }
+                p {
+                    font-size: rem-calc(16px);
+                    font-family: $base-font-family-bold;
+                    font-weight: bold;
+                    line-height: 46px;
+                }
+            }
+        }
+    }
+    .action {
+        margin: 30px 0 50px;
+    }
+    .recaptcha {
+        margin: 20px 0;
+    }
+    .button {
+        width: 213px;
+        font-size: rem-calc(20px);
+        padding: 10px 30px;
+    }
+    @media (max-width: $phablet-min-width) {
+        margin-bottom: 30px;
+        .title {
+            font-size: rem-calc(27px);
+            line-height: 35px;
+            margin-bottom: 25px;
+        }
+        .subtitle {
+            font-size: rem-calc(20px);
+            line-height: 23px;
+            margin-bottom: 20px;
+        }
+        .note {
+            font-size: rem-calc(16px);
+            line-height: 18px;
+        }
+        .recaptcha {
+            margin: 20px 0 35px;
+        }
+        .radio-checkbox {
+            input[type="radio"] {
+                + .radio-checkbox-label {
+                    margin-bottom: 0;
+                    &:before {
+                        width: 17.7px;
+                        height: 17.7px;
+                    }
+                    p {
+                        font-size: rem-calc(16px);
+                        line-height: 40px;
+                        margin-bottom: 0;
+                        margin-left: 28px;
+                    }
+                }
+            }
+        }
+        .action {
+            margin-bottom: 50px;
+        }
+    }
+}

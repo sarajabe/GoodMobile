@@ -1,0 +1,63 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+::ng-deep {
+    .signForm {
+        display: flex;
+        flex-direction: column;
+        .form-row {
+            display: flex;
+            margin-bottom: 30px;
+            input {
+                width: 55px;
+                height: 40px;
+                margin-top: 10px;
+                text-transform: uppercase;
+            }
+            .label {
+                font-size: rem-calc(22px);
+                line-height: 40px;
+                font-family: $lato-font-family;
+                font-weight: 400;
+                margin-left: 16px;
+                margin-bottom: 0;
+                @media (max-width: $phablet-min-width-minus) {
+                    font-size: rem-calc(16px);
+                }
+            }
+        }
+        .note {
+            font-size: rem-calc(22px);
+            line-height: 40px;
+            font-family: $lato-font-family;
+            font-weight: 700;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(16px);
+            }
+        }
+        .captcha {
+            margin-bottom: 60px;
+        }
+        .hint {
+            font-size: rem-calc(12px);
+            line-height: 20px;
+            color: #A5A3A3;
+            margin-top: 12px;
+        }
+        .signed-name {
+            width: 60%;
+            margin-bottom: 40px;
+            @media (max-width: $desktop-min-width-minus) {
+                width: 100%;
+                margin-bottom: 0;
+            }
+            .outlined-label-input {
+                &.disabled {
+                    input {
+                        background-color: white;
+                    }
+                }
+            }
+        }
+    }
+}

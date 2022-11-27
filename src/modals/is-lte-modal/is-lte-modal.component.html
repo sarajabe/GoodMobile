@@ -1,0 +1,24 @@
+<div class="container model-container full {{context.customClass}}">
+        <div class="modal-header">
+            <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+            <h2 class="modal-heading">{{context.title}}</h2>
+        </div>
+        <div class="modal-body">
+            <div class="modal-content">
+                    <div class="is-lte-options">
+                            <form [formGroup]="lteOptionsForm" class="form-options">
+                                    <div class="lte-custom-input"><input type="radio" value="Yes"
+                                            formControlName="option" id="yes"> <label for="yes">Yes</label></div>
+                                    <div class="lte-custom-input"> <input type="radio" value="No"
+                                            formControlName="option" id="no"> <label for="no">No</label></div>
+                                    <div class="lte-custom-input"> <input type="radio" value="Not Sure"
+                                     formControlName="option" id="notSure"> <label for="notSure">Not sure</label></div>        
+                                    <div>
+                                        <button id="next-step" data-cy="nextStep" class="button primary" [class.disabled]="!lteOptionsForm.valid"
+                                            [disabled]="!lteOptionsForm.valid" (click)="checkCoverage()">Check coverage</button>
+                                    </div>
+                                </form>
+                        </div>
+            </div>
+        </div>
+    </div>

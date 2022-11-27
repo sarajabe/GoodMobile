@@ -1,0 +1,265 @@
+@import '../../../styles/modules/mixins';
+@import '../../../styles/modules/variables';
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+.fade-in {
+	opacity: 1;
+	animation-name: fadeIn;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
+}
+.banner {
+    padding: 24px;
+    box-shadow: 0px 3px 4px 0px #EAEAEA40;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    color: #383838;
+    margin: 24px 0;
+    border-radius: 8px;
+    background: #E6F6EE;
+    &.hidden {
+        display: none;
+    }
+    img {
+        width: 20px;
+        height: 20px;
+    }
+    .banner-note {
+        display: flex;
+        flex-direction: column;
+        .title {
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            margin-bottom: 8px;
+        }
+        .note {
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+    }
+}
+.payments-check {
+    padding-top: 32px;
+    .content {
+        .header {
+            font-size: rem-calc(32px);
+            line-height: 40px;
+            margin-bottom: 32px;
+        }
+        .sub-header {
+            font-size: rem-calc(20px);
+            line-height: 24px;
+            margin-bottom: 24px;
+        }
+        .payment-container {
+            background: #A5A3A30D;
+            box-shadow: 0px 3px 15px 0px #29292933;
+            border-radius: 10px;
+            padding: 0 32px;
+            .payment-details {
+                padding: 24px 0 32px;
+                border-bottom: 1px solid #CED3D6;
+                &:last-child {
+                    border-bottom: none;
+
+                }
+                .brand {
+                    font-size: rem-calc(18px);
+                    font-weight: 700;
+                    line-height: 28px;
+                    margin-bottom: 0px;
+                }
+                .info {
+                    font-size: rem-calc(16px);
+                    line-height: 24px;
+                    margin-bottom: 0px;
+                }
+                .attention-banner {
+                    background: #FFEFEE;
+                    box-shadow: 0px 3px 4px 0px #EAEAEA40;
+                    display: flex;
+                    align-items: center;
+                    padding: 18px;
+                    margin: 16px 0 24px;
+                    border-radius: 8px;
+                    .note {
+                        color: #D22119;
+                        font-size: rem-calc(18px);
+                        line-height: 28px;
+                        margin-bottom: 0;
+                        padding-left: 10px;
+                    }
+                }
+                .actions {
+                    display: flex;
+                    justify-content: space-between;
+                    .button {
+                        width: 204px;
+                        font-size: rem-calc(20px);
+                        line-height: 20px;
+                        padding: 10px;
+                        font-weight: bold;
+                        img {
+                            padding-right: 0px;
+                            width: 28px;
+                            height: 21px;
+                        }
+                    }
+                }
+            }
+            .card-form {
+                margin-top: 24px;
+                padding-left: 10px;
+                max-width: 450px;
+                display: flex;
+                flex-direction: column;
+                .form-header {
+                    font-size: rem-calc(18px);
+                    line-height: 26px;
+                    margin-bottom: 16px;
+                }
+                input, select {
+                    height: 40px;
+                }
+                .flex-display {
+                    display: flex;
+                    gap: 20px;
+                    margin-bottom: 0;
+                }
+                .half {
+                    display: flex;
+                    flex-direction: column;
+                    flex-basis: 49%;
+                }
+                .select {
+                    max-width: 103px;
+                }
+                .form-actions {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .transparent {
+                        background-color: transparent;
+                        color: $primary-color;
+                        cursor: pointer;
+                        font-size: rem-calc(20px);
+                        font-family: $secondary-font-family-bold;
+                        margin-bottom: 0;
+                    }
+                    .button {
+                        width: 107px;
+                        padding: 8px;
+                        font-size: rem-calc(20px);
+                        font-weight: 700;
+                    }
+                }
+                ::ng-deep {
+                    .credit-card-form3 {
+                        input {
+                            height: 40px;
+                            max-width: 450px;
+                        }
+                        .row {
+                            margin: 0;
+                        }
+                        fieldset {
+                            margin-bottom: 10px;
+                        }
+                        .four {
+                            padding-left: 0;
+                            &:last-child {
+                                padding-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            .header {
+                font-size: rem-calc(24px);
+                line-height: 32px;
+                margin-bottom: 24px;
+            }
+            .sub-header {
+                font-size: rem-calc(18px);
+                line-height: 28px;
+            }
+            .payment-container {
+                padding: 0 16px;
+                .payment-details {
+                    padding: 16px 0 24px;
+                    .brand {
+                        font-size: rem-calc(18px);
+                        line-height: 28px;
+                    }
+                    .info {
+                        font-size: rem-calc(16px);
+                        line-height: 24px;
+                    }
+                    .attention-banner {
+                        .note {
+                            font-size: rem-calc(14px);
+                            line-height: 24px;
+                        }
+                        img {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                    .actions {
+                        flex-direction: column;
+                        justify-content: center;
+                        gap: 16px;
+                        .button {
+                            width: 173px;
+                            font-size: rem-calc(16px);
+                            line-height: 16px;
+                            padding: 8px;
+                            img {
+                                width: 18px;
+                                height: 18px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .page-footer {
+        background: #FFFFFF;
+        box-shadow: 0px 1px 0px 0px #E2E2E2 inset;
+        padding: 16px 0 23px;
+        margin-top: 140px;
+        .container-flex {
+            display: flex;
+            justify-content: flex-end;
+            .button {
+                width: 107px;
+                padding: 8px;
+                font-size: rem-calc(20px);
+                line-height: 20px;
+                font-weight: 700;
+            }
+        }
+        @media(max-width: $desktop-min-width-minus) {
+            margin-top: 60px;
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            margin-top: 32px;
+            .container-flex {
+                .button {
+                    width: 98px;
+                    font-size: rem-calc(16px);
+                }
+            }
+        }
+    }
+}

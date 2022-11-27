@@ -1,0 +1,75 @@
+<div class="container model-container full {{context.customClass}}">
+    <div class="modal-header">
+      <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+      <h2 class="modal-heading">Select your preferred method of payment</h2>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <ng-container *ngIf="!context.isManage">
+          <p class="note" *ngIf="methodsList?.length > 0">Choose a different payment method below:</p>
+          <div class="account-address-details-container highlight-card" *ngFor="let methodItem of methodsList"
+               (click)="this.selectedMethodId = methodItem.id">
+            <div class="custom-checkbox">
+              <div class="checkbox">
+                <input title="{{methodItem.alias}}" type="radio"
+                       [checked]="methodItem.id === selectedMethodId" name="shippingAddress"
+                       [id]="methodItem.id" [value]="methodItem">
+                <label [for]="methodItem.id"></label>
+              </div>
+              <div class="checkbox-label">
+                {{checkBoxLabel(methodItem)}}
+              </div>
+            </div>
+            <div class="details">
+              <p>Ending in {{methodItem.last4}},</p>
+                <p>Expiry date: {{methodItem.expirationDate | expirationDateFormat}}</p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!!context.isManage">
+          <div class="form-section payment-form">
+            <fieldset class="twelve">
+              <h4 *ngIf="context.isManage">Add New Payment Method</h4>
+              <div class="radio">
+                <div class="radio">
+                  <input title="credit card method" type="radio" value="Credit Card" checked name="cc_method">
+                  <label class="radio-label"></label>
+                </div>
+                <label class="radio-label">
+                  <img src="/assets/img/credit-cards-logos-bw.png" alt="Credit Card">
+                  <span>Credit Card</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="row form-section">
+            <div class="twelve">
+              <app-credit-card-payment [(paymentInfo)]="paymentInfo"
+                                   (isValid)="setValidCardInfo($event)"></app-credit-card-payment>
+  
+              <div class="form-section">
+                <h4>Billing Address</h4>
+                <app-address-lookup [displayedAddress]="paymentInfo" (addressChange)="updateAddress($event)"
+                                (isValid)="setValidBillingAddress($event)"></app-address-lookup>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="row form-section modal-actions">
+          <button *ngIf="!!context.isManage" class="button" (click)="savePaymentInfo()"
+                  [class.disabled]="!isValidPaymentInfo"
+                  [disabled]="!isValidPaymentInfo" [uiBlockButton]="processingRequest || setDefaultRequest">
+            Save
+          </button>
+          <span *ngIf="!context.isManage" class="modal-hint">You can also add another payment method in  <a (click)="goToSettings()">Profile Settings</a></span>
+          <button *ngIf="!context.isManage" class="button primary" (click)="makePaymentMethodAsDefault(selectedMethodId)"
+                  [class.disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"
+                  [disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"
+                  [uiBlockButton]="processingRequest || setDefaultRequest">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

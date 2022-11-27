@@ -1,0 +1,166 @@
+<div class="container model-container full {{context.customClass}}">
+    <div class="modal-header">
+        <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+        <h2 class="modal-heading">{{context.title}}</h2>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content">
+            <div class="content">
+                <p class="note">{{context.note}} <span class="link"
+                        (click)="addNewPayment()">{{context.noteLinkText}}</span>. </p>
+            </div>
+            <div class="form-section payment-form">
+                <form [formGroup]="ccForm" class="ccForm">
+                    <fieldset class="first-row">
+                        <div class="cardNumber-section">
+                            <label for="cardNumber" class="modal-label">VISA ending in {{context?.paymentMethod.last4}},
+                                Expiration date:
+                                {{ccForm.controls.cardExpirationMonth.value}}/{{ccForm.controls.cardExpirationYear.value}}</label>
+                        </div>
+                        <div class="name-section">
+                            <label for="name">Name on card <span class="required-field">*</span></label>
+                            <input class="nameField" data-cy="nameField" type="text" formControlName="fullName" minlength="1"
+                                maxlength="30">
+                            <p class="validation-message" data-cy="nameOnCardRequiredMsg"
+                                *ngIf="ccForm.controls.fullName.touched && ccForm.controls.fullName.hasError('required')">
+                                Name on card is required. </p>
+                            <p class="validation-message" data-cy="invalidName"
+                                *ngIf="ccForm.controls.fullName.dirty && ccForm.controls.fullName.errors?.pattern && ccForm.controls.fullName.value">
+                                Invalid Name. </p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="second-row">
+                        <div class="expiry-section">
+                            <label for="cardExpirationMonth">Expiry date <span class="required-field">*</span></label>
+                            <div class="select no-margin-left">
+                                <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth"
+                                    formControlName="cardExpirationMonth" autocomplete="cc-exp-month">
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <div class="select-bg">
+                                    <div class="select-arrow"></div>
+                                </div>
+                            </div>
+                            <span class="sperator">/</span>
+                            <div class="select">
+                                <select id="cardExpirationYear" data-cy="cardExpirationYear"  name="cardExpirationYear"
+                                    formControlName="cardExpirationYear" autocomplete="cc-exp-year">
+                                    <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">
+                                        {{expYear}}
+                                    </option>
+                                </select>
+                                <div class="select-bg">
+                                    <div class="select-arrow"></div>
+                                </div>
+                            </div>
+                            <label class="validation-message"
+                                *ngIf="(ccForm.controls.cardExpirationMonth.touched || ccForm.controls.cardExpirationYear.touched) && ccForm.errors?.cardExpirationInvalid && (ccForm.controls.cardExpirationMonth.valid || !ccForm.controls.cardExpirationYear.valid)">
+                                Expiration date must be valid
+                            </label>
+                        </div>
+                        <div class="cvv-section">
+                            <label for="cardCode">CVV <span class="required-field">*</span></label>
+                            <input id="cardCode"  data-cy="cardCodeField" type="password" name="cardCode" restrictNumbers minlength="3"
+                                maxlength="4" formControlName="cardCode" autocomplete="cc-csc">
+                            <p class="validation-message" data-cy="cvvRequiredMsg"
+                                *ngIf="ccForm.controls.cardCode.touched && ccForm.controls.cardCode.hasError('required')">
+                                CVV is required. </p>
+                            <p class="validation-message" data-cy="cvvInvalidMsg"
+                                *ngIf="ccForm.controls.cardCode.dirty && ccForm.controls.cardCode.value && ccForm.controls.cardCode.invalid">
+                                CVV is invalid. </p>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="form-section address-form">
+                <h2 class="title">Billing address</h2>
+                <div class="populated" *ngIf="!isEditMode">
+                    <p class="address">{{context?.paymentMethod?.address1}}. <span class="edit desktop" data-cy="editPaymentAddress"
+                            (click)="enableEditAddress()"><img src="/assets/img/edit-white.svg" alt="edit"
+                                name="edit" /> Edit address</span></p>
+                    <p class="address">{{context?.paymentMethod?.city}}, {{context?.paymentMethod?.state}}</p>
+                    <p class="address">{{context?.paymentMethod?.postalCode}}</p>
+                    <p class="edit responsive" (click)="enableEditAddress()"><img src="/assets/img/edit-white.svg"
+                            alt="edit" name="edit" /> Edit address</p>
+                </div>
+                <form [formGroup]="addressForm" class="addressForm" *ngIf="!!isEditMode">
+                    <fieldset class="first-row">
+                        <div class="addressName-section">
+                            <label for="alias">Name <span class="required-field">*</span></label>
+                            <input class="aliasField" data-cy="addressNameField" type="text" name="alias" formControlName="alias" minlength="1"
+                                maxlength="50">
+                            <p class="validation-message" data-cy="addressNameRequiredMsg"
+                                *ngIf="addressForm.controls.alias.touched && addressForm.controls.alias.hasError('required')">
+                                Name is required. </p>
+                        </div>
+                        <div class="address-section">
+                            <label for="addressLookup">Address line <span class="required-field">*</span></label>
+                            <input id="addressLookup" data-cy="addressLookup" name="addressLookup" #addressLookup type="search"
+                                formControlName="address1" display-property-name="main_text" ngui-auto-complete
+                                [max-num-list]="10" [source]="findPlace.bind(this)" class="geolocate"
+                                list-formatter="description" (valueChanged)="addressDetails($event)">
+                            <p class="validation-message" data-cy="addressLineRequiredMsg"
+                                *ngIf="addressForm.controls.address1.touched && addressForm.controls.address1.hasError('required')">
+                                Address is required. </p>
+                        </div>
+                    </fieldset>
+                    <fieldset class="second-row">
+                        <div class="details-section">
+                            <div class="state-section">
+                                <label for="state">State <span class="required-field">*</span></label>
+                                <input class="stateField" data-cy="stateField" type="text" name="state" formControlName="state"
+                                    autocomplete="address-level1" maxlength="2" minlength="2">
+                                <p class="validation-message" data-cy="stateRequiredMsg"
+                                    *ngIf="addressForm.controls.state.touched && addressForm.controls.state.hasError('required')">
+                                    State is required. </p>
+                                <p class="validation-message" data-cy="stateInvalidMsg"
+                                    *ngIf="addressForm.controls.state.dirty&& addressForm.controls.state.value && addressForm.controls.state.errors?.pattern">
+                                    State is invalid. </p>
+                            </div>
+                            <div class="city-section">
+                                <label for="city">City <span class="required-field">*</span></label>
+                                <input class="cityField" data-cy="cityField" type="text" name="city" formControlName="city"
+                                    autocomplete="address-level2">
+                                <p class="validation-message" data-cy="cityRequiredMsg"
+                                    *ngIf="addressForm.controls.city.touched && addressForm.controls.city.hasError('required')">
+                                    City is required. </p>
+                                <p class="validation-message" data-cy="cityInvalidMsg"
+                                    *ngIf="addressForm.controls.city.dirty&& addressForm.controls.city.value && addressForm.controls.city.errors?.pattern">
+                                    City is invalid. </p>
+                            </div>
+                        </div>
+                        <div class="postal-section">
+                            <label for="postalCode">ZIP code <span class="required-field">*</span></label>
+                            <input id="postalCode" data-cy="zipField" name="postalCode" #postalCode type="text"
+                                formControlName="postalCode" autocomplete="postal-code" maxlength="10" minlength="5"
+                                (valueChanged)="addressDetails($event)" />
+                            <p class="validation-message" data-cy="zipRequiredMsg"
+                                *ngIf="addressForm.controls.postalCode.touched && addressForm.controls.postalCode.hasError('required')">
+                                ZIP code is required. </p>
+                            <p class="validation-message" data-cy="zipInvalidMsg"
+                                *ngIf="addressForm.controls.postalCode.dirty && addressForm.controls.postalCode.value && addressForm.controls.postalCode.errors?.pattern">
+                                ZIP code is invalid. </p>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="form-section modal-actions">
+                <button class="button primary" data-cy="updatePaymentBtn" (click)="savePaymentInfo()"
+                    [uiBlockButton]="processingRequest">
+                    Update payment
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

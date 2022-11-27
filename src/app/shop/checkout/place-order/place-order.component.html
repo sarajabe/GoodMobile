@@ -1,0 +1,461 @@
+<section class="place-order-section checkout-step">
+  <div class="progress-banner">
+    <div class="step" *ngIf="!!showShippingCard">
+      <picture>
+        <source srcset='assets/icon/enabled-checkout-shipping.svg' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-shipping.svg" alt="shipping" class="step-image">
+      </picture>
+    </div>
+    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!showShippingCard">
+    <div class="step">
+      <picture>
+        <source srcset='assets/icon/enabled-checkout-payment.svg' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-payment.svg" alt="payment" class="step-image">
+      </picture>
+    </div>
+    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots">
+    <div class="step">
+      <picture>
+        <source srcset='assets/icon/enabled-checkout-overview.svg' media="(min-width: 320px)">
+        <img src="assets/icon/disabled-checkout-overview.svg" alt="overview" class="step-image">
+      </picture>
+    </div>
+  </div>
+  <div class="container-flex place-order">
+    <div class="cart-total" id="cart-section">
+      <p>Checkout</p>
+      <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
+    </div>
+    <h1 class="step-title">Ready to place your order?</h1>
+    <p class="step-sub-title">Let’s make sure everything’s right.</p>
+    <div class="cards-flex">
+      <div class="left" [class.full]="!showShippingCard && !!isMigration">
+        <div class="place-order-card" [class.full]="!showShippingCard && !!isMigration">
+          <div class="card-header">
+            <p class="title">Order Summary</p>
+          </div>
+          <div class="card-tab">
+            <input type="checkbox" class="hidden-checkbox" id="summary" [(ngModel)]="summary" />
+            <label class="tab-label" for="summary">Summary</label>
+            <div class="tab-content">
+              <div class="sub-content">
+                <div class="item-details">
+                  <div class="details summary">
+                    <div class="detail">
+                      <p class="key">Subtotal</p>
+                      <p class="value"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
+                    </div>
+                    <div class="detail secondary">
+                      <p class="key">Discount total</p>
+                      <p class="value" data-cy="discountValue"><b>{{details?.discount | currency}}</b></p>
+                    </div>
+                    <div class="detail">
+                      <p class="key">Shipping fees</p>
+                      <p class="value" data-cy="shippingFees"><b>{{details?.shipping | currency}}</b></p>
+                    </div>
+                    <div class="detail">
+                      <p class="key">Govt. taxes & fees</p>
+                      <p class="value" data-cy="taxesFees"><b>{{details?.taxes | currency}}</b></p>
+                    </div>
+                    <div class="detail last">
+                      <p class="key">Surcharges & fees</p>
+                      <p class="value" data-cy="subchargesFess"><b>{{details?.fees | currency}}</b></p>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="subtotal summary">
+                  Total: {{total | currency}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="place-order-card" [class.full]="!showShippingCard && !!isMigration">
+          <div class="card-header">
+            <p class="title">Order Details</p>
+          </div>
+          <div class="card-tab">
+            <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="items" />
+            <label class="tab-label" for="items">Items</label>
+            <div class="tab-content">
+              <input class="hidden-checkbox" type="checkbox" id="lines" [(ngModel)]="line" />
+              <label class="sub-label secondary" for="lines">
+                <span>Line {{!!topupMdn? topupMdn: (!!purchasedMdn? purchasedMdn : '#1')}}</span><img class="icon"
+                  src="assets/icon/arrow_circle.svg" alt="arrow icon" />
+              </label>
+              <div class="items-sub-content"
+                *ngIf="!userCart?.addOns && (userCart?.simsQuantity === 0 || !userCart?.simsQuantity) && !isGenericType">
+                <div class="item-details">
+                  <div class="image-side">
+                    <img class="image" src="/assets/icon/plan_thumbnail.svg" alt="plan" *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN" />
+                    <img class="image" [src]="promoDetails[userCart?.basePlan?.specialPromotion?.code].img" alt="plan" *ngIf="!!userCart?.basePlan?.specialPromotion?.promotionData && userCart?.basePlan?.specialPromotion?.promotionData > 0 && userCart?.cartType === CART_TYPES.NEW_PLAN"/>
+                  </div>
+                  <div class="details">
+                    <div class="detail">
+                      <div class="detail-info">
+                        <p class="bold" data-cy="basePlan">{{ userCart?.basePlan?.subtitle }}</p>
+                        <p *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN">{{ userCart?.basePlan?.title }}</p>
+                        <p *ngIf="!!userCart?.basePlan?.specialPromotion && userCart?.cartType === CART_TYPES.NEW_PLAN" class="promo bold">{{userCart?.basePlan?.specialPromotion?.promotionTitle}}</p>
+                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">
+                          (Change Plan)</p>
+                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New plan)
+                        </p>
+                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
+                        </p>
+                        <p class="bold" *ngIf="!!isTrialUpgrade">7-day trial upgrade</p>
+                      </div>
+                      <p class="price">
+                        ${{!!userCart?.basePlan?.specialPromotion && userCart?.cartType ==
+                        CART_TYPES.NEW_PLAN ? userCart?.basePlan?.specialPromotion?.promotionCycles
+                        * userCart?.basePlan?.price : (!!userCart?.basePlan?.subscriptionCycles ?
+                        ((userCart?.basePlan?.price * userCart?.basePlan?.subscriptionCycles) |
+                        number: '2.0-1') : userCart?.basePlan?.price)}}/m
+                      </p>
+                    </div>
+                    <div class="detail"
+                      *ngIf="(!!userCart?.basePlan?.specialPromotion && !!userCart?.basePlan?.promotionDiscount && userCart?.cartType == CART_TYPES.NEW_PLAN) || (userCart?.cartType == CART_TYPES.TOPUP_PLAN && !!isApplicablePromo)">
+                      <div class="promo">
+                        <p class="title">
+                          {{userCart?.basePlan?.specialPromotion.promotionDiscount}} discount
+                          promo
+                        </p>
+                        <div class="tooltip">
+                          <img src="/assets/icon/why-arrow.svg" alt="arrow" class="tooltip-arrow">
+                          <img class="action-icon" src="assets/icon/info-purple-circle.svg" class="info-icon"
+                            alt="info" />
+                          <div class="tooltipInfo">
+                            <p class="text">
+                              {{ userCart?.basePlan?.specialPromotion?.promotionDescription }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="price">-${{!!autoRenew && !userCart.voucherData ?
+                        (((userCart?.basePlan?.specialPromotion?.promotionCycles *
+                        userCart?.basePlan?.price) -
+                        (userCart?.basePlan?.specialPromotion?.promotionCycles *
+                        userCart?.basePlan?.promoPrice)) / 2) :
+                        ((userCart?.basePlan?.specialPromotion?.promotionCycles *
+                        userCart?.basePlan?.price)) / 2}}</p>
+                    </div>
+                    <div class="detail"
+                      *ngIf="!!userCart?.referralCode && userCart?.cartType == CART_TYPES.NEW_PLAN && !!user">
+                      <p class="detail-info">Referral Code:</p>
+                      <p class="price">{{userCart?.referralCode}}</p>
+                    </div>
+                    <div class="detail" *ngIf="!!userCart?.promoCodes && !!isActivePromo">
+                      <p class="bold">{{userCart?.promoCodes[0]?.description}}</p>
+                      <p class="bold">Code: <span>{{userCart?.promoCodes[0]?.code}}</span></p>
+                    </div>
+                    <div class="detail" *ngIf="!!isTrialUpgrade">
+                      <p class="bold">Trial upgrade payment discount</p>
+                      <p class="price">-$5</p>
+                    </div>
+                    <p class="quantity">Quantity: {{userCart?.quantity}}</p>
+                    <div class="actions">
+                      <a class="link first" (click)="goToPlans(true)"
+                        *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a>
+                      <a class="link" (click)="clearUserCart('plan')" data-cy="deletePlan">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="sub-item-section" *ngIf="userCart?.cartType ===CART_TYPES.NEW_PLAN">
+                  <hr class="short" />
+                  <div class="item-details">
+                    <img class="thumbnail"
+                      [src]="!!userCart?.eSIM ? 'assets/icon/e-sim.svg': 'assets/icon/sim-image.svg'" alt="SIM card" />
+                    <div class="details">
+                      <div class="detail">
+                        <div class="detail-info">
+                          <p class="bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                        </div>
+                        <p class="price">$0</p>
+                      </div>
+                      <p class="quantity" data-cy="simQuantity">Quantity: 1</p>
+                    </div>
+                  </div>
+                </div>
+                <hr *ngIf="!!selectedPhone" />
+                <div class="item-details" *ngIf="!!userCart && !!selectedPhone">
+                  <img class="thumbnail phone" [src]="selectedPhone?.image" alt="Mobile" />
+                  <div class="details">
+                    <div class="detail" [class.disabled]="!!isItemUnavailable">
+                      <div class="detail-info">
+                        <p class="bold">{{ selectedPhone?.description }}</p>
+                      </div>
+                      <p class="price">
+                        {{ selectedPhone?.price | currency }}
+                      </p>
+                    </div>
+                    <p class="quantity">Quantity: 1</p>
+                    <p class="red-note" *ngIf="!!isItemUnavailable">This item is unavailable</p>
+                    <div class="actions">
+                      <a class="link first" (click)="goToPhones()">Change</a>
+                      <a class="link" (click)="clearUserCart('plan', true)">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="items-sub-content" *ngIf="!!userCart?.addOns && filterAddons(userCart?.addOns)">
+                <div class="item-details" *ngIf="!!dataAddons && dataAddons.length == 1">
+                  <div class="image-side">
+                    <img class="image" src="assets/icon/1G.svg" alt="addon" />
+                  </div>
+                  <div class="details">
+                    <div class="detail">
+                      <div class="detail-info">
+                        <p class="bold" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
+                        <p *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
+                        <p class="bold">(Data Add-On)</p>
+
+                      </div>
+                      <p class="price">
+                        ${{dataAddons[0]?.price * dataAddons[0]?.quantity}}
+                      </p>
+                    </div>
+                    <p class="quantity">Quantity: {{dataAddons[0]?.quantity}}</p>
+                    <div class="actions">
+                      <a class="link first" (click)="goToAddons()">Change</a>
+                      <a class="link" (click)="clearUserCart(dataAddons[0].id)">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                <hr class="short" *ngIf="!!internationalAddon && internationalAddon.length === 1" />
+                <div class="item-details" *ngIf="!!internationalAddon && internationalAddon.length === 1">
+                  <div class="image-side">
+                    <img class="image" src="assets/icon/International.svg" alt="addon" />
+                  </div>
+                  <div class="details">
+                    <div class="detail">
+                      <div class="detail-info">
+                        <p class="bold" *ngIf="!!internationalAddon[0]?.title">
+                          {{internationalAddon[0]?.title}}</p>
+                        <p *ngIf="!!internationalAddon[0]?.subtitle">{{internationalAddon[0]?.subtitle}}
+                        </p>
+                        <p class="bold">(International Add-On)</p>
+
+                      </div>
+                      <p class="price">
+                        ${{internationalAddon[0]?.price}}
+                      </p>
+                    </div>
+                    <p class="quantity">Quantity: {{internationalAddon[0]?.quantity}}</p>
+                    <div class="actions">
+                      <a class="link" (click)="clearUserCart(internationalAddon[0].id)">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                <hr class="short" *ngIf="!!talkAndTextAddons && talkAndTextAddons.length > 0" />
+                <div class="item-details" *ngIf="!!talkAndTextAddons && talkAndTextAddons.length > 0">
+                  <div class="image-side">
+                    <img class="image" src="assets/icon/Pay_Go.svg" alt="addon" />
+                  </div>
+                  <div class="details" *ngFor="let item of talkAndTextAddons">
+                    <div class="detail">
+                      <div class="detail-info">
+                        <p class="bold" *ngIf="!!item?.title">{{item?.title}}</p>
+                        <p *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
+                        <p class="bold">(Talk & text add-on)</p>
+
+                      </div>
+                      <p class="price">
+                        ${{item?.price}}
+                      </p>
+                    </div>
+                    <p class="quantity">Quantity: {{item?.quantity}}</p>
+                    <div class="actions" *ngIf=" talkAndTextAddons.length === 1">
+                      <a class="link" (click)="clearUserCart(talkAndTextAddons[0].id)">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                <hr class="short" *ngIf="userCart?.simsQuantity > 0" />
+              </div>
+              <div class="items-sub-content" *ngIf="!!userCart?.simsQuantity && userCart?.simsQuantity > 0">
+                <div class="item-details">
+                  <img class="thumbnail" [src]="!!userCart?.eSIM ? 'assets/icon/e-sim.svg': 'assets/icon/sim-image.svg'"
+                    alt="SIM card" />
+                  <div class="details">
+                    <div class="detail">
+                      <div class="detail-info">
+                        <p class="bold">{{planCategory('sim')}}</p>
+                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
+                          Order)</p>
+                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>
+
+                      </div>
+                      <p class="price">
+                        ${{userCart?.cartType === CART_TYPES.PLAN_ITEMS ? newSimOrder?.price : 0}}
+                      </p>
+                    </div>
+                    <p class="quantity">Quantity: {{userCart?.quantity}}</p>
+                    <div class="actions">
+                      <a class="link" (click)="clearUserCart('sim')">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="items-sub-content" *ngIf="!!isGenericType">
+                <div class="item-details">
+                  <div class="details">
+                    <div class="item-details" *ngIf="!!userCart && !!selectedPhone">
+                      <img class="thumbnail phone" [src]="selectedPhone?.image" alt="Mobile" />
+                      <div class="details">
+                        <div class="detail" [class.disabled]="!!isItemUnavailable">
+                          <div class="detail-info">
+                            <p class="bold">{{ selectedPhone?.description }}</p>
+                          </div>
+                          <p class="price">
+                            {{ selectedPhone?.price | currency }}
+                          </p>
+                        </div>
+                        <p class="quantity">Quantity: 1</p>
+                        <p class="red-note" *ngIf="!!isItemUnavailable">This item is unavailable</p>
+                        <div class="actions">
+                          <a class="link first" (click)="goToPhones()">Change</a>
+                          <a class="link" (click)="clearUserCart('plan', true)">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sub-item-section">
+                  <hr class="short" />
+                  <div class="item-details">
+                    <img class="thumbnail"
+                      [src]="!!userCart?.eSIM ? 'assets/icon/e-sim.svg': 'assets/icon/sim-image.svg'" alt="SIM card" />
+                    <div class="details">
+                      <div class="detail">
+                        <div class="detail-info">
+                          <p class="bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                        </div>
+                        <p class="price">$0</p>
+                      </div>
+                      <p class="quantity" data-cy="simQuantity">Quantity: 1</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right" *ngIf="!!showShippingCard || !isMigration">
+        <div class="place-order-card" *ngIf="!!showShippingCard">
+          <div class="card-header">
+            <p class="title" data-cy="deliveryDetails">Delivery Details</p>
+          </div>
+          <div class="card-tab">
+            <input type="checkbox" class="hidden-checkbox" id="delivery" [(ngModel)]="delivery" />
+            <label class="tab-label" for="delivery">Package Details</label>
+            <div class="tab-content">
+              <label class="sub-label address-change">
+                <span>Shipping Address</span><a (click)="goToShippingSection()" data-cy="changeShippingAddress">Change</a>
+              </label>
+              <div class="sub-content">
+                <p class="desc">{{ !!shippingAddress?.name ?  shippingAddress?.name : shippingAddress?.alias}}, {{ shippingAddress?.address1 }}</p>
+                <p class="desc" *ngIf="!!shippingAddress?.address2">{{ shippingAddress?.address2 }}</p>
+                <p class="desc">{{ shippingAddress?.city }}, {{ shippingAddress?.state }} {{ shippingAddress?.postalCode
+                  }}</p>
+              </div>
+              <label class="sub-label">Shipping Method</label>
+              <div class="sub-content courier">
+                <p class="desc" data-cy="shippingMethod">{{ orderShippingMethod?.title }}</p>
+                <p class="desc"><b>{{ orderShippingMethod?.price === 0 ? 'Free' : (orderShippingMethod?.price |
+                    currency) }}</b></p>
+              </div>
+              <input class="hidden-checkbox" type="checkbox" id="content" [(ngModel)]="content" />
+              <label class="sub-label" for="content" *ngIf="!userCart?.eSIM || !!selectedPhone">
+                <span>Package Content</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon" />
+              </label>
+              <div class="items-sub-content" *ngIf="!userCart?.eSIM || !!selectedPhone">
+                <div class="flex-content">
+                  <div class="item-details" *ngIf="!!selectedPhone">
+                    <img class="thumbnail phone" [src]="selectedPhone?.image" alt="Mobile" />
+                    <div class="details">
+                      <div class="detail">
+                        <div class="detail-info">
+                          <p class="bold">{{ selectedPhone?.description }}</p>
+                          <p class="quantity">Quantity: 1</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-details" *ngIf="!userCart?.eSIM">
+                    <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card" />
+                    <div class="details">
+                      <div class="detail">
+                        <div class="detail-info">
+                          <p class="bold" data-cy="SIMCard">SIM Card</p>
+                          <p class="quantity" data-cy="shippedSimQuantity" >Quantity: 1</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="place-order-card" *ngIf="!isMigration || (!!isMigration && orderShippingMethod?.price > 0)">
+          <div class="card-header">
+            <p class="title">Payment Method</p>
+            <a data-cy="chanePaymentMethod" (click)="goToPaymentSection()">Change</a>
+          </div>
+          <div class="card-tab payment">
+            <div class="tab-content">
+              <div class="items-sub-content">
+                <div class="sub-item-section">
+                  <div class="item-details" *ngIf="!!showBillingAddress && !!cardInfo">
+                    <img src="assets/icon/credit-card.svg" alt="Payment Card image" />
+                    <div class="details">
+                      <div class="details-flex">
+                        <div class="flex">
+                          <p class="title">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
+                          <p class="desc">Debit card ending in {{ cardInfo?.last4 }}</p>
+                        </div>
+                        <div class="amount">
+                          <p class="key">Deducted Amount</p>
+                          <p class="value">{{(total - balanceAmount) | currency}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr *ngIf="!!showBalanceSection && !!showBillingAddress">
+                  <div class="item-details" *ngIf="!!showBalanceSection">
+                    <img src="assets/icon/balance.svg" alt="Account Balance image" />
+                    <div class="item-details-flex">
+                      <div class="details">
+                        <p class="title">Account Balance</p>
+                      </div>
+                      <div class="amount">
+                        <p class="key">Deducted Amount</p>
+                        <p class="value">{{balanceAmount | currency}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label class="sub-label" *ngIf="!!showBillingAddress">Billing Address</label>
+            <div class="sub-content" *ngIf="!!showBillingAddress">
+              <p class="desc">{{ cardInfo?.fullName }}, {{ cardInfo?.address1 }}</p>
+              <p class="desc" *ngIf="!!cardInfo?.address2">{{ cardInfo?.address2 }}</p>
+              <p class="desc last">{{ cardInfo?.city }}, {{ cardInfo?.state }} {{ cardInfo?.postalCode }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="navigation-section">
+  <div class="container-flex navs">
+    <div class="left">
+      <button class="button secondary" data-cy="backBtn" (click)="goToPaymentSection()">Back</button>
+    </div>
+    <div class="right">
+      <button class="button primary" data-cy="submitBtn" (click)="placeOrder()">Submit</button>
+    </div>
+  </div>
+</section>

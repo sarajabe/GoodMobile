@@ -1,0 +1,51 @@
+<section class="container-flex internal-page-margins activate-plan">
+    <div class="container-flex-row flex-center margin-bottom-20">
+        <div class=" col-12 text-center">
+            <h1>Activate your plan</h1>
+            <div class="subhead content-sizing adjustwidth">
+                <p>Enter the activation code from your SIM card in the form below and we will get you headed down the
+                    right path.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex-row flex-center">
+        <div class="col-sm-12 col-12 text-center">
+            <img src="assets/img/activating-sim.png" srcset="assets/img/activating-sim@2x.png 2x,
+               assets/img/activating-sim@3x.png 3x" class="girl-walking">
+        </div>
+    </div>
+    <form (ngSubmit)="checkSimActivationCode()" [formGroup]="activateForm">
+        <div class="container-flex-row flex-center">
+            <div class="col-sm-10 col-xl-7 col-12 card-container">
+                <fieldset class="field-center">
+                    <label for="code">Enter activation code:</label>
+                    <input restrictNumbers id="code" data-cy="activationCode" type="text" name="code" formControlName="code" minlength="7"
+                        maxlength="7" [readonly]="processingRequest">
+                    <label class='validation-message'
+                        *ngIf="activateForm.controls.code.touched && activateForm.controls.code.hasError('required')">
+                        This field is required.
+                    </label>
+                    <label class='validation-message'
+                        *ngIf="!processingRequest && !activateForm.controls.code.hasError('required') && activateForm.controls.code.hasError('pattern')">
+                        Activation code must contain numbers only
+                    </label>
+                    <label class='validation-message'
+                        *ngIf="!processingRequest && !activateForm.controls.code.hasError('required') && validationFailed">
+                        The number you provided is invalid, check it again or contact customer care at
+                        {{ customerCareNumber | phone }}
+                    </label>
+                </fieldset>
+            </div>
+        </div>
+        <div class="container-flex-row flex-center">
+            <div class="col-sm-7 col-12 actions-container">
+                <div class="form-actions">
+                    <button type="submit" id="submit-code" data-cy="submit-code" [disabled]="!activateForm.valid" class="button primary"
+                        [uiBlockButton]="processingRequest">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

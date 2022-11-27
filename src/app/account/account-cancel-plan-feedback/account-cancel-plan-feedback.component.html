@@ -1,0 +1,28 @@
+<div class="col-xl-7 col-12 col-offset-0 cancel-plan-form-container margin-left-8p" [@fadeInOut]="'in'">
+    <h1 class="title">Your plan has been successfully cancelled</h1>
+    <div>
+        <p class="subtitle" *ngIf="!!cancelDate">Effective on:<b> {{cancelDate | date}}</b></p>
+    </div>
+    <form (ngSubmit)="submitUserFeedback()" #feedbackForm="ngForm" class="cancel-plan-form">
+        <p class="note" *ngIf="!!cancelDate">As requested, your GoodMobile plan has been cancelled, and your service
+            is now canceled / will discontinue on {{userAccount?.billingRenewalPaymentDate | date}}.</p>
+        <p class="note" *ngIf="!cancelDate">As requested, your GoodMobile plan has been cancelled.</p>
+        <p class="note common">Please let us know a little about your decision so we can get better: </p>
+        <div class="radio-checkbox" *ngFor="let issue of cancelPlanProblems">
+            <input title="{{issue.title}}" type="radio" required [(ngModel)]="cancelPlanProblem" name="issue"
+                [id]="issue.id" [value]="issue.title" (change)="updateCancelPlanProblem(issue.title)">
+            <label class="radio-checkbox-label" [for]="issue.id">
+                <p>{{issue.title}}</p>
+            </label>
+        </div>
+        <fieldset class="twelve no-padding recaptcha">
+            <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
+        </fieldset>
+        <fieldset class="twelve no-padding action">
+            <a>
+                <button type="submit" [disabled]="feedbackForm.invalid || !idExistence || !captchaValid"
+                    [uiBlockButton]="processingRequest" class="button primary" aria-label="send feedback">Send feedback</button>
+            </a>
+        </fieldset>
+    </form>
+</div>

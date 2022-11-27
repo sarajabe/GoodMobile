@@ -1,0 +1,156 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.phone-details-container {
+  h1 {
+    line-height: 1;
+  }
+  .back {
+    font-size: rem-calc(17px);
+    font-weight: normal;
+    line-height: 1.14;
+    color: $primary-color;
+    margin-bottom: 16px;
+  }
+  .details-container {
+    border-bottom: 1px solid $grey;
+    .title {
+      font-weight: bold;
+      font-size: rem-calc(23px);
+      margin-bottom: 30px;
+    }
+    .title-text {
+      font-weight: bold;
+      @media (max-width: 640px) {
+        margin-left: 5px;
+      }
+    }
+    .data {
+      font-weight: normal;
+    }
+    .info-list,
+    .id-list {
+      font-size: rem-calc(17px);
+    }
+    .id-list {
+      display: inline-block;
+      span {
+        display: block;
+      }
+    }
+    .info-list,
+    .ms-list {
+      font-size: rem-calc(17px);
+    }
+    .ms-list {
+      display: inline-block;
+      span {
+        display: block;
+      }
+    }
+  }
+  .compatibility-container {
+    .check-inputs-flex {
+        display: flex;
+        width: 100%;
+        gap: 20px;
+        margin-bottom: 24px;
+    
+        @media (max-width: $phablet-min-width) {
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .input-label {
+          color: #383838;
+          margin-bottom: 0;
+        }
+
+        .vm {
+          margin-bottom: 0;
+        }
+    
+        .address-input {
+          flex-basis: 50%;
+          .input-label {
+              margin-bottom: 0;
+              font-size: rem-calc(18px);
+              line-height: 1.18;
+              font-family: $base-font-family;
+              .p-label {
+                  font-weight: bold;
+                  margin-bottom: 6px;
+              }
+              .p-note {
+                  font-size: rem-calc(12px);
+              }
+              @media (max-width: $phablet-min-width) {
+                  font-size: rem-calc(16px);
+              }
+          }
+  
+          input {
+              height: 40px;
+              @media (max-width: $phablet-min-width-minus) {
+                  max-width: 500px;
+              }
+          }
+          .geolocate {
+              padding: 4px 12px;
+          }
+      }
+      }
+    .title {
+      font-weight: bold;
+      font-size: rem-calc(23px);
+      margin-top: 30px;
+    }
+    .description {
+      font-size: rem-calc(17px);
+    }
+    .input-label {
+      font-size: rem-calc(17px);
+    }
+    .validation {
+      margin-bottom: 13px;
+      @media (max-width: 1024.9px) {
+        margin-bottom: 30px;
+      }
+      .button {
+        width: 176px;
+        padding: 11px;
+        font-size: rem-calc(17px);
+      }
+    }
+    .warningSection {
+      max-width: 673px;
+      .message {
+        font-size: rem-calc(19px);
+        padding: 20px 0;
+        color: $primary-color;
+        .highlight {
+          font-size: rem-calc(21px);
+          font-weight: bold;
+          white-space: nowrap;
+        }
+      }
+    }
+    .phone-details-label {
+      @media (min-width: $desktop-min-width) {
+        height: 30px;
+      }
+    }
+  }
+  .set-section{
+    @media(min-width:$phablet-min-width) and (max-width:$desktop-min-width-minus){
+      margin-top: 30px;
+    }
+  .font_design {
+    font-size: rem-calc(17px);
+    line-height: 27px;
+  }
+}
+  .note {
+    font-size: rem-calc(19px);
+  }
+}

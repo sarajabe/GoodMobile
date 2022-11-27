@@ -1,0 +1,20 @@
+<section class="return-device report-page" [class.space]="!!showContactForm">
+    <div class="back-section">
+        <img src="/assets/icon/back-arrow.svg">
+        <a class="back-link" (click)="goToReportIssue()">Report an Issue</a>
+    </div>
+    <h1 class="title">Return device</h1>
+    <div class="note-banner" *ngIf="!showContactForm">
+        <ul class="notes-list">
+            <li class="note">You have 14 days, from delivery date, to return any device. You also have a 30-day 
+                warranty on all purchased devices.
+                <span class="newLine">Warranty return window is 30 days (Delivery date + 30 days).</span>
+            </li>
+            <!-- <li class="note" *ngIf="canReturnDevice">To arrange the return, please start the device return process <a (click)="goToReasonsPage()">here</a>.</li> -->
+            <li class="note" >To arrange the return, please start the device return process <a  (click)="goToReasonsPage()">here</a>.</li>
+            <li class="note">If you still need help, please <span class="link" (click)="showContactForm=true">leave us a message</span>.</li>
+        </ul>
+    </div>
+</section>
+<app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" *ngIf="!!showContactForm">
+</app-contact-form>

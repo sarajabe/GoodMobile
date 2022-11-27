@@ -1,0 +1,392 @@
+{
+  "enableTaxes" : true,
+  "taxes" : {
+    "-US" : {
+      "country" : "United States",
+      "salesTax" : 7.57,
+      "wirelessTax" : 11.5
+    },
+    "-US_AL" : {
+      "country" : "United States",
+      "salesTax" : 9.5,
+      "state" : "AL",
+      "wirelessTax" : 9.75
+    },
+    "-US_AK" : {
+      "country" : "United States",
+      "salesTax" : 2.5,
+      "state" : "AK",
+      "wirelessTax" : 12.69
+    },
+    "-US_AZ" : {
+      "country" : "United States",
+      "salesTax" : 8.2,
+      "state" : "AZ",
+      "wirelessTax" : 11.98
+    },
+    "-US_AR" : {
+      "country" : "United States",
+      "salesTax" : 9.38,
+      "state" : "AR",
+      "wirelessTax" : 14.31
+    },
+    "-US_CA" : {
+      "country" : "United States",
+      "salesTax" : 8.75,
+      "state" : "CA",
+      "wirelessTax" : 11.6
+    },
+    "-US_CO" : {
+      "country" : "United States",
+      "salesTax" : 7.64,
+      "state" : "CO",
+      "wirelessTax" : 10.78
+    },
+    "-US_CT" : {
+      "country" : "United States",
+      "salesTax" : 6.35,
+      "state" : "CT",
+      "wirelessTax" : 7.44
+    },
+    "-US_DC" : {
+      "country" : "United States",
+      "salesTax" : 5.75,
+      "state" : "DC",
+      "wirelessTax" : 11.63
+    },
+    "-US_DE" : {
+      "country" : "United States",
+      "salesTax" : 0,
+      "state" : "DE",
+      "wirelessTax" : 6.29
+    },
+    "-US_FL" : {
+      "country" : "United States",
+      "salesTax" : 7.25,
+      "state" : "FL",
+      "wirelessTax" : 14.66
+    },
+    "-US_GA" : {
+      "country" : "United States",
+      "salesTax" : 8,
+      "state" : "GA",
+      "wirelessTax" : 9.22
+    },
+    "-US_HI" : {
+      "country" : "United States",
+      "salesTax" : 4,
+      "state" : "HI",
+      "wirelessTax" : 6.38
+    },
+    "-US_ID" : {
+      "country" : "United States",
+      "salesTax" : 6,
+      "state" : "ID",
+      "wirelessTax" : 2.17
+    },
+    "-US_IL" : {
+      "country" : "United States",
+      "salesTax" : 8.88,
+      "state" : "IL",
+      "wirelessTax" : 17.46
+    },
+    "-US_IN" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "IN",
+      "wirelessTax" : 11.06
+    },
+    "-US_IA" : {
+      "country" : "United States",
+      "salesTax" : 6.5,
+      "state" : "IA",
+      "wirelessTax" : 8.71
+    },
+    "-US_KS" : {
+      "country" : "United States",
+      "salesTax" : 8.33,
+      "state" : "KS",
+      "wirelessTax" : 13.53
+    },
+    "-US_KY" : {
+      "country" : "United States",
+      "salesTax" : 6,
+      "state" : "KY",
+      "wirelessTax" : 10.56
+    },
+    "-US_LA" : {
+      "country" : "United States",
+      "salesTax" : 9,
+      "state" : "LA",
+      "wirelessTax" : 7.29
+    },
+    "-US_ME" : {
+      "country" : "United States",
+      "salesTax" : 5.5,
+      "state" : "ME",
+      "wirelessTax" : 7.35
+    },
+    "-US_MD" : {
+      "country" : "United States",
+      "salesTax" : 6,
+      "state" : "MD",
+      "wirelessTax" : 12.67
+    },
+    "-US_MA" : {
+      "country" : "United States",
+      "salesTax" : 6.25,
+      "state" : "MA",
+      "wirelessTax" : 8.93
+    },
+    "-US_MI" : {
+      "country" : "United States",
+      "salesTax" : 6,
+      "state" : "MI",
+      "wirelessTax" : 8.28
+    },
+    "-US_MN" : {
+      "country" : "United States",
+      "salesTax" : 7.7,
+      "state" : "MN",
+      "wirelessTax" : 9.54
+    },
+    "-US_MS" : {
+      "country" : "United States",
+      "salesTax" : 7.5,
+      "state" : "MS",
+      "wirelessTax" : 9.14
+    },
+    "-US_MO" : {
+      "country" : "United States",
+      "salesTax" : 8.29,
+      "state" : "MO",
+      "wirelessTax" : 14.79
+    },
+    "-US_MT" : {
+      "country" : "United States",
+      "salesTax" : 0,
+      "state" : "MT",
+      "wirelessTax" : 6.11
+    },
+    "-US_NE" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "NE",
+      "wirelessTax" : 18.53
+    },
+    "-US_NV" : {
+      "country" : "United States",
+      "salesTax" : 7.85,
+      "state" : "NV",
+      "wirelessTax" : 1.95
+    },
+    "-US_NH" : {
+      "country" : "United States",
+      "salesTax" : 0,
+      "state" : "NH",
+      "wirelessTax" : 8.22
+    },
+    "-US_NJ" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "NJ",
+      "wirelessTax" : 8.93
+    },
+    "-US_NM" : {
+      "country" : "United States",
+      "salesTax" : 7.75,
+      "state" : "NM",
+      "wirelessTax" : 11.22
+    },
+    "-US_NY" : {
+      "country" : "United States",
+      "salesTax" : 8.44,
+      "state" : "NY",
+      "wirelessTax" : 17.9
+    },
+    "-US_NC" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "NC",
+      "wirelessTax" : 8.59
+    },
+    "-US_ND" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "ND",
+      "wirelessTax" : 12.27
+    },
+    "-US_OH" : {
+      "country" : "United States",
+      "salesTax" : 7.75,
+      "state" : "OH",
+      "wirelessTax" : 8.42
+    },
+    "-US_OK" : {
+      "country" : "United States",
+      "salesTax" : 8.45,
+      "state" : "OK",
+      "wirelessTax" : 10.88
+    },
+    "-US_OR" : {
+      "country" : "United States",
+      "salesTax" : 0,
+      "state" : "OR",
+      "wirelessTax" : 1.8
+    },
+    "-US_PA" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "PA",
+      "wirelessTax" : 14.14
+    },
+    "-US_PR" : {
+      "country" : "United States",
+      "salesTax" : 11.5,
+      "state" : "PR",
+      "wirelessTax" : 13.45
+    },
+    "-US_RI" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "RI",
+      "wirelessTax" : 14.7
+    },
+    "-US_SC" : {
+      "country" : "United States",
+      "salesTax" : 8.25,
+      "state" : "SC",
+      "wirelessTax" : 10.58
+    },
+    "-US_SD" : {
+      "country" : "United States",
+      "salesTax" : 6,
+      "state" : "SD",
+      "wirelessTax" : 13.14
+    },
+    "-US_TN" : {
+      "country" : "United States",
+      "salesTax" : 9.25,
+      "state" : "TN",
+      "wirelessTax" : 11.99
+    },
+    "-US_TX" : {
+      "country" : "United States",
+      "salesTax" : 8.25,
+      "state" : "TX",
+      "wirelessTax" : 11.53
+    },
+    "-US_YT" : {
+      "country" : "United States",
+      "salesTax" : 6.8,
+      "state" : "YT",
+      "wirelessTax" : 12.77
+    },
+    "-US_VT" : {
+      "country" : "United States",
+      "salesTax" : 6.5,
+      "state" : "VT",
+      "wirelessTax" : 8.5
+    },
+    "-US_VA" : {
+      "country" : "United States",
+      "salesTax" : 5.65,
+      "state" : "VA",
+      "wirelessTax" : 6.61
+    },
+    "-US_WA" : {
+      "country" : "United States",
+      "salesTax" : 9.15,
+      "state" : "WA",
+      "wirelessTax" : 18.69
+    },
+    "-US_WV" : {
+      "country" : "United States",
+      "salesTax" : 7,
+      "state" : "WV",
+      "wirelessTax" : 6.43
+    },
+    "-US_WI" : {
+      "country" : "United States",
+      "salesTax" : 5.55,
+      "state" : "WI",
+      "wirelessTax" : 7.18
+    },
+    "-US_WY" : {
+      "country" : "United States",
+      "salesTax" : 5.5,
+      "state" : "WY",
+      "wirelessTax" : 7.95
+    },
+    "-PR" : {
+      "country" : "Puerto Rico",
+      "salesTax" : 11.5,
+      "wirelessTax" : 13.45
+    },
+    "-CA" : {
+      "country" : "Canada",
+      "salesTax" : 15,
+      "wirelessTax" : 0
+    },
+    "-CA_AB" : {
+      "country" : "Canada",
+      "salesTax" : 5,
+      "state" : "AB",
+      "wirelessTax" : 0
+    },
+    "-CA_BC" : {
+      "country" : "Canada",
+      "salesTax" : 12,
+      "state" : "BC",
+      "wirelessTax" : 0
+    },
+    "-CA_MB" : {
+      "country" : "Canada",
+      "salesTax" : 13,
+      "state" : "MB",
+      "wirelessTax" : 0
+    },
+    "-CA_NB" : {
+      "country" : "Canada",
+      "salesTax" : 15,
+      "state" : "NB",
+      "wirelessTax" : 0
+    },
+    "-CA_NL" : {
+      "country" : "Canada",
+      "salesTax" : 15,
+      "state" : "NL",
+      "wirelessTax" : 0
+    },
+    "-CA_NS" : {
+      "country" : "Canada",
+      "salesTax" : 15,
+      "state" : "NS",
+      "wirelessTax" : 0
+    },
+    "-CA_ON" : {
+      "country" : "Canada",
+      "salesTax" : 13,
+      "state" : "ON",
+      "wirelessTax" : 0
+    },
+    "-CA_PE" : {
+      "country" : "Canada",
+      "salesTax" : 15,
+      "state" : "PE",
+      "wirelessTax" : 0
+    },
+    "-CA_QC" : {
+      "country" : "Canada",
+      "salesTax" : 14.975,
+      "state" : "QC",
+      "wirelessTax" : 0
+    },
+    "-CA_SK" : {
+      "country" : "Canada",
+      "salesTax" : 10,
+      "state" : "SK",
+      "wirelessTax" : 0
+    }
+  }
+}

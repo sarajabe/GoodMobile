@@ -1,0 +1,39 @@
+<section class="select-line-section">
+    <p class="info">Please select an active GoodMobile number or purchase a new line in order to proceed.</p>
+    <div class="selection-area">
+        <div class="select-option">
+            <a id="add-new-line" (click)="selectMobileService('new')" class="wireless-links-container">
+                <img [src]="!isNewMobileService?'/assets/icon/disabled-radio.svg':'/assets/icon/enabled-radio.svg'"
+                    alt="radio" class="radio-img">
+                <span class="wireless-links" data-cy="addAnewLine">Add a new line</span>
+            </a>
+        </div>
+        <div class="select-option">
+            <a id="current-mobile" (click)="selectMobileService('current')" class="wireless-links-container">
+                <img [src]="!isCurrentMobileNumber?'/assets/icon/disabled-radio.svg':'/assets/icon/enabled-radio.svg'"
+                    alt="radio" class="radio-img">
+                <span class="wireless-links">Current Mobile Number</span>
+            </a>
+            <div class="current-mobile-number-section" *ngIf="!!isCurrentMobileNumber">
+                <div id="login-section" *ngIf="!isLoggedIn">
+                  <p class="p-label">Please sign in to choose a current mobile number</p>
+                  <button class="button primary" (click)="goToLogin()" data-cy="signInBtn">Sign in</button>
+                </div>
+                <div *ngIf="!!isLoggedIn && !!hasActivePlans && !!userPlans && userPlans?.length > 0">
+                    <p class="p-label">Please select a mobile number.</p>
+                    <div class="floating-label">
+                    <select id="phonePlan" name="phonePlan" [(ngModel)]="selectedPlan"
+                    (ngModelChange)="userPlanSelected($event)" class="floating-select" focus [class.dirty]="!!selectedPlan" >
+                    <option *ngFor="let plan of userPlans" [ngValue]="plan">
+                      {{plan?.mdn | phone}}
+                    </option>
+                  </select>
+                  <label>Mobile number</label>
+                  </div>
+                </div>
+                <label id="no-active-plans-validation" class="validation-message" *ngIf="!!isLoggedIn && !hasActivePlans">You Don’t Have an Active Mobile Number. Please add a new line to proceed.</label>
+                <label id="no-available-plans-validation" data-cy="no-available-plans-validation" class="validation-message" *ngIf="!!isLoggedIn && !!hasActivePlans && !!userPlans && userPlans?.length < 1">Your active numbers are already associated with purchased phones. Please add a new line to proceed.</label>
+            </div>
+        </div>
+    </div>
+</section>

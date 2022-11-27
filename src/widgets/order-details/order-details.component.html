@@ -1,0 +1,196 @@
+<div class="loading-hidden-transparent" *ngIf="!plan || !plan?.basePlan"></div>
+<section class="order-details-section" *ngIf="!!plan && !!plan?.basePlan">
+  <h3 class="order-title">Your order details</h3>
+  <hr>
+  <ng-container *ngIf="!plan.addOns && (plan.simsQuantity == 0 || !plan.simsQuantity) && !isGenericType">
+    <div class="order-details">
+      <div class="plan-category-title" *ngIf="!!isTrialUpgrade || plan?.cartType == CART_TYPES.CHANGE_PLAN || plan?.cartType == CART_TYPES.TOPUP_PLAN || (plan?.cartType == CART_TYPES.NEW_PLAN && !!plan.activationCode)">
+        <p class="mdn" *ngIf="plan?.cartType == CART_TYPES.TOPUP_PLAN">Purchase for: {{topupMdn}} </p>
+        <p class="mdn" *ngIf="plan?.cartType == CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">Changing plan for: {{topupMdn}} </p>
+        <p class="mdn" *ngIf="plan?.cartType == CART_TYPES.NEW_PLAN && !!plan.activationCode && !isTrialUpgrade">Activation Purchase </p>
+        <p class="mdn" *ngIf="!!isTrialUpgrade">7-day trial upgrade</p>
+      </div>
+      <div class="plan-details" *ngIf="!!plan && !!plan?.basePlan">
+        <div class="plan-sub-title">
+          <div class="title" data-cy="planTitle" *ngIf="plan?.details?.data === 0">{{plan?.basePlan?.subtitle}}</div>
+          <div class="title" *ngIf="plan?.details?.data > 0">{{plan?.details?.data/1024 + 'GB'}} 4G LTE</div>
+          <div class="price">${{!!plan?.basePlan?.specialPromotion && plan.cartType == CART_TYPES.NEW_PLAN ? plan?.basePlan?.specialPromotion?.promotionCycles * plan?.basePlan?.price : (!!plan?.basePlan?.subscriptionCycles ? ((plan?.basePlan?.price * plan?.basePlan?.subscriptionCycles) | number: '2.0-1') : plan?.basePlan?.price)}}</div>
+        </div>
+        <div class="plan-quantity" *ngIf="!!plan?.quantity">Quantity: {{plan?.quantity}}</div>
+        <div class="plan-unlimited">{{!!plan?.basePlan?.specialPromotion && plan?.basePlan?.specialPromotion?.promotionCycles > 1 && plan.cartType == CART_TYPES.NEW_PLAN ? (plan?.basePlan?.specialPromotion?.promotionCycles + '-months X ' + plan?.basePlan?.title) : plan?.basePlan?.title}}</div>
+        <div class="plan-sub-title" *ngIf="!!autoRenew">
+          <div class="title">Auto-renewal payment discount</div>
+          <div class="price">-${{!!plan?.basePlan?.specialPromotion && plan.cartType == CART_TYPES.NEW_PLAN ? plan?.basePlan?.specialPromotion?.promotionCycles * plan?.basePlan?.promoPrice : plan?.basePlan?.promoPrice}}</div> <!-- when changed to promo code instead of value -->
+        </div>
+        <div class="special-promo" *ngIf="(!!plan?.basePlan?.specialPromotion && plan.cartType == CART_TYPES.NEW_PLAN) || (plan.cartType == CART_TYPES.TOPUP_PLAN && !!isPromoApplied)">
+          <p class="title">{{plan?.basePlan?.specialPromotion.promotionDiscount}} discount promo</p>
+          <p class="price">-${{!!autoRenew && !plan.voucherData ? (((plan?.basePlan?.specialPromotion?.promotionCycles * plan?.basePlan?.price) - (plan?.basePlan?.specialPromotion?.promotionCycles * plan?.basePlan?.promoPrice)) / 2) : ((plan?.basePlan?.specialPromotion?.promotionCycles * plan?.basePlan?.price)) / 2}}</p>
+        </div>
+        <div class="special-promo" *ngIf="!!plan?.referralCode && plan.cartType == CART_TYPES.NEW_PLAN && !!user">
+          <p class="title">Referral Code:</p>
+          <p class="price code">{{plan?.referralCode}}</p>
+        </div>
+        <div class="offer" *ngIf="!!plan?.promoCodes && !!isActivePromo">
+          <p class="offer-title">{{plan?.promoCodes[0]?.description}}</p>
+          <p class="offer-code">Code: <span>{{plan?.promoCodes[0]?.code}}</span></p>
+        </div>
+        <div class="plan-sub-title" *ngIf="!!isTrialUpgrade">
+          <div class="title">Trial upgrade payment discount</div>
+          <div class="price">-$5</div>
+        </div>
+      </div>
+    </div>
+    <div class="actions-container">
+      <a (click)="goToPlans()" *ngIf="plan?.cartType != CART_TYPES.TOPUP_PLAN">Change</a>
+      <a (click)="clearUserCart('plan')">Remove</a>
+    </div>
+    <hr />
+  </ng-container>
+  <ng-container *ngIf="!!plan && !!selectedPhone">
+    <div *ngIf="!!isGenericType && !!purchasedMdn">
+      <p class="purchased-for-title">Purchasing phone for: {{purchasedMdn}}</p>
+    </div>
+    <div class="phones-section">
+    <div [class.disabled]="!!isItemUnavailable">
+    <div class="head-desc">
+        <p class="phone-name">{{selectedPhone?.name}}</p>
+        <p>{{selectedPhone?.price | currency}}</p>
+    </div>
+    <p class="quantity">Quantity: 1</p>
+    <img src="{{selectedPhone?.image}}" alt="phone image">
+  </div>
+  <p class="red-note" *ngIf="!!isItemUnavailable">This item is unavailable</p>
+    <div class="actions-container">
+        <a (click)="goToPhones()">Change</a>
+        <a (click)="clearUserCart('plan', true)">Remove</a>
+      </div>
+      <hr>
+  </div>
+  </ng-container>
+  <ng-container *ngIf="!!plan.addOns">
+    <div *ngIf="filterAddons(plan.addOns)">
+        <p class="mdn">Purchase for: {{topupMdn}} </p>
+    <div class="order-details margin-top-30" *ngIf="!!dataAddons && dataAddons.length == 1">
+      <div class="plan-category-title">
+        <div class="title">Data Add-On</div>
+        <div class="quantity">Quantity: {{dataAddons[0]?.quantity}}</div>
+      </div>
+      <div class="plan-details" *ngIf="!!plan && !!plan?.basePlan">
+        <div class="plan-title">{{dataAddons[0]?.title}}</div>
+        <div class="plan-sub-title">
+          <div class="title">{{dataAddons[0]?.subtitle}}</div>
+          <div class="price">${{dataAddons[0]?.price * dataAddons[0]?.quantity}}</div>
+        </div>
+      </div>
+      <div class="actions-container margin-top-30">
+        <a (click)="goToAddons()">Change</a>
+        <a (click)="clearUserCart(dataAddons[0].id)">Remove</a>
+      </div>
+      <hr *ngIf="plan?.addOns.length > 1 || plan?.simsQuantity > 0"/>
+    </div>
+    <div class="order-details margin-top-30" *ngIf="!!internationalAddon && internationalAddon.length == 1">
+        <div class="plan-category-title">
+          <div class="title">International Add-On</div>
+          <div class="quantity">Quantity: 1</div>
+        </div>
+        <div class="plan-details" *ngIf="!!plan && !!plan?.basePlan">
+          <div class="plan-title">{{internationalAddon[0]?.title}}</div>
+          <div class="plan-sub-title">
+            <div class="title">{{internationalAddon[0]?.subtitle}}</div>
+            <div class="price">${{internationalAddon[0]?.price}} </div>
+          </div>
+        </div>
+        <div class="actions-container margin-top-30">
+          <a (click)="clearUserCart(internationalAddon[0].id)">Remove</a>
+        </div>
+        <hr *ngIf="!!talkAndTextAddons"/>
+    </div>
+    <div class="order-details margin-top-30" *ngIf="!!talkAndTextAddons && talkAndTextAddons.length == 1">
+        <div class="plan-category-title">
+          <div class="title">International Add-On</div>
+          <div class="quantity">Quantity: {{talkAndTextAddons[0]?.quantity}}</div>
+        </div>
+        <div class="plan-details" *ngIf="!!plan && !!plan?.basePlan">
+          <div class="plan-title">{{talkAndTextAddons[0]?.title}}</div>
+          <div class="plan-sub-title">
+            <div class="title">{{talkAndTextAddons[0]?.subtitle}}</div>
+            <div class="price">${{talkAndTextAddons[0]?.price}} </div>
+          </div>
+        </div>
+        <div class="actions-container margin-top-30">
+          <a (click)="clearUserCart(talkAndTextAddons[0].id)">Remove</a>
+        </div>
+        <hr />
+    </div>
+    <div class="order-details margin-top-30" *ngIf="!!talkAndTextAddons && talkAndTextAddons.length > 1">
+        <div class="plan-category-title">
+          <div class="title">Talk & text add-on</div>
+          <div class="quantity">Quantity: {{talkAndTextAddons[0]?.quantity}}</div>
+        </div>
+        <div class="plan-details" *ngIf="!!plan && !!plan?.basePlan">
+          <div class="plan-title">{{talkAndTextAddons[0]?.title}}</div>
+          <div class="plan-sub-title">
+            <div class="title">{{talkAndTextAddons[0]?.subtitle}}</div>
+            <div class="price">${{talkAndTextAddons[0]?.price}} </div>
+          </div>
+        </div>
+        <div class="plan-category-title margin-top-30">
+            <div class="title">Talk & text add-on</div>
+            <div class="quantity">Quantity: {{talkAndTextAddons[1]?.quantity}}</div>
+          </div>
+          <div class="plan-details" *ngIf="!!plan && !!plan?.basePlan">
+            <div class="plan-title">{{talkAndTextAddons[1]?.title}}</div>
+            <div class="plan-sub-title">
+              <div class="title">{{talkAndTextAddons[1]?.subtitle}}</div>
+              <div class="price">${{talkAndTextAddons[1]?.price}} </div>
+            </div>
+          </div>
+        <hr />
+    </div>
+  </div>
+  </ng-container>
+  <ng-container *ngIf="plan.simsQuantity > 0">
+        <div class="order-details margin-top-30">
+          <div class="plan-category-title">
+            <p class="mdn" *ngIf="plan?.cartType == CART_TYPES.MIGRATION">Migration Order</p>
+            <p class="mdn" *ngIf="plan?.cartType == CART_TYPES.PLAN_ITEMS">Purchase for: {{topupMdn}} </p>
+
+            <div class="title">{{planCategory('sim')}}</div>
+            <div class="quantity">Quantity: {{plan?.simsQuantity}}</div>
+          </div>
+          <div class="plan-details">
+            <div class="plan-sub-title">
+              <div class="title">Sim Price</div>
+              <div class="price">${{plan?.cartType == CART_TYPES.PLAN_ITEMS ? newSimOrder?.price : 0}}</div>
+            </div>
+            <div class="plan-sub-title" *ngIf="orderShippingMethod">
+              <div class="title">{{orderShippingMethod.title}}</div>
+              <div class="price small">{{!!orderShippingMethod.price ?(orderShippingMethod.price | currency) : '$0'}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="actions-container">
+          <a (click)="clearUserCart('sim')">Remove</a>
+        </div>
+        <hr />
+  </ng-container>
+  <ng-container *ngIf="(plan?.cartType == CART_TYPES.NEW_PLAN || plan?.cartType == CART_TYPES.GENERIC_CART) && !plan?.activationCode && !plan?.planDevice?.iccid">
+    <div class="order-details">
+      <div class="plan-category-title no-margin-bottom">
+        <div class="title">FREE SIM card</div>
+        <div class="price">$0</div>
+      </div>
+      <div class="plan-details">
+        <div class="plan-sub-title" *ngIf="!!orderShippingMethod">
+          <div class="title" data-cy="shippingMethodOrderCard">{{orderShippingMethod?.title}}</div>
+          <div class="price" *ngIf="orderShippingMethod?.id">{{!!orderShippingMethod.price ?(orderShippingMethod?.price | currency) : '$0'}}</div>
+        </div>
+        <div class="plan-sub-title" *ngIf="!!orderShippingMethod && !!daysEstimation">
+          <div class="title" *ngIf="daysEstimation == '1'">Est. Arrival ( {{daysEstimation || "_"}} Day )</div>
+          <div class="title" *ngIf="daysEstimation !== '1'">Est. Arrival ( {{daysEstimation || "_"}} Days )</div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </ng-container>
+</section>

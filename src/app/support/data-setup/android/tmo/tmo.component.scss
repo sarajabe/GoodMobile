@@ -1,0 +1,123 @@
+@import "../../../../../styles/modules/variables";
+@import "../../../../../styles/modules/mixins";
+
+.android-tmo-container {
+    margin-left: 8%;
+    margin-right: 8%;
+    @media (min-width: 1400px) {
+        margin-left: 18%;
+        margin-right: 10%;
+    }
+    .first-section {
+        max-width: 1301px;
+        margin-bottom: 31px;
+        @media (max-width: $desktop-min-width-minus) {
+            margin-bottom: 29px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 27px;
+        }
+        .android-title {
+            font-size: rem-calc(20px);
+            line-height: 27px;
+            margin-bottom: 31px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(19px);
+                line-height: 34px;
+                margin-bottom: 29px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(18px);
+                line-height: 24px;
+                margin-bottom: 27px;
+            }
+        }
+        .android-desc {
+            font-size: rem-calc(18px);
+            line-height: 45px;
+            @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(16px);
+                line-height: 39px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: rem-calc(15px);
+                line-height: 38px;
+            }
+            .more-desc {
+                margin-top: 56px;
+            }
+        }
+    }
+    .instructions-section {
+        font-size: rem-calc(18px);
+        line-height: 45px;
+        @media (max-width: $desktop-min-width-minus) {
+            font-size: rem-calc(16px);
+            line-height: 39px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: rem-calc(15px);
+            line-height: 38px;
+        }
+        .numbers {
+            list-style-type: decimal;
+            padding-left: 15px;
+            .digit {
+                font-weight: bold;
+                font-size: rem-calc(20px);
+                line-height: 27px;
+                margin-top: 31px;
+                margin-bottom: 31px;
+                @media (max-width: $desktop-min-width-minus) {
+                    font-size: rem-calc(19px);
+                    line-height: 34px;
+                    margin-top: 29px;
+                    margin-bottom: 29px;
+                }
+                @media (max-width: $phablet-min-width-minus) {
+                    font-size: rem-calc(18px);
+                    line-height: 24px;
+                    margin-top: 27px;
+                    margin-bottom: 27px;
+                }
+            }
+            .disc {
+                list-style-type: disc;
+                padding-left: 0;
+            }
+            .style-none {
+                list-style-type: none;
+                padding-left: 0;
+                margin-left: -15px;
+                max-width: 797px;
+                @media (min-width: $phablet-min-width) {
+                    .display-flex {
+                        display: flex;
+                        width: 100%;
+                        .start {
+                            flex-basis: 70%;
+                            @media (max-width: $desktop-min-width-minus) {
+                                flex-basis: 55%;
+                            }
+                        }
+                        .end {
+                            flex-basis: 30%;
+                            @media (max-width: $desktop-min-width-minus) {
+                                flex-basis: 45%;
+                            }
+                        }
+                    }
+                }
+                .margin-top {
+                    margin-top: 67px;
+                    @media (max-width: $desktop-min-width-minus) {
+                        margin-top: 50px;
+                    }
+                }
+                .word-break {
+                    word-break: break-word;
+                }
+            }
+        }
+    }
+}

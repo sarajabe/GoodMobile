@@ -1,0 +1,79 @@
+@import '../../../styles/modules/mixins';
+@import '../../../styles/modules/variables';
+
+.payments-check {
+    padding-top: 32px;
+    .attention-banner {
+        background: #FFEFEE;
+        box-shadow: 0px 3px 4px 0px #EAEAEA40;
+        display: flex;
+        align-items: center;
+        padding: 18px;
+        border-radius: 8px;
+        margin: 32px 0;
+        .note {
+            color: #D22119;
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            margin-bottom: 0;
+            padding-left: 10px;
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            margin: 0 0 24px;
+            .note {
+                font-size: rem-calc(14px);
+                line-height: 24px;
+            }
+        }
+    }
+    .content {
+        .header {
+            font-size: rem-calc(32px);
+            line-height: 40px;
+            margin-bottom: 24px;
+        }
+        .description {
+            font-size: rem-calc(20px);
+            line-height: 32px;
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            .header {
+                font-size: rem-calc(24px);
+                line-height: 32px;
+            }
+            .description {
+                font-size: rem-calc(16px);
+                line-height: 24px;
+            }
+        }
+    }
+    .page-footer {
+        background: #FFFFFF;
+        box-shadow: 0px 1px 0px 0px #E2E2E2 inset;
+        padding: 16px 0 23px;
+        margin-top: 140px;
+        .container-flex {
+            display: flex;
+            justify-content: flex-end;
+            .button {
+                width: 107px;
+                padding: 8px;
+                font-size: rem-calc(20px);
+                line-height: 20px;
+                font-weight: 700;
+            }
+        }
+        @media(max-width: $desktop-min-width-minus) {
+            margin-top: 60px;
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            margin-top: 32px;
+            .container-flex {
+                .button {
+                    width: 98px;
+                    font-size: rem-calc(16px);
+                }
+            }
+        }
+    }
+}

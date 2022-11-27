@@ -1,0 +1,9 @@
+<section class="order-not-recieved report-page" [class.space]="!!showContactForm">
+    <div class="back-section">
+        <img src="/assets/icon/back-arrow.svg">
+        <a class="back-link" (click)="goToReportIssue()">Report an Issue</a>
+    </div>
+    <h1 class="title">Something else</h1>
+</section>
+<app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" [isSomethingElse]="true" *ngIf="!!showContactForm">
+</app-contact-form>

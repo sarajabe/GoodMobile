@@ -1,0 +1,17 @@
+<section class="container-flex internal-page-margins choose-plan">
+    <div class="container-flex-row flex-center margin-bottom-20">
+        <div class="text-center">
+            <h1 class="header">Choose a plan to activate </h1>
+            <p class="subhead">
+                Select Activate my plan if you already purchased a plan from GoodMobile
+            </p>
+            <p class="subhead"><b>Did you already purchase a plan from GoodMobile?</b></p>
+        </div>
+    </div>
+
+    <div class="actions-container">
+        <button class="button primary" (click)="goToPendingPlans()" [disabled]="!!noPendingPlans"
+            id="choose-pending">Yes, Activate my plan</button>
+        <button class="button secondary" id="purchase-plan" (click)="purchasePlan()">No, buy a new plan</button>
+    </div>
+</section>

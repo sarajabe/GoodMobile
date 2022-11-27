@@ -1,0 +1,10 @@
+<div class="toggle" [id]="id" [class.active]="isActive">
+  <div class="toggle-title" (click)="toggleActive($event)">
+    <div class="title"><h2 class="title-name">{{question}}</h2></div>
+    <div class="icons"><h2><i></i></h2></div> 
+ </div>
+ <div class="toggle-inner" *ngIf="isActive">
+   <ng-content></ng-content>
+ </div>
+</div>
+  

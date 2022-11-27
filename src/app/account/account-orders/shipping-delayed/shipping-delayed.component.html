@@ -1,0 +1,23 @@
+<section class="shipping-delayed">
+    <div class="tracking-details"><span class="circle">2</span>
+        <p>Tracking details</p>
+    </div>
+    <div class="content">
+        <p class="inform">We are sorry for the inconvenience, it seems like your order will be delayed.</p>
+        <div class="tracking-button"><button id="track-shipment" class="button primary" aria-label="Track shipment">Track shipment</button></div>
+        <form [formGroup]="shippingDelayedForm" class="shipping-delayed-form">
+            <p>You can choose one of the following options</p>
+            <div class="custom-input"><input type="radio" value="Instant refund to your GoodMobile credit balance"
+                    formControlName="option"> &nbsp;Instant refund to your GoodMobile credit balance.</div>
+            <div class="custom-input"> <input type="radio" value="Refund to payment method. Usually takes 5-7 days"
+                    formControlName="option"> &nbsp;Refund to payment method. Usually takes 5-7 days.</div>
+            <div class="custom-input"><input type="radio" value="Contact us" formControlName="option"> &nbsp;Contact us.
+            </div>
+            <div class="buttons-section">
+                <button id="report-issue" data-cy="report-issue" class="button primary" [class.disabled]="!shippingDelayedForm.valid"
+                    [disabled]="!shippingDelayedForm.valid" aria-label="Report issue">Report issue</button>
+                <button id="back" class="button secondary" data-cy="backBtn" (click)="backToReportIssue()" aria-label="Back">Back</button>
+            </div>
+        </form>
+    </div>
+</section>

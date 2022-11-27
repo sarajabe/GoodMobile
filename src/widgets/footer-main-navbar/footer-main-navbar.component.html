@@ -1,0 +1,71 @@
+<footer class="footer" height="445" id="footer">
+	<div class="container-flex footer-container">
+        <ul class="footer-menu">
+            <li class="footer-section shop" (click)="showShop=!showShop; showAccount = false; showSupport = false; showAbout = false;">
+                <span class="section-title" >Shop<i class="arrow" [ngClass]="{'down': !showShop, 'up': !!showShop}" ></i></span>
+                <ul class="section-list" [ngClass]="{'active': showShop == true}">
+                    <li data-cy="cellPhonePlans"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]">Cell phone plans</a></li>
+                    <li data-cy="cellPhones"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE + '/' + PHONES_SHOP_ROUTE_URLS.TYPE]">Cell phones</a></li>
+                </ul>
+            </li>
+            <li class="footer-section account" (click)="showAccount=!showAccount;showShop = false; showSupport = false;showAbout = false;">
+                <span class="section-title">Account<i class="arrow" [ngClass]="{'down': !showAccount, 'up': !!showAccount}" ></i></span>
+                <ul class="section-list split-list" [ngClass]="{'active': showAccount == true}">
+                    <li data-cy="accountSummary"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ ACCOUNT_ROUTE_URLS.SUMMARY]">Account summary</a></li>
+                    <li data-cy="payAndRefill"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]">Pay & refill your account</a></li>
+                    <li data-cy="yourOrders"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ORDERS]">Your orders</a></li>
+                    <li data-cy="paymentrHistory"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAYMENTS]">Payment history</a></li>
+                    <li data-cy="usage"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.USAGE]">Usage</a></li>
+                    <li data-cy="manageDevices"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]">Manage devices</a></li>
+                    <li data-cy="acpApplication" *ngIf="!!isLoggedIn && !!displayAcpSection"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ACP_APPLICATION]">ACP application</a></li>
+                    <li class="last-item" data-cy="profileSettings" [class.acp-margin]="!!isLoggedIn && !!displayAcpSection"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.SETTINGS]">Profile settings</a></li>
+                </ul>
+              </li>
+              <li class="footer-section support" (click)="showSupport=!showSupport; showAccount = false; showShop = false;showAbout = false;">
+                <span class="section-title">Support<i class="arrow" [ngClass]="{'down': !showSupport, 'up': !!showSupport}" ></i></span>
+                <ul class="section-list" [ngClass]="{'active': showSupport == true}">
+                    <li data-cy="acp"><a [routerLink]="[ROUTE_URLS.ACP]">Affordable Connectivity Program</a></li>
+                    <li data-cy="wifiCalling"><a [routerLink]="[ROUTE_URLS.WIFI_CALLING]">WiFi Calling</a></li>
+                    <!-- <li data-cy="3gShutdown"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.SHUTDOWN_3G]">3G shutdown</a></li> -->
+                    <li data-cy="setupYourPhoneData"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]">Setup your phone data</a></li>
+                    <li data-cy="hdVoice"><a [routerLink]="[ROUTE_URLS.HD_VOICE]">HD Voice</a></li>
+                    <li data-cy="faqs"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.FAQS]">FAQs</a></li>
+                    <li data-cy="contactUs"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.CONTACT_US]">Contact us</a></li>
+                    <li data-cy="sitemapLink"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.SITEMAP]">Sitemap</a></li>
+                </ul>
+            </li>
+            <li class="footer-section about" (click)="showAbout=!showAbout; showAccount = false; showShop = false;showSupport = false;">
+                <span class="section-title">About<i class="arrow" [ngClass]="{'down': !showAbout, 'up': !!showAbout}" ></i></span>
+                <ul class="section-list" [ngClass]="{'active': showAbout == true}">
+                    <li data-cy="aboutG2g"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.ABOUT_GM]">About GoodMobile</a></li>
+                    <li data-cy="whyG2g"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.WHY_GM]">Why GoodMobile</a></li>
+                    <li data-cy="howItWorks"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.HOW_IT_WORKS]">How it works</a></li>
+                    <li data-cy="intCalling"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING]">Intl. calling</a></li>
+                </ul>
+              </li>
+            <li class="footer-section no-sub col-12">
+                <p class="section-title main"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS]">Terms & conditions</a></p>
+                <p class="section-title main main2 aid"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.HEARING_AID_COMPATIBILITY]">Hearing aid compatibility</a></p>
+            </li>
+            <li class="footer-section logo">
+                <img src="/assets/img/Group295.png" srcset="/assets/img/Group295@2x.png 2x,	/assets/img/Group295@3x.png 3x"
+                        class="logo" width="30" height="27"
+                        alt="Good2Go Mobile">
+            </li>
+        </ul>
+		<div class="copyright"  *ngFor="let footer of sharedContent | async">
+            <div class="first-row">
+                <p class="copy">{{footer?.fields?.copySign}} {{footer?.fields?.sentenceOne}}</p>
+                <p class="right">
+                    <a href="https://www.facebook.com/Good2GoMobile/" target="_blank" rel="noopener"><img class="fb" src="assets/img/facebook_icon.png" alt="facebook icon" width="48" height="48"/></a>
+                    <a href="https://twitter.com/Good2GoMobile" target="_blank" rel="noopener"><img class="twitter" src="assets/img/twitter_icon.png" alt="twitter icon" width="48" height="48"/></a>
+                    <a href="https://www.instagram.com/good2gomobile/" target="_blank" rel="noopener"><img class="instagram" src="assets/img/instagram_icon.png" alt="instagram icon" width="48" height="48"/></a>
+                </p>
+            </div>
+			<p class="second-row">{{footer?.fields?.sentenceTwo}}</p>
+		</div>
+    </div>
+    <div class="build">
+        Build version: {{BUILD_VERSION}} - {{BUILD_DATE}} <span style="display: none"> - {{FIREBASE_CONF.projectId}}</span>
+    </div>
+</footer>

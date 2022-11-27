@@ -1,0 +1,256 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.about-goodmobile-container {
+  width: 100%;
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  min-height: 100%;
+  .hidden {
+    display: none;
+  }
+  .inherit-height {
+    height: inherit;
+  }
+  .content {
+    @media (max-width: 640px) {
+      height: inherit;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+    @media (max-width: 376px) and (min-width: 374px) {
+      padding-top: 50px;
+      padding-left: 7px;
+      min-width: max-content;
+    }
+    .title {
+      font-size: rem-calc(73px);
+      font-family: $secondary-font-family-bold;
+      margin-bottom: 25px;
+      @media (max-width: 1024px) and (min-width: 640px) {
+        font-size: rem-calc(55px);
+        line-height: rem-calc(54px);
+        margin-bottom: 14px;
+        margin-top: 30px;
+      }
+    }
+    .subtitle {
+      background-color: $secondary-color;
+      color: white;
+      font-weight: bold;
+      font-size: rem-calc(26px);
+      font-family: $secondary-font-family-bold;
+      padding: 10px 22px;
+      @media (max-width: 1024px) and (min-width: 640px) {
+        font-size: rem-calc(24px);
+        line-height: rem-calc(32px);
+      }
+    }
+  }
+  @media (#{$larger-than-phablet}) {
+    height: 555px;
+    padding-top: 195px;
+    background-position: center center;
+    .content {
+      h1 {
+        font-size: rem-calc(110px);
+        line-height: rem-calc(30px);
+      }
+      p {
+        font-size: rem-calc(40px);
+      }
+    }
+  }
+  @media (max-width: 641px) {
+    top: 60px;
+    height: 600px;
+  }
+  @media (max-width: 640px) {
+    padding-top: 0px;
+  }
+  @media (max-width: 640px) and (min-width: 500px) {
+    height: 600px;
+  }
+  @media (max-width: 500px) and (min-width: 300px) {
+    height: 497px;
+  }
+}
+.text-container {
+  @media (max-width: 640px) {
+    margin-top: 100px;
+  }
+  margin-top: 70px;
+  @media (#{$larger-than-desktop}) {
+    padding-left: 33px;
+    .container-flex {
+      padding: 0 20px 0 75px;
+    }
+  }
+  .container-flex {
+    max-width: 1383px;
+    @media (#{$larger-than-desktop}) {
+      padding: 0 20px 0 75px;
+    }
+    .title {
+      font-family: $secondary-font-family-bold;
+      .main {
+        @media (min-width: $desktop-min-width) {
+          font-size: rem-calc(40px);
+          line-height: rem-calc(47px);
+        }
+        @media (max-width: $phablet-min-width) {
+          font-size: rem-calc(30px);
+          line-height: rem-calc(34px);
+          margin-bottom: 5px;
+        }
+        @media (max-width: 1024px) and (min-width: 640px) {
+          font-size: rem-calc(25px);
+          line-height: rem-calc(27px);
+          margin-bottom: 5px;
+        }
+      }
+      .sub {
+        @media (min-width: $desktop-min-width) {
+          font-size: rem-calc(40px);
+          line-height: rem-calc(47px);
+        }
+        @media (max-width: $phablet-min-width) {
+          font-size: rem-calc(30px);
+          line-height: rem-calc(34px);
+          margin-bottom: 5px;
+        }
+        @media (max-width: 1024px) and (min-width: 640px) {
+          font-size: rem-calc(25px);
+          line-height: rem-calc(27px);
+          margin-bottom: 5px;
+        }
+        @media (max-width: $phablet-min-width) {
+          font-size: rem-calc(26px);
+          line-height: rem-calc(34px);
+        }
+      }
+
+      .note {
+        @media (min-width: $desktop-min-width) {
+          font-size: rem-calc(25px);
+          line-height: rem-calc(33px);
+        }
+        @media (max-width: $phablet-min-width) {
+          font-size: rem-calc(20px);
+          line-height: rem-calc(27px);
+        }
+        @media (max-width: 1024px) and (min-width: 640px) {
+          font-size: rem-calc(18px);
+          line-height: rem-calc(24px);
+        }
+      }
+    }
+    .description {
+      padding-top: 40px;
+      margin-bottom: 7%;
+      @media (max-width: 1024px) and (min-width: 640px) {
+        padding-top: 0px;
+      }
+      .span-for-res {
+        @media (max-width: 640px) {
+          display: inline;
+        }
+        display: none;
+      }
+      .block-for-res {
+        @media (max-width: 640px) {
+          display: block;
+        }
+        display: none;
+      }
+      .block-for-large {
+        @media (min-width: 640px) {
+          display: block;
+        }
+        display: none;
+      }
+      .hideonmob {
+        @media (max-width: 640px) {
+          display: none;
+        }
+        display: block;
+      }
+      .hideonlarge {
+        @media (min-width: 640px) {
+          display: none;
+        }
+        display: block;
+      }
+      p {
+        font-family: $base-font-family;
+        font-size: rem-calc(20px);
+        line-height: rem-calc(30px);
+        @media (max-width: 1024px) and (min-width: 640px) {
+          font-size: rem-calc(15px);
+          line-height: rem-calc(23px);
+        }
+      }
+      h1 {
+        @media (max-width: $desktop-min-width) {
+          font-size: rem-calc(30px);
+          line-height: rem-calc(39px);
+        }
+        @media (min-width: $desktop-min-width) {
+          font-size: rem-calc(40px);
+          line-height: rem-calc(53px);
+        }
+        @media (max-width: 1024px) and (min-width: 640px) {
+          font-size: rem-calc(25px);
+          line-height: rem-calc(33px);
+        }
+      }
+    }
+  }
+  @media (max-width: 640px) {
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 100px;
+  }
+}
+
+.get-started {
+  width: 100%;
+  background-color: $secondary-color;
+  margin-top: 35px;
+  padding: 80px 0;
+  @media (max-width: $phablet-min-width) {
+    padding: 35px 0;
+  }
+  .description {
+    color: white;
+    font-size: rem-calc(30px);
+    line-height: rem-calc(40px);
+    font-family: $secondary-font-family-bold;
+    padding: 10px 10px;
+    @media (max-width: $desktop-min-width-minus) {
+      font-size: rem-calc(25px);
+    }
+    @media (max-width: 640px) {
+      text-align: center;
+      margin-bottom: 35px;
+      display: inline;
+    }
+  }
+  .button {
+    padding: 13px 40px;
+    float: right;
+    width: 255px;
+    font-family: $secondary-font-family;
+    font-size: rem-calc(18px);
+    line-height: rem-calc(24px);
+    @media (max-width: 1024px) and (min-width: 640px) {
+      font-size: rem-calc(17px);
+      line-height: rem-calc(21px);
+      width: 200px;
+    }
+  }
+}

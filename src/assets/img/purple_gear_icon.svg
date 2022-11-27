@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+	<title>purple_gear_icon</title>
+	<defs>
+		<image  width="24" height="24" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAAXNSR0IB2cksfwAAAIpQTFRFAAAAhTWahzOZhjKZhjOZhjOZhjOZhjOZhzKZhjOZhjaaiDOZhjSZhjKZhjOZhjSZhjOZhzKZhjKZtIC/s3+/nVms8OXy////4czl2sDflU2mpGazpGWyrHO59/L54c3m0rPZjkCfw5nM8ObzyqbT2b/fu43G+PP5lUylu4zF6dnsyqXSwpnMhTKZ36TNfAAAAC50Uk5TADCCwOn//OG2eCYtracoZ/5mev//////////////////////////////////ZlsXwSgAAAEJSURBVHicdVKLdoIwDA2P+ALFCRJoR20FqbLt/39vNEV0m7vnpG2SNjdNAuARhFGMi+VqvYFnJCnO2O4e9gyfsX+72w/4C4dX9xkZx5+UvPDCSEaH5z2WRFVFVB5ZTcc8/RWqhaxrKWryegDh5JCI8n2UyRFCxHtDslFEqpHUsCGC2G0n0kJpIbQSmipnicGthnI8t+7UnjH3wWDhUhoZ9ImfdiMLJwZLpr6YXhlEoXpzIR9qxdxWXdvydiuHq7KNJ1+jZ5FGW6uNJDOlu3n8w0HOH4QtHwZVfBB9Fmq4lwR2e47VWdv31nZmLiJ8+cfGeJnL/n+j/rQqez0MafJjTnh8MI7CYDJ8A5LFF8oW8s/qAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0" />
+</svg>

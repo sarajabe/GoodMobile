@@ -1,0 +1,15 @@
+<section class="container-flex internal-page-margins choose-trial">
+    <div class="container-flex-row flex-center margin-bottom-20">
+        <div class="text-center">
+            <h1 class="header" id="choose-trial-header">
+                Do you want to keep your Trial phone number,
+            </h1>
+            <h1 class="header second">or port your current phone number from another provider?</h1>
+            <p class="inquiry" (click)="showInquiry()">What does port current phone number mean?</p>
+        </div>
+    </div>
+    <div class="actions-container">
+        <button class="button primary" id="keep-trial-button" (click)="keepTrial()">Keep Trial number</button>
+        <button class="button secondary" id="port-current-button" (click)="portNumber()">Port current number</button>
+    </div>
+</section>

@@ -1,0 +1,2 @@
+Sitemap: https://www.goodmobile.org/sitemap.xml
+User-agent: *

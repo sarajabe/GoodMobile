@@ -1,0 +1,32 @@
+<div class="container model-container {{context.customClass}}">
+        <div class="modal-header">
+          <h2 class="modal-heading">{{context.title}}</h2>
+          <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle"  data-cy="closeIcon" (click)="closeDialog()"><i class="icon-close"  data-cy="closeIcon"></i></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-content">
+            <div class="row">
+              <div id="PROTRACTOR_MODAL_MSG" *ngIf="!context.customHTML">
+                {{context.message}}
+              </div>
+              <div *ngIf="!!context.customHTML" [innerHTML]="context.customHTML"></div>
+              <div *ngIf="!!context.renderElementId" id="{{context.renderElementId}}">{{context.renderElementId}}</div>
+            </div>
+            <div class="row modal-actions display-block" *ngIf="!context.btnUrl">
+              <button class="button primary" (click)="OK()" id="action-button" data-cy="action-button" >{{context.btnText || 'OK'}}</button>
+            </div>
+            <div class="modal-actions" *ngIf="!!context.cancelBtn">
+              <button class="button secondary" (click)="cancel()" id="action-button" data-cy="action-button" >{{context.cancelText || 'Cancel'}}</button>
+            </div>
+            <div class="row modal-actions" *ngIf="!!context.btnUrl">
+              <a [href]="context.btnUrl" target="_blank">
+                <button class="button primary" (click)="OK()" id="modal-button">{{context.btnText || 'OK'}}</button>
+              </a>
+            </div>
+            <div class="note" *ngIf="!!context.noteText">
+              <p class="details">{{context.noteText}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      

@@ -1,0 +1,565 @@
+@import "../../styles/modules/variables";
+@import "../../styles/modules/mixins";
+
+::ng-deep {
+    .plans-section {
+        padding: 10px;
+        margin: 35px auto;
+        @media (max-width: 833.9px) {
+            margin-top: 20px;
+        }
+        @media (max-width: 639.9px) {
+            margin-top: 0;
+        }
+        .plan-row {
+            border: 1px solid $input-border;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            &.special {
+                border: 1px solid $primary-color;
+                .plan-title {
+                    border-radius: 6px;
+                }
+            }
+            .plan-title {
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 135px;
+                &.special-promo {
+                    background-color: $primary-color;
+                    height: 166px;
+                    @media (max-width: $desktop-min-width-minus) {
+                        height: 124px;
+                    }
+                    @media (max-width: $phablet-min-width-minus) {
+                        height: 121.4px;
+                    }
+                    .special-promo-title {
+                        font-size: rem-calc(23px);
+                        color: $secondary-color;
+                        letter-spacing: 1.25px;
+                        text-transform: uppercase;
+                        text-align: center;
+                        position: relative;
+                        margin-bottom: 19px;
+                        font-weight: normal;
+                        font-family: $base-font-family;
+                        top: 0;
+                        @media (max-width: $desktop-min-width-minus) {
+                            font-size: rem-calc(16px);
+                            margin-bottom: 15px;
+                        }
+                        @media (max-width: $ipad-min-width-minus) {
+                            margin-bottom: 6px;
+                        }
+                        @media (max-width: $phablet-min-width-minus) {
+                            font-size: rem-calc(12px);
+                        }
+                        @media (max-width: 359.9px) {
+                            margin-bottom: 18px;
+                        }
+                    }
+                    .data-value {
+                        color: white;
+                    }
+                    .price-value {
+                        color: white;
+                    }
+                    .price {
+                        .view-details {
+                            color: white;
+                        }
+                        .arrow {
+                            border-color: white;
+                        }
+                    }
+                    button {
+                        background-color: $secondary-color;
+                    }
+                    .action {
+                        .responsive {
+                            .arrow {
+                                border-color: $secondary-color;
+                            }
+                        }
+                    }
+                }
+                .flex-content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                }
+                .data {
+                    cursor: pointer;
+                    flex-basis: 28%;
+                    text-align: center;
+                    .data-value {
+                        font-size: rem-calc(65px);
+                        line-height: 66px;
+                        font-family: $base-font-family-bold;
+                        font-weight: bold;
+                        margin-bottom: 0;
+                        .gb {
+                            font-size: rem-calc(46px);
+                            line-height: 66px;
+                            font-family: $base-font-family-bold;
+                        }
+                        &.no-data {
+                            font-size: rem-calc(30px);
+                            line-height: 34px;
+                            max-width: 150px;
+                            margin: 0 auto;
+                        }
+                    }
+                    .data-amounts {
+                        &.data-amounts-flex {
+                            display: flex;
+                            align-items: center;
+                            margin-left: 33px;
+                            @media (max-width: $ipad-min-width-minus) {
+                                margin-left: 26px;
+                            }
+                            @media (max-width: $phablet-min-width-minus) {
+                                margin-left: 4px;
+                            }
+
+                            .data-value {
+                                font-weight: normal;
+                                font-family: $base-font-family;
+                                @media (max-width: 359.9px) {
+                                    font-size: rem-calc(26px);
+                                    line-height: 30px;
+                                }
+                            }
+                            .gb {
+                                font-weight: normal;
+                                font-family: $base-font-family;
+                                @media (max-width: 359.9px) {
+                                    font-size: rem-calc(20px);
+                                    line-height: 30px;
+                                }
+                            }
+                            .slash {
+                                margin-right: 4px;
+                                .val {
+                                    font-size: rem-calc(50px);
+                                    line-height: 62px;
+                                    @media (max-width: $desktop-min-width-minus) {
+                                        font-size: rem-calc(30px);
+                                        line-height: 34px;
+                                    }
+                                    @media (max-width: $ipad-min-width-minus) {
+                                        font-size: rem-calc(24px);
+                                        line-height: 27px;
+                                    }
+                                    @media (max-width: 359.9px) {
+                                        font-size: rem-calc(20px);
+                                    }
+                                }
+                                .gb {
+                                    font-size: rem-calc(30px);
+                                    @media (max-width: $desktop-min-width-minus) {
+                                        font-size: rem-calc(24px);
+                                        line-height: 27px;
+                                    }
+                                    @media (max-width: 359.9px) {
+                                        font-size: rem-calc(14px);
+                                    }
+                                }
+                            }
+                            .cross-off-line {
+                                width: 70px;
+                                height: 39px;
+                                border-bottom: solid 3px #f58520;
+                                transform: skewY(-28deg);
+                                position: absolute;
+                                @media (max-width: $desktop-min-width-minus) {
+                                    width: 48px;
+                                    height: 30px;
+                                }
+                                @media (max-width: $ipad-min-width-minus) {
+                                    width: 44px;
+                                    height: 16px;
+                                }
+                                @media (max-width: 359.9px) {
+                                    width: 30px;
+                                    height: 20px;
+                                }
+                            }
+                        }
+                    }
+                    .description {
+                        font-size: rem-calc(25px);
+                        line-height: 33px;
+                        font-weight: bold;
+                        font-family: $base-font-family-bold;
+                        margin-bottom: 0;
+                    }
+                }
+                .price {
+                    cursor: pointer;
+                    flex-basis: 44%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    .price-value {
+                        font-size: rem-calc(57px);
+                        line-height: 48px;
+                        font-family: $base-font-family-bold;
+                        margin-bottom: 0;
+                    }
+                    .month {
+                        font-size: rem-calc(44px);
+                        line-height: 48px;
+                        font-family: $base-font-family-bold;
+                        margin-bottom: 0;
+                    }
+                    .view-details {
+                        font-size: rem-calc(18px);
+                        line-height: 23px;
+                        font-family: $base-font-family;
+                        color: $primary-color;
+                        margin-top: 10px;
+                        margin-bottom: 0;
+                        cursor: pointer;
+                    }
+                    .arrow {
+                        border: solid $primary-color;
+                        border-width: 0 1px 1px 0;
+                        padding: 3px;
+                        margin-left: 2px;
+                    }
+                }
+                .action {
+                    flex-basis: 33.333333%;
+                    .button {
+                        width: 213px;
+                        padding: 11px;
+                        font-size: rem-calc(17px);
+                    }
+                    @media (min-width: 834px) {
+                        .responsive {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .plan-details {
+                padding: 10px 65px;
+                .price-details {
+                    border-top: 1px solid $input-border;
+                    font-family: $base-font-family-bold;
+                    font-weight: bold;
+                    font-size: rem-calc(20px);
+                    line-height: 28px;
+                    padding-top: 15px;
+                    margin-bottom: 10px;
+                    .value {
+                        font-size: rem-calc(27px);
+                    }
+                }
+                .price-note {
+                    font-size: rem-calc(16px);
+                    font-family: $base-font-family-bold;
+                    font-weight: bold;
+                    line-height: 12px;
+                    margin-bottom: 27px;
+                }
+                .autoPay {
+                    cursor: pointer;
+                }
+                .details-list {
+                    list-style: none;
+                    font-weight: normal;
+                    margin: 0;
+                    padding: 0;
+                    -webkit-padding-start: 0px;
+                    -webkit-margin-before: 0;
+                    -webkit-margin-after: 0;
+                    -webkit-margin-start: 0;
+                    -webkit-margin-end: 0;
+                    li {
+                        padding: 0px;
+                        margin: 0;
+                        list-style-position: outside;
+                        display: flex;
+                        font-size: rem-calc(15px);
+                        line-height: 17px;
+                        .tick {
+                            //  content: '✓';
+                            color: $primary-color;
+                            margin-right: 5px;
+                            display: inline;
+                        }
+                        .help {
+                            background-color: $primary-color;
+                            color: white;
+                            border-radius: 100px;
+                            padding: 2px 6px;
+                            font-size: rem-calc(15px);
+                            margin-left: 5px;
+                            cursor: pointer;
+                        }
+                        .mobile {
+                            color: $primary-color;
+                            cursor: pointer;
+                        }
+                    }
+                    @media (#{$larger-than-phablet}) {
+                        li {
+                            .mobile {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+                .details-action {
+                    .button {
+                        margin: 20px 0;
+                        width: 216px;
+                        font-size: rem-calc(20px);
+                        padding: 9px;
+                    }
+                }
+            }
+            @media (max-width: $desktop-min-width-minus) and (min-width: 834px) {
+                .plan-title {
+                    height: 94.6px;
+                    .data {
+                        .data-value {
+                            font-size: rem-calc(48px);
+                            line-height: 49px;
+                            .gb {
+                                font-size: rem-calc(34px);
+                                line-height: 49px;
+                            }
+                            &.no-data {
+                                font-size: rem-calc(16px);
+                                line-height: 21px;
+                                max-width: 100px;
+                            }
+                        }
+                        .description {
+                            font-size: rem-calc(16px);
+                            line-height: 21px;
+                        }
+                    }
+                    .price {
+                        .price-value {
+                            font-size: rem-calc(40px);
+                            line-height: 38px;
+                        }
+                        .month {
+                            font-size: rem-calc(32px);
+                            line-height: 31px;
+                        }
+                        .view-details {
+                            font-size: rem-calc(13px);
+                            line-height: 15px;
+                            padding-left: 5px;
+                        }
+                        .arrow {
+                            padding: 2px;
+                        }
+                    }
+                    .action {
+                        .button {
+                            width: 200px;
+                            padding: 10px;
+                            font-size: rem-calc(15px);
+                        }
+                    }
+                }
+                .plan-details {
+                    padding: 10px 45px;
+                    .price-details {
+                        border-top: none;
+                        font-size: rem-calc(19px);
+                        line-height: 24px;
+                        padding-top: 10px;
+                        .value {
+                            font-size: rem-calc(23px);
+                        }
+                    }
+                    .details-action {
+                        .button {
+                            width: 200px;
+                            font-size: rem-calc(15px);
+                            padding: 10px;
+                        }
+                    }
+                }
+            }
+            @media (max-width: $ipad-min-width-minus) {
+                .plan-title {
+                    height: 108.4px;
+                    .data {
+                        .data-value {
+                            font-size: rem-calc(30px);
+                            line-height: 34px;
+                            .gb {
+                                font-size: rem-calc(24px);
+                            }
+                            &.no-data {
+                                font-size: rem-calc(15px);
+                                line-height: 17px;
+                                max-width: 80px;
+                                padding-top: 5px;
+                            }
+                        }
+                        .description {
+                            font-size: rem-calc(15px);
+                            display: block;
+                            line-height: 25px;
+                            &.no-data {
+                                width: 75px;
+                            }
+                        }
+                    }
+                    .price {
+                        .price-value {
+                            font-size: rem-calc(30px);
+                            line-height: 32px;
+                        }
+                        .month {
+                            font-size: rem-calc(28px);
+                            line-height: 32px;
+                        }
+                        .view-details {
+                            display: none;
+                        }
+                    }
+                    .action {
+                        text-align: center;
+                        flex-basis: 30%;
+                        @media (max-width: 449.9px) {
+                            flex-basis: 20%;
+                        }
+                        cursor: pointer;
+                        .button {
+                            display: none;
+                        }
+                        .responsive {
+                            margin-right: 0px;
+                            margin-bottom: 0;
+                            .arrow {
+                                padding: 4px;
+                                border: solid $primary-color;
+                                border-width: 0 3px 3px 0;
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+                .plan-details {
+                    padding: 0 20px 10px;
+                    .price-details {
+                        border-top: none;
+                        font-size: rem-calc(17px);
+                        line-height: 23px;
+                        padding-top: 0px;
+                        padding-left: 18px;
+                        margin-bottom: 0;
+                        .value {
+                            font-size: rem-calc(17px);
+                        }
+                    }
+                    .price-note {
+                        font-size: rem-calc(14px);
+                        padding-left: 18px;
+                    }
+                    .details-section {
+                        padding-left: 18px;
+                    }
+                    .details-action {
+                        .button {
+                            width: 216px;
+                            font-size: rem-calc(20px);
+                            padding: 9px;
+                        }
+                    }
+                }
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                .plan-title {
+                    .price {
+                        flex-basis: 80%;
+                    }
+                }
+            }
+            @media (max-width: 414px) {
+                .plan-details {
+                    .price-details {
+                        padding-left: 0;
+                    }
+                    .price-note {
+                        padding-left: 0;
+                    }
+                    .details-section {
+                        padding-left: 0;
+                        .details-list {
+                            li {
+                                p {
+                                    line-height: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    i.arrow {
+        border: solid #863399;
+
+        &.primary {
+            border: solid $primary-color;
+        }
+
+        &.secondary {
+            border: solid $secondary-color;
+        }
+
+        border-width: 0 1px 1px 0;
+        display: inline-block;
+        padding: 2px;
+        margin-bottom: 3px;
+
+        &.right {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        &.left {
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+
+        &.up {
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+        }
+
+        &.down {
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+    }
+    .button-link-flex {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .button-section {
+        width: 216px;
+        @media (max-width: $desktop-min-width-minus) {
+            width: 200px;
+        }
+    }
+}

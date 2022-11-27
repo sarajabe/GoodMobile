@@ -1,0 +1,413 @@
+.cards-container {
+  /*
+  //possible option to show cards in same line
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  */
+}
+
+.card {
+  display: inline-block;
+  position: relative;
+  width: 224px;
+  height: 237px;
+  object-fit: contain;
+  border-radius: 15px;
+  border: solid 1px $black;
+
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.18;
+  letter-spacing: normal;
+  text-align: center;
+  margin: 15px 30px 15px 0;
+  color: $black;
+  padding: 31px 15px 26px 15px;
+
+  font-size: rem-calc(10px);
+ /* @media (#{$larger-than-mobile}) {
+    font-size: rem-calc(10px);
+    width: 174.7px;
+    height: 173.3px;
+    padding: 10px;
+  }*/
+
+  @media (#{$larger-than-mobile}) {
+    font-size: rem-calc(17px);
+    width: 224px;
+    height: 237px;
+    padding: 25px 15px 10px 15px;
+  }
+
+  .title {
+    font-size: rem-calc(13px);
+    font-weight: bold;
+    @include push--auto();
+    font-size: rem-calc(13px);
+    margin-bottom: 5px;
+    @media (#{$larger-than-mobile}) {
+      font-size: rem-calc(15px);
+      width: 195px;
+      margin-top: -10px;
+    }
+  }
+
+  .sub-title {
+    font-size: rem-calc(10px);
+    @include push--auto();
+    @media (#{$larger-than-mobile}) {
+      font-size: rem-calc(10px);
+    }
+    @media (#{$larger-than-desktop}) {
+      font-size: rem-calc(17px);
+      width: 150px;
+      margin-bottom: 5px;
+    }
+  }
+  .data {
+    font-size: rem-calc(20px);
+    font-weight: bold;
+    padding: 20px 37px;
+    &.paygo {
+      @media(max-width: 426px) {
+        padding: 20px 0px;
+      }
+    }
+    @media (#{$larger-than-mobile}) {
+      font-size: rem-calc(35px);
+      @include push--auto();
+      padding: 10px 0;
+    }
+    
+  }
+
+  .price-container {
+   // position: absolute;
+    bottom: 55px;
+    left: 30px;
+    @media (#{$larger-than-mobile}) {
+      bottom: 40px;
+      left: 30px;
+    }
+    @media (#{$larger-than-desktop}) {
+      bottom: 55px;
+      left: 45px;
+    }
+    .price-container-center {
+      color: $primary-color;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      
+      @media (#{$larger-than-mobile}) {
+        height: 75px;
+        border-bottom: 2px solid $black;
+        padding: 0 20px 10px;
+      }
+      @media (#{$larger-than-desktop}) {
+        height: 80px;
+      }
+
+      .dollar-sign {
+      //  @include push--auto();
+        align-self: flex-start;
+        padding-top: 3px;
+        color: $primary-color;
+        font-size: rem-calc(25px);
+        @media (#{$larger-than-mobile}) {
+          font-size: rem-calc(37px);
+          line-height: 1.16;
+     //     padding-top: 10px;
+        }
+        @media (#{$larger-than-desktop}) {
+         // font-size: rem-calc(37px);
+          line-height: 1.14;
+       //   padding-top: 20px;
+        }
+      }
+      .price {
+       // @include push--auto();
+        font-size: rem-calc(50px);
+        color: $primary-color;
+        @media (#{$larger-than-mobile}) {
+          font-size: rem-calc(75px);
+          line-height: 1.15;
+          display: contents;
+        }
+       /* @media (#{$larger-than-desktop}) {
+          font-size: rem-calc(75px);
+          line-height: 1.15;
+        }*/
+      }
+      .month {
+      //  @include push--auto();
+        align-self: center;
+        padding-bottom: 10px;
+        font-size: rem-calc(17px);
+        color: $primary-color;
+        @media (#{$larger-than-mobile}) {
+          font-size: rem-calc(24px);
+          line-height: 0.18;
+          align-self: flex-end;
+      //    padding-bottom: 13px;
+        }
+        @media (#{$larger-than-desktop}) {
+          font-size: rem-calc(24px);
+          line-height: 1.17;
+         // padding-bottom: 21px;
+        }
+      }
+    }
+  }
+
+  .button-container {
+    position: absolute;
+    bottom: 26px;
+    left: 27px;
+
+    @media (#{$larger-than-mobile}) {
+      bottom: 16px;
+    }
+    @media (#{$larger-than-desktop}) {
+      bottom: 20px;
+    }
+    .button {
+      font-size: rem-calc(14px);
+      width: 122px;
+      height: 24px;
+      padding: 4px;
+
+      @media (#{$larger-than-mobile}) {
+        font-size: rem-calc(17px);
+        width: 165px;
+        height: 33px;
+        padding: 6px;
+      }
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  &.wide {
+    border-radius: 25px;
+  //  max-width: 525px;
+  //  max-height: 270px;
+    width: 400px;
+ //   height: 270px;
+    margin: 0;
+    font-family: $base-font-family;
+    font-size: rem-calc(17px);
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: center;
+
+    padding: 0 10px;
+
+    @media (#{$larger-than-mobile}) {
+      padding: 0 30px;
+      font-size: rem-calc(15px);
+    //  height: 180px;
+    //  max-width: 349px;
+    }
+
+    @media (#{$larger-than-desktop}) {
+      font-size: rem-calc(22px);
+      padding: 0;
+    //  height: 270px;
+    //  max-width: 525px;
+    }
+
+    .title {
+      padding: 0;
+      margin-bottom: 25px;
+      margin-top: 20px;
+      display: inline-block;
+      @media (#{$larger-than-mobile}) {
+        img {
+          max-width: 35px;
+        }
+
+        margin-bottom: 18px;
+      }
+
+      @media (#{$larger-than-desktop}) {
+        img {
+          max-width: 54px;
+        }
+        margin-bottom: 25px;
+      }
+    }
+    .card-description {
+      font-size: rem-calc(17px);
+      display: inline-block;
+      overflow-y: hidden;
+      padding: 10px;
+    }
+    .description {
+      padding: 0 10px;
+      display: inline-block;
+      height: 60px;
+      overflow-y: hidden;
+
+      @media (#{$larger-than-mobile}) {
+        height: 50px;
+        padding: 0 5px;
+      }
+
+      @media (#{$larger-than-desktop}) {
+        height: 77px;
+        padding: 0 55px;
+      }
+
+      &.full-content {
+        height: auto;
+        max-height: none;
+      }
+    }
+
+    .action {
+      font-family: $secondary-font-family-bold;
+      font-size: rem-calc(20px);
+      @media (#{$larger-than-mobile}) {
+        font-size: rem-calc(14px);
+      }
+      @media (#{$larger-than-desktop}) {
+        font-size: rem-calc(20px);
+      }
+      line-height: 1.5;
+      padding: 15px 10px;
+      margin-bottom: 45px;
+    }
+
+    .show-more {
+      font-size: rem-calc(15px);
+    }
+
+    @media (#{$larger-than-phablet}) {
+      border: solid 1px $primary-color;
+    }
+  }
+
+  &.mobile-card-row {
+    @media (max-width: 426px) {
+      border: none;
+      border-top: 1px solid #707070;
+      border-bottom: 1px solid #707070;
+      border-radius: 0;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      height: 80px;
+
+      margin-bottom: -1px;
+
+      display: flex;
+      flex-direction: row;
+
+      .title {
+        position: absolute;
+        top: 45px;
+        font-size: rem-calc(15px);
+      }
+
+      .sub-title {
+        position: absolute;
+        font-weight: normal;
+        top: 36px;
+        font-size: rem-calc(15px);
+      }
+
+      .price-container {
+        position: absolute;
+        bottom: auto;
+        top: 8px;
+        left: 53%;
+      }
+
+      .button-container {
+        display: none;
+      }
+
+      &:after {
+        font-family: 'hero-mobile';
+        content: "\e91d";
+        right: 0;
+        position: absolute;
+        color: $black;
+        top: 30px;
+        font-size: rem-calc(20px);
+        font-weight: bold;
+      }
+    }
+
+   /* @media (max-width: 376px) {
+      .price-container {
+        left: 53%;
+        top: 8px;
+        .dollar-sign {
+          font-size: rem-calc(20px);
+        }
+        .price {
+          font-size: rem-calc(50px);
+        }
+        .month {
+          font-size: rem-calc(14px);
+        }
+      }
+    }*/
+  }
+}
+.card-circle {
+  border-radius: 50%;
+  border: 2px solid $primary-color;
+  height: 180px;
+  width: 180px;
+  padding: 36px 15px 26px 15px;
+  margin: 15px 30px;
+  .title {
+    width: auto;
+    h3 {
+      font-size: rem-calc(18px);
+      font-family: $base-font-family-bold;
+    }
+  }
+  .price {
+    display: flex;
+    padding-left: 15px;
+    h3 {
+      font-size: rem-calc(65px);
+      font-family: $base-font-family-bold;
+    }
+    .currency {
+      font-size: rem-calc(56px);
+      font-family: $base-font-family-bold;
+    }
+  }
+  .month {
+    h3 {
+      font-size: rem-calc(19px);
+      font-weight: normal;
+      font-family: $base-font-family;
+    }
+  }
+  @media (max-width: $phablet-min-width) {
+    padding: 45px 15px 26px 15px;
+  }
+  @media (max-width: $mobile-min) {
+    padding: 26px 15px 26px 15px;
+    .price {
+      h3 {
+        line-height: 1;
+      }
+    }
+  }
+}

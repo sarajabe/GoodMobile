@@ -1,0 +1,72 @@
+<section class="change-of-mind rma">
+    <div class="progress-banner">
+        <div class="step">
+            <picture>
+                <source srcset='assets/img/return-reason.svg' media="(min-width: 320px)">
+                <img src="assets/img/return-reason.svg" alt="return reason" class="step-image">
+            </picture>
+        </div>
+        <div class="progress">
+            <div class="rma-progress half"></div>
+        </div>
+        <div class="step">
+            <picture>
+                <source srcset='assets/img/disabled-return-form.svg' media="(min-width: 320px)">
+                <img src="assets/img/disabled-return-form.svg" alt="return form" class="step-image">
+            </picture>
+        </div>
+        <div class="progress">
+            <div class="rma-progress disabled"></div>
+        </div>
+        <div class="step">
+            <picture>
+                <source srcset='assets/img/disabled-return-label.svg' media="(min-width: 320px)">
+                <img src="assets/img/disabled-return-label.svg" alt="return label" class="step-image">
+            </picture>
+        </div>
+    </div>
+    <div class="process-content">
+        <h1 class="title">Device Return Reason</h1>
+        <div class="reasons">
+            <div class="header">
+                <p class="selection-title">Do you consent to the 10% restocking fee?  <span class="tooltip action">
+                    <img class="action-icon" src="assets/icon/info-orange-circle.svg" alt="info" />
+                    <span class="tooltipContent">
+                        A restocking fee is a fee charged if the product is returned for the purpose of a refund. This fee is deducted from the customer’s refund amount.</span>
+                    </span></p>
+               
+              </div>
+            <div class="selection-area">
+                <div class="select-option">
+                    <a id="defective-device" (click)="setConsent('yes')" class="reason-container">
+                        <img [src]="consent === 'yes' ? '/assets/icon/enabled-radio.svg':'/assets/icon/disabled-radio.svg'"
+                            alt="radio" class="radio-img">
+                        <span class="reason-link">Yes</span>
+                    </a>
+                </div>
+                <div class="select-option">
+                    <a id="defective-device" (click)="setConsent('no')" class="reason-container">
+                        <img [src]="consent === 'no' ?'/assets/icon/enabled-radio.svg':'/assets/icon/disabled-radio.svg'"
+                            alt="radio" class="radio-img">
+                        <span class="reason-link">No</span>
+                    </a>
+                    <div class="red-alert" *ngIf="consent === 'no'">
+                        <p class="alert-title"><img src="assets/icon/red-alert.svg" alt="alert"/>Request Denied</p>
+                        <p class="alert-description">A consent to 10% restocking fee is required to proceed with the device return process. Please visit device help page for more information.</p>
+                    </div>
+                </div>
+                <div class="validation" *ngIf="consentRequired">
+                    <p class="validation-message">Please consent to the 10% restocking fee.</p>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="component-footer">
+        <p class="cancel" data-cy="cancelBtn" (click)="goToReportIssue()">Cancel</p>
+        <div class="navigations">
+            <button class="button secondary" aria-label="back" data-cy="backBtn" (click)="goToReasonsPage()">Back</button>
+            <button class="button primary" data-cy="nextButton" aria-label="next" (click)="next()" [disabled]="consent === 'no'">Next</button>
+        </div>
+    </div>
+</section>

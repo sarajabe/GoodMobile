@@ -1,0 +1,33 @@
+<div class="verified-flow-page">
+    <section class="header-section">
+        <p class="sub-header" *ngIf="!selectedPlan?.eSimDetails">Please enter the 7 Digit Activation Code which can be found printed on your SIM card, and
+            confirm the phone you are using.</p>
+        <p class="sub-header" *ngIf="!!selectedPlan?.eSimDetails">Your 7 digit <b>Activation code</b> is {{selectedPlan?.eSimDetails?.activationCode}}</p>
+    </section>
+    <section class="activation-code-section" *ngIf="!selectedPlan?.eSimDetails">
+        <form class="activation-form" [formGroup]="activationForm">
+            <label>Enter your 7-digit activation code</label>
+            <input type="text" name="activationCode" formControlName="activationCode"
+                id="activationCode" data-cy="activationCode" required minlength="7" maxlength="7" placeholder="-------">
+            <label class="validation-message"
+                *ngIf="activationForm.controls.activationCode.touched && activationForm.controls.activationCode.hasError('required')">Activation
+                code is required</label>
+            <label class="validation-message"
+                *ngIf="activationForm.controls.activationCode.dirty && activationForm.controls.activationCode.hasError('pattern') || activationForm.controls.activationCode.hasError('minlength')">Invalid activation
+                code</label>
+        </form>
+    </section>
+    <section class="device-info-section">
+        <p class="title">Your {{!!selectedPlan?.eSimDetails ? 'e': ''}}SIM will be activated on the following device:</p>
+        <p class="info margin-0" *ngIf="!!phoneImei"><b>IMEI: </b>{{phoneImei}}</p>
+    </section>
+    <section class="options-section">
+        <div class="start-migration-button">
+            <button class="button primary"
+                [class.disabled]="!activationForm.valid" (click)="startMigrationService()">Start service migration</button>
+        </div>
+        <div class="back">
+            <a (click)="back()">Back</a>
+        </div>
+    </section>
+</div>

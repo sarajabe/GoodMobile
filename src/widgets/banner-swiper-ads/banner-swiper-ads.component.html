@@ -1,0 +1,69 @@
+<div class="banner-slider mobile-hidden">
+  <div class="slick-list draggable">
+    <div class="swiper-container swiper-container-override" [swiper]="swiperConfig" (slideChangeEnd)="slideChanged()">
+      <div class="swiper-wrapper">
+
+        <div class="banner-fbAds swiper-slide swiper-element-override"
+             *ngFor="let banner of banners; let i = index">
+          <div class="bg-img-container">
+            <div class="bg-img-container-rel">
+              <div class="bg small-bg" [style.background-image]="'url(' + banner.responsiveImages.small + ')'"></div>
+              <div class="bg medium-bg" [style.background-image]="'url(' + banner.responsiveImages.medium + ')'"></div>
+              <div class="bg large-bg" [style.background-image]="'url(' + banner.responsiveImages.large + ')'"></div>
+              <div class="bg highest-res-bg" [style.background-image]="'url(' + banner.responsiveImages.highestResBg+ ')'"></div>
+              <div class="container">
+                <div class="row">
+                  <div class="{{bannerContentWidthFromTheme()}}">
+                    <div class="banner-content margin-left-fix {{banner.bodyTheme}}">
+                      <h1>{{banner.title}}</h1>
+                      <h3 class="pitch">{{banner.subtitle}}</h3>
+                      <div class="description" *ngIf="!!banner.body">
+                        {{banner.body}}
+                      </div>
+                      <div class="description secondary-description" *ngIf="!!banner.disclaimer"> <!-- add a secondary class to apply specific changes to this element-->
+                        {{banner.disclaimer}}
+                      </div>
+                      <a *ngIf="!!banner.buttonText">
+                        <button class="button primary banner-action-{{i}}">{{banner.buttonText}}</button>
+                      </a>
+                    </div> 
+                  </div> 
+                </div>
+              </div>
+              <img class="highest-res-image" [src]="banner.responsiveImages.highestResImage"/>
+            </div>
+
+          </div>
+        </div> 
+      </div>
+      <div class="container">
+        <div class="slick-prev slick-arrow slider-next-button"></div>
+        <div class="slick-next slick-arrow slider-prev-button"></div>
+        <ul class="slick-dots slider-pagination right hallow"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="banner-slider-mobile" *ngIf="!!mobileBanner">
+  <div class="banner">
+    <div class="container-flex-fluid">
+      <div class="container-flex-row">
+        <div class="col-12">
+          <div class="banner-content-mobile">
+            <h1>{{mobileBanner.title}}</h1>
+            <h3 class="pitch">{{mobileBanner.subTitle}}</h3>
+            <div class="description">
+              {{mobileBanner.body}}
+            </div>
+            <a>
+              <button class="button primary">{{mobileBanner.buttonText}}</button>
+            </a>
+            <div class="banner-disclaimer" *ngIf="!!mobileBanner.disclaimer">
+              {{mobileBanner.disclaimer}}
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="40px" height="40px" viewBox="0 0 90.27 90.27" enable-background="0 0 90.27 90.27" xml:space="preserve">
+    <defs>
+        <style>
+            .circle-2 {
+                fill: #D94A47;
+            }
+            .x {
+                opacity: 0.9;
+            }
+            .x-single {
+                fill: #fff;
+            }
+        </style>
+    </defs>
+    <title>icon-error</title>
+    <circle class="circle-2" cx="45.14" cy="45.14" r="45.14"/>
+    <g class="x">
+      <rect class="x-single" x="21.77" y="43.49" width="46.74" height="5" transform="translate(-18.72 45.15) rotate(-45)"/>
+      <rect class="x-single" x="43.47" y="21.81" width="5" height="46.74" transform="translate(-18.72 45.16) rotate(-45)"/>
+    </g>
+
+  <style>
+     .x-single {
+         animation-name: rotate;
+           animation-duration: 1s;
+           animation-delay: 0.3s;
+           animation-timing-function: ease-in-out;
+           animation-fill-mode: both;
+           transform-origin: 50% 50%;
+
+}
+
+    @keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(315deg);
+  }
+}
+  </style>
+</svg>
+
+  <!--
+    https://codepen.io/seansean11/pen/fBjIi
+  -->

@@ -1,0 +1,109 @@
+<section class="check-coverage">
+  <p class="info" *ngIf="!selectedPlanCoveredForTmo">Enter your address below and find out if GoodMobile is the best
+    fit for your location.</p>
+  <div id="coverage-form" *ngIf="!selectedPlanCoveredForTmo">
+    <form [formGroup]="checkCoverageForm" class="form">
+      <div class="input-section">
+        <label>Enter your full address</label>
+        <input type="text" formControlName="address" data-cy="addressRef" type="search" class="geolocate" ngui-auto-complete
+          [source]="findPlace.bind(this)" list-formatter="description" display-property-name="main_text"
+          (valueChanged)="addressDetails($event)" [tab-to-select]="false" placeholder="Enter an address or location"
+          (focus)="setFoucs = true" (blur)="setFoucs = false" (keyup)="addressUpdated()" (input)="changedAddress()">
+        <label class="blur-background validation-message"
+          *ngIf="checkCoverageForm.controls.address.touched && checkCoverageForm.controls.address.hasError('required')"
+          id="required-zip-code-label" data-cy="addressRequiredValidationMsg">Address is required</label>
+        <label class="validation-message" *ngIf="!displayedAddressModel && !!checkCoverageForm.controls.address.value"
+          id="required-address-msg" data-cy="selectAddressValidationMsg">Please select address from the autocomplete list</label>
+      </div>
+      <div class="check-coverage-button">
+        <button class="button primary" [uiBlockButton]="processingRequest" id="check-coverage-button"
+          data-cy="check-coverage-button"  (click)="checkCoverage()">Check Coverage</button>
+      </div>
+    </form>
+    <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+    </app-invisible-recaptcha>
+    <div id="covered-alert" class="result-banner success" *ngIf="!!covered">
+      <h2 class="banner-title">You are covered!</h2>
+      <p class="banner-desc">Congratulations! Your Address, {{addressValue}} has good coverage.</p>
+    </div>
+    <ng-container *ngIf="!!noCoverage && displayedAddressModel">
+    <div id="no-coverage-alert" class="result-banner alert">
+      <h2 class="banner-title">Oops, No Coverage.</h2>
+      <p class="banner-desc">We’re sorry, but the Address {{addressValue}} does not have good coverage. Please try a
+        different address or visit our contact us page for help. </p>
+    </div>
+  </ng-container>
+    <div id="limitation-warning" class="result-banner limitation" *ngIf="!!displayLimitationsForCurrent">
+      <h2 class="banner-title">Service Limitations Warning</h2>
+      <p class="banner-desc">It looks like this device is compatible with the network, but some features such as MMS,
+        and FaceTime over cellular data may not
+        be available on the network. We do have coverage on our iPhone preferred network, which does support these
+        features. Would you like to migrate to the new network? </p>
+      <a (click)="selectLimitationOption('yes')" class="options-container">
+        <img [src]="!yesLimitationOptionSelected?'/assets/icon/disabled-radio.svg':'/assets/icon/enabled-radio.svg'"
+          alt="radio" class="radio-img">
+        <span class="option-links">Yes, change to the preferred network & send me
+          a migration SIM.</span>
+      </a>
+      <a (click)="selectLimitationOption('no')" class="options-container">
+        <img [src]="!noLimitationOptionSelected?'/assets/icon/disabled-radio.svg':'/assets/icon/enabled-radio.svg'"
+          alt="radio" class="radio-img">
+        <span class="option-links">No, keep my current network.</span>
+      </a>
+      <div class="custom-checkbox">
+        <div class="checkbox">
+          <input title="noAccess" type="checkbox" name="noAccess" [(ngModel)]="acceptTerms" id="acceptTerms"
+            placeholder=" " (change)="acceptTermsChanged()">
+          <label for="acceptTerms"></label>
+        </div>
+        <div class="checkbox-label">
+          By selecting this box, I understand that my current service has limited features like, MMS, group message, and
+          FaceTime over cellular.
+        </div>
+      </div>
+      <label id="checkbox-label-validation" class="validation-message"
+        *ngIf="!!noLimitationOptionSelected && !checkboxClicked">
+        you have to accept the terms before continue
+      </label>
+    </div>
+    <div class="result-banner limitation" *ngIf="!!displayLimitationsForNew">
+      <h2 class="banner-title">Service Limitations Warning</h2>
+      <p class="banner-desc">It looks like this device is compatible with the network, but some features such as MMS,
+        and FaceTime over cellular data may not
+        be available on the network. Do you wish to continue
+        with this purchase?
+      </p>
+      <a (click)="selectLimitationOption('no')" class="options-container">
+        <img [src]="!noLimitationOptionSelected?'/assets/icon/disabled-radio.svg':'/assets/icon/enabled-radio.svg'"
+          alt="radio" class="radio-img">
+        <span class="option-links">No, I’m not interested.</span>
+      </a>
+      <a (click)="selectLimitationOption('yes')" class="options-container">
+        <img [src]="!yesLimitationOptionSelected?'/assets/icon/disabled-radio.svg':'/assets/icon/enabled-radio.svg'"
+          alt="radio" class="radio-img">
+        <span class="option-links" data-cy="acceptLimitations">Yes, and I accept the limitations of service for
+          iPhone.</span>
+      </a>
+      <div class="custom-checkbox">
+        <div class="checkbox">
+          <input title="noAccess" type="checkbox" name="noAccess" [(ngModel)]="acceptTerms" id="acceptTerms"
+            placeholder=" " (change)="acceptTermsChanged()">
+          <label for="acceptTerms"></label>
+        </div>
+        <div class="checkbox-label">
+          By selecting this box, I understand that my service will have limited features like, MMS, group message, and
+          FaceTime over cellular.
+        </div>
+      </div>
+      <label id="checkbox-label-validation" class="validation-message"
+        *ngIf="!!yesLimitationOptionSelected && !checkboxClicked">
+        you have to accept the terms before continue
+      </label>
+    </div>
+  </div>
+  <div class="result-banner success" id="covered-box" *ngIf="!!selectedPlanCoveredForTmo">
+    <h2 class="banner-title">You are covered!</h2>
+    <p class="banner-desc">Since you have an active mobile number with GoodMobile, you are not required to check
+      your service coverage again. Select “Done” to add your new phone to cart.</p>
+  </div>
+</section>

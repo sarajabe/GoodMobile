@@ -1,0 +1,387 @@
+<section class="account-settings-section">
+  <div class="first-row">
+    <div class="account-card">
+      <h2 class="card-title">Your ID & password</h2>
+      <div class="card-content block">
+        <h4 class="title">Customer ID</h4>
+        <p class="info">{{user?.customerId}}</p>
+        <h4 class="title">Password</h4>
+        <p class="info" *ngIf="!isEditingPassword">•••••••</p>
+        <div class="editable-action" *ngIf="!!isEditingPassword">
+          <label for="currentPassword">Current Password</label>
+          <input class="card-input" placeholder="Current Password" type="password" [(ngModel)]="currentPassword"
+            id="currentPassword" data-cy="currentPassword" name="currentPassword" />
+          <label for="password">New Password</label>
+          <input class="card-input" placeholder="New Password" type="password" [(ngModel)]="password" id="password" data-cy="password"
+            name="password" (input)="validatePassword()" />
+          <label class="validation-message" *ngIf="isEditingPassword && !isValidPassword && !!password">
+            Password must be between 6 and 12 characters with at least one capital letter, one small letter,
+            and one digit.</label>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="action" (click)="isEditingPassword=true" *ngIf="!isEditingPassword">
+          <img class="action-icon" src="/assets/img/white-pin.svg" alt="change password" name="change password" />
+          <p id="changePassword" data-cy="changePassword" class="action-title">Change password</p>
+        </div>
+        <div class="action editing" *ngIf="!!isEditingPassword">
+          <button id="savePasswordButton" data-cy="savePasswordButton" class="button primary" (click)="updatePassword()"
+            [disabled]="!currentPassword || !password || !isValidPassword">Save</button>
+        </div>
+        <div class="action editing" *ngIf="!!isEditingPassword">
+          <button id="cancelPasswordButton"  data-cy="cancelPasswordButton" class="button secondary" (click)="isEditingPassword=false">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="account-card last">
+      <h2 class="card-title">Personal information</h2>
+      <div class="card-content block">
+        <div class="content">
+          <h4 class="title">Name</h4>
+          <p class="info" *ngIf="!isEditingUserName">{{user?.firstName}} {{user?.lastName}}</p>
+          <div class="editable-action" *ngIf="!!isEditingUserName">
+            <label for="firstName">First Name</label>
+            <input class="card-input" type="text" [(ngModel)]="firstName" [pattern]="namePattern" id="firstName" data-cy="firstName"
+              (input)="validateName('first')" />
+            <label class="validation-message alert" *ngIf="!firstNameValidation && !!firstName"> First name
+              is invalid </label>
+            <label for="lastName">Last Name</label>
+            <input class="card-input" type="text" [(ngModel)]="lastName" [pattern]="namePattern" id="lastName" data-cy="lastName"
+              (input)="validateName('last')" />
+            <label class="validation-message alert" *ngIf="!lastNameValidation && !!lastName"> Last name is
+              invalid </label>
+          </div>
+        </div>
+        <div class="card-action" *ngIf="!!isEditingUserName">
+          <div class="action editing">
+            <button class="button primary" (click)="updateUserInfo()"
+              [disabled]="!firstNameValidation || !lastNameValidation || !firstName || !lastName" id="save-name" data-cy="save-name"
+              name="save-name">Save</button>
+          </div>
+          <div class="action editing">
+            <button class="button secondary" (click)="cancelEditNameClicked()" id="cancel-edit-name" data-cy="cancel-edit-name"
+              name="cancel-edit-name">Cancel</button>
+          </div>
+        </div>
+        <div class="content">
+          <h4 class="title">Email</h4>
+          <p class="info" *ngIf="!isEditingEmail">{{user?.email}}</p>
+          <div class="editable-action" *ngIf="!!isEditingEmail">
+            <form (ngSubmit)="updateUserEmail()" [formGroup]="userForm">
+              <input class="card-input" id="email" data-cy="email" type="email" formControlName="email" required autocomplete="email" />
+              <label class='validation-message alert' *ngIf="userForm.controls.email.hasError('email')">
+                Email address is invalid.
+              </label>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="action editing" *ngIf="!!isEditingEmail">
+          <button id="saveEmailButton"  data-cy="saveEmailButton" class="button primary" (click)="updateUserEmail()"
+            [disabled]="userForm.controls.email.hasError('email') || !userForm.controls.email.value">Save</button>
+        </div>
+        <div class="action editing" *ngIf="!!isEditingEmail">
+          <button id="cancelEmailButton"  data-cy="cancelEmailButton" class="button secondary" (click)="cancelEmailClicked()">Cancel</button>
+        </div>
+        <div class="action" *ngIf="!isEditingUserName" (click)="isEditingUserName = true">
+          <img class="action-icon" src="/assets/img/white-pin.svg" alt="change name" name="change name" />
+          <p id="changeName" data-cy="changeName" class="action-title">Change name</p>
+        </div>
+        <div class="action" [class.right]="!isEditingUserName" (click)="isEditingEmail=true" *ngIf="!isEditingEmail">
+          <img class="action-icon" src="/assets/img/white-pin.svg" alt="change email" name="change email" />
+          <p id="changeEmail" data-cy="changeEmail" class="action-title">Change email</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="second-row">
+    <div class="account-card full billing" *ngIf="!!activatedPlans && activatedPlans?.length > 0">
+      <h2 class="card-title">Billing details</h2>
+      <div class="preferredPayments" *ngFor="let plan of activatedPlans; let i = index"
+        [class.hidden]="i > 1 && !!togglePaymentView">
+        <div class="info-details">
+          <div class="mobile-section">
+            <p class="info"><b>Mobile Number: </b>{{plan?.mdn}}</p>
+          </div>
+          <div class="paymentMethod-section">
+            <p class="info"><b>Preferred method of payment:</b></p>
+            <p class="info" *ngIf="!!plan?.basePlan?.ebb">Affordable Connectivity Program</p>
+            <p class="info" *ngIf="plan?.paymentMethodId && !plan?.basePlan?.ebb">
+              {{getPaymentDetails(plan?.paymentMethodId)}}</p>
+            <p class="info disabled" *ngIf="!plan?.paymentMethodId">No preferred payment method</p>
+          </div>
+        </div>
+        <div class="action">
+          <p id="changePayment-{{i}}" class="changeAction" (click)="updatePlanCC(plan)"
+            *ngIf="!!plan?.paymentMethodId && !plan?.basePlan?.ebb"><img class="icon action-icon"
+              src="/assets/img/swap.svg" alt="change payment" name="change payment" />Change payment</p>
+          <p id="addPayment-{{i}}" class="changeAction" (click)="updatePlanCC(plan)" *ngIf="!plan?.paymentMethodId"><i
+              class="action-icon icon action-plus"><img class="plus-img" src="assets/icon/white-plus.svg"></i>Add
+            payment</p>
+        </div>
+      </div>
+      <div class="card-action" *ngIf="activatedPlans?.length > 2" (click)="togglePaymentView = !togglePaymentView">
+        <div class="action toggle">
+          <span class="toggle-icon"><i class="arrow" [class.down]="togglePaymentView"
+              [class.up]="!togglePaymentView"></i></span>
+          <p class="action-title">All preferred methods of payment</p>
+        </div>
+      </div>
+    </div>
+    <div class="account-card full ebb" *ngIf="!!isEBBPlan && !!userEbbInfo">
+      <div class="ebb-header-section">
+        <h2 class="card-title">Affordable Connectivity Program</h2>
+        <div class="enrolled-container">
+          <p class="enrolled">Enrolled</p>
+        </div>
+      </div>
+      <div class="ebb-info">
+        <div class="firstName-info">
+          <p class="title">First Name:</p>
+          <p class="value">{{userEbbInfo?.firstName}}</p>
+        </div>
+        <div class="lastName-info">
+          <p class="title">Last Name:</p>
+          <p class="value">{{userEbbInfo?.lastName}}</p>
+        </div>
+        <div class="address-info" *ngIf="userEbbInfo?.address?.primary">
+          <p class="title">Primary Residence Address for ACP:</p>
+          <p class="value">{{userEbbInfo?.address?.primary?.state}}, {{userEbbInfo?.address?.primary?.city}}</p>
+        </div>
+      </div>
+      <div class="card-action" (click)="deEnroll()">
+        <div class="action">
+          <img class="de-enroll-icon" src="/assets/icon/$.svg" alt="de-enroll icon" name="de-enroll" />
+          <p class="action-title"> De-Enroll ACP </p>
+        </div>
+      </div>
+    </div>
+    <div class="account-card full CC last">
+      <h2 class="card-title">Your credit cards</h2>
+      <p class="card-subtitle" *ngIf="!userHasPendingPlans && !userHasActivePlans"> No purchases found for this
+        profile</p>
+      <div class="card-content">
+        <div class="info-details" *ngFor="let method of paymentMethodList; let i = index"
+          [class.hidden]="i > 1 && !!toggleCCView">
+          <p class="info"><b class="brand">{{addressLabel(method) | uppercase}} </b> Ending in
+            {{method?.last4}}, Expiration date: {{method?.expirationDate | expirationDateFormat}}
+            <span class="responsive"><i class="action-icon icon close-action" (click)="removePaymentMethod(method)"
+                id="removePayment"><img src="/assets/icon/Cancel iconwhite.svg"></i></span>
+          </p>
+          <div class="card-action">
+            <div class="action desktop" id="removePaymentIcon-{{i}}">
+              <i class="action-icon icon close-action" (click)="removePaymentMethod(method)"><img
+                  src="/assets/icon/Cancel iconwhite.svg"></i>
+            </div>
+            <div class="action" (click)="editPaymentMethod(method)" id="editPaymentIcon-{{i}}">
+              <p class="action-title"><img class="action-icon" src="/assets/img/white-pin.svg" alt="Edit payment"
+                  name="Edit payment" /> Edit payment card</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="action toggle" *ngIf="paymentMethodList?.length > 2">
+          <span class="toggle-icon" (click)="toggleCCView = !toggleCCView;"><i class="arrow" [class.down]="toggleCCView"
+              [class.up]="!toggleCCView"></i></span>
+          <p class="action-title" data-cy="allPaymentsMethod" (click)="toggleCCView = !toggleCCView;">All payment methods</p>
+        </div>
+        <div class="action right" (click)="showPaymentSection = !showPaymentSection;"
+          *ngIf="(!!userHasPendingPlans || !!userHasActivePlans) && paymentMethodList?.length < 10">
+          <i class="action-icon icon" [class.action-plus]="!showPaymentSection"
+            [class.action-minus]="!!showPaymentSection"><img *ngIf="!showPaymentSection" class="plus-img"
+              src="assets/icon/white-plus.svg"><img *ngIf="!!showPaymentSection" src="assets/icon/white-minus.svg"
+              class="minus-img"></i>
+          <p id="addAnotherPayment" data-cy="addAnotherPayment" class="action-title">Add another payment method</p>
+        </div>
+      </div>
+      <div class="card-content" *ngIf="!!showPaymentSection">
+        <h4 class="title toggled">New Payment Method</h4>
+        <form [formGroup]="paymentInfoForm" class="credit-card-form2">
+          <fieldset class="seven">
+            <label class="font-size-12" for="cardNumber">Card Number <span
+                class="form-text error validation-message">*</span></label>
+            <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber"
+              (keyup)="updateData()" (change)="updateData()" maxlength="19" autocomplete="cc-number">
+            <label class="validation-message" data-cy="invalidCreditCardMsg"
+              *ngIf="paymentInfoForm.controls.cardNumber.touched && !paymentInfoForm.controls.cardNumber.valid">Invalid
+              Credit Card Number. </label>
+          </fieldset>
+          <fieldset class="seven">
+            <label class="font-size-12" for="fullName">Name on card <span
+                class="form-text error validation-message">*</span></label>
+            <input id="fullName" data-cy="fullName" type="text" name="fullName" formControlName="fullName" (keyup)="updateData()"
+              (change)="updateData()" autocomplete="cc-given-name" minlength="1" maxlength="30">
+            <label class="validation-message" data-cy="nameOnCardRequiredMsg"
+              *ngIf="paymentInfoForm.controls.fullName.touched && paymentInfoForm.controls.fullName.hasError('required')">Name
+              on card
+              is required. </label>
+            <label class="validation-message" data-cy="invalidName"
+              *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
+              name. </label>
+          </fieldset>
+          <fieldset class="seven">
+            <label class="font-size-12" for="cardCode">CVV <span
+                class="form-text error validation-message">*</span></label>
+            <input id="cardCode"  data-cy="cardCode" type="password" name="cardCode" restrictNumbers formControlName="cardCode"
+              minlength="3" maxlength="4" (keyup)="updateData()" (change)="updateData()" autocomplete="cc-csc">
+            <label class="validation-message" data-cy="cvvRequiredMsg"
+              *ngIf="paymentInfoForm.controls.cardCode.touched && !paymentInfoForm.controls.cardCode.value">CVV
+              is
+              required field. </label>
+            <label class="validation-message" data-cy="cvvInvalidMsg"
+              *ngIf="paymentInfoForm.controls.cardCode.dirty && paymentInfoForm.controls.cardCode.value && !paymentInfoForm.controls.cardCode.valid">CVV
+              is invalid. </label>
+          </fieldset>
+          <fieldset class="seven">
+            <label class="font-size-12" for="cardExpirationMonth">Expiration date <span
+                class="form-text error validation-message">*</span></label>
+            <div class="flex-display">
+              <div class="select no-margin-left">
+                <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
+                  autocomplete="cc-exp-month" (change)="updateData()">
+                  <option value="" selected disabled hidden>MM</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <div class="select-bg">
+                  <div class="select-arrow"></div>
+                </div>
+              </div>
+              <span class="sperator">/</span>
+              <div class="select">
+                <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
+                  autocomplete="cc-exp-year" (change)="updateData()" aria-placeholder="Year">
+                  <option value="" selected disabled hidden>YY</option>
+                  <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}
+                  </option>
+                </select>
+                <div class="select-bg">
+                  <div class="select-arrow"></div>
+                </div>
+              </div>
+            </div>
+            <label class="validation-message no-wrap" data-cy="expiryMonthRequiredMsg"
+              *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
+              Expiration month is required
+            </label>
+            <label class="validation-message no-wrap" data-cy="expiryYearRequiredMsg"
+              *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
+              Expiration year is required
+            </label>
+            <label class="validation-message no-wrap"
+              *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
+              Expiration date must be valid
+            </label>
+          </fieldset>
+        </form>
+        <form [formGroup]="billingAddressForm" class="credit-card-form3"
+          [class.hidden]="sharedAddressAsShipping && (ship == null)">
+          <div class="secondary-font text-bold margin-bottom-20">Billing address</div>
+          <fieldset class="seven">
+            <label class="font-size-12">Name <span class="form-text error validation-message">*</span></label>
+            <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias">
+            <label class="validation-message" data-cy="addressNameRequiredMsg"
+              *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address
+              alias is required field</label>
+          </fieldset>
+          <fieldset class="address-lookup twelve">
+            <app-address-lookup [displayedAddress]="userBillingAddress" (isValid)="setValidAddress($event)"
+              (addressChange)="addressLookUpChanged($event)" [touchForm]="touchAddressForm">
+            </app-address-lookup>
+          </fieldset>
+          <fieldset class="twelve">
+            <button class="button primary large" data-cy="SaveNewPayment"  (click)="savePaymentInfo($event)"
+              [uiBlockButton]="processingRequest || setDefaultRequest">
+              Save new payment
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="forth-row">
+    <div class="account-card full shipping">
+      <h2 class="card-title">Address book</h2>
+      <div class="card-content">
+        <div class="info-details" *ngIf="shippingAddressList?.length < 1">
+          <p class="info">No shipping address found for this profile</p>
+        </div>
+        <div class="info-details" *ngFor="let address of shippingAddressList; let i = index"
+          [class.hidden]="i > 1 && !!toggleShippingView">
+          <h4 class="title">{{!!address?.name ? address?.name : address?.alias}}<span class="mobile"><i
+                class="action-icon icon close-action" (click)="removeShippingAddress(address)"
+                id="removeAddress-{{i}}"><img src="/assets/icon/Cancel iconwhite.svg"></i></span></h4>
+          <div class="address-info">
+            <p class="info">{{address?.address1}} <span *ngIf="!!address?.addess2"> Apt
+                {{address?.address2}}</span></p>
+            <p class="info">{{address?.city}}, {{address?.state}}</p>
+            <p class="info">{{address?.postalCode}}</p>
+          </div>
+          <div class="card-action ">
+            <div class="action desktop">
+              <i class="action-icon icon close-action" (click)="removeShippingAddress(address)"
+                id="removeAddress-{{i}}"><img src="/assets/icon/Cancel iconwhite.svg"></i>
+            </div>
+            <div class="action edit" (click)="editShippingMethod(address.id)" id="editAddressIcon-{{i}}">
+              <p class="action-title"><img class="action-icon" src="/assets/img/white-pin.svg" alt="Edit Shipping"
+                  name="Edit Shipping" /> Edit address</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-action full">
+        <div class="action toggled" *ngIf="shippingAddressList?.length > 2">
+          <span class="toggle-icon" (click)="toggleShippingView = !toggleShippingView"><i class="arrow"
+              [class.down]="toggleShippingView" [class.up]="!toggleShippingView"></i></span>
+          <p class="action-title" data-cy="allAddressesInBook" (click)="toggleShippingView = !toggleShippingView">All addresses in book</p>
+        </div>
+        <div class="action right" [class.space]="shippingAddressList?.length > 2"
+          (click)="showHideShippingAddress()">
+          <i class="action-icon icon" [class.action-plus]="!showShippingAddress"
+            [class.action-minus]="!!showShippingAddress"><img *ngIf="!showShippingAddress" class="plus-img"
+              src="assets/icon/white-plus.svg"><img *ngIf="!!showShippingAddress" src="assets/icon/white-minus.svg"
+              class="minus-img"></i>
+          <p id="addAnotherAddress" data-cy="addAnotherAddress" class="action-title">
+            {{ shippingAddressList?.length < 1 ? 'Add address' : 'Add another addess'}}</p>
+        </div>
+      </div>
+      <div class="card-content" *ngIf="!!showShippingAddress">
+        <h4 class="title toggled">New Address</h4>
+        <form [formGroup]="billingAddressForm" class="credit-card-form3">
+          <fieldset class="seven">
+            <label for="alias">Name <span class="form-text error validation-message">*</span></label>
+            <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias">
+            <label id="required-alias-msg" data-cy="addressNameReuiredMsg" class="validation-message"
+              *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address
+              name
+              is required field</label>
+          </fieldset>
+          <fieldset class="address-lookup twelve">
+            <app-address-lookup [displayedAddress]="userShippingAddress" (isValid)="setValidShippingAddress($event)"
+              (addressChange)="shippingAddressLookUpChanged($event)" [touchForm]="touchShippingForm" [resetForm]="resetAddressForm">
+            </app-address-lookup>
+          </fieldset>
+          <fieldset class="twelve">
+            <button id="save-address-button" data-cy="saveAddressBtn" class="button primary" (click)="saveAddress()"
+              [uiBlockButton]="processingRequest">
+              Save </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha
+    *ngIf="(!!userHasPendingPlans || !!userHasActivePlans) && paymentMethodList?.length < 10"></app-invisible-recaptcha>
+</section>

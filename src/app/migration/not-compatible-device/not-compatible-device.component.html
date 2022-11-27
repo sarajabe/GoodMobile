@@ -1,0 +1,12 @@
+<section class="container-flex incompatible-device">
+    <div class="container-flex-row flex-center">
+        <div class="text-center">
+            <h1 class="header">Oops, something went wrong</h1>
+            <p class="description">It looks like your phone is not compatible with the other network. If you think this is an error, or have another phone to try, you can try again.</p>
+        </div>
+    </div>
+    <div class="actions-container">
+        <button class="button primary" id="try-again" (click)="goToCompatibility()" aria-label="Try again" >Try again</button>
+        <button class="button secondary" id="cancel" data-cy="cancelBtn" (click)="cancel()" aria-label="cancel">Cancel</button>
+    </div>
+</section>

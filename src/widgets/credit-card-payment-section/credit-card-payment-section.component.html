@@ -1,0 +1,184 @@
+<section class="credit-card-section-container" [@fadeInOut]="'in'">
+  <div *ngIf="!!methodsList && methodsList.length > 0">
+    <p class="subtitle">
+      Select a card for payment:
+    </p>
+    <div class="margin-top-10" *ngIf="!!methodsList && methodsList.length > 0">
+      <div class="highlight-card payment" *ngFor="let method of methodsList" [@fadeInOut]="'in'">
+        <div class="custom-checkbox" (click)="toggleExistingPaymentMethod(method, $event)"
+          [class.disabled]="!!voucherPaymentUsed && !isVoucherNotEnough">
+          <div class="checkbox" id="payment-methods">
+            <input title="{{method?.title}}" type="radio" [(ngModel)]="selectedPaymentMethod" name="paymentMethod"
+              [id]="method?.id" [value]="method" [disabled]="!!voucherPaymentUsed && !isVoucherNotEnough">
+
+            <label [for]="method.id" class="payment-method-label"></label>
+          </div>
+          <label class="checkbox-label" [for]="method.id" *ngIf="!!method.brand">{{method.brand}} Card</label>
+          <div class="address-info-line">
+            <div>Ending in {{method.last4}}, </div>
+            <div>Expiry date: {{method.expirationDate | expirationDateFormat}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div (click)="showHideExistingMethods()" class="highlight-card add-payment-plus text-bold"
+    *ngIf="!!methodsList && methodsList.length > 0 && methodsList.length < 10"
+    [class.disabled]="!!voucherPaymentUsed && !isVoucherNotEnough">
+    <p class="plus" *ngIf="!!showAddCardSection">+</p>
+    <p class="plus" *ngIf="!showAddCardSection">-</p>
+    <p>Add a payment card</p>
+  </div>
+  <p *ngIf="!!noPayment && !showAddCardSection" class="secondary-font text-bold">Enter your payment card details below:
+  </p>
+  <div *ngIf="methodsList?.length == 0 || methodsList?.length < 10">
+    <form [formGroup]="paymentInfoForm" class="credit-card-form margin-top-20" [class.hidden]="showAddCardSection"
+      [@fadeInOut]="'in'">
+      <fieldset class="seven">
+        <label for="cardNumber">Card Number <span class="form-text error validation-message">*</span></label>
+        <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber [(ngModel)]="paymentInfo.cardNumber"
+          formControlName="cardNumber" (keyup)="updateData()" (change)="updateData()" maxlength="19"
+          autocomplete="cc-number">
+        <label class="validation-message" data-cy="invalidCreditCardMsg"
+          *ngIf="paymentInfoForm.controls.cardNumber.touched && !paymentInfoForm.controls.cardNumber.valid">Invalid
+          Credit Card Number. </label>
+      </fieldset>
+      <fieldset class="five">
+        <label for="cardCode">CVV <span class="form-text error validation-message">*</span></label>
+        <input id="cardCode" data-cy="cardCode" type="password" name="cardCode" restrictNumbers [(ngModel)]="paymentInfo.cardCode"
+          formControlName="cardCode" minlength="3" maxlength="4" (keyup)="updateData()" (change)="updateData()"
+          autocomplete="cc-csc">
+          <label class="validation-message" data-cy="cvvRequiredMsg"
+          *ngIf="paymentInfoForm.controls.cardCode.touched && paymentInfoForm.controls.cardCode.hasError('required')">CVV
+          is required field. </label>
+        <label class="validation-message" data-cy="cvvInvalidMsg"
+          *ngIf="paymentInfoForm.controls.cardCode.dirty && !paymentInfoForm.controls.cardCode.valid && paymentInfoForm.controls.cardCode.value">CVV
+          is invalid. </label>
+      </fieldset>
+      <fieldset class="seven">
+        <label for="fullName">Name on card <span class="form-text error validation-message">*</span></label>
+        <input id="fullName" data-cy="fullName" type="text" name="fullName" [(ngModel)]="paymentInfo.fullName" formControlName="fullName"
+          minlength="1" maxlength="30" (keyup)="updateData()" (change)="updateData()" autocomplete="cc-given-name">
+        <label class="validation-message" data-cy="nameOnCardRequiredMsg"
+          *ngIf="paymentInfoForm.controls.fullName.touched && !paymentInfoForm.controls.fullName.value">Name on card is
+          required. </label>
+        <label class="validation-message" data-cy="invalidName"
+          *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
+          Name. </label>
+      </fieldset>
+      <fieldset class="four">
+        <label for="cardExpirationMonth">Expiry date <span class="form-text error validation-message">*</span></label>
+        <div class="flex-display">
+          <div class="select no-margin-left">
+            <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
+              autocomplete="cc-exp-month" (change)="updateData()">
+              <option value="" selected disabled hidden>MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <div class="select-bg">
+              <div class="select-arrow"></div>
+            </div>
+          </div>
+          <span class="sperator">/</span>
+          <div class="select">
+            <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
+              autocomplete="cc-exp-year" (change)="updateData()">
+              <option value="" selected disabled hidden>YY</option>
+              <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}</option>
+            </select>
+            <div class="select-bg">
+              <div class="select-arrow"></div>
+            </div>
+          </div>
+        </div>
+        <label class="validation-message no-wrap" data-cy="expiryMonthRequiredMsg"
+          *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
+          Expiration month is required
+        </label>
+        <label class="validation-message no-wrap" data-cy="expiryYearRequiredMsg"
+          *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
+          Expiration year is required
+        </label>
+        <label class="validation-message no-wrap"
+          *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
+          Expiration date must be valid
+        </label>
+      </fieldset>
+      <fieldset class="twelve card-details">
+        <div class="custom-checkbox" [class.disabled]="!!autoRenew">
+          <div class="checkbox">
+            <input type="checkbox" id="saveCardDetailsCheckbox" name="saveCardDetailsCheckbox" [checked]="saveCCInfo"
+              formControlName="saveCard" [(ngModel)]="saveCCInfo" (change)="updateSaveCCInfoChanged()"
+              [disabled]="!!autoRenew" />
+            <label for="saveCardDetailsCheckbox"></label>
+          </div>
+          <div class="checkbox-label">Save card details</div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <!-- Billing Address Using Address lookup-->
+  <div class="billing-address-container padding-right-20" [class.hidden]="showAddCardSection">
+    <div class="credit-card-form">
+      <fieldset class="twelve" *ngIf="!!shippingAddress">
+        <div class="custom-checkbox">
+          <div class="checkbox">
+            <input type="checkbox" id="sameAddressAsShipping" name="sameAddressAsShipping"
+              [(ngModel)]="sharedAddressAsShipping" (change)="toggleSharedAddress()" />
+            <label for="sameAddressAsShipping"></label>
+          </div>
+          <div class="checkbox-label">
+            Billing address is same as Shipping address.
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <form [formGroup]="billingAddressForm" class="credit-card-form" [class.hidden]="!!sharedAddressAsShipping">
+      <!-- && user has selected a shipping address-->
+      <div class="secondary-font text-bold margin-bottom-20">Billing address</div>
+      <fieldset class="seven">
+        <label>Name<span class="form-text error validation-message">*</span></label>
+        <input type="text" [(ngModel)]="billingAddress.alias" formControlName="alias" autocomplete="alias"
+          (keyup)="updateData()" (change)="updateData()" id="alias" data-cy="alias">
+        <label class="validation-message" data-cy="addressNameRequiredMsg"
+          *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address alias is
+          required field</label>
+      </fieldset>
+      <fieldset class="address-lookup twelve">
+        <app-address-lookup [displayedAddress]="billingAddress" (isValid)="setValidAddress($event)"
+          (addressChange)="addressLookUpChanged($event)">
+        </app-address-lookup>
+      </fieldset>
+    </form>
+  </div>
+  <form [formGroup]="autoRenewForm" class="credit-card-form"
+    *ngIf="(!!cart && cart.cartType != CART_TYPES.PLAN_ITEMS) || !cart">
+    <fieldset>
+      <div class="custom-checkbox" [class.disabled]="(disableAutoRenew && !selectedPaymentMethod) || isPromo">
+        <div class="checkbox">
+          <input type="checkbox" id="autoRenewCheckbox" name="autoRenewCheckbox" [checked]="autoRenew"
+            formControlName="autoRenew" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"
+            [class.disabled]="(disableAutoRenew && !selectedPaymentMethod) || isPromo"
+            [disabled]="(disableAutoRenew && !selectedPaymentMethod) || isPromo" />
+          <label for="autoRenewCheckbox"></label>
+        </div>
+        <div class="checkbox-label">I would like to renew my plan automatically on its anniversary date</div>
+      </div>
+    </fieldset>
+    <fieldset class="card-container border-normal full-width alt-bg" *ngIf="!autoRenew" [@fadeInOut]="'in'">
+      By unchecking the auto-renewal option box, you are missing out on the -$5 discount on all
+      plans from Good2Go.
+    </fieldset>
+  </form>
+</section>

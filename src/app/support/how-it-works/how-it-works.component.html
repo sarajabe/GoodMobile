@@ -1,0 +1,98 @@
+<section class="how-it-works-container">
+    <div class="container-flex">
+        <div class="container-flex-row flex-center text-center">
+            <div class="content">
+                <h1>How. It. Works.</h1>
+                <p>Start saving now</p>
+                <img src="/assets/img/banners/how-it-works-image (2).jpg" alt="Bundled up for winter weather and living life with the ease of a no contract wireless network." class="hidden">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="steps-container">
+    <div class="container-flex">
+        <div class="title">
+            <h2 class="header">Technology should make life easier.</h2>
+            <h2 class="subHeader"><span class="text-color-primary">Cell phone plans</span> shouldn’t be confusing.</h2>
+            <p>With GoodMobile there are no contracts and no funny business in the fine print. We are powered by a premium carrier* that boasts the best 4G LTE network in the United States.</p>
+        </div>
+        <div class="steps-section">
+            <div class="ltr-step">
+                <div class="description">
+                    <h3>1- Keep or buy</h3>
+                    <p class="step-description first">Keep the unlocked iPhone or Android phone you already love or we’ll help you buy a new phone from top manufacturers like Apple, Samsung or Google.</p>
+                    <div class="action">
+                        <button class="button secondary"  data-cy="shopForPhones" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.TYPE">Shop for phones</button>
+                        <button class="button primary" data-cy="bringYourPhoneHowItWorksPage" [routerLink]="ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE">Bring your phone</button>
+                    </div>
+                </div>
+                <div class="step-image">
+                    <img src="assets/img/HIW-first-step.jpg" alt="Keep the unlocked iPhone or Android phone you already love or we’ll help you buy a new phone from top manufacturers like Apple, Samsung or Google.">
+                </div>
+                <div class="mobile">
+                    <button class="button secondary" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.TYPE">Shop for phones</button>
+                    <button class="button primary" [routerLink]="ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE">Bring your phone</button>
+                </div>
+            </div>
+            <div class="rtl-step">
+                <div class="step-image">
+                    <img src="assets/img/HIW-second-step.jpg" >
+                </div>
+                <div class="description">
+                    <h3>2- Pick a plan</h3>
+                  <p class="step-description">GoodMobile is about what’s best for you. All plans include unlimited talk and text in the US. High-speed data – it’s whatever you need. Add more at any time. Plans start at just <b>$15/month</b> with 1GB of high-speed data.</p>
+                    <div class="action">
+                        <button class="button secondary" data-cy="viewAllPlans" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES">View all plans</button>
+                    </div>
+                </div>
+                <div class="mobile-image">
+                    <img src="assets/img/HIW-second-step.jpg" alt="GoodMobile is about what’s best for you. All plans include unlimited talk and text in the US + Canada and Mexico." >
+                </div>
+                <div class="mobile">
+                        <button class="button secondary" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES">View all plans</button>
+                </div>
+            </div>
+            <div class="ltr-step">
+                <div class="description">
+                    <h3>3- Activate your SIM</h3>
+                    <p class="step-description second">Your SIM arrives by mail, and you activate it online. Soon you’ll be GoodMobile. We’re always here to help online or give us a call at:<a href="tel: (800) 416-3003"> 1.800.416.3003</a></p>
+                    <p>You can also check our FAQs for more answers: </p>
+                    <div class="action">
+                        <button class="button primary" data-cy="g2gFAQs" [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS">GoodMobile FAQs</button>
+                    </div>
+                </div>
+                <div class="step-image">
+                    <img src="assets/img/HIW-third-step.jpg" alt="Your SIM arrives by mail, and you activate it online. Soon you’ll be GoodMobile.">
+                </div>
+                <div class="mobile">
+                    <button class="button primary" [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS">GoodMobile FAQs</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <div class="banner-step">
+        <div class="container-flex">
+            <div class="description">
+                <h3>4- Change anything you’d like, anytime</h3>
+                <p class="step-description">Add on international calling to 60 countries. Add more high-speed data anytime you want. Change your plan. You decide.</p>
+                <div class="action">
+                    <button class="button secondary" data-cy="internationalCalling" (click)="goToAddons('intl')">International Calling</button>
+                    <button class="button primary" data-cy="dataAddOns" (click)="goToAddons()">Data Add-ons</button>
+                </div>
+                <img class="hidden" src="/assets/img/HIW-img1.jpg" alt="Add on international calling to 60 countries. Add more high-speed data anytime you want. Change your plan. You decide.">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="get-started hiw">
+    <div class="container-flex">
+        <div class="container-flex-row flex-center">
+           <div class="description">
+                <p>Cheap phone plans shouldn’t mean sacrifice. <span>For the best cell phone deals, try GoodMobile</span></p>
+            </div>
+            <div class="">
+                <button class="button primary" data-cy="goToPlans" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES">Go to plans</button>
+            </div>
+        </div>
+    </div>
+</section>

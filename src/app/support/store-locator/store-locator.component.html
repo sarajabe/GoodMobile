@@ -1,0 +1,87 @@
+<section class="internal-page-margins stores-container">
+    <div class="col-xl-12 col-12">
+        <div class="container-flex">
+            <div class="title">
+                <h1>Store locator</h1>
+            </div>
+            <div class="subtitle">
+                <div>Find GoodMobile authorized retailers near you</div>
+            </div>
+            <div class="form-holder">
+                <form #searchForm="ngForm" class="search-store-form">
+                    <div class="two">
+                        <label class="" for="zipCode">Enter ZIP Code</label>
+                        <input restrictNumbers name="zipCode" id="zipCode" data-cy="zipCode" [(ngModel)]="zipCode" required #zipCodeRef="ngModel"><br><br>
+                        <label class="validation-message" *ngIf="emptyZipCode ">Please Enter Zip Code</label>
+                    </div>
+                    <div class="two">
+                        <label for="radius">Radius within</label>
+                        <select name="radius" id="radius" (ngModelChange)="updateRadius($event)" [(ngModel)]="radius">
+                            <option value="10">10 miles</option>
+                            <option value="20">20 miles</option>
+                            <option value="30">30 miles</option>
+                            <option value="60">60 miles</option>
+                      </select>
+                      <i class="select-arrow"></i>
+                    </div>
+                    <div class="two">
+                        <label for="product">Product</label>
+                        <select name="product" id="product" (ngModelChange)="updateProduct($event)" [(ngModel)]="product">
+                            <option value="SIM">SIM cards</option>
+                            <option value="VOUCHER">Vouchers</option>  
+                      </select>
+                      <i class="select-arrow"></i>
+                    </div>
+                    <div class="two search-section">
+                        <label for="search-button">&nbsp;</label>
+                        <button class="primary search-button margin-bottom-30" (click)="searchStores()"><img src="assets/img/search.svg" alt="search"><span>Search</span></button>
+                    </div>
+                </form>
+            </div>
+            <div class="content-holder">
+                <div class="resultLabels row" *ngIf="!!filteredStores && filteredStores.length > 0">
+                    <div class="four label">
+                        <h3>Store Name</h3>
+                    </div>
+                    <div class="four label">
+                        <h3>Address</h3>
+                    </div>
+                    <div class="four label">
+                        <h3>Store phone number</h3>
+                    </div>
+                </div>
+                <div *ngIf="emptyStores && storesList.length == 0 && !emptyZipCode">
+                    <h1 class='store-locator-validation'>No Stores Found, please try a different search criteria</h1>
+                </div>
+                <div class="resultLabels row" *ngIf="!storesList">
+                    <div class="ten label no-result">
+                        <h3>There are No stores to display</h3>
+                    </div>
+                </div>
+                <div class="stores" *ngFor = "let filteredStore of storesList | paginate: config">
+                    <div class="row">
+                    <div class="four name">
+                        <h4><div class="store-icon"><img src="assets/img/store-map.svg"></div> {{filteredStore.storeName}} - <span class="diff-color">{{filteredStore.distance}} miles </span></h4>
+                    </div>
+                    <div class="four address">
+                        <p>{{filteredStore.address}}, {{filteredStore.city}}, {{filteredStore.state}}, {{filteredStore.location}}</p>
+                        <div class="direction-link"><a href="http://maps.google.com/maps?q={{filteredStore.address}} {{filteredStore.city}} {{filteredStore.state}} {{filteredStore.location}}" target="_blank"><span><img src="assets/img/address-icon.svg"></span>Get direction</a></div>
+                    </div>
+                    <div class="four telephone">
+                        <div class="mobile-shown">
+                                <a href="http://maps.google.com/maps?q={{filteredStore.address}} {{filteredStore.city}} {{filteredStore.state}} {{filteredStore.location}}" target="_blank"><img src="/assets/img/direction.svg"></a>
+                                <a href="tel:{{filteredStore.telephone}}" target="_blank"><img src="/assets/img/phone-icon.svg"></a>
+                        </div>
+                        <a href="tel:{{filteredStore.telephone}}" target="_blank" class="text-color-primary text-bold mobile-hide">{{filteredStore.telephone}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-bottom-50">
+                <div class="right-action eight" *ngIf="!!storeLists && !!storeLists.stores && storeLists.totalItems > 4">
+                    <custom-pagination [config]="config" (configChange)="pageChanged($event)"></custom-pagination>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
