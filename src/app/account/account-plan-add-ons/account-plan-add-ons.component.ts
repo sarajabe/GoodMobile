@@ -178,13 +178,12 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
                   removedItems.push(this.userCart.basePlan);
                 } else {
                   if (this.userCart.simsQuantity > 0) {
-                    removedItems.push({ id: 'SIMG2G4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
+                    removedItems.push({ id: 'SIMGWLTMO4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
                   }
                   if (!!this.userCart.addOns) {
                     removedItems.push(this.userCart.addOns);
                   }
                 }
-                this.analyticsService.trackRermoveFromCart(removedItems);
                 this.analyticsService.trackRermoveFromCartGA4(removedItems);
                 this.userPlansService.selectUserPlan(userPlan.id);
                 this.mobilePlansService.removePhonesFromCart();
@@ -275,7 +274,6 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
           if (!!result) {
             this.appState.clearSessionStorage();
             this.mobilePlansService.removePhonesFromCart();
-            this.analyticsService.trackRermoveFromCart([this.userCart.basePlan]);
             this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
             if (!!this.userCart.voucherData) {
               this.mobilePlansService.removeVoucherCode();
@@ -431,7 +429,6 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
             if (!!this.userCart.voucherData) {
               this.mobilePlansService.removeVoucherCode();
             }
-            this.analyticsService.trackRermoveFromCart([this.userCart.basePlan]);
             this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
             this.setSelectedAddonType(type);
             this.mobilePlansService.setCartType(CART_TYPES.PLAN_ITEMS);

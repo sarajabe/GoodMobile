@@ -23,7 +23,7 @@
     "pree2e-windows": "remove-item e2e/allure-results -recurse -force",
     "generate-report": "allure serve ./e2e/allure-results",
     "e2e-test": "ng e2e -c env --baseUrl='http://localhost:4000/home'",
-    "proxy-generate-token": "gcloud auth print-identity-token --impersonate-service-account=e2e-robot@ztar-product-g2g-test.iam.gserviceaccount.com --audiences='850761398684-i83stc2if8a7t7vek7odk20jrga74por.apps.googleusercontent.com' --include-email --project=ztar-product-g2g-test",
+    "proxy-generate-token": "gcloud auth print-identity-token --impersonate-service-account=e2e-robot@ztar-product-goodwill-test.iam.gserviceaccount.com --audiences='850761398684-i83stc2if8a7t7vek7odk20jrga74por.apps.googleusercontent.com' --include-email --project=ztar-product-goodwill-test",
     "headers-injection-token": "headers-injection-proxy -p 9000 -t \"https://g2g-test.ztarmobile.io\" -h \"e2e/header.json\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",

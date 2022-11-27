@@ -628,7 +628,6 @@ export class CartComponent implements OnInit, OnDestroy {
         this.mobilePlansService.removeVoucherCode();
       }
       this.appState.clearSessionStorage();
-      this.analyticsService.trackRermoveFromCart([this.userCart.basePlan]);
       this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
       this.router.navigate([ROUTE_URLS.HOME]);
     }
@@ -651,7 +650,6 @@ export class CartComponent implements OnInit, OnDestroy {
         this.mobilePlansService.setAddonsList(cartAddons, this.userCart).then(() => {
         });
       }
-      this.analyticsService.trackRermoveFromCart(this.userCart.addOns);
       this.analyticsService.trackRermoveFromCartGA4(this.userCart.addOns);
     }
   } else {
@@ -663,11 +661,9 @@ export class CartComponent implements OnInit, OnDestroy {
       this.mobilePlansService.removeVoucherCode();
     }
     if (!!this.userCart.basePlan && !!this.userCart.basePlan.parentId) {
-    this.analyticsService.trackRermoveFromCart([this.userCart.basePlan]);
     this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
     }
     if(!!this.userCart.addOns && this.userCart.addOns.length > 0) {
-      this.analyticsService.trackRermoveFromCart(this.userCart.addOns);
       this.analyticsService.trackRermoveFromCartGA4(this.userCart.addOns);
     }
     this.router.navigate([ROUTE_URLS.HOME]);

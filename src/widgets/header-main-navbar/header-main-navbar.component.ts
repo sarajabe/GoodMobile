@@ -337,7 +337,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                   removedItems.push(this.userCart.addOns);
                 }
               }
-              this.analyticService.trackRermoveFromCart(removedItems);
               this.analyticService.trackRermoveFromCartGA4(removedItems);
               this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`]);
             }
@@ -425,7 +424,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                     removedItems.push(this.userCart.addOns);
                   }
                 }
-                this.analyticService.trackRermoveFromCart(removedItems);
                 this.analyticService.trackRermoveFromCartGA4(removedItems);
                 this.userPlansService.selectUserPlan(userPlan.id);
               }

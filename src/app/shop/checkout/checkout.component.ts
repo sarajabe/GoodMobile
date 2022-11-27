@@ -1119,16 +1119,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.mobilePlansService.clearUserCart();
       this.flowSettings.steps = [{} as IFlowIndicatorStep];
       // eslint-disable-next-line max-len
-      this.analyticsService.trackRermoveFromCart([{ id: 'SIMG2G4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
-      this.analyticsService.trackRermoveFromCartGA4([{ id: 'SIMG2G4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
+      this.analyticsService.trackRermoveFromCartGA4([{ id: 'SIMGWLTMO4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
       this.appState.clearSessionStorage();
       this.checkoutService.shippingAddressSubject.next(undefined);
       this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.MANAGE_DEVICES}`]);
     }
     if (item === 'sim' && !!cartHasMultipleItems) { // cart has sim and addon and want to remove sim.
       // eslint-disable-next-line max-len
-      this.analyticsService.trackRermoveFromCart([{ id: 'SIMG2G4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
-      this.analyticsService.trackRermoveFromCartGA4([{ id: 'SIMG2G4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
+      this.analyticsService.trackRermoveFromCartGA4([{ id: 'SIMGWLTMO4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
       this.appState.clearSessionStorage();
       this.checkoutService.updateShippingAddress(undefined);
       this.initFlowControl();
@@ -1138,7 +1136,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.appState.clearSessionStorage();
       this.flowSettings.steps = [{} as IFlowIndicatorStep];
       this.checkoutService.shippingAddressSubject.next(undefined);
-      this.analyticsService.trackRermoveFromCart([this.currentPlan.basePlan]);
       this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
       this.router.navigate([ROUTE_URLS.HOME]);
     }
@@ -1162,7 +1159,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           }, 100);
         });
       }
-      this.analyticsService.trackRermoveFromCart(this.currentPlan.addOns);
       this.analyticsService.trackRermoveFromCartGA4(this.currentPlan.addOns);
     }
   }

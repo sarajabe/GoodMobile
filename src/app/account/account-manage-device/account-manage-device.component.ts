@@ -367,13 +367,12 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
                   removedItems.push(this.userCart.basePlan);
                 } else {
                   if (this.userCart.simsQuantity > 0) {
-                    removedItems.push({ id: 'SIMG2G4GLTE', quantity: this.userCart.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' });
+                    removedItems.push({ id: 'SIMGWLTMO4GLTE', quantity: this.userCart.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' });
                   }
                   if (!!this.userCart.addOns) {
                     removedItems.push(this.userCart.addOns);
                   }
                 }
-                this.analyticsService.trackRermoveFromCart(removedItems);
                 this.analyticsService.trackRermoveFromCartGA4(removedItems);
                 this.appState.clearSessionStorage();
                 this.mobilePlansService.clearUserCart();
@@ -486,8 +485,8 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   private setReplacementSim(eSim?: boolean): void {
     const params = {};
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
-    this.tmoSim = !!eSim ? { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMG2GTMO4GLTE' } as IDeviceCompatibilityV1 : { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMG2GTMO4GLTE' } as IDeviceCompatibilityV1;
-    this.attSim = { network: 'att', networkType: 'GSM', skuIdentifier: 'G', skuNumber: 'SIMG2G4GLTE' } as IDeviceCompatibilityV1;
+    this.tmoSim =  { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
+    this.attSim = { network: 'att', networkType: 'GSM', skuIdentifier: 'G', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
     const device = this.selectedPlan.planDevice.network === 'att' ? this.attSim : this.tmoSim;
     if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new sim will remove any plan in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
@@ -497,7 +496,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
             if (!!this.userCart.voucherData) {
               this.mobilePlansService.removeVoucherCode();
             }
-            this.analyticsService.trackRermoveFromCart([this.userCart.basePlan]);
             this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
             this.mobilePlansService.setBasePlan(this.mobilePlansService.getNoPlanMobilePlan());
             this.mobilePlansService.setCartType(CART_TYPES.PLAN_ITEMS);

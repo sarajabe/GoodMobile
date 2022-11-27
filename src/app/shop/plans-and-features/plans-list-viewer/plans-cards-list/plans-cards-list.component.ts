@@ -464,13 +464,12 @@ export class PlansCardsListComponent implements OnInit, OnChanges, AfterViewChec
       removedItems.push(this.currentPlan.basePlan);
     } else {
       if (this.currentPlan.simsQuantity > 0) {
-        removedItems.push({ id: 'SIMG2G4GLTE', quantity: this.currentPlan.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
+        removedItems.push({ id: 'SIMGWLTMO4GLTE', quantity: this.currentPlan.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
       }
       if (!!this.currentPlan.addOns) {
         removedItems.push(this.currentPlan.addOns);
       }
     }
-    this.analyticsService.trackRermoveFromCart(removedItems);
     this.analyticsService.trackRermoveFromCartGA4(removedItems);
     this.mobilePlansService.setSimPurchaseQuantity(0);
     this.mobilePlansService.setAddonsList(null, this.currentPlan);

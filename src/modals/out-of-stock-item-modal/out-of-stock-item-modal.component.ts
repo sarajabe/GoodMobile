@@ -63,7 +63,6 @@ export class OutOfStockItemModalComponent implements OnInit, CloseGuard, ModalCo
       this.closeDialog();
     } else if (this.context.currentPlan.cartType === CART_TYPES.GENERIC_CART) {
       this.mobilePlansService.clearUserCart();
-      this.analyticsService.trackRermoveFromCart([this.context.currentPlan.basePlan]);
       this.analyticsService.trackRermoveFromCartGA4([this.context.currentPlan.basePlan]);
       this.appState.clearSessionStorage();
       this.checkoutService.shippingAddressSubject.next(undefined);

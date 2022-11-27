@@ -188,13 +188,12 @@ export class AccountUsageHistoryComponent implements OnInit, OnDestroy, AccountP
                   removedItems.push(this.userCart.basePlan);
                 } else {
                   if (this.userCart.simsQuantity > 0) {
-                    removedItems.push({ id: 'SIMG2G4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
+                    removedItems.push({ id: 'SIMGWLTMO4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
                   }
                   if (!!this.userCart.addOns) {
                     removedItems.push(this.userCart.addOns);
                   }
                 }
-                this.analyticService.trackRermoveFromCart(removedItems);
                 this.analyticService.trackRermoveFromCartGA4(removedItems);
                 this.userPlansService.selectUserPlan(userPlan.id);
               } else {
