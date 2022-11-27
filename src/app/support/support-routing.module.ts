@@ -15,7 +15,7 @@ import { InternationalCallingComponent } from './international-calling/internati
 import { LandingCoverageComponent } from './landing-coverage/landing-coverage.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
-import { WhyGoodMobileComponent } from './why-GoodMobile/why-GoodMobile.component';
+import { WhyGoodMobileComponent } from './why-goodmobile/why-goodmobile.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { ShutdownComponent } from './shutdown/shutdown.component';
 import { IosGsmComponent } from './data-setup/ios/gsm/gsm.component';
