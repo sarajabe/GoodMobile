@@ -129,7 +129,7 @@
         <ul class="responsive-menu">
           <li class="responsive-item first" *ngIf="innerWidth < 751">
             <div class="logo"><a [routerLink]="[ROUTE_URLS.HOME]"
-                (click)="showResponsiveMenu = false;toggleShowing()"><img alt="good2go logo"
+                (click)="showResponsiveMenu = false;toggleShowing()"><img alt="goodMobile logo"
                   src="/assets/img/logo-small.png" /></a></div>
             <button class="close" (click)="showResponsiveMenu = false;toggleShowing()"><i class="icon-close"></i></button>
           </li>
@@ -138,7 +138,7 @@
               [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">sign in </a></li>
           <li class="responsive-item" *ngIf="!isLoggedIn"> <a
               [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.SIGN_UP]" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">create a Good2Go account
+              [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">create a GoodMobile account
             </a>
           </li>
           <li class="responsive-item" *ngIf="!!isLoggedIn">

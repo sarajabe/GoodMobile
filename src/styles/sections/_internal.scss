@@ -722,7 +722,7 @@
     text-align: center !important;
   }
 }
-.why-good2go {
+.why-goodmobile {
   width: 100%;
   background-color: $light-grey;
   min-height: 400px;
@@ -732,9 +732,9 @@
     padding: 30px 0;
     text-align: center;
   }
-  .why-good2go-slider {
+  .why-goodmobile-slider {
     max-width: 1155px;
-    .why-good2go-slide {
+    .why-goodmobile-slide {
       .container-flex {
         display: inline-flex;
         width: 100%;
@@ -803,9 +803,9 @@
   @media (max-width: $desktop-min-width) {
     padding: 35px 0 50px;
     text-align: center;
-    .why-good2go-slider {
+    .why-goodmobile-slider {
       height: auto;
-      .why-good2go-slide {
+      .why-goodmobile-slide {
         .container-flex {
           display: block;
         }
@@ -850,8 +850,8 @@
     }
   }
   @media (max-width: $phablet-min-width) {
-    .why-good2go-slider {
-      .why-good2go-slide {
+    .why-goodmobile-slider {
+      .why-goodmobile-slide {
         .common-side {
           width: 100%;
           .header {

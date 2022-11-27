@@ -37,7 +37,7 @@ export class PlansListComponent implements OnDestroy {
       if (isReady) {
         this.basePlans = [];
         this.basePlans = this.mobilePlansService.allBasePlans;
-        this.filteredPlans = this.basePlans.filter((plan) => !!plan.parentId && plan.id !== 'GOOD2GO-UNLIMITED-3GB-25-PROMO' && plan.id !== 'GOOD2GO-7-DAY-TRIAL' && (!plan.isSpecialPromotion || !!plan.specialPromotion && !plan.specialPromotion.isSpecific) && !plan.ebb);
+        this.filteredPlans = this.basePlans.filter((plan) => !!plan.parentId && (!plan.isSpecialPromotion || !!plan.specialPromotion && !plan.specialPromotion.isSpecific) && !plan.ebb);
         const replacedPlans = this.filteredPlans.filter((val) => this.filteredPlans.includes(this.filteredPlans.find((e) => e.details.data === val.details.data && !val.isSpecialPromotion && !!e.isSpecialPromotion))); // get plans that has equal data with the special promo plans
         this.filteredPlans = this.filteredPlans.filter((plan) => !replacedPlans.includes(plan)); // remove plans that has the same data as the promo plan
         this.filteredPlans.sort((a, b) => a.details.data - b.details.data);
@@ -71,19 +71,7 @@ export class PlansListComponent implements OnDestroy {
       }
     }
   }
-  public showAutoPayPopUp(): void {
-    this.modalHelper.showInformationMessageModal('Auto Pay Credit', '', 'Got it', null,
-      true, 'autoPay-help-modal',
-      `<div class="description-content">
-      <p class="main">Sign up for Good2Go Auto Pay and get a $5 service credit at the end of each monthly billing cycle. Save up to $60 per year!</p>
-      </div>
-      <div class="margin-bottom-5"><strong>Payment Timing</strong></div>
-      <p class="payment-main">• We’ll charge your card two (2) days before your due date. Don’t worry, we’ll send you a reminder before your card is charged.
-      </p><p class="payment-sub">• We’ll notify you if we have any problems processing your card.</p>
-      <div class="margin-bottom-5"><strong>Your Monthly Charges</strong></div>
-      <p class="charges">Auto Pay will automatically charge the full amount due. Your amount due includes your rate plan and any monthly features currently on your account.
-      This amount won’t change unless you change your plan, ad-ons or features, or if you have any existing credits, charges, or fees on your account.</p>`);
-  }
+
   public toggleSelectedPlan(index): void {
     if (this.selectedIndex === index) {
       this.activePlan = !this.activePlan;

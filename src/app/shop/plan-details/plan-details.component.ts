@@ -116,19 +116,6 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
   public goToPlans(): void {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
   }
-  public showAutoPayPopUp(): void {
-    this.modalHelper.showInformationMessageModal('Auto Pay Credit', '', 'Got it', null,
-    true, 'autoPay-help-modal',
-    `<div class="description-content">
-    <p class="main">Sign up for GoodMobile Auto Pay and get a $5 service credit at the end of each monthly billing cycle. Save up to $60 per year!</p>
-    </div>
-    <div class="margin-bottom-5"><strong>Payment Timing</strong></div>
-    <p class="payment-main">• We’ll charge your card two (2) days before your due date. Don’t worry, we’ll send you a reminder before your card is charged.
-    </p><p class="payment-sub">• We’ll notify you if we have any problems processing your card.</p>
-    <div class="margin-bottom-5"><strong>Your Monthly Charges</strong></div>
-    <p class="charges">Auto Pay will automatically charge the full amount due. Your amount due includes your rate plan and any monthly features currently on your account.
-    This amount won’t change unless you change your plan, ad-ons or features, or if you have any existing credits, charges, or fees on your account.</p>`);
-  }
 
   public needPhonePopUp(): void {
     this.modalHelper.showRoutingModal('Do you need a phone to go with this plan?', '', true ,

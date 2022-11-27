@@ -107,9 +107,6 @@ export class FeaturedPlansComponent implements AfterViewInit, OnDestroy, OnInit 
 
   public goToPlans(selectedPlan: MobilePlanItem) {
     let id = selectedPlan.id;
-    if (id.includes('GOOD2GO-6GB-35')) {
-      id = 'GOOD2GO-MDG-6GB-30';
-    }
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PLANS_SHOP_ROUTE_URLS.BASE}/${id}/${PLANS_SHOP_ROUTE_URLS.DETAILS}`]);
   }
   public viewAllPlans() {

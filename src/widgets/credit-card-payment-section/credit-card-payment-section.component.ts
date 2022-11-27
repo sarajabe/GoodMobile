@@ -124,7 +124,6 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
       if (!!cart) {
         this.cart = cart;
         this.disableAutoRenew = cart.cartType === CART_TYPES.PLAN_ITEMS;
-        // this.isPromo =  cart.basePlan.id === 'GOOD2GO-UNLIMITED-3GB-25-PROMO' ? true : false;
         /* eslint-disable no-shadow */
         const storedAutoRenew = sessionStorage.getItem('auto_renew');
         if (!storedAutoRenew) {

@@ -38,8 +38,7 @@
                 </div>
             </div>
             <div class="plan-details col-12" *ngIf="selectedIndex == i && activePlan" [class.special-promo]="!!plan?.isSpecialPromotion">
-                <p class="price-details"><span class="value">${{plan?.price - plan?.promoPrice}}</span>/mo after <span
-                        class="text-color-primary autoPay" (click)="showAutoPayPopUp()">Auto Pay Credit</span></p>
+                <p class="price-details"><span class="value">${{plan?.price - plan?.promoPrice}}</span>/mo </p>
                 <p class="price-note">Regular price {{plan?.price | currency}}/mo</p>
                 <div class="details-section">
                     <p class="promo-title" *ngIf="!!plan.specialPromotion">{{plan?.specialPromotion?.promotionTitle}}</p>
@@ -52,11 +51,6 @@
                             <p class="tick">✓</p>
                             <p>Unlimited talk and text <span *ngIf="!!plan?.details?.data  != 0">+ data access </span>on
                                 America’s nationwide networks </p>
-                        </li>
-                        <li *ngIf="!plan?.isSpecialPromotion">
-                            <p class="tick">✓</p>
-                            <p>Save up to $60/year with <span class="text-color-primary autoPay"
-                                    (click)="showAutoPayPopUp()">Auto Pay Credit!</span> </p>
                         </li>
                         <li *ngIf="!plan?.isSpecialPromotion">
                             <p class="tick">✓</p>

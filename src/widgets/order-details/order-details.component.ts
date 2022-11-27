@@ -79,18 +79,6 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
           this.isVoucher = false;
         }
         this.autoRenew = cart.autoRenewPlan;
-        if (!!cart.activationCode && !!cart.activePlanId && cart.cartType === CART_TYPES.NEW_PLAN && cart.activationCode === '11111') {
-          this.isTrialUpgrade = true;
-        }
-        if (!!cart.activePlanId && cart.cartType === CART_TYPES.CHANGE_PLAN) {
-          this.userPlanService.getUserPlan(cart.activePlanId).then((plan) => {
-            if (!!plan && plan.basePlan.id === 'GOOD2GO-7-DAY-TRIAL' && !plan.upgradeDiscountUsed) {
-              this.isTrialUpgrade = true;
-            } else {
-              this.isTrialUpgrade = false;
-            }
-          });
-        }
         if (cart.cartType === CART_TYPES.TOPUP_PLAN && !this.isTopupChecked || cart.cartType === CART_TYPES.CHANGE_PLAN || cart.cartType === CART_TYPES.PLAN_ITEMS) {
           const activeUserPlanId = !!cart.activePlanId ? cart.activePlanId : sessionStorage.getItem('plan_id');
           this.userPlanService.getUserPlan(activeUserPlanId).then((plan) => {
@@ -143,7 +131,7 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public goToPlans(): void {
-    this.modalHelper.showConfirmMessageModal('Are you sure you want to change plan?', 'By clicking yes you agree to leaving this page and changing your Good2Go plan', 'Yes', 'Cancel',
+    this.modalHelper.showConfirmMessageModal('Are you sure you want to change plan?', 'By clicking yes you agree to leaving this page and changing your GoodMobile plan', 'Yes', 'Cancel',
       'confirm-change-checkout-modal').result.then((result) => {
         if (result) {
           sessionStorage.removeItem('payment_id');
@@ -184,8 +172,8 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
   public filterAddons(planAddons): boolean {
     this.dataAddons = planAddons.filter((addon) => addon.type === 'add-on-data');
-    this.internationalAddon = planAddons.filter((addon) => addon.id === 'GOOD2GO-UNLIMITED-INTERNATIONAL');
-    this.talkAndTextAddons = planAddons.filter((addon) => addon.type === 'add-on-talkandtext' && addon.id !== 'GOOD2GO-UNLIMITED-INTERNATIONAL');
+    this.internationalAddon = planAddons.filter((addon) => addon.id === 'GOODMOBILE-UNLIMITED-INTERNATIONAL');
+    this.talkAndTextAddons = planAddons.filter((addon) => addon.type === 'add-on-talkandtext' && addon.id !== 'GOODMOBILE-UNLIMITED-INTERNATIONAL');
     return true;
   }
 
