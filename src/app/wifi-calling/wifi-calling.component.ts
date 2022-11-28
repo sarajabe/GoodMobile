@@ -17,7 +17,7 @@ export class WifiCallingComponent implements OnInit {
   constructor(private contentfulService: ContentfulService, private modalHelper: ModalHelperService) { }
 
   ngOnInit(): void {
-    this.contentfulService.getQuestionsByCategoryId('goodmobileFaqs', 'wifi-calling-page').subscribe(questions => {
+    this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'wifi-calling-page').subscribe(questions => {
       if (!!questions) {
          this.allQuestions = questions[0].fields.questions;
       }

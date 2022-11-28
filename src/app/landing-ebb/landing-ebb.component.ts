@@ -56,7 +56,7 @@ export class LandingEbbComponent implements OnInit, OnDestroy {
       .subscribe((authState) => this.isLoggedIn = !!authState && !authState.isAnonymous);
   }
   ngOnInit(): void {
-    this.contentfulService.getQuestionsByCategoryId('goodmobileFaqs', 'acp').subscribe(questions => {
+    this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'acp').subscribe(questions => {
       if (!!questions) {
         const allQuestions = questions[0].fields.questions;
         this.firstThreeQuestions = allQuestions.slice(0, 3);

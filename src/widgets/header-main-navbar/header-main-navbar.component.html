@@ -7,47 +7,8 @@
       </a>
     </div>
     <ul class="menu" *ngIf="innerWidth > 1024.9">
-      <li class="menu-item has-list" (click)="showShopMenu = !showShopMenu" data-cy="shopMenu">
-        <div class="label-section">
-          <p class="title" data-cy="shopMenu">shop <i class="arrow down"></i></p>
-        </div>
-        <div class="wrapper" [class.menuShown]="!!showShopMenu">
-          <ul class="dropdown" *ngIf="!isLoggedIn || (!!isLoggedIn && !userHasActivePlans)">
-            <li class="sub-item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                (click)="onLinkClick($event)">plans</a></li>
-            <li class="sub-item"><a
-                [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE + '/' + PHONES_SHOP_ROUTE_URLS.TYPE]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                (click)="onLinkClick($event)">phones</a></li>
-          </ul>
-          <ul class="dropdown shop" *ngIf="!!isLoggedIn && !!userHasActivePlans">
-            <li class="sub-item">
-              <div class="shop-item title">New account </div>
-              <a class="shop-item" data-cy="purchaseANewPlan" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                (click)="onLinkClick($event)">Purchase new plan</a>
-              <a class="shop-item"
-                [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE + '/' + PHONES_SHOP_ROUTE_URLS.TYPE]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                (click)="onLinkClick($event)">Purchase phone</a>
-            </li>
-            <li class="sub-item">
-              <div class="shop-item title"><span class="acount-dropdown-title">Account :</span>
-                <select class="mdn-list" id="phonePlan" name="phonePlan" [(ngModel)]="selectedPlan"
-                  (ngModelChange)="userPlanSelected($event)" [disabled]="disabled" [compareWith]="planCompare">
-                  <option *ngFor="let plan of userPlans" [ngValue]="plan">
-                    {{getSelectorTitle(plan)}}
-                  </option>
-                </select>
-              </div>
-              <button class="shop-item" (click)="changePlan()" [class.disabled]="!!isPortIn">Change plan</button>
-              <button class="shop-item" (click)="onLinkClick($event, 'addon')"
-                [class.disabled]="!!isPortIn || !!isExpiredAccount">Order Add-ons</button>
-            </li>
-          </ul>
-        </div>
-      </li>
+      <li class="menu-item"><a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]"
+        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">shop</a></li>
       <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header" [routerLink]="[ROUTE_URLS.BRING_PHONE]"
           routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">bring
           your phone</a></li>

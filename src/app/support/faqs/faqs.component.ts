@@ -36,7 +36,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
         this.targetCategory =  this.faqsCategories[0].fields.g2gFaqs[0].fields.categoryId;
         this.activeCategory = this.targetCategory;
         this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
-        this.questions = this.contentFulService.getQuestionsByCategoryId('goodmobileFaqs', this.targetCategory);
+        this.questions = this.contentFulService.getQuestionsByCategoryId('good2goFaqs', this.targetCategory);
         this.checkParams();
       }
      });
@@ -57,7 +57,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
         this.activeCategory = this.targetCategory;
         this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
         this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
-        this.questions = this.contentFulService.getQuestionsByCategoryId('goodmobileFaqs', this.targetCategory);
+        this.questions = this.contentFulService.getQuestionsByCategoryId('good2goFaqs', this.targetCategory);
         if ( this.targetCategory  === 'covid'){
           this.isCovid = true;
         }
@@ -92,7 +92,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
       this.targetCategory = categoryId;
       if (category !== this.activeCategory) {
         this.activeCategory = this.targetCategory;
-        this.questions = this.contentFulService.getQuestionsByCategoryId('goodmobileFaqs', categoryId);
+        this.questions = this.contentFulService.getQuestionsByCategoryId('good2goFaqs', categoryId);
         this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
         this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
         if (this.targetCategory === 'covid') {

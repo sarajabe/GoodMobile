@@ -18,7 +18,7 @@ export class HdVoiceComponent implements OnInit {
   constructor(private contentfulService: ContentfulService) { }
 
   ngOnInit(): void {
-    this.contentfulService.getQuestionsByCategoryId('goodmobileFaqs', 'hd-voice-questions').subscribe(questions => {
+    this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'hd-voice-questions').subscribe(questions => {
       if (!!questions) {
         const allQuestions = questions[0].fields.questions;
         this.firstThreeQuestions = allQuestions.slice(0, 3);

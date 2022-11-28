@@ -101,7 +101,7 @@
         flex-direction: column;
         justify-content: center;
         height: 741px;
-        background-color: #7dd0de;
+        background-color: $blue;
         text-align: center;
         @media (max-width: $desktop-min-width-minus) {
             height: 1297px;

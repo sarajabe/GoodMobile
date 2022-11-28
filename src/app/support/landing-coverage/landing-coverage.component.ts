@@ -45,7 +45,7 @@ export class LandingCoverageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questions = this.contentfulService.getQuestionsByCategoryId('goodmobileFaqs', 'coverage');
+    this.questions = this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'coverage');
     setInterval(() => {
       this.reCaptcha.execute(); // reset recaptcha every 2 minutes to avoid invalid or expired recaptcha error
     }, 1.8 * 60 * 1000);

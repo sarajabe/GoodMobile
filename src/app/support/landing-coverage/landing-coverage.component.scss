@@ -342,7 +342,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #7dd0de;
+    background-color: $blue;
     height: 450px;
     @media (max-width: $desktop-min-width-minus) {
       height: 390px;
@@ -430,7 +430,7 @@
     font-size: rem-calc(13px);
     line-height: 30px;
     .note {
-      color: #863399;
+      color: $primary-color;
     }
   }
 }

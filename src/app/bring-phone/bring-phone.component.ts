@@ -22,7 +22,7 @@ export class BringPhoneComponent implements OnInit {
   constructor(private contentfulService: ContentfulService, private router: Router) { }
 
   ngOnInit(): void {
-    this.contentfulService.getQuestionsByCategoryId('goodmobileFaqs', 'byod-questions').subscribe(questions => {
+    this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'byod-questions').subscribe(questions => {
       if (!!questions) {
         const allQuestions = questions[0].fields.questions;
         this.firstThreeQuestions = allQuestions.slice(0, 3);
