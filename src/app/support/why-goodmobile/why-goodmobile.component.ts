@@ -23,7 +23,7 @@ export class WhyGoodMobileComponent implements OnInit {
   ngOnInit(): void {
     this.metaService.createCanonicalUrl();
     this.innerWidth = window.innerWidth;
-    this.whyGoodmobile = this.contentful.getContent('whyGoodmobile');
+    this.whyGoodmobile = this.contentful.getContent('whyGood2go');
   }
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
