@@ -27,7 +27,7 @@ export const CONTENTFUL = {
   token: '4H2KlEJCD-Nw76Voi1BJDNdnNX3u0ymvzD8TxgoSXLw',
   environment: 'master'
 };
-export const ZMP_G2G_BFF_ENDPOINT_URL = 'https://g2g-bff-5zxbrbyvaq-uc.a.run.app';
+export const ZMP_G2G_BFF_ENDPOINT_URL = 'https://gm-node-bff-test-7l7gbelfja-uc.a.run.app';
 export const environment: Environment = {
   production: false,
   showDevModule: true,
