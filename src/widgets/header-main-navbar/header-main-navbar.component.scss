@@ -54,6 +54,60 @@
         }
       }
     }
+    .wrapper {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      z-index: 1;
+      width: 290px;
+      .dropdown {
+        left: -70px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        top: 10px;
+        background: #F8FCFE;
+        box-shadow: 0px 4px 15px 0px #CED3D699;
+        border-radius: 10px;
+        padding: 12px 24px;
+        .sub-item {
+          display: block;
+          list-style-type: none;
+          height: auto;
+          line-height: 32px;
+          font-size: rem-calc(18px);
+          font-family: $base-font-family;
+          padding: 12px 0;
+          cursor: pointer;
+          font-weight: bold;
+          color: $primary-color;
+          border-bottom: 2px solid #DDDDDD;
+          background-color: transparent;
+          &:last-child {
+            border-bottom: none;
+          }
+          &:hover {
+            transition: all 0.2s ease-in;
+            color: $hover-color !important;
+
+            i {
+              color: white;
+            }
+          }
+
+          &.disabled {
+            color: $sg-steel;
+            cursor: not-allowed;
+
+            &:hover {
+              background-color: $primary-color;
+            }
+          }
+        }
+
+      }
+    }
+    
     .responsive-wrapper {
       display: none;
       position: absolute;
@@ -91,6 +145,10 @@
           }
         }
       }
+      i {
+        width: 10px;
+        height: 10px;
+      }
       .responsive-menu {
         padding-inline-start: 16px;
         list-style: none;
@@ -115,6 +173,76 @@
           &:last-child {
             border-bottom: none;
             margin-bottom: 0;
+          }
+          &.account-list {
+            display: list-item;
+            .label-section {
+              display: flex;
+              justify-content: space-between;
+             
+            }
+            .name {
+              p {
+                color: $primary-color;
+                font-size: rem-calc(18px);
+                line-height: 32px;
+                font-weight: bold;
+                display: flex;
+                gap: 8px;
+                align-items: center;
+              }
+            }
+            .toggle-side {
+              padding-right: 16px;
+            }
+            .menu-wrapper {
+              display: none;
+
+              .sub-menu {
+                list-style: none;
+                padding-inline-start: 20px;
+
+                .item {
+                  a {
+                    font-weight: normal;
+                    font-family: $base-font-family;
+                    font-size: rem-calc(16px);
+                    line-height: 24px;
+                    padding: 8px;
+                    color: #393939;
+                  }
+
+                  &.main {
+                    font-weight: bold;
+                    border-bottom: none;
+                    display: inline-flex;
+                    align-items: center;
+
+                    select {
+                      border: none;
+                      color: $primary-color;
+                      width: 145px;
+                      margin-left: 10px;
+                      height: 30px;
+                      font-size: rem-calc(14px);
+                      padding: 0 5px 0 0;
+                    }
+                  }
+
+                  &.disabled {
+                    cursor: not-allowed;
+
+                    a {
+                      color: $sg-steel;
+                    }
+                  }
+                }
+              }
+
+              &.menuShown {
+                display: block;
+              }
+            }
           }
         }
       }
@@ -205,6 +333,28 @@
         .login-option {
           font-size: rem-calc(18px);
           line-height: 32px;
+          cursor: pointer;
+          i {
+            width: 8px;
+            height: 8px;
+          }
+          .label-section {
+            display: flex;
+            align-items: center;
+          }
+          .account {
+            margin-right: 5px;
+          }
+          &:hover {
+            .wrapper {
+              display: block;
+              transition: all 0.4s ease-in-out;
+            }
+            .arrow {
+              transform: rotate(-135deg);
+              -webkit-transform: rotate(-135deg);
+            }
+          }
         }
       }
     }
