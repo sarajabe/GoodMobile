@@ -2,7 +2,6 @@
 @import '../../styles/modules/mixins';
 
 .header {
-  // max-width: 2000px;
   height: 64px;
   opacity: 0.96 !important;
   background: #F8FCFE;
@@ -13,14 +12,8 @@
   display: flex;
   z-index: 10;
 
-  // @media (max-width: $desktop-min-width-minus) {
-  //   height: 80px;
-  // }
 
   @media (max-width: $tablet-min-width-minus) {
-    // height: 60px;
-    // background-color: $header-bg;
-
     &.menuShown {
       height: 100%;
       overflow: scroll;
