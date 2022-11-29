@@ -55,8 +55,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   public displayAcpSection = false;
   public showACPActionBanner = false;
   public acpActionRequired = false;
-  public showPaymentUpdateBanner = false;
-  public paymentUpdateNeeded = false;
   public ACP_STATUS = {
     COMPLETE: 'COMPLETE',
     PENDING_RESOLUTION: 'PENDING_RESOLUTION',
@@ -116,7 +114,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
       if (!!user) {
-        this.paymentUpdateNeeded = !!user.paymentUpdateNeeded ? user.paymentUpdateNeeded : false;
         this.userPlansService.userPlans.subscribe((plans) => {
           if (!!plans) {
             const acpPlan = plans.find((plan) => !!plan.basePlan.ebb && !plan.canceled);
@@ -136,6 +133,8 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                   this.alertBannerHeight = alert.clientHeight;
                   this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
                 }, 200);
+              }  else {
+                this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
               }
             } else {
               this.displayAcpSection = false;
@@ -161,16 +160,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
           });
         }
       }
-      if (!!this.userProfile && !!this.userProfile.paymentUpdateNeeded) {
-        this.showPaymentUpdateBanner = (this.pageUrl.indexOf(DUPLICATE_PAYMENTS_ROUTE_URLS.NAME) > -1) ? false : true;
-        if (!!this.showPaymentUpdateBanner) {
-          setTimeout(() => {
-            const alert = document.getElementById('payment-alert');
-            this.paymentAlertBannerHeight = alert.clientHeight;
-            this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.paymentAlertBannerHeight);
-          }, 200);
-        }
-      }
     });
 
     this.getMaintenanceContentFromContentful();
@@ -183,7 +172,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngAfterViewInit(): void {
     const header = document.getElementById('header');
-    this.headerHeight = !!header && !!this.showACPActionBanner && !!this.showPaymentUpdateBanner ? header.clientHeight : 64;
+    this.headerHeight = !!header && !!this.showACPActionBanner ? header.clientHeight : (window.innerWidth < 640 ? 58 : 64 );
     this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -201,33 +190,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
             this.alertBannerHeight = alert.clientHeight;
             this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
           }, 200);
-        } else {
-          if (!!this.pageUrl && this.pageUrl.indexOf(DUPLICATE_PAYMENTS_ROUTE_URLS.NAME) > -1) {
-            this.showPaymentUpdateBanner = false;
-            this.paymentUpdateInProgress = false;
-            this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
-          } else {
-            const paymentUpdateInProgressSaved = sessionStorage.getItem('attention-payment');
-            this.paymentUpdateInProgress = !!paymentUpdateInProgressSaved ? true : false;
-            this.showPaymentUpdateBanner = this.paymentUpdateNeeded && !this.paymentUpdateInProgress;
-            if (!!this.showPaymentUpdateBanner) {
-              setTimeout(() => {
-                const alert = document.getElementById('payment-alert');
-                this.paymentAlertBannerHeight = alert.clientHeight;
-                this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.paymentAlertBannerHeight);
-              }, 200);
-            } else {
-              setTimeout(() => {
-                if (!!this.paymentUpdateInProgress) {
-                  const alert = document.getElementById('progress-alert');
-                  const height = alert.clientHeight;
-                  this.appState.globalAlertHeightReplySubject.next(this.headerHeight + height);
-                } else {
-                  this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
-                }
-              }, 200);
-            }
-          }
         }
       }
     }
@@ -256,8 +218,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     this.appState.userLoggedIn.next(undefined);
     this.acpActionRequired = false;
     this.showACPActionBanner = false;
-    this.showPaymentUpdateBanner = false;
-    this.paymentUpdateNeeded = false;
     this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
     this.checkoutService.setPayments({card: { address1: '', address2: '', cardCode: '', cardNumber: '', last4: '', id: '', city: '', state: '', country: '', postalCode: '', method: '', name: '', alias: '', fullName: '', brand: ''}});
   }
@@ -485,24 +445,13 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   onResize(event): void {
     this.innerWidth = window.innerWidth;
     const header = document.getElementById('header');
-    this.headerHeight = !!header && !!this.showACPActionBanner && !!this.showPaymentUpdateBanner ? header.clientHeight : 64;
+    this.headerHeight = !!header && !!this.showACPActionBanner ? header.clientHeight : (window.innerWidth < 640 ? 58 : 64 );
     if (this.showACPActionBanner) {
       const alert = document.getElementById('alert');
       this.alertBannerHeight = alert.clientHeight;
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
     } else {
-      if (this.showPaymentUpdateBanner) {
-        const alert = document.getElementById('payment-alert');
-        this.paymentAlertBannerHeight = alert.clientHeight;
-        this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.paymentAlertBannerHeight);
-      } else if (this.paymentUpdateInProgress) {
-        const alert = document.getElementById('progress-alert');
-        this.paymentProgressBannerHeight = alert.clientHeight;
-        this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.paymentProgressBannerHeight);
-      } else {
-        this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
-
-      }
+      this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
     }
   }
   @HostListener('window:popstate', ['$event'])

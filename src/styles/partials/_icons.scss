@@ -48,6 +48,21 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Weissach';
+  src: url('/assets/fonts/Weissach-Regular.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Weissach-bold';
+  src: url('/assets/fonts/Weissach-Bold.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Sansation-bold';

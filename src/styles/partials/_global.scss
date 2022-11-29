@@ -1,25 +1,16 @@
-/*.mobile-hidden {
-  display: none;
-  @media (#{$larger-than-tablet}) {
-    display: initial;
+
+.page-section {
+  padding: 0 6.5%;
+  @media (min-width: 1920px) {
+    padding: 0 200px;
+  }
+  @media(max-width: $desktop-min-width-minus) {
+    padding: 0 24px;
+  }
+  @media(max-width: 479.9px) {
+    padding: 0 16px;
   }
 }
-
-.mobile-shown {
-  @media (#{$larger-than-tablet}) {
-    display: none;
-  }
-}*/
-
-.store-locator-validation {
-  color: $alert;
-  text-transform: capitalize;
-  letter-spacing: normal;
-  font-family: $header-font-family;
-  font-size: rem-calc(20px);
-  font-weight: $header-font-weight;
-}
-
 #toast-container.toast-bottom-center > div, #toast-container.toast-top-center > div {
   text-align: left;
   width: 100%;
