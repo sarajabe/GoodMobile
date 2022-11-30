@@ -14,7 +14,7 @@
           <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
             'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
           <p class="sperator"></p>
-          <p class="data">{{plan?.details?.data/1024}} GB</p>
+          <p class="data">{{plan?.details?.data/1024}}GB</p>
         </div>
         <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
             [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
@@ -64,7 +64,7 @@
       <div class="item-details">
         <img src="/assets/icon/coverage-icon.svg" alt="coverage-icon">
         <p class="title">Nationwide Coverage</p>
-        <p class="desc">Premium data service powered by one of the nation’s top GSM networks.</p>
+        <p class="desc spcific">Premium data service powered by one of the nation’s top GSM networks.</p>
         <a class="link" (click)="goToCoverage()">Check your Coverage <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
       </div>
       <div class="item-details">
