@@ -17,16 +17,14 @@ import { AcpDetailsComponent } from './acp-details/acp-details.component';
 const routes: Routes = [
   {
     path: '', component: HomeComponent, data: {
-      title: 'GoodMobile | Prepaid Cell Phone Plans',
-      description: `GoodMobile offers nationwide wireless phone plans with no contracts. Buy the data that you need. Low-cost prepaid phone
-    plans for iPhone and Android devices.`} as IPageMeta,
+      title: 'FREE Unlimited Cell Phone Plans | GoodMobile',
+      description: `Get FREE UNLIMITED Data, Talk and Text with the Affordable Connectivity Program (ACP). Check to see if you’re eligible and apply to the ACP benefits to reduce your monthly bills.`} as IPageMeta,
   },
   { path: LOGIN_ROUTE_URLS.BASE, loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   {
     path: ROUTE_URLS.HOME, component: HomeComponent, data: {
-      title: 'GoodMobile | Prepaid Cell Phone Plans',
-      description: `GoodMobile offers nationwide wireless phone plans with no contracts. Buy the data that you need. Low-cost prepaid phone
-  plans for iPhone and Android devices.`} as IPageMeta,
+      title: 'FREE Unlimited Cell Phone Plans | GoodMobile',
+      description: `Get FREE UNLIMITED Data, Talk and Text with the Affordable Connectivity Program (ACP). Check to see if you’re eligible and apply to the ACP benefits to reduce your monthly bills.`} as IPageMeta,
   },
   { path: ACCOUNT_ROUTE_URLS.NAME, loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
   {

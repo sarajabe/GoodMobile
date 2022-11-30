@@ -5,7 +5,7 @@
     .featured-container {
         display: flex;
         gap: 24px;
-        margin-top: 84px;
+        padding-top: 84px;
         .description-section {
             display: flex;
             flex-direction: column;
@@ -47,37 +47,6 @@
                     }
                 }
             }
-         
-            @media (max-width: $phablet-min-width-minus) {
-                .header {
-                    font-size: rem-calc(24px);
-                    line-height: 30px;
-                    margin-top: -20px;
-                }
-                .details {
-                    font-size: rem-calc(16px);
-                    line-height: 22px;
-                    max-width: 275px;
-                    margin: 0 auto;
-                    margin-bottom: 6px;
-                }
-                .disclaimer {
-                    font-size: rem-calc(13px);
-                    line-height: 22px;
-                }
-                .promo-note{
-                    margin-bottom: 10px;
-                    font-size: rem-calc(13px);
-                    line-height: 22px;
-                    margin-top: 10px;
-                }
-            }
-            @media (max-width: 342px) {
-                .header {
-                    margin: -20px auto 12px;
-                    max-width: 218px;
-                }
-            }
         }
        .cards-section {
             display: flex;
@@ -86,45 +55,118 @@
             flex-basis: 40%;
             justify-content: flex-end;
        }
+        @media(max-width: 999.9px) {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            padding-top: 56px;
+            .description-section {
+                flex-basis: 100%;
+                justify-content: center;
+                align-items: center;
+                .header {
+                    max-width: none;
+                }
+                .icons-section {
+                    .icons-container {
+                        align-items: center;
+                        justify-content: center;
+                        .icons-text {
+                        max-width: none;
+                        }
+                    }
+                }
+            }
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            padding-top: 40px;
+            .description-section {
+                text-align: center;
+                .header {
+                    max-width: 187px;
+                }
+                .icons-section {
+                    gap: 16px;
+                    .icons-container {
+                        img {
+                            width: 56px;
+                            height: 56px;
+                        }
+                        .icons-text {
+                            max-width: 70px;
+                        }
+                    }
+               }  
+            }
+        }
     }
     
     .swiper-container {
-        overflow: hidden;
-        margin-top: 15px;
-        &.featured {
-            .swiper-wrapper  {
-                margin-top: 28px;
-                .swiper-slide {
-                    box-shadow: 0px 4px 12px 0px #00000029!important;
-                    border: 0.5px solid #fdebf0;
-                }
-            }
-        }
         &.swiper-width{
             width: 100%;
-            max-width: 300px;
-            height: 421px;
+            max-width: 240px;
+           
+        }
+        .swiper-slide {
+            height: 290px;
+            box-shadow: 0px 8px 30px 0px #5E5E5E1F;
+            border-radius: 5px;
+            background: #FCFCFB;
+        }
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+          font-size: rem-calc(12px);
+        }
+  
+        .swiper-button-prev,
+        .swiper-button-next {
+            position: absolute;
+            background-color: $primary-color;
+            background-size: 28%;
+            color: $white;
+            height: 21px;
+            width: 21px;
+            z-index: 1;
+            cursor: pointer;
+            top: 127px;
+            --swiper-navigation-size: 11px;
+            border-radius: 50%;
+        }
+  
+        .swiper-button-next {
+            right: 12px;
+        }
+        .slick-dots {
+            width: 100%;
+            position: relative;
+            list-style: none;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 24px;
-            .special-promo-banner {
-                .special-promo-text {
-                    text-align: center;
-                }
-            }
-        }
-        .navigate-container {
             text-align: center;
-            padding-top: 125px;
-            .button {
-                width: 200px;
-                padding: 9px;
-                font-size: rem-calc(20px);
+            height: 30px;
+            left: 0;
+            top: 15px;
+            justify-content: center;
+            li {
+              height: 9px;
+              width: 9px;
+              margin: 0 8px;
+      
+              &.swiper-pagination-bullet {
+                bottom: 0;
+                background-color: $grey;
+                opacity: 1;
+              }
+      
+              &.swiper-pagination-bullet-active {
+                background-color: $primary-color;
+              }
+             
             }
-        }
+          }
+     
     }
+  
     .featured-plan-card {
         display: flex;
         flex-direction: column;
@@ -198,66 +240,35 @@
         }
         .ribbon {
             position: absolute;
-            left: -5px; top: -5px;
             z-index: 1;
-            overflow: hidden;
-            width: 75px; height: 75px;
-            text-align: right;
-          }
-          .ribbon span {
-            font-size: 10px;
-            color: #FFF;
+            height: 60px;
+            width: 35px;
+            color: $white;
             text-align: center;
-            line-height: 20px;
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-            width: 100px;
-            display: block;
-            background: #9D0125;
-            background: linear-gradient(139.03deg, #9D0125 30.56%, #CD3446 50.32%);
-            box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-            position: absolute;
-            top: 19px; left: -21px;
-          }
-          .ribbon span::before {
-            content: "";
-            position: absolute; left: 0px; top: 100%;
-            z-index: -1;
-            border-left: 3px solid #9D0125;
-            border-right: 3px solid transparent;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid #9D0125;
-          }
-          .ribbon span::after {
-            content: "";
-            position: absolute; right: 0px; top: 100%;
-            z-index: -1;
-            border-left: 3px solid transparent;
-            border-right: 3px solid #9D0125;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid #9D0125;
-          }
+            top: 18px;
+            left: 12px;
+        }
     }
     .swiper-button-next {
             background-color: $primary-color;
-            height: 34.3px;
-            width: 34.3px;
             z-index: 1;
             cursor: pointer;
             color: white;
             background-size: 28%;
             top: 410px;
             right: 80px;
-        }
-        .swiper-button-prev {
-            background-color: $secondary-color;
-            height: 34.3px;
-            width: 34.3px;
-            z-index: 1;
-            cursor: pointer;
-            color: white;
-            background-size: 28%;
-            top: 410px;
-            left: 80px;
-        }
+    }
+    .swiper-button-prev {
+        background-color: $secondary-color;
+        height: 34.3px;
+        width: 34.3px;
+        z-index: 1;
+        cursor: pointer;
+        color: white;
+        background-size: 28%;
+    }
+    .swiper-button-disabled {
+        background-color: $medium-grey!important;
+    }
+   
 }

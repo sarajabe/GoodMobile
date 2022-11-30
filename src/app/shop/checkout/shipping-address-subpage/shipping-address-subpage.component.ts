@@ -245,58 +245,51 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
         this.showAddressRequiredError = false;
         this.shippingAddress = {} as IFirebaseAddress;
       } else {
-        this.selectedShippingAddress = this.shippingAddress;
-        this.showShippingForm = false;
-        this.showAddressRequiredError = false;
-        this.shippingAddress = {} as IFirebaseAddress;
-        this.shippingMethodForm.form.reset();
-        this.touchShippingForm = false;
-        this.addNewAddress(this.shippingAddress);
-        // this.shippingService.verifyShippingAddress(this.shippingAddress).then((addresses) => {
-        //   this.appState.loading = false;
-        //   if (!!addresses) {
-        //     this.customHtml =
-        //       `
-        //       <div class="flex-container">
-        //       <div class="pop-header">
-        //        <p><img src='/assets/img/location.svg'><b> Current Customer Address:</b></p>
-        //         <p class="sub-padding">` + this.shippingAddress.address1 + ', ' + this.shippingAddress.state + ' ' + this.shippingAddress.postalCode + `</p>
-        //         </div>
-        //         <div class="pop-header">
-        //         <p><img src='/assets/img/location.svg'><b> Verified Address from USPS</b></p>
-        //         <p class="sub-padding"> ` + addresses[0].address1 + ', ' + addresses[0].state + ' ' + addresses[0].postalCode + `</p>
-        //         </div>
-        //         </div>
-        //        `;
-        //     this.modalHelper.showInformationMessageModal('Verify your shipping address',
-        //       '',
-        //       'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address')
-        //       .result.then((result) => {
-        //         if (result) {
-        //           // PRIMARY
-        //           this.selectedShippingAddress = this.shippingAddress;
-        //           this.addNewAddress(this.shippingAddress);
-        //         }
-        //         else {
-        //           const name = this.shippingAddress.name;
-        //           addresses[0].name = name;
-        //           this.selectedShippingAddress = addresses[0];
-        //           this.addNewAddress(addresses[0]);
-        //         }
-        //         this.showShippingForm = false;
-        //         this.showAddressRequiredError = false;
-        //         this.shippingAddress = {} as IFirebaseAddress;
-        //         this.shippingMethodForm.form.reset();
-        //         this.touchShippingForm = false;
-        //       }, (error) => {
-        //         console.error('error step', error);
-        //       });
-        //   }
-        // }, (error) => {
-        //   this.appState.loading = false;
-        //   this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Edit address', null,
-        //     false, 'usp-pop-up-modal2', this.customHtml2);
-        // });
+        this.shippingService.verifyShippingAddress(this.shippingAddress).then((addresses) => {
+          this.appState.loading = false;
+          if (!!addresses) {
+            this.customHtml =
+              `
+              <div class="flex-container">
+              <div class="pop-header">
+               <p><img src='/assets/img/location.svg'><b> Current Customer Address:</b></p>
+                <p class="sub-padding">` + this.shippingAddress.address1 + ', ' + this.shippingAddress.state + ' ' + this.shippingAddress.postalCode + `</p>
+                </div>
+                <div class="pop-header">
+                <p><img src='/assets/img/location.svg'><b> Verified Address from USPS</b></p>
+                <p class="sub-padding"> ` + addresses[0].address1 + ', ' + addresses[0].state + ' ' + addresses[0].postalCode + `</p>
+                </div>
+                </div>
+               `;
+            this.modalHelper.showInformationMessageModal('Verify your shipping address',
+              '',
+              'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address')
+              .result.then((result) => {
+                if (result) {
+                  // PRIMARY
+                  this.selectedShippingAddress = this.shippingAddress;
+                  this.addNewAddress(this.shippingAddress);
+                }
+                else {
+                  const name = this.shippingAddress.name;
+                  addresses[0].name = name;
+                  this.selectedShippingAddress = addresses[0];
+                  this.addNewAddress(addresses[0]);
+                }
+                this.showShippingForm = false;
+                this.showAddressRequiredError = false;
+                this.shippingAddress = {} as IFirebaseAddress;
+                this.shippingMethodForm.form.reset();
+                this.touchShippingForm = false;
+              }, (error) => {
+                console.error('error step', error);
+              });
+          }
+        }, (error) => {
+          this.appState.loading = false;
+          this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Edit address', null,
+            false, 'usp-pop-up-modal2', this.customHtml2);
+        });
       }
     }
   }

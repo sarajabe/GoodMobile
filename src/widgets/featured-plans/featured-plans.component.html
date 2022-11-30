@@ -6,23 +6,23 @@
       <div class="icons-section">
         <div class="icons-container">
           <img width="72" height="72" src="assets/img/data-overage-fees.svg" alt="No Data Overage Fees"/>
-          <p class="icons-text caption">No Data Overage Fees</p>
+          <p class="icons-text label">No Data Overage Fees</p>
         </div>
         <div class="icons-container">
           <img width="72" height="72" src="assets/img/unlimited-talk-text.svg" alt="Unlimited Talk & Text"/>
-          <p class="icons-text caption">Unlimited Talk & Text</p>
+          <p class="icons-text label">Unlimited Talk & Text</p>
         </div>
         <div class="icons-container">
           <img width="72" height="72" src="assets/img/no-annual-contract.svg" alt="No Annual Contract"/>
-          <p class="icons-text caption">No Annual Contract</p>
+          <p class="icons-text label">No Annual Contract</p>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="innerWidth > 640.9; else responsive ">
+    <ng-container *ngIf="innerWidth > 639.9; else responsive ">
       <div class="cards-section">
         <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="goToPlans(plan)">
           <div class="featured-plan-card" >
-            <div class="ribbon" *ngIf="!!plan?.ebb"><span>New!</span></div>
+            <div class="ribbon" *ngIf="!!plan?.ebb"><img class="ribbon" src="assets/img/new-ribbon.svg"></div>
             <div class="card-header-section">
               <p class="card-header caption">{{plan?.category}}</p>
             </div>
@@ -42,12 +42,12 @@
       </div>
     </ng-container>
 
-   <ng-template #responsive>
+  <ng-template #responsive>
     <div class="swiper-container featured swiper-width" [swiper]="config" (slideChangeEnd)="slideChanged($event)" [(index)]="index">
       <div class="swiper-wrapper">
         <div class="swiper-slide" *ngFor="let plan of featuredPlans">
           <div class="featured-plan-card" >
-            <div class="ribbon" *ngIf="!!plan?.ebb"><span>New!</span></div>
+            <div class="ribbon" *ngIf="!!plan?.ebb"><img class="ribbon" src="assets/img/new-ribbon.svg"></div>
             <div class="card-header-section">
               <p class="card-header caption">{{plan?.category}}</p>
             </div>
@@ -65,13 +65,12 @@
           </div>
       </div>
     </div>
-    <div class="swiper-container-override featured-plans-slider-override">
-      <div class="container">
+      <div class="swiper-container-override featured-plans-slider-override">
         <div class="row">
-          <ul class="slick-dots slider-pagination" ></ul>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
         </div>
       </div>
     </div>
-  </div>
-   </ng-template>
-  </div>
+  </ng-template>
+</div>

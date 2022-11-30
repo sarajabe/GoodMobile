@@ -45,10 +45,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                private appState: AppState) {
 
     this.prepareSchemaData();
-    this.firebaseAdsService.bannerSwiperSlides.pipe(takeWhile(() => this.alive)).subscribe((bannerSwiperSlides) => {
-    this.bannerSwiperSettings.banners = bannerSwiperSlides;
-    this.isBannersSlidesReady = true;
-    });
     this.metaService.createCanonicalUrl(ENDPOINT_URL);
     }
 

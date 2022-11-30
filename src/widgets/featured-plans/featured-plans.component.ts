@@ -80,13 +80,13 @@ export class FeaturedPlansComponent implements AfterViewInit, OnDestroy, OnInit 
         delay: 8000, // 8 seconds
         disableOnInteraction: false
       },
-      pagination: {
-        el: '.slider-pagination',
-        renderBullet: (index, className) => {
-          return `<li style="z-index: 10" class="slick-active ${className}"><button ></button></li>`;
-        },
-        clickable: true
-      },
+      // pagination: {
+      //   el: '.slider-pagination',
+      //   renderBullet: (index, className) => {
+      //     return `<li style="z-index: 10" class="slick-active ${className}"><button ></button></li>`;
+      //   },
+      //   clickable: true
+      // },
     };
  }
   ngOnDestroy(): void{
