@@ -42,7 +42,7 @@ $black: #383838 !default;
 $blue: #74C0EB!default;
 $disabled: #B0B0B0!default;
 
-$primary-color: #00668D !default;
+$primary-color: #005895 !default;
 $primary-color-dark: #003C75 !default;
 $primary-color-light: #f2e8f4 !default;
 $secondary-color: #74C0EB!default;
@@ -77,6 +77,8 @@ $warning: #f5a623 !default;
 $alert: #D94A47 !default;
 
 $red: #d0021b !default;
+$dark-red: #CC3345 !default;
+$yellow: #FFC25B !default;
 
 // Google Fonts Import
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600);
@@ -88,8 +90,8 @@ $bold: 600;
 
 // Base Font
 /*$base-font-family: "bryant", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;*/
-$base-font-family: "Sansation", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$base-font-family-bold: "Sansation-bold", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$base-font-family: "Weissach", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$base-font-family-bold: "Weissach-bold", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $base-font-weight: $regular;
 $base-font-size: 14px;
 $base-line-height: 1.4;

@@ -48,6 +48,21 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Weissach';
+  src: url('/assets/fonts/Weissach-Regular.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Weissach-bold';
+  src: url('/assets/fonts/Weissach-Bold.ttf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Sansation-bold';
@@ -194,14 +209,14 @@ i.arrow {
   border: solid black;
 
   &.primary {
-    border: solid $primary-color;
+    border-color: $primary-color;
   }
 
   &.secondary {
     border: solid $secondary-color;
   }
 
-  border-width: 0 1px 1px 0;
+  border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 2px;
   margin-bottom: 3px;

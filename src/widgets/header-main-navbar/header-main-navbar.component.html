@@ -1,212 +1,164 @@
-<header class="header" [class.menuShown]="!!showResponsiveMenu" id="header">
-  <div class="header-container">
-    <div class="logo-section">
-      <a [routerLink]="[ROUTE_URLS.HOME]" (click)="menuShowing = false;">
-        <img src="assets/img/logo.svg" class="logo"
-          alt="GoodMobile">
-      </a>
-    </div>
-    <ul class="menu" *ngIf="innerWidth > 1024.9">
-      <li class="menu-item"><a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
-        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">shop</a></li>
-      <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header" [routerLink]="[ROUTE_URLS.BRING_PHONE]"
-          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">bring
-          your phone</a></li>
-      <li class="menu-item"><a id="coverage-header" data-cy="coverage-header"
-          [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]" routerLinkActive="active"
-          [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">coverage</a></li>
-      <li class="menu-item"> <a id="activate" data-cy="activate"
-          [routerLink]="[ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.SIM_CHECK]" routerLinkActive="active"
-          [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">activate</a></li>
-      <!-- <li class="menu-item"><a id="refer-friend-header-logged-desktop" data-cy="refer-friend-header" [routerLink]="[ROUTE_URLS.REFER_FRIEND]"
-          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">refer a
-          friend</a></li> -->
-    </ul>
-    <div class="icons-section">
-      <ul class="right-menu">
-        <li height="23" width="123" class="item align-right" *ngIf="!isLoggedIn && innerWidth > 1024.9"> <a
-            [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.LOGIN]" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}" (click)="menuShowing = false;"> sign in </a></li>
-        <li height="23" width="123" class="item has-list" *ngIf="!!isLoggedIn && innerWidth > 1024.9">
-          <div class="label-section">
-            <p class="title account" data-cy="account-menu-header">account <i class="arrow down"></i></p>
-          </div>
-          <div class="wrapper">
-            <nav class="dropdown">
-              <button class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                id="account-summary-header" data-cy="account-summary-header">Account summary</button>
-              <button *ngIf="!!displayAcpSection" class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
-                (click)="onLinkClick($event, 'acp')" id="acp-application-header">ACP application</button>
-              <button class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header" data-cy="purchased-plans-header">Purchased plans</button>
-              <button class="sub-item"
-                (click)="onLinkClick($event, 'refill')" [class.disabled]="!!isPortIn" id="refill-account-header" data-cy="refill-account-header"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Pay &
-                refill your account</button>
-              <!-- <button class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.REFER_FRIEND]"
-                (click)="onLinkClick($event, 'refer')" id="refer-friend-header-unlogged-desktop" data-cy="refer-friend-header" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">Refer a friend</button> -->
-              <button class="sub-item" (click)="onLinkClick($event, 'addon')" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}" [class.disabled]="!!isExpiredAccount || !!isPortIn"
-                id="plan-addOns-header" data-cy="plan-addOns-header">Plan add-ons</button>
-              <button class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
-                (click)="onLinkClick($event, 'orders')" id="your-orders-header">Your
-                orders</button>
-              <button class="sub-item" (click)="onLinkClick($event, 'payment')" [class.disabled]="!!isPortIn"
-                id="payment-history-header" data-cy="payment-history-header">Payment history</button>
-              <button class="sub-item" 
-                (click)="onLinkClick($event, 'usage')" [class.disabled]="!!isPortIn" id="usage-history-header" data-cy="usage-history-header">Usage
-                history</button>
-              <button class="sub-item" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                id="manage-device-header">Manage device & sim</button>
-              <button class="sub-item" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
-                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                id="profile-setting-header" data-cy="profile-setting-header">Profile settings</button>
-              <button class="sub-item" (click)="logout($event)" id="logout-header" data-cy="logout-header">Logout</button>
-            </nav>
-          </div>
-        </li>
-        <li class="item">
-          <button class="menu-btn" (click)="goToCart()">
-            <img width="21" height="17"
-              [src]="innerWidth > 1024.9 ? '/assets/icon/cart black.svg' : (innerWidth > 749 ? '/assets/icon/purple_cart.svg' : '/assets/icon/white_cart.svg')"
-              alt="cart icon"><span class="counter" *ngIf="hasCartItem && totalItems != 0">{{totalItems}}</span></button>
-        </li>
-        <li class="item">
-          <button class="menu-btn" (click)="getPriority()">
-            <img alt="bell icon" class="bell_icon" width="19" height="21"
-              [src]="innerWidth > 1024.9 ? '/assets/icon/bell black.svg' : (innerWidth > 749 ? '/assets/icon/purple bell.svg' : '/assets/icon/bell.svg')">
-            <span class="counter" *ngIf="!!isLoggedIn && notificationCounter > 0">{{notificationCounter}}</span> </button>
-        </li>
-      </ul>
-    </div>
-    <div class="hamburger-section" *ngIf="innerWidth < 1025">
-      <img [src]="innerWidth > 749 ? '/assets/icon/humburger-menu-purple.svg' : '/assets/icon/hamburger-white.svg'"
-        alt="hamburger icon" class="hamburger" (click)="showResponsiveMenu=!showResponsiveMenu;toggleShowing()" />
-      <div class="responsive-wrapper" [class.menuShown]="!!showResponsiveMenu">
-        <ul class="responsive-menu">
-          <li class="responsive-item first" *ngIf="innerWidth < 751">
+<header class="header" [class.menuShown]="!!showResponsiveMenu" id="header" height="64">
+    <div class="page-section header-container">
+      <div class="logo-section">
+        <img src="/assets/icon/humburger.svg" alt="hamburger icon" class="hamburger responsive" (click)="showResponsiveMenu=!showResponsiveMenu;toggleShowing()" />
+        <div class="responsive-wrapper responsive" [class.menuShown]="!!showResponsiveMenu">
+          <div class="responsive-menu-header">
             <div class="logo"><a [routerLink]="[ROUTE_URLS.HOME]"
                 (click)="showResponsiveMenu = false;toggleShowing()"><img alt="goodMobile logo"
-                  src="/assets/img/logo-small.png" /></a></div>
+                  src="/assets/img/logo.svg" /></a></div>
             <button class="close" (click)="showResponsiveMenu = false;toggleShowing()"><i class="icon-close"></i></button>
-          </li>
-          <li class="responsive-item" *ngIf="!isLoggedIn"> <a
-              [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.LOGIN]" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">sign in </a></li>
-          <li class="responsive-item" *ngIf="!isLoggedIn"> <a
-              [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.SIGN_UP]" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">create a GoodMobile account
-            </a>
-          </li>
-          <li class="responsive-item" *ngIf="!!isLoggedIn">
-            <div class="label-section" (click)="showAccountMenu = !showAccountMenu">
-              <p class="title account">account <i class="arrow"
-                  [ngClass]="{'down': !showAccountMenu, 'up': !!showAccountMenu}"></i></p>
             </div>
-            <div class="menu-wrapper" [class.menuShown]="!!showAccountMenu">
-              <ul class="sub-menu">
-                <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                    id="account-summary-header" data-cy="account-summary-header">account summary</a></li>
-                <li *ngIf="!!displayAcpSection" class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
-                      (click)="onLinkClick($event, 'acp')" routerLinkActive="active"
-                      [routerLinkActiveOptions]="{exact: true}" id="acp-application-header">ACP application</a></li>
-                <li class="item"><a
-                    [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header" data-cy="purchased-plans-header">purchased plans</a></li>
-                <li class="item" [class.disabled]="!!isPortIn"><a
-                    (click)="onLinkClick($event, 'refill')" [class.disabled]="!!isPortIn" id="refill-account-header" data-cy="refill-account-header"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">pay &
-                    refill your account</a></li>
-                <!-- <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.REFER_FRIEND]"
-                    (click)="onLinkClick($event, 'refer')" id="refer-friend-header-logged-tablet" data-cy="refer-friend-header" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact: true}">refer a friend</a></li> -->
-                <li class="item" [class.disabled]="!!isExpiredAccount || !!isPortIn"><a
-                    (click)="onLinkClick($event, 'addon')" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact: true}" [class.disabled]="!!isExpiredAccount || !!isPortIn"
-                    id="plan-addOns-header" data-cy="plan-addOns-header">plan add-ons</a></li>
-                <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
-                    (click)="onLinkClick($event, 'orders')" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact: true}" id="your-orders-header">Your orders</a></li>
-                <li class="item" [class.disabled]="!!isPortIn"><a
-                    (click)="onLinkClick($event, 'payment')" [class.disabled]="!!isPortIn"
-                    id="payment-history-header">payment history</a></li>
-                <li class="item" [class.disabled]="!!isPortIn"><a
-                    (click)="onLinkClick($event, 'usage')" [class.disabled]="!!isPortIn" id="usage-history-header" data-cy="usage-history-header">usage
-                    history</a></li>
-                <li class="item"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                    id="manage-device-header">manage device & sim</a></li>
-                <li class="item"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                    id="profile-setting-header">profile settings</a></li>
-                <li class="item" (click)="logout()">logout</li>
-              </ul>
-            </div>
-          </li>
-          <li class="responsive-item">
-            <div class="label-section" (click)="showShopResMenu = !showShopResMenu">
-              <p class="title">shop <i class="arrow"
-                  [ngClass]="{'down': !showShopResMenu, 'up': !!showShopResMenu}"></i></p>
-            </div>
-            <div class="menu-wrapper" [class.menuShown]="!!showShopResMenu">
-              <ul class="sub-menu" *ngIf="!isLoggedIn">
-                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event)">plans</a></li>
-                <li class="item"><a
-                    [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE + '/' + PHONES_SHOP_ROUTE_URLS.TYPE]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event)">phones</a></li>
-              </ul>
-              <ul class="sub-menu" *ngIf="!!isLoggedIn">
-                <li class="item main">new account</li>
-                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event, 'plans')">purchase new plan</a></li>
-                <li class="item"><a
-                    [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE + '/' + PHONES_SHOP_ROUTE_URLS.TYPE]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event)">purchase phone</a></li>
-                <li class="item main">
-                  <div class="title">Account:</div>
-                  <select class="mdns" [(ngModel)]="selectedPlan" (ngModelChange)="userPlanSelected($event)"
-                    [disabled]="disabled" [compareWith]="planCompare">
-                    <option *ngFor="let plan of userPlans" [ngValue]="plan">
-                      {{getSelectorTitle(plan)}}
-                    </option>
-                  </select>
-                </li>
-                <li class="item" [class.disabled]="!!isPortIn"><a (click)="changePlan()"
-                    [class.disabled]="!!isPortIn">change plan</a></li>
-                <li class="item" [class.disabled]="!!isPortIn || !!isExpiredAccount"><a
-                    (click)="onLinkClick($event, 'addon')" [class.disabled]="!!isPortIn || !!isExpiredAccount">Order
-                    Add-ons</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="responsive-item"><a [routerLink]="[ROUTE_URLS.BRING_PHONE]" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)" id="byod" >bring your phone</a>
-          </li>
-          <li class="responsive-item"><a
+          <ul class="responsive-menu">
+            <li class="responsive-item account-list" *ngIf="!!isLoggedIn" (click)="showAccountMenu = !showAccountMenu">
+              <div class="label-section">
+
+                <div class="name" >
+                  <p><img class="item-icon" src="assets/icon/account.svg" alt="Account" /> Account
+                  </p>
+                </div>
+                <div class="toggle-side"> <i class="arrow primary" [ngClass]="{'down': !showAccountMenu, 'up': !!showAccountMenu}"></i></div>
+              </div>
+              <div class="menu-wrapper" [class.menuShown]="!!showAccountMenu">
+                <ul class="sub-menu">
+                  <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
+                      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                      id="account-summary-header" data-cy="account-summary-header">account summary</a></li>
+                  <li *ngIf="!!displayAcpSection" class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
+                        (click)="onLinkClick($event, 'acp')" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}" id="acp-application-header">ACP application</a></li>
+                  <li class="item"><a
+                      [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
+                      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                      (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header" data-cy="purchased-plans-header">purchased plans</a></li>
+                  <li class="item" [class.disabled]="!!isPortIn"><a
+                      (click)="onLinkClick($event, 'refill')" [class.disabled]="!!isPortIn" id="refill-account-header" data-cy="refill-account-header"
+                      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">pay &
+                      refill your account</a></li>
+                  <li class="item" [class.disabled]="!!isExpiredAccount || !!isPortIn"><a
+                      (click)="onLinkClick($event, 'addon')" routerLinkActive="active"
+                      [routerLinkActiveOptions]="{exact: true}" [class.disabled]="!!isExpiredAccount || !!isPortIn"
+                      id="plan-addOns-header" data-cy="plan-addOns-header">plan add-ons</a></li>
+                  <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
+                      (click)="onLinkClick($event, 'orders')" routerLinkActive="active"
+                      [routerLinkActiveOptions]="{exact: true}" id="your-orders-header">Your orders</a></li>
+                  <li class="item" [class.disabled]="!!isPortIn"><a
+                      (click)="onLinkClick($event, 'payment')" [class.disabled]="!!isPortIn"
+                      id="payment-history-header">payment history</a></li>
+                  <li class="item" [class.disabled]="!!isPortIn"><a
+                      (click)="onLinkClick($event, 'usage')" [class.disabled]="!!isPortIn" id="usage-history-header" data-cy="usage-history-header">usage
+                      history</a></li>
+                  <li class="item"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
+                      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                      id="manage-device-header">manage device & sim</a></li>
+                  <li class="item"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
+                      routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                      id="profile-setting-header">profile settings</a></li>
+                  <li class="item" (click)="logout()"><a>logout</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="responsive-item" *ngIf="!isLoggedIn">
+              <img class="item-icon" src="assets/icon/account.svg" alt="sign in" />
+              <a
+                [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.LOGIN]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">Sign in </a></li>
+            <li class="responsive-item">
+              <img class="item-icon" src="assets/icon/cart.svg" alt="shop" />
+              <a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Shop</a></li>
+            <li class="responsive-item">
+              <img class="item-icon" src="assets/icon/mobile.svg" alt="bring your phone" />
+              <a [routerLink]="[ROUTE_URLS.BRING_PHONE]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)" id="byod" >Bring your phone</a>
+            </li>
+            <li class="responsive-item">
+              <img class="item-icon" src="assets/icon/wifi.svg" alt="coverage" />
+              <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Coverage</a></li>
+            <li class="responsive-item"> 
+              <img class="item-icon" src="assets/icon/toggle.svg" alt="activate" />
+              <a id="activate" data-cy="activate"
+                [routerLink]="[ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.SIM_CHECK]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Activate</a></li>
+          </ul>
+        </div>
+        <a [routerLink]="[ROUTE_URLS.HOME]" (click)="menuShowing = false;">
+          <img src="assets/img/logo.svg" class="logo" alt="GoodMobile" width="134" height="32">
+        </a>
+      </div>
+      <div class="list-section desktop">
+        <ul class="menu" >
+          <li class="menu-item"><a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
+            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">shop</a></li>
+          <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header" [routerLink]="[ROUTE_URLS.BRING_PHONE]"
+              routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">bring
+              your phone</a></li>
+          <li class="menu-item"><a id="coverage-header" data-cy="coverage-header"
               [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">coverage</a></li>
-          <li class="responsive-item"> <a id="activate" data-cy="activate"
+          <li class="menu-item"> <a id="activate" data-cy="activate"
               [routerLink]="[ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.SIM_CHECK]" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">activate</a></li>
-          <!-- <li class="responsive-item"><a [routerLink]="[ROUTE_URLS.REFER_FRIEND]" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)" id="refer-friend-header-unlogged-tablet" data-cy="refer-friend-header">refer a
-              friend</a> 
-             </li> -->
+        </ul>
+      </div>
+      <div class="icons-section">
+        <ul class="login-list desktop" >
+          <li class="login-option" *ngIf="!isLoggedIn">
+            <a [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.LOGIN]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuShowing = false;"> sign in </a>
+          </li>
+          <li class="login-option" *ngIf="!!isLoggedIn">
+            <div class="label-section">
+              <img class="account" data-cy="account-menu-header" src="assets/icon/Avatar.svg"> <i class="arrow down primary"></i>
+            </div>
+            <div class="wrapper">
+              <nav class="dropdown">
+                <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                  id="account-summary-header" data-cy="account-summary-header">Account summary</a>
+                <a *ngIf="!!displayAcpSection" class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
+                  (click)="onLinkClick($event, 'acp')" id="acp-application-header">ACP application</a>
+                <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                  (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header" data-cy="purchased-plans-header">Purchased plans</a>
+                <a class="sub-item"
+                  (click)="onLinkClick($event, 'refill')" [class.disabled]="!!isPortIn" id="refill-account-header" data-cy="refill-account-header"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Pay &
+                  refill your account</a>
+                <a class="sub-item" (click)="onLinkClick($event, 'addon')" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact: true}" [class.disabled]="!!isExpiredAccount || !!isPortIn"
+                  id="plan-addOns-header" data-cy="plan-addOns-header">Plan add-ons</a>
+                <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
+                  (click)="onLinkClick($event, 'orders')" id="your-orders-header">Your
+                  orders</a>
+                <a class="sub-item" (click)="onLinkClick($event, 'payment')" [class.disabled]="!!isPortIn"
+                  id="payment-history-header" data-cy="payment-history-header">Payment history</a>
+                <a class="sub-item" 
+                  (click)="onLinkClick($event, 'usage')" [class.disabled]="!!isPortIn" id="usage-history-header" data-cy="usage-history-header">Usage
+                  history</a>
+                <a class="sub-item" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                  id="manage-device-header">Manage device & sim</a>
+                <a class="sub-item" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
+                  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                  id="profile-setting-header" data-cy="profile-setting-header">Profile settings</a>
+                <a class="sub-item" (click)="logout($event)" id="logout-header" data-cy="logout-header">Logout</a>
+              </nav>
+            </div>
+          </li>
+        </ul>
+        <ul class="icons-list" >
+          <li class="item">
+            <button class="menu-btn" (click)="goToCart()">
+              <img width="32" height="32" src="/assets/icon/cart.svg" alt="cart icon"><span class="counter" *ngIf="hasCartItem && totalItems != 0">{{totalItems}}</span></button>
+          </li>
+          <li class="item">
+            <button class="menu-btn" (click)="getPriority()">
+              <img width="32" height="32"  src="/assets/icon/bell.svg" alt="bell icon"><span class="counter" *ngIf="hasCartItem && totalItems != 0">{{totalItems}}</span></button>
+          </li>
         </ul>
       </div>
     </div>
-  </div>
 </header>
 <div class="alert-banner" *ngIf="!!mantainenceDescription && !!displayMaintenanceBanner">
   <img class="alert-icon" src="assets/icon/alert.svg" alt="alert">
@@ -220,28 +172,5 @@
     </p>
    <p class="desc">An ACP application has started! Resume your application now.</p>
    <button class="button primary" aria-label="Continue Application" (click)="goToACPApplication()">Continue Application</button>
-  </div>
-</div>
-<div class="acp-alert-banner payment" *ngIf="!!showPaymentUpdateBanner" id="payment-alert">
-  <div class="container-flex">
-    <p class="title">
-      <img class="alert-icon" src="assets/icon/red-alert.svg" alt="alert">
-      <span>Action Required!</span>
-    </p>
-   <p class="desc">The current payment methods are indicating an issue. Please update your payment methods as soon as possible to 
-    prevent service loss.
-    </p>
-   <button class="button primary" aria-label="Continue Application" (click)="goToPaymentUpdate()">Update Now</button>
-  </div>
-</div>
-<div class="acp-alert-banner" *ngIf="!!paymentUpdateInProgress" id="progress-alert">
-  <div class="container-flex">
-    <p class="title">
-      <img class="alert-icon" src="assets/icon/red-alert.svg" alt="alert">
-      <span>In progress!</span>
-    </p>
-   <p class="desc">Your process of changing the preferred payment card is still in progress
-    </p>
-   <button class="button primary" aria-label="Continue Editing" (click)="continueEditing()">Continue Editing</button>
   </div>
 </div>
