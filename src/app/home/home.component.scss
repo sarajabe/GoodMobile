@@ -1,6 +1,47 @@
 @import "../../styles/modules/variables";
 @import "../../styles/modules/mixins";
 
+.header {
+  color: $section-header-color;
+  margin-bottom: 12px;
+}
+.note {
+  color: $medium-grey;
+}
+.details {
+  font-size: rem-calc(20px);
+  line-height: 24px;
+
+}
+.description {
+  max-width: 760px;
+}
+.why-us {
+  background-color: $section-blue-background;
+  margin-top: -130px;
+  padding-top: 150px;
+  @media(max-width: 1199.9px) {
+    margin-top: -83px;
+}
+}
+.section-container {
+  display: flex;
+  align-items: center;
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+  .details-section {
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+  }
+  .image-section {
+    display: flex;
+    flex-basis: 50%;
+  }
+}
+
+
 .home-banner-section {
   max-width: 1500px;
   width: 100%;
@@ -406,20 +447,6 @@
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .featured-plans-section {

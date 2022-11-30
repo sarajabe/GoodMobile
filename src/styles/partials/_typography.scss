@@ -85,6 +85,10 @@ p {
     font-size: rem-calc(14px);
     line-height: 22px;
   }
+  &.caption {
+    font-size: rem-calc(12px);
+    line-height: 20px;
+  }
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(16px);
     line-height: 24px;

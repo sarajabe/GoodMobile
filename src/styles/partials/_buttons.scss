@@ -53,6 +53,9 @@
     }
   }
 
+  &.small {
+    font-size: rem-calc(16px);
+  }
   @include button-theme($text-color);
 
   &.primary {
@@ -71,6 +74,7 @@
     &.disabled {
       background-color: $disabled;
     }
+  
   }
 
   &.secondary {
@@ -217,12 +221,12 @@ linear-gradient(0deg, #B0B0B0, #B0B0B0);
     font-size: rem-calc(22px);
   }
 
-  &.small {
-    padding: 15px 30px;
-    font-size: 12px;
-    height: auto;
-    letter-spacing: 2px;
-  }
+  // &.small {
+  //   padding: 15px 30px;
+  //   font-size: 12px;
+  //   height: auto;
+  //   letter-spacing: 2px;
+  // }
 
   &.extra-small {
     padding: 5px 10px;

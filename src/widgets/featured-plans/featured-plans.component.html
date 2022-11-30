@@ -1,40 +1,44 @@
-<div class="container-flex featured-container">
+<div class="page-section featured-container">
     <div class="description-section">
-      <h2 class="header">Best selling wireless plans</h2>
-      <p class="details">No data overage fees, plus <b>unlimited talk and text</b></p>
-      <p class="disclaimer"><i>Prices reflect $5.00 savings with Autopay.</i></p>
-      <p class="promo-note">5G where available. 5G compatible device required.</p>
-      <button class="button secondary" data-cy="viewAllPlans"  title="view all plans" aria-label="view all plans" (click)="viewAllPlans()" *ngIf="innerWidth > 1399.9">View all plans</button>
+      <p class="note caption">OUR FEATURES</p>
+      <h2 class="header">Cell phone plan at a great price</h2>
+      <p class="details">Best selling wireless plans</p>
+      <div class="icons-section">
+        <div class="icons-container">
+          <img width="72" height="72" src="assets/img/data-overage-fees.svg" alt="No Data Overage Fees"/>
+          <p class="icons-text caption">No Data Overage Fees</p>
+        </div>
+        <div class="icons-container">
+          <img width="72" height="72" src="assets/img/unlimited-talk-text.svg" alt="Unlimited Talk & Text"/>
+          <p class="icons-text caption">Unlimited Talk & Text</p>
+        </div>
+        <div class="icons-container">
+          <img width="72" height="72" src="assets/img/no-annual-contract.svg" alt="No Annual Contract"/>
+          <p class="icons-text caption">No Annual Contract</p>
+        </div>
+      </div>
     </div>
-    <ng-container *ngIf="innerWidth > 1024.9; else responsive ">
+    <ng-container *ngIf="innerWidth > 640.9; else responsive ">
       <div class="cards-section">
         <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="goToPlans(plan)">
           <div class="featured-plan-card" >
-            <div class="special-promo-banner" *ngIf="plan?.isSpecialPromotion">
-              <p class="special-promo-text">{{plan?.specialPromotion?.promotionTitle}}</p>
-            </div>
-            <div class="data-section">
-              <p class="oldData"><span class="border" *ngIf="plan?.specialPromotion?.promotionData"></span>{{plan?.data/1024 + 'GB'}}</p>
-              <p class="data">{{!!plan?.specialPromotion && plan?.specialPromotion?.promotionData > 0 ? (plan?.specialPromotion?.promotionData + plan?.data) / 1024 : (plan?.data / 1024)}}GB</p>
-              <p class="lte">4G/5G LTE</p>
-              <div class="border-line">
-              </div>
+            <div class="ribbon" *ngIf="!!plan?.ebb"><span>New!</span></div>
+            <div class="card-header-section">
+              <p class="card-header caption">{{plan?.category}}</p>
             </div>
             <div class="price-section">
-              <h3 class="price">${{plan?.isSpecialPromotion ? plan?.priceAfterSpecialPromoDiscount : plan?.price - plan?.promoPrice}}</h3>
-              <p class="month">per month</p>
+              <p class="price"><span class="dollar" *ngIf="plan?.price > 0">$</span>{{plan?.price > 0 ? plan?.price : 'FREE'}}<span class="month" *ngIf="plan?.price > 0">/mo</span></p>
+            </div>
+            <div class="data-section">
+              <p class="data">{{!!plan?.specialPromotion && plan?.specialPromotion?.promotionData > 0 ? (plan?.specialPromotion?.promotionData + plan?.data) / 1024 : (plan?.data / 1024)}}GB</p>
+              <p class="lte">premium 5G Data</p>
+              <p class="unlimited caption">With Unlimited Talk &Text</p>
             </div>
             <div class="action">
-              <button class="button primary" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
-            </div>
-            <div class="regular-price">
-              <p class="regular">Regular price ${{plan?.price}}</p>
+              <button class="button primary small" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
             </div>
           </div>
         </div>
-      </div>
-      <div class="navigate-container">
-        <button class="button secondary"  (click)="viewAllPlans()" title="view all plans" aria-label="view all plans">View all plans</button>
       </div>
     </ng-container>
 
@@ -43,25 +47,20 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" *ngFor="let plan of featuredPlans">
           <div class="featured-plan-card" >
-            <div class="special-promo-banner" *ngIf="plan?.isSpecialPromotion">
-              <p class="special-promo-text">{{plan?.specialPromotion?.promotionTitle}}</p>
-            </div>
-            <div class="data-section">
-              <p class="oldData"><span class="border" *ngIf="plan?.specialPromotion?.promotionData"></span>{{plan?.data/1024 + 'GB'}}</p>
-              <p class="data">{{!!plan?.specialPromotion && plan?.specialPromotion?.promotionData > 0 ? (plan?.specialPromotion?.promotionData + plan?.data) / 1024 : (plan?.data / 1024)}}GB</p>
-              <p class="lte">4G/5G LTE</p>
-              <div class="border-line">
-              </div>
+            <div class="ribbon" *ngIf="!!plan?.ebb"><span>New!</span></div>
+            <div class="card-header-section">
+              <p class="card-header caption">{{plan?.category}}</p>
             </div>
             <div class="price-section">
-              <h3 class="price">${{plan?.isSpecialPromotion ? plan?.priceAfterSpecialPromoDiscount : plan?.price - plan?.promoPrice}}</h3>
-              <p class="month">per month</p>
+              <p class="price"><span class="dollar" *ngIf="plan?.price > 0">$</span>{{plan?.price > 0 ? plan?.price : 'FREE'}}<span class="month" *ngIf="plan?.price > 0">/mo</span></p>
+            </div>
+            <div class="data-section">
+              <p class="data">{{!!plan?.specialPromotion && plan?.specialPromotion?.promotionData > 0 ? (plan?.specialPromotion?.promotionData + plan?.data) / 1024 : (plan?.data / 1024)}}GB</p>
+              <p class="lte">premium 5G Data</p>
+              <p class="unlimited caption">With Unlimited Talk &Text</p>
             </div>
             <div class="action">
-              <button class="button primary" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
-            </div>
-            <div class="regular-price">
-              <p class="regular">Regular price ${{plan?.price}}</p>
+              <button class="button primary small" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
             </div>
           </div>
       </div>
