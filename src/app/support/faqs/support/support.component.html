@@ -15,7 +15,7 @@
     <div class="twelve questions" *ngIf="!!validMDN">
       <div *ngFor="let item of SupportData | async">
         <div *ngFor="let qst of item?.fields?.supportQuestions">
-            <a class="copy-icon-link" (click)="copy(true,!!isReload,qst?.fields?.questionId,item?.fields?.carrierId,qst?.fields?.answerId)"><img src="/assets/icon/Copy icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a> 
+            <a class="copy-icon-link" (click)="copy(true,!!isReload,qst?.fields?.questionId,item?.fields?.carrierId,qst?.fields?.answerId)"><img src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a> 
           <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId" [isActive]="qst?.fields?.questionId == questionIdParam"
             (click)="toggleActive(qst?.fields?.questionId, item?.fields?.carrierId, qst?.fields?.answerId)">
             <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>

@@ -7,7 +7,7 @@
       </a>
     </div>
     <ul class="menu" *ngIf="innerWidth > 1024.9">
-      <li class="menu-item"><a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]"
+      <li class="menu-item"><a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
         routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">shop</a></li>
       <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header" [routerLink]="[ROUTE_URLS.BRING_PHONE]"
           routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">bring
@@ -156,7 +156,7 @@
             </div>
             <div class="menu-wrapper" [class.menuShown]="!!showShopResMenu">
               <ul class="sub-menu" *ngIf="!isLoggedIn">
-                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]"
+                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                     (click)="onLinkClick($event)">plans</a></li>
                 <li class="item"><a
@@ -166,7 +166,7 @@
               </ul>
               <ul class="sub-menu" *ngIf="!!isLoggedIn">
                 <li class="item main">new account</li>
-                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]"
+                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                     (click)="onLinkClick($event, 'plans')">purchase new plan</a></li>
                 <li class="item"><a

@@ -1,13 +1,106 @@
-<div class="container-flex">
-  <div class="container-flex-row flex-center plan-and-features-header-container christmas-col-flex">
-    <div class="plan-and-features-header">
-        <h1>Maximize your savings</h1>
-        <div class="subhead">
-          <p class="main">No contracts. No overages. Unlimited talk & text + data. </p>
-          <p class="sub">Just great wireless.</p>
+<div class="plans-page">
+  <div class="plans-banner">
+    <h1 class="banner-head">Maximize your savings!</h1>
+    <div class="banner-text">
+      <p>No contracts. No overages.</p>
+      <p>Unlimited talk & text + data. Just great wireless.</p>
+    </div>
+  </div>
+  <div class="plan-cards" *ngIf="filteredPlans?.length > 0">
+    <div *ngFor="let plan of filteredPlans; let i = index;" class="plan-card">
+      <div class="card-header" [class.rounded]="!cardExpanded[i]">
+        <p *ngIf="!!plan?.category" class="category">{{plan?.category}}</p>
+        <div class="plan-data">
+          <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
+            'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
+          <p class="sperator"></p>
+          <p class="data">{{plan?.details?.data/1024}} GB</p>
         </div>
+        <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
+            [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
       </div>
+      <div class="card-body" *ngIf="!!cardExpanded[i]">
+        <p class="intro">INCLUDES</p>
+        <div class="details">
+          <img src="/assets/icon/green-tick.svg" alt="green-tick">
+          <p>6GB high-speed data per month; speeds reduce after allowance is used</p>
+        </div>
+        <div class="details">
+          <img src="/assets/icon/green-tick.svg" alt="green-tick">
+          <p>Unlimited talk and text + data access on America’s
+            nationwide networks</p>
+        </div>
+        <div class="details" *ngIf="!!plan?.ebb">
+          <img src="/assets/icon/green-tick.svg" alt="green-tick">
+          <p>Affordable Connectivity Program (ACP) qualification
+            and enrollment required. <a (click)="goToEbb()"><b>Learn More</b></a></p>
+        </div>
+        <div class="details">
+          <img src="/assets/icon/green-tick.svg" alt="green-tick">
+          <p>Works with network compatible unlocked iPhone and Android phones</p>
+        </div>
+        <div class="details">
+          <img src="/assets/icon/green-tick.svg" alt="green-tick">
+          <p>FREE SIM Card Activation Kit. FREE Shipping.</p>
+        </div>
+        <a *ngIf="!!plan?.ebb" (click)="goToEbb()" class="more-info">More information <img
+            src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+      </div>
+      <div class="actions">
+        <a (click)="addPlanToCart(i)">
+          <img *ngIf="innerWidth > 1024" src="/assets/icon/base-cart-icon.svg" alt="cart-icon"
+            onmouseover="this.src='/assets/icon/cart-long-button.svg'"
+            onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
+          <img *ngIf="innerWidth < 1025" src="/assets/icon/base-cart-icon.svg" alt="cart-icon">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="great-things-section">
+    <p class="sub-note">WHY GOODMOBILE</p>
+    <h2 class="sec-head">With GoodMobile, Great things Await!</h2>
+    <p class="subtext">Talk, Text and Surf More!</p>
+    <div class="things-details">
+      <div class="item-details">
+        <img src="/assets/icon/coverage-icon.svg" alt="coverage-icon">
+        <p class="title">Nationwide Coverage</p>
+        <p class="desc">Premium data service powered by one of the nation’s top GSM networks.</p>
+        <a class="link" (click)="goToCoverage()">Check your Coverage <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+      </div>
+      <div class="item-details">
+        <img src="/assets/icon/device-check.svg" alt="device-icon">
+        <p class="title">Keep your device</p>
+        <p class="desc">Got a phone you love? Keep it. Or we’ll help you get a new one. Most unlocked phones will work on our networks.</p>
+        <a class="link" (click)="goToCompatibility()">Check Compatibility <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+      </div>
+      <!-- <div class="item-details">
+        <img src="/assets/icon/phone-num.svg" alt="phone-num-icon">
+        <p class="title">Keep your phone number</p>
+        <p class="desc">Or get a new one if you want 
+          when you activate your SIM Card. </p>
+        <a class="link">Learn More <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+      </div> -->
+      <div class="item-details">
+        <img src="/assets/icon/frequently-qst.svg" alt="frequently-qst-icon">
+        <p class="title">Frequently Asked Questions</p>
+        <p class="desc">Got questions? We have answers.</p>
+        <a class="link" (click)="goToFaqs()">Go to FAQs <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+      </div>
+    </div>
+  </div>
+  <div class="faqs-section">
+    <p class="sub-note">FAQ QUESTIONS</p>
+    <h2 class="sec-head">We are here to help you!</h2>
+    <p class="subtext">Browse through the most frequently asked questions.</p>
+    <div class="plans-questions">
+              <div *ngFor="let qst of plansQuestions" class="questions-container">
+                <a class="copy-icon-link" (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a> 
+                <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                      [isActive]="qst?.fields?.questionId == questionIdParam"
+                      (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                      <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+                  </app-question-answer>
+              </div>
+  </div>
   </div>
 </div>
-
-

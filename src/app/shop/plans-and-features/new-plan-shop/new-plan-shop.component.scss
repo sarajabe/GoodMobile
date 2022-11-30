@@ -1,228 +1,494 @@
 @import "../../../../styles/modules/_variables.scss";
 @import "../../../../styles/modules/_mixins.scss";
 
-.plan-and-features-header-container {
-  .col-12 {
-    padding: 0;
-    @media (#{$larger-than-phablet}) {
-      padding: 0 10px;
-    }
-  }
+::ng-deep {
+  .plans-page {
+    .plans-banner {
+      background: linear-gradient(180deg, #d6e1ff 0%, #e3efff 100%);
+      border-radius: 0px 0px 8px 8px;
+      height: 269px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px 46px;
+      max-width: 2000px;
 
-  .plan-and-features-header {
-    margin-bottom: 0;
-    text-align: center;
-    margin-top: 30px;
-    width: 100%;
-    h1 {
-      margin-top: 5px;
-      font-size: rem-calc(38px);
-      font-family: $secondary-font-family-bold;
-      line-height: 26px;
-      @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width){
-        font-size: rem-calc(25px);
-        line-height: rem-calc(33px);
-        padding-bottom: 0;
-        margin-bottom: 15px;
+      @media (max-width: $phablet-min-width-minus) {
+        padding: 32px 24px;
+      }
+      .banner-head {
+        font-size: 36px;
+        line-height: 44px;
+        font-weight: bold;
+        font-family: $base-font-family-bold;
+        margin-bottom: 12px;
+        color: $header-color;
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 4px;
+        }
+      }
+      .banner-text {
+        text-align: center;
+        p {
+          font-size: 20px;
+          line-height: 28px;
+          font-weight: normal;
+          font-family: $base-font-family;
+          margin-bottom: 0px;
+          @media (max-width: $phablet-min-width-minus) {
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
       }
     }
-    .subhead {
+    .plan-cards {
+      display: flex;
+      justify-content: space-between;
       width: 100%;
-      p {
-        font-size: rem-calc(22px);
-        font-family: $base-font-family;
-        line-height: 26px;
-        margin-bottom: 0;
-        @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width){
-          font-size: rem-calc(15px);
-          line-height: rem-calc(22px);
-          margin-top: 0px;
-        //  width: 81%;
-          margin-left: auto;
-          margin-right: auto;
+      max-width: 1080px;
+      margin: 0 auto;
+      margin-top: -80px;
+      margin-bottom: 65px;
+      @media (max-width: 1439.9px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 44px;
+        margin-bottom: 29px;
+      }
+      @media (max-width: $phablet-min-width-minus) {
+        gap: 24px;
+        padding: 0 39px;
+        margin-top: -110px;
+      }
+      .plan-card {
+        max-width: 520px;
+        width: 100%;
+        position: relative;
+        @media (max-width: $phablet-min-width-minus) {
+          max-width: 320px;
+        }
+        .card-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 16px 16px 8px;
+          gap: 10px;
+          min-height: 148px;
+          background: linear-gradient(78.53deg, #412b71 -25.3%, #ab8ddd 115.4%);
+          border-radius: 8px 8px 0px 0px;
+          &.rounded {
+            box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
+              0px 5px 14px rgba(9, 9, 9, 0.12);
+            border-radius: 8px;
+          }
+          .category {
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 24px;
+            font-family: $base-font-family-bold;
+            text-transform: uppercase;
+            color: #fbfbfb;
+          }
+          .plan-data {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: $base-font-family-bold;
+            color: #fbfbfb;
+            width: 100%;
+            max-width: 350px;
+            .price {
+              font-size: 36px;
+              line-height: 44px;
+              font-weight: bold;
+              .currency {
+                font-size: 18px;
+                line-height: 32px;
+              }
+              .mo {
+                font-size: 24px;
+                line-height: 32px;
+              }
+            }
+            .sperator {
+              width: 0px;
+              height: 38px;
+              border: 1px solid #fbfbfb;
+            }
+            .data {
+              font-size: 36px;
+              line-height: 44px;
+            }
+          }
+          .link {
+            font-size: 16px;
+            line-height: 16px;
+            font-weight: bold;
+            margin-right: 9px;
+            color: #fbfbfb;
+          }
+        }
+        .card-body {
+          background: #fcfcfb;
+          box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08),
+            0px 5px 16px rgba(0, 60, 117, 0.02);
+          border-radius: 8px;
+          padding: 24px 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          min-height: 434px;
+          @media (max-width: 1439.9px) {
+            min-height: unset;
+          }
+          @media (max-width: $phablet-min-width-minus) {
+            padding: 24px 16px;
+          }
+          .intro {
+            font-size: 14px;
+            line-height: 24px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            color: #6a509b;
+            font-weight: bold;
+            @media (max-width: $phablet-min-width-minus) {
+              font-size: 12px;
+              line-height: 20px;
+              margin-bottom: 12px;
+            }
+          }
+          .details {
+            margin-bottom: 22px;
+            display: flex;
+            align-items: flex-start;
+            @media (max-width: $phablet-min-width-minus) {
+              margin-bottom: 12px;
+            }
+            img {
+              width: 20px;
+              height: 20px;
+              margin-right: 14px;
+              @media (max-width: $phablet-min-width-minus) {
+                width: 14px;
+                height: 14px;
+                margin-right: 10px;
+              }
+            }
+            p {
+              font-size: 14px;
+              line-height: 24px;
+              color: #090909;
+              margin-bottom: 0;
+              @media (max-width: $phablet-min-width-minus) {
+                font-size: 12px;
+                line-height: 20px;
+              }
+            }
+          }
+          .more-info {
+            font-size: 18px;
+            line-height: 18px;
+            color: $link-color;
+            margin-bottom: 0;
+            font-weight: bold;
+            margin-top: 11px;
+            @media (max-width: 1439.9px) {
+              margin-bottom: 8px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+              font-size: 16px;
+              line-height: 16px;
+              margin-top: 7px;
+            }
+            img {
+              margin-left: 8px;
+              width: 20px;
+              height: 20px;
+              @media (max-width: $phablet-min-width-minus) {
+                margin-left: 5px;
+                width: 14px;
+                height: 14px;
+              }
+            }
+          }
+        }
+        .actions {
+          position: absolute;
+          margin-top: -24px;
+          right: 30px;
+          @media (max-width: $phablet-min-width-minus) {
+            right: 16px;
+          }
+          img {
+            height: 48px;
+            @media (max-width: $phablet-min-width-minus) {
+              width: 40px;
+              height: 40px;
+            }
+          }
         }
       }
-      @media(max-width: $phablet-min-width-minus) {
-        margin-bottom: 40px;
+    }
+    .sub-note {
+      font-size: 12px;
+      line-height: 12px;
+      font-weight: normal;
+      margin-bottom: 4px;
+      color: #5e5e5e;
+      @media (max-width: $phablet-min-width-minus) {
+        margin-bottom: 2px;
       }
     }
-    .readMore, .readLess {
-      color: $primary-color;
-      font-size: rem-calc(22px);
-      font-family: $base-font-family;
-      cursor: pointer;
-      display: none;
-    }
-    @media (max-width: 639.9px) {
-      h1 {
-        font-size: rem-calc(26px);
-        line-height: 34px;
-        padding-bottom: 0;
-        margin-left: auto;
-        margin-right: auto;
+    .sec-head {
+      font-size: 32px;
+      line-height: 40px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: $header-color;
+      @media (max-width: $phablet-min-width-minus) {
+        font-size: 22px;
+        line-height: 32px;
+        margin-bottom: 8px;
       }
-      .subhead {
-        p {
-          font-size: rem-calc(16px);
-          line-height: 22px;
-          // max-width: 331px;
-          margin: 0 auto;
+    }
+    .subtext {
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: normal;
+      color: #090909;
+      margin-bottom: 40px;
+      @media (max-width: $phablet-min-width-minus) {
+        font-size: 18px;
+        line-height: 28px;
+        margin-bottom: 44px;
+      }
+    }
+    .great-things-section {
+      background: #f8fcfe;
+      padding: 64px 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 64px;
+      @media (max-width: 999.9px) {
+        padding: 64px 24px;
+      }
+      @media (max-width: $phablet-min-width-minus) {
+        flex-direction: column;
+        padding: 48px 16px;
+        margin-bottom: 48px;
+      }
+      .things-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        align-items: flex-start;
+        justify-content: center;
+        @media (max-width: 999.9px) {
+          flex-direction: column;
+          align-items: center;
         }
-        .sub {
-          margin-bottom: 20px;
+        .item-details {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-self: center;
+          text-align: center;
+          img {
+            width: 55px;
+            height: 55px;
+            margin-bottom: 28px;
+          }
+          .title {
+            font-size: 20px;
+            line-height: 28px;
+            margin-bottom: 8px;
+            font-weight: bold;
+          }
+          .desc {
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 0px;
+            max-width: 352px;
+            min-height: 100px;
+            @media (max-width: 999.9px) {
+              min-height: 100%;
+              margin-bottom: 25px;
+              max-width: 951px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+              max-width: 352px;
+            }
+          }
+          .link {
+            font-size: 18px;
+            line-height: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            img {
+              margin-left: 10px;
+              width: 20px;
+              height: 20px;
+              margin-bottom: 0;
+            }
+          }
         }
       }
-      .readMore, .readLess {
-        font-size: rem-calc(16px);
-        display: inline;
-      }
-      .phablet-hidden {
-        display: none;
-      }
-      .phablet-shown {
-        display: block;
-      }
     }
-    @media (max-width: 440px) {
-      .subhead {
-        p {
-          display: inline;
+    .faqs-section {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin: 0 auto;
+      margin-bottom: 80px;
+      max-width: 1520px;
+      width: 100%;
+      padding: 0 32px;
+      @media (max-width: $desktop-min-width-minus) {
+        max-width: 976px;
+      }
+      @media (max-width: $phablet-min-width-minus) {
+        max-width: 591px;
+        padding: 0 16px;
+      }
+      .plans-questions {
+        max-width: 100%;
+        width: 100%;
+        .questions-container {
+          position: relative;
+        }
+      }
+      .tool-tip-text {
+        visibility: hidden;
+        font-size: rem-calc(10px);
+        width: 120px;
+        background-color: #876dab;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+        right: 68px;
+        margin-top: -7px;
+        @media (max-width: $desktop-min-width-minus) {
+          right: 62px;
+          margin-top: -3px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          width: 100px;
+          right: 16px;
+        }
+      }
+      .copy-icon-link:hover .tool-tip-text {
+        visibility: visible;
+      }
+      .copied {
+        font-size: rem-calc(10px);
+        width: 120px;
+        background-color: #005895;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+        right: 68px;
+        margin-top: -7px;
+        @media (max-width: $desktop-min-width-minus) {
+          right: 62px;
+          margin-top: -3px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          width: 100px;
+          right: 16px;
+        }
+      }
+      .copy-icon {
+        z-index: 1;
+        cursor: pointer;
+        position: absolute;
+        right: 61px;
+        width: 24px;
+        height: 54px;
+        @media (max-width: $desktop-min-width-minus) {
+          right: 60px;
+        }
+      }
+      .toggle {
+        margin-bottom: 12px;
+        &.active {
+          border: 1px solid #d9e6ef;
+          border-radius: 4px;
+          background: #fbfbfb;
+          margin-bottom: 16px;
+          .toggle-title {
+            border: none;
+            .title {
+              .title-name {
+                border-bottom: solid 1px #dadada;
+                padding: 14px 4px 14px !important;
+                margin: 0px 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                  padding: 14px 8px 14px !important;
+                  margin: 0px 10px;
+                }
+              }
+            }
+          }
+        }
+        .toggle-title {
+          background: #fbfbfb;
+          border: 1px solid #d9e6ef;
+          border-radius: 4px;
+          .title {
+            .title-name {
+              font-size: 16px;
+              line-height: 24px;
+              color: #6a509b;
+              margin: 0;
+              padding: 16px 20px 16px 14px !important;
+              @media (max-width: $phablet-min-width-minus) {
+                font-size: 14px;
+                padding: 20px 16px 24px !important;
+              }
+            }
+          }
+        }
+        .toggle-inner {
+          font-size: 14px !important;
+          line-height: 22px !important;
+          font-weight: normal;
+          width: 100%;
+          padding: 16px 66px 16px 32px !important;
+          @media (max-width: $phablet-min-width-minus) {
+            font-size: 12px !important;
+            line-height: 20px !important;
+            padding: 7px 24px 10px 24px !important;
+          }
+          p {
+            font-size: 14px !important;
+            line-height: 22px !important;
+            font-weight: normal;
+            @media (max-width: $phablet-min-width-minus) {
+              font-size: 12px !important;
+              line-height: 20px !important;
+            }
+          }
         }
       }
     }
-    .disclaimer {
-      font-size: rem-calc(16px);
-      padding: 0;
-      margin: 0px 0 44px 15px;
-     // text-indent: -10px;
-
-      @media (#{$larger-than-phablet}) {
-        padding: 16px;
-        margin-bottom: 13px;
-        margin-top: 16px;
-        margin-left: 0;
-        text-indent: 0;
-        font-size: rem-calc(18px);
-      }
-    }
   }
-    
-.promo-section {
-  margin-top:40px;
-  // height:200px;
-  @media(max-width:639.9px){
-    margin-top:20px;
-  }
-.promo-double-data {
-  text-align: center;
-  font-family:$secondary-font-family-bold;
-  font-size: rem-calc(56px);
-  line-height: 1;
-  margin-bottom: 20px;
-  color: #f58520;
-  @media(max-width:1024.9px) {
-    font-size: rem-calc(33px);
-    text-align: center;
-  }
-}
-.centered {
-  text-align: center;
-}
-.christmas-h3 {
-  font-family: $secondary-font-family-bold;
-  font-size: rem-calc(29px);
-  line-height: 1;
-  text-align: center;
-  color: #383838;
-  @media(max-width:1024.9px){
-    font-size: rem-calc(20px);
-    height:23px;
-  }
-  @media(max-width:639.9px){
-    font-size: rem-calc(18px);
-    height: 32px;
-  }
-}
-.christmas-top {
-  font-family: $base-font-family-bold;
-  line-height: 1.83;
-  color: #383838;
-  font-weight: bold;
-  @media(max-width:450.9px){
-    margin-top:0px;
-  }
-}
-.christmas-sub-p-header {
-  font-size: rem-calc(12px);
-}
-.terms-condition-link {
-  color: #383838;
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
-  a:hover {
-    color:#d33333;
-  }
-  a:-webkit-any-link{
-    color:#d33333;
-  }
-}
-}
-.christmas-col-flex{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.christmas-pop{
-  display: flex;
-  width:100%;
-  height:100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: $base-font-family;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.65;
-  font-size: rem-calc(17px);
-  @media(max-width:834.9px){
-    font-size: rem-calc(14px);
-    }
-  letter-spacing: normal;
-  text-align: center;
-  color: #06262d;
-}
-.christmas-first{
-  font-size: rem-calc(18px);
-  font-weight: bold;
-  width:60%;
-  @media(max-width:1024px){
-      width:100%;
-      font-size: rem-calc(14px);
-  }
-}
-.christmas-second{
-  font-size: rem-calc(17px);
-  width:90%;
-  @media(max-width:1024px){
-    font-size: rem-calc(14px);
-    width: 100%;
-  }
-}
-.christmas-third{
-  font-weight: bold;
-  @media(max-width:1024px){
-    font-size: rem-calc(14px);
-    width: 100%;
-  }
-}
-.christmas-fourth, .christmas-fifth {
-  width: 90%;
-  @media(max-width:1024.9px) {
-    font-size: rem-calc(14px);
-    width: 100%;
-  }
-}
 }

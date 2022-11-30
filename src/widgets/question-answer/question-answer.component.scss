@@ -13,7 +13,7 @@
     .toggle-title {
       .icons {
         i {
-          background: url("../../assets/img/minus-sign.svg") 3px 7px no-repeat;
+          background: url("../../assets/icon/minus-sign.svg") 3px 7px no-repeat;
         }
       }
     }
@@ -61,10 +61,9 @@
       flex-basis: 20%;
       i {
         position: absolute;
-        background: url("../../assets/img/plus.svg") 4.6px 4px no-repeat;
-        border: solid 2px #383838;
-        border-radius: 50%;
-        padding: 11px 11px;
+        background: url("../../assets/icon/plus-sign.svg") 4.6px 4px no-repeat;
+        border:none;
+        padding: 11px 18px;
         width: 24px;
         height: 24px;
         margin: 11px;
