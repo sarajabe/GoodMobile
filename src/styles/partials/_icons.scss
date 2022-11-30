@@ -13,41 +13,22 @@
 }
 
 @font-face {
-  font-family: 'bryant';
-  src: url('/assets/fonts/bryant-regular.ttf') format('opentype'),
-  url('/assets/fonts/bryant-light.ttf') format('opentype'),
-  url('/assets/fonts/bryant-medium.ttf') format('opentype'),
-  url('/assets/fonts/bryant-bold.ttf') format('opentype');
+  font-family: 'calibri';
+  src: url('/assets/fonts/calibri-regular.ttf') format('opentype'),
+  url('/assets/fonts/calibri-bold.ttf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'bryant-bold';
-  src: url('/assets/fonts/bryant-bold.ttf') format('opentype');
+  font-family: 'calibri-bold';
+  src: url('/assets/fonts/calibri-bold.ttf') format('opentype');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Sansation';
-  src: url('/assets/fonts/sansation_regular.ttf') format('opentype'),
-  url('/assets/fonts/sansation_italic.ttf') format('opentype'),
-  url('/assets/fonts/sansation_bold.ttf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'cookiesAndCream';
-  src: url('/assets/fonts/Cookiesandcream.ttf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
 @font-face {
   font-family: 'Weissach';
   src: url('/assets/fonts/Weissach-Regular.ttf') format('opentype');
@@ -61,13 +42,6 @@
   src: url('/assets/fonts/Weissach-Bold.ttf') format('opentype');
   font-weight: bold;
   font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Sansation-bold';
-  src:  url('/assets/fonts/sansation_bold.ttf') format('opentype');
-  font-weight: bold;
   font-display: swap;
 }
 

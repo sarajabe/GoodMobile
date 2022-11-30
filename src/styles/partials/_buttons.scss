@@ -53,6 +53,9 @@
     }
   }
 
+  &.small {
+    font-size: rem-calc(16px);
+  }
   @include button-theme($text-color);
 
   &.primary {
@@ -71,6 +74,7 @@
     &.disabled {
       background-color: $disabled;
     }
+  
   }
 
   &.secondary {
@@ -197,31 +201,10 @@ linear-gradient(0deg, #B0B0B0, #B0B0B0);
     }
   }
 
-  /*
-  // who needs responsive buttons...
-  &.large {
-    padding: 15px 30px;
-    font-size: 12px;
-    height: auto;
-    letter-spacing: 2px;
-
-    @media (#{$larger-than-phablet}) {
-      padding: 20px 50px;
-      font-size: rem-calc(16px);
-    }
-  }
-  */
 
   &.large {
     padding: 13px 55px;
     font-size: rem-calc(22px);
-  }
-
-  &.small {
-    padding: 15px 30px;
-    font-size: 12px;
-    height: auto;
-    letter-spacing: 2px;
   }
 
   &.extra-small {

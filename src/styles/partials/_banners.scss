@@ -468,46 +468,7 @@
       display: none;
     }
   }
-  &.featured-plans-slider-override {
-    .container,
-    .row {
-      height: 100%;
-    }
-    .slick-dots {
-      width: 100%;
-      position: relative;
-      list-style: none;
-      display: flex;
-      text-align: center;
-      height: 30px;
-      left: 0;
-      top: 0;
-      li {
-        height: 9px;
-        width: 9px;
-        margin: 0 8px;
 
-        &.swiper-pagination-bullet {
-          bottom: 0;
-          background-color: $secondary-color;
-          opacity: 1;
-        }
-
-        &.swiper-pagination-bullet-active {
-          background-color: $primary-color;
-        }
-
-        button {
-          &:before {
-            content: "";
-          }
-        }
-      }
-    }
-    .container{
-      margin-top: 0;
-    }
-  }
   &.social-media-slider-override {
     .container,
     .row {
