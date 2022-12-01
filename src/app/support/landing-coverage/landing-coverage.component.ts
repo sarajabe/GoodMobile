@@ -100,11 +100,11 @@ export class LandingCoverageComponent implements OnInit {
     if (!!this.address && !!this.recaptchaResponse && !!this.displayedAddressModel) {
       this.displayValidation = false;
       this.processingRequest = true;
-      this.equipmentService.checkDeviceCompatibilityByAddress(this.recaptchaResponse, this.displayedAddressModel?.postalCode,
+      this.equipmentService.checkDeviceCompatibilityV2(this.recaptchaResponse, this.displayedAddressModel?.postalCode,
         this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2).then(res => {
           if (!!res) {
-            if (!!res?.att?.covered || !!res?.tmo?.covered) {
+            if (!!res?.tmo?.covered) {
               this.processingRequest = false;
               let compatibleDevice = {} as IDeviceCompatibilityV1;
               compatibleDevice.manufacturer = res?.details?.make;
@@ -116,25 +116,21 @@ export class LandingCoverageComponent implements OnInit {
               compatibleDevice.postalCode = this.displayedAddressModel?.postalCode;
               compatibleDevice.id = res?.details?.serialNumber;
               compatibleDevice.postalCode = this.displayedAddressModel?.postalCode;
-              if (!!res?.tmo?.covered) {
-                compatibleDevice = res?.tmo?.details as IDeviceCompatibilityV1;
-                compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
-                compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
-                compatibleDevice.network = 'tmo';
-                this.networkType = 'tmo';
+              compatibleDevice = res?.tmo?.details as IDeviceCompatibilityV1;
+              compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
+              compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
+              compatibleDevice.network = 'tmo';
+              this.networkType = 'tmo';
+              if (!res?.details?.eSimOnly) {
                 this.mobilePlansService.setPlanDevice(compatibleDevice);
-              } else if (!!res?.att?.covered) {
-                compatibleDevice = res?.att?.details as IDeviceCompatibilityV1;
-                compatibleDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
-                compatibleDevice.skuNumber = res?.att?.details?.skuNumber;
-                compatibleDevice.network = 'att';
-                this.networkType = 'att';
-                this.mobilePlansService.setPlanDevice(compatibleDevice);
+                const params = {};
+                params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE] = this.networkType;
+                params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.displayedAddressModel?.postalCode;
+                this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.COVERAGE}`, params]);
+              } else {
+                this.toastHelper.showWarning('Your device is not compatible.');
               }
-              const params = {};
-              params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE] = this.networkType;
-              params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.displayedAddressModel?.postalCode;
-              this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.COVERAGE}`, params]);
+             
             }
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
