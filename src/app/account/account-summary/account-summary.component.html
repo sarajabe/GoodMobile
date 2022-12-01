@@ -197,10 +197,10 @@
                   <div class="data-height">
                     <span class="title-text base-plan-title"><span [class.promo-title]="!!isApplicablePromo">{{!!selectedPlan?.basePlan?.specialPromotion && !!isApplicablePromo ? selectedPlan?.basePlan?.specialPromotion?.promotionTitle : selectedPlan?.basePlan?.title}}
                       </span>
-                      <span class="plan-data"
+                      <!-- <span class="plan-data"
                         *ngIf="filteredPlan?.data > 0 && !selectedPlan?.canceled && !!userAccount && !!selectedPlan">
                         {{(filteredPlan?.data/1024)}}GB 4G LTE Plan 
-                      </span>
+                      </span> -->
                       <span *ngIf="filteredPlan?.data < 1"> No data</span>
                     </span>
                     <br>
@@ -338,7 +338,7 @@
                       <div class="checkbox-label" [class.disabled]="!!selectedPlan?.canceled">
                         <b>Auto Pay Enabled</b>
                         <div class="note" *ngIf="!!autoRenew">
-                          <p>Don’t worry, you are already enrolled in Auto-Pay
+                          <p class="caption">Don’t worry, you are already enrolled in Auto-Pay
                             your payment should occur automatically.</p>
                         </div>
                       </div>

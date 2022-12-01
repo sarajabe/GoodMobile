@@ -903,7 +903,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
       .result.then((result) => {
         if (!!result && result === 'success' && !isToggle) {
           this.modalHelper.showConfirmMessageModal('Plan Auto Pay',
-            'Sign up for Auto Pay and get a $5 service credit on each monthly billing cycle. Save up to $60/year! Of course, you can cancel autopay and make changes to your account at any time',
+            'Sign up for Auto Pay and renew your plan subscription automatically at the end of your billing cycle!. Of course, you can cancel autopay and make changes to your account at any time.',
             'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal')
             .result.then((response) => {
               if (!!response) {
@@ -979,7 +979,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
   public updateAutoRenew(): void {
     if (!this.autoRenew) {
       this.modalHelper.showConfirmMessageModal(
-        'Disable Auto Pay?', 'By disabling the Auto Pay option, you will miss out the -$5 discount on your monthly billing cycle. Are you sure you wish to disable it?',
+        'Disable Auto Pay?', 'Are you sure you want to cancel auto payment from this account?',
         'Yes', 'No', 'auto-renew-modal')
         .result.then((result) => {
           if (result) {
@@ -1013,7 +1013,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         });
     }
     if (this.autoRenew) {
-      this.modalHelper.showConfirmMessageModal('Enable Auto Pay?', 'Sign up for Auto Pay and get a -$5 service credit on each monthly billing cycle. Save up to $60/year!. Of course, you can cancel autopay and make changes to your account at any time.', 'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal2')
+      this.modalHelper.showConfirmMessageModal('Enable Auto Pay?', 'Sign up for Auto Pay and renew your plan subscription automatically at the end of your billing cycle!. Of course, you can cancel autopay and make changes to your account at any time.', 'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal2')
         .result.then((result) => {
           if (result) {
             this.updatedPlan = this.selectedPlan;

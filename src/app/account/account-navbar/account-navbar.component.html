@@ -27,13 +27,6 @@
                                 [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
                                 [routerLinkActiveOptions]="{exact: true}">Pay &
                                 refill your account</a></li>
-                <li class="menu-item" (click)="resetAll(); isRefer = true;">
-                        <a class="items-link link-border-bottom"
-                                [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.REFER_FRIEND'"
-                                routerLinkActive="active"
-                                [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.REFER_FRIEND]"
-                                [routerLinkActiveOptions]="{exact: true}">Refer a friend</a>
-                </li>
                 <li class="menu-item" (click)="resetAll(); isPlanAddOns = true;"
                         [class.disabled]="!!isExpiredAccount || !!isPortIn"><a class="items-link link-border-bottom"
                                 [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS'"
