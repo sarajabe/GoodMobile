@@ -90,7 +90,7 @@ export class ShutdownComponent implements OnInit {
   }
   public showWhatIsIMEI(): void {
     this.modalHelper.showInformationMessageModal('3 Ways to find your MEID or IMEI', '', 'Got it', null,
-      true, 'compatibility-help-modal-IME ',
+      true, 'compatibility-help-modal-IME',
       `<div class="description-content">
     <div class="intro">
     Your IMEI number is needed if you want to unlock your device to use
@@ -178,7 +178,7 @@ export class ShutdownComponent implements OnInit {
         }
         else {
           this.modalHelper.showInformationMessageModal('Invalid mobile number', '', 'Got it', null,
-            false, 'compatibility-help-modal-IME ',
+            false, 'compatibility-help-modal-IME',
             `<div class="description-content">
       <div class="intro">
          <div class="note-dial"> <b>The number you entered is not a valid GoodMobile number, please enter a valid GoodMobile number</b></div>

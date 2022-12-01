@@ -12,7 +12,7 @@
       <div class="row modal-actions" *ngIf="!!context.primaryButton || !!context.secondaryButton">
         <button class="button primary" *ngIf="!!context.primaryButton" (click)="closeDialog(true)"
           id="modal--primary-url-button" data-cy="modal--primary-url-button">{{context.primaryButton}}</button>
-        <button class="button secondary" *ngIf="!!context.secondaryButton" (click)="closeDialog(false)"
+        <button class="button transparent" *ngIf="!!context.secondaryButton" (click)="closeDialog(false)"
           id="modal-secondary-url-button">{{context.secondaryButton}}</button>
       </div>
     </div>

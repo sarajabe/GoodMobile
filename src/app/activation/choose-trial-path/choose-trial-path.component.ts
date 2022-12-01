@@ -117,6 +117,6 @@ export class ChooseTrialPathComponent implements OnDestroy {
       <p class="info">Port is a fancy way of saying “transfer your phone number from another provider to GoodMobile”.</p>
       <p class="info">You can transfer an active number from another provider using the second SIM card you received in the SIM kit.</p>
     </div>`;
-    this.modalHelper.showInformationMessageModal('', null, 'Got it!', null, true, 'port-inquiry-modal', customHtml);
+    this.modalHelper.showInformationMessageModal('', null, 'Got it!', null, true, 'big-button', customHtml);
   }
 }

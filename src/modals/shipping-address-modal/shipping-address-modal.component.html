@@ -1,4 +1,4 @@
-<div class="container model-container full {{context.customClass}}">
+<div class="container model-container {{context.customClass}}">
     <div class="modal-header">
         <button class="modal-close modal-toggle"  data-cy="closeIcon" (click)="closeDialog(false)"><i class="icon-close"></i></button>
         <h2 class="modal-heading" >{{context.title}}</h2>
@@ -8,11 +8,11 @@
             <div class="form-section">
                 <app-address-lookup [showAlias]="true"  [displayedAddress]="address" (isValid)="setValidAddress($event)" (addressChange)="addressChanged($event)"></app-address-lookup>
             </div>
-            <div class="row modal-actions">
+            <div class="modal-actions">
                 <button  class="button primary" data-cy="save" (click)="saveAddress()" [disabled]="!isValidAddress">
                   Save
                 </button>
-                <button class="button" (click)="closeDialog(false)"> Cancel</button>
+                <button class="button transparent" (click)="closeDialog(false)"> Cancel</button>
               </div>
         </div>
     </div>

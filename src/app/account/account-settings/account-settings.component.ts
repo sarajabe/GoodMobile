@@ -283,7 +283,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public deEnroll(): void {
     const deEnrollCustomHtml = `To cancel your Federal Affordable Connectivity enrollment, 
     please contact our customer care number <a href="tel: (800) 416-3003">(800) 416-3003</a> for assistance.`;
-    this.modalHelper.showInformationMessageModal('De-Enroll Federal Affordable Connectivity ', '', 'Done', null, true, 'deEnroll-modal',
+    this.modalHelper.showInformationMessageModal('De-Enroll Federal Affordable Connectivity ', '', 'Done', null, true, null,
       deEnrollCustomHtml, false)
       .result.then((result) => {
         if (result) {

@@ -11,9 +11,9 @@
           </div>
           <div *ngIf="settings.enableHTML" [innerHTML]="context.message" class="twelve"></div>
         </div>
-        <div class="row modal-actions">
+        <div class="modal-actions">
           <button id="confirm-btn" data-cy="confirm-btn" class="button primary" (click)="OK()">{{settings.okText || 'OK'}}</button>
-          <button id="cancel-btn" data-cy="cancel-btn" class="button" (click)="cancel()">{{settings.cancelText || 'Cancel'}}</button>
+          <button id="cancel-btn" data-cy="cancel-btn" class="button transparent" (click)="cancel()">{{settings.cancelText || 'Cancel'}}</button>
         </div>
       </div>
     </div>

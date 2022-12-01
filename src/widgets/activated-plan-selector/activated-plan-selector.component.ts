@@ -89,7 +89,7 @@ export class ActivatedPlanSelectorComponent implements OnInit, OnDestroy, OnChan
   }
 
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal().result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => {
           this.userPlansService.selectUserPlan(userPlanId);

@@ -1254,7 +1254,7 @@ label > .label-body {
   -moz-osx-font-smoothing: grayscale; }
 
   .icon-close:before {
-    content: "\2716";
+    content: "\00d7";
 }
 
 .icon-menu:before {

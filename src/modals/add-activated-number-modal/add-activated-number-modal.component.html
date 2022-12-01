@@ -6,8 +6,6 @@
     <div class="modal-body">
       <form #confirmNumberForm="ngForm">
         <div class="modal-content">
-          <div class="row">
-            <div class="twelve">
                 <p class="note" *ngIf="!!waitingConfirmCode">
                   A text message with a verification code was sent to {{phoneNumber}} Please enter the verification code below.
                 </p>
@@ -21,9 +19,7 @@
                   <input id="verificationCode" type="tel" name="verificationCode" [(ngModel)]="verificationCode" required minlength="6" maxlength="6" restrictNumbers>
                 </fieldset>
               </div>
-            </div>
-          </div>
-          <div class="row modal-actions">
+          <div class="modal-actions">
             <button class="button primary" (click)="sendCode()" type="submit" id="verifyButton" *ngIf="!waitingConfirmCode" [disabled]="!phoneNumber"
                     [uiBlockButton]="processingMdnRequest">Verify
             </button>

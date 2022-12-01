@@ -52,7 +52,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
         else {
           this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
             '',
-            'Back', null, true, 'ios-setup-modal2', this.customHTML2, true, 'Next')
+            'Back', null, true, 'ios-setup-modal', this.customHTML2, true, 'Next')
             // tslint:disable-next-line:no-shadowed-variable
             .result.then((result) => {
               if (result) {
@@ -88,7 +88,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep2(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML2, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML2, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep1(this.customHTML);
@@ -103,7 +103,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep3(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML3, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML3, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep2();
@@ -118,7 +118,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep4(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML4, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML4, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep3();
@@ -133,7 +133,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep5(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML5, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML5, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep4();
@@ -148,7 +148,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep6(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML6, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML6, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep5();
@@ -163,7 +163,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep7(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML7, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML7, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep6();
@@ -178,7 +178,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep8(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML8, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML8, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep7();
@@ -193,7 +193,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep9(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML9, true, 'Next')
+      'Back', null, true, 'ios-setup-modal', this.customHTML9, true, 'Next')
       .result.then((result) => {
         if (result) {
           this.showStep8();
@@ -208,7 +208,7 @@ click on the goodMobile LTE Data Settings tab to configure your iPhone LTE setti
   public showStep10(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',
-      'Back', null, true, 'ios-setup-modal2', this.customHTML10, true, 'Done')
+      'Back', null, true, 'ios-setup-modal', this.customHTML10, true, 'Done')
       .result.then((result) => {
         if (result) {
           this.showStep9();

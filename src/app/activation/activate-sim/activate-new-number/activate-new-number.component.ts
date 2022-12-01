@@ -199,7 +199,7 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
     } else {
       this.modalHelper.showInformationMessageModal('Failed to load the selected user plan',
         'Something went wrong, couldn\'t load the selected plan, please try again later.',
-        'Continue to Account Summary')
+        'Continue to Account Summary','',false,'big-button')
         .result.then((result) => {
           if (!!result) {
             this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);

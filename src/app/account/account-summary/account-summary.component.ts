@@ -409,7 +409,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     }
   }
   public revertCancellation(): void {
-    this.modalHelper.showConfirmMessageModal('Revert plan cancellation', 'Would you like to revert you plan cancellation?', 'Yes', 'No', 'auto-renewel-modal')
+    this.modalHelper.showConfirmMessageModal('Revert plan cancellation', 'Would you like to revert you plan cancellation?', 'Yes', 'No', 'auto-renew-modal')
       .result.then((result) => {
         if (result) {
           this.appState.loading = true;
@@ -904,7 +904,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         if (!!result && result === 'success' && !isToggle) {
           this.modalHelper.showConfirmMessageModal('Plan Auto Pay',
             'Sign up for Auto Pay and get a $5 service credit on each monthly billing cycle. Save up to $60/year! Of course, you can cancel autopay and make changes to your account at any time',
-            'Yes to Auto Pay & Save', 'No to Saving', 'auto-renewel-modal')
+            'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal')
             .result.then((response) => {
               if (!!response) {
                 this.appState.loading = true;

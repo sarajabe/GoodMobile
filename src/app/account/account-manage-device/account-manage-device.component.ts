@@ -282,10 +282,10 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     const customHTML = '<div class="question"><p>Is this the Phone Number you Want your SIM active with?</p></div><div class="number"><p>' + mdn + '</p></div>';
     this.modalHelper.showInformationMessageModal('', '', 'Yes', null, true, 'SIM-replacement-modal', customHTML, true, 'No').result.then((result) => {
       if (!!result && result === true) {
-        this.modalHelper.showSIMModal('', 'Enter your Replacement SIM’s ICCID', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
+        this.modalHelper.showSIMModal('Enter your Replacement SIM’s ICCID', '', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
           this.selectedPlan.planDevice.network, 'Replacement SIM ICCID', true).result.then((selection) => {
             if (!!selection && selection !== false && selection.input) {
-              const modalHTML = '<div class="question"><p>You are about to swap to SIM <p class="iccid"><b>[' + selection.input + ']</b></p> on Phone Number <b>' + mdn +
+              const modalHTML = '<div class="question"><p class="subhead">You are about to swap to SIM <p class="iccid"><b>[' + selection.input + ']</b></p> on Phone Number <b>' + mdn +
                 '</b></p><p class="confirm">Is this correct?"</p></div>';
               this.modalHelper.showInformationMessageModal('', '',
                 'Yes', null, true, 'confirm-swap-modal', modalHTML, true, 'No',

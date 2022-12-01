@@ -410,7 +410,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
 
   public cancelApplication(): void {
     if (!!this.userProfile) {
-      this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel application?', 'By clicking yes you agree to cancel your ACP application.', 'Yes', 'Cancel', 'clear-cart-modal')
+      this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel application?', 'By clicking yes you agree to cancel your ACP application.', 'Yes', 'Cancel', 'clean-cart-modal')
         .result.then((res) => {
           if (!!res) {
             this.appState.loading = true;

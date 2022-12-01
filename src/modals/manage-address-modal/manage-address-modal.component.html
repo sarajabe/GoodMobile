@@ -1,4 +1,4 @@
-<div class="container model-container full {{context.customClass}}">
+<div class="container model-container {{context.customClass}}">
     <div class="modal-header">
       <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
       <h2 class="modal-heading"> Select your preferred shipping Address</h2>
@@ -30,16 +30,14 @@
         </ng-container>
         <ng-container *ngIf="!!context.isManage">
           <div class="row">
-            <div class="twelve ">
               <h2>Add Address to Address Book </h2>
               <div class="form-section">
                 <app-address-lookup [showAlias]="true" [displayedAddress]="address" (isValid)="setValidAddress($event)"
                                 (addressChange)="addressChanged($event)"></app-address-lookup>
               </div>
-            </div>
           </div>
         </ng-container>
-        <div class="row modal-actions">
+        <div class="modal-actions">
           <span class="modal-hint">You can also add another shipping Address in <a (click)="goToSettings()">Profile Settings</a></span>
           <button *ngIf="!context.isManage" class="button primary" data-cy="save" (click)="setDefaultShippingAddress(selectedMethodId)"
                   [class.disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"

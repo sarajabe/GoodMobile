@@ -1584,57 +1584,6 @@
     }
   }
 }
-.need-phone-popUp {
-  &.model-container {
-    @media (#{$larger-than-desktop}) {
-      width: 67%;
-    }
-    .modal-heading {
-      @media (#{$larger-than-desktop}) {
-        font-size: rem-calc(38px);
-        line-height: 50px;
-        width: 75%;
-        margin-top: 0;
-      }
-      font-size: rem-calc(31px);
-      width: 100%;
-      line-height: 41px;
-      margin-top: 35px;
-    }
-  }
-  .modal-content > * {
-    padding: 0;
-  }
-  .modal-content {
-    padding: 1em 1em 2em;
-  }
-  .modal-content .twelve {
-    font-size: rem-calc(31px);
-    width: 100%;
-    font-family: $secondary-font-family-bold;
-    @media (max-width: 350px) {
-      font-size: rem-calc(25px);
-    }
-  }
-  .modal-close {
-    background: transparent;
-  }
-  .button {
-    width: 270px;
-    margin: 7px 0px;
-    padding: 10px 5px;
-    padding: 8px 5px;
-    font-size: rem-calc(20px);
-  }
-  .second {
-    .button {
-      background-color: $secondary-color;
-    }
-  }
-  .third {
-    display: none !important;
-  }
-}
 .note {
   font-size: 0.9rem;
   font-weight: bold;

@@ -6,14 +6,9 @@
     <div class="modal-body">
       <form #userInputForm="ngForm">
         <div class="container modal-content">
-  
-          <div class="row">
-            <div class="twelve">
-              <div class="row">
-                <div class="twelve">
+                <div class="label">
                   {{context.message}}
                 </div>
-              </div>
               <div class="row">
                 <fieldset class="twelve">
                   <label class="label" for="userInputField" *ngIf="!!context.labelText">{{context.labelText}}</label>
@@ -21,13 +16,9 @@
                          required autocomplete="user-input" maxlength="30">
                 </fieldset>
               </div>
-            </div>
-          </div>
-          <div class="row modal-actions">
-            <div class="twelve">
+          <div class="modal-actions">
               <button class="button {{context.okBtnClass}}" (click)="submitUserInput()">{{context.okText}}</button>
               <button class="button {{context.cancelBtnClass}}" (click)="closeDialog()" *ngIf="!!context.isCancelable">{{context.cancelText}}</button>
-            </div>
           </div>
         </div>
       </form>

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { IUserPlan } from '@ztarmobile/zwp-service-backend';
 import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
 import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
-import { DUPLICATE_PAYMENTS_ROUTE_URLS } from 'src/app/app.routes.names';
 
 export class MdnsListModalContext extends BSModalContext {
   public title: string;

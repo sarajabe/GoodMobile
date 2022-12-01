@@ -6,36 +6,29 @@
   <div class="modal-body">
     <form #userInputForm="ngForm">
       <div class="container modal-content">
-
-        <div class="row">
-          <div class="twelve">
             <div class="row">
-              <div class="twelve">
+              <div class="msg">
                 {{context.message}}
               </div>
             </div>
             <div class="row">
-              <fieldset class="twelve">
+              <fieldset>
                 <label class="label" for="userInputField">{{context.labelText}}</label>
                 <input id="userInputField" type="text" name="userInputField" [(ngModel)]="userInputValue" #userInput
                   required autocomplete="user-input" [minLength]="checkLength()" [maxlength]="checkLength()">
                 <div class="primary-col"><a (click)="showIccidModal()">What is an ICCID number?</a></div>
               </fieldset>
-              <fieldset class="twelve captcha" *ngIf="!!showRecaptcha">
+              <fieldset class="captcha" *ngIf="!!showRecaptcha">
                 <div class="re-captcha--resizing">
                   <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
                   </app-re-captcha>
                 </div>
               </fieldset>
             </div>
-          </div>
-        </div>
-        <div class="row modal-actions">
-          <div class="twelve">
+        <div class="modal-actions">
             <button class="button {{context.okBtnClass}}" (click)="submitUserInput()"
               [class.disabled]="userInputValue?.length < validLength || !captchaValid"
               [disabled]="userInputValue?.length < validLength || !captchaValid">{{context.okText}}</button>
-          </div>
         </div>
       </div>
     </form>

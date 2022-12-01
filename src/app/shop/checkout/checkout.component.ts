@@ -778,7 +778,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       'Are you sure you want to remove plan?' : 'Are you sure you want to remove item?';
     const confirmMessage = (this.currentPlan.cartType === CART_TYPES.NEW_PLAN) || (this.currentPlan.cartType === CART_TYPES.CHANGE_PLAN) ?
       'By clicking yes you agree to remove plan from your cart' : 'By clicking yes you agree to remove item from your cart';
-    this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'Cancel', 'clear-cart-modal')
+    this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'Cancel', 'clean-cart-modal')
       .result.then((result) => {
         if (!!result) {
           switch (this.currentPlan.cartType) {
@@ -868,7 +868,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECK_PHONE}`, params]);
   }
   public removePlanDevice(): void {
-    this.modalHelper.showConfirmMessageModal('Remove Device', 'Are you sure you want to remove your compatible device?', 'Yes', 'Cancel', 'clear-cart-modal')
+    this.modalHelper.showConfirmMessageModal('Remove Device', 'Are you sure you want to remove your compatible device?', 'Yes', 'Cancel', 'clean-cart-modal')
       .result.then((result) => {
         if (!!result) {
           this.mobilePlansService.setPlanDevice(null);
@@ -879,7 +879,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.modalHelper.showInformationMessageModal('Your selected phone',
       '',
       'Continue with plan purchase',
-      null, true, 'selected-phone-modal',
+      null, true, 'big-button',
       `<p>First, continue with your plan purchase. Then you will be directed to complete your selected device purchase from an online retailer.</p>
     <p>If you have more questions please contact us on: <a class="text-color-secondary" href="mailto:support@goodmobile.org">support@goodmobile.org</a></p>`
     );

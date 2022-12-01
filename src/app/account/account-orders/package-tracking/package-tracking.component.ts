@@ -54,10 +54,10 @@ export class PackageTrackingComponent implements OnInit, OnDestroy {
       </div>`;
       }
     });
-    const customHTML2 = `<div><h1>Delivery by USPS</h1><p class="track-font-size"><b>Tracking Number: ${trackingNumber}</b></p></div>
+    const customHTML2 = `<div><p class="track-font-size"><b>Tracking Number: ${trackingNumber}</b></p></div>
     ${this.customHtml}
     </div>`;
-    this.modalHelper.showInformationMessageModal('', '', null, null, true, 'custom-modal-view-updates', customHTML2);
+    this.modalHelper.showInformationMessageModal('Delivery by USPS', '', null, null, true, 'custom-modal-view-updates', customHTML2);
   }
   private getTrackingInfo(orderId): void {
     this.appState.loading = true;
