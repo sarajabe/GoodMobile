@@ -109,17 +109,13 @@
                         are currently processing a previously selected plan change or renewal of your current plan. No
                         other changes to your plan can be made at this time.</div>
                     <div class="validation-message" *ngIf="!!selectedPlan?.canceled">Your plan is cancelled.</div>
-                    <div>
-                        <div class="tab-nav">
-                            <ul>
-                                <li><span class="fet active"
-                                        [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
-                                        (click)="makePayment('voucher')">Pay with voucher</span></li>
-                                <li><span class="fet2 active"
-                                        [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
-                                        (click)="makePayment()">Pay with Card</span></li>
-                            </ul>
-                        </div>
+                    <div class="tab-nav">
+                        <button class="button primary" [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                        [disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                        (click)="makePayment()">Pay with Card</button>
+                        <button class="button secondary" [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                        [disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                        (click)="makePayment('voucher')">Pay with voucher</button>
                     </div>
                 </div>
             </div>

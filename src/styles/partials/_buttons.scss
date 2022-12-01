@@ -79,13 +79,17 @@
 
   &.secondary {
     border-color: $primary-color;
+    border: 1px solid;
     background-color: transparent;
     color: $primary-color;
     &:hover {
       border-color: $hover-color;
       color: $hover-color;
-      background: linear-gradient(0deg, #FDEEDE, #FDEEDE),
-linear-gradient(0deg, #FF972F, #FF972F);
+      background: linear-gradient(0deg, #FDEEDE, #FDEEDE), linear-gradient(0deg, #FF972F, #FF972F);
+      &.disabled {
+        background-color: $disabled;
+        color: $white;
+      }
     }
     &:focus {
       border-color: $blue;
@@ -98,7 +102,7 @@ linear-gradient(0deg, #E3F2FB, #E3F2FB);
       border-color: $disabled;
       background: linear-gradient(0deg, #F3F3F3, #F3F3F3),
 linear-gradient(0deg, #B0B0B0, #B0B0B0);
-
+      color: $disabled;
     }
     &.disabled {
       background-color: $disabled;
