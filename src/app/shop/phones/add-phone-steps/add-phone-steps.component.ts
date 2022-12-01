@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CART_TYPES, CustomizableMobilePlan, ICatalogItem, IUserPlan, MobileCustomPlansService, MobilePlanItem, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { ICarrierValidity } from '@ztarmobile/zwp-service-backend-v2';
 import { take, takeWhile } from 'rxjs/operators';
-import { PHONES_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { PhoneManagementService } from 'src/services/phones.service';
 
 
@@ -105,7 +105,7 @@ export class AddPhoneStepsComponent implements OnInit, OnDestroy {
         if (this.selectedOption === 'new') { // user selected new mobile number
           const params = {};
           params[SHOP_ROUTE_URLS.PARAMS.PHONE_PURCHASE] = true;
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`, params]);
+          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`, params]);
         } else { // user selected current mobile number
           const savedMdn = JSON.parse(sessionStorage.getItem('selectedUserPlan'));
           if (!!savedMdn) {
@@ -166,7 +166,7 @@ export class AddPhoneStepsComponent implements OnInit, OnDestroy {
   public cancel(): void {
     this.clearProcessStorage();
     if (this.isPlanFlow) {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
     } else {
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`]);
     }

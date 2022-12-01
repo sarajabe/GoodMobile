@@ -16,8 +16,8 @@ h1, .h1 {
   $font-family: $header-font-family;
   font-weight: bold;
   @media (max-width: $phablet-min-width-minus) {
-    font-size: rem-calc(24px);
-    line-height: 36px;
+    font-size: rem-calc(26px);
+    line-height: 38px;
   }
 }
 
@@ -47,9 +47,10 @@ h4, .h4 {
   font-size: rem-calc(24px);
   font-weight: 700;
   line-height: 32px;
+  font-family: $secondary-font-family-bold;
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(20px);
-    line-height: 30px;
+    line-height: 28px;
   }
 }
 
@@ -57,6 +58,7 @@ h5, .h5 {
   font-size: rem-calc(20px);
   font-weight: 700;
   line-height: 28px;
+  font-family: $secondary-font-family-bold;
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(18px);
     line-height: 28px;
@@ -67,6 +69,7 @@ h6, .h6 {
   font-size: rem-calc(18px);
   font-weight: 700;
   line-height: 24px;
+  font-family: $secondary-font-family;
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(16px);
     line-height: 20px;
@@ -79,7 +82,7 @@ p {
   font-size: rem-calc(18px);
   font-weight: 400;
   line-height: 32px;
-  font-family: $secondary-font-family;
+  font-family: $base-font-family;
   &.smaller {
     font-size: rem-calc(16px);
     line-height: 24px;
@@ -103,19 +106,30 @@ p {
     font-family: $secondary-font-family;
   }
   @media (max-width: $phablet-min-width-minus) {
-    font-size: rem-calc(16px);
-    line-height: 24px;
-    &.smaller {
-      font-size: rem-calc(14px);
-      line-height: 24px;
-    }
-    &.smallest {
-      font-size: rem-calc(12px);
-      line-height: 18px;
-    }
+    // font-size: rem-calc(16px);
+    // line-height: 24px;
+    // &.smaller {
+    //   font-size: rem-calc(14px);
+    //   line-height: 24px;
+    // }
+    // &.smallest {
+    //   font-size: rem-calc(12px);
+    //   line-height: 18px;
+    // }
   }
 }
-
+a {
+  &.caption {
+    font-size: rem-calc(12px);
+    line-height: 20px;
+    font-family: $secondary-font-family;
+  }
+  &.label {
+    font-size: rem-calc(12px);
+    line-height: 12px;
+    font-family: $secondary-font-family;
+  }
+}
 // Pre
 pre {
   line-height: 1.6;

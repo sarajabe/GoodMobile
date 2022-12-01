@@ -151,36 +151,6 @@
             </div>
           </div>
         </ng-container>
-        <ng-container
-          *ngIf="!!userAccount && !!selectedPlan && !selectedPlan?.canceled && !isNotInterested && !!canMigrate && !selectedPlan?.planDevice?.pendingMigrationSim && !selectedPlan.migrate">
-          <div class="activate-esim-container">
-            <div class="flex">
-                <img src="assets/icon/info-orange-circle.svg" alt="note icon">
-                <div class="container-content">
-                    <p class="title">MMS is now available for iPhones!</p>
-                    <p class="desc">iPhone users can migrate to our preferred network. You will have the same plan, same phone,
-                      same phone number, with a new SIM that gives you improved features. <a class="learn-more"
-                      (click)="showMigrationDataFlow()"> <b>Learn more.</b></a></p>
-                    <div class="actions">
-                        <button class="button primary" (click)="orderSIMMigration()">Get started</button>
-                        <a class="not-interested" (click)="notInterested()">Not interested</a>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="!!selectedPlan && selectedPlan.migrate && selectedPlan?.migrate.portInRequestNumber ">
-          <div class="common-migration-banners process-migration-banner">
-            <h2 class="migration-title">Your Service Migration is in Process</h2>
-            <div class="flex-info">
-              <p class="info">These things usually take time, you will be sent a confirmation email
-                once the migration is complete.</p>
-              <div class="actions">
-                <button class="button primary" (click)="refreshPage()">Refresh page</button>
-              </div>
-            </div>
-          </div>
-        </ng-container>
         <ng-container *ngIf="!!selectedPlan && !!selectedPlan?.planDevice?.pendingMigrationSim">
           <div class="activate-esim-container">
             <div class="flex">
@@ -258,11 +228,6 @@
                         (click)="changePlan()">
                         <img class="change-icon" src="/assets/icon/change.svg">
                         Change plan</a>
-                      <a class="change-action" (click)="upgradeTrialPlan()"
-                        [class.disabled]="!!selectedPlan?.upgradeDiscountUsed"
-                        *ngIf="!!selectedPlan">
-                        <img class="change-icon" src="/assets/icon/change.svg">
-                        Upgrade plan</a>
                       <a (click)="cancelPlan()" class="top-action"
                         [class.disabled]="!!selectedPlan && !!selectedPlan.canceledOnExpiry" *ngIf="!!selectedPlan.mdn">
                         <span class="action-icon icon close-action"><img

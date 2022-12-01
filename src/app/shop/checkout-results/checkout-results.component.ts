@@ -10,7 +10,7 @@ import { AppState } from '../../app.service';
 import { MetaService } from '../../../services/meta-service.service';
 import { ModalHelperService } from '../../../services/modal-helper.service';
 import { takeWhile, combineLatest, take } from 'rxjs/operators';
-import { SHOP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { SHOP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { ContentfulService } from 'src/services/contentful.service';
 
 @Component({
@@ -139,7 +139,7 @@ export class CheckoutResultsComponent implements OnDestroy {
   }
 
   public goToPlans(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
   }
 
   public goToCompatability(): void {

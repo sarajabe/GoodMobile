@@ -1,69 +1,67 @@
 <footer class="footer" height="445" id="footer">
-	<div class="container-flex footer-container">
-        <ul class="footer-menu">
-            <li class="footer-section shop" (click)="showShop=!showShop; showAccount = false; showSupport = false; showAbout = false;">
-                <span class="section-title" >Shop<i class="arrow" [ngClass]="{'down': !showShop, 'up': !!showShop}" ></i></span>
-                <ul class="section-list" [ngClass]="{'active': showShop == true}">
-                    <li data-cy="cellPhonePlans"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES]">Cell phone plans</a></li>
-                    <li data-cy="cellPhones"><a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE + '/' + PHONES_SHOP_ROUTE_URLS.TYPE]">Cell phones</a></li>
+	<div class="page-section footer-container">
+        <div class="logo-section">
+            <img class="footer-logo" src="assets/img/logo.svg" alt="GoodMobile" width="120" height="26">
+        </div>
+        <div class="footer-sections-container">
+            <div class="footer-section" [ngClass]="{'active': showShop == true}" (click)="showShop=!showShop; showAccount = false; showSupport = false; showAbout = false;">
+                <p class="text-color-primary primary-font-bold section-title"><span>Shop</span><i class="arrow primary" [ngClass]="{'down': !showShop, 'up': !!showShop}" ></i></p>
+                <ul class="section-menu">
+                    <li class="section-link">
+                        <a class="caption" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+ '/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Cell phone plans</a>
+                    </li>
                 </ul>
-            </li>
-            <li class="footer-section account" (click)="showAccount=!showAccount;showShop = false; showSupport = false;showAbout = false;">
-                <span class="section-title">Account<i class="arrow" [ngClass]="{'down': !showAccount, 'up': !!showAccount}" ></i></span>
-                <ul class="section-list split-list" [ngClass]="{'active': showAccount == true}">
-                    <li data-cy="accountSummary"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ ACCOUNT_ROUTE_URLS.SUMMARY]">Account summary</a></li>
-                    <li data-cy="payAndRefill"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]">Pay & refill your account</a></li>
-                    <li data-cy="yourOrders"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ORDERS]">Your orders</a></li>
-                    <li data-cy="paymentrHistory"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAYMENTS]">Payment history</a></li>
-                    <li data-cy="usage"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.USAGE]">Usage</a></li>
-                    <li data-cy="manageDevices"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]">Manage devices</a></li>
-                    <li data-cy="acpApplication" *ngIf="!!isLoggedIn && !!displayAcpSection"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ACP_APPLICATION]">ACP application</a></li>
-                    <li class="last-item" data-cy="profileSettings" [class.acp-margin]="!!isLoggedIn && !!displayAcpSection"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.SETTINGS]">Profile settings</a></li>
-                </ul>
-              </li>
-              <li class="footer-section support" (click)="showSupport=!showSupport; showAccount = false; showShop = false;showAbout = false;">
-                <span class="section-title">Support<i class="arrow" [ngClass]="{'down': !showSupport, 'up': !!showSupport}" ></i></span>
-                <ul class="section-list" [ngClass]="{'active': showSupport == true}">
-                    <li data-cy="acp"><a [routerLink]="[ROUTE_URLS.ACP]">Affordable Connectivity Program</a></li>
-                    <li data-cy="wifiCalling"><a [routerLink]="[ROUTE_URLS.WIFI_CALLING]">WiFi Calling</a></li>
-                    <!-- <li data-cy="3gShutdown"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.SHUTDOWN_3G]">3G shutdown</a></li> -->
-                    <li data-cy="setupYourPhoneData"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]">Setup your phone data</a></li>
-                    <li data-cy="hdVoice"><a [routerLink]="[ROUTE_URLS.HD_VOICE]">HD Voice</a></li>
-                    <li data-cy="faqs"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.FAQS]">FAQs</a></li>
-                    <li data-cy="contactUs"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.CONTACT_US]">Contact us</a></li>
-                    <li data-cy="sitemapLink"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.SITEMAP]">Sitemap</a></li>
-                </ul>
-            </li>
-            <li class="footer-section about" (click)="showAbout=!showAbout; showAccount = false; showShop = false;showSupport = false;">
-                <span class="section-title">About<i class="arrow" [ngClass]="{'down': !showAbout, 'up': !!showAbout}" ></i></span>
-                <ul class="section-list" [ngClass]="{'active': showAbout == true}">
-                    <li data-cy="aboutG2g"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.ABOUT_GM]">About GoodMobile</a></li>
-                    <li data-cy="whyG2g"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.WHY_GM]">Why GoodMobile</a></li>
-                    <li data-cy="howItWorks"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.HOW_IT_WORKS]">How it works</a></li>
-                    <li data-cy="intCalling"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING]">Intl. calling</a></li>
-                </ul>
-              </li>
-            <li class="footer-section no-sub col-12">
-                <p class="section-title main"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS]">Terms & conditions</a></p>
-                <p class="section-title main main2 aid"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.HEARING_AID_COMPATIBILITY]">Hearing aid compatibility</a></p>
-            </li>
-            <li class="footer-section logo">
-                <img src="/assets/img/Group295.png" srcset="/assets/img/Group295@2x.png 2x,	/assets/img/Group295@3x.png 3x"
-                        class="logo" width="30" height="27"
-                        alt="GoodMobile">
-            </li>
-        </ul>
-		<div class="copyright"  *ngFor="let footer of sharedContent | async">
-            <div class="first-row">
-                <p class="copy">{{footer?.fields?.copySign}} {{footer?.fields?.sentenceOne}}</p>
-                <p class="right">
-                    <a href="https://www.facebook.com/GoodMobile/" target="_blank" rel="noopener"><img class="fb" src="assets/img/facebook_icon.png" alt="facebook icon" width="48" height="48"/></a>
-                    <a href="https://twitter.com/GoodMobile" target="_blank" rel="noopener"><img class="twitter" src="assets/img/twitter_icon.png" alt="twitter icon" width="48" height="48"/></a>
-                    <a href="https://www.instagram.com/goodmobile/" target="_blank" rel="noopener"><img class="instagram" src="assets/img/instagram_icon.png" alt="instagram icon" width="48" height="48"/></a>
-                </p>
             </div>
-			<p class="second-row">{{footer?.fields?.sentenceTwo}}</p>
-		</div>
+            <div class="footer-section" [ngClass]="{'active': showAccount == true}" (click)="showAccount=!showAccount;showShop = false; showSupport = false;showAbout = false;" >
+                <p class="text-color-primary primary-font-bold section-title"><span>Account</span><i class="arrow primary" [ngClass]="{'down': !showAccount, 'up': !!showAccount}" ></i></p>
+                <ul class="section-menu">
+                    <li class="section-link" data-cy="accountSummary"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ ACCOUNT_ROUTE_URLS.SUMMARY]">Account summary</a></li>
+                    <li class="section-link" data-cy="payAndRefill"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]">Pay & refill your account</a></li>
+                    <li class="section-link" data-cy="yourOrders"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ORDERS]">Your orders</a></li>
+                    <li class="section-link" data-cy="paymentrHistory"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAYMENTS]">Payment history</a></li>
+                    <li class="section-link" data-cy="usage"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.USAGE]">Manage usage</a></li>
+                    <li class="section-link" data-cy="manageDevices"><a class="caption"[routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]">Manage devices</a></li>
+                    <li class="section-link" data-cy="acpApplication" *ngIf="!!isLoggedIn && !!displayAcpSection"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ACP_APPLICATION]">ACP application</a></li>
+                    <li class="section-link" data-cy="profileSettings"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.SETTINGS]">Profile settings</a></li>
+                </ul>
+            </div>
+            <div class="footer-section" [ngClass]="{'active': showSupport == true}" (click)="showSupport=!showSupport; showAccount = false; showShop = false;showAbout = false;">
+                <p class="text-color-primary primary-font-bold section-title"><span>Support</span><i class="arrow primary" [ngClass]="{'down': !showSupport, 'up': !!showSupport}" ></i></p>
+                <ul class="section-menu">
+                    <li class="section-link" data-cy="acp"><a class="caption" [routerLink]="[ROUTE_URLS.ACP]">Affordable Connectivity Program</a></li>
+                    <li class="section-link" data-cy="wifiCalling"><a class="caption" [routerLink]="[ROUTE_URLS.WIFI_CALLING]">WiFi Calling</a></li>
+                    <li class="section-link" data-cy="setupYourPhoneData"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]">Setup your phone data</a></li>
+                    <li class="section-link" data-cy="hdVoice"><a class="caption" [routerLink]="[ROUTE_URLS.HD_VOICE]">HD Voice</a></li>
+                    <li class="section-link" data-cy="faqs"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.FAQS]">FAQs</a></li>
+                    <li class="section-link" data-cy="contactUs"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.CONTACT_US]">Contact us</a></li>
+                    <li class="section-link" data-cy="sitemapLink"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.SITEMAP]">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="footer-section" [ngClass]="{'active': showAbout == true}" (click)="showAbout=!showAbout; showAccount = false; showShop = false;showSupport = false;">
+                <p class="text-color-primary primary-font-bold section-title"><span>About</span><i class="arrow primary" [ngClass]="{'down': !showAbout, 'up': !!showAbout}" ></i></p>
+                <ul class="section-menu">
+                    <li class="section-link" data-cy="about-gm"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.ABOUT_GM]">About GoodMobile</a></li>
+                    <li class="section-link" data-cy="why-gm"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.WHY_GM]">Why GoodMobile</a></li>
+                    <li class="section-link" data-cy="howItWorks"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.HOW_IT_WORKS]">How it works</a></li>
+                    <li class="section-link" data-cy="intCalling"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING]">Intl. calling</a></li>
+                </ul>
+            </div>
+            <div class="footer-section group">
+                <p class="text-color-primary primary-font-bold section-title sub"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS]">Terms & conditions</a></p>
+                <p class="text-color-primary primary-font-bold section-title "><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.HEARING_AID_COMPATIBILITY]">Hearing aid compatibility</a></p>
+            </div>
+        </div>
+        <img src="assets/img/footer-mask.svg" alt="mask" class="mask right">
+        <img src="assets/img/footer-left-mask.svg" alt="mask" class="mask left">
+        <div class="copyrights-social">
+            <p class="caption">©2022 GoodMobile. All rights reserved.</p>
+            <div class="socials">
+                <a href="https://www.facebook.com/GoodMobile/" target="_blank" rel="noopener"><img class="fb" src="assets/img/facebook_icon.png" alt="facebook icon" width="38" height="38"/></a>
+                <a href="https://twitter.com/GoodMobile" target="_blank" rel="noopener"><img class="twitter" src="assets/img/twitter_icon.png" alt="twitter icon" width="38" height="38"/></a>
+                <a href="https://www.instagram.com/goodmobile/" target="_blank" rel="noopener"><img class="instagram" src="assets/img/instagram_icon.png" alt="instagram icon" width="38" height="38"/></a>
+            </div>
+        </div>
+       
     </div>
     <div class="build">
         Build version: {{BUILD_VERSION}} - {{BUILD_DATE}} <span style="display: none"> - {{FIREBASE_CONF.projectId}}</span>

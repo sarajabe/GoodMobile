@@ -109,7 +109,7 @@
           </li>
           <li class="login-option" *ngIf="!!isLoggedIn">
             <div class="label-section">
-              <img class="account" data-cy="account-menu-header" src="assets/icon/Avatar.svg"> <i class="arrow down primary"></i>
+              <img class="account" data-cy="account-menu-header" src="assets/icon/Avatar.svg"><i class="arrow primary" (mouseenter)="showAccountMenu=true" (mouseleave)="showAccountMenu=false" [ngClass]="{'down': !showAccountMenu, 'up': !!showAccountMenu}"></i>
             </div>
             <div class="wrapper">
               <nav class="dropdown">

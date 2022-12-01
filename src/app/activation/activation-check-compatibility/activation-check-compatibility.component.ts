@@ -7,7 +7,7 @@ import {
   MobileCustomPlansService, UserDeviceService, UserPlansService, IExistingOrder, AccountPaymentService, PlacesAutocompleteService, IFirebaseAddress, IAutoCompletePrediction
 } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -389,7 +389,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                       params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.zipCode;
                       this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE_RESULT}`, params]);
                     } else {
-                      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+                      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
                     }
                   }
                 }, (error) => {
@@ -482,7 +482,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
       params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userPlanId;
       this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
     } else if (!!this.activationCode) {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
     } else {
       params[ACTIVATION_ROUTE_URLS.PARAMS.NETWORK] = network;
       this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE_RESULT}`, params]);

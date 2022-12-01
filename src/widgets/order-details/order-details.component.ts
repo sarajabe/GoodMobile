@@ -143,7 +143,7 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
           } else {
             const params = {};
             params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN] = true;
-            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`, params]);
+            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`, params]);
           }
         } else {
           if (result === false) {

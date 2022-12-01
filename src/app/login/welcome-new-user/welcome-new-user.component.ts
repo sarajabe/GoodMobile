@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { MetaService } from 'src/services/meta-service.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class WelcomeNewUserComponent implements OnInit {
   }
 
   public goToPlans(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
   }
 
   public goToCompatibility(): void {

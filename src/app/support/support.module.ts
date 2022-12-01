@@ -30,7 +30,6 @@ import { SitemapComponent } from './sitemap/sitemap.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { WhyGoodMobileComponent } from './why-goodmobile/why-goodmobile.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
-import { ShutdownComponent } from './shutdown/shutdown.component';
 import { FourthGenerationPageComponent } from './data-setup/android/gsm/fourth-generation-page/fourth-generation-page.component';
 import { FifthGenerationPageComponent } from './data-setup/android/gsm/fifth-generation-page/fifth-generation-page.component';
 import { IosFifthGenerationPageComponent } from './data-setup/ios/gsm/fifth-generation-page/fifth-generation-page.component';
@@ -43,7 +42,7 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
     FaqsComponent, CovidComponent, SupportComponent, DataSetupComponent, AndroidCdmaComponent, AndroidGsmComponent,
     IosCdmaComponent, IosGsmComponent, TMobileComponent, IosTmoComponent, AndroidTmoComponent, HearingAidCompatibilityComponent,
     HowItWorksComponent, InternationalCallingComponent, LandingCoverageComponent, SitemapComponent, StoreLocatorComponent, WhyGoodMobileComponent,
-    TermsAndConditionsComponent, IosFifthGenerationPageComponent, IosFourthGenerationPageComponent, ShutdownComponent, FourthGenerationPageComponent, FifthGenerationPageComponent],
+    TermsAndConditionsComponent, IosFifthGenerationPageComponent, IosFourthGenerationPageComponent, FourthGenerationPageComponent, FifthGenerationPageComponent],
   imports: [
     CommonModule,
     SupportRoutingModule,

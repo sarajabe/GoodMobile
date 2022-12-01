@@ -216,7 +216,6 @@ export const SUPPORT_ROUTE_URLS = {
   INTERNATIONAL_CALLING: 'international-calling',
   REFER_A_FRIEND: 'refer-a-friend',
   PRIVACY_NOTICE: 'privacy-notice',
-  SHUTDOWN_3G: '3G_shutdown',
   PARAMS: {
     TARGETID: 'targetId',
     NETWORKTYPE: 'networkType'
