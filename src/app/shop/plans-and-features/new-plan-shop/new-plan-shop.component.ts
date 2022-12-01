@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, SimpleChanges, OnChanges, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest, take, takeWhile } from 'rxjs/operators';
-import { ACTIVATION_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, IMarketingDetails, IUserAccount, MobileCustomPlansService, MobilePlanItem, PURCHASE_INTENT, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { PageScrollService } from 'ngx-page-scroll-core';
@@ -142,6 +142,10 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   }
   public goToEbb(): void {
     this.router.navigate([ROUTE_URLS.ACP]);
+  }
+  public goToPurchasedPlans(): void {
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
+
   }
   public showAutoPayPopUp(): void {
     this.modalHelper.showInformationMessageModal('Auto Pay Credit', '', 'Got it', null,
