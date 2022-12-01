@@ -114,29 +114,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.userCart = plan;
       this.autoRenew = this.userCart?.autoRenewPlan;
-      if (!!this.userCart?.activationCode && !!this.userCart?.activePlanId && this.userCart?.cartType === CART_TYPES.NEW_PLAN && this.userCart?.activationCode === '11111') {
-        this.isTrialUpgrade = true;
-      }
-      if (this.userCart.cartType === CART_TYPES.NEW_PLAN) {
-        this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
-          this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
-          this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
-          if (!this.planInCatalog && !this.planInCatalogChecked) {
-            this.planInCatalogChecked = true;
-            const customHtml = `<div class="content"><p class="info">The current offer is no longer available.</p>
-            <p class="info"><b>Please check our new Holidays offer!</b></p>`
-            this.modalHelper.showInformationMessageModal('Special Offer!', '', 'See Offers', null, false, 'archived-plan', customHtml).result.then((response) => {
-              this.mobilePlansService.clearUserCart();
-              this.appState.clearSessionStorage();
-              sessionStorage.setItem('removeFromCart', 'true');
-              this.checkoutService.paymentsSubject.next(null);
-              this.checkoutService.detailsSubject.next(null);
-              this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
-              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
-            });
-          }
-        });
-      }
       if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
         this.isGenericType = true;
         if (!!this.userCart.activePlanId) {
@@ -215,7 +192,7 @@ export class CartComponent implements OnInit, OnDestroy {
             } else {
               const params = {};
               params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN] = true;
-              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`, params]);
+              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`, params]);
             }
           }
         }, (error) => {
@@ -687,7 +664,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.checkoutService.paymentsSubject.next(null);
           this.checkoutService.detailsSubject.next(null);
           this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
         });
       }
     }

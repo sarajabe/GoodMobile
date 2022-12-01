@@ -2,8 +2,7 @@
   <div class="header-section">
     <h1 class="title">Create your GoodMobile account</h1>
     <p class="subhead">
-      Your GoodMobile account allows you to purchase plans with a competitive price and high speed data starting at
-      $10/month. Let’s get you signed up!
+      Your GoodMobile account allows you to manage your Affordable Connectivity Program (ACP) plan, and enjoy high-speed data at competitive prices! Let’s get you signed up!
     </p>
   </div>
   <form [formGroup]="userForm" class="sign-up-form">
@@ -71,10 +70,15 @@
             Passwords do not match </label>
         </fieldset>
       </div>
-      <div class="form-section">
+      <div class="form-section column">
         <fieldset class="left">
           <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
         </fieldset>
+        <fieldset class="full" *ngIf="showRecaptchaError">
+          <label class="validation-message alert" id="required-recaptcha" >
+            Please verify that you are not a robot</label>
+        </fieldset>
+        
       </div>
     </div>
     <div class="actions-section">

@@ -53,7 +53,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public verifiedAddress: IFirebaseAddress;
   public addressCard = false;
   public simOption: string;
-  public simOptions = [{ id: 'esim', value: 'Yes, let’s go!' },{ id: 'physical', value: 'No, send me a physical SIM' }];
+  public simOptions = [{ id: 'esim', value: 'Yes, let’s go!' }, { id: 'physical', value: 'No, send me a physical SIM' }];
   public utms;
   private planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
@@ -187,8 +187,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                     this.goToAcpLanding();
                   }
                 });
-            } 
-            else if(!!userEbbPlan && !this.planPuchasedClicked){
+            }
+            else if (!!userEbbPlan && !this.planPuchasedClicked) {
               this.goToAcpLanding();
             }
           }, 200);
@@ -266,7 +266,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     if (!!this.isEsim) {
       this.simOptionsForm.markAllAsTouched();
       if (this.simOptionsForm.valid) {
-        if(this.simOption === 'esim') {
+        if (this.simOption === 'esim') {
           this.modalHelper.showConfirmMessageModal(
             `Confirmation`, 'You will be recieving an eSIM for your device instead of a physical SIM, would you like to proceed? ',
             'Yes', 'No', 'auto-renew-modal')
@@ -288,7 +288,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     }
   }
   public purchasePlan(isEsim?): void {
-    if (!!this.newMobileServiceFrom.valid && ((!isEsim && !!this.isAddressVerified )|| !!isEsim)) {
+    if (!!this.newMobileServiceFrom.valid && ((!isEsim && !!this.isAddressVerified) || !!isEsim)) {
       this.clearCart();
       this.mobilePlansService.setActivePlanId("");
       this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
@@ -296,7 +296,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.mobilePlansService.setBasePlan(this.ebbPlan);
       this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
       this.mobilePlansService.setMarketingObject(this.marketingDetails);
-      if(!!isEsim) {
+      if (!!isEsim) {
         this.mobilePlansService.seteSIM(true);
         this.mobilePlansService.setQrScanned(false);
       }
@@ -304,15 +304,15 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         const data: INewPlanCartItem = {
           autoRenewPlan: true,
           basePlanId: this.ebbPlan.id,
-          orderShipMethod: !!isEsim? null : "usps_first_class_mail/letter",
+          orderShipMethod: !!isEsim ? null : "usps_first_class_mail/letter",
           promoCode: "5",
           savePaymentMethod: false,
-          shippingAddress: !!isEsim? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
+          shippingAddress: !!isEsim ? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
           paymentInfo: null,
           simsQuantity: 0,
           usingPaymentProfile: false,
           voucherCode: null,
-          haseSIM: !!isEsim? true :false
+          haseSIM: !!isEsim ? true : false
         };
         this.appState.loading = true;
         this.orderCheckoutService.checkoutNewPlan(data).then(
@@ -376,7 +376,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2, equipment).then(res => {
           if (!!res) {
             this.appState.loading = false;
-            if (!!res?.tmo?.covered || !!res?.att?.covered) {
+            if (!!res?.tmo?.covered) {
               this.compatibileDevice.manufacturer = res?.details?.make;
               this.compatibileDevice.marketingName = res?.details?.name;
               this.compatibileDevice.address1 = this.displayedAddressModel?.address1;
@@ -385,34 +385,17 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
               this.compatibileDevice.state = this.displayedAddressModel?.state;
               this.compatibileDevice.postalCode = this.displayedAddressModel?.postalCode;
               this.compatibileDevice.id = res?.details?.serialNumber;
-              if (!!res?.tmo?.covered && !!res?.details?.eSimCapable) {
-                this.compatibileDevice.skuIdentifier = res?.tmo?.details?.esimInformation?.skuIdentifier;
-                this.compatibileDevice.skuNumber = res?.tmo?.details?.esimInformation?.skuNumber;
+              if (!!res?.details?.eSimOnly) {
+                this.successCehck = false;
+                this.errorCheck = true;
+              } else {
                 this.compatibileDevice.network = 'tmo';
-                this.mobileCustomPlansService.seteSIM(true);
-                this.mobileCustomPlansService.setQrScanned(false);
-                this.isEsim = true;
-                this.successCehck = true;
-              } else if (!!res?.tmo?.covered && !res?.details?.eSimCapable) {
                 this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
                 this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
-                this.compatibileDevice.network = 'tmo';
                 this.successCehck = true;
-                this.isEsim = false;
+                this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
+                this.mobileCustomPlansService.setPlanExpectedDevice(null);
               }
-              else if (!res?.tmo?.covered && !!res?.details?.eSimOnly) {
-                this.successCehck = false;
-                this.isEsim = false;
-                this.errorCheck = true;
-              } else if (!!res?.att?.covered) {
-                this.compatibileDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
-                this.compatibileDevice.skuNumber = res?.att?.details?.skuNumber;
-                this.compatibileDevice.network = 'att';
-                this.successCehck = true;
-                this.isEsim = false;
-              }
-              this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
-              this.mobileCustomPlansService.setPlanExpectedDevice(null);
             } else {
               this.successCehck = false;
               this.errorCheck = true;

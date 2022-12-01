@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener} from '@angular/core';
 import { Router } from '@angular/router';
-import { SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
+import { PLANS_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { MetaService } from 'src/services/meta-service.service';
 import { ContentfulService } from 'src/services/contentful.service';
 
@@ -12,6 +12,7 @@ import { ContentfulService } from 'src/services/contentful.service';
 export class AboutGoodMobileComponent implements OnInit {
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
+  public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   public page: any;
   public innerWidth: any;
   public aboutGoodmobile: any;

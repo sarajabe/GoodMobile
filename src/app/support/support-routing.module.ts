@@ -17,7 +17,6 @@ import { SitemapComponent } from './sitemap/sitemap.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { WhyGoodMobileComponent } from './why-goodmobile/why-goodmobile.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
-import { ShutdownComponent } from './shutdown/shutdown.component';
 import { IosGsmComponent } from './data-setup/ios/gsm/gsm.component';
 import { AndroidGsmComponent } from './data-setup/android/gsm/gsm.component';
 import { IosTmoComponent } from './data-setup/ios/tmo/tmo.component';
@@ -145,8 +144,6 @@ const routes: Routes = [
       data: {title: 'GoodMobile | Support | Terms & Conditions', description: 'Get the GoodMobile Terms & Conditions.'} as IPageMeta},
       {path: SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS_CATEGORY, component: TermsAndConditionsComponent,
         data: {title: 'GoodMobile | Support | Terms & Conditions', description: 'Get the GoodMobile Terms & Conditions.'} as IPageMeta},
-        {path: SUPPORT_ROUTE_URLS.SHUTDOWN_3G, component: ShutdownComponent,
-          data: {title: 'GoodMobile | Support | 3G Shutdown', description: 'All major mobile carriers will be finalizing the shutdown of their 3G networks on various dates in 2022. Once the 3G network is shut down, 3G cell phones will not work.'} as IPageMeta},
     ]
   }
 ];

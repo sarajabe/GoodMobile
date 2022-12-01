@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { MetaService } from '../../../services/meta-service.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class SitemapComponent {
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
   public ACTIVATION_ROUTE_URLS = ACTIVATION_ROUTE_URLS;
   public PHONES_SHOP_ROUTE_URLS = PHONES_SHOP_ROUTE_URLS;
+  public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   constructor(private metaService: MetaService) {
     this.metaService.createCanonicalUrl();
   }

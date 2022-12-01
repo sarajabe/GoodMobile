@@ -35,13 +35,13 @@ $white-grey: #ebebeb !default;
 $lightest-grey: #e2e2e2 !default;
 $light-grey: #f2f2f2 !default;
 $grey: #B1B1B1 !default;
-$medium-grey: #999999 !default;
+$medium-grey: #868686 !default;
 $dark-grey: #666666 !default;
 $darkest-grey: #333333 !default;
 $black: #383838 !default;
 $blue: #74C0EB!default;
 $disabled: #B0B0B0!default;
-
+$white: #FBFBFB!default;
 $primary-color: #005895 !default;
 $primary-color-dark: #003C75 !default;
 $primary-color-light: #f2e8f4 !default;
@@ -55,6 +55,10 @@ $menu-bar-font: #000000 !default;
 $menu-bar-font-alt: #ffffff !default;
 $link-color : #005895;
 $header-color: #563e86;
+$section-header-color: #563E86 !default;
+$section-blue-background: #F1F9FD!default;
+
+
 $border-color: #979797 !default;
 $link-color: $primary-color !default;
 $text-color: $black !default;
@@ -95,9 +99,8 @@ $base-font-family-bold: "Weissach-bold", "Helvetica Neue", Helvetica, Arial, san
 $base-font-weight: $regular;
 $base-font-size: 14px;
 $base-line-height: 1.4;
-$secondary-font-family: "bryant", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$secondary-font-family-bold: "bryant-bold", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$cookies-font-family: "cookiesAndCream", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$secondary-font-family: "calibri", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$secondary-font-family-bold: "calibri-bold", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $proxima-font-family: "proxima-nova", sans-serif !default;
 $lato-font-family: "Lato", sans-serif !default;
 // Fixed Font
@@ -106,11 +109,11 @@ $fixed-font-size: 85%;
 $fixed-line-height: $base-line-height;
 
 // Headings
-$header-font-family: "bryant-bold", "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$header-font-family: "Weissach-bold", "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $header-font-weight: $bold;
 
 // Buttons
-$button-font-family: "bryant", "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$button-font-family: "Weissach", "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $button-font-weight: $bold;
 
 // Nav

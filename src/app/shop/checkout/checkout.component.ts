@@ -19,7 +19,7 @@ import { AppState } from '../../app.service';
 import { ToastrHelperService } from '../../../services/toast-helper.service';
 import { ModalHelperService } from '../../../services/modal-helper.service';
 import { combineLatest, take, takeWhile } from 'rxjs/operators';
-import { CHECKOUT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { CHECKOUT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { PhoneManagementService } from 'src/services/phones.service';
 
 
@@ -505,7 +505,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.paymentInfoReceived = false;
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PAYMENT_SECTION}`]);
     } else if (document.location.href.indexOf('customerinfo') > -1) {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
     }
     else {
       if (!!this.saveOnce) {

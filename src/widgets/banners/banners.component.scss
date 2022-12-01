@@ -14,7 +14,7 @@
         object-position: 30%;
 
         @media (max-width: $desktop-min-width-minus) {
-          object-position: 34.5%;
+          object-position: 40.5%;
         }
 
         @media (max-width: $phablet-min-width-minus) {
@@ -42,7 +42,7 @@
 
       @media (max-width: $desktop-min-width-minus) {
         height: 500px;
-        right: 24px;
+        right: 21px;
       }
       @media (max-width: $phablet-min-width-minus) {
         right: unset;
@@ -59,22 +59,31 @@
         line-height: 24px;
         font-family: $base-font-family-bold;
         margin-bottom: 12px;
-
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
         @media (max-width: $desktop-min-width-minus) {
           font-size: rem-calc(14px);
           line-height: 24px;
         }
         @media (max-width: $phablet-min-width-minus) {
           margin-bottom: 0;
+          img {
+            width: 35px;
+            height: 50px;
+          }
         }
+      }
+      b {
+        font-family: $base-font-family-bold;
       }
       .header-part {
         margin-bottom: 28px;
-        .header {
+       .header {
+          font-family: $base-font-family-bold;
+          color: $header-color;
           font-size: rem-calc(28px);
           line-height: 36px;
-          font-family: $base-font-family-bold;
-          color: #FFE4FF;
           span {
             display: block;
             font-size: rem-calc(36px);
@@ -83,20 +92,21 @@
         }
         @media (max-width: $desktop-min-width-minus) {
           margin-bottom: 12px;
+        }
+        @media (max-width: 840px) {
+          max-width: 254px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          max-width: none;
+          margin-bottom: 5px;
           .header {
-            font-size: rem-calc(22px);
-            line-height: 32px;
+            font-size: rem-calc(20px);
+            line-height: 25px;
             span {
               font-size: rem-calc(26px);
               line-height: 32px;
             }
           }
-        }
-        @media (max-width: 840px) {
-          max-width: 220px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          max-width: none;
         }
       }
 

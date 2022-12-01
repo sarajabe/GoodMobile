@@ -72,7 +72,6 @@ export const LOGIN_ROUTE_URLS = {
   WELCOME: 'welcome',
   SIGN_UP: 'sign-up',
   LOGIN: 'login',
-  LEGACY_LOGIN: 'legacy-login',
   FORGOT_PASSWORD: 'forgot-password',
   RESET_PASSWORD: 'reset-password',
   ACP_SIGNUP: 'acp-signup'
@@ -217,7 +216,6 @@ export const SUPPORT_ROUTE_URLS = {
   INTERNATIONAL_CALLING: 'international-calling',
   REFER_A_FRIEND: 'refer-a-friend',
   PRIVACY_NOTICE: 'privacy-notice',
-  SHUTDOWN_3G: '3G_shutdown',
   PARAMS: {
     TARGETID: 'targetId',
     NETWORKTYPE: 'networkType'

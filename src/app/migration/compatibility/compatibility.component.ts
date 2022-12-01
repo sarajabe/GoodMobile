@@ -178,10 +178,15 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
               this.compatibileDevice.postalCode = this.displayedAddressModel?.postalCode;
               this.compatibileDevice.id = res?.details?.serialNumber;
               this.zipCode = this.displayedAddressModel?.postalCode;
-              this.compatibileDevice.network = 'tmo';
-              this.compatibileDevice.skuIdentifier = !!res?.details?.eSimCapable ? res?.tmo?.details?.esimInformation?.skuIdentifier : res?.tmo?.details?.skuIdentifier;
-              this.compatibileDevice.skuNumber = !!res?.details?.eSimCapable ? res?.tmo?.details?.esimInformation?.skuNumber : res?.tmo?.details?.skuNumber;
-              this.setDevice(this.compatibileDevice, res?.details?.eSimCapable);
+              if (!!res?.details?.eSimOnly) {
+                this.compatibilityStatus = 'NOT_COVERED';
+                this.showDeviceResultBanner = true;
+              } else {
+                this.compatibileDevice.network = 'tmo';
+                this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
+                this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                this.setDevice(this.compatibileDevice);
+              }
             } else {
               this.compatibilityStatus = 'NOT_COVERED';
               this.showDeviceResultBanner = true;
@@ -316,7 +321,7 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
       </div>
         `);
   }
-  private setDevice(device, eSim?): void {
+  private setDevice(device): void {
     if (!this.isSimOrdered) { // if the user didn't ordered the SIM and wants to check his device
       this.userPlan.migrationDevice = this.compatibileDevice.id;
       this.userPlansService.updateUserPlan(this.userPlan.userId, this.userPlan);
@@ -329,15 +334,8 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
       this.mobilePlansService.setPlanDevice(this.compatibileDevice);
       this.mobilePlansService.setActivePlanId(this.userPlanId);
       this.mobilePlansService.setSimPurchaseQuantity(1);
-      this.mobilePlansService.removePhonesFromCart();
       this.mobilePlansService.setPlanExpectedDevice(null);
       this.mobilePlansService.setBasePlan(this.mobilePlansService.getNoPlanMobilePlan());
-      if (!!eSim) {
-        this.mobilePlansService.seteSIM(true);
-        this.mobilePlansService.setQrScanned(false);
-      } else {
-        this.mobilePlansService.seteSIM(false);
-      }
       this.router.navigate([`${MIGRATION_ROUTE_URLS.BASE}/${MIGRATION_ROUTE_URLS.COMPATIBLE_DEVIE}`]);
     } else { // user ordered the SIM and wants to start migration service but didn't confirm the planDevice
       const params = {};

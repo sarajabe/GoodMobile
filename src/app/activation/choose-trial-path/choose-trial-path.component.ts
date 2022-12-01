@@ -99,7 +99,7 @@ export class ChooseTrialPathComponent implements OnDestroy {
             this.appState.clearSessionStorage();
             this.mobilePlansService.clearUserCart();
             this.mobilePlansService.setActivePlanId(this.selectedPlanId);
-            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
           }
         }, (error) => {
           console.error('error', error);
@@ -108,7 +108,7 @@ export class ChooseTrialPathComponent implements OnDestroy {
       this.appState.clearSessionStorage();
       this.mobilePlansService.setActivePlanId(this.selectedPlanId);
       this.mobilePlansService.setSimCard('11111');
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}`]);
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
     }
   }
 

@@ -105,9 +105,12 @@
               font-size: 36px;
               line-height: 44px;
               font-weight: bold;
+              position: relative;
               .currency {
                 font-size: 18px;
                 line-height: 32px;
+                position: absolute;
+                left: -10px;
               }
               .mo {
                 font-size: 24px;
@@ -130,6 +133,9 @@
             font-weight: bold;
             margin-right: 9px;
             color: #fbfbfb;
+            @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 16px;
+            }
           }
         }
         .card-body {
@@ -269,16 +275,13 @@
     }
     .great-things-section {
       background: #f8fcfe;
-      padding: 64px 200px;
+      padding: 64px 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       margin-bottom: 64px;
-      @media (max-width: 999.9px) {
-        padding: 64px 24px;
-      }
       @media (max-width: $phablet-min-width-minus) {
         flex-direction: column;
         padding: 48px 16px;
@@ -321,7 +324,10 @@
             @media (max-width: 999.9px) {
               min-height: 100%;
               margin-bottom: 25px;
-              max-width: 951px;
+              max-width: 480px;
+              &.spcific{
+                max-width: 340px;
+              }
             }
             @media (max-width: $phablet-min-width-minus) {
               max-width: 352px;
@@ -351,18 +357,9 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      margin: 0 auto;
       margin-bottom: 80px;
-      max-width: 1520px;
       width: 100%;
-      padding: 0 32px;
-      @media (max-width: $desktop-min-width-minus) {
-        max-width: 976px;
-      }
-      @media (max-width: $phablet-min-width-minus) {
-        max-width: 591px;
-        padding: 0 16px;
-      }
+    
       .plans-questions {
         max-width: 100%;
         width: 100%;

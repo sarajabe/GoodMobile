@@ -14,7 +14,7 @@
           <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
             'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
           <p class="sperator"></p>
-          <p class="data">{{plan?.details?.data/1024}} GB</p>
+          <p class="data">{{plan?.details?.data/1024}}GB</p>
         </div>
         <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
             [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
@@ -64,22 +64,22 @@
       <div class="item-details">
         <img src="/assets/icon/coverage-icon.svg" alt="coverage-icon">
         <p class="title">Nationwide Coverage</p>
-        <p class="desc">Premium data service powered by one of the nation’s top GSM networks.</p>
+        <p class="desc spcific">Premium data service powered by one of the nation’s top GSM networks.</p>
         <a class="link" (click)="goToCoverage()">Check your Coverage <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
       </div>
       <div class="item-details">
         <img src="/assets/icon/device-check.svg" alt="device-icon">
         <p class="title">Keep your device</p>
-        <p class="desc">Got a phone you love? Keep it. Or we’ll help you get a new one. Most unlocked phones will work on our networks.</p>
+        <p class="desc">Got a phone you love? Keep it. Most unlocked phones will work on our networks.</p>
         <a class="link" (click)="goToCompatibility()">Check Compatibility <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
       </div>
-      <!-- <div class="item-details">
+      <div class="item-details">
         <img src="/assets/icon/phone-num.svg" alt="phone-num-icon">
         <p class="title">Keep your phone number</p>
         <p class="desc">Or get a new one if you want 
           when you activate your SIM Card. </p>
-        <a class="link">Learn More <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
-      </div> -->
+        <a class="link" (click)="goToPurchasedPlans()">Learn More <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+      </div>
       <div class="item-details">
         <img src="/assets/icon/frequently-qst.svg" alt="frequently-qst-icon">
         <p class="title">Frequently Asked Questions</p>
@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-  <div class="faqs-section">
+  <div class="faqs-section page-section">
     <p class="sub-note">FAQ QUESTIONS</p>
     <h2 class="sec-head">We are here to help you!</h2>
     <p class="subtext">Browse through the most frequently asked questions.</p>

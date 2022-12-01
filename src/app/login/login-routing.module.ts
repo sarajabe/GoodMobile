@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IPageMeta } from '@ztarmobile/zwp-service';
 import { LOGIN_ROUTE_URLS } from '../app.routes.names';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { LegacyLoginComponent } from './legacy-login/legacy-login.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserLoginComponent } from './user-login.component';
@@ -14,8 +13,6 @@ import { AcpSignupComponent } from './acp-signup/acp-signup.component';
 const routes: Routes = [
   {path: '', component: UserLoginComponent, children: [
   { path: LOGIN_ROUTE_URLS.LOGIN, component: LoginComponent, data: {title: 'Login To Your GoodMobile Account | GoodMobile', description:
-  'Login to your GoodMobile account to top up, renew, or edit your profile.'} as IPageMeta },
-  { path: LOGIN_ROUTE_URLS.LEGACY_LOGIN, component: LegacyLoginComponent, data: {title: 'Login To Your GoodMobile Account | GoodMobile', description:
   'Login to your GoodMobile account to top up, renew, or edit your profile.'} as IPageMeta },
   { path: LOGIN_ROUTE_URLS.SIGN_UP, component: SignUpComponent, data: {title: 'Sign Up  | GoodMobile', description: 'Create your GoodMobile account'} as IPageMeta},
   { path: LOGIN_ROUTE_URLS.WELCOME, component: WelcomeNewUserComponent, data: {title: 'Welcome onboard!', description: `Welcome to GoodMobile, With GoodMobile you can purchase plans

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SHOP_ROUTE_URLS, LOGIN_ROUTE_URLS } from '../../app.routes.names';
+import { SHOP_ROUTE_URLS, LOGIN_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { InternationalCallingConfigurationService } from '@ztarmobile/zwp-service-backend';
 import { Router } from '@angular/router';
 import { MetaService } from '../../../services/meta-service.service';
@@ -21,6 +21,7 @@ export class InternationalCallingComponent {
   public showPayGo = false;
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
   public LOGIN_ROUTE_URLS = LOGIN_ROUTE_URLS;
+  public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
 
   constructor(private InternationalCallingConfigurationService: InternationalCallingConfigurationService, private router: Router, private metaService: MetaService) {
       this.InternationalCallingConfigurationService.isReady.subscribe((ready) => {
