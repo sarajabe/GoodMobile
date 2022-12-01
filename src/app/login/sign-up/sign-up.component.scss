@@ -50,6 +50,9 @@
         }
         .form-section {
             display: flex;
+            &.column {
+                flex-direction: column;
+            }
             .left, .right {
                 flex-basis: 50%;
                 input {

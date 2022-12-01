@@ -70,10 +70,15 @@
             Passwords do not match </label>
         </fieldset>
       </div>
-      <div class="form-section">
+      <div class="form-section column">
         <fieldset class="left">
           <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
         </fieldset>
+        <fieldset class="full" *ngIf="showRecaptchaError">
+          <label class="validation-message alert" id="required-recaptcha" >
+            Please verify that you are not a robot</label>
+        </fieldset>
+        
       </div>
     </div>
     <div class="actions-section">

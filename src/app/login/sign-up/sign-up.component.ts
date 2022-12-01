@@ -31,6 +31,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public confirmPassword = '';
   public processingRequest = false;
   public captchaValid = false;
+  public showRecaptchaError = false;
   private userCart: IUserPlan;
   private captchaResponse: string;
   private params: any;
@@ -98,7 +99,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   public signUp(): void {
-    if (this.captchaValid) {
+    this.userForm.markAllAsTouched();
+    this.showRecaptchaError = !!this.captchaResponse ? false : true;
+    if (this.captchaValid && !!this.userForm.valid) {
       this.processingRequest = true;
       this.user.firstName = this.userForm.get('firstName').value;
       this.user.lastName = this.userForm.get('lastName').value;
@@ -153,6 +156,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public resolvedCaptcha(captchaResponse: string): void {
     this.captchaResponse = captchaResponse;
     this.captchaValid = !!captchaResponse;
+    this.showRecaptchaError = false;
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string): any {
