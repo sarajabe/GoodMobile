@@ -44,7 +44,6 @@
                                         </p>
                                         <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
                                         </p>
-                                        <p class="bold" *ngIf="!!isTrialUpgrade">7-day trial upgrade</p>
                                     </div>
                                     <p class="price">
                                         ${{!!userCart?.basePlan?.specialPromotion && userCart?.cartType ==
@@ -60,24 +59,9 @@
                                             name="autoRenewCheckbox" class="custom-checkbox" data-cy="autoPayCheckBox"
                                             [class.checked]="!!autoRenew" />
                                         <label class="toggle-label">
-                                            <span class="auto-pay">Auto Pay Discount</span>
-                                            <div class="tooltip">
-                                                <img src="/assets/icon/why-arrow.svg" alt="arrow" class="tooltip-arrow">
-                                                <img class="action-icon" src="assets/icon/info-purple-circle.svg" class="info-icon"
-                                                    alt="info" />
-                                                <div class="tooltipInfo">
-                                                    <p class="text">
-                                                        A payment card is required to be saved for this offer
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <span class="auto-pay">Auto Pay Renewal</span>
                                         </label>
                                     </div>
-                                    <p class="price auto-renew" data-cy="autoPayDiscount">-${{!!userCart?.basePlan?.specialPromotion &&
-                                        userCart.cartType == CART_TYPES.NEW_PLAN ?
-                                        userCart?.basePlan?.specialPromotion?.promotionCycles *
-                                        userCart?.basePlan?.promoPrice : userCart?.basePlan?.promoPrice}}/m</p>
-                                    <!-- when changed to promo code instead of value -->
                                 </div>
                                 <div class="detail"
                                     *ngIf="(!!userCart?.basePlan?.specialPromotion && !!userCart?.basePlan?.specialPromotion.specialDiscount && userCart?.cartType == CART_TYPES.NEW_PLAN) || (userCart?.cartType == CART_TYPES.TOPUP_PLAN && !!isApplicablePromo)">

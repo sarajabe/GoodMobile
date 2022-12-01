@@ -152,9 +152,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  public goToLegacyLogin(): void {
-    this.router.navigate([`${LOGIN_ROUTE_URLS.BASE}/${LOGIN_ROUTE_URLS.LEGACY_LOGIN}`]);
-  }
+
 
   public goToSignUp(): void {
     if (!!this.params) {

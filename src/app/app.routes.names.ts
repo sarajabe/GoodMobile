@@ -72,7 +72,6 @@ export const LOGIN_ROUTE_URLS = {
   WELCOME: 'welcome',
   SIGN_UP: 'sign-up',
   LOGIN: 'login',
-  LEGACY_LOGIN: 'legacy-login',
   FORGOT_PASSWORD: 'forgot-password',
   RESET_PASSWORD: 'reset-password',
   ACP_SIGNUP: 'acp-signup'
