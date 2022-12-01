@@ -232,7 +232,7 @@ export class AccountPhoneDetailsComponent implements OnInit, OnDestroy {
         this.equipment = this.equipment.replace(/\s+/g, '');
       }
 
-      this.equipmentService.checkDeviceCompatibilityByAddress(this.captchaResponse, this.displayedAddressModel?.postalCode,
+      this.equipmentService.checkDeviceCompatibilityV2(this.captchaResponse, this.displayedAddressModel?.postalCode,
         this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then(res => {
           this.processingRequest = false;

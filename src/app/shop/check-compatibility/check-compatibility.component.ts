@@ -66,7 +66,6 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-  public attAndEsimMessage: string;
 
   private activationCode: string;
   private alive = true;
@@ -100,7 +99,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
           this.flowType = this.FLOW_TYPES.CHECK_OUT;
           this.isCheckoutFlow = true;
         }
-        
+
       }
     });
     this.metaService.createCanonicalUrl();
@@ -164,25 +163,6 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
       }
     }
     this.DEVICE_COMPATIBILITY_DESCS = {
-      'ATT_COVERED_ESIM_ONLY': {
-        title: 'Sorry!',
-        desc1: `${this.attAndEsimMessage}`,
-        desc2: `<b>What is an eSim?</b><span class="tooltip">
-          <img src="assets/icon/Information-sec.svg" class="info" alt="Info icon"/>
-          <span class="tooltiptext">
-          <img src="assets/icon/why-arrow.svg" alt="Info icon"/>
-            <p>An eSIM is an industry-standard digital SIM that allows you to activate a cellular plan from your carrier without having to use a physical SIM.</p>
-            <p>The activation process is immediate without having to wait around.</p>
-          </span>
-        </span>`,
-        desc3: 'If you have another device with physical SIM support, <b>you can enter the IMEI to check compatibility</b> on the network again.',
-        buttonName: 'Check Another Device',
-        buttonAction: 'retry',
-        desc4: '<b>For updates on the eSIM support for your network coverage.</b>',
-        linkName: null,
-        linkAction: null,
-        success: false
-      },
       'NOT_COVERED': {
         title: 'We are sorry!',
         desc1: 'Your device is not compatible.',
@@ -276,7 +256,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
           if (!!res) {
             this.appState.loading = false;
             this.showAddressResultBanner = true;
-            if (!!res?.att?.covered || !!res?.tmo?.covered) {
+            if (!!res?.tmo?.covered) {
               this.addressCompatibilityResponse = res;
               this.compatibilityStatus = 'COVERED';
             } else {
@@ -285,7 +265,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
           }
-        }, error => {
+        }, (error) => {
           this.appState.loading = false;
           this.showAddressResultBanner = true;
           this.compatibilityStatus = 'NOT_COVERED';
@@ -303,8 +283,8 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then(res => {
           if (!!res) {
             this.appState.loading = false;
-            if (!!res?.att?.covered || !!res?.tmo?.covered) {
-              this.compatibileDevice = res.details as IDeviceCompatibilityV1;
+            if (!!res?.tmo?.covered) {
+              this.compatibileDevice = res?.details as IDeviceCompatibilityV1;
               this.compatibileDevice.manufacturer = res?.details?.make;
               this.compatibileDevice.marketingName = res?.details?.name;
               this.deviceName = res?.details?.name;
@@ -316,24 +296,13 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
               this.compatibileDevice.postalCode = this.displayedAddressModel?.postalCode;
               this.compatibileDevice.id = res?.details?.serialNumber;
               this.zipCode = this.displayedAddressModel?.postalCode;
-              if (!!res?.tmo?.covered && !!res?.details?.eSimCapable) {
-                this.compatibileDevice.skuIdentifier = res?.tmo?.details?.esimInformation?.skuIdentifier;
-                this.compatibileDevice.skuNumber = res?.tmo?.details?.esimInformation?.skuNumber;
+              if (!!res?.details?.eSimOnly) {
+                this.compatibilityStatus = 'NOT_COVERED';
+                this.showDeviceResultBanner = true;
+              } else {
                 this.compatibileDevice.network = 'tmo';
-                this.setDevice(this.compatibileDevice, true);
-                this.checkPhoneResult(true);
-              } else if (!!res?.tmo?.covered && !res?.details?.eSimCapable) {
                 this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
                 this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
-                this.compatibileDevice.network = 'tmo';
-                this.setDevice(this.compatibileDevice);
-                this.mobileCustomPlansService.seteSIM(false);
-                this.checkPhoneResult();
-              }
-              else if (!res?.tmo?.covered && !!res?.att?.covered && !res?.details?.eSimOnly) {
-                this.compatibileDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
-                this.compatibileDevice.skuNumber = res?.att?.details?.skuNumber;
-                this.compatibileDevice.network = 'att';
                 this.setDevice(this.compatibileDevice);
                 this.checkPhoneResult();
               }
@@ -347,12 +316,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
         }, (error) => {
           this.appState.loading = false;
           this.showDeviceResultBanner = true;
-          if (error.error.errors[0].code === 900) {
-            this.attAndEsimMessage = error.error.errors[0].message;
-            this.compatibilityStatus = 'ATT_COVERED_ESIM_ONLY';
-          } else {
-            this.compatibilityStatus = 'NOT_COVERED';
-          }
+          this.compatibilityStatus = 'NOT_COVERED';
           this.reCaptcha.resetReCaptcha();
           this.reCaptcha.execute();
         });
@@ -399,56 +363,29 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
         `);
   }
   public skipDevice(): void {
-    if (!!this.addressCompatibilityResponse.tmo.covered) {
-      this.modalHelper.showTMOSkipModal('Skip device check', true, 'skip-tmo-modal').result.then((option) => {
-        if (option === 'eSim') {
-          const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMG2GTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
-          this.setDevice(device, true);
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
-        } else if (option === 'physical') {
-          const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMG2GTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
+    let device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
+    this.modalHelper.showConfirmMessageModal('Skip device check', 'The service will only work on 4G/5G VoLTE compatible devices. By skipping this step, there is no way to know if your phone is compatible with our networks. Is your phone 4G or 5G and VoLTE compatible?', 'Yes', 'Check Phone', 'skip-modal')
+      .result.then((option) => {
+        if (option === true) {
           this.setDevice(device);
-          this.mobileCustomPlansService.seteSIM(false);
           this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
         } else {
           this.mobileCustomPlansService.clearUserCart();
           this.equipmentNumber.nativeElement.focus();
         }
       });
-    } else if (!this.addressCompatibilityResponse.tmo.covered && !!this.addressCompatibilityResponse.att.covered) {
-      let device = { network: 'att', networkType: 'GSM', skuIdentifier: 'G', skuNumber: 'SIMG2G4GLTE', verified: true } as IDeviceCompatibilityV1;
-      this.modalHelper.showConfirmMessageModal('Skip device check', 'The service will only work on 4G/5G VoLTE compatible devices. By skipping this step, there is no way to know if your phone is compatible with our networks. Is your phone 4G or 5G and VoLTE compatible?', 'Yes', 'Check Phone', 'skip-modal')
-        .result.then((option) => {
-          if (option === true) {
-            this.setDevice(device);
-            this.mobileCustomPlansService.seteSIM(false);
-            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
-          } else {
-            this.mobileCustomPlansService.clearUserCart();
-            this.equipmentNumber.nativeElement.focus();
-          }
-        });
-    }
   }
-  private checkPhoneResult(eSim?: boolean): void {
+  private checkPhoneResult(): void {
     const params = {};
     params[ACTIVATION_ROUTE_URLS.PARAMS.NETWORK] = this.compatibileDevice.network;
     params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.displayedAddressModel.postalCode;
-    if (!!eSim) {
-      params[ACTIVATION_ROUTE_URLS.PARAMS.ESIM] = true;
-    }
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE_RESULT}`, params]);
   }
-  private setDevice(device, eSim?): void {
+  private setDevice(device): void {
     device.verified = true;
     this.mobileCustomPlansService.setBasePlan(this.newPlan);
     this.mobileCustomPlansService.setCartType(CART_TYPES.NEW_PLAN);
     this.mobileCustomPlansService.setPlanDevice(device);
-    if (!!eSim) {
-      this.mobileCustomPlansService.seteSIM(true);
-      this.mobileCustomPlansService.setQrScanned(false);
-    }
-    this.mobileCustomPlansService.removePhonesFromCart();
     this.mobileCustomPlansService.setPlanExpectedDevice(null);
     this.prepareMarketingDetails();
   }
