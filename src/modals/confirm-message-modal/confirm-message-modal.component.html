@@ -6,10 +6,10 @@
     <div class="modal-body">
       <div class="modal-content">
         <div class="row">
-          <div *ngIf="!settings.enableHTML" class="twelve">
+          <div *ngIf="!settings.enableHTML" class="msg">
             {{context.message}}
           </div>
-          <div *ngIf="settings.enableHTML" [innerHTML]="context.message" class="twelve"></div>
+          <div *ngIf="settings.enableHTML" [innerHTML]="context.message" class="msg"></div>
         </div>
         <div class="modal-actions">
           <button id="confirm-btn" data-cy="confirm-btn" class="button primary" (click)="OK()">{{settings.okText || 'OK'}}</button>

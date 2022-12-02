@@ -128,6 +128,9 @@
       }
     }
     &.add-number-modal {
+      input {
+        max-width: 300px;
+      }
       .modal-actions {
         margin: 0!important;
         .cancel {
@@ -490,6 +493,10 @@
             text-align: left;
             width: 100%;
             margin-top: 13px;
+            .button {
+              margin-top: 14px!important;
+              margin-bottom: 44px!important;
+            }
             input {
               width: auto;
             }
@@ -599,28 +606,15 @@
                     }
                   }
                 }
-
-                .responsive {
-                  display: none;
-                }
-
                 @media (max-width: 639.9px) {
                   .address {
                     .edit {
-                      display: none;
+                      display: block;
+                      margin-top: 14px!important;
+                      padding-left: 0!important;
                     }
                   }
 
-                  .responsive {
-                    display: block;
-                    color: white;
-                    cursor: pointer;
-                    background-color: $primary-color;
-                    padding: 8px;
-                    text-align: center;
-                    font-size: rem-calc(15px);
-                    margin-bottom: 14px;
-                  }
                 }
               }
 
@@ -1141,8 +1135,11 @@
             line-height: 1.18;
 
             @media (max-width: 729.9px) {
-              width: 290px;
-              height: 108px;
+              max-width: 290px;
+              max-width: 290px;
+              height: 100%;
+              margin-bottom: 20px;
+              line-height: 14px;
             }
           }
 
@@ -2180,6 +2177,15 @@
           }
         }
       }
+      .modal-actions {
+        flex-direction: column!important;
+        .button {
+           width: 100px!important;
+           padding: 8px !important;
+           margin-right: 0!important;
+           margin-bottom: 14px!important;
+        }
+      }
     }
     &.payment-method-modal {
       width: 100%;
@@ -2908,6 +2914,14 @@
         .modal-content {
           .row {
             width: 100%;
+            .msg{
+              font-size: 18px;
+              line-height: 28px;
+              @media(max-width: $phablet-min-width-minus) {
+                font-size: 16px;
+                line-height: 24px;
+              }
+            }
           }
           .modal-actions {
             display: flex;
@@ -3012,7 +3026,7 @@
           width: 100%;
         }
       }
-      .twelve {
+      .msg {
         font-size: rem-calc(17px);
         line-height: 20px;
         padding: 10px 30px 0;
@@ -3020,7 +3034,7 @@
       }
       @media (max-width: $tablet-min-width) {
         .row {
-          .twelve {
+          .msg {
             padding: 0;
           }
         }
@@ -3028,17 +3042,20 @@
     }
     &.clean-cart-modal {
       .modal-body {
-        .twelve {
+        text-align: center;
+        .msg {
           font-size: rem-calc(17px);
           line-height: 20px;
           max-width: 520px;
           width: 100%;
+          text-align: center;
+          margin: 0 auto;
         }
       }
 
       @media (max-width: 641px) {
         .modal-body {
-          .twelve {
+          .msg {
             font-size: rem-calc(17px);
             line-height: 20px;
           }
@@ -3219,6 +3236,35 @@
       }
     }
     &.auto-renew-modal {
+      .msg {
+        font-size: 18px;
+        line-height: 28px;
+        @media(max-width: $phablet-min-width-minus) {
+          font-size: 16px;
+        line-height: 24px;
+        }
+      }
+      &.large{
+        .modal-actions {
+          display: flex;
+          justify-content: center;
+          align-items: center;    
+          @media(max-width: $phablet-min-width-minus) {
+            flex-direction: column;
+            .primary{
+              margin-right: 0!important;
+              margin-bottom: 14px!important;
+            }
+            .transparent{
+              margin-bottom: 14px!important;
+            }
+          }
+          button {
+            width: 240px!important;
+            padding: 6px!important;
+          }
+        }
+      }
       .modal-close {
         display: none;
       }

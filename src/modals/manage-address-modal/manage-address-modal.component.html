@@ -38,7 +38,7 @@
           </div>
         </ng-container>
         <div class="modal-actions">
-          <span class="modal-hint">You can also add another shipping Address in <a (click)="goToSettings()">Profile Settings</a></span>
+          <p class="modal-hint">You can also add another shipping Address in <a (click)="goToSettings()">Profile Settings</a></p>
           <button *ngIf="!context.isManage" class="button primary" data-cy="save" (click)="setDefaultShippingAddress(selectedMethodId)"
                   [class.disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"
                   [disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"

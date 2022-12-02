@@ -1013,7 +1013,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         });
     }
     if (this.autoRenew) {
-      this.modalHelper.showConfirmMessageModal('Enable Auto Pay?', 'Sign up for Auto Pay and renew your plan subscription automatically at the end of your billing cycle!. Of course, you can cancel autopay and make changes to your account at any time.', 'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal2')
+      this.modalHelper.showConfirmMessageModal('Enable Auto Pay?', 'Sign up for Auto Pay and renew your plan subscription automatically at the end of your billing cycle!. Of course, you can cancel autopay and make changes to your account at any time.', 'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal large')
         .result.then((result) => {
           if (result) {
             this.updatedPlan = this.selectedPlan;
