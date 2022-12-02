@@ -160,22 +160,27 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     <p class="charges">Auto Pay will automatically charge the full amount due. Your amount due includes your rate plan and any monthly features currently on your account.
     This amount won’t change unless you change your plan, ad-ons or features, or if you have any existing credits, charges, or fees on your account.</p>`);
   }
-  public addPlanToCart(index): void {
-    this.getSelectedPlan(index);
-    if (!!this.isReplacePlan) {
-      this.addPlan(this.selectedPlan);
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
-    } else {
-      if (!!this.currentPlan && !!this.currentPlan.planDevice && this.currentPlan.planDevice.id) {
-        this.mobilePlansService.removePhonesFromCart();
-        this.mobilePlansService.setPlanExpectedDevice(null);
-        this.mobilePlansService.setBasePlan(this.selectedPlan);
-        this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
+  public addPlanToCart(plan , index): void {
+    if(!plan?.ebb) {
+      this.getSelectedPlan(index);
+      if (!!this.isReplacePlan) {
+        this.addPlan(this.selectedPlan);
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
       } else {
-        this.checkUser(this.selectedPlan);
+        if (!!this.currentPlan && !!this.currentPlan.planDevice && this.currentPlan.planDevice.id) {
+          this.mobilePlansService.removePhonesFromCart();
+          this.mobilePlansService.setPlanExpectedDevice(null);
+          this.mobilePlansService.setBasePlan(this.selectedPlan);
+          this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
+          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
+        } else {
+          this.checkUser(this.selectedPlan);
+        }
       }
+    } else {
+      this.goToEbb();
     }
+
   }
   public showDetails(index): void {
     this.cardExpanded[index]= !this.cardExpanded[index];
