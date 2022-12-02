@@ -112,28 +112,16 @@
            @media(max-width: $phablet-min-width-minus) {
             margin-top: 20px;
            }
-           button {
-            border-radius: 8px;
+           .button {
+            width: 75px;
             padding: 8px 24px;
             height: 42px;
-            font-size: 20px;
-            line-height: 20px;
-            width: 75px;
             margin: 0;
-            @media(max-width: $phablet-min-width-minus) {
-              font-size: 16px;
-              line-height: 16px;
-            }
            }
            .primary {
-            background: $primary-color;
             margin-right: 16px;
-            color: #F3F3F3;
            }
            .transparent {
-            background: #FBFBFB;
-            border: 1px solid #005895;
-            color: $primary-color;
             margin-right: 0;
            }
         }

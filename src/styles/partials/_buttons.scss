@@ -112,7 +112,7 @@ linear-gradient(0deg, #B0B0B0, #B0B0B0);
     }
   }
 
-  &.thirdly {
+  &.thirdly{
     border: none;
     color: $primary-color;
     background-color: transparent;
@@ -165,7 +165,7 @@ linear-gradient(0deg, #B0B0B0, #B0B0B0);
     color: $medium-grey;
   }
 
-  &.ghost {
+  &.ghost, &.transparent {
     background-color: transparent;
     border: 2px solid $primary-color;
     font-weight: 600;
