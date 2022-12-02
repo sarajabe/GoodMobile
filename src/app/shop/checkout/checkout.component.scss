@@ -4,7 +4,7 @@
 //:host ::ng-deep is used to apply the common styles on all child router-outlet components
 :host ::ng-deep .checkout-step {
     .progress-banner {
-        background: #8633990d;
+        background:  #F2F7FA;
         box-shadow: 0px -1px 4px 0px #ced3d640 inset;
         display: flex;
         align-items: center;
@@ -81,7 +81,7 @@
         display: flex;
         justify-content: space-between;
         p {
-            color: $secondary-color;
+            color: $purple;
             font-size: rem-calc(24px);
             font-family: $secondary-font-family-bold;
             line-height: 36px;
@@ -237,7 +237,7 @@
                 .add-trigger {
                     display: flex;
                     align-items: center;
-                    background: #8633991a;
+                    background: #E5EEF4;;
                     padding: 8px 12px;
                     max-width: 480px;
                     border-radius: 10px;
@@ -364,7 +364,7 @@
                 font-size: rem-calc(18px);
                 line-height: 28px;
                 font-family: $base-font-family-bold;
-                background: rgba(226, 226, 226, 0.2);
+                background: #F8FCFE;
                 box-shadow: inset 0px -1px 0px rgba(206, 211, 214, 0.25);
                 @media (max-width: $phablet-min-width-minus) {
                     padding: 12px 16px;

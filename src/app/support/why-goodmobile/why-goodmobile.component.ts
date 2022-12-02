@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../app.routes.names';
+import { PLANS_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../app.routes.names';
 import { MetaService } from '../../../services/meta-service.service';
 import { ContentfulService } from '../../../services/contentful.service';
 
@@ -11,6 +11,7 @@ import { ContentfulService } from '../../../services/contentful.service';
 export class WhyGoodMobileComponent implements OnInit {
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
+  public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   public whyGoodmobile;
   public page: any;
   public innerWidth: any;

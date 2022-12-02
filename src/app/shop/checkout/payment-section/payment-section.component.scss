@@ -383,7 +383,7 @@
             gap: 10px;
             margin: 24px 0;
             border-radius: 5px;
-            background: #F585201A;
+            background: #F1F9FD;
             max-width: 340px;
             img {
                 width: 25px;
@@ -522,6 +522,10 @@
         border-radius: 10px;
         margin-bottom: 24px;
         height: 80px;
+        img {
+            width: 40px;
+            height: 40px;
+        }
     }
     .navigation-section {
         border-top: 1px solid #e3e3ea;

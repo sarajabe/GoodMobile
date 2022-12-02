@@ -2,15 +2,15 @@
   <div class="progress-banner">
     <div class="step" *ngIf="!!shippingAddress">
         <picture>
-            <source srcset='assets/icon/enabled-checkout-shipping.svg' media="(min-width: 320px)">
-            <img src="assets/icon/enabled-checkout-shipping.svg" alt="shipping" class="step-image">
+            <source srcset='assets/icon/enabled-checkout-shipping.png' media="(min-width: 320px)">
+            <img src="assets/icon/enabled-checkout-shipping.png" alt="shipping" class="step-image">
         </picture>
     </div>
     <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!shippingAddress">
     <div class="step">
         <picture>
-            <source srcset='assets/icon/enabled-checkout-payment.svg' media="(min-width: 320px)">
-            <img src="assets/icon/enabled-checkout-payment.svg" alt="payment" class="step-image">
+            <source srcset='assets/icon/enabled-checkout-payment.png' media="(min-width: 320px)">
+            <img src="assets/icon/enabled-checkout-payment.png" alt="payment" class="step-image">
         </picture>
     </div>
     <picture>
@@ -20,12 +20,12 @@
    
     <div class="step">
         <picture>
-            <source srcset='assets/icon/disabled-checkout-overview.svg' media="(min-width: 320px)">
-            <img src="assets/icon/disabled-checkout-overview.svg" alt="overview" class="step-image">
+            <source srcset='assets/icon/disabled-checkout-overview.png' media="(min-width: 320px)">
+            <img src="assets/icon/disabled-checkout-overview.png" alt="overview" class="step-image">
         </picture>
     </div>
 </div>
-<div class="container-flex payment">
+<div class="page-section payment">
   <div class="cart-total" id="cart-section">
     <p>Checkout</p>
     <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
@@ -37,7 +37,7 @@
       <p class="note"><b>Note: </b>Please make sure you specify the payment method to complete your request.</p>
     </div>
     <div class="payment-option">
-      <label class="container"><img src="assets/icon/credit-card.svg" alt="credit card" /> Credit Card
+      <label class="container"><img src="assets/icon/credit-card.png" alt="credit card" /> Credit Card
         <input type="checkbox" [(ngModel)]="payWithCard" class="title-checkbox" (change)="togglePayWithCard()">
         <span class="checkmark withImage"></span>
       </label>

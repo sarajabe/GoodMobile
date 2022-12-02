@@ -1,4 +1,4 @@
-<section class="container-flex cart" id="cart">
+<section class="page-section cart" id="cart">
     <div class="top-section">
         <div class="top-info">
             <p class="top-head">Cart</p>
@@ -34,15 +34,15 @@
                             <div class="details">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold" data-cy="basePlan">{{ userCart?.basePlan?.subtitle }}</p>
-                                        <p *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN">{{ userCart?.basePlan?.title }}</p>
-                                        <p *ngIf="!!userCart?.basePlan?.specialPromotion && userCart?.cartType === CART_TYPES.NEW_PLAN" class="promo bold">{{userCart?.basePlan?.specialPromotion?.promotionTitle}}</p>
-                                        <p class="bold"
-                                            *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">
+                                        <p class="bold smaller" data-cy="basePlan">{{ userCart?.basePlan?.subtitle }}</p>
+                                        <p class="smaller" *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN">{{ userCart?.basePlan?.title }}</p>
+                                        <p *ngIf="!!userCart?.basePlan?.specialPromotion && userCart?.cartType === CART_TYPES.NEW_PLAN" class="promo bold smaller">{{userCart?.basePlan?.specialPromotion?.promotionTitle}}</p>
+                                        <p class="bold smaller"
+                                            *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN">
                                             (Change Plan)</p>
-                                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New plan)
+                                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New plan)
                                         </p>
-                                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
+                                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
                                         </p>
                                     </div>
                                     <p class="price">
@@ -66,7 +66,7 @@
                                 <div class="detail"
                                     *ngIf="(!!userCart?.basePlan?.specialPromotion && !!userCart?.basePlan?.specialPromotion.specialDiscount && userCart?.cartType == CART_TYPES.NEW_PLAN) || (userCart?.cartType == CART_TYPES.TOPUP_PLAN && !!isApplicablePromo)">
                                     <div class="promo">
-                                        <p class="title">
+                                        <p class="title smaller">
                                             {{userCart?.basePlan?.specialPromotion.promotionDiscount}} discount
                                             promo
                                         </p>
@@ -95,14 +95,10 @@
                                     <p class="price">{{userCart?.referralCode}}</p>
                                 </div>
                                 <div class="detail" *ngIf="!!userCart?.promoCodes && !!isActivePromo">
-                                    <p class="bold">{{userCart?.promoCodes[0]?.description}}</p>
-                                    <p class="bold">Code: <span>{{userCart?.promoCodes[0]?.code}}</span></p>
+                                    <p class="bold smaller">{{userCart?.promoCodes[0]?.description}}</p>
+                                    <p class="bold smaller">Code: <span>{{userCart?.promoCodes[0]?.code}}</span></p>
                                 </div>
-                                <div class="detail" *ngIf="!!isTrialUpgrade">
-                                    <p class="bold">Trial upgrade payment discount</p>
-                                    <p class="price">-$5</p>
-                                </div>
-                                <p class="quantity" data-cy="planQuantity">Quantity: {{userCart?.quantity}}</p>
+                                <p class="quantity smaller" data-cy="planQuantity">Quantity: {{userCart?.quantity}}</p>
                                 <div class="actions">
                                     <a class="link first" (click)="goToPlans(true)"
                                         *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a>
@@ -120,11 +116,11 @@
                                 <div class="details">
                                     <div class="detail">
                                         <div class="detail-info">
-                                            <p class="bold" data-cy="simType-CartItems">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                                            <p class="bold smaller" data-cy="simType-CartItems">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
                                         </div>
-                                        <p class="price" data-cy="simPrice">$0</p>
+                                        <p class="price smaller" data-cy="simPrice">$0</p>
                                     </div>
-                                    <p class="quantity" data-cy="simQuantity">Quantity: 1</p>
+                                    <p class="quantity smaller" data-cy="simQuantity">Quantity: 1</p>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +136,7 @@
                                         {{ selectedPhone?.price | currency }}
                                     </p>
                                 </div>
-                                <p class="quantity">Quantity: 1</p>
+                                <p class="quantity smaller">Quantity: 1</p>
                                 <p class="red-note" *ngIf="!!isItemUnavailable">This item is unavailable</p>
                                 <div class="actions">
                                     <a class="link first" (click)="goToPhones()">Change</a>
@@ -157,16 +153,16 @@
                             <div class="details">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
-                                        <p *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
-                                        <p class="bold">(Data Add-On)</p>
+                                        <p class="bold smaller" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
+                                        <p class="smaller" *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
+                                        <p class="bold smaller">(Data Add-On)</p>
 
                                     </div>
-                                    <p class="price">
+                                    <p class="price smaller">
                                         ${{dataAddons[0]?.price * dataAddons[0]?.quantity}}
                                     </p>
                                 </div>
-                                <p class="quantity">Quantity: {{dataAddons[0]?.quantity}}</p>
+                                <p class="quantity smaller">Quantity: {{dataAddons[0]?.quantity}}</p>
                                 <div class="actions">
                                     <a class="link first" (click)="goToAddons()">Change</a>
                                     <a class="link" (click)="clearUserCart(dataAddons[0].id)">Delete</a>
@@ -181,18 +177,18 @@
                             <div class="details">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold" *ngIf="!!internationalAddon[0]?.title">
+                                        <p class="bold smaller" *ngIf="!!internationalAddon[0]?.title">
                                             {{internationalAddon[0]?.title}}</p>
-                                        <p *ngIf="!!internationalAddon[0]?.subtitle">{{internationalAddon[0]?.subtitle}}
+                                        <p class="smaller" *ngIf="!!internationalAddon[0]?.subtitle">{{internationalAddon[0]?.subtitle}}
                                         </p>
-                                        <p class="bold">(International Add-On)</p>
+                                        <p class="bold smaller">(International Add-On)</p>
 
                                     </div>
-                                    <p class="price">
+                                    <p class="price smaller">
                                         ${{internationalAddon[0]?.price}}
                                     </p>
                                 </div>
-                                <p class="quantity">Quantity: {{internationalAddon[0]?.quantity}}</p>
+                                <p class="quantity smaller">Quantity: {{internationalAddon[0]?.quantity}}</p>
                                 <div class="actions">
                                     <a class="link" (click)="clearUserCart(internationalAddon[0].id)">Delete</a>
                                 </div>
@@ -206,16 +202,16 @@
                             <div class="details" *ngFor="let item of talkAndTextAddons">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold" *ngIf="!!item?.title">{{item?.title}}</p>
-                                        <p *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
-                                        <p class="bold">(Talk & text add-on)</p>
+                                        <p class="bold smaller" *ngIf="!!item?.title">{{item?.title}}</p>
+                                        <p class="smaller" *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
+                                        <p class="bold smaller">(Talk & text add-on)</p>
 
                                     </div>
-                                    <p class="price">
+                                    <p class="price smaller">
                                         ${{item?.price}}
                                     </p>
                                 </div>
-                                <p class="quantity">Quantity: {{item?.quantity}}</p>
+                                <p class="quantity smaller">Quantity: {{item?.quantity}}</p>
                                 <div class="actions" *ngIf=" talkAndTextAddons.length === 1">
                                     <a class="link" (click)="clearUserCart(talkAndTextAddons[0].id)">Delete</a>
                                 </div>
@@ -231,17 +227,17 @@
                             <div class="details">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold">{{planCategory('sim')}}</p>
-                                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
+                                        <p class="bold smaller">{{planCategory('sim')}}</p>
+                                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
                                             Order)</p>
-                                         <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>    
+                                         <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>    
 
                                     </div>
-                                    <p class="price">
+                                    <p class="price smaller">
                                         ${{userCart?.cartType === CART_TYPES.PLAN_ITEMS ? newSimOrder?.price : 0}}
                                     </p>
                                 </div>
-                                <p class="quantity">Quantity: {{userCart?.quantity}}</p>
+                                <p class="quantity smaller">Quantity: {{userCart?.quantity}}</p>
                                 <div class="actions">
                                     <a class="link" (click)="clearUserCart('sim')">Delete</a>
                                 </div>
@@ -256,13 +252,13 @@
                                     <div class="details">
                                         <div class="detail" [class.disabled]="!!isItemUnavailable">
                                             <div class="detail-info">
-                                                <p class="bold">{{ selectedPhone?.description }}</p>
+                                                <p class="bold smaller">{{ selectedPhone?.description }}</p>
                                             </div>
                                             <p class="price">
                                                 {{ selectedPhone?.price | currency }}
                                             </p>
                                         </div>
-                                        <p class="quantity">Quantity: 1</p>
+                                        <p class="quantity smaller">Quantity: 1</p>
                                         <p class="red-note" *ngIf="!!isItemUnavailable">This item is unavailable</p>
                                         <div class="actions">
                                             <a class="link first" (click)="goToPhones()">Change</a>
@@ -283,9 +279,9 @@
                                     <div class="detail-info">
                                         <p class="bold">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
                                     </div>
-                                    <p class="price">$0</p>
+                                    <p class="price smaller">$0</p>
                                 </div>
-                                <p class="quantity">Quantity: 1</p>
+                                <p class="quantity smaller">Quantity: 1</p>
                             </div>
                         </div>
                     </div>

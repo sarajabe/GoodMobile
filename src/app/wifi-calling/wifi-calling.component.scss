@@ -276,9 +276,12 @@
       }
     }
     .wifi-calling-info {
-      font-size: rem-calc(13px);
-      line-height: 30px;
       margin-bottom: 89px;
+      p {
+        font-size: rem-calc(12px);
+        line-height: 20px;
+        font-family: $secondary-font-family;
+      }
     }
   }
 }
