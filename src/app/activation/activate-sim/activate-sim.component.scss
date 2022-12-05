@@ -253,4 +253,9 @@
             font-family: $secondary-font-family;
         }
     }
+    .label-width {
+        @media (max-width: 1182.9px) and (min-width: 1025px) {
+        width: 118%;
+        }
+    }
 }
