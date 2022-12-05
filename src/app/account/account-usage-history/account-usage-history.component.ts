@@ -266,7 +266,7 @@ export class AccountUsageHistoryComponent implements OnInit, OnDestroy, AccountP
   }
 
   public addActivatedPhoneNumber(): void {
-    this.modalHelper.showAddActivatedNumberModal().result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => this.userPlansService.selectUserPlan(userPlanId),
           (error) => this.toastHelper.showAlert(error.error.message));

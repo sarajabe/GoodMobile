@@ -224,7 +224,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       'Are you sure you want to remove plan?' : 'Are you sure you want to remove item?';
     confirmMessage = (this.userCart.cartType === CART_TYPES.NEW_PLAN) || (this.userCart.cartType === CART_TYPES.CHANGE_PLAN) ?
       'By clicking yes you agree to remove plan from your cart' : 'By clicking yes you agree to remove item from your cart';
-    this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'No', 'clear-cart-modal')
+    this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'No', 'clean-cart-modal')
       .result.then((result) => {
         if (!!result) {
           switch (this.userCart.cartType) {

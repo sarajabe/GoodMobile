@@ -207,11 +207,13 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
   }
   private callAcpPlanExistModal(): void {
     this.modalHelper
-      .showInformationMessageModal(
-        "ACP Plan Exists",
-        "You already have a Federal Affordable Connectivity plan!",
-        "Account Summary"
-      )
+    .showInformationMessageModal(
+      "ACP Plan Exists",
+      "You already have a Federal Affordable Connectivity plan!",
+      "Account Summary",
+      '',
+      false, 'acp-modal-exists'
+    )
       .result.then((res) => {
         if (!!res) {
           this.router.navigate([

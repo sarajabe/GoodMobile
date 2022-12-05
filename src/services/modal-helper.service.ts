@@ -18,8 +18,6 @@ import { ShippingAddressModalComponent } from '../modals/shipping-address-modal/
 import { SimReplacementModalComponent } from '../modals/sim-replacement-modal/sim-replacement-modal.component';
 import { WifiCallingModalComponent } from '../modals/wifi-calling-modal/wifi-calling-modal.component';
 import { MigrationStepsComponent } from '../modals/migration-steps/migration-steps.component';
-import { IsLteModalComponent } from '../modals/is-lte-modal/is-lte-modal.component';
-import { DynamicModalsComponent } from '../modals/dynamic-modals/dynamic-modals.component';
 import { ReferralPromotionComponent } from 'src/modals/referral-promotion-modal/referral-promotion.component';
 import { FiveGModalComponent } from '../modals/five-gmodal/five-gmodal.component';
 import { OutOfStockItemModalComponent } from 'src/modals/out-of-stock-item-modal/out-of-stock-item-modal.component';
@@ -61,9 +59,6 @@ export interface IModalHelper {
   showWifiCallingModal(title: string, termsRoute: string, customClass?: string, wifiAddress?: IFirebaseAddress): DialogRef<any>;
   showMigrationStepsModal(customClass?: string): DialogRef<any>;
   showReferralPromotionModal(customClass?: string): DialogRef<any>;
-  showIsLteOptionsModal(title: string, customClass?: string): DialogRef<any>;
-  showDynamicModal(title: string, message: string, btnText?: string, btnUrl?: string, hasCloseLink?: boolean, customClass?: string, customHTML?: string, contentfulModel?: string,
-    renderElementId?: string, richTextId?: string, cancelBtn?: boolean, cancelText?: string, noteText?: string): DialogRef<any>;
   showFiveGModal(title: string, customHTML: string, linkText: string, linkRoute: any, customClass?: string, hasCloseLink?: boolean): DialogRef<any>;
   // tslint:disable-next-line:max-line-length
   showItemOutOFStockModal(title: string, customHTML: string, currentPlan: CustomizableMobilePlan, customClass?: string, hasCloseLink?: boolean): DialogRef<any>;
@@ -218,23 +213,9 @@ export class ModalHelperService {
       customClass,
     }, BSModalContext));
   }
-  showIsLteOptionsModal(title: string, customClass?: string): DialogRef<any> {
-    return this.modal.open(IsLteModalComponent, overlayConfigFactory({
-      title, customClass,
-    }, BSModalContext));
-  }
-
   showNotImpactedModal(title: string, message: string, customClass?: string): DialogRef<any> {
     return this.modal.open(PhoneNotImpactedModalComponent, overlayConfigFactory({
       title, message,
-    }, BSModalContext));
-  }
-  public showDynamicModal(title: string, message: string, btnText?: string, btnUrl?: string, hasCloseLink?: boolean, customClass?: string,
-    customHTML?: string, contentfulModel?: string, renderElementId?: string, richTextId?: string,
-    cancelBtn?: boolean, cancelText?: string, noteText?: string): DialogRef<any> {
-    return this.modal.open(DynamicModalsComponent, overlayConfigFactory({
-      title, message, btnText, btnUrl, hasCloseLink, customClass,
-      customHTML, contentfulModel, richTextId, renderElementId, cancelBtn, cancelText, noteText
     }, BSModalContext));
   }
 

@@ -180,7 +180,7 @@
               </fieldset>
             </form>
             <div class="save-card">
-              <label class="container">
+              <label class="payment-container">
                 <input type="checkbox" d="saveCardDetailsCheckbox" name="saveCardDetailsCheckbox" [checked]="saveCCInfo"
                 [(ngModel)]="saveCCInfo" (change)="updateSaveCCInfoChanged()"
                 [disabled]="!!autoRenew" [class.disabled]="!!autoRenew" >
@@ -190,7 +190,7 @@
             </div>
             <div class="billing-section">
               <p class="form-label">Billing Address</p>
-              <label class="container"  *ngIf="!!shippingAddress">
+              <label class="payment-container"  *ngIf="!!shippingAddress">
                 <input type="checkbox" id="billingSameAsShipping" name="billingSameAsShipping"
                   [(ngModel)]="billingSameAsShipping" (change)="toggleSharedAddress()">
                 <span class="checkmark"></span>

@@ -157,7 +157,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
     }
   }
   public cancel(): void {
-    this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel?', 'Shipping address has not been updated yet. Click "No" to stay on current page', 'Yes', 'No', 'clear-cart-modal')
+    this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel?', 'Shipping address has not been updated yet. Click "No" to stay on current page', 'Yes', 'No', 'clean-cart-modal')
     .result.then((res) => {
       if (!!res) {
        this.goToReportIssue()

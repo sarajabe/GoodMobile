@@ -154,7 +154,7 @@ export class LandingCoverageComponent implements OnInit {
 
   public showWhatIsIMEI(): void {
     this.modalHelper.showInformationMessageModal('3 Ways to find your MEID or IMEI', '', 'Got it', null,
-      true, 'compatibility-help-modal-IME ',
+      true, 'compatibility-help-modal-IME',
       `<div class="description-content">
     <div class="intro">
     Your IMEI number is needed if you want to unlock your device to use

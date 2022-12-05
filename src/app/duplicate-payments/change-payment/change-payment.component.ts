@@ -308,7 +308,7 @@ export class ChangePaymentComponent implements OnInit, OnDestroy {
         <p class="note"><b>${this.updatedPlan}</b></p>
         <p class="note">still needs to be revalidated. Please try again before you proceed.</p>
       </div>`
-    this.modalHelper.showInformationMessageModal('Switch failed!', '', 'Next', null, true , 'invalid-card switch',customHtml);
+    this.modalHelper.showInformationMessageModal('Switch failed!', '', 'Next', null, true , 'invalid-card',customHtml);
     });
   }
 

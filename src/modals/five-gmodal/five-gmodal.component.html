@@ -8,7 +8,7 @@
         <div class="row">
           <div *ngIf="!!context.customHTML" [innerHTML]="context.customHTML"></div>
         </div>
-        <div class="row modal-actions" *ngIf="!!context.linkText">
+        <div class="modal-actions" *ngIf="!!context.linkText">
           <a [href]="context.linkRoute" (click)="download()">
            {{context.linkText}} <img class="arrow" src="../../assets/icon/5g-download-arrow.svg">
           </a>

@@ -5,18 +5,12 @@
     </div>
     <div class="modal-body">
       <div class="modal-content">
-        <div class="row">
           <p class="message">
             {{context.message}}
           </p>
-        </div>
-        <div class="col-md-12 first">
+        <div class="modal-actions">
             <button class="button primary" (click)="goToFirstPage()">{{context.yesButtonText}}</button>
-        </div>
-        <div class="col-md-12 second">
-            <button class="button primary" (click)="goToSecondPage()">{{context.noButtonText}}</button>
-        </div>
-        <div class="col-md-12 third">
+            <button class="button transparent" (click)="goToSecondPage()">{{context.noButtonText}}</button>
             <button class="button secondary" (click)="goToThirdPage()">{{context.skipButtonText}}</button>
         </div>
       </div>

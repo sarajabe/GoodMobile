@@ -1,4 +1,4 @@
-<div class="container model-container full {{context.customClass}}">
+<div class="container model-container {{context.customClass}}">
     <div class="modal-header">
         <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
         <h2 class="modal-heading">{{context.title}}</h2>
@@ -86,13 +86,11 @@
             <div class="form-section address-form">
                 <h2 class="title">Billing address</h2>
                 <div class="populated" *ngIf="!isEditMode">
-                    <p class="address">{{context?.paymentMethod?.address1}}. <span class="edit desktop" data-cy="editPaymentAddress"
+                    <p class="address">{{context?.paymentMethod?.address1}}. <span class="edit" data-cy="editPaymentAddress"
                             (click)="enableEditAddress()"><img src="/assets/img/edit-white.svg" alt="edit"
                                 name="edit" /> Edit address</span></p>
                     <p class="address">{{context?.paymentMethod?.city}}, {{context?.paymentMethod?.state}}</p>
                     <p class="address">{{context?.paymentMethod?.postalCode}}</p>
-                    <p class="edit responsive" (click)="enableEditAddress()"><img src="/assets/img/edit-white.svg"
-                            alt="edit" name="edit" /> Edit address</p>
                 </div>
                 <form [formGroup]="addressForm" class="addressForm" *ngIf="!!isEditMode">
                     <fieldset class="first-row">

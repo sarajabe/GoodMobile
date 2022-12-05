@@ -1,4 +1,4 @@
-<div class="container model-container full {{context.customClass}}">
+<div class="container model-container {{context.customClass}}">
     <div class="modal-header">
       <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
       <h2 class="modal-heading">Select your preferred method of payment</h2>
@@ -61,7 +61,7 @@
                   [disabled]="!isValidPaymentInfo" [uiBlockButton]="processingRequest || setDefaultRequest">
             Save
           </button>
-          <span *ngIf="!context.isManage" class="modal-hint">You can also add another payment method in  <a (click)="goToSettings()">Profile Settings</a></span>
+          <p *ngIf="!context.isManage" class="modal-hint">You can also add another payment method in  <a (click)="goToSettings()">Profile Settings</a></p>
           <button *ngIf="!context.isManage" class="button primary" (click)="makePaymentMethodAsDefault(selectedMethodId)"
                   [class.disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"
                   [disabled]="selectedMethodId == context.userPlan.paymentMethodId || (processingRequest || setDefaultRequest)"

@@ -33,90 +33,114 @@
   .modal-wrapper,
   .model-container {
     z-index: 9999;
-    background-color: #fff;
-    box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
-    padding: 0 !important;
+    background: #FCFCFB;
+    box-shadow: 0px 4px 15px rgba(206, 211, 214, 0.6);
+    border-radius: 16px;
+    padding: 24px!important;
     border-radius: 19px;
     max-height: 90vh;
     overflow: hidden;
-    width: 100%;
-
-    @media (#{$larger-than-tablet}) {
-      width: 70%;
-      margin: 0 auto;;
+    width: 700px;
+    @media(max-width: $ipad-min-width-minus) {
+      width: 600px;
     }
-
-    @media (#{$larger-than-desktophd}) {
-      width: 70%;
-      margin: 0 auto;;
+    @media(max-width: $phablet-min-width-minus) {
+      padding: 16px!important;
+      max-width: 320px;
     }
-
-    &.full {
+    @media(max-width: $mobile-min) {
+      max-width: 288px;
+    }
+    .modal-header{
       width: 100%;
-
-      @media (#{$larger-than-desktop}) {
-        width: 85%;
+      padding: 16px 12px;
+      font-size: 28px;
+      line-height: 36px;
+      font-weight: bold;
+      color: #090909;
+      background-color: #FCFCFB;
+      text-align: center;
+      position: relative;
+      @media(max-width: $phablet-min-width-minus) {
+        font-size: 22px;
+        line-height: 32px;
       }
-    }
-
-    &.skip-modal {
-      width: 100%;
-      max-width: 600px;
-
-      .modal-header {
-        padding: 15px 0;
-
-        .modal-heading {
-          line-height: 33px;
+      .modal-heading{
+        font-size: 28px;
+        line-height: 36px;
+        width: 100%;
+        margin-bottom: 0;
+        font-weight: bold;
+        @media(max-width: $phablet-min-width-minus) {
+          font-size: 22px;
+          line-height: 32px;
         }
       }
+      .modal-close {
+        background: none;
+        background-color: #FCFCFB;
+        top: -10px;
+        right: -1px;
+        position: absolute;
+        border: 0;
+        cursor: pointer;
+        .icon-close {
+          color: $primary-color;
+          font-size: 30px;
+          font-weight: bold;
+        }
 
-      .modal-body {
-        .modal-content {
-          padding: 15px 15px 30px;
-
-          .row {
-            padding: 0 20px;
-          }
-
-          .modal-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px;
-
-            .primary {
-              background-color: $primary-color;
-              margin-right: 15px;
-            }
-
-            button {
-              margin: 0;
-              width: 190px;
-              padding: 10px;
-              background-color: $secondary-color;
-              border-color: $secondary-color;
-              color: white;
-            }
-          }
-
-          @media (max-width: $phablet-min-width-minus) {
-            .modal-actions {
-              margin: 20px 0;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-
-              .primary {
-                margin-right: 0;
-                margin-bottom: 15px;
-              }
-            }
-          }
+      }
+    }
+    .modal-body {
+      .modal-content {
+        padding: 8px 12px;
+        text-align: center;
+        @media(max-width: $phablet-min-width-minus) {
+          padding: 12px 20px;
+        }
+        .modal-actions{
+           display: flex;
+           width: 100%;
+           justify-content: center;
+           align-items: center;
+           margin: 0;
+           margin-top: 16px;
+           margin-bottom: 12px;
+           padding: 0;
+           text-align: center;
+           @media(max-width: $phablet-min-width-minus) {
+            margin-top: 20px;
+           }
+           .button {
+            width: 75px;
+            padding: 8px 24px;
+            height: 42px;
+            margin: 0;
+           }
+           .primary {
+            margin-right: 16px;
+           }
+           .transparent {
+            margin-right: 0;
+           }
         }
       }
     }
-
+    &.add-number-modal {
+      input {
+        max-width: 300px;
+      }
+      .modal-actions {
+        margin: 0!important;
+        .cancel {
+          display: none;
+        }
+        .primary {
+          margin-right: 0!important;
+        }
+    }
+    }
     &.skip-tmo-modal {
       width: 100%;
       max-width: 700px;
@@ -288,757 +312,147 @@
         }
       }
     }
-
-    &.pending-confirmation {
-      width: 100%;
-      max-width: 580px;
-      .modal-header {
-        padding: 24px 0;
-
-        .modal-heading {
-          font-size: rem-calc(24px);
-          line-height: 32px;
-          margin-bottom: 0;
-          margin-top: 0;
-        }
-        .modal-close {
-          background: transparent;
-          color: $primary-color;
-        }
-      }
+    &.confirm-password-modal {
       .modal-body {
         .modal-content {
-          padding: 0 32px 20px;
-          .row {
-            padding: 0;
-          }
-          .note {
-            font-size: rem-calc(18px);
-            line-height: 28px;
-            margin-bottom: 5px;
-            font-weight: 400;
-          }
-          .modal-actions {
-            display: inline-block;
-            width: 50%;
-            @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
-              width: unset;
-              &.left {
-                margin-left: 26px;
-              }
-            }
-            .button {
-              padding: 8px;
-              width: 170px;
-              font-weight: bold;
-              font-size: rem-calc(16px);
-            }
+          padding: 0 32px;
+          margin-top: 0px;
+          .label-msg{
+            font-size: 18px;
+            line-height: 22px;
+            margin-bottom: 10px;
             @media(max-width: $phablet-min-width-minus) {
-              display: flex;
-              width: 100%;
-              margin: auto;
+              font-size: 16px;
+              line-height: 18px;
             }
+          }
+          input{
+            max-width: 300px;
+          }
+        }
+        .modal-actions {
+          margin-top:0!important;
+          .button {
+            width: 130px;
+            padding: 6px 12px;
           }
         }
       }
     }
-    &.invalid-card {
-      width: 100%;
-      max-width: 700px;
-
-      .modal-header {
-        padding: 32px 0;
-
-        .modal-heading {
-          font-size: rem-calc(32px);
-        }
-
-        .modal-close {
-          background: transparent;
-          color: $primary-color;
-        }
-      }
-
-      &.switch {
-        .modal-header {
-          padding: 32px 0 0;
-        }
-      }
-
+    &.esim-replacement {
       .modal-body {
-        .modal-content {
-          .description {
-            font-size: rem-calc(18px);
-            line-height: 28px;
-            margin-bottom: 16px;
-            color: #262626;
-          }
-
-          .list {
-            list-style-position: inside;
-            padding-inline-start: 0;
-
-            li {
-              font-size: rem-calc(18px);
-              line-height: 28px;
-              margin-bottom: 8px;
-              color: #262626;
-            }
-          }
-
-          .note {
-            margin-bottom: 4px;
-            font-size: rem-calc(20px);
-            line-height: 28px;
-            font-weight: 400;
-          }
-        }
-      }
-    }
-
-    &.clear-phone-modal {
-      width: 100%;
-      max-width: 700px;
-
-      .modal-header {
-        padding: 15px 0;
-
-        .modal-heading {
-          line-height: 33px;
-          font-size: 32px;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          padding: 15px 15px 30px;
+        .content {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          .row {
-            padding: 0 20px;
-          }
-
-          .modal-actions {
-            .primary {
-              margin: 0px;
-              background-color: #863399;
-            }
-
-            button {
-              height: 32px;
-              width: 195px;
-              font-size: 16px;
-              line-height: 16px;
-              padding: 8px 12px;
-
-              &:nth-child(2) {
-                background-color: $secondary-color;
-                border: none;
-                color: #fff;
-                font-weight: bold;
-                margin: 0 0 0 24px;
-
-                @media (max-width: $desktop-min-width-minus) {
-                  margin: 10px 0 0 0;
-                }
-              }
-            }
-          }
-
-          @media (max-width: $desktop-min-width-minus) {
-            .modal-actions {
-              margin: 20px 0;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            }
-          }
-        }
-      }
-      .modal-close{
-        background: no-repeat;
-        color: $primary-color;
-      }
-    }
-
-    &.christmas-tc {
-      width: 100%;
-      max-width: 100%;
-    }
-
-    &.ios-setup-modal {
-      height: 100%;
-
-      @media (#{$larger-than-phablet}) {
-        width: 600px;
-      }
-
-      @media (max-width: 640.9px) {
-        width: 345px;
-      }
-    }
-
-    &.ios-setup-modal2 {
-      height: 100%;
-
-      @media (#{$larger-than-phablet}) {
-        width: 600px;
-      }
-
-      @media (max-width: 640.9px) {
-        width: 345px;
-      }
-    }
-
-    &.migration-flows-popup {
-      height: 100%;
-
-      @media (min-width: 700px) {
-        width: 700px;
-      }
-
-      @media (max-width: 699.9px) {
-        width: 600px;
-      }
-
-      @media (max-width: 610.9px) {
-        width: 300px;
-      }
-
-      .modal-header {
-        @media (max-width: 1199.9px) {
-          padding: 1em 1em 0;
-        }
-      }
-
-      .modal-heading {
-        margin-top: 10px;
-        text-align: left;
-        margin-left: 0px;
-
-        @media (max-width: 610.9px) {
-          text-align: center;
-          font-size: rem-calc(22px);
-          margin-left: auto;
-          line-height: 26px;
-        }
-      }
-
-      .modal-close {
-        background: none;
-      }
-
-      .modal-body {
-        overflow-x: hidden;
-
-        .modal-content {
-          padding: 0em 3.3em;
-
-          @media (max-width: 1199.9px) {
-            padding: 0em 2.3em;
-          }
-        }
-
-        .swiper-container {
-          width: 100%;
-          max-width: 100%;
-        }
-
-        .swiper-pagination {
-          text-align: left;
-
-          @media (max-width: 610.9px) {
-            text-align: center;
-          }
-
-          .swiper-pagination-bullet-active {
-            background: $primary-color;
-          }
-        }
-
-        .flex-display {
-          width: 100%;
-          display: flex;
-          align-items: center;
-
-          @media (max-width: 699.9px) {
-            padding: 0 0em;
-          }
-
-          @media (max-width: 610.9px) {
+          min-height: 150px;
+          .re-captcha--resizing {
+            min-height: 80px;
+            display: flex;
             flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            margin-top: 23px;
-            padding: 0px;
-          }
-
-          .desc {
-            max-width: 307px;
-            width: 100%;
-            text-align: left;
-            font-size: 13px;
-            line-height: 22px;
-
-            @media (max-width: 610.9px) {
-              text-align: center;
-            }
-          }
-
-          .image {
-            width: 273px;
-            height: 245px;
-
-            @media (max-width: 699.9px) {
-              width: 249px;
-              height: 223px;
-            }
-
-            @media (max-width: 610.9px) {
-              margin-bottom: 30px;
-            }
-          }
-        }
-
-        .actions {
-          display: flex;
-          margin-bottom: 60px;
-          align-items: center;
-
-          @media (max-width: 610px) {
-            justify-content: center;
             align-items: center;
-            flex-direction: column;
-          }
-
-          button {
-            width: 130px;
-            font-size: rem-calc(15px);
-            padding: 10px;
-
-            &.last {
-              width: 215px;
-            }
-          }
-
-          .not-interested {
-            color: $secondary-color;
-            font-size: rem-calc(12px);
-            margin-left: 20px;
-            line-height: 15px;
-
-            @media (max-width: 610px) {
-              margin-left: 0px;
-              margin-top: 18px;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            @media(max-width: 370px) {
+              padding-left: 36px;
             }
           }
         }
-      }
-
-      .modal-content>* {
-        padding: 0em 0em;
-        margin-bottom: 20px;
-      }
-
-      .modal-actions {
-        button {
-          position: relative;
-          right: 200px;
-          bottom: 50px;
-          font-size: rem-calc(15px);
-
-          @media (max-width: 699.9px) {
-            right: 150px;
-          }
-
-          @media (max-width: 610.9px) {
-            right: 0px;
-            bottom: 10px;
-          }
+        .button {
+          width: 137px;
+          padding: 8px;
         }
       }
     }
-
-    &.confirm-referral-modal {
-      max-width: 740px;
-      width: 100%;
-
-      .modal-header {
-        .modal-heading {
-          width: 100%;
-          text-align: center;
-          margin: 12px auto 0;
-        }
-      }
-
-      .modal-close {
-        display: none;
-      }
-
-      .modal-body {
-        .modal-actions {
-          .button {
-            padding: 10px;
-            width: 180px;
-            background-color: $secondary-color;
-            color: white;
-            margin-right: 10px;
-
-            &.primary {
-              background-color: $primary-color;
-            }
-          }
-        }
-      }
-    }
-
-    &.is-lte-modal {
-      max-width: 440px;
-
-      .modal-header {
-        padding: 1em 1em 0;
-      }
-
-      .modal-heading {
-        line-height: 37px;
-        font-size: rem-calc(28px);
-        text-align: left;
-        margin: 12px 0 0;
-      }
-
-      .modal-close {
-        background: none;
-      }
-
-      .modal-content {
-        padding: 0;
-        text-align: left;
-      }
-
-      .modal-content>* {
-        padding: 1.5em 1em;
-      }
-
-      .lte-custom-input {
-        display: flex;
-
-        label {
-          margin-left: 12px;
-        }
-
-        input[type="radio"] {
-          -webkit-appearance: none;
-          width: 24px;
-          height: 21px;
-          border: 1px solid darkgray;
-          border-radius: 50%;
-          outline: none;
-          box-shadow: 0 0 1px 0px gray;
-        }
-
-        input[type="radio"]:hover {
-          box-shadow: 0 0 1px 0px $secondary-color;
-        }
-
-        input[type="radio"]:before {
-          content: "";
-          display: block;
-          width: 80%;
-          height: 80%;
-          margin: 14% auto;
-          border-radius: 50%;
-        }
-
-        input[type="radio"]:checked:before {
-          background: $secondary-color;
-        }
-
-        input:focus {
-          outline: none;
-        }
-      }
-
-      .button {
-        margin-top: 24px;
-      }
-    }
-
-    &.mdn-list {
-      .modal-header {
-        .modal-heading {
-          font-size: rem-calc(32px);
-          line-height: 40px;
-
-          @media (max-width: $phablet-min-width-minus) {
-            font-size: rem-calc(24px);
-            line-height: 32px;
-          }
-        }
-
-        .modal-close {
-          background-color: transparent;
-        }
-      }
-
+    &.five-toggle-modal {
       .modal-body {
         .modal-content {
-          display: flex;
-          flex-direction: column;
-          padding-top: 5px;
-          padding-bottom: 32px;
+          padding: 32px;
+          padding-top: 12px;
 
-          p {
-            font-size: rem-calc(20px);
-            line-height: 32px;
-            margin-bottom: 10px;
+          .row {
+            padding: 0;
+            margin-bottom: 0;
 
-            @media (max-width: $phablet-min-width-minus) {
-              font-size: rem-calc(16px);
-              line-height: 24px;
+            div {
+              max-width: 510px;
+              width: 100%;
+
+              p {
+                margin-bottom: 0;
+                font-size: rem-calc(16px);
+                line-height: 18px;
+                font-weight: 400;
+              }
             }
           }
-
           .modal-actions {
-            margin: 0;
-
-            button {
-              width: 133px;
-              padding: 8px;
-              font-size: rem-calc(20px);
+            a {
+              font-family: $lato-font-family;
+              font-size: rem-calc(16px);
               font-weight: 700;
-              margin: 0;
-            }
-
-            @media (max-width: $phablet-min-width-minus) {
-              padding-bottom: 0;
-
-              button {
-                font-size: rem-calc(16px);
-                width: 98px;
+              .arrow {
+                margin-left: 16px;
               }
             }
           }
         }
       }
     }
-
-    &.confirm-modal {
-      &.delete-duplicate {
-        width: 100%;
-
-        .modal-header {
-          .modal-heading {
-            font-size: rem-calc(32px);
-            line-height: 40px;
-            max-width: 495px;
-
-            @media (max-width: $phablet-min-width-minus) {
-              font-size: rem-calc(24px);
-              line-height: 32px;
+    &.change-plan-modal {
+      .modal-body {
+        overflow-x: visible;
+        overflow-y: visible;
+      }
+      .modal-actions {
+        @media(max-width: $phablet-min-width-minus) {
+          flex-direction: column;
+        }
+        .button {
+           width: 300px!important;
+           &.primary {
+            @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 12px;
+            margin-right: 0!important;
             }
-          }
+           }
+        }
+      }
+      @media (max-width: $tablet-min-width) {
+        .modal-body {
+          overflow-y: auto;
+        }
+      }
+    }
+    &.select-addon-modal {
+      .modal-content {
+        .row {
+          display: flex;
+          margin: 0;
+          justify-content: center;
 
-          .modal-close {
+          &:first-child {
             display: none;
           }
         }
-
-        .modal-body {
-          .modal-content {
-            display: flex;
+        .modal-actions {
+          @media(max-width: $phablet-min-width-minus) {
             flex-direction: column;
-            padding-top: 10px;
-
-            .modal-actions {
-              margin: 0;
-
-              button {
-                width: 94px;
-                padding: 8px;
-                font-size: rem-calc(20px);
-                font-weight: 700;
-
-                @media (max-width: $phablet-min-width-minus) {
-                  font-size: rem-calc(16px);
-                  width: 88px;
-                }
-              }
-            }
           }
-        }
-      }
-
-      .modal-actions {
-        .button {
-          background-color: $secondary-color;
-          width: 145px;
-          padding: 8px;
-
-          &.primary {
-            background-color: $primary-color;
-            margin-right: 10px;
-
-            @media (max-width: 1025px) {}
+          .button {
+             width: 250px!important;
+             &.primary {
+              @media(max-width: $phablet-min-width-minus) {
+              margin-bottom: 12px;
+              margin-right: 0!important;
+              }
+             }
           }
         }
       }
     }
-
-    &.skip-upgrade-modal {
-      width: 100%;
-      max-width: 380px;
-
-      .modal-header {
-        width: 100%;
-        text-align: center;
-        padding: 20px;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          width: 100%;
-          text-align: center;
-          font-size: rem-calc(28px);
-          line-height: 37px;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          padding: 0;
-
-          .row {
-            padding: 0 35px 20px;
-            margin-bottom: 0;
-
-            .message {
-              margin-bottom: 0;
-
-              .content {
-                font-size: rem-calc(17px);
-                line-height: 30px;
-              }
-            }
-          }
-
-          .modal-actions {
-            margin: 0 0 20px;
-            padding: 0 0 10px;
-
-            .button {
-              width: 129px;
-              padding: 10px;
-            }
-          }
-        }
-      }
-    }
-
-    &.select-cc-modal {
-      width: 730px;
-
-      @media (max-width: 750px) {
-        width: 100%;
-      }
-
-      @media (max-width: 414px) {
-        width: 89%;
-      }
-
-      .modal-header {
-        width: 100%;
-        text-align: left;
-        padding: 1em 2em 0;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          width: 100%;
-          text-align: left;
-          font-size: rem-calc(22px);
-          line-height: 28px;
-
-          @media (max-width: 750px) {
-            font-size: rem-calc(28px);
-            text-align: center;
-            line-height: 37px;
-          }
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          text-align: left;
-
-          .content {
-            padding: 13px;
-            display: block;
-
-            .mdn {
-              font-size: rem-calc(15px);
-              line-height: 17px;
-              margin-bottom: 0;
-            }
-          }
-
-          .payments {
-            display: inline-block;
-            padding: 13px;
-
-            .action {
-              display: inline-block;
-
-              .button {
-                padding: 11px;
-                font-size: rem-calc(20px);
-                width: 250px;
-              }
-            }
-
-            .payments-list {
-              display: inline-block;
-              height: 37px;
-              font-size: rem-calc(15px);
-              margin-right: 10px;
-            }
-          }
-
-          @media (max-width: 750px) {
-            text-align: center;
-
-            .content {
-              .mdn {
-                font-size: rem-calc(13px);
-              }
-            }
-
-            .payments {
-              .payments-list {
-                margin: auto;
-                margin-bottom: 20px;
-                font-size: rem-calc(13px);
-                display: block;
-              }
-
-              .action {
-                display: block;
-
-                .button {
-                  width: 243px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
     &.edit-payment-modal {
       width: 100%;
 
@@ -1049,35 +463,14 @@
       .modal-header {
         width: 100%;
         text-align: left;
-        padding: 1em 2em 0;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          width: 100%;
-          text-align: left;
-          font-size: rem-calc(22px);
-          line-height: 28px;
-
-          @media (max-width: 639.9px) {
-            font-size: rem-calc(31px);
-            text-align: center;
-            line-height: 33px;
-          }
-        }
       }
 
       .modal-body {
         .modal-content {
           text-align: left;
-
           .content {
             display: flex;
-            padding: 13px 13px 0;
             text-align: left;
-
             .note {
               font-size: rem-calc(17px);
               line-height: 26px;
@@ -1099,8 +492,14 @@
             display: inline-block;
             text-align: left;
             width: 100%;
-            padding: 13px;
-
+            margin-top: 13px;
+            .button {
+              margin-top: 14px!important;
+              margin-bottom: 44px!important;
+            }
+            input {
+              width: auto;
+            }
             label {
               display: inline;
               font-size: rem-calc(15px);
@@ -1135,7 +534,7 @@
               }
 
               .name-section {
-                width: 45%;
+                width: auto;
                 display: inline-block;
               }
             }
@@ -1207,27 +606,15 @@
                     }
                   }
                 }
-
-                .responsive {
-                  display: none;
-                }
-
                 @media (max-width: 639.9px) {
                   .address {
                     .edit {
-                      display: none;
+                      display: block;
+                      margin-top: 14px!important;
+                      padding-left: 0!important;
                     }
                   }
 
-                  .responsive {
-                    display: block;
-                    color: white;
-                    cursor: pointer;
-                    background-color: $primary-color;
-                    padding: 8px;
-                    text-align: center;
-                    font-size: rem-calc(15px);
-                  }
                 }
               }
 
@@ -1301,6 +688,7 @@
                 display: inline-block;
                 margin: auto;
                 text-align: center;
+                margin-bottom: 12px;
               }
             }
 
@@ -1312,7 +700,7 @@
                 }
 
                 .name-section {
-                  width: 100%;
+                  width: auto;
 
                   input {
                     width: 410px;
@@ -1347,7 +735,7 @@
                 }
 
                 .cvv-section {
-                  width: 100%;
+                  width: auto;
 
                   label {
                     margin-right: 58px;
@@ -1497,189 +885,1316 @@
         }
       }
     }
-
-    &.shipping-address-modal {
-      width: 100%;
-      max-width: 960px;
-      border: 1px solid $input-border;
-
-      .modal-header {
-        position: relative;
-        background-color: #fff;
-        padding: 1em 2em 0;
-        text-align: left;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(22px);
-          line-height: 28px;
-          font-family: $secondary-font-family;
-          font-weight: 500;
-          width: 100%;
-          text-align: left;
-        }
-      }
-
-      .modal-content>* {
-        padding: 0px 15px;
-        display: flex;
-      }
-
+    &.information-message-modal {
       .modal-content {
-        text-align: left;
-
-        @media (#{$larger-than-desktop}) {
-          padding: 0px 100px 20px 20px;
-        }
-
-        .twelve {
+        .row {
           width: 100%;
-          margin: 0;
-          text-align: left;
-
-          &.address-lookup {
-            input {
-              width: 66.66666666666666%;
-
-              @media (max-width: 640px) {
-                width: 100%;
-              }
+          .msg{
+            font-size: 16px;
+            line-height: 18px;
+            @media(max-width: $phablet-min-width-minus) {
+              font-size: 14px;
+              line-height: 16px;
             }
           }
         }
-
-        label {
-          text-align: left;
+      }
+    }
+    &.success-swap-modal {
+      .modal-close{
+        @media(max-width: $phablet-min-width-minus) {
+          top: -15px;
+        }
+      }
+      .modal-content {
+        .subHeader {
+          font-size: rem-calc(17px);
+          line-height: 25px;
+          font-family: $base-font-family-bold;
+          font-weight: bold;
         }
 
+        .details {
+          font-size: rem-calc(17px);
+          line-height: 25px;
+          font-family: $base-font-family;
+        }
+      }
+    }
+    &.SIM-replacement-modal {
+      .modal-content {
+        padding: 0;
+        overflow: hidden;
+
+        .question {
+          font-size: rem-calc(25px);
+          font-family: $secondary-font-family;
+          font-weight: 500;
+          line-height: 33px;
+          max-width: 338px;
+        }
+
+        .number {
+          font-size: rem-calc(30px);
+          font-family: $base-font-family-bold;
+          font-weight: bold;
+          line-height: 34px;
+        }
+        @media (max-width: 640px) {
+          .question {
+            font-size: rem-calc(20px);
+            line-height: 27px;
+          }
+
+          .number {
+            font-size: rem-calc(25px);
+            line-height: 27px;
+          }
+        }
+      }
+    }
+    &.Sim-replacement-iccid-modal {
+      .modal-content {
+        overflow: hidden;
+        margin-top: 0!important;
+        padding: 0!important;
+        .row{
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+        &.captcha {
+          margin: 20px auto 0;
+        }
         input {
           width: 100%;
-          height: 30px;
+          max-width: 300px;
+          height: 45px;
+          padding: 0 10px;
+        }
+        .label {
+          font-size: rem-calc(15px);
+          font-family: $base-font-family;
           margin-bottom: 15px;
+          line-height: 17px;
+          margin-top: 0px;
+          text-align: center;
+          padding: 0 10px;
         }
-
-        i {
-          display: none;
+      }
+      .modal-actions {
+        .button {
+           width: 250px!important;
         }
-
-        .radio {
-          display: inline-flex;
+      }
+    }
+    &.confirm-swap-modal {
+      .modal-content {
+        padding: 0;
+        p {
+          margin-bottom: 5px;
         }
-
+        .subhead{
+          font-size: 22px;
+          line-height: 24px;
+        }
+        .question {
+          font-size: rem-calc(22px);
+          font-family: $secondary-font-family;
+          line-height: 28px;
+          margin-bottom: 0;
+        }
+        .confirm {
+          font-size: rem-calc(22px);
+          font-family: $secondary-font-family;
+          line-height: 28px;
+        }
+        .details {
+          font-size: rem-calc(13px);
+          font-family: $base-font-family;
+          line-height: 15px;
+        }
+        @media (max-width: 640px) {
+          overflow: hidden;
+          .question {
+            font-size: rem-calc(18px);
+            line-height: 20px;
+          }
+          .confirm {
+            font-size: rem-calc(18px);
+            line-height: 20px;
+          }
+        }
+        @media (max-width: 425.9px) {
+          b {
+            display: block;
+            margin-top: 5px;
+          }
+        }
+      }
+      .modal-content > * {
+        padding: 0.5em 2em;
+      }
+    }
+    &.confirm-esim {
+      .modal-actions {
+        .button {
+           width: 150px!important;
+        }
+      }
+      .modal-body {
+        margin-top: 0px;
+        .content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .info {
+            font-size: rem-calc(20px);
+            line-height: 32px;
+            margin-bottom: 8px;
+          }
+          .focus {
+            font-size: rem-calc(22px);
+            line-height: 32px;
+            margin-top: 4px;
+            font-weight: bold;
+          }
+        }
         .row {
           margin-bottom: 0;
         }
-
-        .modal-actions {
-          margin: 0 0 10px;
-          padding: 0 15px 20px;
-
-          .button {
-            display: none;
-
-            &.primary {
-              display: inline-block;
-              width: 220px;
-              font-size: rem-calc(20px);
-              padding: 10px;
+        @media (max-width: $phablet-min-width-minus) {
+          .content {
+            .info {
+              font-size: rem-calc(16px);
+              line-height: 24px;
+              margin-bottom: 4px;
+            }
+            .focus {
+              font-size: rem-calc(18px);
+              line-height: 28px;
             }
           }
         }
       }
-
-      @media (#{$larger-than-desktop}) {
-        width: 960px;
+    }
+    &.usp-pop-up-modal {
+      @media(min-width:730px) {
+        width: 700px!important;
       }
-
-      @media (#{$larger-than-phablet}) {
-        .eight {
-          width: 66.66666666666666%;
-          padding: 10px;
+      @media (max-width: 888.9px) {
+        overflow: scroll;
+      }
+      .modal-header{
+        text-align: left;
+      }
+      .modal-actions {
+        justify-content: flex-start!important;
+        @media(max-width: 729.9px) {
+          flex-direction: column;
+          align-items: flex-start!important;
+          margin-top: 0!important;
         }
-
-        .four {
-          width: 33.33333333333333%;
-          padding: 10px;
-        }
-
-        .twelve {
-          padding: 10px;
+        .button {
+           width: 250px!important;
+           &.primary {
+            @media(max-width: 729.9px) {
+            margin-bottom: 12px;
+            margin-right: 0!important;
+            }
+           }
         }
       }
+      .modal-body {
+        overflow: hidden;
+        max-height: unset;
+        .row {
+          width: 100%;
+        }
+        .modal-content {
+          text-align: left;
+          .flex-container {
+            display: flex;
 
-      @media (max-width: $phablet-min-width) {
-        .modal-header {
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-            font-weight: bold;
-            text-align: center;
+            @media (max-width: 729.9px) {
+              flex-direction: column;
+            }
+          }
+
+          .pop-header {
+            display: inline-block;
+            padding-right: 2%;
+            width: 100%;
+            height: 82px;
+            font-family: $base-font-family;
+            font-size: rem-calc(17px);
+            line-height: 1.18;
+
+            @media (max-width: 729.9px) {
+              max-width: 290px;
+              max-width: 290px;
+              height: 100%;
+              margin-bottom: 20px;
+              line-height: 14px;
+            }
+          }
+
+          .sub-padding {
+            padding-left: 18px;
           }
         }
+      }
+    }
+    &.usp-pop-up-modal2 {
+      .modal-header {
+        text-align: left;
+      }
+      .modal-actions {
+        justify-content: flex-start!important;
+        @media(max-width: 729.9px) {
+          flex-direction: column;
+          align-items: flex-start!important;
+        }
+        .button {
+           width: 250px!important;
+           &.primary {
+            @media(max-width: 729.9px) {
+            margin-bottom: 12px;
+            }
+           }
+        }
+      }
+      .modal-body {
+        overflow: hidden;
+        max-height: unset;
 
-        .modal-body {
-          padding: 10px 0 20px;
+        .modal-content {
+          text-align: left;
+          padding-top: 3px;
+          .row {
+            width: 100%;
+          }
+          .flex-container {
+            display: flex;
+            flex-direction: column;
+          }
+          .pop-header1 {
+            display: inline-block;
+            padding-right: 52px;
+            width: 560px;
+            font-family: $base-font-family;
+            font-size: rem-calc(17px);
+            line-height: 1.18;
+            margin-bottom: 20px;
+            @media (max-width: 729.9px) {
+              width: 100%;
+              margin-bottom: 15px;
+            }
+          }
 
-          label {
+          .pop-header2 {
+            display: inline-block;
+            padding-right: 52px;
+            width: 560px;
+            font-family: $base-font-family;
+            font-size: rem-calc(17px);
+            line-height: 1;
+
+            @media (max-width: 729.9px) {
+              width: 100%
+            }
+          }
+
+          .sub-padding {
+            padding-left: 18px;
+          }
+        
+        }
+      }
+    }
+    &.custom-modal-view-updates {
+      .modal-header {
+        text-align: left;
+      }
+      .modal-body {
+        .modal-content {
+          padding-top: 0;
+          text-align: left;
+          .row {
+            width: 100%;
+            .track-font-size {
+              font-size: rem-calc(21px);
+
+              @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(18px);
+              }
+            }
+
+            .date {
+              @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(16px);
+              }
+            }
+
+            .display-flex {
+              display: flex;
+              width: 100%;
+
+              @media (max-width: $desktop-min-width-minus) {
+                font-size: rem-calc(16px);
+              }
+
+              .border-right {
+                width: 124px;
+                border-right: 1px solid;
+                height: 40px;
+              }
+
+              .left-margins {
+                margin-left: 20px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                  max-width: 160px;
+                  width: 100%;
+                }
+              }
+            }
+          }
+          button {
+            display: none;
+          }
+        }
+      }
+    }
+    &.custom-modal-voucher-results {
+      .modal-content {
+        .message {
+          font-size: rem-calc(22px);
+          line-height: 26px;
+          font-family: $base-font-family;
+          color: $black;
+          font-weight: normal;
+
+          &.balance {
+            font-weight: bold;
+            color: $black;
+
+            .text-color-alert {
+              color: $black;
+            }
+          }
+        }
+      }
+     
+      @media (max-width: 640px) {
+        .modal-content {
+          .message {
             font-size: rem-calc(17px);
             line-height: 20px;
-            font-family: $base-font-family;
           }
-
-          input {
-            height: 40px;
+        }
+      }
+    }
+    &.change-ebb-plan-modal {
+      .row {
+       width: 100%;
+      }
+      .approve-remove-ebb {
+        font-weight: bold;
+        font-size: 20px;
+      }
+    }
+    &.wifi-result-modal {
+      .modal-body {
+        .modal-content {
+          .row {
+            width: 100%;
+            font-size: rem-calc(14px);
           }
-
-          .modal-actions {
-            float: none;
+        }
+      }
+    }
+    &.successful-activation-modal {
+      .modal-body {
+        .row {
+          font-size: rem-calc(17px);
+          line-height: 20px;
+          width: 100%;
+        }
+      }
+      @media (max-width: $phablet-min-width) {
+        .modal-body {
+          .row {
+            font-size: rem-calc(15px);
+            line-height: 17px;
+          }
+        }
+      }
+    }
+    &.pending-confirmation {
+      .modal-actions {
+        @media(max-width: $phablet-min-width-minus) {
+          flex-direction: column;
+        }
+        .button {
+           width: 200px!important;
+           &.primary {
+            @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 12px;
+            margin-right: 0!important;
+            }
+           }
+        }
+      }
+      .modal-body {
+        .modal-content {
+          .row {
+            padding: 0;
+          }
+          .note {
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            margin-bottom: 5px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+    &.send-receipt-email-modal {
+      .modal-actions {
+        .button {
+           width: 150px!important;
+        }
+      }
+      .modal-content {
+        .row {
+          width: 100%;
+          .details {
+            font-size: rem-calc(18px);
+            line-height: 25px;
+            font-family: $base-font-family-bold;
+            max-width: 540px;
             text-align: center;
             margin: 0 auto;
+          }
+        }
+      }
+    }
+    &.acp-modal-exists{
+      .modal-actions {
+        .button {
+           width: 220px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+    }
+    &.ebb-validation {
+      .modal-header {
+        .modal-heading {
+          color: #d94a47;
+        }
+        .modal-close{
+          .icon-close {
+            color: #d94a47;
+          }
+        }
+      }
 
-            .button {
-              &.primary {
-                width: 145px;
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        .modal-actions {
+          .button {
+            background-color: #d94a47;
+            border-color: #d94a47;
+            color: #fff;
+            width: 120px;
+            padding: 10px;
+          }
+        }
+      }
+    }
+    &.compatibility-help-modal-IME {
+      @media (min-width: 641px) and (max-width: 725.9px) {
+        overflow: scroll;
+      }
+      .modal-body {
+        .modal-content {
+          .row {
+            width: 100%;
+            padding: 0;
+          }
+          .description-content {
+            margin-bottom: 22px;
+            max-width: 558px;
+            font-size: rem-calc(18px);
+            font-family: $base-font-family;
+            line-height: 1.56;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+          }
+          .intro {
+            margin-top: 16px;
+            margin-bottom: 30px;
+
+            @media (min-width: 641px) and (max-width: 1024.9px) {
+              margin-top: 8px;
+              font-size: rem-calc(15px);
+            }
+
+            @media (max-width: 640px) {
+              font-size: rem-calc(14px);
+            }
+          }
+          .note-dial {
+            margin-bottom: 9px;
+
+            @media (max-width: 1024.9px) {
+              font-size: rem-calc(15px);
+            }
+
+            @media (max-width: 640px) {
+              font-size: rem-calc(13px);
+            }
+          }
+          .p-nowrap {
+            @media (min-width: 1025px) {
+              white-space: nowrap;
+            }
+
+            @media (max-width: 1024.9px) {
+              font-size: rem-calc(15px);
+            }
+
+            @media (max-width: 640px) {
+              font-size: rem-calc(13px);
+            }
+
+            margin-bottom: 0px;
+          }
+          .menu-margins {
+            margin-top: 9px;
+            margin-bottom: 9px;
+            width: 100%;
+
+            @media (max-width: 1024.9px) {
+              font-size: rem-calc(15px);
+            }
+
+            @media (max-width: 640px) {
+              font-size: rem-calc(13px);
+            }
+          }
+
+          .button {
+            width: 149.8px;
+            margin-bottom: 20px!important;
+          }
+        }
+      }
+      @media (max-width: $phablet-min-width) {
+        .modal-body {
+          .modal-content {
+            .description-content {
+              font-size: rem-calc(15px);
+              line-height: 22px;
+            }
+
+            .list-content {
+              padding: 5px;
+              font-size: rem-calc(13px);
+
+              li {
+                span {
+                  font-size: rem-calc(13px);
+                  line-height: 22px;
+                  font-weight: bold;
+                }
               }
             }
           }
         }
       }
     }
+    &.usp-pop-up-modal3 {
+      @media (max-width: $phablet-min-width-minus) {
+        overflow: scroll;
+      }
+      .modal-body {
+        overflow: hidden;
+        max-height: unset;
+        .modal-content {
+          text-align: center;
+          .row {
+            padding: 0;
+            width: 100%;
+          }
 
-    &.payment-method-modal {
-      width: 100%;
-      max-width: 960px;
+          .flex-container {
+            display: flex;
+            flex-direction: column;
+            @media (max-width: $phablet-min-width-minus) {
+              width: 272px;
+              height: 197px;
+            }
+          }
 
-      .modal-header {
-        //  position: relative;
-        background-color: #fff;
+          .pop-header1 {
+            display: inline-block;
+            padding-right: 0px;
+            width: 100%;
+            font-family: $base-font-family;
+            font-size: 18px;
+            line-height: 0;
+            margin-bottom: 16px;
 
-        //  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-        //  border-bottom: 1px solid #e8e8e8;
-        //  padding: 1em 2em;
-        //  text-align: left;
-        .modal-heading {
-          text-align: left;
-          width: 100%;
-          margin: 12px;
-          font-size: rem-calc(22px);
+            @media (max-width: $phablet-min-width-minus) {
+              width: 100%;
+              margin: 0;
+              margin-bottom: 15px;
+              font-size: 16px;
+              line-height: 24px;
+              max-width: 235px;
+              text-align: left;
+            }
+          }
+
+          .pop-header2 {
+            display: inline-block;
+            padding-right: 0px;
+            width: 560px;
+            font-family: $base-font-family;
+            font-size: 18px;
+            line-height: 28px;
+            margin-top: 0px;
+            margin-left: 14%;
+            text-align: left;
+            margin-bottom: 0;
+
+            @media (max-width: $phablet-min-width-minus) {
+              font-size: 16px;
+              line-height: 24px;
+              max-width: 235px;
+              margin-left: 2%;
+            }
+
+            li {
+              margin-bottom: 8px;
+
+            }
+
+            @media (max-width: $phablet-min-width-minus) {
+              width: 290px;
+            }
+          }
         }
-
-        .modal-close {
-          background-color: transparent;
+      }
+    }
+    &.big-button{
+      .modal-actions {
+        .button {
+           width: 360px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+    }
+    &.iccid-info-modal {
+      width: 94%!important;
+      max-width: 100%!important;
+      .row {
+        padding: 10px;
+        width: 100%;
+      }
+      .modal-actions {
+        @media (max-width: 540.9px) {
+          margin-top: 140px!important;
+          margin-bottom: 50px!important;
+        }
+        .button {
+           width: 180px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+      .text-content-holder {
+        margin-bottom: 25px;
+        .text {
+          font-size: rem-calc(18px);
+          margin-bottom: 20px;
+          line-height: 21px;
+          font-family: $base-font-family;
+          display: inline-block;
+          max-width: 581px;
         }
       }
 
+      .image-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        min-height: max-content;
+        justify-content: left;
+        padding-left: 0px;
+
+        .pointer-holder {
+          position: absolute;
+          height: 120%;
+          background-color: $black;
+          width: 1px;
+          z-index: 2;
+          left: 248px;
+          top: -49px;
+          color: black;
+          font-weight: bold;
+
+          @media (min-width: 426px) {
+            transform: rotate(90deg);
+            color: black;
+            font-weight: bold;
+          }
+        }
+        img {
+          width: 221.7px;
+          height: 138.7px;
+          left: 0;
+        }
+        .image-pointer {
+          font-size: 0.9rem;
+          line-height: 22px;
+          position: absolute;
+          top: 27px;
+          width: 208px;
+          text-align: left;
+          left: 346px;
+          font-weight: bold;
+          color: black;
+
+          @media (min-width: 834px) {
+            right: 0;
+            font-weight: bold;
+          }
+        }
+        .rect {
+          background-color: #f2e8f4;
+          width: 90.7px;
+          height: 13.3px;
+          position: absolute;
+          left: 96.3px;
+          text-align: left;
+          font-size: rem-calc(7px);
+
+          &.rect1 {
+            top: 28.4px;
+          }
+
+          &.rect2 {
+            top: 46.4px;
+          }
+
+          &.rect3 {
+            top: 73px;
+          }
+
+          &.rect4 {
+            top: 78px;
+            display: none;
+          }
+        }
+        .big-rect {
+          background-color: #f2e8f4;
+          height: 9.4px;
+          width: 56.7px;
+          position: absolute;
+          left: 325px;
+          font-size: rem-calc(7px);
+          text-align: left;
+
+          &.rect1 {
+            top: 61px;
+          }
+
+          &.rect2 {
+            top: 72px;
+          }
+
+          &.rect3 {
+            top: 83px;
+          }
+
+          &.rect4 {
+            display: none;
+            top: 94px;
+          }
+        }
+        @media (max-width: 833.9px) {
+          margin-left: 40px;
+          .image-pointer {
+            top: 25px;
+            width: 230px;
+            font-size: 0.8em;
+            text-align: center;
+          }
+        }
+        @media (max-width: 825px) {
+          .image-pointer {
+            width: 188px;
+            left: 246px;
+            top: 25px;
+          }
+
+          .pointer-holder {
+            top: -16px;
+            height: 73%;
+            left: 189px;
+          }
+        }
+        @media (max-width: 689px) {
+          .image-pointer {
+            width: 151px;
+            left: 246px;
+            top: 25px;
+          }
+
+          .pointer-holder {
+            top: -16px;
+            height: 73%;
+            left: 189px;
+          }
+        }
+        @media (max-width: 540.9px) {
+            margin-left: 0px!important;
+            justify-content: center!important;
+          .pointer-holder {
+            top: 26px;
+            height: 100%;
+            transform: none;
+          }
+          .image-pointer {
+            top: 186px;
+            width: 100%;
+            max-width: 340px;
+            left: 0px;
+            position: absolute;
+          }
+          .button {
+            margin-top: -64px;
+          }
+          .rect {
+            left: 121px;
+          }
+        }
+      }
+    }
+    &.activation-info-modal {
+      .modal-actions {
+        .button {
+           width: 120px!important;
+        }
+      }
       .modal-content {
-        >* {
-          //  display: block;
+        .row {
+          display: block;
+          .text-content-holder {
+            width: 100%;
+            max-width: 609px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            font-size: rem-calc(18px);
+            @media (max-width: 833.9px) {
+              max-width: 404px;
+            }
+            @media (max-width: 633.9px) {
+              max-width: 296px;
+              font-size: rem-calc(17px);
+            }
+          }
+
+          .image-container {
+            margin-bottom: 30px;
+            @media (max-width: 633.9px) {
+              margin-bottom: 38px;
+            }
+            .activation-image {
+              width: 288.9px;
+              height: 181.9px;
+
+              @media (max-width: 633.9px) {
+                height: 155px;
+                width: 180px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.successPhoneModal {
+      .modal-actions {
+        .button {
+           width: 180px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+      .modal-body {
+        .modal-content {
+          .row {
+            .success-message {
+              text-align: center;
+
+              .message {
+                font-size: rem-calc(17px);
+                line-height: 24px;
+                margin-bottom: 20px;
+                font-weight: bold;
+              }
+
+              .note {
+                font-weight: bold;
+                font-size: rem-calc(14px);
+                line-height: 22px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.unlockedModal {
+      .modal-actions {
+        margin-top: 0!important;
+        margin-bottom: 20px!important;
+        .button {
+           width: 180px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+      .modal-body {
+        .modal-content {
+          .row {
+            text-align: left;
+            .question-section {
+              .question {
+                font-weight: bold;
+                font-size: rem-calc(14px);
+                line-height: 22px;
+                margin-bottom: 0;
+              }
+
+              .answer {
+                margin-bottom: 20px;
+                font-size: rem-calc(14px);
+                line-height: 22px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.invalid-card {
+      .modal-body {
+        .modal-content {
+          .description {
+            font-size: rem-calc(18px);
+            line-height: 28px;
+            margin-bottom: 16px;
+            color: #262626;
+          }
+
+          .list {
+            list-style-position: inside;
+            padding-inline-start: 0;
+
+            li {
+              font-size: rem-calc(18px);
+              line-height: 28px;
+              margin-bottom: 8px;
+              color: #262626;
+            }
+          }
+
+          .note {
+            margin-bottom: 4px;
+            font-size: rem-calc(20px);
+            line-height: 28px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+    &.duplicate-result-modal {
+      &.error {
+        .modal-header {
+          .modal-heading {
+            color: #D22119;
+          }
+        }
+      }
+      .modal-actions {
+        .primary{
+          margin-right:0!important;
+         }
+      }
+      .modal-body {
+        .modal-content {
           display: flex;
-          justify-content: flex-start;
-          padding: 0;
+          flex-direction: column;
+        }
+      }
+    }
+    &.archived-plan {
+      .modal-actions {
+        .button {
+          width: 145px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+      .modal-body {
+        .modal-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .content {
+            .info {
+              font-size: rem-calc(18px);
+              margin-bottom: 8px;
+            }   
+          }
+        }
+        
+      }
+    }
+    &.voucher-info-modal {
+      .modal-actions {
+        margin-bottom: 50px!important;
+        @media (max-width: 1024.9px) {
+          margin-top: 140px!important;
+        }
+        @media (max-width: 639.9px) {
+          margin-top: 160px!important;
+        }
+        .button {
+          width: 145px!important;
+        }
+        .primary{
+          margin-right:0!important;
+         }
+      }
+      .row {
+       width: 100%;
+      }
+
+      .text-content-holder {
+        font-size: rem-calc(22px);
+        margin-bottom: 20px;
+        line-height: 26px;
+        font-family: $base-font-family;
+        display: inline-block;
+        min-height: max-content;
+
+        @media (max-width: 1025px) {
+          font-size: rem-calc(17px);
+          line-height: 20px;
+        }
+      }
+
+      .image-container {
+        position: relative;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        min-height: max-content;
+
+        .pointer-holder {
+          position: absolute;
+          height: 50%;
+          background-color: $black;
+          width: 1px;
+          z-index: 2;
+          top: 222px;
+          left: 55%;
+
+          @media (#{$larger-than-desktop}) {
+            left: 355px;
+          }
         }
 
+        img {
+          width: 182.4px;
+          height: 263px;
+          left: 0;
+        }
+
+        .image-pointer {
+          font-size: rem-calc(17px);
+          line-height: 22px;
+          display: inline-block;
+          max-width: 280px;
+          position: absolute;
+          top: 375px;
+        }
+
+        @media (#{$larger-than-desktop}) {
+          justify-content: left;
+          padding-left: 80px;
+
+          .pointer-holder {
+            height: 80%;
+            transform: rotate(90deg);
+            top: 100px;
+            background-color: $input-border;
+          }
+
+          .image-pointer {
+            max-width: 225px;
+            top: 200px;
+            right: 36px;
+            font-size: rem-calc(15px);
+          }
+        }
+      }
+    }
+    &.autoPay-help-modal {
+      .modal-header {
+        text-align: left;
+      }
+      .modal-content {
+        text-align: left;
+        font-size: rem-calc(16px);
+
+        .description-content {
+          margin-bottom: 20px;
+        }
+
+        .payment-sub {
+          margin-bottom: 20px;
+        }
+
+        @media (#{$larger-than-phablet}) {
+          font-size: rem-calc(17px);
+        }
+      }
+    }
+    &.ios-setup-modal {
+      .modal-header {
+        .modal-heading {
+          text-align: center!important;
+          margin: 0 auto!important;
+        }
+      }
+      height: 100%;
+    }
+    &.tyy-message-modal {
+      .modal-content {
+        width: 100%;
+        text-align: center;
+        .info {
+          p {
+            font-size: rem-calc(15px);
+            font-family: $base-font-family;
+          }
+    
+          .note {
+            font-style: italic;
+          }
+        }
+      }
+    }
+    &.manage-payment-modal {
+      .modal-body {
+        .note {
+          font-size: rem-calc(17px);
+          margin-bottom: 0;
+        }
+      }
+      .modal-hint {
+        font-size: rem-calc(16px);
+        line-height: 20px;
+        margin: 0 auto 15px;
+      }
+      .account-address-details-container {
+        &.highlight-card {
+          width: 100%;
+          text-align: left;
+
+          .custom-checkbox {
+            .checkbox-label {
+              text-transform: capitalize;
+              font-size: rem-calc(15px);
+              font-family: $base-font-family;
+            }
+          }
+
+          .details {
+            text-align: left;
+            padding-top: 0;
+
+            p {
+              font-size: rem-calc(15px);
+              font-family: $base-font-family;
+              margin-bottom: 0;
+            }
+          }
+
+          @media (#{$larger-than-phablet}) {
+            .custom-checkbox {
+              .checkbox-label {
+                width: calc(100% - 30px);
+              }
+            }
+          }
+
+          @media (max-width: $phablet-min-width) {
+            display: block;
+
+            .custom-checkbox {
+              width: 100%;
+
+              .checkbox-label {
+                width: auto;
+              }
+            }
+          }
+        }
+      }
+      .modal-actions {
+        flex-direction: column!important;
+        .button {
+           width: 100px!important;
+           padding: 8px !important;
+           margin-right: 0!important;
+           margin-bottom: 14px!important;
+        }
+      }
+    }
+    &.payment-method-modal {
+      width: 100%;
+      max-width: 960px!important;
+      .modal-content {
+        >* {
+          display: flex;
+          justify-content: flex-start;
+        }
         .form-section {
           .credit-image {
             display: none;
@@ -1724,11 +2239,9 @@
         }
 
         .modal-actions {
-          margin: 10px 0;
-
           .button {
-            width: 213px;
-            padding: 10px;
+            width: 213px!important;
+            padding: 10px!important;;
           }
         }
 
@@ -1747,376 +2260,52 @@
         }
       }
     }
-
-    &.five-toggle-modal {
-      max-width: 580px;
-      width: 100%;
-
-      .modal-header {
-        padding: 32px;
-        padding-bottom: 0;
-
-        .modal-heading {
-          font-size: rem-calc(24px);
-          white-space: nowrap;
-          margin: 0 auto;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          padding: 32px;
-          padding-top: 12px;
-
-          .row {
-            padding: 0;
-            margin-bottom: 0;
-
-            div {
-              max-width: 510px;
-              width: 100%;
-
-              p {
-                margin-bottom: 0;
-                font-size: rem-calc(16px);
-                line-height: 18px;
-                font-weight: 400;
-              }
-            }
-          }
-
-          .modal-actions {
-            margin-top: 24px;
-
-            a {
-              font-family: $lato-font-family;
-              font-size: rem-calc(16px);
-              font-weight: 700;
-
-              .arrow {
-                margin-left: 16px;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.acp-modal {
-      width: 100%;
-      max-width: 850px;
-
-      .modal-heading {
-        width: 100%;
-      }
-
-      .modal-body {
-        .modal-content {
-          padding: 0.8em 1em;
-
-          .modal-actions {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            margin: 0 auto;
-          }
-        }
-      }
-    }
-
-    &.SIM-replacement-modal {
-      border: 1px solid $primary-color;
-      max-width: 486.6px;
-      width: 100%;
-
-      @media (min-width: 641px) {
-        height: 314px;
-      }
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-      }
-
-      .modal-content {
-        padding: 0;
-        overflow: hidden;
-
-        .question {
-          font-size: rem-calc(25px);
-          font-family: $secondary-font-family;
-          font-weight: 500;
-          line-height: 33px;
-          max-width: 338px;
-        }
-
-        .number {
-          font-size: rem-calc(30px);
-          font-family: $base-font-family-bold;
-          font-weight: bold;
-          line-height: 34px;
-        }
-
-        .modal-actions {
-          .button {
-            width: 134.8px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family;
-          }
-
-          .primary {
-            margin-right: 100px;
-          }
-        }
-
-        @media (max-width: 1025px) {
-          .modal-actions {
-            .primary {
-              margin-right: 0px;
-            }
-          }
-        }
-
-        @media (max-width: 640px) {
-          .question {
-            font-size: rem-calc(20px);
-            line-height: 27px;
-          }
-
-          .number {
-            font-size: rem-calc(25px);
-            line-height: 27px;
-          }
-
-          .modal-actions {
-            display: block;
-            padding: 0;
-
-            .secondary {
-              margin-bottom: 25px;
-            }
-          }
-        }
-      }
-
-      .modal-content>* {
-        @media (max-width: 1025px) {
-          padding: 0.5em 3em;
-        }
-      }
-    }
-    &.archived-plan {
-      border: 1px solid #E2E2E2;
-      max-width: 600px;
-      width: 100%;
-      border-radius: 11px;
-      @media(min-width: $desktop-min-width) {
-        width: 600px;
-      }
-      .modal-header {
-        .modal-heading {
-          display: flex;
-          font-size: rem-calc(32px);
-          line-height: 32px;
-          width: 100%;
-          padding: 0 10px;
-          justify-content: center;
-          @media(max-width: $phablet-min-width-minus) {
-            font-size: rem-calc(24px);
-          }
-        }
-      }
-      .modal-body {
-        .modal-content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          .content {
-            .info {
-              font-size: rem-calc(18px);
-              margin-bottom: 8px;
-            }   
-          }
-          .button {
-            width: 145px;
-            padding: 8px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family-bold;
-          }  
-          .modal-actions {
-            margin: 0;
-          }
-        }
-        
-      }
-    }
-    &.esim-replacement {
-      border: 1px solid #E2E2E2;
-      max-width: 578px;
-      width: 100%;
-      border-radius: 11px;
-      @media (min-width: 641px) {
-        min-height: 412px;
-      }
-      @media(max-width: 370px) {
-        width: 92%;;
-      }
-      .modal-header {
-        .modal-heading {
-          display: flex;
-          flex-direction: column;
-          font-size: rem-calc(32px);
-          line-height: 32px;
-          width: 100%;
-          gap: 8px;
-          padding: 0 10px;
-          span {
-            font-size: rem-calc(20px);
-            line-height: 32px;
-            font-family: $base-font-family-bold;
-          }
-        }
-        .modal-close {
-          background-color: transparent;
-          color: $primary-color;
-        }
-      }
-
-      .modal-body {
-        margin-top: 32px;
-        .content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          min-height: 150px;
-          .re-captcha--resizing {
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            @media(max-width: 370px) {
-              padding-left: 36px;
-            }
-          }
-        }
+    &.mdn-list {
+      .modal-actions {
         .button {
-          width: 137px;
-          padding: 8px;
-          margin-top: 32px;
-          margin-bottom: 24px;
-          font-size: rem-calc(20px);
-          font-family: $secondary-font-family-bold;
+           width: 133px!important;
+           padding: 8px !important;
         }
-      }
-    }
-    &.confirm-esim {
-      border: 1px solid #E2E2E2;
-      max-width: 700px;
-      width: 100%;
-      border-radius: 11px;
-      .modal-header {
-        .modal-heading {
-          display: flex;
-          flex-direction: column;
-          font-size: rem-calc(32px);
-          line-height: 32px;
-          width: 100%;
-          padding: 0 10px;
-          @media (max-width: $phablet-min-width-minus) {
-            font-size: rem-calc(24px);
-          }
-        }
-        .modal-close {
-          background-color: transparent;
-          color: $primary-color;
-        }
+        .primary{
+          margin-right:0!important;
+         }
       }
       .modal-body {
-        margin-top: 0px;
-        .content {
+        .modal-content {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          .info {
+          p {
             font-size: rem-calc(20px);
             line-height: 32px;
-            margin-bottom: 8px;
-          }
-          .focus {
-            font-size: rem-calc(22px);
-            line-height: 32px;
-            margin-top: 4px;
-            font-weight: bold;
-          }
-        }
-        .row {
-          margin-bottom: 0;
-        }
-        .button {
-          width: 148px;
-          padding: 8px;
-          margin-top: 0px;
-          margin-bottom: 0px;
-          font-size: rem-calc(20px);
-          font-family: $secondary-font-family-bold;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          .content {
-            .info {
+            margin-bottom: 10px;
+            @media (max-width: $phablet-min-width-minus) {
               font-size: rem-calc(16px);
               line-height: 24px;
-              margin-bottom: 4px;
             }
-            .focus {
-              font-size: rem-calc(18px);
-              line-height: 28px;
-            }
-          }
-          .button {
-            font-size: rem-calc(16px);
-            width: 124px;
           }
         }
       }
     }
     &.migration-confirmation {
-      border: 1px solid #E2E2E2;
-      max-width: 700px;
-      width: 100%;
-      border-radius: 11px;
-      .modal-header {
-        .modal-heading {
-          font-size: rem-calc(32px);
-          line-height: 32px;
-          width: 100%;
-          padding: 0 10px;
+      .modal-actions {
+        .button {
+           width: 280px!important;
+           padding: 8px !important;
         }
-        .modal-close {
-          background-color: transparent;
-          color: $primary-color;
-        }
-        @media(max-width: $phablet-min-width-minus) {
-          .modal-heading {
-            font-size: rem-calc(24px);
-            line-height: 24px;
+        @media(max-width:$desktop-min-width-minus) {
+          flex-direction: column;
+          .primary{
+            margin-right: 0!important;
+            margin-bottom: 14px!important;
           }
         }
       }
-
       .modal-body {
-        margin-top: 16px;
-        .content {
+        .modal-content {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 24px;
           gap: 24px;
           .message {
             font-size: rem-calc(20px);
@@ -2133,20 +2322,6 @@
             }
           }
         }
-        .action {
-          display: flex;
-          gap: 16px;
-          justify-content: center;
-          align-items: center;
-          padding: 0 16px 32px;
-          .button {
-            width: 272px;
-            padding: 8px;
-            margin-top: 32px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family-bold;
-          }
-        }
         @media(max-width: $phablet-min-width-minus) {
           margin-top: 0;
           .content {
@@ -2154,735 +2329,359 @@
               font-size: rem-calc(18px);
               line-height: 24px;
             }
-            .action {
+          }
+        }
+      }
+    }
+    &.migration-flows-popup {
+      .modal-header{
+        padding:0!important
+      }
+      .modal-heading {
+        text-align: left;
+        @media (max-width: 610.9px) {
+          text-align: center;
+          margin-left: auto;
+        }
+      }
+      .modal-body {
+        overflow-x: hidden;
+        .swiper-container {
+          width: 100%;
+          max-width: 100%;
+        }
+        .swiper-pagination {
+          text-align: left;
+
+          @media (max-width: 610.9px) {
+            text-align: center;
+          }
+
+          .swiper-pagination-bullet-active {
+            background: $primary-color;
+          }
+        }
+
+        .flex-display {
+          width: 100%;
+          display: flex;
+          align-items: center;
+
+          @media (max-width: 699.9px) {
+            padding: 0 0em;
+          }
+
+          @media (max-width: 610.9px) {
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            margin-top: 23px;
+            padding: 0px;
+          }
+
+          .desc {
+            max-width: 307px;
+            width: 100%;
+            text-align: left;
+            font-size: 13px;
+            line-height: 22px;
+
+            @media (max-width: 610.9px) {
+              text-align: center;
+            }
+          }
+
+          .image {
+            width: 273px;
+            height: 245px;
+
+            @media (max-width: 699.9px) {
+              width: 249px;
+              height: 223px;
+            }
+
+            @media (max-width: 610.9px) {
+              margin-bottom: 30px;
+            }
+          }
+        }
+
+        .actions {
+          display: flex;
+          margin-bottom: 60px;
+          align-items: center;
+          margin-top: 14px;
+          @media (max-width: 610px) {
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          }
+
+          button {
+            width: 130px;
+            font-size: rem-calc(15px);
+            padding: 10px;
+
+            &.last {
+              width: 215px;
+            }
+          }
+
+          .not-interested {
+            color: $secondary-color;
+            font-size: rem-calc(12px);
+            margin-left: 20px;
+            line-height: 15px;
+
+            @media (max-width: 610px) {
+              margin-left: 0px;
+              margin-top: 18px;
+            }
+          }
+        }
+      }
+    }
+    &.out-of-stock-modal {
+      .modal-body {
+        .modal-content {
+          .row {
+            font-size: 20px;
+            line-height: 32px;
+            max-width: 100%;    
+            @media (max-width: $ipad-min-width-minus) {
+              font-size: 18px;
+              line-height: 28px;
+            }
+          }
+          .modal-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;    
+            @media (max-width: $ipad-min-width-minus) {
               flex-direction: column;
-              padding-bottom: 24px;
-              .button {
-                margin-top: 0;
-                width: 227px;
-                font-size: rem-calc(16px);
+              .primary{
+                margin-right: 0!important;
+                margin-bottom: 14px!important;
+              }
+            }
+            a {
+              font-size: 20px;
+              line-height: 28px;
+    
+              @media (max-width: $ipad-min-width-minus) {
+                font-size: 16px;
+                line-height: 20px;
               }
             }
           }
         }
       }
     }
-    &.Sim-replacement-iccid-modal {
-      border: 1px solid $primary-color;
-      width: 486px;
-
-      @media (min-width: 641px) {
-        min-height: 305px;
-        height: auto;
-      }
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
+    &.impacted-modal {
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+        flex-direction: column;
+        button {
+          width: 360px!important;
+          padding: 6px!important;
+        }
+        .primary{
+          margin-right: 0!important;
+          margin-bottom: 14px!important;
+        }
+        .transparent{
+          margin-bottom: 14px!important;
         }
       }
-
       .modal-content {
-        padding: 20px;
-        overflow: hidden;
-        margin-top: 3px;
-
-        @media (max-width: 1025px) {
-          padding: 0.5em 2em;
-        }
-
-        .twelve {
-          width: 100%;
-          font-size: rem-calc(25px);
-          font-family: $secondary-font-family;
-          font-weight: 500;
-          line-height: 33px;
-
-          &.captcha {
-            margin: 20px auto 0;
-          }
-        }
-
-        .button {
-          display: none;
-
-          &.primary {
-            display: inline-block;
-            width: 134.8px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family;
-            padding: 11px;
-            margin-top: 20px;
-
-            @media (max-width: 1025px) {
-              margin-top: 0;
-            }
-          }
-        }
-
-        .primary-col {
-          max-width: 426px;
-          width: 100%;
-          margin: 0 auto;
-          text-align: left;
-          margin-top: 5px;
-          color: $primary-color;
-          font-size: 16px;
-
-          @media (max-width: $desktop-min-width-minus) {
-            max-width: 385px;
-          }
-        }
-
-        input {
-          width: 100%;
-          height: 45px;
-          padding: 0 10px;
-        }
-
-        .label {
-          font-size: rem-calc(15px);
-          font-family: $base-font-family;
-          margin-bottom: 15px;
-          line-height: 17px;
-          margin-top: 20px;
-          text-align: left;
-          padding: 0 10px;
-        }
-      }
-
-      .modal-content>* {
-        padding: 0;
-        display: block;
-      }
-
-      @media (max-width: 1025px) {
-        width: 100%;
-        max-width: 486.6px;
-      }
-    }
-
-    &.confirm-swap-modal {
-      border: 1px solid $primary-color;
-      max-width: 486.6px;
-      width: 100%;
-
-      @media (min-width: 426px) {
-        height: 344.8px;
-      }
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-      }
-
-      .modal-content {
-        padding: 0;
-
-        p {
-          margin-bottom: 5px;
-        }
-
-        .question {
-          font-size: rem-calc(22px);
-          font-family: $secondary-font-family;
-          line-height: 28px;
-          margin-bottom: 0;
-        }
-
-        .confirm {
-          font-size: rem-calc(22px);
-          font-family: $secondary-font-family;
-          line-height: 28px;
-        }
-
-        .button {
-          width: 134.8px;
-          font-size: rem-calc(20px);
-          font-family: $secondary-font-family;
-          padding: 11px;
-          margin-top: 0px;
-
-          &.primary {
-            margin-right: 100px;
-
-            @media (max-width: 1025px) {
-              margin-right: 0;
-            }
-          }
-        }
-
-        .details {
-          font-size: rem-calc(13px);
-          font-family: $base-font-family;
-          line-height: 15px;
-        }
-
-        @media (max-width: 640px) {
-          overflow: hidden;
-
-          .question {
-            font-size: rem-calc(18px);
-            line-height: 20px;
-          }
-
-          .confirm {
-            font-size: rem-calc(18px);
-            line-height: 20px;
-          }
-        }
-
-        @media (max-width: 425.9px) {
-          b {
-            display: block;
-            margin-top: 5px;
-          }
-
-          .modal-actions {
-            margin: 0;
-          }
-        }
-      }
-
-      .modal-content>* {
-        padding: 0.5em 2em;
-      }
-    }
-
-    &.success-swap-modal {
-      border: 1px solid $primary-color;
-      max-width: 486.6px;
-      width: 100%;
-
-      @media (min-width: 1025px) {
-        height: 517.3px;
-      }
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(25px);
-          line-height: 33px;
-          font-family: $secondary-font-family-bold;
-          font-weight: bold;
-        }
-      }
-
-      .modal-content {
-        .subHeader {
-          font-size: rem-calc(17px);
-          line-height: 25px;
-          font-family: $base-font-family-bold;
-          font-weight: bold;
-        }
-
-        .details {
-          font-size: rem-calc(17px);
-          line-height: 25px;
-          font-family: $base-font-family;
-        }
-
-        .modal-actions {
+        @media (max-width: 641px) {
+          overflow-y: visible;
+          max-height: 300px;
           margin-top: 0;
+          &.row {
+            margin-bottom: 0;
+          }
         }
+        margin: 20px;
       }
+      .not-working-link {
+          color: $secondary-color;
+          cursor: pointer;
 
-      .modal-content>* {
-        padding: 0.5em 1em;
+          @media (max-width: 641px) {
+            margin-bottom: 0;
+          }
+        }
+    }
+    &.need-phone-popUp {
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+        flex-direction: column;
+        button {
+          width: 360px!important;
+          padding: 6px!important;
+        }
+        .primary{
+          margin-right: 0!important;
+          margin-bottom: 14px!important;
+        }
+        .transparent{
+          margin-bottom: 14px!important;
+        }
       }
     }
-
-    &.send-receipt-email-modal {
+    &.select-cc-modal {
       .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-      }
-
-      .modal-content {
-        padding: 0.2em 1em;
-
-        .row {
-          padding: 0;
-          margin-top: 24px;
-
-          @media (min-width: 750px) {
-            max-width: 320px;
-          }
-
-          .details {
-            font-size: rem-calc(18px);
-            line-height: 25px;
-            font-family: $base-font-family-bold;
-            max-width: 540px;
+        width: 100%;
+        text-align: left;
+        .modal-heading {
+          text-align: left;
+          @media (max-width: 750px) {
             text-align: center;
           }
         }
-
-        .modal-actions {
-          margin: unset;
-          padding: unset;
-
-          .primary {
-            background-color: $primary-color;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 0;
-            margin-right: 12px;
-            margin-bottom: 20px;
-          }
-
-          .secondary {
-            margin-top: 2px;
-            margin-bottom: 20px;
-            border: none;
-            padding: 10px 20px;
-          }
-        }
       }
-
-      .modal-content>* {
-        padding: 0em 4em;
-
-        @media (max-width: 500px) {
-          padding: 0em 2em;
-        }
-      }
-    }
-
-    &.custom-modal-voucher-results {
-      border: 1px solid $input-border;
-      width: 100%;
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          width: 100%;
-          font-size: rem-calc(38px);
-          font-family: $secondary-font-family-bold;
-          line-height: 26px;
-          margin-top: 20px;
-        }
-      }
-
-      .modal-content {
-        .message {
-          font-size: rem-calc(22px);
-          line-height: 26px;
-          font-family: $base-font-family;
-          color: $black;
-          font-weight: normal;
-
-          &.balance {
-            font-weight: bold;
-            color: $black;
-
-            .text-color-alert {
-              color: $black;
-            }
-          }
-        }
-      }
-
-      .modal-content>* {
-        display: block;
-      }
-
-      .modal-actions {
-        margin: 0;
-
-        .button {
-          margin-left: auto;
-          margin-right: auto;
-          width: 145px;
-          padding: 10px;
-          font-family: $secondary-font-family;
-        }
-      }
-
-      @media (#{$larger-than-desktop}) {
-        width: 960px;
-      }
-
-      @media (max-width: 750px) {
-        .modal-header {
-          .modal-heading {
-            line-height: 36px;
-          }
-        }
-      }
-
-      @media (max-width: 640px) {
-        .modal-header {
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-            max-width: 186px;
-          }
-
-          .modal-close {
-            background-color: #ccc;
-          }
-        }
-
-        .modal-content {
-          .row {
-            padding: 0 30px;
-          }
-
-          .message {
-            font-size: rem-calc(17px);
-            line-height: 20px;
-          }
-        }
-      }
-    }
-
-    &.select-addon-modal {
-      width: 100%;
-      max-width: 715.7px;
-      border: 1px solid $input-border;
-
-      .modal-header {
-        .modal-heading {
-          padding-top: 15px;
-          line-height: 50px;
-          font-size: rem-calc(38px);
-          font-family: $secondary-font-family-bold;
-        }
-      }
-
-      .modal-content {
-        .row {
-          display: flex;
-          margin: 0;
-          justify-content: center;
-
-          &:first-child {
-            display: none;
-          }
-        }
-      }
-
-      .button {
-        background-color: $secondary-color;
-        margin: 10px 8px;
-        padding: 8px 10px;
-        width: 216px;
-        font-size: rem-calc(20px);
-        font-family: $secondary-font-family;
-
-        //  margin: 10px auto 10px 10px;
-        &.primary {
-          background-color: $primary-color;
-          order: 2;
-          //  margin: 10px 10px 10px auto;
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        max-width: 346px;
-
-        .modal-header {
-          padding: 5px 22px;
-
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-            width: 100%;
-          }
-        }
-
-        .modal-content {
-          padding: 0 17px;
-
-          .row {
-            display: flex;
-            flex-direction: column;
-          }
-
-          .button {
-            margin: 10px auto 0;
-
-            &.primary {
-              order: 2;
-            }
-          }
-        }
-      }
-    }
-
-    &.confirm-change-checkout-modal {
-      max-width: 700px;
-      width: 100%;
-
-      .modal-heading {
-        font-size: rem-calc(32px);
-        line-height: 40px;
-
-        @media (#{$larger-than-desktop}) {
-          width: 83%;
-        }
-      }
-
-      .modal-header {
-        .modal-close {
-          background-color: white;
-        }
-      }
-
-      .modal-content {
-        padding: 0 1em 1.2em;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .row{
-          padding: 0.5em 0;
-        }
-      }
-
-      .twelve {
-        font-size: rem-calc(17px);
-        line-height: 20px;
-        padding: 10px 30px 0;
-        width: 100%;
-      }
-
-      .modal-actions {
-        .button {
-          width: 100px;
-          height: 32px;
-          margin-left: 10px;
-          background-color: $secondary-color;
-          padding: 10px 20px;
-          padding: 7px 12px;
-          font-size: 16px;
-          line-height: 16px;
-          &.primary {
-            background-color: $primary-color;
-            margin-left: 0px;
-          }
-        }
-      }
-      .icon-close{
-        color: $primary-color;
-      }
-      @media (max-width: $tablet-min-width) {
-        .modal-heading {
-          width: 82%;
-        }
-
-        .row {
-          &:first-child {
-            padding: 0 4em;
-          }
-
-          .twelve {
-            padding: 0;
-          }
-        }
-
-        .button {
-          width: 195px;
-        }
-      }
-
-      @media (max-width: 641px) {
-        max-width: 346px;
-
-        .modal-heading {
-          font-size: rem-calc(31px);
-          line-height: 41px;
-          width: 92%;
-          margin: 24px auto 0;
-        }
-
-        .row {
-          &:first-child {
-            padding: 0 1em;
-          }
-        }
-
-        .twelve {
-          padding: 0 27px;
-        }
-
-        .modal-actions {
-          .button {
-            margin-left: 10px;
-          }
-        }
-      }
-    }
-
-    &.change-pin-modal {
-      border: 1px solid $input-border;
-      max-width: 715px;
-      width: 100%;
-      //  height: 395px;
-      max-height: none;
-
-      .modal-close {
-        background-color: white;
-      }
-
-      .modal-header {
-        .modal-heading {
-          width: 100%;
-          font-size: rem-calc(38px);
-          font-family: $secondary-font-family-bold;
-          line-height: 50px;
-        }
-      }
-
       .modal-body {
+        .modal-content {
+          text-align: left;
+          .content {
+            padding: 13px;
+            display: block;
+
+            .mdn {
+              font-size: rem-calc(15px);
+              line-height: 17px;
+              margin-bottom: 0;
+            }
+          }
+
+          .payments {
+            display: inline-block;
+            padding: 13px;
+
+            .action {
+              display: inline-block;
+
+              .button {
+                padding: 11px;
+                font-size: rem-calc(20px);
+                width: 250px;
+              }
+            }
+
+            .payments-list {
+              display: inline-block;
+              height: 37px;
+              font-size: rem-calc(15px);
+              margin-right: 10px;
+            }
+          }
+
+          @media (max-width: 750px) {
+            text-align: center;
+
+            .content {
+              .mdn {
+                font-size: rem-calc(13px);
+              }
+            }
+
+            .payments {
+              .payments-list {
+                margin: auto;
+                margin-bottom: 20px;
+                font-size: rem-calc(13px);
+                display: block;
+              }
+
+              .action {
+                display: block;
+
+                .button {
+                  width: 243px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &.shipping-address-modal {
+      .modal-actions {
+        display: flex;
+        justify-content: flex-start!important;
+        align-items: flex-start!important;    
+        button {
+          width: 140px!important;
+        }
+      }
+      .modal-header {
+        text-align: left;
+        .modal-heading {
+          text-align: left;
+        }
+      }
+      .modal-content {
+        text-align: left;
         .twelve {
           width: 100%;
-          max-width: 590px;
+          margin: 0;
+          text-align: left;
+
+          &.address-lookup {
+            input {
+              width: 66.66666666666666%;
+
+              @media (max-width: 640px) {
+                width: 94%;
+              }
+            }
+          }
         }
 
         label {
-          font-size: rem-calc(15px);
-          font-family: $base-font-family;
-          line-height: 17px;
+          text-align: left;
         }
 
         input {
-          margin: 0px auto 0;
-          height: 45px;
-          border: 1px solid $input-border;
-          max-width: 454px;
-          width: 100%;
+          width: 94%;
+          height: 30px;
+          margin-bottom: 15px;
         }
 
-        span {
-          font-size: rem-calc(17px);
-          line-height: 20px;
-          font-family: $base-font-family;
+        i {
+          display: none;
         }
 
-        .button {
-          width: 213px;
-          padding: 10px 30px;
-          font-size: rem-calc(20px);
+        .radio {
+          display: inline-flex;
+        }
 
-          &.secondary {
-            margin-left: 15px;
-          }
+        .row {
+          margin-bottom: 0;
         }
       }
-
-      @media (max-width: $tablet-min-width) {
-        .modal-header {
-          padding: 20px 15px 0;
-        }
-      }
-
       @media (max-width: $phablet-min-width) {
-        .modal-header {
-          padding: 20px 21px 0;
-        }
-
-        .modal-header {
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-          }
-        }
-
         .modal-body {
-          .twelve {
-            &:nth-child(2) {
-              padding: 0 23px;
-            }
-          }
-
           label {
             font-size: rem-calc(17px);
             line-height: 20px;
+            font-family: $base-font-family;
           }
 
           input {
             height: 40px;
-            margin: 0px auto 25px;
-
-            &.edit-input {
-              @media (max-width: 639.9px) {
-                width: 66%;
-                margin-left: 39px;
-              }
-            }
-          }
-
-          .button {
-            width: 145px;
-
-            &.secondary {
-              margin-left: 10px;
-            }
           }
         }
       }
     }
-
-    &.ebb-validation {
-      max-width: 777px;
-      width: 100%;
-
-      .modal-header {
-        .modal-heading {
-          color: #d94a47;
-          font-size: rem-calc(27px);
-          font-family: $secondary-font-family-bold;
-          line-height: 34px;
-          width: 100%;
-        }
-
-        .modal-close {
-          background-color: transparent;
-          color: #d94a47;
-        }
-      }
-
-      .modal-content {
-        padding: 37px;
-        display: flex;
-        flex-direction: column;
-
-        .modal-actions {
-          margin: 0;
-          padding: 0;
-
-          .button {
-            background-color: #d94a47;
-            border-color: #d94a47;
-            color: #fff;
-            width: 120px;
-            padding: 10px;
-          }
-        }
-      }
-    }
-
     &.delivery {
-      width: 100%;
-      max-width: 600px;
-
       .modal-body {
-        .modal-content>* {
-          padding: 20px 35px;
-        }
-
         .modal-content {
-          padding: 20px;
           display: flex;
           flex-direction: column;
 
@@ -2947,2801 +2746,19 @@
               }
             }
           }
-
-          .modal-actions {
-            margin: 0;
-            padding: 0;
-
-            .button {
-              background-color: $primary-color;
-              border-color: $primary-color;
-              color: #fff;
-              width: 120px;
-              padding: 10px;
-            }
-          }
         }
       }
     }
-
-    &.clean-cart-modal {
-      max-width: 800px;
-      width: 100%;
-
-      .modal-header {
-        .modal-close {
-          background-color: white;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(38px);
-          font-family: $secondary-font-family-bold;
-          line-height: 50px;
-          width: 100%;
-        }
-      }
-
-      .modal-content {
-        padding: 0 1em 1.2em;
-      }
-
-      .modal-body {
-        .twelve {
-          font-size: rem-calc(17px);
-          line-height: 20px;
-          max-width: 520px;
-          width: 100%;
-        }
-
-        .modal-actions {
-          .button {
-            background-color: $secondary-color;
-            width: 175px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family;
-            padding: 10px 20px;
-
-            &.primary {
-              background-color: $primary-color;
-              margin-right: 15px;
-            }
-          }
-        }
-      }
-
-      @media (max-width: 641px) {
-        .modal-header {
-          padding: 10px 30px;
-
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-          }
-        }
-
-        .modal-body {
-          .twelve {
-            font-size: rem-calc(17px);
-            line-height: 20px;
-          }
-
-          .modal-actions {
-            .button {
-              width: 145px;
-              font-size: rem-calc(20px);
-
-              &.primary {
-                margin-right: 5px;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.impacted-modal {
-      max-width: 800px;
-      width: 100%;
-
-      @media (max-width: 641px) {
-        margin-top: 0;
-      }
-
-      @media (max-width: 355px) {
-        width: 88%;
-      }
-
-      margin-top: 0;
-
-      .modal-header {
-        .modal-close {
-          background-color: white;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(38px);
-          font-family: $secondary-font-family-bold;
-          line-height: 50px;
-          width: 100%;
-
-          @media (max-width: $desktop-min-width-minus) {
-            font-size: rem-calc(24px);
-            line-height: 36px;
-            width: 88%;
-          }
-        }
-      }
-
-      .modal-content {
-        padding: 0 1em 1.2em;
-
-        @media (max-width: 641px) {
-          overflow-y: visible;
-          max-height: 300px;
-          margin-top: 0;
-          padding: 0 1em 0;
-
-          &.row {
-            margin-bottom: 0;
-          }
-        }
-
-        margin: 20px;
-      }
-
-      .modal-body {
-        .twelve {
-          font-size: rem-calc(17px);
-          line-height: 20px;
-          max-width: 720px;
-          width: 100%;
-        }
-
-        .not-working-link {
-          color: $secondary-color;
-          cursor: pointer;
-
-          @media (max-width: 641px) {
-            margin-bottom: 0;
-          }
-        }
-
-        .modal-actions {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-
-          @media (max-width: 641px) {
-            padding-bottom: 0;
-          }
-
-          .button {
-            background-color: $secondary-color;
-            width: 350px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family;
-            padding: 10px 20px;
-            margin-bottom: 10px;
-            margin-top: 0;
-
-            &.primary {
-              background-color: $primary-color;
-            }
-          }
-        }
-      }
-
-      @media (max-width: 641px) {
-        .modal-header {
-          padding: 10px 30px;
-
-          @media (max-width: 355px) {
-            padding: 13px 10px;
-          }
-
-          .modal-heading {
-            font-size: rem-calc(24px);
-            line-height: 32px;
-          }
-        }
-
-        .modal-body {
-          .twelve {
-            font-size: rem-calc(17px);
-            line-height: 20px;
-          }
-
-          .modal-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .button {
-              width: 300px;
-              font-size: rem-calc(14px) !important;
-              margin-bottom: 10px;
-              margin-top: 0;
-            }
-          }
-        }
-      }
-    }
-
-    &.add-number-modal {
-      width: 486.6px;
-      border: 1px solid $primary-color;
-      min-height: 258px;
-
-      .modal-header {
-        padding: 10px 35px;
-
-        .modal-close {
-          background-color: white;
-        }
-
-        .modal-heading {
-          text-align: left;
-          margin: 10px 0;
-          width: 100%;
-          font-size: rem-calc(20px);
-          line-height: 27px;
-        }
-      }
-
-      .modal-body {
-        .row {
-          padding: 5px 5px 0;
-          display: block;
-        }
-
-        .twelve {
-          width: 100%;
-          text-align: left;
-
-          .phone-number-section,
-          .verification-code-section {
-            text-align: left;
-
-            input {
-              width: 100%;
-              height: 45px;
-            }
-
-            label {
-              font-size: rem-calc(15px);
-              line-height: 17px;
-              text-align: left;
-            }
-          }
-        }
-
-        .message {
-          display: none;
-        }
-
-        .modal-actions {
-          margin: 0;
-          text-align: right;
-
-          .cancel {
-            display: none;
-          }
-
-          .button {
-            width: 145px;
-            padding: 10px 00px;
-            font-size: rem-calc(20px);
-
-            &.primary {
-              background-color: $secondary-color;
-            }
-          }
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        border: 1px solid $grey;
-        width: 100%;
-        max-width: 346px;
-
-        .modal-header {
-          padding: 15px 10px 0;
-
-          .modal-heading {
-            text-align: center;
-            font-size: rem-calc(31px);
-            line-height: 41px;
-          }
-
-          .modal-close {
-            top: 6px;
-            right: 5px;
-          }
-        }
-
-        .modal-content {
-          padding: 0 20px;
-        }
-
-        .modal-body {
-          .row {
-            padding: 3px 5px;
-          }
-
-          .twelve {
-            .phone-number-section {
-              input {
-                height: 40px;
-              }
-            }
-          }
-
-          .modal-actions {
-            text-align: center;
-            margin-bottom: 30px;
-
-            .button {
-              width: 145px;
-              padding: 8px 0px;
-            }
-          }
-        }
-      }
-    }
-
-    &.successful-activation-modal {
-      width: 486.6px;
-      border: 1px solid $primary-color;
-      min-height: 258px;
-
-      .modal-header {
-        padding: 10px 35px;
-
-        .modal-close {
-          background-color: white;
-        }
-
-        .modal-heading {
-          text-align: center;
-          margin: 25px 0 0;
-          width: 100%;
-          font-size: rem-calc(25px);
-          line-height: 33px;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          padding: 10px;
-        }
-
-        .row {
-          padding: 5px 5px 0;
-          font-size: rem-calc(17px);
-          line-height: 20px;
-          width: 300px;
-        }
-
-        .modal-actions {
-          .button {
-            width: 134.8px;
-            padding: 10px 0px;
-            font-size: rem-calc(20px);
-
-            &.primary {
-              background-color: $secondary-color;
-            }
-          }
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        border: 1px solid $grey;
-        width: 100%;
-        max-width: 346px;
-        min-height: 285px;
-
-        .modal-header {
-          padding: 15px 10px 0;
-
-          .modal-heading {
-            text-align: center;
-            font-size: rem-calc(31px);
-            line-height: 41px;
-            width: 274px;
-            margin: 20px auto 10px;
-          }
-        }
-
-        .modal-content {
-          padding: 0 20px;
-        }
-
-        .modal-body {
-          .row {
-            padding: 3px 5px;
-            font-size: rem-calc(15px);
-            line-height: 17px;
-          }
-
-          .modal-actions {
-            text-align: center;
-            margin-bottom: 20px;
-
-            .button {
-              width: 145px;
-              padding: 8px 0px;
-            }
-          }
-        }
-      }
-    }
-
-    &.change-plan-modal {
-      font-size: rem-calc(22px);
-      font-family: $secondary-font-family-bold;
-      width: 100%;
-      max-width: 960px;
-
-      //  height: 315px;
-      .modal-header {
-        .modal-close {
-          background-color: white;
-        }
-      }
-
-      .modal-body {
-        overflow-x: visible;
-        overflow-y: visible;
-
-        .modal-content {
-          padding: 0;
-
-          .twelve {
-            width: 100%;
-
-            p {
-              font-size: rem-calc(22px);
-              line-height: 30px;
-            }
-
-            .second {
-              padding: 0;
-            }
-          }
-        }
-
-        .modal-content>* {
-          padding: 0 60px;
-        }
-      }
-
-      &.cancel {
-        .modal-header {
-          padding-top: 20px;
-        }
-
-        .modal-body {
-          .modal-content>* {
-            padding: 0 40px;
-          }
-        }
-
-        .button {
-          padding: 10px 20px;
-        }
-
-        @media (max-width: $phablet-min-width) {
-          .modal-body {
-            .modal-content>* {
-              padding: 0 20px;
-            }
-          }
-
-          .modal-actions {
-            margin-bottom: 30px;
-          }
-        }
-      }
-
-      .button {
-        background-color: $secondary-color;
-        margin: 10px;
-        width: 359.8px;
-        padding: 10px 30px;
-
-        &.primary {
-          background-color: $primary-color;
-        }
-      }
-
-      .modal-actions {
-        justify-content: center;
-        align-items: center;
-        display: block;
-        margin-bottom: 20px;
-      }
-
-      @media (max-width: $desktop-min-width) {
-        .modal-body {
-          .modal-actions {
-            display: flex;
-            flex-direction: column;
-
-            .button {
-              &.primary {
-                order: 2;
-              }
-            }
-          }
-        }
-      }
-
-      @media (max-width: $tablet-min-width) {
-        .modal-body {
-          overflow-y: auto;
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        max-width: 345px;
-
-        .modal-body {
-          .modal-content>* {
-            padding: 16px 15px 0;
-          }
-
-          .modal-content {
-            .row {
-              &:first-child {
-                margin-bottom: 0px;
-              }
-            }
-
-            .twelve {
-              p {
-                font-size: rem-calc(14px);
-                line-height: 18px;
-              }
-
-              .first {
-                padding: 0 14px;
-              }
-
-              .second {
-                padding: 0px;
-                margin-bottom: 0px;
-              }
-            }
-
-            .modal-actions {
-              padding: 0px;
-
-              .button {
-                width: 315px;
-                margin: 8px 0;
-                font-size: rem-calc(17px);
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.change-expired-plan-modal {
-      font-size: rem-calc(22px);
-      font-family: $secondary-font-family-bold;
-      width: 100%;
-      max-width: 960px;
-
-      //  height: 315px;
-      .modal-header {
-        .modal-close {
-          background-color: white;
-        }
-      }
-
-      .modal-body {
-        overflow-x: visible;
-        overflow-y: visible;
-
-        .modal-content {
-          padding: 0;
-
-          .twelve {
-            width: 100%;
-
-            p {
-              font-size: rem-calc(22px);
-              line-height: 30px;
-            }
-
-            .second {
-              padding: 0;
-            }
-          }
-        }
-
-        .modal-content>* {
-          padding: 0 60px;
-        }
-      }
-
-      &.cancel {
-        .modal-header {
-          padding-top: 20px;
-        }
-
-        .modal-body {
-          .modal-content>* {
-            padding: 0 40px;
-          }
-        }
-
-        .button {
-          padding: 10px 20px;
-        }
-
-        @media (max-width: $phablet-min-width) {
-          .modal-body {
-            .modal-content>* {
-              padding: 0 20px;
-            }
-          }
-
-          .modal-actions {
-            margin-bottom: 30px;
-          }
-        }
-      }
-
-      .button {
-        background-color: $secondary-color;
-        margin: 10px;
-        width: 359.8px;
-        padding: 10px 30px;
-
-        &.primary {
-          display: none;
-        }
-      }
-
-      .modal-actions {
-        justify-content: center;
-        align-items: center;
-        display: block;
-        margin-bottom: 20px;
-      }
-
-      @media (max-width: $desktop-min-width) {
-        .modal-body {
-          .modal-actions {
-            display: flex;
-            flex-direction: column;
-
-            .button {
-              &.primary {
-                order: 2;
-              }
-            }
-          }
-        }
-      }
-
-      @media (max-width: $tablet-min-width) {
-        .modal-body {
-          overflow-y: auto;
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        max-width: 345px;
-
-        .modal-body {
-          .modal-content>* {
-            padding: 16px 15px 0;
-          }
-
-          .modal-content {
-            .row {
-              &:first-child {
-                margin-bottom: 0px;
-              }
-            }
-
-            .twelve {
-              p {
-                font-size: rem-calc(14px);
-                line-height: 18px;
-              }
-
-              .first {
-                padding: 0 14px;
-              }
-
-              .second {
-                padding: 0px;
-                margin-bottom: 0px;
-              }
-            }
-
-            .modal-actions {
-              padding: 0px;
-
-              .button {
-                width: 315px;
-                margin: 8px 0;
-                font-size: rem-calc(17px);
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.christmas-tc {
-      width: 100%;
-      max-width: 1224px;
-
-      .modal-header {
-        @media (min-width: $desktop-min-width) {
-          padding: 1em 1em 0;
-        }
-
-        .modal-heading {
-          min-width: max-content;
-          object-fit: contain;
-          text-align: center;
-          font-weight: bold;
-          font-size: rem-calc(41px);
-          font-family: $secondary-font-family-bold;
-          line-height: 1.22;
-
-          @media (max-width: 834.9px) {
-            line-height: 1.07;
-            min-width: unset;
-          }
-        }
-
-        .modal-close {
-          background: white;
-        }
-      }
-
-      .modal-body {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .modal-content {
-        .row {
-          font-size: rem-calc(18px);
-          width: 100%;
-          padding: 0.5em 4em;
-
-          .christmas-pop {
-            max-width: 1020px;
-          }
-
-          @media (max-width: 1024px) {
-            padding: 0.5em 1em;
-            font-size: rem-calc(14px);
-          }
-
-          .button {
-            display: none;
-          }
-        }
-      }
-    }
-
-    &.successPhoneModal {
-      width: 100%;
-      max-width: 378px;
-      border: 2px solid $input-border;
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(28px);
-          line-height: 37px;
-          text-align: center;
-          width: 100%;
-          margin: 22px auto 0;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          .row {
-            padding: 0 30px;
-
-            .success-message {
-              text-align: center;
-
-              .message {
-                font-size: rem-calc(17px);
-                line-height: 24px;
-                margin-bottom: 20px;
-                font-weight: bold;
-              }
-
-              .note {
-                font-weight: bold;
-                font-size: rem-calc(14px);
-                line-height: 22px;
-              }
-            }
-          }
-
-          .modal-actions {
-            margin: 0 auto 10px;
-            padding: 0;
-
-            .button {
-              font-size: rem-calc(20px);
-            }
-          }
-        }
-      }
-    }
-
-    &.unlockedModal {
-      width: 100%;
-      max-width: 378px;
-      border: 2px solid $input-border;
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          line-height: 22px;
-          font-size: rem-calc(18px);
-          text-align: left;
-          width: 100%;
-          margin: 12px;
-
-          @media (max-width: $desktop-min-width-minus) {
-            margin: 12px 0 0 36px;
-          }
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          .row {
-            padding: 0 30px;
-            text-align: left;
-
-            .question-section {
-              .question {
-                font-weight: bold;
-                font-size: rem-calc(14px);
-                line-height: 22px;
-                margin-bottom: 0;
-              }
-
-              .answer {
-                margin-bottom: 20px;
-                font-size: rem-calc(14px);
-                line-height: 22px;
-              }
-            }
-          }
-
-          .modal-actions {
-            margin: 0 auto 30px;
-            text-align: center;
-
-            .button {
-              font-size: rem-calc(20px);
-              width: 190px;
-              padding: 8px;
-              height: 43px;
-            }
-          }
-        }
-      }
-    }
-
-    &.frequencyModal {
-      border: 1px solid $input-border;
-      width: 100%;
-      max-width: 531px;
-
-      .modal-header {
-        text-align: left;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          line-height: 37px;
-          font-size: rem-calc(28px);
-          text-align: left;
-          width: 100%;
-          max-width: 357px;
-          margin: 12px 5px;
-
-          @media (max-width: $desktop-min-width-minus) {
-            margin: 20px 30px 10px;
-          }
-
-          @media (max-width: $phablet-min-width-minus) {
-            font-size: rem-calc(22px);
-            line-height: 28px;
-          }
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          padding-top: 0;
-
-          .row {
-            padding: 20px;
-
-            .frequencies {
-              .freq {
-                text-align: left;
-                font-size: rem-calc(17px);
-                line-height: 24px;
-                max-width: 441px;
-
-                @media (max-width: $phablet-min-width-minus) {
-                  font-size: rem-calc(15px);
-                  line-height: 22px;
-                  max-width: 376px;
-                }
-              }
-            }
-
-            &.modal-actions {
-              display: none;
-            }
-          }
-        }
-      }
-
-      @media (max-width: 470px) {
-        width: 90%;
-
-        .modal-header {
-          .modal-heading {
-            margin: 20px 0 10px;
-          }
-        }
-
-        .modal-body {
-          .modal-content {
-            padding-left: 10px;
-
-            .row {
-              padding-left: 10px;
-            }
-          }
-        }
-      }
-    }
-
-    &.portRequiredModal {
-      width: 100%;
-      max-width: 822px;
-      border: 1px solid $input-border;
-      border-radius: 11px;
-
-      .modal-header {
-        text-align: left;
-
-        .modal-close {
-          background-color: transparent;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          .row {
-            margin-bottom: 30px;
-            font-weight: bold;
-            font-size: rem-calc(22px);
-            line-height: 28px;
-            padding: 30px 30px 0;
-          }
-
-          .button {
-            width: 197px;
-            padding: 11px;
-            font-size: rem-calc(17px);
-            background-color: $secondary-color;
-
-            &.primary {
-              background-color: $primary-color;
-              margin-right: 10px;
-            }
-
-            @media (max-width: 750px) {
-              display: block;
-
-              &.primary {
-                margin-right: 0;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.voucher-info-modal {
-      width: 100%;
-      max-width: 822px;
-      border: 1px solid $input-border;
-      border-radius: 11px;
-
-      .modal-header {
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(38px);
-          font-family: $secondary-font-family-bold;
-          line-height: 50px;
-
-          @media (max-width: 1025px) {
-            font-size: rem-calc(31px);
-            line-height: 10px;
-            margin-top: 25px;
-          }
-        }
-      }
-
-      .button {
-        background-color: $secondary-color;
-        width: 145px;
-        padding: 10px;
-        font-size: rem-calc(20px);
-        line-height: 27px;
-
-        @media (max-width: 1025px) {
-          margin-top: 130px;
-        }
-      }
-
-      .row {
-        padding: 10px;
-
-        &.modal-actions {
-          padding-bottom: 30px;
-        }
-      }
-
-      .text-content-holder {
-        font-size: rem-calc(22px);
-        margin-bottom: 20px;
-        line-height: 26px;
-        font-family: $base-font-family;
-        display: inline-block;
-        min-height: max-content;
-
-        @media (max-width: 1025px) {
-          font-size: rem-calc(17px);
-          line-height: 20px;
-        }
-      }
-
-      .image-container {
-        position: relative;
-        height: 300px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-        min-height: max-content;
-
-        .pointer-holder {
-          position: absolute;
-          height: 50%;
-          background-color: $black;
-          width: 1px;
-          z-index: 2;
-          top: 222px;
-          left: 55%;
-
-          @media (#{$larger-than-desktop}) {
-            left: 355px;
-          }
-        }
-
-        img {
-          width: 182.4px;
-          height: 263px;
-          left: 0;
-          /*position: absolute;*/
-        }
-
-        .image-pointer {
-          font-size: rem-calc(17px);
-          //  width: 60%;
-          line-height: 22px;
-          display: inline-block;
-          max-width: 280px;
-          position: absolute;
-          top: 375px;
-        }
-
-        @media (#{$larger-than-desktop}) {
-          justify-content: left;
-          padding-left: 80px;
-
-          .pointer-holder {
-            height: 80%;
-            transform: rotate(90deg);
-            top: 100px;
-            background-color: $input-border;
-          }
-
-          .image-pointer {
-            max-width: 225px;
-            top: 200px;
-            right: 36px;
-            font-size: rem-calc(15px);
-          }
-        }
-      }
-    }
-
-    &.iccid-info-modal {
-      width: 100%;
-      max-width: 720px;
-      border: 1px solid $input-border;
-      border-radius: 11px;
-
-      .modal-header {
-        .modal-heading {
-          font-size: rem-calc(25px);
-          font-family: $secondary-font-family-bold;
-          line-height: 33px;
-        }
-
-        @media (max-width: 833.9px) {
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-          }
-
-          .modal-close {
-            background-color: transparent;
-          }
-        }
-      }
-
-      .button {
-        background-color: $secondary-color;
-        width: 149.8px;
-        padding: 7px;
-        font-size: rem-calc(20px);
-        line-height: 27px;
-        margin-top: -41px;
-
-        @media (max-width: 833.9px) {
-          width: 145px;
-        }
-      }
-
-      .row {
-        padding: 10px;
-
-        &.modal-actions {
-          margin-bottom: 30px;
-
-          @media (max-width: 833.9px) {
-            padding-top: 60px;
-            //  margin-bottom: 50px;
-          }
-
-          @media (max-width: 427px) {
-            padding-top: 130px;
-            margin-bottom: 50px;
-          }
-        }
-      }
-
-      .text-content-holder {
-        margin-bottom: 25px;
-
-        .text {
-          font-size: rem-calc(18px);
-          margin-bottom: 20px;
-          line-height: 21px;
-          font-family: $base-font-family;
-          display: inline-block;
-          max-width: 581px;
-        }
-      }
-
-      .image-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        //  justify-content: center;
-        flex-direction: row;
-        min-height: max-content;
-        justify-content: left;
-        padding-left: 0px;
-
-        .pointer-holder {
-          position: absolute;
-          height: 120%;
-          background-color: $black;
-          width: 1px;
-          z-index: 2;
-          //top:222px;
-          left: 248px;
-          top: -49px;
-          color: black;
-          font-weight: bold;
-
-          @media (min-width: 426px) {
-            transform: rotate(90deg);
-            // background-color: $input-border;
-            color: black;
-            font-weight: bold;
-          }
-        }
-
-        img {
-          width: 221.7px;
-          height: 138.7px;
-          left: 0;
-          /*position: absolute;*/
-        }
-
-        .image-pointer {
-          font-size: 0.9rem;
-          line-height: 22px;
-          position: absolute;
-          top: 27px;
-          width: 208px;
-          text-align: left;
-          left: 346px;
-          font-weight: bold;
-          color: black;
-
-          @media (min-width: 834px) {
-            right: 0;
-            font-weight: bold;
-            // max-width: 167px;
-            //width:
-          }
-        }
-
-        .rect {
-          background-color: #f2e8f4;
-          width: 90.7px;
-          height: 13.3px;
-          // margin-top: 207.2px;
-          position: absolute;
-          left: 96.3px;
-          text-align: left;
-          font-size: rem-calc(7px);
-
-          &.rect1 {
-            top: 28.4px;
-          }
-
-          &.rect2 {
-            top: 46.4px;
-          }
-
-          &.rect3 {
-            top: 73px;
-          }
-
-          &.rect4 {
-            top: 78px;
-            display: none;
-          }
-        }
-
-        .big-rect {
-          background-color: #f2e8f4;
-          height: 9.4px;
-          width: 56.7px;
-          position: absolute;
-          left: 325px;
-          font-size: rem-calc(7px);
-          text-align: left;
-
-          &.rect1 {
-            top: 61px;
-          }
-
-          &.rect2 {
-            top: 72px;
-          }
-
-          &.rect3 {
-            top: 83px;
-          }
-
-          &.rect4 {
-            display: none;
-            top: 94px;
-          }
-        }
-
-        @media (max-width: 833.9px) {
-          // justify-content: center;
-          margin-left: 40px;
-
-          .image-pointer {
-            // left: 5px;
-            //   left: 195px;
-            top: 25px;
-            width: 230px;
-            font-size: 0.8em;
-            text-align: center;
-          }
-
-          /* .pointer-holder {
-          //   height: 69%;
-           //  left: 238px;
-             left: 388px;
-             top: 80px;
-           }
-           .rect {
-            // left: 225px;
-          //  left: 372px;
-           }
-           .big-rect {
-           //  left: 193px;
-            // left: 342px;
-             height: 14.6px;
-             width: 87.6px;
-             font-size: rem-calc(10px);
-             &.rect1 {
-               top: 205px;
-             }
-             &.rect2 {
-               top: 223px;
-             }
-             &.rect3 {
-               top: 241px;
-             }
-             &.rect4 {
-               top: 259px;
-             }
-           }*/
-        }
-
-        @media (max-width: 825px) {
-          .image-pointer {
-            width: 188px;
-            left: 246px;
-            top: 25px;
-          }
-
-          .pointer-holder {
-            top: -16px;
-            height: 73%;
-            left: 189px;
-          }
-        }
-
-        @media (max-width: 689px) {
-          .image-pointer {
-            width: 151px;
-            left: 246px;
-            top: 25px;
-          }
-
-          .pointer-holder {
-            top: -16px;
-            height: 73%;
-            left: 189px;
-          }
-        }
-
-        @media (max-width: 640px) {
-          margin-left: 0;
-        }
-
-        @media (max-width: 477px) {
-          .image-pointer {
-            width: 128px;
-            left: 227px;
-            top: 25px;
-          }
-        }
-
-        @media (max-width: 426.9px) {
-          justify-content: center;
-
-          .image-pointer {
-            //max-width: 155px;
-            width: 230px;
-            left: 22px;
-            top: 183px;
-          }
-
-          .pointer-holder {
-            top: 52px;
-            height: 97%;
-            left: 180px;
-          }
-
-          .rect {
-            left: 148px;
-          }
-
-          .big-rect {
-            //  left: 193px;
-            width: 113.3px;
-            height: 71.7px;
-            border: solid 0.5px #1a1818;
-            left: 200px;
-            // height: 14.6px;
-            // width: 87.6px;
-            font-size: rem-calc(10px);
-
-            &.rect1 {
-              top: 205px;
-            }
-
-            &.rect2 {
-              top: 223px;
-            }
-
-            &.rect3 {
-              top: 241px;
-            }
-
-            &.rect4 {
-              display: none;
-              top: 259px;
-            }
-          }
-        }
-
-        @media (max-width: 406px) {
-          .rect {
-            left: 140px;
-          }
-        }
-
-        @media (max-width: 390px) {
-          .rect {
-            left: 129px;
-          }
-        }
-
-        @media (max-width: 376px) {
-          .rect {
-            left: 129px;
-          }
-
-          .pointer-holder {
-            left: 184px;
-          }
-
-          .image-pointer {
-            top: 189px;
-          }
-        }
-
-        @media (max-width: 360px) {
-          .pointer-holder {
-            left: 162px;
-          }
-
-          .image-pointer {
-            top: 186px;
-            left: 9px;
-          }
-
-          .button {
-            margin-top: -64px;
-          }
-
-          .rect {
-            left: 121px;
-          }
-        }
-
-        @media (max-width: 326px) {
-          .pointer-holder {
-            left: 162px;
-          }
-
-          .image-pointer {
-            top: 186px;
-            left: 9px;
-          }
-
-          .button {
-            margin-top: -64px;
-          }
-
-          .rect {
-            left: 102px;
-          }
-        }
-      }
-    }
-
-    &.activation-info-modal {
-      width: 100%;
-      max-width: 769px;
-      border: 1px solid $input-border;
-      border-radius: 11px;
-
-      .modal-header {
-        .modal-heading {
-          font-size: rem-calc(25px);
-          font-family: $secondary-font-family-bold;
-          line-height: 33px;
-          padding-top: 20px;
-
-          @media (max-width: 633.9px) {
-            width: 262px;
-            line-height: 1.32;
-          }
-        }
-
-        .modal-close {
-          background: none;
-        }
-
-        @media (max-width: 833.9px) {
-          .modal-heading {
-            line-height: 41px;
-            width: 262px;
-          }
-        }
-      }
-
-      .modal-body {
-        overflow-x: hidden;
-      }
-
-      .button {
-        background-color: $primary-color;
-        width: 154px;
-        padding: 7px;
-        font-size: rem-calc(20px);
-        line-height: 27px;
-        margin-top: -41px;
-
-        @media (max-width: 833.9px) {
-          width: 165px;
-        }
-
-        @media (max-width: 633.9px) {
-          width: 145px;
-        }
-      }
-
-      .modal-content {
-        padding: 0 0px;
-
-        .row {
-          display: block;
-
-          .text-content-holder {
-            width: 609px;
-            max-width: 609px;
-            margin-bottom: 30px;
-            font-size: rem-calc(18px);
-
-            @media (max-width: 833.9px) {
-              width: 404px;
-            }
-
-            @media (max-width: 633.9px) {
-              width: 296px;
-              padding: 0 16px;
-              font-size: rem-calc(17px);
-            }
-          }
-
-          .image-container {
-            margin-bottom: 30px;
-
-            @media (max-width: 633.9px) {
-              margin-bottom: 38px;
-            }
-
-            .activation-image {
-              width: 288.9px;
-              height: 181.9px;
-
-              @media (max-width: 633.9px) {
-                padding: 0 28.4px;
-                height: 155px;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.manage-payment-modal {
-      max-height: none;
-      max-width: 715px;
-      width: 100%;
-
-      @media (max-width: $phablet-min-width) {
-        //  width: 70%;
-      }
-
-      .modal-header {
-        padding: 10px 50px;
-
-        .modal-close {
-          background-color: white;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(38px);
-          line-height: 50px;
-          font-family: $secondary-font-family-bold;
-          width: 100%;
-        }
-
-        @media (max-width: $phablet-min-width) {
-          .modal-heading {
-            font-size: rem-calc(31px);
-            line-height: 41px;
-          }
-        }
-
-        @media (#{$larger-than-tablet}) {
-          padding: 10px 100px;
-        }
-
-        @media (max-width: $mobile-min) {
-          padding: 20px 26px 0;
-        }
-      }
-
-      .modal-body {
-        padding: 10px 50px;
-
-        .note {
-          font-size: rem-calc(17px);
-          margin-bottom: 0;
-        }
-
-        @media (#{$larger-than-phablet}) {
-          padding: 10px 80px;
-        }
-
-        @media (max-width: $mobile-min) {
-          padding: 10px 23px;
-        }
-      }
-
-      .modal-content {
-        padding: 0;
-      }
-
-      .modal-content>* {
-        padding: 5px 30px 12px 15px;
-      }
-
-      .modal-actions {
-        margin-top: 0;
-
-        .modal-hint {
-          font-size: rem-calc(17px);
-          line-height: 20px;
-          margin: 0 auto 15px;
-        }
-
-        .button {
-          width: 213px;
-          padding: 10px 30px;
-          margin: 25px 30px 0;
-        }
-
-        @media (max-width: 640px) {
-          display: block;
-
-          .modal-hint {
-            display: block;
-          }
-
-          .button {
-            padding: 10px 10px;
-            width: 145px;
-            margin: 0 30px;
-          }
-        }
-      }
-
-      .account-address-details-container {
-        &.highlight-card {
-          width: 100%;
-          text-align: left;
-
-          .custom-checkbox {
-            .checkbox-label {
-              text-transform: capitalize;
-              font-size: rem-calc(15px);
-              font-family: $base-font-family;
-            }
-          }
-
-          .details {
-            text-align: left;
-            padding-top: 0;
-
-            p {
-              font-size: rem-calc(15px);
-              font-family: $base-font-family;
-              margin-bottom: 0;
-            }
-          }
-
-          @media (#{$larger-than-phablet}) {
-            .custom-checkbox {
-              .checkbox-label {
-                width: calc(100% - 30px);
-              }
-            }
-          }
-
-          @media (max-width: $phablet-min-width) {
-            display: block;
-
-            .custom-checkbox {
-              width: 100%;
-
-              .checkbox-label {
-                width: auto;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.compatibility-help-modal-IME {
-      width: 100%;
-      max-width: 720px;
-      border: 1px solid $input-border;
-      height: 100%;
-
-      @media (min-width: 641px) and (max-width: 725.9px) {
-        overflow: scroll;
-      }
-
-      .modal-header {
-        .modal-heading {
-          width: 100%;
-          font-size: rem-calc(25px);
-          font-weight: bold;
-          line-height: 33px;
-
-          @media (max-width: 1024.9px) {
-            font-size: rem-calc(20px);
-          }
-        }
-
-        .modal-close {
-          background: unset;
-          top: 7px;
-          right: 9px;
-
-          @media (max-width: 640px) {
-            right: 5px;
-            top: 15px;
-          }
-        }
-      }
-
-      .modal-body {
-        padding: 0 15px;
-
-        @media (#{$larger-than-phablet}) {
-          padding: 0 30px;
-        }
-
-        .modal-content {
-          padding: 0.5em 1em;
-
-          .row {
-            padding: 0;
-          }
-
-          .description-content {
-            margin-bottom: 22px;
-            max-width: 558px;
-            font-size: rem-calc(18px);
-            font-family: $base-font-family;
-            line-height: 1.56;
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-          }
-
-          .intro {
-            margin-top: 16px;
-            margin-bottom: 30px;
-
-            @media (min-width: 641px) and (max-width: 1024.9px) {
-              margin-top: 8px;
-              font-size: rem-calc(15px);
-            }
-
-            @media (max-width: 640px) {
-              font-size: rem-calc(14px);
-            }
-          }
-
-          .note-dial {
-            margin-bottom: 9px;
-
-            @media (max-width: 1024.9px) {
-              font-size: rem-calc(15px);
-            }
-
-            @media (max-width: 640px) {
-              font-size: rem-calc(13px);
-            }
-          }
-
-          .p-nowrap {
-            @media (min-width: 1025px) {
-              white-space: nowrap;
-            }
-
-            @media (max-width: 1024.9px) {
-              font-size: rem-calc(15px);
-            }
-
-            @media (max-width: 640px) {
-              font-size: rem-calc(13px);
-            }
-
-            margin-bottom: 0px;
-          }
-
-          .menu-margins {
-            margin-top: 9px;
-            margin-bottom: 9px;
-            width: 100%;
-
-            @media (max-width: 1024.9px) {
-              font-size: rem-calc(15px);
-            }
-
-            @media (max-width: 640px) {
-              font-size: rem-calc(13px);
-            }
-          }
-
-          .button {
-            width: 149.8px;
-            padding: 10px;
-            font-size: rem-calc(20px);
-            margin-bottom: 20px;
-            font-family: $secondary-font-family;
-
-            @media (min-width: 1025px) {
-              margin-top: 2px;
-              margin-left: 5px;
-              margin-bottom: 28px;
-            }
-
-            @media (max-width: 1024.9px) {
-              font-size: rem-calc(16px);
-            }
-
-            @media (max-width: 640px) {
-              font-size: rem-calc(15px);
-            }
-
-            &.primary {
-              background-color: $primary-color;
-            }
-          }
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        max-width: 315.6px;
-        height: auto;
-        max-height: none;
-        border: 1px solid $primary-color;
-
-        .modal-header {
-          .modal-heading {
-            font-size: rem-calc(22px);
-            line-height: 28px;
-            margin: 15px auto 0;
-            max-width: 164px;
-
-            @media (max-width: 640px) {
-              font-size: rem-calc(18px);
-            }
-          }
-
-          .modal-close {
-            right: 0;
-            top: 1px;
-          }
-        }
-
-        .modal-body {
-          .modal-content {
-            padding: 0 10px;
-
-            .description-content {
-              font-size: rem-calc(15px);
-              line-height: 22px;
-            }
-
-            .list-content {
-              padding: 5px;
-              font-size: rem-calc(13px);
-
-              li {
-                span {
-                  font-size: rem-calc(13px);
-                  line-height: 22px;
-                  font-weight: bold;
-                }
-              }
-            }
-
-            .modal-actions {
-              padding: 0 5px 20px;
-            }
-
-            .button {
-              width: 145px;
-              font-size: rem-calc(20px);
-              margin-bottom: 16px;
-            }
-          }
-        }
-      }
-    }
-
-    &.custom-modal-view-updates {
-      @media (min-width: 1025px) {
-        width: 750px;
-      }
-
-      @media (min-width: 640px) and (max-width: 1024.9px) {
-        width: 610px;
-      }
-
-      height: 100%;
-
-      .modal-header {
-        .modal-heading {
-          display: none;
-        }
-
-        .modal-close {
-          background: unset;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          padding-top: 0;
-          text-align: left;
-
-          .row {
-            @media (max-width: $phablet-min-width-minus) {
-              padding: 20px 6px;
-            }
-
-            h1 {
-              @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(24px);
-              }
-            }
-
-            padding: 30px 36px;
-
-            .track-font-size {
-              font-size: rem-calc(21px);
-
-              @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(18px);
-              }
-            }
-
-            .date {
-              @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(16px);
-              }
-            }
-
-            .display-flex {
-              display: flex;
-              width: 100%;
-
-              @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(16px);
-              }
-
-              .border-right {
-                width: 124px;
-                border-right: 1px solid;
-                height: 40px;
-              }
-
-              .left-margins {
-                margin-left: 20px;
-
-                @media (max-width: $phablet-min-width-minus) {
-                  max-width: 160px;
-                  width: 100%;
-                }
-              }
-            }
-          }
-
-          button {
-            display: none;
-          }
-        }
-      }
-    }
-
-    &.compatibility-help-modal {
-      width: 100%;
-      max-width: 720px;
-      border: 1px solid $input-border;
-      height: 457px;
-
-      @media (min-width: 641px) and (max-width: 725.9px) {
-        overflow: scroll;
-      }
-
-      .modal-header {
-        .modal-heading {
-          width: 100%;
-          font-size: rem-calc(25px);
-          font-family: $secondary-font-family;
-          font-weight: 500;
-          line-height: 33px;
-        }
-      }
-
-      .modal-body {
-        padding: 0 15px;
-
-        @media (#{$larger-than-phablet}) {
-          padding: 0 30px;
-        }
-
-        .modal-content {
-          padding: 0.5em 1em;
-
-          .row {
-            padding: 0;
-          }
-
-          .description-content {
-            margin-bottom: 22px;
-            max-width: 540px;
-            font-size: rem-calc(18px);
-            font-family: $base-font-family;
-            line-height: 21px;
-          }
-
-          .list-content {
-            text-align: left;
-            font-weight: bold;
-            line-height: 30px;
-            font-family: $base-font-family-bold;
-            margin: 0;
-            padding: 5px 15px;
-            font-size: rem-calc(18px);
-
-            li {
-              ul {
-                margin: 0;
-                padding: 0;
-                list-style: disc;
-              }
-            }
-          }
-
-          .button {
-            width: 149.8px;
-            padding: 10px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family;
-
-            @media (min-width: 1025px) {
-              margin-top: 2px;
-              margin-left: 5px;
-            }
-
-            &.primary {
-              background-color: $secondary-color;
-            }
-          }
-        }
-      }
-
-      @media (max-width: $phablet-min-width) {
-        max-width: 315.6px;
-        height: auto;
-        max-height: none;
-        border: 1px solid $primary-color;
-
-        .modal-header {
-          .modal-heading {
-            font-size: rem-calc(22px);
-            line-height: 28px;
-            margin: 15px auto 0;
-            max-width: 164px;
-          }
-
-          .modal-close {
-            right: 0;
-            top: 1px;
-          }
-        }
-
-        .modal-body {
-          .modal-content {
-            padding: 0 10px;
-
-            .description-content {
-              font-size: rem-calc(15px);
-              line-height: 22px;
-            }
-
-            .list-content {
-              padding: 5px;
-              font-size: rem-calc(13px);
-
-              li {
-                span {
-                  font-size: rem-calc(13px);
-                  line-height: 22px;
-                  font-weight: bold;
-                }
-              }
-            }
-
-            .modal-actions {
-              padding: 0 5px 20px;
-            }
-
-            .button {
-              width: 145px;
-              font-size: rem-calc(20px);
-            }
-          }
-        }
-      }
-    }
-
-    &.usp-pop-up-modal {
-      width: 100%;
-      max-width: 720px;
-      height: 335px;
-
-      @media (max-width: 888.9px) {
-        overflow: scroll;
-      }
-
-      @media (min-width: 730px) {
-        width: 696px;
-        height: 335px;
-      }
-
-      @media (max-width: 729.9px) {
-        width: 300px;
-        height: 587px;
-      }
-
-      .modal-header {
-        text-align: left;
-        padding: 42px 47px;
-
-        @media (max-width: 729.9px) {
-          padding: 24px 20px;
-        }
-
-        .modal-heading {
-          width: 100%;
-          height: 10px;
-          font-size: rem-calc(28px);
-          font-weight: bold;
-          line-height: 1.32;
-          text-align: left;
-          color: #383838;
-          font-family: $secondary-font-family;
-
-          @media (max-width: 729.9px) {
-            width: 215px;
-            margin-bottom: 41px;
-          }
-        }
-
-        .modal-close {
-          background-color: unset;
-        }
-      }
-
-      .modal-body {
-        overflow: hidden;
-        max-height: unset;
-
-        .modal-content {
-          text-align: left;
-
-          .row {
-            padding: 0 34px;
-
-            @media (max-width: 729.9px) {
-              padding: 0 24px;
-            }
-          }
-
-          .flex-container {
-            display: flex;
-
-            @media (max-width: 729.9px) {
-              flex-direction: column;
-            }
-          }
-
-          .pop-header {
-            display: inline-block;
-            padding-right: 52px;
-            width: 300px;
-            height: 82px;
-            font-family: $base-font-family;
-            font-size: rem-calc(17px);
-            line-height: 1.18;
-
-            @media (max-width: 729.9px) {
-              width: 290px;
-              height: 108px;
-            }
-          }
-
-          .sub-padding {
-            padding-left: 18px;
-          }
-
-          .modal-actions button {
-            padding: 7px 25px;
-            margin-left: 26px;
-            width: 243px;
-            height: 43px;
-            font-family: $secondary-font-family;
-            font-size: rem-calc(20px);
-
-            @media (max-width: 1024.9px) {
-              margin-left: 0px;
-            }
-
-            @media (max-width: 729.9px) {
-              font-size: 18px;
-
-              &.secondary {
-                margin-top: 0;
-              }
-            }
-          }
-
-          &.secondary {
-            margin-left: 16px;
-          }
-
-          &.primary {
-            margin-left: 38px;
-          }
-        }
-
-        .modal-content>*:last-child {
-          margin-bottom: 0;
-
-          @media (min-width: 730px) {
-            margin-left: 35px;
-          }
-
-          @media (max-width: 729.9px) {
-            margin-left: 13px;
-          }
-        }
-      }
-    }
-
-    &.usp-pop-up-modal2 {
-      width: 696px;
-      max-width: 720px;
-      height: 360px;
-
-      @media (max-width: 729.9px) {
-        overflow: scroll;
-        width: 300px;
-        height: 462px;
-      }
-
-      .modal-header {
-        text-align: left;
-        padding: 42px 47px;
-
-        @media (max-width: 729.9px) {
-          padding: 40px 30px;
-        }
-
-        .modal-heading {
-          width: 100%;
-          height: 10px;
-          font-size: rem-calc(28px);
-          font-weight: bold;
-          line-height: 1.32;
-          text-align: left;
-          color: #383838;
-          font-family: $secondary-font-family;
-
-          @media (max-width: 729.9px) {
-            max-width: 268px;
-            margin-bottom: 40px;
-            font-size: rem-calc(26px);
-          }
-        }
-
-        .modal-close {
-          background-color: unset;
-        }
-      }
-
-      .modal-body {
-        overflow: hidden;
-        max-height: unset;
-
-        .modal-content {
-          text-align: left;
-          padding-top: 3px;
-
-          .row {
-            padding: 0 34px;
-
-            @media (max-width: 729.9px) {
-              padding: 0 24px;
-            }
-          }
-
-          .flex-container {
-            display: flex;
-            flex-direction: column;
-
-            @media (max-width: 729.9px) {
-              width: 272px;
-              height: 197px;
-            }
-          }
-
-          .pop-header1 {
-            display: inline-block;
-            padding-right: 52px;
-            width: 560px;
-            font-family: $base-font-family;
-            font-size: rem-calc(17px);
-            line-height: 1.18;
-            margin-bottom: 20px;
-
-            @media (max-width: 729.9px) {
-              width: 290px;
-              margin-bottom: 15px;
-            }
-          }
-
-          .pop-header2 {
-            display: inline-block;
-            padding-right: 52px;
-            width: 560px;
-            font-family: $base-font-family;
-            font-size: rem-calc(17px);
-            line-height: 1;
-
-            @media (max-width: 729.9px) {
-              width: 290px;
-            }
-          }
-
-          .sub-padding {
-            padding-left: 18px;
-          }
-
-          .modal-actions {
-            @media (min-width: 730px) {
-              margin-top: 0px;
-            }
-          }
-
-          .modal-actions button {
-            padding: 12px 25px;
-            margin-left: 26px;
-            width: 243px;
-            height: 43px;
-            font-family: $secondary-font-family;
-            font-size: rem-calc(20px);
-
-            @media (max-width: 1024.9px) {
-              margin-left: 0px;
-            }
-
-            @media (max-width: 729.9px) {
-              width: 181px;
-            }
-          }
-
-          &.secondary {
-            margin-left: 16px;
-          }
-
-          &.primary {
-            margin-left: 38px;
-          }
-        }
-
-        .modal-content>*:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-
-    &.usp-pop-up-modal3 {
-      width: 575px;
-      max-width: 720px;
-      height: 360px;
-
-      @media (max-width: $phablet-min-width-minus) {
-        overflow: scroll;
-        width: 300px;
-        height: 462px;
-      }
-
-      text-align: center;
-
-      .modal-header {
-        max-width: 421px;
-        text-align: center;
-        margin: 0 auto;
-        margin-bottom: 16px;
-        margin-top: 32px;
-
-        @media (max-width: $phablet-min-width-minus) {
-          margin-top: 24px;
-        }
-
-        .modal-heading {
-          width: 100%;
-          height: 100%;
-          font-size: rem-calc(32px);
-          font-weight: bold;
-          line-height: 40px;
-          text-align: center;
-          color: #383838;
-          font-family: $secondary-font-family-bold;
-
-          @media (max-width: $phablet-min-width-minus) {
-            max-width: 268px;
-            font-size: rem-calc(24px);
-            line-height: 32px;
-          }
-        }
-
-        .modal-close {
-          background-color: unset;
-        }
-      }
-
-      .modal-body {
-        overflow: hidden;
-        max-height: unset;
-
-        .modal-content {
-          text-align: center;
-          padding-top: 3px;
-
-          .row {
-            padding: 0;
-          }
-
-          .flex-container {
-            display: flex;
-            flex-direction: column;
-
-            @media (max-width: $phablet-min-width-minus) {
-              width: 272px;
-              height: 197px;
-            }
-          }
-
-          .pop-header1 {
-            display: inline-block;
-            padding-right: 0px;
-            width: 100%;
-            font-family: $base-font-family;
-            font-size: 18px;
-            line-height: 0;
-            margin-bottom: 16px;
-
-            @media (max-width: $phablet-min-width-minus) {
-              width: 290px;
-              margin: 0 auto;
-              margin-bottom: 15px;
-              font-size: 16px;
-              line-height: 24px;
-              max-width: 235px;
-            }
-          }
-
-          .pop-header2 {
-            display: inline-block;
-            padding-right: 0px;
-            width: 560px;
-            font-family: $base-font-family;
-            font-size: 18px;
-            line-height: 28px;
-            margin-top: 0px;
-            margin-left: 14%;
-            text-align: left;
-            margin-bottom: 0;
-
-            @media (max-width: $phablet-min-width-minus) {
-              font-size: 16px;
-              line-height: 24px;
-              max-width: 235px;
-              margin-left: 2%;
-            }
-
-            li {
-              margin-bottom: 8px;
-
-            }
-
-            @media (max-width: $phablet-min-width-minus) {
-              width: 290px;
-            }
-          }
-
-          .modal-actions {
-            @media (min-width: 730px) {
-              margin-top: 0px;
-            }
-          }
-
-          .modal-actions button {
-            padding: 4px 10px;
-            width: 100px;
-            height: 32px;
-            font-family: $secondary-font-family;
-            font-size: rem-calc(20px);
-          }
-        }
-
-        .modal-content>*:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-
-    &.deEnroll-modal {
-      width: 100%;
-      max-width: 960px;
-      height: 100%;
-
-      .modal-header {
-        padding: 45px 20px;
-        padding-bottom: 0px;
-
-        .modal-heading {
-          width: 100%;
-          margin-bottom: 18px;
-          font-size: rem-calc(28px);
-          font-weight: bold;
-          line-height: 1.32;
-          text-align: center;
-          color: #383838;
-          font-family: $secondary-font-family-bold;
-        }
-
-        .modal-close {
-          background-color: unset;
-        }
-      }
-
-      .modal-body {
-        padding-bottom: 45px;
-
-        .modal-content {
-          max-width: 730px;
-          padding: 0em 1em;
-
-          .modal-actions {
-            padding: 0;
-            margin: 20px auto;
-
-            button {
-              margin-right: 0px;
-              padding: 12px 20px;
-            }
-          }
-        }
-      }
-    }
-
-    &.duplicate-result-modal {
-      width: 100%;
-      max-width: 700px;
-
-      &.error {
-        .modal-header {
-          .modal-heading {
-            color: #D22119;
-          }
-        }
-      }
-
-      .modal-header {
-        padding: 32px 20px;
-        padding-bottom: 0px;
-
-        .modal-heading {
-          width: 100%;
-          margin-bottom: 18px;
-          font-size: rem-calc(32px);
-          font-weight: bold;
-          line-height: 40px;
-          text-align: center;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          max-width: 600px;
-          padding: 0em 1em;
-          display: flex;
-          flex-direction: column;
-
-          .modal-actions {
-            padding: 0;
-            margin: 20px auto;
-
-            button {
-              width: 111px;
-              padding: 8px;
-            }
-          }
-        }
-      }
-    }
-
-    &.autoPay-help-modal {
-      width: 100%;
-      max-width: 960px;
-      border: 1px solid $input-border;
-
-      .modal-header {
-        .modal-heading {
-          width: 100%;
-          text-align: left;
-          margin: 15px 0 0;
-
-          @media (#{$larger-than-phablet}) {
-            font-size: rem-calc(25px);
-            padding: 0 30px;
-            font-family: $secondary-font-family-bold;
-            font-weight: bold;
-            line-height: 30px;
-          }
-
-          @media (max-width: 1024px) {
-            padding: 0 55px;
-          }
-
-          @media (max-width: 640px) {
-            padding: 0 20px;
-          }
-
-          font-size: rem-calc(31px);
-          width: 100%;
-          line-height: 41px;
-        }
-      }
-
-      .modal-content {
-        text-align: left;
-        padding: 0 1em 20px;
-        font-size: rem-calc(16px);
-
-        .description-content {
-          margin-bottom: 20px;
-        }
-
-        .payment-sub {
-          margin-bottom: 20px;
-        }
-
-        @media (#{$larger-than-phablet}) {
-          font-size: rem-calc(17px);
-        }
-      }
-
-      .modal-actions {
-        margin: 0 0 1em;
-
-        .button {
-          padding: 10px 50px;
-          width: 220px;
-          margin-top: 0;
-        }
-
-        @media (max-width: 640px) {
-          display: block;
-
-          .button {
-            display: block;
-            margin: 0 auto;
-            width: 213px;
-            font-size: rem-calc(20px);
-          }
-        }
-      }
-
-      .modal-close {
-        background: #fff;
-      }
-
-      .modal-content>* {
-        padding: 0.5em 1em;
-
-        @media (#{$larger-than-phablet}) {
-          padding: 0 50px 20px;
-        }
-      }
-    }
-
     &.wifi-calling-modal {
       max-width: 375px;
       border: 2px solid $primary-color;
       border-radius: 11px;
       width: 100%;
-
-      .modal-header {
-        padding: 30px 20px 10px;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(25px);
-          font-weight: 500;
-          line-height: 33px;
-          width: 100%;
-          max-width: 256px;
+      .modal-actions {
+        button {
+          width: 140px!important;
         }
       }
-
       .modal-body {
         max-height: calc(80vh - 65px);
         overflow-x: hidden;
@@ -5880,54 +2897,9 @@
               }
             }
           }
-
-          .modal-actions {
-            margin: 0 auto 30px;
-
-            .button {
-              width: 135px;
-              font-size: rem-calc(20px);
-              padding: 8px;
-            }
-          }
-        }
-
-        .modal-content>* {
-          padding: 0;
         }
       }
     }
-
-    &.wifi-result-modal {
-      width: 302px;
-      border: 1px solid $primary-color;
-      border-radius: 11px;
-
-      .modal-header {
-        padding: 30px 20px 10px;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(25px);
-          font-weight: 500;
-          line-height: 33px;
-          width: 100%;
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          .row {
-            padding: 0 26px;
-            font-size: rem-calc(14px);
-          }
-        }
-      }
-    }
-
     &.edit-wifi-modal {
       .modal-body {
         .modal-content {
@@ -5937,49 +2909,159 @@
         }
       }
     }
-
-    &.disable-wifi-modal {
-      width: 302px;
-      border: 1px solid $primary-color;
-      border-radius: 11px;
-
-      .modal-header {
-        padding: 30px 20px 10px;
-
-        .modal-close {
-          background-color: transparent;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(25px);
-          font-weight: 500;
-          line-height: 33px;
-          width: 100%;
-        }
-      }
-
+    &.skip-modal {
       .modal-body {
         .modal-content {
-          padding: 0 0 20px;
-
-          .modal-actions {
-            margin: 0 auto;
-
-            .button {
-              background-color: $secondary-color;
-              width: 125px;
-              padding: 8px;
-
-              &.primary {
-                background-color: $primary-color;
-                margin-right: 10px;
+          .row {
+            width: 100%;
+            .msg{
+              font-size: 18px;
+              line-height: 28px;
+              @media(max-width: $phablet-min-width-minus) {
+                font-size: 16px;
+                line-height: 24px;
               }
+            }
+          }
+          .modal-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;    
+            @media(max-width: $phablet-min-width-minus) {
+              flex-direction: column;
+              .primary{
+                margin-right: 0!important;
+                margin-bottom: 14px!important;
+              }
+              .transparent{
+                margin-bottom: 14px!important;
+              }
+            }
+            button {
+              width: 160px!important;
+              padding: 6px!important;
             }
           }
         }
       }
     }
+    &.clear-phone-modal {
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+        @media(max-width: $phablet-min-width-minus) {
+          flex-direction: column;
+          .primary{
+            margin-right: 0!important;
+            margin-bottom: 14px!important;
+          }
+          .transparent{
+            margin-bottom: 14px!important;
+          }
+        }
+        button {
+          width: 260px!important;
+          padding: 6px!important;
+        }
+      }
+      .modal-body {
+        .modal-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .row {
+            width: 100%;
+          }
+        }
+      }
+    }
+    &.disable-wifi-modal {
+      .modal-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+        @media(max-width: $phablet-min-width-minus) {
+          flex-direction: column;
+          .primary{
+            margin-right: 0!important;
+            margin-bottom: 14px!important;
+          }
+          .transparent{
+            margin-bottom: 14px!important;
+          }
+        }
+        button {
+          width: 120px!important;
+          padding: 6px!important;
+        }
+      }
+    }
+    &.confirm-modal {
+      &.delete-duplicate {
+        width: 100%;
+        .modal-header {
+          .modal-close {
+            display: none;
+          }
+        }
 
+        .modal-body {
+          .modal-content {
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+          }
+        }
+      }
+    }
+    &.confirm-change-checkout-modal {
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .row{
+          width: 100%;
+        }
+      }
+      .msg {
+        font-size: rem-calc(17px);
+        line-height: 20px;
+        padding: 10px 30px 0;
+        width: 100%;
+      }
+      @media (max-width: $tablet-min-width) {
+        .row {
+          .msg {
+            padding: 0;
+          }
+        }
+      }
+    }
+    &.clean-cart-modal {
+      .modal-body {
+        text-align: center;
+        .msg {
+          font-size: rem-calc(17px);
+          line-height: 20px;
+          max-width: 520px;
+          width: 100%;
+          text-align: center;
+          margin: 0 auto;
+        }
+      }
+
+      @media (max-width: 641px) {
+        .modal-body {
+          .msg {
+            font-size: rem-calc(17px);
+            line-height: 20px;
+          }
+        }
+      }
+    }
     &.referral-promo-modal {
       max-width: 740px;
       width: 100%;
@@ -6153,354 +3235,46 @@
         }
       }
     }
-
-    &.confirm-password-modal {
-      max-width: 500px;
-      width: 100%;
-
-      .modal-header {
-        .modal-close {
-          background-color: white;
-        }
-
-        .modal-heading {
-          font-size: rem-calc(25px);
-          font-family: $secondary-font-family-bold;
-          line-height: 25px;
-          text-align: center;
-          width: 100%;
-          height: 100%;
-
-          @media (max-width: 640.9px) {
-            width: 218px;
-            height: 50px;
-            line-height: 1.27;
-            font-size: rem-calc(22px);
-          }
+    &.auto-renew-modal {
+      .msg {
+        font-size: 18px;
+        line-height: 28px;
+        @media(max-width: $phablet-min-width-minus) {
+          font-size: 16px;
+        line-height: 24px;
         }
       }
-
-      .modal-body {
-        .modal-content {
-          padding: 0 30px;
-          margin-top: 10px;
-
-          .row {
-            padding: 5px 0px;
-          }
-        }
-
+      &.large{
         .modal-actions {
           display: flex;
-          flex-direction: column;
-          margin: 0 10px 20px;
-
-          .button {
-            width: 175px;
-            font-size: rem-calc(20px);
-            font-family: $secondary-font-family;
-            padding: 10px;
-            display: block;
-            background-color: $secondary-color;
-
-            &.primary {
-              background-color: $primary-color;
+          justify-content: center;
+          align-items: center;    
+          @media(max-width: $phablet-min-width-minus) {
+            flex-direction: column;
+            .primary{
+              margin-right: 0!important;
+              margin-bottom: 14px!important;
             }
+            .transparent{
+              margin-bottom: 14px!important;
+            }
+          }
+          button {
+            width: 240px!important;
+            padding: 6px!important;
           }
         }
       }
-    }
-
-    &.delete-phone-confirm-modal {
-      @media (min-width: 1200px) {
-        width: 60%;
-      }
-
-      .modal-header {
-        .modal-heading {
-          @media (min-width: 450px) {
-            line-height: 28px;
-            width: 68%;
-          }
-
-          @media (max-width: 450px) {
-            line-height: 31px;
-            font-size: rem-calc(22px);
-          }
-        }
-      }
-
-      .modal-body {
-        .modal-content {
-          .row {
-            @media (min-width: 640px) {
-              padding: 0.5em 1em;
-            }
-
-            .button {
-              width: 200px;
-              height: 43px;
-              padding: 0px;
-
-              &:nth-child(1) {
-                @media (min-width: 883px) {
-                  margin-right: 40px;
-                }
-
-                margin-right: 1%;
-              }
-
-              &:nth-child(2) {
-                background-color: #f58520;
-              }
-            }
-          }
-        }
+      .modal-close {
+        display: none;
       }
     }
   }
-
-  &.model-container {
-    &#information-modal {
-      max-width: 700px;
-    }
-  }
-
-  .modal-header,
-  .modal-content {
-    text-align: center;
-    font-size: rem-calc(17px);
-
-    @media (#{$larger-than-mobile}) {
-      font-size: rem-calc(18px);
-    }
-
-    padding: 10px;
-    line-height: 1.5;
-
-    @media (#{$larger-than-desktop}) {
-      padding: 1em 2em 0;
-    }
-
-    fieldset {
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    input[type="email"],
-    input[type="number"],
-    input[type="search"],
-    input[type="text"],
-    input[type="tel"],
-    input[type="url"],
-    input[type="password"] {
-      width: auto;
-      margin-bottom: 0;
-    }
-  }
-
-  .modal-content {
-    padding-bottom: 10px;
-    padding: 1.2em 1em;
-
-    .row {
-      margin-bottom: 10px;
-    }
-
-    .modal-heading {
-      width: 79%;
-      text-align: center;
-      margin: 12px auto 0;
-    }
-
-    .twelve {
-      width: 93%;
-      margin: 0 auto;
-      float: none;
-    }
-
-    &>* {
-      display: flex;
-      //align-items: center;
-      justify-content: flex-start;
-
-      @media (#{$larger-than-phablet}) {
-        padding: 0.5em 4em;
-      }
-    }
-  }
-
-  .modal-actions {
-    margin: 10px -10px 0;
-    padding: 0px 0px 20px 0px;
-    justify-content: flex-start;
-    //width: 100vw;
-
-    @media (#{$larger-than-desktop}) {
-      margin: 10px -2em 0;
-    }
-
-    button {
-      margin: 10px auto 0 auto;
-      padding: 10px 20px;
-      font-size: rem-calc(20px);
-
-      @media (#{$larger-than-mobile}) {
-        padding: 10px 50px;
-      }
-    }
-  }
-
   .modal-body {
     max-height: calc(90vh - 65px);
     overflow-y: auto;
   }
-
-  .modal-header {
-    position: relative;
-    background-color: #fff;
-    text-align: center;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 11px;
-    right: 10px;
-    padding: 3px;
-    color: #000;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    background: #ccc;
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-
-    i {
-      font-size: rem-calc(19px);
-    }
-  }
-
-  .modal-close:hover {
-    color: #777;
-  }
-
-  .modal-heading {
-    @media (#{$larger-than-mobile}) {
-      font-size: rem-calc(25px);
-      line-height: 23px;
-    }
-
-    font-size: rem-calc(31px);
-    line-height: 40px;
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  .modal-content>*:first-child {
-    margin-top: 0;
-  }
-
-  .modal-content>*:last-child {
-    margin-bottom: 0;
-
-    &.display-block {
-      @media (max-width: 639.9px) and (min-width: 576px) {
-        display: block;
-      }
-    }
-  }
 }
-
-.information-message-modal {
-  .modal-header {
-    @media (min-width: $desktop-min-width) {
-      padding: 1em 1em 0;
-    }
-
-    .modal-heading {
-      @media (min-width: $desktop-min-width) {
-        min-width: max-content;
-      }
-    }
-  }
-
-  .modal-content {
-    .row {
-      width: 100%;
-    }
-  }
-}
-
-.change-ebb-plan-modal {
-  .row {
-    &.modal-actions {
-      width: unset;
-      margin-right: 100px;
-    }
-  }
-
-  .approve-remove-ebb {
-    font-weight: bold;
-    font-size: 20px;
-  }
-}
-
-.tyy-message-modal {
-  width: 100% !important;
-
-  .modal-header {
-    padding: 1em 1em 0;
-
-    .modal-heading {
-      width: 64%;
-      text-align: left;
-      margin: 12px 0 0;
-      line-height: 35px;
-      font-size: rem-calc(24px);
-
-      @media (max-width: $phablet-min-width-minus) {
-        width: 75%;
-        margin: 27px 0 0;
-      }
-    }
-  }
-
-  .modal-close {
-    background: none;
-  }
-
-  .modal-content {
-    width: 283px;
-    text-align: left;
-    padding: 1em 1em;
-
-    .info {
-      p {
-        max-width: 285px;
-        font-size: rem-calc(15px);
-        font-family: $base-font-family;
-      }
-
-      .note {
-        font-style: italic;
-      }
-    }
-  }
-
-  .modal-content>* {
-    padding: 0;
-    text-align: left;
-  }
-
-  .modal-actions {
-    button {
-      display: none;
-    }
-  }
-}
-
 .modal.is-visible,
 .modal.fade.in {
   visibility: visible;
@@ -6548,555 +3322,3 @@
   opacity: 1;
 }
 
-.clear-cart-modal {
-  .modal-body {
-    .modal-content {
-      .modal-actions {
-        .primary {
-          margin-right: 15px;
-          background-color: #863399;
-        }
-
-        button {
-          width: 155px;
-          padding: 10px;
-
-          &:nth-child(2) {
-            background-color: #f58520;
-          }
-        }
-
-        @media (max-width: 424px) {
-          button {
-            width: 103px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.out-of-stock-modal {
-  &.model-container {
-    width: 100%;
-    max-width: 800px;
-  }
-
-  .modal-heading {
-    font-size: 40px;
-    line-height: 48px;
-
-    @media (max-width: $ipad-min-width-minus) {
-      font-size: 24px;
-      line-height: 32px;
-    }
-  }
-
-  .modal-body {
-    .modal-content {
-      .row {
-        font-size: 20px;
-        line-height: 32px;
-        max-width: 100%;
-        padding: 0em 5em;
-
-        @media (max-width: $ipad-min-width-minus) {
-          padding: 0em 1em;
-          font-size: 18px;
-          line-height: 28px;
-        }
-      }
-
-      .modal-actions {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-
-        @media (max-width: $ipad-min-width-minus) {
-          flex-direction: column;
-          margin: 0;
-        }
-
-        button {
-          margin: 16px 0;
-          margin-right: 16px;
-
-          @media (max-width: $ipad-min-width-minus) {
-            font-size: 16px;
-            margin-right: 0px;
-          }
-        }
-
-        a {
-          font-size: 20px;
-          line-height: 28px;
-
-          @media (max-width: $ipad-min-width-minus) {
-            font-size: 16px;
-            line-height: 20px;
-          }
-        }
-      }
-    }
-  }
-
-  // .modal-content > *:last-child {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   margin: 0 auto;
-  //   @media (max-width: $ipad-min-width-minus) {
-  //     flex-direction: column;
-  //     margin: 0;
-  //   }
-  // }
-}
-
-.auto-renew-modal {
-  .modal-header {
-    .modal-heading {
-      width: 100%;
-      text-align: center;
-      margin: 12px auto 0;
-    }
-  }
-
-  .modal-close {
-    display: none;
-  }
-
-  .modal-body {
-    .modal-content {
-      .modal-actions {
-        .primary {
-          margin-right: 15px;
-          width: 155px;
-          background-color: #863399;
-        }
-
-        button {
-          &:nth-child(2) {
-            background-color: #f58520;
-            width: 155px;
-          }
-        }
-
-        @media (max-width: 357.9px) {
-          .primary {
-            width: 155px;
-            margin-right: 0;
-          }
-        }
-
-        @media (max-width: 345.9px) {
-          .primary {
-            margin-top: -6px;
-          }
-        }
-
-        @media (min-width: 358px) and (max-width: 424px) {
-          .primary {
-            width: 155px;
-            margin-right: 5px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.auto-renew-modal2 {
-  .modal-close {
-    display: none;
-  }
-
-  .modal-body {
-    .modal-content {
-      .twelve {
-        width: 100%;
-        line-height: 2;
-
-        @media (min-width: 1451px) {
-          width: 91%;
-        }
-
-        // @media(min-width:1317px) and (max-width:1451px){
-        //   width:110%;
-        // }
-      }
-
-      .modal-actions {
-        .primary {
-          margin-right: 15px;
-          width: 290px;
-          font-size: 18px;
-          background-color: #863399;
-
-          @media (max-width: 1060px) {
-            display: table-row-group;
-          }
-
-          @media (max-width: 365px) {
-            margin-top: -14px;
-          }
-        }
-
-        button {
-          &:nth-child(2) {
-            background-color: #f58520;
-            width: 287px;
-            font-size: 18px;
-
-            @media (max-width: 1075px) {
-              margin-left: -10px;
-            }
-
-            @media (max-width: 365px) {
-              margin-bottom: 25px;
-            }
-          }
-        }
-
-        @media (max-width: 424px) {
-          .primary {
-            width: 287px;
-            font-size: 18px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.auto-renewel-modal {
-  .modal-close {
-    display: none;
-  }
-
-  .modal-body {
-    .modal-content {
-      .modal-actions {
-        .button {
-          padding: 9px;
-          margin-right: 15px;
-          width: 235px;
-          background-color: #f58520;
-
-          &.primary {
-            background-color: #863399;
-          }
-        }
-      }
-    }
-  }
-}
-
-.promotion-terms-modal {
-  &.model-container {
-    width: 100%;
-  }
-
-  max-width: 745px;
-
-  .modal-header {
-    text-align: left;
-    padding: 1em 2em 0;
-
-    .modal-heading {
-      text-align: left;
-      color: #ff0505;
-      width: 100%;
-      font-family: $base-font-family;
-      font-size: rem-calc(16px);
-      line-height: 22px;
-    }
-
-    .modal-close {
-      background-color: transparent;
-    }
-  }
-
-  .modal-content>* {
-    padding: 1em 2em;
-  }
-
-  .modal-content {
-    text-align: left;
-    font-size: rem-calc(13px);
-    font-family: $base-font-family;
-
-    .main-content {
-      p {
-        margin-bottom: 25px;
-      }
-
-      .first {
-        margin-bottom: 0;
-
-        .focus {
-          font-weight: bold;
-        }
-      }
-
-      .features-list {
-        padding-inline-start: 15px;
-        margin-top: 0;
-      }
-
-      .terms {
-        margin-bottom: 0;
-
-        .temsApplies {
-          width: 46%;
-          display: inline-block;
-        }
-
-        .action {
-          width: 54%;
-          display: inline-block;
-          text-align: right;
-        }
-
-        @media (max-width: 712px) {
-          .temsApplies {
-            width: 100%;
-            display: block;
-          }
-
-          .action {
-            width: 100%;
-            display: block;
-            text-align: left;
-            margin-top: 30px;
-          }
-        }
-      }
-    }
-
-    .modal-actions {
-      margin: 0 0 25px;
-      float: right;
-      padding: 1em 4em;
-
-      .button {
-        width: 213px;
-        padding: 10px 5px;
-        font-family: $secondary-font-family;
-        font-size: rem-calc(17px);
-      }
-
-      @media (max-width: 712px) {
-        margin: 0 auto;
-        display: block;
-        text-align: center;
-        float: none;
-      }
-    }
-  }
-}
-
-.ios-setup-modal {
-  max-width: 800px;
-  width: 100%;
-
-  .modal-header {
-    .modal-close {
-      background-color: white;
-    }
-
-    .modal-heading {
-      font-size: rem-calc(25px);
-      font-family: $secondary-font-family-bold;
-      line-height: 50px;
-      text-align: left;
-      width: 100%;
-      max-width: 482px;
-      height: 100%;
-
-      @media (max-width: 640.9px) {
-        width: 218px;
-        height: 61px;
-        line-height: 1.27;
-        font-size: rem-calc(22px);
-      }
-    }
-  }
-
-  .modal-content {
-    padding: 0 1em 1.2em;
-  }
-
-  .modal-body {
-    .modal-content {
-      @media (max-width: 640.9px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .row {
-        @media (max-width: 640.9px) {
-          padding: 0;
-          margin-bottom: 0;
-        }
-
-        &.modal-actions {
-          &.display-block {
-            @media (max-width: 640.9px) {
-              display: block;
-              order: 1;
-            }
-          }
-        }
-      }
-    }
-
-    .twelve {
-      font-size: rem-calc(15px);
-      line-height: 20px;
-      max-width: 480px;
-      width: 100%;
-    }
-
-    .modal-actions {
-      .button {
-        background-color: $secondary-color;
-        width: 175px;
-        font-size: rem-calc(20px);
-        font-family: $secondary-font-family;
-        padding: 10px 20px;
-
-        @media (max-width: 640.9px) {
-          width: 145px;
-          height: 43px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        &.primary {
-          background-color: #c5c5c4;
-          margin-right: 87px;
-          margin-left: 10px;
-          cursor: not-allowed;
-
-          @media (min-width: 641px) and (max-width: 1024.9px) {
-            margin-right: 42px;
-          }
-
-          @media (max-width: 640.9px) {
-            margin-left: 97px;
-            margin-right: 95px;
-            margin-top: -15px;
-            margin-bottom: 50px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.ios-setup-modal2 {
-  max-width: 800px;
-  width: 100%;
-
-  .modal-header {
-    .modal-close {
-      background-color: white;
-    }
-
-    .modal-heading {
-      font-size: rem-calc(25px);
-      font-family: $secondary-font-family-bold;
-      line-height: 50px;
-      text-align: left;
-      width: 100%;
-      max-width: 482px;
-      height: 100%;
-
-      @media (max-width: 640.9px) {
-        width: 218px;
-        height: 61px;
-        line-height: 1.27;
-        font-size: rem-calc(22px);
-      }
-    }
-  }
-
-  .modal-content {
-    padding: 0 1em 1.2em;
-  }
-
-  .modal-body {
-    .modal-content {
-      @media (max-width: 640.9px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .row {
-        @media (max-width: 640.9px) {
-          padding: 0;
-          margin-bottom: 0;
-        }
-
-        &.modal-actions {
-          &.display-block {
-            @media (max-width: 640.9px) {
-              display: block;
-              order: 1;
-            }
-          }
-        }
-      }
-    }
-
-    .twelve {
-      font-size: rem-calc(15px);
-      line-height: 20px;
-      max-width: 480px;
-      width: 100%;
-    }
-
-    .modal-actions {
-      .button {
-        background-color: $secondary-color;
-        width: 175px;
-        font-size: rem-calc(20px);
-        font-family: $secondary-font-family;
-        padding: 10px 20px;
-
-        @media (max-width: 640.9px) {
-          width: 145px;
-          height: 43px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        &.primary {
-          background-color: $primary-color;
-          margin-right: 87px;
-          margin-left: 10px;
-
-          @media (min-width: 641px) and (max-width: 1024.9px) {
-            margin-right: 42px;
-          }
-
-          @media (max-width: 640.9px) {
-            margin-left: 97px;
-            margin-right: 95px;
-            margin-top: -15px;
-            margin-bottom: 50px;
-          }
-        }
-      }
-    }
-  }
-}

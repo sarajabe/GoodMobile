@@ -19,8 +19,6 @@ import { SimReplacementModalComponent } from './sim-replacement-modal/sim-replac
 import { WifiCallingModalComponent } from './wifi-calling-modal/wifi-calling-modal.component';
 import { MigrationStepsComponent } from './migration-steps/migration-steps.component';
 import { SWIPER_CONFIG, SwiperConfigInterface, SwiperModule } from 'ngx-swiper-wrapper';
-import { IsLteModalComponent } from './is-lte-modal/is-lte-modal.component';
-import { DynamicModalsComponent } from './dynamic-modals/dynamic-modals.component';
 import { ReferralPromotionComponent } from './referral-promotion-modal/referral-promotion.component';
 import { FiveGModalComponent } from './five-gmodal/five-gmodal.component';
 import { OutOfStockItemModalComponent } from './out-of-stock-item-modal/out-of-stock-item-modal.component';
@@ -48,9 +46,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         SimReplacementModalComponent,
         WifiCallingModalComponent,
         MigrationStepsComponent,
-        IsLteModalComponent,
         ReferralPromotionComponent,
-        DynamicModalsComponent,
         FiveGModalComponent,
         OutOfStockItemModalComponent,
         AcpModalComponent,
@@ -65,8 +61,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ],
     exports: [ManagePaymentModalComponent, ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
         InformationMessageModalComponent, AddActivatedNumberModalComponent, InputModalComponent, EditCcModalComponent, SelectPaymentModalComponent, ShippingAddressModalComponent, SimReplacementModalComponent,
-        WifiCallingModalComponent, MigrationStepsComponent, IsLteModalComponent, TrackingModalComponent,
-        RoutingModalComponent, DynamicModalsComponent, ReferralPromotionComponent, FiveGModalComponent, eSimReplacementModalComponent,
+        WifiCallingModalComponent, MigrationStepsComponent, TrackingModalComponent,
+        RoutingModalComponent, ReferralPromotionComponent, FiveGModalComponent, eSimReplacementModalComponent,
         OutOfStockItemModalComponent, AcpModalComponent, PhoneNotImpactedModalComponent,MdnsListModalComponent, CompatibilitySkipModalComponent],
     providers: [{ provide: SWIPER_CONFIG, useValue: DEFAULT_SWIPER_CONFIG }]
 })

@@ -4,16 +4,16 @@
       <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
     </div>
     <div class="modal-body">
-      <div class="content">
+      <div class="modal-content">
         <p class="message">Please confirm if this is the phone you are using?</p>
         <img class="phone" src="assets/img/iphone-12.svg" alt="iPhone">
         <div>
             <p class="info">{{context.phone}}</p>
             <p class="info">IMEI: <span class="light">{{context.imei}}</span></p>
         </div>
-        <div class="action">
+        <div class="modal-actions">
             <button class="button primary" (click)="confirm(true)" aria-label="Yes, this is my phone">Yes, this is my phone</button>
-            <button class="button secondary" (click)="confirm(false)" aria-label="No, I have another phone">No, I have another phone</button>
+            <button class="button transparent" (click)="confirm(false)" aria-label="No, I have another phone">No, I have another phone</button>
         </div>
       </div>
     </div>

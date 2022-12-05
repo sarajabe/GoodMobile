@@ -1,4 +1,4 @@
-<div class="container model-container full {{context.customClass}}">
+<div class="container model-container {{context.customClass}}">
     <div class="modal-header">
       <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
       <h2 class="modal-heading" *ngIf="context.isManage">Add Payment Method to Wallet</h2>
@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
       <div class="modal-content">
-        <div class="row form-section" *ngIf="context.isManage">
+        <div class="form-section" *ngIf="context.isManage">
           <div class="three" *ngFor="let methodItem of methodsList">
             <h5 class="text-bold">{{methodItem.method}} {{methodItem.id === context.userPlan.paymentMethodId ? '- Default' : ''}}</h5>
             <small>{{methodItem.alias}}<br> Expiring {{methodItem.expirationDate | expirationDateFormat}}</small>
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="form-section payment-form">
-          <fieldset class="twelve credit-image">
+          <fieldset class="credit-image">
             <h4 *ngIf="context.isManage">Add New Payment Method</h4>
             <div class="radio">
               <div class="radio">
@@ -31,17 +31,14 @@
             </div>
           </fieldset>
         </div>
-        <div class="row form-section">
-          <div class="twelve">
+        <div class="form-section">
             <app-credit-card-payment [(paymentInfo)]="paymentInfo" (isValid)="setValidCardInfo($event)"></app-credit-card-payment>
-  
             <div class="form-section">
               <h4>Billing Address</h4>
               <app-address-lookup [displayedAddress]="billingAddress" (addressChange)="updateAddress($event)" (isValid)="setValidBillingAddress($event)"></app-address-lookup>
             </div>
-          </div>
         </div>
-        <div class="row form-section modal-actions">
+        <div class="form-section modal-actions">
           <button *ngIf="!editMode" class="button primary" (click)="savePaymentInfo()"
                   [class.disabled]="!isValidPaymentInfo" [disabled]="!isValidPaymentInfo" [uiBlockButton]="processingRequest">
             Save
