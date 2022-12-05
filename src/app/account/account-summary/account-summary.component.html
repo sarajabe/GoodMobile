@@ -224,7 +224,7 @@
                     <div class="links-container">
                       <a class="change-action"
                         [class.disabled]="!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus"
-                        *ngIf="!!selectedPlan  && !userAccount?.billingRenewalPaid"
+                        *ngIf="!!selectedPlan  && (!!selectedPlan?.basePlan.ebb || !userAccount?.billingRenewalPaid)"
                         (click)="changePlan()">
                         <img class="change-icon" src="/assets/icon/change.svg">
                         Change plan</a>

@@ -374,25 +374,26 @@
 
 ::ng-deep {
   .alert-banner {
-    background-color: #CE0A0A;
+    background: #FAEBEC;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: 100px;
+    top: 64px;
     height: 100px;
     padding: 50px;
     max-width: 2000px;
     z-index: 8;
     width: 100%;
+    box-shadow: 0px 4px 15px 0px #CED3D699;
 
     .message {
       p {
         font-size: rem-calc(18px);
         line-height: 22px;
         max-width: 1360px;
-        margin-bottom: 0;
+        margin-bottom: 16px;
       }
     }
 
@@ -444,7 +445,7 @@
     display: flex;
     align-items: center;
     position: fixed;
-    top: 100px;
+    top: 64px;
     height: 176px;
     padding: 32px;
     max-width: 2000px;
@@ -467,9 +468,9 @@
 
     .desc {
       color: $black;
-      font-size: rem-calc(16px);
       line-height: 24px;
       padding-left: 40px;
+      margin-bottom: 16px;
     }
 
     .button {

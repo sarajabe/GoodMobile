@@ -1,6 +1,6 @@
 <section class="content-section" *ngIf="!acpSuccess && !acpError">
-  <h2 class="header">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
-  <h3 class="sub-header">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h3>
+  <h1 class="header">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h1>
+  <p class="sub-header">{{STEPS_CONTENT[activeStep]?.stepDesc}}</p>
   <p class="extra-desc" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}
   </p>
   <section class="stepper">

@@ -2,25 +2,9 @@
 
 .acp-flow {
     margin-top: 60px;
-    padding: 0 10%;
-    @media (max-width: $desktop-min-width-minus) {
-        padding: 0 20px;
-    }
+   
     @media (max-width: $phablet-min-width-minus) {
         margin-top: 32px;
-        padding: 0 16px;
-    }
-    .header {
-        font-size: 32px;
-        line-height: 40px;
-        margin-bottom: 4px;
-        letter-spacing: -0.02em;
-        font-weight: normal;
-        font-family: $secondary-font-family;
-        @media (max-width: $phablet-min-width-minus) {
-            font-size: 24px;
-            line-height: 32px;
-        }
     }
     .sub-header {
         font-size: 24px;
@@ -107,8 +91,9 @@
         align-items: flex-start;
         padding: 24px;
         gap: 10px;
-        background: rgba(134, 51, 153, 0.1);
-        box-shadow: 0px 3px 4px rgba(234, 234, 234, 0.25);
+        background: #F1F9FD;
+        box-shadow: 0px 4px 15px 0px #CED3D699;
+
         border-radius: 8px 8px 10px 10px;
         max-width: 865px;
         width: 100%;

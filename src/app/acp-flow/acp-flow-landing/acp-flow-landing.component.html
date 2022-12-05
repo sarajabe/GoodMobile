@@ -1,7 +1,7 @@
-<section class="acp-flow" *ngIf="!showAcpComponents && !acpSuccess && !acpError">
-  <h2 class="header">Before we begin...</h2>
-  <h3 class="sub-header" data-cy="id-decision">Do you have an
-    ACP application ID?</h3>
+<section class="acp-flow page-section" *ngIf="!showAcpComponents && !acpSuccess && !acpError">
+  <h1 class="header">Before we begin...</h1>
+  <p class="sub-header" data-cy="id-decision">Do you have an
+    ACP application ID?</p>
   <form [formGroup]="acpFlowForm" class="acp-form-flow" [class.acp-disabled]="!!enrolled">
     <div class="radioBtn" *ngFor="let item of acpOptions">
       <label class="form-control" [for]="item?.id">

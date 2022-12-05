@@ -120,12 +120,12 @@
                 color: $primary-color;
 
                 .circle {
-                    background: rgba(134, 51, 153, 0.1);
+                    background: #F8FCFE;
                     color: $primary-color;
-                    border-right: 0.66px solid #ff9811;
-                    border-left: 0.66px solid #863399;
-                    border-top: 0.66px solid #ff9811;
-                    border-bottom: 0.66px solid #863399;
+                    border-right: 0.66px solid $primary-color;
+                    border-left: 0.66px solid $blue;
+                    border-top: 0.66px solid $primary-color;
+                    border-bottom: 0.66px solid $blue;
                     width: 40px;
                     height: 40px;
 
