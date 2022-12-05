@@ -4,7 +4,7 @@
         <div class="search-side">
             <input class="search-input" data-cy="ID" placeholder="Search by order ID" type="search" [(ngModel)]="orderId" (keyup.enter)="searchOrderByID()">
             <div class="clear-action" *ngIf="!!orderId"><i class="icon-close"  data-cy="closeIcon" (click)="resetOrderId()"></i></div>
-            <img class="icon-search" data-cy="searchBtn"  src="assets/icon/search-purple.svg" alt="search" (click)="searchOrderByID()"/>
+            <img class="icon-search" data-cy="searchBtn"  src="assets/icon/search.svg" alt="search" (click)="searchOrderByID()"/>
         </div>
         <div class="filters">
             <div class="sorting" #sort>
@@ -30,7 +30,7 @@
                 <p class="filter-title" data-cy="filter"  [class.focus]="showFilter || (filterCount > 0)" (click)="toggleFilter()"> <img class="filter-icon" alt="filter" src="assets/icon/filter.svg" /> Filter <span class="countr" *ngIf="filterCount > 0">{{filterCount}}</span></p>
                 <div class="filter-view" [class.shown]="!!showFilter">
                     <div class="close-section">
-                        <img class="close-button" src="assets/icon/purple-close-circle.svg" alt="close" (click)="closeFilters()">
+                        <img class="close-button" src="assets/icon/close-circle.svg" alt="close" (click)="closeFilters()">
                     </div>
                     <div class="filter-section date" (click)="showFilter=true;">
                         <h3 class="filter-section-title">Date <span class="clear-title" (click)="clearDates()" [class.show]="canClearDate">Clear</span></h3>

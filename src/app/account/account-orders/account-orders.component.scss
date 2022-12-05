@@ -84,7 +84,8 @@
             display: flex;
             justify-content: flex-end;
             .focus {
-                background: #8633991A;
+                background: linear-gradient(0deg, #FDEEDE, #FDEEDE),
+                linear-gradient(0deg, #FF972F, #FF972F);
             }
             .sorting {
                 margin-right: 10px;
@@ -172,7 +173,10 @@
                 }
                 &:hover {
                     .sort-title {
-                        background: #8633991A;
+                        background: linear-gradient(0deg, #FDEEDE, #FDEEDE),
+linear-gradient(0deg, #FF972F, #FF972F);
+                        color: $hover-color;
+                        border-color: $hover-color;
                     }
                     
                 }
@@ -236,6 +240,7 @@
                                 display: flex;
                                 justify-content: space-between;
                                 align-items: center;
+                                color: $header-color;
                                 .clear-title {
                                     color: $primary-color;
                                     font-size: rem-calc(16px);
@@ -284,8 +289,8 @@
                                                 position: absolute;
                                                 color: #fff!important;
                                                 content: "✔"!important;
-                                                border: 1px solid #863399;
-                                                background-color: #863399;
+                                                border: 1px solid $primary-color;
+                                                background-color: $primary-color;
                                                 font-size: rem-calc(15px);
                                                 width: 22px;
                                                 height: 22px;
@@ -337,7 +342,10 @@
                 }
                 &:hover {
                     .filter-title {
-                        background: #8633991A;
+                        background: linear-gradient(0deg, #FDEEDE, #FDEEDE),
+                        linear-gradient(0deg, #FF972F, #FF972F);
+                        color: $hover-color;
+                        border-color: $hover-color;
                     }
                     
                 }
