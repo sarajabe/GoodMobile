@@ -95,27 +95,11 @@ p {
     font-size: rem-calc(12px);
     line-height: 20px;
     font-family: $secondary-font-family;
-    @media (max-width: $phablet-min-width-minus) {
-      font-size: rem-calc(10px);
-      line-height: 20px;
-    }
   }
   &.label {
     font-size: rem-calc(12px);
     line-height: 12px;
     font-family: $secondary-font-family;
-  }
-  @media (max-width: $phablet-min-width-minus) {
-    // font-size: rem-calc(16px);
-    // line-height: 24px;
-    // &.smaller {
-    //   font-size: rem-calc(14px);
-    //   line-height: 24px;
-    // }
-    // &.smallest {
-    //   font-size: rem-calc(12px);
-    //   line-height: 18px;
-    // }
   }
 }
 a {
@@ -209,7 +193,9 @@ pre {
     color: $primary-color;
   }
 }
-
+.header-color {
+  color: $header-color;
+}
 .text-color-secondary {
   color: $secondary-color;
   &:hover {
