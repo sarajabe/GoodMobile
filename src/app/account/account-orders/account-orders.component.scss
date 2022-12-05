@@ -186,11 +186,10 @@ linear-gradient(0deg, #FF972F, #FF972F);
                 position: relative;
                 .filter-title {
                     border: 1px solid $primary-color;
-                    border-radius: 40px;
+                    border-radius: 4px;
                     color: $primary-color;
-                    padding: 4px 12px;
-                    font-size: rem-calc(14px);
-                    font-family: $secondary-font-family-bold;
+                    padding: 4px 8px;
+                    font-size: rem-calc(16px);
                     display: flex;
                     align-items: center;
                     img {

@@ -39,13 +39,10 @@
 
 ::ng-deep {
     .acp-section {
-        max-width: 1300px;
-        width: 100%;
         margin-bottom: 20px;
 
         @media (min-width: $desktop-min-width) {
             padding-top: 38px;
-            padding-right: 53px;
         }
 
         @media (max-width: $desktop-min-width-minus) {
