@@ -20,7 +20,7 @@
     </div>
     <ng-container *ngIf="innerWidth > 639.9; else responsive ">
       <div class="cards-section">
-        <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="goToPlans(plan)">
+        <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="viewAllPlans()">
           <div class="featured-plan-card" >
             <div class="ribbon" *ngIf="!!plan?.ebb"><img class="ribbon" src="assets/img/new-ribbon.svg"></div>
             <div class="card-header-section">
@@ -35,7 +35,7 @@
               <p class="unlimited caption">With Unlimited Talk &Text</p>
             </div>
             <div class="action">
-              <button class="button primary small" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
+              <button class="button primary small" (click)="viewAllPlans()" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
               <p class="unlimited caption">With Unlimited Talk &Text</p>
             </div>
             <div class="action">
-              <button class="button primary small" (click)="goToPlans(plan)" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
+              <button class="button primary small" (click)="viewAllPlans()" title="Select-plan" id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
             </div>
           </div>
       </div>

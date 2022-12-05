@@ -2,26 +2,26 @@
   <div class="progress-banner">
     <div class="step" *ngIf="!!showShippingCard">
       <picture>
-        <source srcset='assets/icon/enabled-checkout-shipping.svg' media="(min-width: 320px)">
-        <img src="assets/icon/enabled-checkout-shipping.svg" alt="shipping" class="step-image">
+        <source srcset='assets/icon/enabled-checkout-shipping.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-shipping.png" alt="shipping" class="step-image">
       </picture>
     </div>
     <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!showShippingCard">
     <div class="step">
       <picture>
-        <source srcset='assets/icon/enabled-checkout-payment.svg' media="(min-width: 320px)">
-        <img src="assets/icon/enabled-checkout-payment.svg" alt="payment" class="step-image">
+        <source srcset='assets/icon/enabled-checkout-payment.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-payment.png" alt="payment" class="step-image">
       </picture>
     </div>
     <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots">
     <div class="step">
       <picture>
-        <source srcset='assets/icon/enabled-checkout-overview.svg' media="(min-width: 320px)">
-        <img src="assets/icon/disabled-checkout-overview.svg" alt="overview" class="step-image">
+        <source srcset='assets/icon/enabled-checkout-overview.png' media="(min-width: 320px)">
+        <img src="assets/icon/disabled-checkout-overview.png" alt="overview" class="step-image">
       </picture>
     </div>
   </div>
-  <div class="container-flex place-order">
+  <div class="page-section place-order">
     <div class="cart-total" id="cart-section">
       <p>Checkout</p>
       <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
