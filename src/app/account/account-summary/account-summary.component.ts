@@ -620,7 +620,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
   }
 
   public goToPlans(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}]`]);
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
   }
 
   public goToPendingPlans(): void {

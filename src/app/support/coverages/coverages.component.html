@@ -13,7 +13,7 @@
                 </p>
                 <div class="actions" *ngIf="!!coverageChecked">
                     <button class="button primary"
-                        [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Shop plans</button>
+                        (click)="goToPlans()">Shop plans</button>
                 </div>
             </div>
             <div class="col-12">

@@ -204,9 +204,11 @@
                 class="form-text error validation-message">*</span></label>
             <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber"
               (keyup)="updateData()" (change)="updateData()" maxlength="19" autocomplete="cc-number">
-            <label class="validation-message" data-cy="invalidCreditCardMsg"
-              *ngIf="paymentInfoForm.controls.cardNumber.touched && !paymentInfoForm.controls.cardNumber.valid">Invalid
-              Credit Card Number. </label>
+              <label class="validation-message" data-cy="requiredCardNoMsg"
+                  *ngIf="paymentInfoForm.controls.cardNumber.touched && !paymentInfoForm.controls.cardNumber.value">Card number is required. </label>
+                <label class="validation-message"
+                  *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid && paymentInfoForm.controls.cardNumber.value">Invalid
+                  Credit Card Number. </label>
           </fieldset>
           <fieldset class="seven">
             <label class="font-size-12" for="fullName">Name on card <span
