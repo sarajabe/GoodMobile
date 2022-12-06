@@ -326,7 +326,7 @@
                             font-size: 18px;
                             line-height: 28px;
                             font-family: $base-font-family-bold;
-                            color: #765BA7;
+                            color: $third-color;
                             cursor: pointer;
     
                             @media (max-width: $phablet-min-width-minus) {

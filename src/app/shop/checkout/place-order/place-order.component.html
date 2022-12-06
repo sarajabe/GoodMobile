@@ -45,9 +45,9 @@
                       <p class="smaller">Subtotal</p>
                       <p class="smaller"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
                     </div>
-                    <div class="detail secondary">
-                      <p class="smaller orange">Discount total</p>
-                      <p class="smaller" data-cy="discountValue"><b>{{details?.discount | currency}}</b></p>
+                    <div class="detail">
+                      <p class="smaller text-orange">Discount total</p>
+                      <p class="smaller text-orange" data-cy="discountValue"><b>{{details?.discount | currency}}</b></p>
                     </div>
                     <div class="detail">
                       <p class="smaller">Shipping fees</p>
