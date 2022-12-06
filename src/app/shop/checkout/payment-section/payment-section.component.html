@@ -37,7 +37,7 @@
       <p class="note"><b>Note: </b>Please make sure you specify the payment method to complete your request.</p>
     </div>
     <div class="payment-option">
-      <label class="container"><img src="assets/icon/credit-card.png" alt="credit card" /> Credit Card
+      <label class="payment-container"><img src="assets/icon/credit-card.png" alt="credit card" /> Credit Card
         <input type="checkbox" [(ngModel)]="payWithCard" class="title-checkbox" (change)="togglePayWithCard()">
         <span class="checkmark withImage"></span>
       </label>
@@ -76,7 +76,7 @@
             </div>
           </label>
         </div>
-        <label class="container autopay" *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART">Allow Auto Payment 
+        <label class="payment-container autopay" *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART">Allow Auto Payment 
           <input type="checkbox" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"  class="title-checkbox" >
           <span class="checkmark"></span>
         </label>
@@ -220,7 +220,7 @@
       </div>
     </div>
     <div class="payment-option" *ngIf="totalBalance > 0">
-      <label class="container balance"><img src="assets/icon/balance.svg" alt="Balance" /> <div class="balance-amounts"><span>Account Balance</span><span class="amount">{{(totalBalance - balanceAmount - rewardAmount) | currency}}</span></div> 
+      <label class="payment-container balance"><img src="assets/icon/balance.svg" alt="Balance" /> <div class="balance-amounts"><span>Account Balance</span><span class="amount">{{(totalBalance - balanceAmount - rewardAmount) | currency}}</span></div> 
         <input type="checkbox" [(ngModel)]="payWithTotalBalance" class="title-checkbox" (change)="togglePayWithTotalBalance()">
         <span class="checkmark withImage"></span>
       </label>
@@ -232,7 +232,7 @@
       </div>
       <div class="card-content">
         <div class="balance-section" *ngIf="!!userAccount && userAccount.accountBalance > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="container amounts">Pay from Account Balance
+          <label class="payment-container amounts">Pay from Account Balance
             <input type="checkbox" [(ngModel)]="payWithBalance" class="title-checkbox"  (change)="togglePayWithBalance()">
             <span class="checkmark"></span>
           </label>
@@ -259,7 +259,7 @@
           </div>
         </div>
         <div class="balance-section" *ngIf="!!userAccount && !!userAccount.rewards && userAccount.rewards.available > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="container amounts">Pay from Refer a Friend Reward
+          <label class="payment-container amounts">Pay from Refer a Friend Reward
             <input type="checkbox" [(ngModel)]="payWithReward" class="title-checkbox" (change)="togglePayWithReward()">
             <span class="checkmark"></span>
           </label>

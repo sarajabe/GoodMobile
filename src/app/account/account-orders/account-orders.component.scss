@@ -93,13 +93,16 @@
                 position: relative;
                 .sort-title {
                     border: 1px solid $primary-color;
-                    border-radius: 40px;
+                    border-radius: 4px;
                     color: $primary-color;
-                    padding: 4px 12px;
                     font-size: rem-calc(14px);
-                    font-family: $secondary-font-family-bold;
                     display: flex;
                     align-items: center;
+                    justify-content: center;
+                    width: 110px;
+                    b {
+                        font-family: $base-font-family-bold;
+                    }
                     img {
                         height: 19px;
                     }
@@ -188,10 +191,12 @@ linear-gradient(0deg, #FF972F, #FF972F);
                     border: 1px solid $primary-color;
                     border-radius: 4px;
                     color: $primary-color;
-                    padding: 4px 8px;
                     font-size: rem-calc(16px);
+                    font-family: $secondary-font-family;
                     display: flex;
                     align-items: center;
+                    width: 96px;
+                    justify-content: center;
                     img {
                         height: 19px;
                         margin-right: 5px;
@@ -212,12 +217,12 @@ linear-gradient(0deg, #FF972F, #FF972F);
                     &.shown {
                         position: absolute;
                         display: block;
-                        background: #FFFFFF;
+                        background: $white;
                         box-shadow: 0px -1px 4px 0px #CED3D640 inset;
                         min-width: 400px;
                         right: -7px;
                         .close-section {
-                            box-shadow: inset 0px -0.91875px 3.675px rgba(206, 211, 214, 0.25);
+                            box-shadow: 0px -0.918749988079071px 3.674999952316284px 0px #CED3D640 inset;
                             border-radius: 7px 7px 0px 0px;
                             padding: 14px 20px;
                             display: flex;
@@ -234,7 +239,7 @@ linear-gradient(0deg, #FF972F, #FF972F);
                                 padding-bottom: 8px;
                             }
                             .filter-section-title {
-                                font-size: rem-calc(20px);
+                                font-size: rem-calc(18px);
                                 line-height: 24px;
                                 display: flex;
                                 justify-content: space-between;
@@ -242,10 +247,12 @@ linear-gradient(0deg, #FF972F, #FF972F);
                                 color: $header-color;
                                 .clear-title {
                                     color: $primary-color;
-                                    font-size: rem-calc(16px);
+                                    font-size: rem-calc(18px);
                                     margin-bottom: 0;
                                     cursor: pointer;
                                     display: none;
+                                    font-family: $secondary-font-family;
+                                    font-weight: 400;
                                     &.show {
                                         display: block;
                                     }
@@ -398,16 +405,16 @@ linear-gradient(0deg, #FF972F, #FF972F);
         display: flex;
         flex-direction: column;
         .order-card {
-            background-color: #F4F4F4;
+            background-color: $white;
             flex-basis: 100%;
             margin-bottom: 48px;
-            box-shadow: 0px 1px 15px 0px #29292933;
+            box-shadow: 0 8px 30px #5e5e5e1f;
             border-radius: 10px;
             .card-header-section {
                 padding: 24px;
                 display: flex;
                 flex-direction: column;
-                color: $black;
+                color: $third-color;
                 .status {
                     background: #1FCC4099;
                     padding: 1px 10px;
@@ -437,7 +444,7 @@ linear-gradient(0deg, #FF972F, #FF972F);
                     }
                 }
                 .order-info {
-                    font-family: $secondary-font-family;
+                    font-family: $base-font-family;
                     font-size: rem-calc(16px);
                     line-height: 24px;
                     margin-bottom: 8px;
@@ -463,7 +470,7 @@ linear-gradient(0deg, #FF972F, #FF972F);
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    margin-top: 20px;
+                    margin-top: 12px;
                     justify-content: space-between;
                     .action {
                         display: flex;
@@ -471,6 +478,7 @@ linear-gradient(0deg, #FF972F, #FF972F);
                         cursor: pointer;
                         .description {
                             margin-bottom: 0;
+                            font-family: $secondary-font-family-bold;
 
                         }
                         .rotate {
@@ -511,17 +519,18 @@ linear-gradient(0deg, #FF972F, #FF972F);
             }
             .card-content-section {
                 .main-header {
-                    background: #8633990D;
+                    background: #E5EEF4;
                     padding: 22px 24px;
                     font-size: rem-calc(20px);
                     line-height: 32px;
                     font-family: $base-font-family-bold;
                     .section-title {
                         margin-bottom: 0;
+                        font-family: $secondary-font-family-bold;
                         .help {
                             color: $primary-color;
                             padding-left: 16px;
-                            font-family: $secondary-font-family-bold;
+                            font-size: rem-calc(18px);
                             cursor: pointer;
                         }
                     }
@@ -538,7 +547,9 @@ linear-gradient(0deg, #FF972F, #FF972F);
                         }
                         .line {
                             margin-bottom: 0;
-                            font-size: rem-calc(20px);
+                            font-size: rem-calc(18px);
+                            color: #6A509B;
+                            font-family: $base-font-family-bold;
                         }
                    } 
                    .sub-content {
@@ -601,15 +612,6 @@ linear-gradient(0deg, #FF972F, #FF972F);
                             .details {
                                 font-size: rem-calc(16px);
                                 line-height: 16px;
-                                p {
-                                  margin-bottom: 5px;
-                                }
-                                .title {
-                                    margin-bottom: 8px;
-                                    @media(max-width:$phablet-min-width-minus) {
-                                        margin-bottom: 4px;
-                                    }
-                                }
                                 .promo{
                                     background: #F58520;
                                     border-radius: 3px;
