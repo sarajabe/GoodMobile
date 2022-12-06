@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         contactType: 'Customer Care',
         areaServed: 'US'
       }],
-      sameAs: ['https://facebook.com/GoodMobile', 'https://twitter.com/GoodMobile', 'https://instagram.com/goodMobile']
+      sameAs: ['https://facebook.com/GoodMobile', 'https://twitter.com/GoodMobile', 'https://instagram.com/goodmobileusa']
     };
     this.jsonLDString = this.appState.setJsonLdData(structuredData);
   }
