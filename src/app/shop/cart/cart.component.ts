@@ -1,7 +1,7 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, GenericMobilePlanItem, IBasePlan, ICatalogItem, IDeviceCompatibilityV1, IPlanAddOn, IUser, IVoucherData, MobileCustomPlansService, MobilePlanDetails, MobilePlanItem, PlansConfigurationService, PURCHASE_INTENT, ShippingConfigurationService, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { take, takeWhile } from 'rxjs/operators';
+import { ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, GenericMobilePlanItem, IBasePlan, ICatalogItem, IDeviceCompatibilityV1, IPlanAddOn, IUser, IVoucherData, MobileCustomPlansService, MobilePlanDetails, PlansConfigurationService, PURCHASE_INTENT, ShippingConfigurationService, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { takeWhile } from 'rxjs/operators';
 import { POSTAL_PATTERN } from 'src/app/app.config';
 import { ACCOUNT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -166,9 +166,6 @@ export class CartComponent implements OnInit, OnDestroy {
             this.modalHelper.showItemOutOFStockModal('Action Required', customHtml, this.userCart, 'out-of-stock-modal', false);
           }
         }
-      }
-      if(!!this.userCart && this.userCart?.cartType === CART_TYPES.NEW_PLAN && (!this.userCart.phones || (!!this.userCart.phones && this.userCart.phones.length < 1)) && ((!!this.userCart.planDevice && !this.userCart.planDevice.verified) || !this.userCart.planDevice) && !document.body.classList.contains('modal-open')) {
-        this.removePhoneModal();
       }
       this.appState.loading = false;
     });
@@ -645,28 +642,5 @@ export class CartComponent implements OnInit, OnDestroy {
     }
     this.router.navigate([ROUTE_URLS.HOME]);
   }
-  }
-  @HostListener("window:keydown.esc", ["$event"])
-  onEsc(event: any): void {
-    if (event.keyCode === 27) {
-      event.preventDefault();
-      if(!!this.userCart && this.userCart?.cartType === CART_TYPES.NEW_PLAN && (!this.userCart.phones || (!!this.userCart.phones && this.userCart.phones.length < 1)) && ((!!this.userCart.planDevice && !this.userCart.planDevice.verified) || !this.userCart.planDevice)) {
-        this.removePhoneModal();
-      }
-      if (!!this.userCart && this.userCart?.cartType === CART_TYPES.NEW_PLAN && !this.planInCatalog ) {
-        this.planInCatalogChecked = true;
-        const customHtml = `<div class="content"><p class="info">The current offer is no longer available.</p>
-        <p class="info"><b>Please check our new Holidays offer!</b></p>`
-        this.modalHelper.showInformationMessageModal('Special Offer!', '', 'See Offers', null, false, 'archived-plan', customHtml).result.then((response) => {
-          this.mobilePlansService.clearUserCart();
-          this.appState.clearSessionStorage();
-          sessionStorage.setItem('removeFromCart', 'true');
-          this.checkoutService.paymentsSubject.next(null);
-          this.checkoutService.detailsSubject.next(null);
-          this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
-        });
-      }
-    }
   }
 }
