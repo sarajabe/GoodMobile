@@ -80,12 +80,6 @@
           <input type="checkbox" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"  class="title-checkbox" >
           <span class="checkmark"></span>
         </label>
-        <div class="autopay-banner" *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART && !autoRenew" >
-            <img class="info-icon" alt="info" src="assets/icon/Information-sec.svg">
-            <div class="banner-note">
-              <p class="note">By unchecking this box, you're missing out on the $5 Auto-Renewal discount on all your plans.</p>
-            </div>
-        </div>
         <div class="showMore" *ngIf="methodsList?.length > 2" (click)="showAllPayments = !showAllPayments">
           <p class="more" data-cy="showMoreAndLess">{{!!showAllPayments ? 'Show less' : 'Show more'}}</p>
           <i class="arrow down" [class.rotate]="!!showAllPayments"></i>
@@ -97,7 +91,7 @@
           </div>
           <section class="add-new-card-section" *ngIf="!!showAddCardSection">
             <form [formGroup]="paymentInfoForm" class="checkout-payment-form">
-              <p class="form-label">Credit Card Details:</p>
+              <h3 class="form-label">Credit Card Details:</h3>
               <fieldset class="relative">
                 <label for="fullName">Name on card <span class="form-text error validation-message">*</span></label>
                 <input id="fullName" data-cy="fullName" type="text" name="fullName"  formControlName="fullName"
@@ -189,7 +183,7 @@
               </label>
             </div>
             <div class="billing-section">
-              <p class="form-label">Billing Address</p>
+              <h4 class="form-label">Billing Address</h4>
               <label class="payment-container"  *ngIf="!!shippingAddress">
                 <input type="checkbox" id="billingSameAsShipping" name="billingSameAsShipping"
                   [(ngModel)]="billingSameAsShipping" (change)="toggleSharedAddress()">
@@ -289,25 +283,12 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="!!isMigration && (!shippingMethod || (!!shippingMethod && shippingMethod.price == 0))">
-    <div class="migration-banner">
-      <img src="assets/icon/info-orange-circle.svg" alt="info"/>
-      <div class="banner-note">
-        <p class="title">Good News!</p>
-        <p class="note">Your order is free, no need for payment!.</p>
-      </div>
-    </div>
-  </ng-container>
 </div>
 </section>
 <section class="navigation-section" [class.blur]="showAddCardSection">
-  <div class="container-flex navs">
-    <div class="left">
-      <button class="button secondary" data-cy="backBtn" (click)="goBack()">Back</button>
-      </div>
-    <div class="right">
-      <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn">Next</button>
-    </div>
+  <div class="page-section navs">
+    <button class="button secondary" data-cy="backBtn" (click)="goBack()">Back</button>
+    <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn">Next</button>
 </div>
 </section>
 <app-invisible-recaptcha  (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha ></app-invisible-recaptcha>
