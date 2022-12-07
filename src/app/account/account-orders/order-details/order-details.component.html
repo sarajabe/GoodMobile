@@ -450,9 +450,9 @@
                                                             ORDER_INTENT.REPLACEMENT ? '(Replacement)' : (orderInfo?.intent
                                                             ===
                                                             ORDER_INTENT.NEW ? '(New)' : '(Migration')}}</b></p>
-                                                    <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
-                                                    <p class="id" *ngIf="sim?.deviceId">IMEI: {{sim?.deviceId}}</p>
-                                                    <p class="quantity">Quantity: 1</p>
+                                                    <p class="id smallest" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                    <p class="id smallest" *ngIf="sim?.deviceId">IMEI: {{sim?.deviceId}}</p>
+                                                    <p class="quantity smaller">Quantity: 1</p>
                                                     <p class="action" *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'"
                                                         (click)="scrollToDetails()">
                                                         Item Details</p>

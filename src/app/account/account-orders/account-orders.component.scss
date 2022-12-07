@@ -196,20 +196,21 @@ linear-gradient(0deg, #FF972F, #FF972F);
                     display: flex;
                     align-items: center;
                     width: 96px;
-                    justify-content: center;
+                    justify-content: space-evenly;
                     img {
                         height: 19px;
-                        margin-right: 5px;
                     }
                     .countr {
                         color: white;
                         background-color: $primary-color;
                         border-radius: 50%;
-                        padding: 3px 5px;
-                        margin-left: 5px;
+                        padding: 0px 5px;
                         font-size: rem-calc(12px);
-                        width: 17px;
+                        height: 18px;
                         text-align: center;
+                        display: flex;
+                        align-items: center;
+                        height: 18px;
                     }
                 }
                 .filter-view {
@@ -379,16 +380,12 @@ linear-gradient(0deg, #FF972F, #FF972F);
                 justify-content: flex-start;
                 .filter {
                     width: 129px;
-                    .filter-title {
-                        justify-content: center;
-                    }
                     .filter-section {
                         padding: 16px 20px;
                     }
                 }
                 .sorting {
                     width: 129px;
-                    margin-right: 20px;
                     .sort-title {
                         justify-content: center;
                     }
