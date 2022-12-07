@@ -239,7 +239,7 @@
                     line-height: 24px;
                     margin-left: 16px;
                     cursor: pointer;
-                    color: #B0B0B0;
+                    color: $primary-color;
 
                     @media(max-width: $phablet-min-width-minus) {
                         margin-left: 0;
