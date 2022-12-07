@@ -56,7 +56,6 @@
             }
         }
         .sec-head {
-            font-weight: bold;
             margin-bottom: 41px;
             color: $header-color;
             &.bottom {
@@ -98,6 +97,10 @@
                         width: 55px;
                         height: 55px;
                         margin-bottom: 25px;
+                        @media (max-width: $desktop-min-width-minus) {
+                            width: unset;
+                            height: unset;
+                        }
                     }
                     .title {
                         margin-bottom: 8px;
@@ -106,7 +109,6 @@
                     }
                     .desc {
                         font-weight: normal;
-                        margin-bottom: 0px;
                         max-width: 352px;
                         margin-bottom: 25px;
                         &.no-bottom {
@@ -140,7 +142,7 @@
         .section-container {
             display: flex;
             align-items: center;
-            margin: 83px 0;
+            margin: 56px 0;
             @media (max-width: 999.9px) {
                 flex-direction: column;
                 justify-content: center;
@@ -151,8 +153,7 @@
                 }
             }
             @media (max-width: $phablet-min-width-minus) {
-                margin-bottom: 69px;
-                margin-top: 56px;
+                margin: 48px 0;
             }
             .details-section {
                 display: flex;
@@ -226,6 +227,7 @@
             @media (max-width: $phablet-min-width-minus) {
                 flex-direction: column;
                 padding: 48px 16px;
+                margin-bottom: 48px;
             }
             .sec-head {
                 @media (max-width: $desktop-min-width-minus) {
@@ -261,6 +263,7 @@
             .subtext {
                 margin-bottom: 40px;
                 font-family: $secondary-font-family;
+                font-weight: normal;
                 @media (max-width: $phablet-min-width-minus) {
                     margin-bottom: 35px;
                 }
@@ -322,12 +325,9 @@
                 z-index: 1;
                 cursor: pointer;
                 position: absolute;
-                right: 61px;
+                right: 50px;
                 width: 24px;
                 height: 54px;
-                @media (max-width: $desktop-min-width-minus) {
-                    right: 60px;
-                }
             }
             .toggle {
                 margin-bottom: 12px;

@@ -403,12 +403,9 @@
         z-index: 1;
         cursor: pointer;
         position: absolute;
-        right: 61px;
+        right: 50px;
         width: 24px;
         height: 54px;
-        @media (max-width: $desktop-min-width-minus) {
-          right: 60px;
-        }
       }
       .toggle {
         margin-bottom: 12px;
