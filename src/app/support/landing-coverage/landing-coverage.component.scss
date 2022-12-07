@@ -91,7 +91,7 @@
           align-items: center;
         }
         .input-section {
-          max-height: 130px;
+          max-height: 118px;
           label {
             font-family: $base-font-family-bold;
             color: white;
@@ -189,7 +189,8 @@
           }
         }
         .check-coverage-button {
-          margin: 0 0 16px 16px;
+          margin: 6px;
+          margin-left: 16px;
           @media (max-width: $desktop-min-width-minus) {
             margin-left: 0;
             margin-top: 10px;
