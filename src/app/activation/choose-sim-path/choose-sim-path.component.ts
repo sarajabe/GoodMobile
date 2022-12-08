@@ -12,9 +12,9 @@ export class ChooseSimPathComponent {
   constructor(private router: Router,
               private metaService: MetaService) {
 
-    if (sessionStorage.getItem('activation_step') !== 'step2') {
-      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_SIM_SOURCE}`]);
-    }
+    // if (sessionStorage.getItem('activation_step') !== 'step2') {
+    //   this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_SIM_SOURCE}`]);
+    // }
     this.metaService.createCanonicalUrl();
   }
 

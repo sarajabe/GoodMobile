@@ -13,7 +13,6 @@ import { ChooseActivationPathComponent } from './choose-activation-path/choose-a
 import { ChoosePlanPathComponent } from './choose-plan-path/choose-plan-path.component';
 import { ChooseSimPathComponent } from './choose-sim-path/choose-sim-path.component';
 import { ChooseSimSourceComponent } from './choose-sim-source/choose-sim-source.component';
-import { ChooseTrialPathComponent } from './choose-trial-path/choose-trial-path.component';
 import { NoSIMComponent } from './no-sim/no-sim.component';
 import { ReplaceResultComponent } from './replace-result/replace-result.component';
 import { ReplaceSimComponent } from './replace-sim/replace-sim.component';
@@ -56,8 +55,6 @@ const routes: Routes = [
           title: 'Choose SIM Source', description: 'Where did you get your GoodMobile SIM from?'
         } as IPageMeta, canActivate: [AuthEmailGuardService]
       },
-      { path: ACTIVATION_ROUTE_URLS.CHOOSE_TRIAL, component: ChooseTrialPathComponent, data: { title: 'Trial Upgrade', description:
-      'Upgrade your trial plan and enjoy GoodMobile service' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACTIVATION_ROUTE_URLS.No_SIM, component: NoSIMComponent, data: { title: 'No SIM' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       {
         path: ACTIVATION_ROUTE_URLS.REPLACE_RESULT, component: ReplaceResultComponent, data: {

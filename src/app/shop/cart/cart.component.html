@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="sub-item-section"
-                            *ngIf="userCart?.cartType ===CART_TYPES.NEW_PLAN">
+                            *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN && !userCart?.activationCode">
                             <hr class="short" />
                             <div class="item-details">
                                 <img class="thumbnail"
@@ -228,10 +228,7 @@
                                 <div class="detail">
                                     <div class="detail-info">
                                         <p class="bold smaller">{{planCategory('sim')}}</p>
-                                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
-                                            Order)</p>
-                                         <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>    
-
+                                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>    
                                     </div>
                                     <p class="price smaller">
                                         ${{userCart?.cartType === CART_TYPES.PLAN_ITEMS ? newSimOrder?.price : 0}}
@@ -243,48 +240,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="sub-content" *ngIf="!!isGenericType">
-                        <div class="item-details">
-                            <div class="details">
-                                <div class="item-details" *ngIf="!!userCart && !!selectedPhone">
-                                    <img class="thumbnail phone" [src]="selectedPhone?.image" alt="Mobile" />
-                                    <div class="details">
-                                        <div class="detail" [class.disabled]="!!isItemUnavailable">
-                                            <div class="detail-info">
-                                                <p class="bold smaller">{{ selectedPhone?.description }}</p>
-                                            </div>
-                                            <p class="price">
-                                                {{ selectedPhone?.price | currency }}
-                                            </p>
-                                        </div>
-                                        <p class="quantity smaller">Quantity: 1</p>
-                                        <p class="red-note" *ngIf="!!isItemUnavailable">This item is unavailable</p>
-                                        <div class="actions">
-                                            <a class="link first" (click)="goToPhones()">Change</a>
-                                            <a class="link" (click)="clearUserCart('plan', true)">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-item-section">
-                        <hr class="short" />
-                        <div class="item-details">
-                            <img class="thumbnail"
-                                [src]="!!userCart?.eSIM ? 'assets/icon/e-sim.svg': 'assets/icon/sim-image.svg'"
-                                alt="SIM card" />
-                            <div class="details">
-                                <div class="detail">
-                                    <div class="detail-info">
-                                        <p class="bold">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
-                                    </div>
-                                    <p class="price smaller">$0</p>
-                                </div>
-                                <p class="quantity smaller">Quantity: 1</p>
-                            </div>
-                        </div>
-                    </div>
                     </div>
                     <div class="sub-content">
                         <hr class="long" />

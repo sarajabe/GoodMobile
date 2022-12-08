@@ -312,7 +312,6 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     this.filteredPlans.sort((a, b) => a.details.data - b.details.data);
     this.filteredPlans.push(this.filteredPlans.shift()); // make the first element the last one in array
     this.checkInnerWidth();
-    console.log('filtereddd', this.filteredPlans)
   }
   private checkUser(plan: MobilePlanItem): void {
     this.simpleAuthService.userState.pipe(take(1)).subscribe((authState) => {

@@ -240,7 +240,8 @@ export const ACTIVATION_ROUTE_URLS = {
     NETWORK: 'network',
     ZIP_CODE: 'zipCode',
     ICCID: 'iccid',
-    ESIM: 'eSim'
+    ESIM: 'eSim',
+    ACTIVATION: 'activate'
   },
   BASE: '/activation',
   NAME: 'activation',

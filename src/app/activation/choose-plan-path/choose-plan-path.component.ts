@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { MetaService } from 'src/services/meta-service.service';
 
@@ -13,12 +13,12 @@ import { MetaService } from 'src/services/meta-service.service';
   styleUrls: ['./choose-plan-path.component.scss']
 })
 export class ChoosePlanPathComponent implements OnDestroy {
+  public option;
   public pendingPlans: IUserPlan[];
   public activePlans: IUserPlan[];
   public activationCode: string;
   public isLoggedIn = false;
   public processingRequest = false;
-  public noPendingPlans = false;
   private alive = true;
 
   constructor(private router: Router,
@@ -29,7 +29,7 @@ export class ChoosePlanPathComponent implements OnDestroy {
               private userPlansService: UserPlansService,
               private simpleAuthService: SimpleAuthService) {
 
-    if (sessionStorage.getItem('activation_step') !== 'step3' && sessionStorage.getItem('activation_step') !== 'step4') {
+    if (sessionStorage.getItem('activation_step') !== 'step2' && sessionStorage.getItem('activation_step') !== 'step3') {
       this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_SIM_PATH}`]);
     }
     this.metaService.createCanonicalUrl();
@@ -48,9 +48,6 @@ export class ChoosePlanPathComponent implements OnDestroy {
               this.pendingPlans = plans.filter((plan) => !plan.mdn);
               this.activePlans = plans.filter((plan) => !!plan.mdn);
               this.appState.loading = false;
-              if (!!this.pendingPlans && this.pendingPlans.length === 0) {
-                this.noPendingPlans = true;
-              }
             }
           });
         }, 500);
@@ -61,11 +58,29 @@ export class ChoosePlanPathComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.alive = false;
   }
-
+  public goToOrders(): void {
+    sessionStorage.setItem('activation_step', 'step2');
+    this.mobileCustomPlansService.setSimCard('');
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
+  }
+  public selectOption(): void {
+    switch (this.option) {
+      case ('new'): {
+        this.purchasePlan();
+        break;
+      }
+      case ('purchased'): {
+        this.goToPendingPlans();
+        break;
+      }
+    }
+  }
   public purchasePlan(): void {
-    sessionStorage.setItem('activation_step', 'step4');
-    this.mobileCustomPlansService.setSimCard('0000000');
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`]);
+    sessionStorage.setItem('activation_step', 'step2');
+    this.mobileCustomPlansService.setSimCard(this.activationCode);
+    const params = {};
+    params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION]=true;
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`,params]);
   }
 
   public goToPendingPlans(): void {
@@ -73,9 +88,14 @@ export class ChoosePlanPathComponent implements OnDestroy {
     this.mobileCustomPlansService.setSimCard('');
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
   }
+
+  public goToVerifyActivation(): void {
+    sessionStorage.setItem('activation_step', 'step2');
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_PLAN}`]);
+  }
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {
     event.preventDefault();
-    sessionStorage.setItem('activation_step', 'step2');
+    sessionStorage.setItem('activation_step', 'step1');
   }
 }
