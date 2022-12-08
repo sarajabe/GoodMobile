@@ -264,14 +264,14 @@
                             }
                         }
                         &.grayed {
-                            color: #00000099;
+                            color: #5E5E5E;
                             &:before {
-                                border-top-color: #dadada !important;
-                                box-shadow: inset 0 0.5px #dadada;
+                                border-top-color: #5E5E5E !important;
+                                box-shadow: inset 0 0.5px #5E5E5E;
                             }
                             &:after {
-                                border-top-color: #dadada !important;
-                                box-shadow: inset 0 0.5px #dadada;
+                                border-top-color: #5E5E5E !important;
+                                box-shadow: inset 0 0.5px #5E5E5E;
                             }
                         }
                         &.error {

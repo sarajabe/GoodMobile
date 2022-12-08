@@ -1,8 +1,8 @@
 <section class="order-details">
     <div class="back-section">
-        <a class="back-link" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]">Your Orders
+        <a class="back-link" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]">My Orders
             &nbsp;<img src="/assets/icon/back-arrow.svg"></a>
-        <p class="id">Order ID: {{orderId}}</p>
+        <p class="id">{{orderId}}</p>
     </div>
     <div class="title-section">
         <h1 class="order-id">Order ID: {{orderId}}</h1>
@@ -43,20 +43,20 @@
                                             <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail" *ngIf="!plan?.promotionCode" >
                                             <img class="thumbnail" [src]="promoDetails[plan?.promotionCode].img" alt="g2g-plan" *ngIf="!!plan?.promotionCode && orderInfo?.intent === ORDER_INTENT.NEW"/>
                                             <div class="details">
-                                                <p class="title"><b>{{plan?.subtitle}}</b></p>
-                                                <p class="description" [class.promo]="!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
-                                                <p class="category"><b>(New plan)</b></p>
-                                                <p class="id" *ngIf="plan?.itemId">Item # {{plan?.itemId}}</p>
+                                                <p class="smaller primary-font-bold">{{plan?.subtitle}}</p>
+                                                <p class="smaller primary-font" [class.promo]="!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
+                                                <p class="smaller primary-font-bold">(New plan)</p>
+                                                <p class="id smallest" *ngIf="plan?.itemId">Item # {{plan?.itemId}}</p>
                                                 <p class="code" *ngIf="plan?.redemptionCode">Redemption Code:
                                                     {{plan?.redemptionCode}}</p>
-                                                <p class="quantity">Quantity: {{ plan?.quantity }}</p>
+                                                <p class="quantity smaller">Quantity: {{ plan?.quantity }}</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
                                                     (click)="cancelOrderWithRefund()">Cancel</p>
                                             </div>
                                         </div>
                                         <div class="price-side">
-                                            <p class="price"><b>${{plan?.price}}</b></p>
+                                            <p class="price smaller"><b>${{plan?.price}}</b></p>
                                         </div>
                                     </div>
                                     <div class="sub-item-section">
@@ -66,16 +66,16 @@
                                                 <div class="details-side">
                                                     <img class="thumbnail" [src]="(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'" alt="SIM card">
                                                     <div class="details">
-                                                        <p class="title"><b>{{(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'e' : ''}}SIM Card</b></p>
-                                                        <p class="category"><b>(New)</b></p>
-                                                        <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
-                                                        <p class="quantity">Quantity: 1</p>
+                                                        <p class="smaller primary-font-bold">{{(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'e' : ''}}SIM Card</p>
+                                                        <p class="category smaller primary-font-bold">(New)</p>
+                                                        <p class="id smallest" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                        <p class="quantity smaller">Quantity: 1</p>
                                                         <p class="action" (click)="scrollToDeliveryDetails()"
                                                             *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
                                                     </div>
                                                 </div>
                                                 <div class="price-side">
-                                                    <p class="price"><b>${{sim?.price}}</b></p>
+                                                    <p class="price smaller"><b>${{sim?.price}}</b></p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -86,7 +86,7 @@
                                                     <div class="details">
                                                         <p class="title"><b>eSIM Card</b></p>
                                                         <p class="category"><b>(New)</b></p>
-                                                        <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                        <p class="id smallest" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
                                                         <p class="quantity">Quantity: 1</p>
                                                     </div>
                                                 </div>
@@ -104,53 +104,7 @@
                                             </div>
                                             <div class="details">
                                                 <p class="title"><b>{{device?.description}}</b></p>
-                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
-                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
-                                                <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
-                                                <p class="action" data-cy="cancel"
-                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
-                                                    (click)="cancelOrderWithRefund()">Cancel</p>
-                                            </div>
-                                        </div>
-                                        <div class="price-side">
-                                            <p class="price"><b>${{device?.price}}</b></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.MIGRATION">
-                                <input type="checkbox" id="lines" [(ngModel)]="line">
-                                <label class="sub-label new" for="lines">
-                                    <span>Line {{orderInfo?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
-                                        src="assets/icon/arrow_circle.svg" alt="arrow icon">
-                                </label>
-                                <div class="sub-content">
-                                    <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
-                                        <div class="details-side">
-                                            <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
-                                            <div class="details">
-                                                <p class="title"><b>SIM Card</b></p>
-                                                <p class="category"><b>(Migration)</b></p>
-                                                <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
-                                                <p class="quantity">Quantity: 1</p>
-                                                <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
-                                            </div>
-                                        </div>
-                                        <div class="price-side">
-                                            <p class="price"><b>${{sim?.price}}</b></p>
-                                        </div>
-                                    </div>
-                                    <hr *ngIf="!!orderInfo?.devices">
-                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
-                                        <div class="details-side">
-                                            <div class="phone-image-container">
-                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
-                                            </div>
-                                            <div class="details">
-                                                <p class="title"><b>{{device?.description}}</b></p>
-                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
                                                 <p class="quantity">Quantity: {{device?.quantity}}</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
                                                     *ngIf="screenWidth < 1025">Delivery Details</p>
@@ -178,14 +132,14 @@
                                                 [src]="addon.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : 'assets/icon/International.svg'"
                                                 alt="thumbnail">
                                             <div class="details">
-                                                <p class="title"><b>{{addon?.subtitle}}</b></p>
-                                                <p class="category"><b>(Addon)</b></p>
-                                                <p class="id" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
-                                                <p class="quantity">Quantity: {{ addon?.quantity }}</p>
+                                                <p class="smaller primary-font-bold">{{addon?.subtitle}}</p>
+                                                <p class="smaller primary-font">(Addon)</p>
+                                                <p class="smallest id primary-font" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
+                                                <p class="smaller quantity primary-font">Quantity: {{ addon?.quantity }}</p>
                                             </div>
                                         </div>
                                         <div class="price-side">
-                                            <p class="price"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
+                                            <p class="price smaller"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
                                         </div>
                                     </div>
                                     <hr *ngIf="i < (orderInfo?.planAddOns.length - 1)">
@@ -202,11 +156,11 @@
                                         <div class="details-side">
                                             <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail">
                                             <div class="details">
-                                                <p class="title"><b>{{plan?.subtitle}}</b></p>
-                                                <p class="description">Unlimited Talk, and Text</p>
-                                                <p class="category"><b>(Refill Plan)</b></p>
+                                                <p class="title smaller primary-font-bold">{{plan?.subtitle}}</p>
+                                                <p class="description smaller primary-font">Unlimited Talk, and Text</p>
+                                                <p class="category smaller primary-font-bold">(Refill Plan)</p>
                                                 <!-- <p class="id">{{ 'account-order-detail.item#' | translate : {val: plan?.title} }}</p> -->
-                                                <p class="quantity">Quantity: {{ plan?.quantity }}</p>
+                                                <p class="quantity smaller">Quantity: {{ plan?.quantity }}</p>
                                             </div>
                                         </div>
                                         <div class="price-side">
@@ -251,9 +205,9 @@
                                                 <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
                                             </div>
                                             <div class="details">
-                                                <p class="title"><b>{{device?.description}}</b></p>
-                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
-                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                                <p class="title smaller primary-font-bold">{{device?.description}}</p>
+                                                <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="quantity smaller">Quantity: {{device?.quantity}}</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
                                                     *ngIf="screenWidth < 1025">Delivery Details</p>
                                                 <p class="action" data-cy="cancel"
@@ -267,10 +221,10 @@
                                         <div class="details-side">
                                             <img class="thumbnail" [src]="orderInfo?.skuNumber === 'TE'? 'assets/icon/e-sim.svg': 'assets/icon/sim-image.svg'" alt="SIM card">
                                             <div class="details">
-                                                <p class="title"><b>{{(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'e' : ''}}SIM Card</b></p>
-                                                <p class="category"><b>(Replacement)</b></p>
-                                                <p class="id" *ngIf="sim?.itemId">Item #{{ sim?.itemId}}</p>
-                                                <p class="quantity">Quantity: 1</p>
+                                                <p class="title smaller primary-font-bold">{{(!!orderInfo?.skuNumber && orderInfo?.skuNumber === 'TE') ? 'e' : ''}}SIM Card</p>
+                                                <p class="category smaller primary-font-bold">(Replacement)</p>
+                                                <p class="id smallest" *ngIf="sim?.itemId">Item #{{ sim?.itemId}}</p>
+                                                <p class="quantity smaller">Quantity: 1</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
                                                     *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
                                                 <p class="action" data-cy="cancel"
@@ -280,7 +234,7 @@
                                             </div>
                                         </div>
                                         <div class="price-side">
-                                            <p class="price"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
+                                            <p class="price smaller"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
                                         </div>
                                     </div>
                                     <div *ngIf="!!orderInfo?.planAddOns">
@@ -291,15 +245,15 @@
                                                     [src]="addon.addOnType === 'add-on-data' ? 'assets/icon/1G.svg' : 'assets/icon/International.svg'"
                                                     alt="thumbnail">
                                                 <div class="details">
-                                                    <p class="title"><b>{{addon?.subtitle}}</b></p>
-                                                    <p class="category"><b>(Addon)</b></p>
-                                                    <p class="id" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
-                                                    <p class="quantity">Quantity: {{ addon?.quantity }}</p>
+                                                    <p class="title smaller primary-font-bold">{{addon?.subtitle}}</p>
+                                                    <p class="category primary-font-bold">(Addon)</p>
+                                                    <p class="id smallest" *ngIf="addon?.itemId">Item # {{ addon?.itemId }}</p>
+                                                    <p class="quantity smaller primary-font">Quantity: {{ addon?.quantity }}</p>
                                                     <hr *ngIf="i < (orderInfo?.planAddOns.length - 1)">
                                                 </div>
                                             </div>
                                             <div class="price-side">
-                                                <p class="price"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
+                                                <p class="price smaller"><b>{{addon?.price | currency:'USD':'symbol':0}}</b></p>
                                             </div>
                                         </div>
                                     </div>
@@ -316,10 +270,10 @@
                                         <div class="details-side">
                                             <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
                                             <div class="details">
-                                                <p class="title"><b>SIM Card</b></p>
-                                                <p class="category"><b>(New)</b></p>
-                                                <p class="id" *ngIf="sim?.itemId">Item # {{sim?.itemId}}</p>
-                                                <p class="quantity">Quantity: 1</p>
+                                                <p class="title smaller primary-font-bold"><b>SIM Card</b></p>
+                                                <p class="category smaller primary-font-bold"><b>(New)</b></p>
+                                                <p class="id smallest" *ngIf="sim?.itemId">Item # {{sim?.itemId}}</p>
+                                                <p class="quantity smaller">Quantity: 1</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
                                                     *ngIf="screenWidth < 1025">Delivery Details</p>
                                                 <p class="action" data-cy="cancel"
@@ -328,7 +282,7 @@
                                             </div>
                                         </div>
                                         <div class="price-side">
-                                            <p class="price"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
+                                            <p class="price smaller"><b>{{sim?.price | currency:'USD':'symbol':0}}</b></p>
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +297,7 @@
                         <h2 class="card-header">Order Summary</h2>
                         <p class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(orderInfo?.id)"
                             *ngIf="!!orderInfo?.paymentSuccessful"><img class="icon"
-                                src="assets/icon/purple-invoice.svg"><span>View Invoice</span></p>
+                                src="assets/icon/primary-invoice.svg"><span>View Invoice</span></p>
                     </div>
                     <div class="card-tab">
                         <input type="checkbox" id="summary" [(ngModel)]="summary">
@@ -355,8 +309,8 @@
                                     <p class="value">{{orderInfo?.payment?.itemsPrice}}</p>
                                 </div>
                                 <div class="price-details discount">
-                                    <p class="price-title">Discount total</p>
-                                    <p class="value">- {{orderInfo?.payment?.discountApplied}}</p>
+                                    <p class="price-title text-orange">Discount total</p>
+                                    <p class="value text-orange">- {{orderInfo?.payment?.discountApplied}}</p>
                                 </div>
                                 <div class="price-details">
                                     <p class="price-title">Shipping fees</p>
@@ -440,7 +394,7 @@
                             <div>
                                 <input type="checkbox" id="addresses" [(ngModel)]="address">
                                 <label class="sub-label" (click)="open()">
-                                    <span data-cy="shippingAddress">Shipping Address <span class="title-action"
+                                    <span data-cy="shippingAddress" class="black">Shipping Address <span class="title-action"
                                             data-cy="changeShippingAddress"
                                             (click)="editShippingAddress(orderInfo?.shippingInfo?.shippingAddress, orderInfo?.id);addresses=true;"
                                             *ngIf="orderInfo?.status !== ORDER_STATUS.DELIVERED && orderInfo?.status !== ORDER_STATUS.SHIPPED && orderInfo?.status !== ORDER_STATUS.CANCELED">Change</span></span><img
@@ -467,7 +421,7 @@
                                 *ngIf="(!!orderInfo?.devices && orderInfo?.devices?.length > 0) || (!!orderInfo?.cards && orderInfo?.cards?.length > 0)">
                                 <input type="checkbox" id="package" [(ngModel)]="packages">
                                 <label class="sub-label" for="package">
-                                    <span>Package Content</span><img class="icon" data-cy="arrowIconPackageContent"
+                                    <span class="black">Package Content</span><img class="icon" data-cy="arrowIconPackageContent"
                                         src="assets/icon/arrow_circle.svg" alt="arrow icon">
                                 </label>
                                 <div class="sub-content">
@@ -477,9 +431,9 @@
                                                 <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
                                             </div>
                                             <div class="details">
-                                                <p class="title"><b>{{device?.description}}</b></p>
-                                                <p class="id" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
-                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
+                                                <p class="smaller primary-font-bold">{{device?.description}}</p>
+                                                <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="quantity smaller">Quantity: {{device?.quantity}}</p>
                                                 <p class="action" *ngIf="screenWidth < 1025"
                                                     (click)="scrollToDetails()">
                                                     Item Details</p>
@@ -492,13 +446,13 @@
                                             <div class="details-side">
                                                 <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
                                                 <div class="details">
-                                                    <p class="title"><b>SIM Card</b><b> {{orderInfo?.intent ===
+                                                    <p class="title smaller primary-font-bold">SIM Card<b> {{orderInfo?.intent ===
                                                             ORDER_INTENT.REPLACEMENT ? '(Replacement)' : (orderInfo?.intent
                                                             ===
                                                             ORDER_INTENT.NEW ? '(New)' : '(Migration')}}</b></p>
-                                                    <p class="id" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
-                                                    <p class="id" *ngIf="sim?.deviceId">IMEI: {{sim?.deviceId}}</p>
-                                                    <p class="quantity">Quantity: 1</p>
+                                                    <p class="id smallest" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                                    <p class="id smallest" *ngIf="sim?.deviceId">IMEI: {{sim?.deviceId}}</p>
+                                                    <p class="quantity smaller">Quantity: 1</p>
                                                     <p class="action" *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'"
                                                         (click)="scrollToDetails()">
                                                         Item Details</p>

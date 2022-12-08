@@ -32,7 +32,7 @@
       <div class="left" [class.full]="!showShippingCard && !!isMigration">
         <div class="place-order-card" [class.full]="!showShippingCard && !!isMigration">
           <div class="card-header">
-            <p class="title">Order Summary</p>
+            <h3 class="title">Order Summary</h3>
           </div>
           <div class="card-tab">
             <input type="checkbox" class="hidden-checkbox" id="summary" [(ngModel)]="summary" />
@@ -42,24 +42,24 @@
                 <div class="item-details">
                   <div class="details summary">
                     <div class="detail">
-                      <p class="key">Subtotal</p>
-                      <p class="value"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
-                    </div>
-                    <div class="detail secondary">
-                      <p class="key">Discount total</p>
-                      <p class="value" data-cy="discountValue"><b>{{details?.discount | currency}}</b></p>
+                      <p class="smaller">Subtotal</p>
+                      <p class="smaller"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
                     </div>
                     <div class="detail">
-                      <p class="key">Shipping fees</p>
-                      <p class="value" data-cy="shippingFees"><b>{{details?.shipping | currency}}</b></p>
+                      <p class="smaller text-orange">Discount total</p>
+                      <p class="smaller text-orange" data-cy="discountValue"><b>{{details?.discount | currency}}</b></p>
                     </div>
                     <div class="detail">
-                      <p class="key">Govt. taxes & fees</p>
-                      <p class="value" data-cy="taxesFees"><b>{{details?.taxes | currency}}</b></p>
+                      <p class="smaller">Shipping fees</p>
+                      <p class="smaller" data-cy="shippingFees"><b>{{details?.shipping | currency}}</b></p>
+                    </div>
+                    <div class="detail">
+                      <p class="smaller">Govt. taxes & fees</p>
+                      <p class="smaller" data-cy="taxesFees"><b>{{details?.taxes | currency}}</b></p>
                     </div>
                     <div class="detail last">
-                      <p class="key">Surcharges & fees</p>
-                      <p class="value" data-cy="subchargesFess"><b>{{details?.fees | currency}}</b></p>
+                      <p class="smaller">Surcharges & fees</p>
+                      <p class="smaller" data-cy="subchargesFess"><b>{{details?.fees | currency}}</b></p>
                     </div>
                   </div>
                 </div>
@@ -73,7 +73,7 @@
         </div>
         <div class="place-order-card" [class.full]="!showShippingCard && !!isMigration">
           <div class="card-header">
-            <p class="title">Order Details</p>
+            <h3 class="title">Order Details</h3>
           </div>
           <div class="card-tab">
             <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="items" />
@@ -94,16 +94,16 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold" data-cy="basePlan">{{ userCart?.basePlan?.subtitle }}</p>
+                        <p class="smaller primary-font-bold" data-cy="basePlan">{{ userCart?.basePlan?.subtitle }}</p>
                         <p *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN">{{ userCart?.basePlan?.title }}</p>
                         <p *ngIf="!!userCart?.basePlan?.specialPromotion && userCart?.cartType === CART_TYPES.NEW_PLAN" class="promo bold">{{userCart?.basePlan?.specialPromotion?.promotionTitle}}</p>
-                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">
+                        <p class="smaller primary-font-bold" *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">
                           (Change Plan)</p>
-                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New plan)
+                        <p class="smaller primary-font-bold" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New plan)
                         </p>
                         <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
                         </p>
-                        <p class="bold" *ngIf="!!isTrialUpgrade">7-day trial upgrade</p>
+                        <p class="smaller primary-font-bold" *ngIf="!!isTrialUpgrade">7-day trial upgrade</p>
                       </div>
                       <p class="price">
                         ${{!!userCart?.basePlan?.specialPromotion && userCart?.cartType ==
@@ -148,10 +148,6 @@
                       <p class="bold">{{userCart?.promoCodes[0]?.description}}</p>
                       <p class="bold">Code: <span>{{userCart?.promoCodes[0]?.code}}</span></p>
                     </div>
-                    <div class="detail" *ngIf="!!isTrialUpgrade">
-                      <p class="bold">Trial upgrade payment discount</p>
-                      <p class="price">-$5</p>
-                    </div>
                     <p class="quantity">Quantity: {{userCart?.quantity}}</p>
                     <div class="actions">
                       <a class="link first" (click)="goToPlans(true)"
@@ -168,11 +164,11 @@
                     <div class="details">
                       <div class="detail">
                         <div class="detail-info">
-                          <p class="bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                          <p class="smaller bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
                         </div>
-                        <p class="price">$0</p>
+                        <p class="smaller price">$0</p>
                       </div>
-                      <p class="quantity" data-cy="simQuantity">Quantity: 1</p>
+                      <p class="smaller quantity" data-cy="simQuantity">Quantity: 1</p>
                     </div>
                   </div>
                 </div>
@@ -182,9 +178,9 @@
                   <div class="details">
                     <div class="detail" [class.disabled]="!!isItemUnavailable">
                       <div class="detail-info">
-                        <p class="bold">{{ selectedPhone?.description }}</p>
+                        <p class="smaller bold">{{ selectedPhone?.description }}</p>
                       </div>
-                      <p class="price">
+                      <p class="smaller price">
                         {{ selectedPhone?.price | currency }}
                       </p>
                     </div>
@@ -205,12 +201,12 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
-                        <p *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
-                        <p class="bold">(Data Add-On)</p>
+                        <p class="smaller bold" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
+                        <p class="smaller" *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
+                        <p class="smaller bold">(Data Add-On)</p>
 
                       </div>
-                      <p class="price">
+                      <p class="price smaller">
                         ${{dataAddons[0]?.price * dataAddons[0]?.quantity}}
                       </p>
                     </div>
@@ -229,14 +225,14 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold" *ngIf="!!internationalAddon[0]?.title">
+                        <p class="bold smaller" *ngIf="!!internationalAddon[0]?.title">
                           {{internationalAddon[0]?.title}}</p>
-                        <p *ngIf="!!internationalAddon[0]?.subtitle">{{internationalAddon[0]?.subtitle}}
+                        <p class="smaller" *ngIf="!!internationalAddon[0]?.subtitle">{{internationalAddon[0]?.subtitle}}
                         </p>
-                        <p class="bold">(International Add-On)</p>
+                        <p class="bold smaller">(International Add-On)</p>
 
                       </div>
-                      <p class="price">
+                      <p class="price smaller">
                         ${{internationalAddon[0]?.price}}
                       </p>
                     </div>
@@ -254,16 +250,16 @@
                   <div class="details" *ngFor="let item of talkAndTextAddons">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold" *ngIf="!!item?.title">{{item?.title}}</p>
-                        <p *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
-                        <p class="bold">(Talk & text add-on)</p>
+                        <p class="bold smaller" *ngIf="!!item?.title">{{item?.title}}</p>
+                        <p class="smaller" *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
+                        <p class="bold smaller">(Talk & text add-on)</p>
 
                       </div>
-                      <p class="price">
+                      <p class="price smaller">
                         ${{item?.price}}
                       </p>
                     </div>
-                    <p class="quantity">Quantity: {{item?.quantity}}</p>
+                    <p class="quantity smaller">Quantity: {{item?.quantity}}</p>
                     <div class="actions" *ngIf=" talkAndTextAddons.length === 1">
                       <a class="link" (click)="clearUserCart(talkAndTextAddons[0].id)">Delete</a>
                     </div>
@@ -278,17 +274,17 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold">{{planCategory('sim')}}</p>
-                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
+                        <p class="bold smaller">{{planCategory('sim')}}</p>
+                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
                           Order)</p>
-                        <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>
+                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>
 
                       </div>
-                      <p class="price">
+                      <p class="price smaller">
                         ${{userCart?.cartType === CART_TYPES.PLAN_ITEMS ? newSimOrder?.price : 0}}
                       </p>
                     </div>
-                    <p class="quantity">Quantity: {{userCart?.quantity}}</p>
+                    <p class="quantity smaller">Quantity: {{userCart?.quantity}}</p>
                     <div class="actions">
                       <a class="link" (click)="clearUserCart('sim')">Delete</a>
                     </div>
@@ -327,11 +323,11 @@
                     <div class="details">
                       <div class="detail">
                         <div class="detail-info">
-                          <p class="bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                          <p class="bold smaller" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
                         </div>
-                        <p class="price">$0</p>
+                        <p class="price smaller">$0</p>
                       </div>
-                      <p class="quantity" data-cy="simQuantity">Quantity: 1</p>
+                      <p class="quantity smaller" data-cy="simQuantity">Quantity: 1</p>
                     </div>
                   </div>
                 </div>
@@ -343,7 +339,7 @@
       <div class="right" *ngIf="!!showShippingCard || !isMigration">
         <div class="place-order-card" *ngIf="!!showShippingCard">
           <div class="card-header">
-            <p class="title" data-cy="deliveryDetails">Delivery Details</p>
+            <h3 class="title" data-cy="deliveryDetails">Delivery Details</h3>
           </div>
           <div class="card-tab">
             <input type="checkbox" class="hidden-checkbox" id="delivery" [(ngModel)]="delivery" />
@@ -399,7 +395,7 @@
         </div>
         <div class="place-order-card" *ngIf="!isMigration || (!!isMigration && orderShippingMethod?.price > 0)">
           <div class="card-header">
-            <p class="title">Payment Method</p>
+            <h3 class="title">Payment Method</h3>
             <a data-cy="chanePaymentMethod" (click)="goToPaymentSection()">Change</a>
           </div>
           <div class="card-tab payment">
@@ -407,15 +403,15 @@
               <div class="items-sub-content">
                 <div class="sub-item-section">
                   <div class="item-details" *ngIf="!!showBillingAddress && !!cardInfo">
-                    <img src="assets/icon/credit-card.svg" alt="Payment Card image" />
+                    <img src="assets/icon/credit-card.png" alt="Payment Card image" />
                     <div class="details">
                       <div class="details-flex">
                         <div class="flex">
-                          <p class="title">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
+                          <p class="title smaller bold">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
                           <p class="desc">Debit card ending in {{ cardInfo?.last4 }}</p>
                         </div>
                         <div class="amount">
-                          <p class="key">Deducted Amount</p>
+                          <p class="key smaller bold">Deducted Amount</p>
                           <p class="value">{{(total - balanceAmount) | currency}}</p>
                         </div>
                       </div>
@@ -450,12 +446,8 @@
   </div>
 </section>
 <section class="navigation-section">
-  <div class="container-flex navs">
-    <div class="left">
-      <button class="button secondary" data-cy="backBtn" (click)="goToPaymentSection()">Back</button>
-    </div>
-    <div class="right">
-      <button class="button primary" data-cy="submitBtn" (click)="placeOrder()">Submit</button>
-    </div>
+  <div class="page-section navs">
+    <button class="button secondary" data-cy="backBtn" (click)="goToPaymentSection()">Back</button>
+    <button class="button primary" data-cy="submitBtn" (click)="placeOrder()">Submit</button>
   </div>
 </section>

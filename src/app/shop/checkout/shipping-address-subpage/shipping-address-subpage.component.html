@@ -152,13 +152,9 @@
   </div>
 </section>
 <section class="navigation-section" [class.blur]="!!showShippingForm">
-  <div class="container-flex navs">
-    <div class="left">
-      <button class="button secondary" data-cy="backBtn" (click)="goToCart()">Back</button>
-    </div>
-    <div class="right">
-      <button class="button primary" (click)="nextCheckoutStep()" id="continue-shipping" data-cy="nextBtn">Next</button>
-    </div>
+  <div class="page-section navs">
+    <button class="button secondary" data-cy="backBtn" (click)="goToCart()">Back</button>
+    <button class="button primary" (click)="nextCheckoutStep()" id="continue-shipping" data-cy="nextBtn">Next</button>
   </div>
 </section>
 <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-invisible-recaptcha>

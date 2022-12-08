@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BingLayer, GeocodingService, MapService } from '@ztarmobile/zwp-services-util';
 import * as L from 'leaflet';
-import { SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS} from '../../app.routes.names';
+import { SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS} from '../../app.routes.names';
 import { MetaService } from '../../../services/meta-service.service';
 import { MapLayer } from '../../../widgets/coverage-map/mapLayer';
 
@@ -73,6 +73,10 @@ export class CoveragesComponent implements OnInit {
 
   public udpateStatus($event): void {
     this.coverageChecked = $event;
+  }
+
+  public goToPlans(): void {
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
   }
 
 }

@@ -4,7 +4,7 @@
 .order-details {
     .back-section {
         display: flex;
-        font-family: $base-font-family;
+        font-family: $secondary-font-family-bold;
         font-size: rem-calc(16px);
         line-height: 24px;
         margin-bottom: 32px;
@@ -17,11 +17,11 @@
         }
 
         .id {
-            font-weight: bold;
-            font-family: $base-font-family-bold;
+            font-family: $secondary-font-family;
             color: $primary-color;
             margin-bottom: 0;
             margin-left: 10px;
+            font-size: rem-calc(16px);
         }
 
         img {
@@ -111,9 +111,9 @@
 
         .action {
             color: $primary-color;
-            font-family: $base-font-family-bold;
-            font-size: rem-calc(16px);
-            line-height: 16px;
+            font-family: $secondary-font-family-bold;
+            font-size: rem-calc(18px);
+            line-height: 18px;
             margin-bottom: 10px;
             cursor: pointer;
             display: flex;
@@ -171,10 +171,10 @@
         }
 
         .order-card {
-            background-color: #F4F4F4;
+            background-color: $white;
             flex-basis: 48%;
             align-self: self-start;
-            box-shadow: 0px 1px 15px rgba(41, 41, 41, 0.2);
+            box-shadow: 0 8px 30px #5e5e5e1f;
             border-radius: 10px;
 
             &.summary {
@@ -183,7 +183,7 @@
 
             .order-card-container {
                 padding-bottom: 48px;
-
+                background-color: $white;
                 @media(max-width: $phablet-min-width-minus) {
                     padding-bottom: 32px;
                 }
@@ -200,6 +200,7 @@
                     line-height: 32px;
                     color: $black;
                     margin-bottom: 0;
+                    font-family: $secondary-font-family-bold;
                 }
 
                 .action {
@@ -264,7 +265,7 @@
 
                     .info-section {
                         padding: 18px 24px 18px 24px;
-                        background-color: #F4F4F4;
+                        background-color: $white;
 
                         &.tracking {
                             display: flex;
@@ -309,11 +310,7 @@
                         .price-details {
                             display: flex;
                             margin-bottom: 12px;
-                            color: $black;
-
-                            &.discount {
-                                color: $secondary-color;
-                            }
+                            color: $third-color;
 
                             .price-title {
                                 flex-basis: 80%;
@@ -400,14 +397,15 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    padding: 18px 24px;
-                    background: #8633990D;
-                    color: $black;
+                    color: #1c1d1f;
+                    padding: 16px 24px;
                     cursor: pointer;
                     margin-bottom: 0;
-                    font-size: rem-calc(20px);
-                    line-height: 28px;
-                    font-family: $base-font-family-bold;
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: $bold;
+                    font-family: $secondary-font-family-bold;
+                    background: hsla(204, 41%, 93%, 1);
 
                     &:after {
                         content: "\276F";
@@ -424,7 +422,13 @@
                     }
 
                     .tab-title {
+                        color: #1c1d1f;
+                        cursor: pointer;
                         margin-bottom: 0;
+                        font-size: 20px;
+                        line-height: 32px;
+                        font-weight: $bold;
+                        font-family: $secondary-font-family-bold;
                     }
 
                     @media(max-width: $phablet-min-width-minus) {
@@ -443,49 +447,42 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    background: #EDEDED;
-                    padding: 18px 16px 18px 24px;
+                    background: #F8FCFE;
+                    box-shadow: inset 0px -1px 0px rgba(206, 211, 214, 0.25);
+                    padding: 16px 24px;
+                    padding-right: 14px;
                     margin-bottom: 0;
+                    font-size: 18px;
+                    line-height: 28px;
                     font-family: $base-font-family-bold;
-                    font-size: rem-calc(18px);
-                    line-height: 32px;
-                    box-shadow: 0px -1px 0px 0px #CED3D640 inset;
+                    color: #765BA7;
                     cursor: pointer;
+                    .black {
+                        color: $third-color;
+                    }
+                    @media (max-width: $phablet-min-width-minus) {
+                        padding: 12px 16px;
+                        padding-right: 10px;
+                        font-size: 16px;
+                        line-height: 24px;
+                    }
 
                     img {
                         transform: rotate(-180deg);
-                        width: 32px;
-                        height: 32px;
-                    }
+                        width: 26.67px;
+                        height: 26.67px;
 
-                    &.new {
-                        color: $secondary-color;
-                    }
-
-                    @media (max-width: $desktop-min-width-minus) {
-                        img {
-                            width: 26px;
-                            height: 26px;
-                        }
-                    }
-
-                    @media (max-width: $phablet-min-width-minus) {
-                        padding: 14px 12px 14px 16px;
-                        font-size: rem-calc(16px);
-                        line-height: 24px;
-
-                        img {
+                        @media (max-width: $phablet-min-width-minus) {
                             width: 20px;
                             height: 20px;
                         }
                     }
-
                 }
 
                 .sub-content {
                     display: none;
                     transition: max-height 0.15s cubic-bezier(0, 1, 0, 1);
-                    background-color: #F4F4F4;
+                    background-color: $white;
 
                     .item-details {
                         display: flex;
@@ -508,8 +505,8 @@
 
                             .thumbnail {
                                 height: 48px;
-                                margin-right: 22px;
-                                width: 48px;
+                                margin-right: 12px;
+                                width: 60px;
 
                                 &.phone {
                                     width: 40px;
@@ -603,7 +600,6 @@
                                 }
 
                                 .thumbnail {
-                                    height: 32px;
                                     margin-right: 12px;
 
                                     &.phone {

@@ -17,30 +17,20 @@
         padding: 32px 24px;
       }
       .banner-head {
-        font-size: 36px;
-        line-height: 44px;
         font-weight: bold;
         font-family: $base-font-family-bold;
         margin-bottom: 12px;
         color: $header-color;
         @media (max-width: $phablet-min-width-minus) {
-          font-size: 24px;
-          line-height: 32px;
           margin-bottom: 4px;
         }
       }
       .banner-text {
         text-align: center;
-        p {
-          font-size: 20px;
-          line-height: 28px;
+        h5 {
           font-weight: normal;
           font-family: $base-font-family;
           margin-bottom: 0px;
-          @media (max-width: $phablet-min-width-minus) {
-            font-size: 16px;
-            line-height: 24px;
-          }
         }
       }
     }
@@ -105,6 +95,7 @@
               font-size: 36px;
               line-height: 44px;
               font-weight: bold;
+              font-family: $base-font-family-bold;
               position: relative;
               .currency {
                 font-size: 18px;
@@ -125,12 +116,16 @@
             .data {
               font-size: 36px;
               line-height: 44px;
+              font-family: $base-font-family-bold;
+              font-weight: bold;
+
             }
           }
           .link {
             font-size: 16px;
             line-height: 16px;
             font-weight: bold;
+            font-family: $base-font-family-bold;
             margin-right: 9px;
             color: #fbfbfb;
             @media (max-width: $phablet-min-width-minus) {
@@ -161,6 +156,7 @@
             text-transform: uppercase;
             color: #6a509b;
             font-weight: bold;
+            font-family: $base-font-family-bold;
             @media (max-width: $phablet-min-width-minus) {
               font-size: 12px;
               line-height: 20px;
@@ -168,7 +164,7 @@
             }
           }
           .details {
-            margin-bottom: 22px;
+            margin-bottom: 16px;
             display: flex;
             align-items: flex-start;
             @media (max-width: $phablet-min-width-minus) {
@@ -185,14 +181,8 @@
               }
             }
             p {
-              font-size: 14px;
-              line-height: 24px;
               color: #090909;
               margin-bottom: 0;
-              @media (max-width: $phablet-min-width-minus) {
-                font-size: 12px;
-                line-height: 20px;
-              }
             }
           }
           .more-info {
@@ -201,6 +191,7 @@
             color: $link-color;
             margin-bottom: 0;
             font-weight: bold;
+            font-family: $base-font-family-bold;
             margin-top: 11px;
             @media (max-width: 1439.9px) {
               margin-bottom: 8px;
@@ -239,9 +230,7 @@
         }
       }
     }
-    .sub-note {
-      font-size: 12px;
-      line-height: 12px;
+    .label {
       font-weight: normal;
       margin-bottom: 4px;
       color: #5e5e5e;
@@ -253,6 +242,7 @@
       font-size: 32px;
       line-height: 40px;
       font-weight: bold;
+      font-family: $base-font-family-bold;
       margin-bottom: 12px;
       color: $header-color;
       @media (max-width: $phablet-min-width-minus) {
@@ -262,14 +252,11 @@
       }
     }
     .subtext {
-      font-size: 20px;
-      line-height: 28px;
       font-weight: normal;
+      font-family: $secondary-font-family;
       color: #090909;
       margin-bottom: 40px;
       @media (max-width: $phablet-min-width-minus) {
-        font-size: 18px;
-        line-height: 28px;
         margin-bottom: 44px;
       }
     }
@@ -309,18 +296,16 @@
             margin-bottom: 28px;
           }
           .title {
-            font-size: 20px;
-            line-height: 28px;
             margin-bottom: 8px;
             font-weight: bold;
+            font-family: $secondary-font-family-bold;
           }
           .desc {
             font-weight: normal;
-            font-size: 16px;
-            line-height: 24px;
+            font-family: $base-font-family;
             margin-bottom: 0px;
             max-width: 352px;
-            min-height: 100px;
+            min-height: 80px;
             @media (max-width: 999.9px) {
               min-height: 100%;
               margin-bottom: 25px;
@@ -337,6 +322,7 @@
             font-size: 18px;
             line-height: 18px;
             font-weight: bold;
+            font-family: $base-font-family-bold;
             display: flex;
             align-items: center;
             margin-bottom: 0;
@@ -417,12 +403,9 @@
         z-index: 1;
         cursor: pointer;
         position: absolute;
-        right: 61px;
+        right: 50px;
         width: 24px;
         height: 54px;
-        @media (max-width: $desktop-min-width-minus) {
-          right: 60px;
-        }
       }
       .toggle {
         margin-bottom: 12px;

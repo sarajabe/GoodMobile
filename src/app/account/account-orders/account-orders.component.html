@@ -8,7 +8,7 @@
         </div>
         <div class="filters">
             <div class="sorting" #sort>
-                <p class="sort-title" data-cy="sortByDate" [class.focus]="showSortMenu" (click)="toggleSort()">Sort By: Date <img class="sort-icon" [src]="sortValue === 'desc' ? 'assets/icon/desc.svg' : 'assets/icon/asc.svg'" alt="sort"/></p>
+                <p class="sort-title" data-cy="sortByDate" [class.focus]="showSortMenu" (click)="toggleSort()">Sort By: <b>Date</b> <img class="sort-icon" [src]="sortValue === 'desc' ? 'assets/icon/desc.png' : 'assets/icon/asc.png'" alt="sort"/></p>
                 <div class="sort-section" [class.shown]="showSortMenu">
                     <form [formGroup]="sortForm" class="form-options">
                         <div class="radioBtn">
@@ -126,7 +126,7 @@
                             <img src="assets/icon/arrow_circle.svg" alt="arrow" class="rotate">
                         </div>
                         <div class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(order?.id)" *ngIf="!!order?.paymentSuccessful">
-                            <img src="assets/icon/purple-invoice.svg" alt="invoice" class="invoice">
+                            <img src="assets/icon/primary-invoice.svg" alt="invoice" class="invoice">
                             <p class="description" >View Invoice</p>
                         </div>
                     </div>
@@ -145,16 +145,16 @@
                                         <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="g2g-plan" *ngIf="!plan?.promotionCode" >
                                         <img class="thumbnail" [src]="promoDetails[plan?.promotionCode].img" alt="g2g-plan" *ngIf="!!plan?.promotionCode && order?.intent === ORDER_INTENT.NEW"/>
                                         <div class="details">
-                                            <p class="title"><b>{{plan?.subtitle}}</b></p>
-                                            <p class="description" [class.promo]="!!plan?.promotionTitle && order?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && order?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
-                                            <p class="category" ><b>({{order?.intent === ORDER_INTENT.NEW ? 'new' : (order?.intent === ORDER_INTENT.REFILL ? 'Refill' : 'Change')}} plan)</b></p>
+                                            <p class="smaller primary-font-bold">{{plan?.subtitle}}</p>
+                                            <p class="smaller primary-font" [class.promo]="!!plan?.promotionTitle && order?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && order?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
+                                            <p class="smaller primary-font-bold" >({{order?.intent === ORDER_INTENT.NEW ? 'new' : (order?.intent === ORDER_INTENT.REFILL ? 'Refill' : 'Change')}} plan)</p>
                                         </div>
                                     </div>
                                     <hr *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'" [class.indent]="order?.intent === ORDER_INTENT.NEW && !order.devices">
                                 </ng-container>
                                 <div class="item-details" [class.multiple]="!!order?.planAddOns && !!order?.cards">
                                     <img class="item sim" [class.indent]="order?.intent === ORDER_INTENT.NEW && !order.devices" [class.esim]="order?.skuNumber === 'TE'" [src]="(order?.intent === ORDER_INTENT.NEW || order?.intent === ORDER_INTENT.NEW_SIM) ?
-                                         (!!order?.skuNumber && order?.skuNumber === 'TE' ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg') : 'assets/icon/replacement-sim.svg'" alt="g2g SIM" *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'">
+                                         (!!order?.skuNumber && order?.skuNumber === 'TE' ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg') : 'assets/icon/replacement-sim.svg'" alt="goodMobile SIM" *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'">
                                     <div class="image-container" *ngIf="!!order?.devices && order?.devices?.length > 0">
                                         <img class="item device" [src]="phonesImages[order.id]" alt="Mobile">
                                         <div class="colored-icon"  [class.canceled]="order?.status === ORDER_STATUS.CANCELED"></div>

@@ -33,18 +33,18 @@
       flex-basis: 16%;
       .logo {
         width: 143px;
-        height: 32px;
+        height: 46px;
         cursor: pointer;
       }
       @media(max-width: $desktop-min-width-minus) {
         flex-basis: 50%;
+        align-items: center;
         gap: 32px;
       }
       @media(max-width: $phablet-min-width-minus) {
         gap: 10px;
         .logo {
-          width: 126px;
-          height: 26px;
+          width: 110px;
         }
         .hamburger {
           height: 24px;

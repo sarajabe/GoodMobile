@@ -1,156 +1,82 @@
 <div class="bring-phone-page">
-    <section class="banner-section">
-        <div class="banner-image-container">
-            <div class="banner-img">
-                <picture>
-                    <source srcset='assets/img/banners/byod-banner-mobile.webp' media="(max-width: 639.9px)"
-                        type="image/webp">
-                    <source srcset='assets/img/banners/byod-banner-mobile.png' media="(max-width: 639.9px)"
-                        type="image/png">
-                    <source srcset='assets/img/banners/byod-banner-tablet.webp' media="(max-width: 1024.9px)"
-                        type="image/webp">
-                    <source srcset='assets/img/banners/byod-banner-tablet.png' media="(max-width: 1024.9px)"
-                        type="image/png">
-                    <source srcset='assets/img/banners/byod-banner-desktop.webp' media="(min-width: 1025px)"
-                        type="image/webp">
-                    <source srcset='assets/img/banners/byod-banner-desktop.png' media="(min-width: 1025px)"
-                        type="image/png">
-                    <img src="assets/img/banners/byod-banner-desktop.png" alt="GoodMobile byod banner image">
-                </picture>
+    <div class="top-banner">
+        <h1 class="banner-head">Love your device?</h1>
+        <h4 class="banner-subtitle">Bring it to GoodMobile</h4>
+        <button class="button primary specific" (click)="goToCompatibility()">Get Started</button>
+    </div>
+    <div class="great-things-section">
+        <p class="label">START WITH GOODMOBILE</p>
+        <h2 class="sec-head">Bring your own device to GoodMobile</h2>
+        <div class="things-details">
+            <div class="item-details">
+                <img src="/assets/icon/device-check.svg" alt="device-icon">
+                <h5 class="title">Keep the device you love</h5>
+                <p class="smaller desc">Let’s find out if your device is compatibale with our network.</p>
+                <a class="link" (click)="goToCompatibility()">Check Device<img src="/assets/icon/next-blue-arrow.svg"
+                        alt="next-arrow"></a>
+            </div>
+            <div class="item-details">
+                <img src="/assets/icon/shop-plans.svg" alt="coverage-icon">
+                <h5 class="title">Choose the Right Plan for you</h5>
+                <p class="smaller desc spcific">Get a FREE SIM kit when you sign up to a GoodMobile plan online.</p>
+                <a class="link" (click)="goToPlans()">Shop Plans<img src="/assets/icon/next-blue-arrow.svg"
+                        alt="next-arrow"></a>
+            </div>
+
+            <div class="item-details">
+                <img src="/assets/icon/activate-req.svg" alt="phone-num-icon">
+                <h5 class="title">Activate</h5>
+                <p class="smaller desc spcific no-bottom">Keep your existing phone number or request a new one.</p>
             </div>
         </div>
-        <div class="banner-text-content">
-            <h1 class="header">Love Your Phone?</h1>
-            <p class="sub-header">Bring it to GoodMobile and start saving.</p>
-            <div class="get-started-button">
-                <button class="button primary" data-cy="getStartedBtn"
-                    [routerLink]="[ACTIVATION_ROUTE_URLS.BASE + '/' + ACTIVATION_ROUTE_URLS.CHECK_PHONE]">Get
-                    started</button>
+    </div>
+    <div class="page-section section-container reverse">
+        <div class="details-section">
+            <p class="label">PREMIUM WIRELESS</p>
+            <h2 class="header">Our best value plan</h2>
+            <h3 class="price">6GB for $30/mo</h3>
+            <h5 class="details">Customers who join GoodMobile enjoy premium data service provided by one of the country’s fastest networks! It's a steal of a deal on our best value plan!</h5>
+            <div class="action">
+                <button class="button primary" (click)="goToPlans()">Learn More</button>
             </div>
         </div>
-    </section>
-    <section class="bring-phone-steps-section">
-        <h2 class="title">Bring your own phone to GoodMobile</h2>
-        <div class="all-steps">
-            <div class="step-part">
-                <div class="icon">
-                    <img src="assets/icon/keep-device-step.svg" alt="keep device icon">
-                </div>
-                <p class="step-title">Keep the device you already love</p>
-                <p class="step-details">Let’s find out if your phone is compatible with our network.</p>
-                <div class="step-button">
-                    <button class="primary button"
-                        [routerLink]="[ACTIVATION_ROUTE_URLS.BASE + '/' + ACTIVATION_ROUTE_URLS.CHECK_PHONE]">Check
-                        phone</button>
-                </div>
-            </div>
-            <div class="step-part">
-                <div class="icon">
-                    <img src="assets/icon/choose-plan-step.svg" alt="choose plan icon">
-                </div>
-                <p class="step-title">Choose the Right Plan for You</p>
-                <p class="step-details">Get a FREE SIM Kit when you sign up to a GoodMobile plan online.</p>
-                <div class="step-button">
-                    <button class="primary button"
-                        [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Shop
-                        plans</button>
-                </div>
-            </div>
-            <div class="step-part bottom-0">
-                <div class="icon">
-                    <img src="assets/icon/activate-step.svg" alt="activate icon">
-                </div>
-                <p class="step-title">Activate</p>
-                <p class="step-details">Keep your existing phone number or request a new one.</p>
+        <div class="image-section center">
+            <picture>
+                <source height="500" srcset='assets/img/love-bring-phone.png' media="(min-width: 1800px)"
+                    type="image/png">     
+                <source height="300" srcset='assets/img/love-phone-normal.png' media="(min-width: 640px)"
+                    type="image/png">
+                    <source height="300" srcset='assets/img/love-bring-phone-mobile.png' media="(max-width: 640px)"
+                    type="image/png">    
+                <img height="300" src="assets/img/love-phone-normal.png" alt="love bring phone">
+            </picture>
+        </div>
+    </div>
+    <div class="compatibility-section">
+        <p class="label">CHECK COMPATIBILITY</p>
+        <h2 class="sec-head bottom">Check your phone’s compatibility with the 
+            GoodMobile network</h2>
+        <h5 class="desc">Most GSM phones work on our network. Let’s confirm if yours is compatible.</h5>
+        <button class="button primary specific" (click)="goToCompatibility()">Check your Phone</button>
+    </div>
+    <div class="faqs-section page-section">
+        <p class="label">FAQ QUESTIONS</p>
+        <h2 class="sec-head bottom">We are here to help you!</h2>
+        <h5 class="subtext">Browse through the most frequently asked questions.</h5>
+        <div class="plans-questions">
+            <div *ngFor="let qst of bringYourPhoneQsts" class="questions-container">
+                <a class="copy-icon-link"
+                    (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img
+                        src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span
+                        class="tool-tip-text">Copy question url</span> <span
+                        *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam"
+                        class="copied">Copied!</span></a>
+                <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                    [isActive]="qst?.fields?.questionId == questionIdParam"
+                    (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                    <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+                </app-question-answer>
             </div>
         </div>
-    </section>
-    <section class="bring-phone-content-section">
-        <div class="side-section margin-bottom">
-            <div class="image-part">
-                <picture>
-                    <source srcset='assets/img/two-girls-with-phone-mobile.webp' media="(max-width: 639.9px)"
-                        type="image/webp">
-                    <source srcset='assets/img/two-girls-with-phone-mobile.png' media="(max-width: 639.9px)"
-                        type="image/png">
-                    <source srcset='assets/img/two-girls-with-phone-tablet.webp' media="(max-width: 1024.9px)"
-                        type="image/webp">
-                    <source srcset='assets/img/two-girls-with-phone-tablet.png' media="(max-width: 1024.9px)"
-                        type="image/png">
-                    <source srcset='assets/img/two-girls-with-phone-desktop.webp' media="(min-width: 1025px)"
-                        type="image/webp">
-                    <source srcset='assets/img/two-girls-with-phone-desktop.png' media="(min-width: 1025px)"
-                        type="image/png">
-                    <img src="assets/img/two-girls-with-phone-desktop.png" alt="two-girls-with-phone-image">
-                </picture>
-            </div>
-            <div class="details-part">
-                <p class="status three-months">3 months intro offer</p>
-                <div class="gb-title">
-                    <p class="value new-value"> $10<span class="normal">/mo</span></p>
-                    <p class="value">3GB <span class="normal align">FOR</span> <span class="diagonal-border"></span> <span class="old-value"> $20</span><span class="normal">/mo</span></p>
-                </div>
-                <p class="desc">New customers who join GoodMobile save 50% on your three months! It's a steal of a deal on our 3GB and 6GB plans.</p>
-                <div class="learn-more-button">
-                    <button class="button primary" (click)="goToplanDetails('GoodMobile-6GB-30')" aria-label="learn more">Learn more</button>
-                </div>
-                <!-- <div class="desc">new customer intro offer - save 50% <br>on your first 3-months! regular price $35/mo.</div> -->
-            </div>
-        </div>
-    </section>
-    <section class="check-phone-section">
-        <h2 class="title">Check your phone’s compatibility with the GoodMobile network</h2>
-        <p class="description">Most GSM phones work on our network. Let’s confirm if yours is compatible.</p>
-        <button class="button primary"
-            [routerLink]="ACTIVATION_ROUTE_URLS.BASE + '/' + ACTIVATION_ROUTE_URLS.CHECK_PHONE" data-cy="checkYourPhoneBtn">Check your
-            phone</button>
-    </section>
-    <section class="faqs-section">
-        <h2 class="title">Got Questions? We’re here to answer</h2>
-        <div class="bring-phone-questions">
-            <div class="row">
-                <div class="twelve questions">
-                    <div *ngFor="let qst of firstThreeQuestions">
-                        <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
-                            [isActive]="qst?.fields?.questionId == questionIdParam"
-                            (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
-                            <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
-                        </app-question-answer>
-                    </div>
-                    <div *ngIf="!!showMore">
-                        <div *ngFor="let qst of restQuestions">
-                            <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
-                                [isActive]="qst?.fields?.questionId == questionIdParam"
-                                (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
-                                <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
-                            </app-question-answer>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p class="more-or-less-faqs" *ngIf="!showMore"><a (click)="showMore = true">More FAQs</a></p>
-        <p class="more-or-less-faqs" *ngIf="!!showMore"><a (click)="showMore = false; questionId = 'q0'">Less FAQs</a>
-        </p>
-        <div class="bring-phone-info">
-            <p>Most unlocked GSM phones will work on the GoodMobile network, however, we don’t have control over the
-                availability of the features we provide that are not available from your unlocked phone. Unfortunately,
-                some features like Wi-Fi calling, VoLTE, MMS may not work on our network. GoodMobile cannot and does
-                not guarantee the functionality or performance of any handsets or devices for use on the GoodMobile
-                network. Nor do we guarantee the functionality of any handsets or devices. As a courtesy, we provide
-                Internet and picture messaging (MMS) settings for some devices. GoodMobile cannot guarantee the
-                effectiveness of these settings, nor their placement in the device and therefore does not assume any
-                liability for the lack of effectiveness of these settings for the devices</p>
-            <p>Wi-Fi Calling requires Wi-Fi Calling capable smartphone and Wi-Fi network. Once enabled, phone
-                automatically makes/receives calls/text messages over Wi-Fi in the U.S. If wireless network coverage is
-                weak or unavailable, or outside the Domestic Coverage Area anytime you connect to a Wi-Fi network. Wi-Fi
-                Calling is available on select devices. Use of Wi-Fi Calling may be restricted in some countries. If you
-                move in or out of Wi-Fi coverage while on a Wi-Fi call, your call will disconnect unless you have AT&T
-                HD Voice coverage (911 calls will disconnect even if you are within HD Voice coverage). HD Voice not
-                available everywhere. To enable Wi-Fi Calling, you must have a wireless account provisioned for HD
-                Voice. Cannot use Wi-Fi Calling to call 211, 311, 511, and 811. <a
-                    [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS + '/wifi-calling']">Learn
-                    more</a>.</p>
-        </div>
-    </section>
+    </div>
 </div>

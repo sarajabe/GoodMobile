@@ -79,8 +79,10 @@
 
 .my-account-main-content {
     display: block;
+    margin-bottom: 32px;
     @media (min-width: $desktop-min-width) {
         display: flex;
+        margin-bottom: 64px;
     }
 }
 
