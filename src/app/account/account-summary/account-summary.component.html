@@ -73,26 +73,30 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!!userAccount && !!selectedPlan && !!selectedPlan.canceledOnExpiry">
-          <div class="cancel-plan-container">
-            <div class="info-section six">
-              <h3 class="title alert">Plan cancellation </h3>
-              <p class="details">Your plan will be canceled on
-                {{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MM-dd-yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}
-              </p>
-            </div>
-            <div class="action-section six">
-              <button class="button secondary" (click)="revertCancellation()">Revert cancellation</button>
+          <div class="info-banner warning-background">
+            <div class="flex">
+              <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
+              <div class="banner-content">
+                <p class="title">Plan cancellation</p>
+                <p class="description last">Your plan will be canceled on
+                  {{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate |
+                  date:'MM-dd-yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-")))
+                  : '-'}}</p>
+                <div class="actions">
+                  <button class="button secondary" (click)="revertCancellation()">Revert cancellation</button>
+                </div>
+              </div>
             </div>
           </div>
         </ng-container>
         <ng-container
           *ngIf="!!userAccount && !!selectedPlan && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.pendingNewSim && !selectedPlan?.canceled && !selectedPlan?.eSimDetails">
-          <div class="activate-esim-container">
+          <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-purple-circle.svg" alt="note icon">
-                <div class="container-content">
+                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
                     <p class="title">Your replacement SIM is on the way</p>
-                    <p class="desc noMax">Once your replacement SIM arrives:</p>
+                    <p class="description last">Once your replacement SIM arrives:</p>
                     <div class="actions">
                         <button class="button primary" (click)="replaceSIM()">Activate SIM</button>
                     </div>
@@ -101,14 +105,14 @@
         </div>
         </ng-container>
         <ng-container *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!selectedPlan.eSIM  && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.network === 'tmo' && !selectedPlan?.qrScanned && selectedPlan?.mdn && !!selectedPlan?.eSimDetails">
-          <div class="activate-esim-container">
+          <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-purple-circle.svg" alt="note icon">
-                <div class="container-content">
+              <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
                     <p class="title">Are you ready to swap to eSIM?</p>
-                    <p class="desc noMax space">Your replacement eSIM is ordered successfully! You may now proceed with <b>downloding your eSIM!</b></p>
-                    <p class="desc">The SIM will be changed immediately. </p>
-                    <p class="desc noMax"><b>To prevent service loss, you must have your phone ready to scan the QR code to load the SIM on your phone</b></p>
+                    <p class="description">Your replacement eSIM is ordered successfully! You may now proceed with <b>downloding your eSIM!</b></p>
+                    <p class="description bottom-8">The SIM will be changed immediately. </p>
+                    <p class="description last"><b>To prevent service loss, you must have your phone ready to scan the QR code to load the SIM on your phone</b></p>
                     <div class="actions">
                         <button class="button primary" (click)="activateReplacementEsim()">Swap to eSIM</button>
                     </div>
@@ -116,16 +120,23 @@
             </div>
         </div>
         </ng-container>
-        <div
-          *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)) "
-          class="alert-top-banner">
-          <h3 class="alert-action-style">Action required - Don’t lose your number</h3>
-          <p class="alert-sub-title">Your Plan has expired, but we understand these are trying times, so
-            GoodMobile has
-            added 250 minutes and 250 texts to your account for use within the 30 days after your plan
-            expired.</p>
-          <div><a (click)="makePayment()" class="alert-payment">Make payment now</a></div>
-        </div>
+        <ng-container
+          *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus))">
+          <div class="info-banner warning-background">
+            <div class="flex">
+              <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
+              <div class="banner-content">
+                <p class="title">Action required - Don’t lose your number</p>
+                <p class="description last">Your Plan has expired, but we understand these are trying times, so
+                  GoodMobile has added 250 minutes and 250 texts to your account for use within the 30 days after your
+                  plan expired.</p>
+                <div class="actions">
+                  <button class="button thirdly" (click)="makePayment()">Make payment now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
         <br>
         <ng-container *ngIf="!!selectedPlan && !!selectedPlan?.pendingPlan && !!selectedPlan?.pendingPlan.basePlan">
           <h4 class="h4 account-section-title">
@@ -152,12 +163,12 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!!selectedPlan && !!selectedPlan?.planDevice?.pendingMigrationSim">
-          <div class="activate-esim-container">
+          <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-orange-circle.svg" alt="note icon">
-                <div class="container-content">
+                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
                     <p class="title">Are you ready to setup your migration {{!!selectedPlan?.eSimDetails ? 'e': ''}}SIM?</p>
-                    <p class="desc noMax">{{!!selectedPlan?.eSimDetails ? 'You should have received your eSIM for the service migration. Please make sure you have the phone you intend to use ready to scan it, then click on "I receieved my eSIM" to begin the service migration.' : 
+                    <p class="description last">{{!!selectedPlan?.eSimDetails ? 'You should have received your eSIM for the service migration. Please make sure you have the phone you intend to use ready to scan it, then click on "I receieved my eSIM" to begin the service migration.' : 
                       'Your SIM for your service migration is on its way. When you receive your Migration SIM, click on the button below to begin the service migration.'}}</p>
                     <div class="actions">
                         <button class="button primary" (click)="startMigration()">I received my {{!!selectedPlan?.eSimDetails ? 'e': ''}}SIM</button>
@@ -167,12 +178,12 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!selectedPlan.eSIM && !!selectedPlan?.iccid && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.network === 'tmo' && !selectedPlan?.qrScanned && selectedPlan?.mdn && !selectedPlan?.eSimDetails">
-          <div class="activate-esim-container">
+          <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-orange-circle.svg" alt="note icon">
-                <div class="container-content">
+                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
                     <p class="title">Are you ready to setup your eSIM?</p>
-                    <p class="desc">Once you've <b>activated your plan</b> you may now proceed with downloding your eSIM!</p>
+                    <p class="description last">Once you've <b>activated your plan</b> you may now proceed with downloding your eSIM!</p>
                     <div class="actions">
                         <button class="button primary" (click)="activateEsim()">Setup eSIM</button>
                     </div>

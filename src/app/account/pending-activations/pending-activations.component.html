@@ -1,16 +1,25 @@
 <section class="pending-activation-section">
-    <div class="count-banner" id="counter">
-        <p class="count">Your Purchased Plans: <span class="number">{{pendingPlans?.length}}</span></p>
+    <div class="info-banner default-background" id="counter">
+        <div class="flex center">
+            <img src="assets/icon/info-icon.svg" alt="Info Icon">
+            <div class="banner-content">
+                <p class="description last">Your Purchased Plans: {{pendingPlans?.length}}</p>
+            </div>
+        </div>
     </div>
     <ng-container *ngIf="!!pendingPlans && pendingPlans?.length > 0">
-        <div class="banner" *ngIf="!!currentUserPlan?.eSIM">
-            <img class="info" alt="info" src="assets/icon/info-orange-circle.svg">
-            <div class="banner-note">
-              <p class="banner-title"><b>Are you ready to activate your eSIM?</b></p>
-              <p class="banner-info">Once you're <b>activated</b>, this screen automatically updates with your <b>QR code!</b> </p>
-              <p class="banner-info">Please make sure you have the phone you intend to use ready to <b>scan it</b> and set up your eSIM!</p>
+        <div class="info-banner default-background top" *ngIf="!!currentUserPlan?.eSIM">
+            <div class="flex">
+                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
+                    <p class="title">Are you ready to activate your eSIM?</p>
+                    <p class="description">Once you're <b>activated</b>, this screen automatically updates with
+                        your <b>QR code!</b></p>
+                    <p class="description last">Please make sure you have the phone you intend to use ready to <b>scan
+                            it</b> and set up your eSIM!</p>
+                </div>
             </div>
-          </div>
+        </div>
         <div class="order-card" *ngFor="let pendingPlan of pendingPlans | paginate: config">
             <div class="order-card-container">
                 <div class="card-header-section">
@@ -20,40 +29,59 @@
                 <div class="card-content shown">
                     <div class="item-details">
                         <div class="details-side">
-                            <img class="thumbnail" [src]="!!pendingPlan?.eSIM ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'" alt="thumbnail">
+                            <img class="thumbnail"
+                                [src]="!!pendingPlan?.eSIM ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'"
+                                alt="thumbnail">
                             <div class="details">
                                 <p class="title"><b>{{pendingPlan?.basePlan?.subtitle}}</b></p>
-                                <p class="description" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">{{!!pendingPlan?.basePlan?.ebb ? 'Affordable Connectivity Program Plan' : (!!pendingPlan?.basePlan?.specialPromotion && !!pendingPlan?.basePlan?.specialPromotion?.promotionData ?  pendingPlan?.basePlan?.specialPromotion?.promotionTitle : pendingPlan?.basePlan?.title )}}</p>
+                                <p class="description" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
+                                    {{!!pendingPlan?.basePlan?.ebb ? 'Affordable Connectivity Program Plan' :
+                                    (!!pendingPlan?.basePlan?.specialPromotion &&
+                                    !!pendingPlan?.basePlan?.specialPromotion?.promotionData ?
+                                    pendingPlan?.basePlan?.specialPromotion?.promotionTitle :
+                                    pendingPlan?.basePlan?.title )}}</p>
                             </div>
                         </div>
                         <div class="price-side">
-                            <p class="price"><b>${{!!pendingPlan?.autoRenewPlan ? (pendingPlan?.basePlan.price - 5) : pendingPlan?.basePlan.price }}</b></p>
+                            <p class="price"><b>${{!!pendingPlan?.autoRenewPlan ? (pendingPlan?.basePlan.price - 5) :
+                                    pendingPlan?.basePlan.price }}</b></p>
                         </div>
                     </div>
-                    <div class="info-banner">
-                        <p class="info">Regular price: {{pendingPlan?.basePlan.price | currency:'USD':'symbol':0}}/mo</p>
-                        <p class="info" *ngIf="!isEBBPlan">Price with Auto Pay: {{(!!pendingPlan?.basePlan?.specialPromotion && !!pendingPlan?.basePlan?.specialPromotion.promotionDiscount ? (pendingPlan?.basePlan.price - 5) * (discountAmount / 100) : pendingPlan?.basePlan.price - 5) | currency:'USD':'symbol':0}}/mo</p>
+                    <div class="information-banner">
+                        <p class="info">Regular price: {{pendingPlan?.basePlan.price | currency:'USD':'symbol':0}}/mo
+                        </p>
+                        <p class="info" *ngIf="!isEBBPlan">Price with Auto Pay:
+                            {{(!!pendingPlan?.basePlan?.specialPromotion &&
+                            !!pendingPlan?.basePlan?.specialPromotion.promotionDiscount ? (pendingPlan?.basePlan.price -
+                            5) * (discountAmount / 100) : pendingPlan?.basePlan.price - 5) |
+                            currency:'USD':'symbol':0}}/mo</p>
                         <p class="info" *ngIf="!!isEBBPlan">FREE for ACP</p>
                     </div>
-                    <div class="info-banner activation" *ngIf="!!pendingPlan?.eSIM">
+                    <div class="information-banner activation" *ngIf="!!pendingPlan?.eSIM">
                         <p class="title">Your Activation Code</p>
                         <p class="copy">
                             {{pendingPlan?.activationCode}}
-                            <img src="assets/icon/copy-purple.svg" alt="copy" (click)="copyLink()"/>
+                            <img src="assets/icon/copy-purple.svg" alt="copy" (click)="copyLink()" />
                         </p>
                         <p class="note-title">Note:</p>
-                        <p class="note">This code is needed in the next step, it will be filled out automatically. You can copy it from the icon!</p>
+                        <p class="note">This code is needed in the next step, it will be filled out automatically. You
+                            can copy it from the icon!</p>
                     </div>
-                    <button class="button primary" (click)="activatePlan()" aria-label="Activate Plan" [disabled]="!!pendingPlan?.eSIM && !!purchasedPhone && !deliveredPhone" data-cy="activatePlanBtn">{{!!pendingPlan?.eSIM ? 'Activate Plan & eSIM' : 'Activate Plan'}}</button>
+                    <button class="button primary" (click)="activatePlan()" aria-label="Activate Plan"
+                        [disabled]="!!pendingPlan?.eSIM && !!purchasedPhone && !deliveredPhone"
+                        data-cy="activatePlanBtn">{{!!pendingPlan?.eSIM ? 'Activate Plan & eSIM' : 'Activate
+                        Plan'}}</button>
                     <div class="delivered" *ngIf="!!pendingPlan?.eSIM && !!purchasedPhone && !deliveredPhone">
-                        <p class="validation">This button will be disabled until the device is delivered to you. If the plan is not intended for the purchased device, you may activate the plan on another device.</p>
+                        <p class="validation">This button will be disabled until the device is delivered to you. If the
+                            plan is not intended for the purchased device, you may activate the plan on another device.
+                        </p>
                         <p class="another" (click)="goToCompatiblity()">Use Another Device</p>
                     </div>
                 </div>
                 <div class="tab-content">
                     <input type="checkbox" id="device" [(ngModel)]="deviceExpanded">
                     <label class="sub-label" for="device">
-                        <span>{{!pendingPlan?.planDevice?.id ? 'Device' : 'Purchased Device'}}</span><img class="icon" 
+                        <span>{{!pendingPlan?.planDevice?.id ? 'Device' : 'Purchased Device'}}</span><img class="icon"
                             src="assets/icon/arrow_circle.svg" alt="arrow icon">
                     </label>
                     <ng-container *ngIf="!!purchasedPhone">
@@ -85,7 +113,8 @@
                                     </div>
                                 </div>
                                 <div class="price-side">
-                                    <p class="price" ><img src="assets/icon/edit-square.svg" (click)="editDevice()" alt="edit"/></p>
+                                    <p class="price"><img src="assets/icon/edit-square.svg" (click)="editDevice()"
+                                            alt="edit" /></p>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +127,8 @@
                                     <div class="details">
                                         <p class="title space"><b>No device was selected</b></p>
                                         <p class="title">You can add a device once you check compatibility</p>
-                                        <button class="button primary no-left" aria-label="check compatibility" (click)="editDevice()">Check Compatibility</button>
+                                        <button class="button primary no-left" aria-label="check compatibility"
+                                            (click)="editDevice()">Check Compatibility</button>
                                     </div>
                                 </div>
                             </div>
@@ -108,25 +138,29 @@
                 <div class="tab-content">
                     <input type="checkbox" id="payment" [(ngModel)]="paymentExpanded">
                     <label class="sub-label" for="payment">
-                        <span>{{!!pendingPlan?.shippingAddress ? 'Shipping & Payment Details' : 'Payment Details'}}</span><img class="icon" 
-                            src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                        <span>{{!!pendingPlan?.shippingAddress ? 'Shipping & Payment Details' : 'Payment
+                            Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
                     </label>
                     <ng-container *ngIf="!!pendingPlan?.shippingAddress">
                         <div class="sub-header">
                             <p class="title">Shipping Address</p>
                         </div>
-                        <div class="card-content sub" >
+                        <div class="card-content sub">
                             <div class="item-details">
                                 <div class="details-side">
                                     <img class="thumbnail" src="assets/icon/location-pin.svg" alt="location">
                                     <div class="details">
-                                        <p class="title space"><b>{{!!currentShippingAddress?.name ? currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>
-                                        <p class="title">{{currentShippingAddress?.address1}}, {{currentShippingAddress?.city}},</p>
-                                        <p class="title">{{currentShippingAddress?.state}}, {{currentShippingAddress?.postalCode}}</p>
+                                        <p class="title space"><b>{{!!currentShippingAddress?.name ?
+                                                currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>
+                                        <p class="title">{{currentShippingAddress?.address1}},
+                                            {{currentShippingAddress?.city}},</p>
+                                        <p class="title">{{currentShippingAddress?.state}},
+                                            {{currentShippingAddress?.postalCode}}</p>
                                     </div>
                                 </div>
                                 <div class="price-side">
-                                    <p class="price" ><img src="assets/icon/edit-square.svg" (click)="editShippingAddress()" alt="edit"  data-cy="editIcon"/></p>
+                                    <p class="price"><img src="assets/icon/edit-square.svg"
+                                            (click)="editShippingAddress()" alt="edit" data-cy="editIcon" /></p>
                                 </div>
                             </div>
                         </div>
@@ -140,9 +174,11 @@
                                 <img class="thumbnail cc" src="assets/icon/payment-card.svg" alt="payment card">
                                 <div class="details">
                                     <p class="title"><b>{{planPaymentMethod?.method}}</b></p>
-                                    <p class="title">{{!!planPaymentMethod?.name ? planPaymentMethod?.name : planPaymentMethod?.alias}}</p>
+                                    <p class="title">{{!!planPaymentMethod?.name ? planPaymentMethod?.name :
+                                        planPaymentMethod?.alias}}</p>
                                     <p class="title">Ending in {{planPaymentMethod?.last4}}</p>
-                                    <p class="title">Expiration date: {{planPaymentMethod?.expirationDate | expirationDateFormat}}</p>
+                                    <p class="title">Expiration date: {{planPaymentMethod?.expirationDate |
+                                        expirationDateFormat}}</p>
                                 </div>
                             </div>
                             <div class="details-side" *ngIf="!!isEBBPlan">
@@ -151,25 +187,33 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="alert-note" *ngIf="!isEBBPlan">You won't be able to change the payment method at this phase for auto-renew feature, until the plan is activated.</p>
+                        <p class="alert-note" *ngIf="!isEBBPlan">You won't be able to change the payment method at this
+                            phase for auto-renew feature, until the plan is activated.</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="pagination-container">
-            <app-custom-pagination [config]="config" [circle]="true" (configChange)="pageChanged($event)"></app-custom-pagination>
+            <app-custom-pagination [config]="config" [circle]="true" (configChange)="pageChanged($event)">
+            </app-custom-pagination>
         </div>
     </ng-container>
     <ng-container *ngIf="!pendingPlans || (!!pendingPlans && pendingPlans?.length == 0)">
-        <div class="banner">
-            <img class="info" alt="info" src="assets/icon/info-orange-circle.svg">
-            <div class="banner-note">
-              <p class="banner-title"><b>No Purchased plans yet!</b></p>
-              <p class="banner-info">All purchased plans will be shown here after purchase.
-                Please select a plan from our shop to get you started with GoodMobile!</p>
-                <button class="button primary" aria-label="start shopping" (click)="goToPlans()">Start Shopping!</button>
+        <div class="info-banner default-background">
+            <div class="flex">
+                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
+                    <p class="title">No Purchased plans yet!</p>
+                    <p class="description">All purchased plans will be shown here after purchase.</p>
+                    <p class="description last">Please select a plan from our shop to get you started with GoodMobile!
+                    </p>
+                    <div class="actions">
+                        <button class="button primary" aria-label="start shopping" (click)="goToPlans()">Start
+                            Shopping!</button>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
     </ng-container>
-   
+
 </section>
