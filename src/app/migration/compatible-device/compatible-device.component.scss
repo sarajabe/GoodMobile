@@ -4,168 +4,32 @@
 .compatible-device {
     padding-top: 40px;
     padding-bottom: 40px;
-    @media(max-width:$desktop-min-width-minus){
+
+    @media(max-width:$desktop-min-width-minus) {
         padding-top: 24px;
     }
+
     .header {
         font-size: rem-calc(40px);
         line-height: 48px;
         margin-bottom: 32px;
     }
+
     .esim-networks-part {
         margin-bottom: 40px;
+
         @media (max-width: $phablet-min-width-minus) {
             padding: 0;
             margin-bottom: 24px;
         }
 
-        .success-banner {
+        .info-banner {
             max-width: 1360px;
             width: 100%;
-            padding: 24px 24px 28px;
-            background: #E6F7EE;
-            box-shadow: 0px 3px 4px rgb(234 234 234 / 25%);
-            border-radius: 8px;
-            margin: 0 auto;
-            @media (max-width: $phablet-min-width-minus) {
-                padding: 16px 16px 24px;
-            }
+
             .flex {
-                display: inline-flex;
-                gap: 12px;
-                &.no-gap {
-                    gap: 0px;
-                }
-                @media (max-width: $phablet-min-width-minus) {
-                    gap: 4px;
-                }
-                img {
-                    width: 32px;
-                    height: 32px;
-                    @media (max-width: $phablet-min-width-minus) {
-                        width: 24px;
-                        height: 24px;
-                    }
-                }
-
                 .banner-content {
-                    .title {
-                        font-size: rem-calc(24px);
-                        line-height: 24px;
-                        font-family: $secondary-font-family-bold;
-                        margin-bottom: 8px;
-                        @media (max-width: $phablet-min-width-minus) {
-                            font-size: rem-calc(18px);
-                            line-height: 24px;
-                        }
-                    }
-                    .desc {
-                        font-size: rem-calc(18px);
-                        line-height: 28px;
-                        margin-bottom: 8px;
-                        max-width: 963px;
-                        @media (max-width: $phablet-min-width-minus) {
-                            font-size: rem-calc(14px);
-                            line-height: 24px;
-                        }
-                        &.att {
-                            margin-bottom: 16px;
-                        }
-                    }
-
-                    .note {
-                        font-size: rem-calc(18px);
-                        line-height: 24px;
-                        margin-bottom: 8px;
-                        font-weight: 400;
-                        @media (max-width: $phablet-min-width-minus) {
-                            font-size: rem-calc(14px);
-                            line-height: 24px;
-                        }
-
-                        .tooltip {
-                            cursor: pointer;
-                            .info {
-                                width: 24px;
-                                height: 24px;
-                                margin-left: 4px;
-
-                                @media (max-width: $phablet-min-width-minus) {
-                                    width: 16px;
-                                    height: 16px;
-                                }
-                            }
-
-                            .tooltiptext {
-                                max-width: 484px;
-                                height: fit-content;
-                                padding: 16px;
-                                top: 50px;
-                                left: auto;
-                                right: 0;
-                                background: #DAD0DC;
-                                box-shadow: 0px 4px 15px rgb(206 211 214 / 60%);
-                                border-radius: 10px;
-                                font-size: rem-calc(14px);
-                                line-height: 24px;
-
-                                @media(max-width: 849.5px) {
-                                    max-width: 302px;
-                                    padding: 12px;
-                                    text-align: center;
-                                }
-                                @media(max-width: 685.5px) {
-                                    right: auto;
-                                }
-                                @media(max-width: $phablet-min-width-minus) {
-                                    left: auto;
-                                    right: 0;
-                                    top: 45px;
-                                }
-
-                                @media(max-width: 533.5px) {
-                                    width: 201px;
-                                    top: 46px;
-                                    left: -36px;
-                                }
-
-                                p {
-                                    margin-bottom: 0;
-                                }
-
-                                img {
-                                    width: 17px;
-                                    height: 9.32px;
-                                    position: absolute;
-                                    top: -8px;
-                                    left: 27.5px;
-
-                                    @media(max-width: 533.5px) {
-                                        left: 99.5px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    .actions {
-                        display: flex;
-                        gap: 12px;
-                        margin-top: 16px;
-                        .button {
-                            padding: 8px 32px;
-                            font-size: rem-calc(20px);
-                            line-height: 20px;
-                            font-weight: 700;
-                        }
-                        @media (max-width: $phablet-min-width-minus) {
-                            flex-direction: column;
-                            .button {
-                                font-size: rem-calc(16px);
-                                line-height: 16px;
-                            }
-                        }
-                    }
+                    max-width: 850px;
                 }
             }
         }
@@ -182,6 +46,7 @@
                 line-height: 28px;
                 margin-bottom: 12px;
                 font-family: $secondary-font-family-bold;
+
                 @media (max-width: $phablet-min-width-minus) {
                     font-size: rem-calc(18px);
                     line-height: 24px;
@@ -194,6 +59,7 @@
                 font-family: $secondary-font-family-bold;
                 cursor: pointer;
                 color: $primary-color;
+
                 @media (max-width: $phablet-min-width-minus) {
                     font-size: rem-calc(16px);
                     line-height: 16px;
@@ -201,6 +67,7 @@
             }
         }
     }
+
     @media (max-width: $phablet-min-width-minus) {
         .header {
             font-size: rem-calc(24px);
