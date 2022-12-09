@@ -2,44 +2,53 @@
 
 .acp-flow {
     margin-top: 60px;
-   
+
     @media (max-width: $phablet-min-width-minus) {
         margin-top: 32px;
     }
+
     .sub-header {
         font-size: 24px;
         line-height: 32px;
         margin-bottom: 37px;
+
         @media (max-width: $phablet-min-width-minus) {
             font-size: 20px;
             line-height: 28px;
             margin-bottom: 32px;
         }
     }
+
     .acp-form-flow {
         &.acp-disabled {
-            .form-control{
+            .form-control {
                 opacity: .5;
                 cursor: not-allowed;
             }
-            span , input[type=radio]{
+
+            span,
+            input[type=radio] {
                 cursor: not-allowed;
             }
         }
+
         .form-control {
             font-size: 18px;
             line-height: 28px;
             display: flex;
             align-items: center;
             margin-bottom: 19.2px;
+
             @media (max-width: $phablet-min-width-minus) {
                 font-size: 16px;
                 line-height: 24px;
             }
         }
+
         label {
             margin-bottom: 0;
         }
+
         input[type="radio"] {
             cursor: pointer;
             -webkit-appearance: none;
@@ -79,99 +88,105 @@
             transform: scale(0);
             transition: 120ms transform ease-in-out;
         }
+
         input[type="radio"]:checked::before {
             transform: scale(0.4);
             background-color: $primary-color;
         }
     }
-    .note-container {
+
+    .info-banner {
         margin-top: 45px;
         margin-bottom: 0px;
-        display: flex;
-        align-items: flex-start;
-        padding: 24px;
-        gap: 10px;
-        background: #F1F9FD;
-        box-shadow: 0px 4px 15px 0px #CED3D699;
-
-        border-radius: 8px 8px 10px 10px;
         max-width: 865px;
         width: 100%;
+
         @media (max-width: $phablet-min-width-minus) {
             margin-top: 37.6px;
         }
-        .notes {
-            img {
-                width: 26px;
-                height: 26px;
-            }
-            .head-note {
-                margin-bottom: 8px;
-                font-size: 18px;
-                line-height: 28px;
-                margin-right: 10.6px;
-                @media (max-width: $phablet-min-width-minus) {
-                    font-size: 16px;
-                    line-height: 24px;
-                    margin-bottom: 2px;
+
+        .flex {
+            .banner-content {
+                .description {
+                    margin-bottom: 8px;
                 }
-            }
-            .sub-note {
-                display: flex;
-                justify-content: flex-start;
-                margin-bottom: 12px;
-                @media (max-width: $phablet-min-width-minus) {
-                    margin-bottom: 2px;
-                }
-                &.last {
-                    margin-bottom: 0px;
-                }
-                img {
-                    width: 14px;
-                    margin-right: 8px;
-                }
-                p {
-                    font-size: 16px;
-                    line-height: 24px;
-                    margin-bottom: 0;
-                    @media (max-width: $phablet-min-width-minus) {
-                        font-size: 14px;
+
+                .notes {
+
+                    .sub-note {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 4px;
+
+                        &.last {
+                            margin-bottom: 0px;
+
+                            @media (max-width: 404.9px) {
+                                align-items: flex-start;
+                            }
+                        }
+
+                        img {
+                            width: 15px;
+                            height: 26px;
+
+                            @media (max-width: $phablet-min-width-minus) {
+                                width: 11px;
+                            }
+                        }
+
+                        .desc {
+                            font-size: 14px;
+                            line-height: 24px;
+                            margin-bottom: 0;
+                            font-family: $base-font-family-bold;
+                        }
                     }
                 }
             }
         }
     }
+
     .illustration-section {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 22px;
         margin-top: 0;
+
         @media (min-width: 1760px) {
             margin-bottom: 93px;
             margin-top: 83.81px;
         }
+
         @media (max-width: $desktop-min-width-minus) {
             margin-bottom: 172px;
         }
+
         @media (max-width: $phablet-min-width-minus) {
             margin-bottom: 65px;
         }
+
         .picture {
             position: relative;
+
             @media (min-width: 1760px) {
                 width: 100%;
             }
+
             img {
                 width: 499px;
                 height: 331.82px;
                 object-fit: contain;
+
                 @media (min-width: 1760px) {
                     position: absolute;
                     width: 1488px;
                     bottom: 0;
                     left: 0;
                 }
+
                 @media (max-width: $phablet-min-width-minus) {
                     width: 320px;
                     height: 211.82px;
@@ -180,6 +195,7 @@
         }
     }
 }
+
 .navigation-section {
     border-top: 1px solid #e3e3ea;
     padding: 16px 80px;
@@ -191,6 +207,7 @@
     z-index: 2;
     bottom: 0;
     width: 100%;
+
     .left {
         .no-border {
             color: $primary-color;
@@ -200,17 +217,20 @@
             font-weight: 700;
             margin-bottom: 0;
             cursor: pointer;
+
             @media (max-width: $phablet-min-width-minus) {
                 font-size: 16px;
                 line-height: 16px;
             }
         }
     }
+
     .right {
         cursor: pointer;
         padding: 0 30px;
         font-family: $secondary-font-family-bold;
     }
+
     .button {
         font-size: 20px;
         line-height: 20px;
@@ -218,17 +238,21 @@
         font-family: $secondary-font-family-bold;
         font-weight: 700;
         cursor: pointer;
+
         @media (max-width: $phablet-min-width-minus) {
             font-size: 16px;
             line-height: 16px;
         }
     }
+
     @media (max-width: $desktop-min-width-minus) {
         padding: 20px 20px 30px;
+
         .right {
             padding: 0;
         }
     }
+
     @media (max-width: $phablet-min-width-minus) {
         padding: 16px 16px 24px;
     }

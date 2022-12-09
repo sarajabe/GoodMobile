@@ -17,11 +17,7 @@
         margin-bottom: 40px;
         padding-top: 0px;
     }
-    .note-banner {
-        background: #8633991A;
-        box-shadow: 0px 3px 4px 0px #EAEAEA40;
-        padding: 24px;
-        border-radius: 8px 8px 10px 10px;
+    .info-banner {
         &.success {
             margin-bottom: 173px;
             @media (max-width: $desktop-min-width-minus) {
@@ -31,36 +27,8 @@
                 margin-bottom: 40px;
             }
         }
-        .note {
-            font-size: rem-calc(18px);
-            line-height: 28px;
-            margin-bottom: 0;
-            font-weight: 400;
-            max-width: 775px;
-            display: flex;
-            justify-content: flex-start;
-            .icon {
-                margin-right: 12px;
-            }
-            &.inline {
-                @media (max-width: $desktop-min-width-minus) {
-                    display: inline-block;
-                    span {
-                        display: inline;
-                    }
-                }
-            }
-        }
-        @media (max-width: $phablet-min-width-minus) {
-            padding: 16px;
-            .note {
-                align-items: flex-start;
-                font-size: rem-calc(14px);
-                line-height: 24px;
-            }
-        }
     }
-    .description {
+    .desc {
         font-size: rem-calc(20px);
         line-height: 32px;
         margin: 24px 0 32px;
