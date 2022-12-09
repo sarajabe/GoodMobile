@@ -117,6 +117,7 @@ export class UpgradeOfferComponent implements OnInit {
       selectedPlan.extTitle, selectedPlan.description, selectedPlan.promoMessage, selectedPlan.promoCode, selectedPlan.promoPrice, selectedPlan.promoMonths);
     this.mobilePlansService.clearUserCart().then(() => {
       sessionStorage.removeItem('shippingAddress');
+      sessionStorage.removeItem('storePickup');
       sessionStorage.removeItem('shippingMethod');
       sessionStorage.removeItem('payment_id');
       sessionStorage.setItem('auto_renew', !!plan.autoRenewPlan ? 'true' : 'false');

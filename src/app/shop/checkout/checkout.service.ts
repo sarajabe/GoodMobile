@@ -49,6 +49,7 @@ export interface CheckoutCartOptions {
   rewardsAmount?: number;
   balanceAmount?: number;
   haseSIM?: boolean;
+  storePickup?: boolean;
 }
 
 export interface BaseCheckoutPlan {
@@ -79,6 +80,7 @@ export interface CheckoutAddonPlan extends BaseCheckoutPlan {
   mdn?: string;
   rewardsAmount?: number;
   balanceAmount?: number;
+  storePickup?: boolean;
 }
 
 export interface CheckoutSimCardItem extends ICartSimItem {
@@ -88,6 +90,7 @@ export interface CheckoutSimCardItem extends ICartSimItem {
 export interface CheckoutSimCard extends ICartSimCard {
   userPlanId: string;
   haseSIM?:boolean;
+  storePickup?:boolean;
 }
 
 export interface ICheckoutService {
@@ -109,6 +112,8 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   public saveCCEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
   public shippingMethodSubject: ReplaySubject<IShippingMethod> = new ReplaySubject<IShippingMethod>(1);
   public shippingAddressSubject: ReplaySubject<IFirebaseAddress> = new ReplaySubject<IFirebaseAddress>(1);
+  public storePickupSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+
   public PaymentInfoSubject: ReplaySubject<ICreditCardInfo> = new ReplaySubject<ICreditCardInfo>(1);
   // eslint-disable-next-line max-len
   public balanceInfoSubject: ReplaySubject<{ rewardsAmount?: number, balanceAmount?: number, calculateTaxes?: boolean }> = new ReplaySubject<{ rewardsAmount?: number, balanceAmount?: number, calculateTaxes?: boolean }>(1);
@@ -168,6 +173,9 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   public updateShippingAddress(address): void {
     this.shippingAddressSubject.next(address);
   }
+  public updateStorePickup(storePickup): void {
+    this.storePickupSubject.next(storePickup);
+  }
   public updatePaymentMethod(method): void {
     this.PaymentInfoSubject.next(method);
   }
@@ -203,6 +211,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     return new Promise<void>((resolve, reject) => {
       // this is important to save this value for later when user activate the plan
       const setAutoRenewPromise: Promise<void> = this.mobilePlansService.setAutoRenewPlan(options.autoRenewPlan);
+      this.mobilePlansService.setStorePickup(options.storePickup);
       const prepareCartValuesPromise: Promise<INewPlanCartItem> = this.prepareCartItems(checkoutNewPlan);
       const allPromises = Promise.all([setAutoRenewPromise, prepareCartValuesPromise]);
       allPromises.then((items: [void, INewPlanCartItem]) => {
@@ -566,7 +575,8 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           autoRenewPlan: options.autoRenewPlan,
           promoCode: options.autoRenewPlan ? '' + currentPlan.basePlan.promoPrice : null,
           savePaymentMethod: options.saveCcInfo,
-          haseSIM: options.haseSIM
+          haseSIM: options.haseSIM,
+          storePickup: options.storePickup
         };
         if (!cardInfo.cardNumber && !cardInfo.id && !!currentPlan.voucherData && currentPlan.voucherData.code) {
           delete requestBody.paymentInfo; // if user enter enough voucher remove payment info property from request

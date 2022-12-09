@@ -41,6 +41,7 @@ export class AppState {
 
   public clearSessionStorage(): void {
     sessionStorage.removeItem('shippingAddress');
+    sessionStorage.removeItem('storePickup');
     sessionStorage.removeItem('shippingMethod');
     sessionStorage.removeItem('plan_id');
     sessionStorage.removeItem('payment_id');

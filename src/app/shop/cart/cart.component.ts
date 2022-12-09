@@ -546,10 +546,10 @@ export class CartComponent implements OnInit, OnDestroy {
   private removePhoneModal(): void {
     this.modalHelper.showTMOSkipModal('Device check is needed! ', false, 'skip-tmo-modal', true).result.then((option) => {
       if (option === 'eSim') {
-        const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMG2GTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
+        const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMGWLTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
         this.setDevice(device, true);
       } else if (option === 'physical') {
-        const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMG2GTMO4GLTE', verified: true} as IDeviceCompatibilityV1;
+        const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE', verified: true} as IDeviceCompatibilityV1;
         this.setDevice(device);
         this.mobileCustomPlansService.seteSIM(false);
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);

@@ -339,7 +339,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
               0,
               true,
               true,
-              { id: !!this.compatibileDevice.skuNumber ? this.compatibileDevice.skuNumber : "SIMG2GTMO4GLTE", price: 5 }
+              { id: !!this.compatibileDevice.skuNumber ? this.compatibileDevice.skuNumber : "SIMGWLTMO4GLTE", price: 5 }
             );
             this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
               if (!!data && data.activeCampaign) {

@@ -77,6 +77,22 @@
                         </p>
                         <p class="another" (click)="goToCompatiblity()">Use Another Device</p>
                     </div>
+                    <hr class="border" *ngIf="!!pendingPlan?.storePickup">
+                    <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup">
+                        <p class="smaller">Pick up Barcode</p>
+                        <ngx-barcode
+                            [bc-value]="barCodeValues"
+                            [bc-display-value]="false" class="barCode-radios"></ngx-barcode>
+                        <div class="info-banner default-background specific">
+                            <div class="flex">
+                                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                                <div class="banner-content">
+                                    <p class="smallest">Check with the store clerk to pick up your package</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="tab-content">
                     <input type="checkbox" id="device" [(ngModel)]="deviceExpanded">
@@ -138,27 +154,29 @@
                 <div class="tab-content">
                     <input type="checkbox" id="payment" [(ngModel)]="paymentExpanded">
                     <label class="sub-label" for="payment">
-                        <span>{{!!pendingPlan?.shippingAddress ? 'Shipping & Payment Details' : 'Payment
-                            Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                        <span>{{!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup ? 'Delivery & Payment Details' : 'Payment Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
                     </label>
-                    <ng-container *ngIf="!!pendingPlan?.shippingAddress">
+                    <ng-container *ngIf="!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup">
                         <div class="sub-header">
-                            <p class="title">Shipping Address</p>
+                            <p class="title">Delivery Methods</p>
                         </div>
                         <div class="card-content sub">
                             <div class="item-details">
-                                <div class="details-side">
-                                    <img class="thumbnail" src="assets/icon/location-pin.svg" alt="location">
-                                    <div class="details">
-                                        <p class="title space"><b>{{!!currentShippingAddress?.name ?
-                                                currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>
-                                        <p class="title">{{currentShippingAddress?.address1}},
-                                            {{currentShippingAddress?.city}},</p>
-                                        <p class="title">{{currentShippingAddress?.state}},
-                                            {{currentShippingAddress?.postalCode}}</p>
+                                <div class="details-side" [class.center]="!!pendingPlan?.storePickup">
+                                    <img [src]="!!pendingPlan?.storePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon" class="delivery-img">
+                                    <div class="delivery-details">
+                                        <p class="smaller title">{{!!pendingPlan?.storePickup? 'Store Pick up': 'Home Delivery'}}</p>
+                                        <div class="details" *ngIf="!!pendingPlan?.shippingAddress">
+                                            <p class="smaller desc"><b>{{!!currentShippingAddress?.name ?
+                                                    currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>
+                                            <p class="smaller desc">{{currentShippingAddress?.address1}},
+                                                {{currentShippingAddress?.city}},</p>
+                                            <p class="smaller desc last">{{currentShippingAddress?.state}},
+                                                {{currentShippingAddress?.postalCode}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="price-side">
+                                <div class="price-side" *ngIf="!!pendingPlan?.shippingAddress">
                                     <p class="price"><img src="assets/icon/edit-square.svg"
                                             (click)="editShippingAddress()" alt="edit" data-cy="editIcon" /></p>
                                 </div>

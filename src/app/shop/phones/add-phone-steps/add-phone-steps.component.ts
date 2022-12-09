@@ -121,6 +121,7 @@ export class AddPhoneStepsComponent implements OnInit, OnDestroy {
           this.showCoverageError = false;
           sessionStorage.removeItem('shippingMethod');
           sessionStorage.removeItem('shippingAddress');
+          sessionStorage.removeItem('storePickup');
           if (this.selectedOption === 'new') {
             if (!this.isDeclinedTerms) {
               const id = JSON.parse(sessionStorage.getItem('selectedPlanId'));

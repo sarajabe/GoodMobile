@@ -50,6 +50,7 @@ import { ReturnReasonComponent } from './order-rma/return-reason/return-reason.c
 import { ChangeOfMindComponent } from './order-rma/change-of-mind/change-of-mind.component';
 import { ReturnFormComponent } from './order-rma/return-form/return-form.component';
 import { AccountEsimSetupComponent } from './account-esim-setup/account-esim-setup.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 @NgModule({
   declarations: [UserAccountComponent,
@@ -107,7 +108,8 @@ import { AccountEsimSetupComponent } from './account-esim-setup/account-esim-set
       showSubtitle: false,
       showUnits: false,
       showInnerStroke: false
-    })
+    }),
+    NgxBarcodeModule
   ],
   providers: [AccountHeaderService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

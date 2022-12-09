@@ -1,16 +1,18 @@
 <section class="payment-section checkout-step">
   <div class="progress-banner">
-    <div class="step" *ngIf="!!shippingAddress">
+    <div class="step" *ngIf="!!shippingAddress || !!isStorePickup">
         <picture>
-            <source srcset='assets/icon/enabled-checkout-shipping.png' media="(min-width: 320px)">
-            <img src="assets/icon/enabled-checkout-shipping.png" alt="shipping" class="step-image">
+            <source srcset='assets/icon/enabled-checkout-shipping-tablet.png' media="(min-width: 640px)">
+            <source srcset='assets/icon/enabled-checkout-shipping-mobile.png' media="(min-width: 320px)">
+            <img src="assets/icon/enabled-checkout-shipping-tablet.png" alt="shipping" class="step-image">
         </picture>
     </div>
-    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!shippingAddress">
+    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!shippingAddress || !!isStorePickup">
     <div class="step">
         <picture>
-            <source srcset='assets/icon/enabled-checkout-payment.png' media="(min-width: 320px)">
-            <img src="assets/icon/enabled-checkout-payment.png" alt="payment" class="step-image">
+            <source srcset='assets/icon/enabled-checkout-payment-tablet.png' media="(min-width: 640px)">
+            <source srcset='assets/icon/enabled-checkout-payment-mobile.png' media="(min-width: 320px)">
+            <img src="assets/icon/enabled-checkout-payment-tablet.png" alt="payment" class="step-image">
         </picture>
     </div>
     <picture>
@@ -20,8 +22,9 @@
    
     <div class="step">
         <picture>
-            <source srcset='assets/icon/disabled-checkout-overview.png' media="(min-width: 320px)">
-            <img src="assets/icon/disabled-checkout-overview.png" alt="overview" class="step-image">
+            <source srcset='assets/icon/disabled-checkout-overview-tablet.png' media="(min-width: 640px)">
+            <source srcset='assets/icon/disabled-checkout-overview-mobile.png' media="(min-width: 320px)">
+            <img src="assets/icon/disabled-checkout-overview-tablet.png" alt="overview" class="step-image">
         </picture>
     </div>
 </div>

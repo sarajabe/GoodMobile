@@ -136,6 +136,7 @@ export class UpgradeConfirmationComponent implements OnInit, OnDestroy {
         selectedPlan.extTitle, selectedPlan.description, selectedPlan.promoMessage, selectedPlan.promoCode, selectedPlan.promoPrice, selectedPlan.promoMonths);
         this.mobilePlansService.clearUserCart().then(() => {
           sessionStorage.removeItem('shippingAddress');
+          sessionStorage.removeItem('storePickup');
           sessionStorage.removeItem('shippingMethod');
           sessionStorage.removeItem('payment_id');
           sessionStorage.removeItem('useFromBalance');
@@ -161,6 +162,7 @@ export class UpgradeConfirmationComponent implements OnInit, OnDestroy {
       selectedPlan.extTitle, selectedPlan.description, selectedPlan.promoMessage, selectedPlan.promoCode, selectedPlan.promoPrice, selectedPlan.promoMonths);
     this.mobilePlansService.clearUserCart().then(() => {
       sessionStorage.removeItem('shippingAddress');
+      sessionStorage.removeItem('storePickup');
       sessionStorage.removeItem('shippingMethod');
       sessionStorage.removeItem('payment_id');
       sessionStorage.setItem('auto_renew', !!plan.autoRenewPlan ? 'true' : 'false');

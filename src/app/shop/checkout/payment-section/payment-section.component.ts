@@ -47,6 +47,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public autoRenew: boolean;
   public shippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public saveCCInfo = true;
+  public isStorePickup = false;
   public billingSameAsShipping = false;
   public billingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public isValidAddress = false;
@@ -123,6 +124,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       cardExpirationYear: ['', Validators.required],
     }, { validator: this.validExpirationDate('cardExpirationMonth', 'cardExpirationYear') });
     const storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
+    this.isStorePickup = JSON.parse(sessionStorage.getItem('storePickup'));
     if (!!storedShippingAddress) {
       this.shippingAddress = Object.assign({}, storedShippingAddress) as IFirebaseAddress;
       this.billingSameAsShipping = true;
@@ -171,10 +173,10 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           this.payWithCard = !!this.selectedPaymentMethod && this.selectedPaymentMethod.id ? true : false;
         } else {
           this.checkoutService.paymentsSubject.pipe(takeWhile(() => this.alive)).subscribe((p) => {
-            if (!!p && !!p.card) {
+            if (!!p && !!p?.card) {
               this.paymentInfo = p.card;
             }
-            if (!!p.card && !!p.card.cardNumber) {
+            if (!!p?.card && !!p?.card?.cardNumber) {
               this.isNewPayment = true;
               this.convertPaymentData(false);
             } else {

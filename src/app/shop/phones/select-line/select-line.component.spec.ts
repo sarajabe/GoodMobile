@@ -70,7 +70,7 @@ describe('SelectLineComponent', () => {
         serialType: 'imei',
         simSize: 'Nano',
         skuIdentifier: 'T',
-        skuNumber: 'SIMG2GTMO4GLTE',
+        skuNumber: 'SIMGWLTMO4GLTE',
         technology: 'LTE',
         valid: true
       },

@@ -2,22 +2,25 @@
   <div class="progress-banner">
     <div class="step" *ngIf="!!showShippingCard">
       <picture>
-        <source srcset='assets/icon/enabled-checkout-shipping.png' media="(min-width: 320px)">
-        <img src="assets/icon/enabled-checkout-shipping.png" alt="shipping" class="step-image">
+        <source srcset='assets/icon/enabled-checkout-shipping-tablet.png' media="(min-width: 640px)">
+        <source srcset='assets/icon/enabled-checkout-shipping-mobile.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-shipping-tablet.png" alt="shipping" class="step-image">
       </picture>
     </div>
     <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!showShippingCard">
     <div class="step">
       <picture>
-        <source srcset='assets/icon/enabled-checkout-payment.png' media="(min-width: 320px)">
-        <img src="assets/icon/enabled-checkout-payment.png" alt="payment" class="step-image">
+        <source srcset='assets/icon/enabled-checkout-payment-tablet.png' media="(min-width: 640px)">
+        <source srcset='assets/icon/enabled-checkout-payment-mobile.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-payment-tablet.png" alt="payment" class="step-image">
       </picture>
     </div>
     <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots">
     <div class="step">
       <picture>
-        <source srcset='assets/icon/enabled-checkout-overview.png' media="(min-width: 320px)">
-        <img src="assets/icon/disabled-checkout-overview.png" alt="overview" class="step-image">
+        <source srcset='assets/icon/enabled-checkout-overview-tablet.png' media="(min-width: 640px)">
+        <source srcset='assets/icon/enabled-checkout-overview-mobile.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-overview-tablet.png" alt="overview" class="step-image">
       </picture>
     </div>
   </div>
@@ -342,29 +345,32 @@
             <h3 class="title" data-cy="deliveryDetails">Delivery Details</h3>
           </div>
           <div class="card-tab">
-            <input type="checkbox" class="hidden-checkbox" id="delivery" [(ngModel)]="delivery" />
-            <label class="tab-label" for="delivery">Package Details</label>
-            <div class="tab-content">
+            <div class="tab-content-show">
               <label class="sub-label address-change">
-                <span>Shipping Address</span><a (click)="goToShippingSection()" data-cy="changeShippingAddress">Change</a>
+                <span>Delivery Methods</span><a (click)="goToShippingSection()" data-cy="changeShippingAddress">Change</a>
               </label>
-              <div class="sub-content">
-                <p class="desc">{{ !!shippingAddress?.name ?  shippingAddress?.name : shippingAddress?.alias}}, {{ shippingAddress?.address1 }}</p>
-                <p class="desc" *ngIf="!!shippingAddress?.address2">{{ shippingAddress?.address2 }}</p>
-                <p class="desc">{{ shippingAddress?.city }}, {{ shippingAddress?.state }} {{ shippingAddress?.postalCode
-                  }}</p>
+              <div class="delivery-methods-section">
+                <img [src]="!!isStorePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon">
+                <div class="details">
+                  <p class="smaller title">{{!!isStorePickup? 'Store Pick up': 'Home Delivery'}}</p>
+                  <div class="sub-content-show address" *ngIf="!!shippingAddress?.address1">
+                    <p class="desc">{{ !!shippingAddress?.name ?  shippingAddress?.name : shippingAddress?.alias}}, {{ shippingAddress?.address1 }}</p>
+                    <p class="desc" *ngIf="!!shippingAddress?.address2">{{ shippingAddress?.address2 }}</p>
+                    <p class="desc">{{ shippingAddress?.city }}, {{ shippingAddress?.state }} {{ shippingAddress?.postalCode
+                      }}</p>
+                  </div>
+                </div>
               </div>
-              <label class="sub-label">Shipping Method</label>
-              <div class="sub-content courier">
+              <label class="sub-label" *ngIf="!!orderShippingMethod?.title">Shipping Method</label>
+              <div class="sub-content-show courier" *ngIf="!!orderShippingMethod?.title">
                 <p class="desc" data-cy="shippingMethod">{{ orderShippingMethod?.title }}</p>
                 <p class="desc"><b>{{ orderShippingMethod?.price === 0 ? 'Free' : (orderShippingMethod?.price |
                     currency) }}</b></p>
               </div>
-              <input class="hidden-checkbox" type="checkbox" id="content" [(ngModel)]="content" />
               <label class="sub-label" for="content" *ngIf="!userCart?.eSIM || !!selectedPhone">
-                <span>Package Content</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon" />
+                <span>Package Content</span>
               </label>
-              <div class="items-sub-content" *ngIf="!userCart?.eSIM || !!selectedPhone">
+              <div class="items-sub-content-show" *ngIf="!userCart?.eSIM || !!selectedPhone">
                 <div class="flex-content">
                   <div class="item-details" *ngIf="!!selectedPhone">
                     <img class="thumbnail phone" [src]="selectedPhone?.image" alt="Mobile" />
@@ -390,8 +396,8 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
+        </div>
         </div>
         <div class="place-order-card" *ngIf="!isMigration || (!!isMigration && orderShippingMethod?.price > 0)">
           <div class="card-header">

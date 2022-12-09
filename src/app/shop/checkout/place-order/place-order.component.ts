@@ -65,6 +65,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   public usedBalance = 0;
   public usedReward = 0;
   public details;
+  public isStorePickup = false;
 
   private alive = true;
 
@@ -117,6 +118,8 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
         console.error(error);
       });
       this.storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
+      this.isStorePickup = JSON.parse(sessionStorage.getItem('storePickup'));
+
       if (!!this.storedShippingAddress) {
         this.shippingAddress = Object.assign({}, this.storedShippingAddress) as IFirebaseAddress;
 
@@ -125,7 +128,12 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
           this.shippingAddress = address;
         });
       }
-      this.showShippingCard = !!this.shippingAddress && this.shippingAddress.address1 ? true : false;
+      if(!this.isStorePickup) {
+        this.checkoutService.storePickupSubject.pipe(take(1)).subscribe((storePickup) => {
+          this.isStorePickup = storePickup;
+        });
+      }
+      this.showShippingCard = (!!this.shippingAddress && this.shippingAddress.address1) || !!this.isStorePickup ? true : false;
       if (!!storedPaymentId && storedPaymentId !== '1') {
         this.accountPaymentService.getPaymentMethod(storedPaymentId).then((method) => {
           this.cardInfo = Object.assign(this.cardInfo, method);

@@ -2,7 +2,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   FirebaseUserProfileService, IAddress, IFirebaseAddress, IShippingMethod, IUser,
-  ShippingConfigurationService, AccountPaymentService, ActionsAnalyticsService, CustomizableMobilePlan, CART_TYPES
+  ShippingConfigurationService, AccountPaymentService, ActionsAnalyticsService, CustomizableMobilePlan, CART_TYPES, MobileCustomPlansService
 } from '@ztarmobile/zwp-service-backend';
 import { FadeInOutAnimation } from '../../../app.animations';
 import { Router } from '@angular/router';
@@ -16,9 +16,10 @@ import { ModalHelperService } from '../../../../services/modal-helper.service';
 import { takeWhile } from 'rxjs/operators';
 import { CHECKOUT_ROUTE_URLS, SHOP_ROUTE_URLS } from '../../../app.routes.names';
 import { ToastrHelperService } from '../../../../services/toast-helper.service';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PageScrollService } from 'ngx-page-scroll-core';
+import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 
 @Component({
   selector: 'app-shipping-address-subpage',
@@ -29,6 +30,7 @@ import { PageScrollService } from 'ngx-page-scroll-core';
 export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('shippingMethodForm') shippingMethodForm: NgForm;
   @ViewChild('packageForm') packageForm: NgForm;
+  @ViewChild('barCodeCheck') barCodeCheck: NgForm;
   @Input() isLoggedIn: boolean;
   public total = 0;
   public shippingMethodItems = true;
@@ -60,6 +62,12 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public touchShippingForm = false;
   public hasPhone = false;
   public showAddressRequiredError = false;
+  public homeDeliveryOption = false;
+  public pickupOptionsForm: FormGroup;
+  public pickupsOptions = [{ id: 'home', value: 'Home Delivery' , img: '/assets/icon/home.svg', desc:'I’d like to have my package delivered to my door.'},
+   { id: 'store', value: 'Store Pickup', img: '/assets/icon/store.svg', desc: 'I’d like to collect my package frome store.' }];
+  public stores = [];
+  public barCode = false;
 
   private alive = true;
   storedAddress: IFirebaseAddress;
@@ -72,8 +80,13 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     private analyticsService: ActionsAnalyticsService,
     private metaService: MetaService,
     public appState: AppState,
-    private pageScrollService: PageScrollService) {
+    private pageScrollService: PageScrollService,
+    private lookupsService: LookupsService,
+    private mobilePlansService : MobileCustomPlansService) {
     this.metaService.createCanonicalUrl();
+    this.pickupOptionsForm = new FormGroup({
+      option: new FormControl('', Validators.required)
+    });
     this.checkoutService.totalSubject.subscribe((t) => {
       this.total = t;
     })
@@ -87,9 +100,19 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   ngOnInit(): void {
     this.analyticsService.trackCheckoutSteps(2, 'Shipping');
     this.flowSettings = this.checkoutService.initFlowControlSettings(this.checkoutService.needsShipping, this.isLoggedIn);
+    this.lookupsService.getAvailableStores().then(stores => {
+      if(stores?.storesLocations?.length > 0) {
+        this.stores = stores?.storesLocations;
+      }
+    }, error => {
+      this.toastHelper.showAlert(error.error.errors[0].message);
+
+    })
     const storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
+    const storePickup = JSON.parse(sessionStorage.getItem('storePickup'));
     if (!!storedShippingAddress) {
       this.storedAddress = storedShippingAddress as IFirebaseAddress;
+      this.pickupOptionsForm.controls.option.setValue('home');
       if (!!this.storedAddress.id) {
         this.storedShippingId = this.storedAddress.id;
       } else {
@@ -97,6 +120,10 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       }
     } else {
       this.shippingAddress = {} as IFirebaseAddress;
+    }
+    if(!!storePickup) {
+      this.pickupOptionsForm.controls.option.setValue('store');
+      this.barCode = storePickup;
     }
     const storedPayment = sessionStorage.getItem('payment_id');
     if (!!storedPayment && !!storedShippingAddress) {
@@ -294,33 +321,51 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     }
   }
   public nextCheckoutStep(): void {
-    if (!!this.showShippingForm) {
-      this.shippingMethodForm.form.markAllAsTouched();
-      this.touchShippingForm = true;
-    } else if(!this.selectedShippingAddress || !!this.selectedShippingAddress && Object.keys(this.selectedShippingAddress).length === 0) {
-      this.showAddressRequiredError = true;
-      window.scroll(0,100);
-    }
-    this.packageForm.form.markAllAsTouched();
-    if (this.packageForm.valid && !!this.selectedShippingAddress &&  Object.keys(this.selectedShippingAddress).length !== 0 && !this.touchShippingForm || (!!this.touchShippingForm && this.shippingMethodForm.form.valid)) {
-      this.removeEmptyValues(this.selectedShippingAddress);
-      this.checkoutService.updateShippingAddress(this.selectedShippingAddress);
-      sessionStorage.setItem('shippingAddress', JSON.stringify(this.selectedShippingAddress));
-      const storedPaymentId = sessionStorage.getItem('payment_id');
-      if (!!storedPaymentId && storedPaymentId !== '1') {
-        const nextStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT);
-        this.checkoutService.updateCheckoutStep(nextStep);
-        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PLACE_ORDER}`]);
-      } else {
-        const nextStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_CREDIT_CARD);
-        this.checkoutService.updateCheckoutStep(nextStep);
-        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PAYMENT_SECTION}`]);
+    if(!!this.pickupOptionsForm.valid) {
+      if(this.pickupOptionsForm.controls.option.value === 'home') {
+        if (!!this.showShippingForm) {
+          this.shippingMethodForm.form.markAllAsTouched();
+          this.touchShippingForm = true;
+        } else if(!this.selectedShippingAddress || !!this.selectedShippingAddress && Object.keys(this.selectedShippingAddress).length === 0) {
+          this.showAddressRequiredError = true;
+          window.scroll(0,100);
+        }
+        this.packageForm.form.markAllAsTouched();
+        if (this.packageForm.valid && !!this.selectedShippingAddress &&  Object.keys(this.selectedShippingAddress).length !== 0 && !this.touchShippingForm || (!!this.touchShippingForm && this.shippingMethodForm.form.valid)) {
+          this.removeEmptyValues(this.selectedShippingAddress);
+          this.checkoutService.updateShippingAddress(this.selectedShippingAddress);
+          this.checkoutService.updateStorePickup(undefined);
+          sessionStorage.setItem('shippingAddress', JSON.stringify(this.selectedShippingAddress));
+          sessionStorage.setItem('shippingMethod', JSON.stringify(this.orderShippingMethod));
+          this.analyticsService.trackAddShippingInfoGA4(this.cart, this.orderShippingMethod.title, this.simPrice, this.simId);
+          sessionStorage.removeItem('storePickup');
+          this.goToNextStep();
+        }
+      } else if (this.pickupOptionsForm.controls.option.value === 'store') {
+        this.checkoutService.updateStorePickup(this.barCode);
+        sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
+        this.checkoutService.updateShippingAddress(undefined);
+        sessionStorage.removeItem('shippingAddress');
+        sessionStorage.removeItem('shippingMethod');
+        this.goToNextStep();
       }
-      this.analyticsService.trackAddShippingInfoGA4(this.cart, this.orderShippingMethod.title, this.simPrice, this.simId);
+     
     }
   }
   public goToCart(): void {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
+  }
+  private goToNextStep(): void {
+    const storedPaymentId = sessionStorage.getItem('payment_id');
+    if (!!storedPaymentId && storedPaymentId !== '1') {
+      const nextStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT);
+      this.checkoutService.updateCheckoutStep(nextStep);
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PLACE_ORDER}`]);
+    } else {
+      const nextStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_CREDIT_CARD);
+      this.checkoutService.updateCheckoutStep(nextStep);
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PAYMENT_SECTION}`]);
+    }
   }
   private addNewAddress(address): void {
     this.addressesList.unshift(address);

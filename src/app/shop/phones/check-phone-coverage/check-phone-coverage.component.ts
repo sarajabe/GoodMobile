@@ -137,7 +137,7 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
         this.checkboxClicked = false;
         this.acceptTerms = false;
         // send the tmo sim
-        this.compatibleDevice = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMG2GTMO4GLTE', verified: false};
+        this.compatibleDevice = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMGWLTMO4GLTE', verified: false};
         sessionStorage.setItem('checkedDevice', JSON.stringify(this.compatibleDevice));
         sessionStorage.setItem('address', 'true');
         this.stepsManagement.setDeclinedTerms(false);
@@ -217,7 +217,7 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
                 this.compatibleDevice.id = res?.details?.serialNumber;
                 if (!!res?.tmo?.covered) {
                   this.compatibleDevice.skuIdentifier = 'TE';
-                  this.compatibleDevice.skuNumber = 'ESIMG2GTMO4GLTE';
+                  this.compatibleDevice.skuNumber = 'ESIMGWLTMO4GLTE';
                   this.compatibleDevice.network = 'tmo';
                   if (this.selectedOption === 'new') {
                     // if the user selected new option and the returned network is tmo then its covered

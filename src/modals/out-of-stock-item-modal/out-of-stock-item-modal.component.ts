@@ -66,6 +66,7 @@ export class OutOfStockItemModalComponent implements OnInit, CloseGuard, ModalCo
       this.analyticsService.trackRermoveFromCartGA4([this.context.currentPlan.basePlan]);
       this.appState.clearSessionStorage();
       this.checkoutService.shippingAddressSubject.next(undefined);
+      this.checkoutService.storePickupSubject.next(undefined);
       sessionStorage.setItem('removeFromCart', 'true');
       this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
       this.closeDialog();

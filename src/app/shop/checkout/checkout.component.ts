@@ -39,6 +39,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   public selectedCreditCardPaymentInfo: ICreditCardInfo = {} as ICreditCardInfo;
   public shippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public storedShippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
+  public storePickup = false;
   public storedPaymentId: string;
   public billingName: string;
   public deviceImageURL: string;
@@ -222,7 +223,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         }
       }
     });
-
+    this.checkoutService.storePickupSubject.pipe(takeWhile(() => this.alive)).subscribe((isPickup) => {
+     this.storePickup = isPickup;
+    });
     // listen to shipping method changes
     this.checkoutService.shippingMethodSubject.pipe(takeWhile(() => this.alive)).subscribe((method) => {
       if (!!method) {
@@ -438,7 +441,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       if (!!isPlaceOrder) {
         this.checkout();
       }
-
     });
   }
 
@@ -495,6 +497,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       }
       if (!!this.shippingAddress && (!!this.shippingAddress.address1 || !!this.shippingAddress.id)) {
         this.shippingInfoReceived = true; // if the user enters shipping then goes to payment and clicks back and forward from browser
+        const shippingAddressStepIndex = this.flowSettings.steps.findIndex((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
+        this.flowSettings.steps[shippingAddressStepIndex].state = FLOW_STATE.STATE_DONE;
+      }
+      if(!!this.storePickup) {
         const shippingAddressStepIndex = this.flowSettings.steps.findIndex((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
         this.flowSettings.steps[shippingAddressStepIndex].state = FLOW_STATE.STATE_DONE;
       }
@@ -743,32 +749,35 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod.price ? this.orderShippingMethod.price : 0, taxes: this.taxes, fees: this.fees, discount: this.discount, method: !!this.orderShippingMethod ? this.orderShippingMethod : null });
   }
   public checkout(): void {
-    switch (this.currentPlan.cartType) {
-      case CART_TYPES.NEW_PLAN:
-        this.checkoutNewPlan();
-        break;
-      case CART_TYPES.GENERIC_CART:
-        this.checkoutNewPlan();
-        break;
-      case CART_TYPES.CHANGE_PLAN:
-        this.checkoutChangePlan();
-        break;
-      case CART_TYPES.TOPUP_PLAN:
-        this.checkoutTopUpPlan();
-        break;
-      case CART_TYPES.MIGRATION:
-        this.checkoutMigrationOrder();
-        break;
+    if(!!this.currentPlan?.cartType) {
+      switch (this.currentPlan.cartType) {
+        case CART_TYPES.NEW_PLAN:
+          this.checkoutNewPlan();
+          break;
+        case CART_TYPES.GENERIC_CART:
+          this.checkoutNewPlan();
+          break;
+        case CART_TYPES.CHANGE_PLAN:
+          this.checkoutChangePlan();
+          break;
+        case CART_TYPES.TOPUP_PLAN:
+          this.checkoutTopUpPlan();
+          break;
+        case CART_TYPES.MIGRATION:
+          this.checkoutMigrationOrder();
+          break;
+      }
+      if (!!this.currentPlan.addOns && this.currentPlan.simsQuantity < 1) {
+        this.checkoutAddonPlan();
+      }
+      if (this.currentPlan.simsQuantity > 0 && !this.currentPlan.addOns && this.currentPlan.cartType === CART_TYPES.PLAN_ITEMS) {
+        this.orderNewSim();
+      }
+      if (!!this.currentPlan.addOns && this.currentPlan.simsQuantity > 0) {
+        this.checkoutPlanItem();
+      }
     }
-    if (!!this.currentPlan.addOns && this.currentPlan.simsQuantity < 1) {
-      this.checkoutAddonPlan();
-    }
-    if (this.currentPlan.simsQuantity > 0 && !this.currentPlan.addOns && this.currentPlan.cartType === CART_TYPES.PLAN_ITEMS) {
-      this.orderNewSim();
-    }
-    if (!!this.currentPlan.addOns && this.currentPlan.simsQuantity > 0) {
-      this.checkoutPlanItem();
-    }
+
   }
   public clearUserCart(event): void {
     if (!this.currentPlan) {
@@ -789,6 +798,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.flowSettings.steps = [{} as IFlowIndicatorStep];
               this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
               this.checkoutService.shippingAddressSubject.next(undefined);
+              this.checkoutService.storePickupSubject.next(undefined);
               this.router.navigate([ROUTE_URLS.HOME]);
               break;
             case CART_TYPES.PLAN_ITEMS:
@@ -800,6 +810,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.appState.clearSessionStorage();
               this.flowSettings.steps = [{} as IFlowIndicatorStep];
               this.checkoutService.shippingAddressSubject.next(undefined);
+              this.checkoutService.storePickupSubject.next(undefined);
               sessionStorage.setItem('removeFromCart', 'true');
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
@@ -809,6 +820,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.flowSettings.steps = [{} as IFlowIndicatorStep];
               this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
               this.checkoutService.shippingAddressSubject.next(undefined);
+              this.checkoutService.storePickupSubject.next(undefined);
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
             case CART_TYPES.MIGRATION:
@@ -817,6 +829,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.flowSettings.steps = [{} as IFlowIndicatorStep];
               this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
               this.checkoutService.shippingAddressSubject.next(undefined);
+              this.checkoutService.storePickupSubject.next(undefined);
               sessionStorage.setItem('isMigrationSimRemoved', 'true');
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
@@ -826,6 +839,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.flowSettings.steps = [{} as IFlowIndicatorStep];
               this.appState.clearSessionStorage();
               this.checkoutService.shippingAddressSubject.next(undefined);
+              this.checkoutService.storePickupSubject.next(undefined);
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
           }
@@ -897,13 +911,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           basePlanId: this.currentPlan.basePlan.id,
           simsQuantity: this.currentPlan.simsQuantity,
           paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
-          shippingAddress: this.shippingAddress,
+          shippingAddress: !this.storePickup ? this.shippingAddress: null,
           usingPaymentProfile: !!this.cardInfo && !!this.cardInfo.id ? true : false,
           voucherCode: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
-          orderShipMethod: !!this.orderShippingMethod ? this.orderShippingMethod.id : null,
+          orderShipMethod: !!this.orderShippingMethod && !this.storePickup  ? this.orderShippingMethod.id : null,
           autoRenewPlan: this.autoRenewPlan,
           promoCode: !!this.autoRenewPlan ? '' + this.currentPlan.basePlan.promoPrice : null,
           savePaymentMethod: !!this.cardInfo && (!!this.cardInfo.cardNumber || !!this.cardInfo.id) && this.saveCcInfo ? true : false,
+          storePickup: this.storePickup
         };
         this.appState.loading = true;
         this.mobilePlansService.calculateTaxesAndFees(purchaseDetails).then((result) => {
@@ -937,7 +952,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               mdn: this.changeRequestMdn,
               userPlanId: this.currentPlan.activePlanId,
               rewardsAmount: this.useFromRewardStored,
-              balanceAmount: this.useFromBalanceStored
+              balanceAmount: this.useFromBalanceStored,
+              storePickup: this.storePickup
             };
             this.appState.loading = true;
             this.mobilePlansService.calculateTaxesAndFees(purchaseDetails).then((result) => {
@@ -956,7 +972,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               mdn: this.changeRequestMdn,
               userPlanId: this.currentPlan.activePlanId,
               rewardsAmount: this.useFromRewardStored,
-              balanceAmount: this.useFromBalanceStored
+              balanceAmount: this.useFromBalanceStored,
+              storePickup: this.storePickup
             };
             this.appState.loading = true;
             this.mobilePlansService.calculateTopupTaxesAndFees(this.currentPlan.activePlanId, purchaseDetails).then((result) => {
@@ -984,7 +1001,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 newAddOnId: '',
                 refillVoucher: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
                 rewardsAmount: this.useFromRewardStored,
-                balanceAmount: this.useFromBalanceStored
+                balanceAmount: this.useFromBalanceStored,
+                storePickup: this.storePickup
               };
               this.appState.loading = true;
               this.mobilePlansService.calculateAddonsTaxes(this.currentPlan.activePlanId, purchaseDetails).then((result) => {
@@ -1001,8 +1019,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 this.cardInfo.type = 'creditCard';
               }
               purchaseDetails = {
-                shippingAddress: this.shippingAddress,
-                orderShipMethod: this.orderShippingMethod.id,
+                shippingAddress: !this.storePickup ? this.shippingAddress: null,
+                orderShipMethod: !this.storePickup ? this.orderShippingMethod.id: null,
                 userPlanId: this.activeUserPlanId,
                 simsQuantity: 1,
                 paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
@@ -1010,7 +1028,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 savePaymentMethod: (!!this.cardInfo && !!this.cardInfo.id ? false : this.saveCcInfo),
                 mdn: this.changeRequestMdn,
                 rewardsAmount: this.useFromRewardStored,
-                balanceAmount: this.useFromBalanceStored
+                balanceAmount: this.useFromBalanceStored,
+                storePickup: this.storePickup
               };
               this.appState.loading = true;
               this.mobilePlansService.calculateTaxesAndFees(purchaseDetails).then((result) => {
@@ -1030,8 +1049,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 purchaseDetails = {
                   mdn: this.changeRequestMdn,
                   addOns: this.currentPlan.addOns,
-                  shippingAddress: this.shippingAddress,
-                  orderShipMethod: this.orderShippingMethod.id,
+                  shippingAddress: !this.storePickup ? this.shippingAddress: null,
+                  orderShipMethod: !this.storePickup ? this.orderShippingMethod.id: null,
                   userPlanId: this.activeUserPlanId,
                   simsQuantity: 1,
                   paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
@@ -1039,7 +1058,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                   usingPaymentProfile: (!!this.cardInfo.id ? true : false),
                   savePaymentMethod: (!!this.cardInfo && !!this.cardInfo.id ? false : this.saveCcInfo),
                   rewardsAmount: this.useFromRewardStored,
-                  balanceAmount: this.useFromBalanceStored
+                  balanceAmount: this.useFromBalanceStored,
+                  storePickup: this.storePickup
                 };
                 this.appState.loading = true;
                 this.mobilePlansService.calculateAddonSIMTaxesAndFees(this.currentPlan.activePlanId, purchaseDetails).then((result) => {
@@ -1055,10 +1075,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             purchaseDetails = {
               simsQuantity: this.currentPlan.simsQuantity,
               paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
-              shippingAddress: this.shippingAddress,
-              orderShipMethod: !!this.orderShippingMethod ? this.orderShippingMethod.id : null,
+              shippingAddress: !this.storePickup ? this.shippingAddress: null,
+              orderShipMethod: !!this.orderShippingMethod && !this.storePickup ? this.orderShippingMethod.id : null,
               autoRenewPlan: false,
               mdn: this.changeRequestMdn,
+              storePickup: this.storePickup
             };
             this.appState.loading = true;
             this.mobilePlansService.calculateTaxesAndFees(purchaseDetails).then((result) => {
@@ -1088,6 +1109,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       rewardsAmount: this.useFromRewardStored,
       balanceAmount: this.useFromBalanceStored,
       nextCycle: false,
+      storePickup: this.storePickup
     };
     if (!!this.currentPlan && this.currentPlan.addOns) {
       purchaseDetails.addOns = this.currentPlan.addOns;
@@ -1095,8 +1117,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       purchaseDetails.newAddOnId = '';
     }
     if (this.currentPlan.simsQuantity > 0) {
-      purchaseDetails.shippingAddress = this.shippingAddress;
-      purchaseDetails.orderShipMethod = this.orderShippingMethod.id;
+      purchaseDetails.shippingAddress = !this.storePickup ? this.shippingAddress: null;
+      purchaseDetails.orderShipMethod = !this.storePickup ? this.orderShippingMethod.id: null;
       purchaseDetails.simsQuantity = 1;
     }
     const SIMDetails = { shippingPrice: this.orderShippingMethod.price, SIMPrice: this.newSimOrder.price, SIMId: this.newSimOrder.id };
@@ -1122,6 +1144,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.analyticsService.trackRermoveFromCartGA4([{ id: 'SIMGWLTMO4GLTE', quantity: this.currentPlan.simsQuantity, price: this.newSimOrder.price, type: 'plan-item', title: 'SIM CARD' }]);
       this.appState.clearSessionStorage();
       this.checkoutService.shippingAddressSubject.next(undefined);
+      this.checkoutService.storePickupSubject.next(undefined);
       this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.MANAGE_DEVICES}`]);
     }
     if (item === 'sim' && !!cartHasMultipleItems) { // cart has sim and addon and want to remove sim.
@@ -1136,6 +1159,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.appState.clearSessionStorage();
       this.flowSettings.steps = [{} as IFlowIndicatorStep];
       this.checkoutService.shippingAddressSubject.next(undefined);
+      this.checkoutService.storePickupSubject.next(undefined);
       this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
       this.router.navigate([ROUTE_URLS.HOME]);
     }
@@ -1145,6 +1169,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         this.flowSettings.steps = [{} as IFlowIndicatorStep];
         this.appState.clearSessionStorage();
         this.checkoutService.shippingAddressSubject.next(undefined);
+        this.checkoutService.storePickupSubject.next(undefined);
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`]);
       } else {
         let cartAddons = this.currentPlan.addOns;
@@ -1168,13 +1193,13 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   private checkoutNewPlan(): void {
-    const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMG2GTMO4GLTE' } as IDeviceCompatibilityV1;
+    const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
     if (!!this.currentPlan.planExpectedDevice || (!this.currentPlan.planDevice && !this.currentPlan.planExpectedDevice)) {
       this.mobilePlansService.setPlanDevice(device); // send default SIM if the user selects a phone from shop or no device at all
     }
     const cart = {
       currentPlan: this.currentPlan,
-      shippingAddress: this.hasShippingItems ? this.shippingAddress : null,
+      shippingAddress: this.hasShippingItems && !this.storePickup ? this.shippingAddress : null,
       cardInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber) ? this.cardInfo : null,
       options: {
         autoRenewPlan: this.currentPlan.autoRenewPlan,
@@ -1185,10 +1210,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         fees: this.fees,
         simId: this.newSimOrder.id,
         simPrice: this.newSimOrder.price,
-        haseSIM: this.currentPlan.eSIM
+        haseSIM: this.currentPlan.eSIM,
+        storePickup: this.storePickup
       },
-      orderShippingMethod: this.hasShippingItems ? this.orderShippingMethod : null,
-      hasShippingItems: this.hasShippingItems
+      orderShippingMethod: this.hasShippingItems && !this.storePickup ? this.orderShippingMethod : null,
+      hasShippingItems: this.hasShippingItems,
     };
     this.checkoutService.checkoutNewPlan(cart).then(() => {
       this.checkoutService.paymentsSubject.next(null);
@@ -1228,9 +1254,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         taxes: this.taxes,
         fees: this.fees,
         rewardsAmount: this.useFromRewardStored,
-        balanceAmount: this.useFromBalanceStored
+        balanceAmount: this.useFromBalanceStored,
+        storePickup: this.storePickup
       },
-      nextCycle: this.nextCycleRenew
+      nextCycle: this.nextCycleRenew,
     }).then(() => {
       this.checkoutService.paymentsSubject.next(null);
       this.checkoutService.detailsSubject.next(null);
@@ -1246,7 +1273,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         network: 'tmo', networkType: 'GSM', skuIdentifier: this.currentPlan.planDevice.skuIdentifier, skuNumber: this.currentPlan.planDevice.skuNumber
       }
     };
-    if (!this.currentPlan.eSIM) {
+    if (!this.currentPlan.eSIM && !this.storePickup) {
       orderDetails.shippingAddress = this.shippingAddress;
       orderDetails.orderShipMethod = this.orderShippingMethod.id
     } else {
@@ -1290,9 +1317,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         taxes: this.taxes,
         fees: this.fees,
         rewardsAmount: this.useFromRewardStored,
-        balanceAmount: this.useFromBalanceStored
-      }
-    }).then(() => {
+        balanceAmount: this.useFromBalanceStored,
+        storePickup: this.storePickup
+      },
+        }).then(() => {
       this.appState.loading = false;
       this.mobilePlansService.clearUserCart();
       this.appState.clearSessionStorage();
@@ -1356,7 +1384,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         usingPaymentProfile: (!!this.cardInfo && !!this.cardInfo.id ? true : false),
         savePaymentMethod: (!!this.cardInfo && !!this.cardInfo.id ? false : this.saveCcInfo),
         rewardsAmount: this.useFromRewardStored, balanceAmount: this.useFromBalanceStored,
-        shippingAddress: !!this.shippingAddress && this.shippingAddress.address1 ? this.shippingAddress : null, orderShipMethod: !!this.orderShippingMethod && !!this.shippingAddress && this.shippingAddress.address1 ? this.orderShippingMethod.id : null, userPlanId: this.activeUserPlanId, simsQuantity: 1, haseSIM: this.currentPlan.eSIM
+        shippingAddress: !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup ? this.shippingAddress : null, orderShipMethod: !!this.orderShippingMethod && !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup? this.orderShippingMethod.id : null, userPlanId: this.activeUserPlanId, simsQuantity: 1, haseSIM: this.currentPlan.eSIM,
+        storePickup: this.storePickup
       },
       this.taxes, this.fees, false, this.currentPlan, this.orderShippingMethod.price, this.newSimOrder.price, this.newSimOrder.id)
       .then(() => {
@@ -1442,6 +1471,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
   private getStoredData(): void {
     this.storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
+    this.storePickup =  JSON.parse(sessionStorage.getItem('storePickup'));
     if (!!this.storedShippingAddress) {
       this.shippingAddress = Object.assign({}, this.storedShippingAddress) as IFirebaseAddress;
       this.shippingInfoReceived = true;

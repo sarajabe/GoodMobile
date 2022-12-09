@@ -49,6 +49,8 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public ACCOUNT_ROUTE_URLS = ACCOUNT_ROUTE_URLS;
   public deviceExpanded = true;
   public paymentExpanded = true;
+  public barCodeValues;
+  public customerId;
   private userId: string;
   private alive = true;
 
@@ -83,6 +85,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     this.accountHeaderService.setAccountMenuVisibility(true);
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
       this.user = user;
+      this.customerId = this.user?.customerId;
     });
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((pendingPlans) => {
       this.pendingPlans = pendingPlans.filter((plan) => !plan.mdn);
@@ -96,6 +99,9 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       if (!!this.currentUserPlan) {
         this.getShippingAddres();
         this.calculateTotal(this.currentUserPlan);
+      }
+      if(!!this.currentUserPlan?.storePickup) {
+        this.getOrderDetails();
       }
       this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb  ? true : false;
       this.config.totalItems = this.pendingPlans.length;
@@ -182,6 +188,9 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       this.getShippingAddres();
       this.getUserPlan(this.pendingPlans[index].id);
       this.calculateTotal(this.currentUserPlan);
+      if(!!this.currentUserPlan?.storePickup) {
+        this.getOrderDetails();
+      }
       sessionStorage.removeItem('pendingAddress');
       let el = document.getElementById('counter');
       el.scrollIntoView();
@@ -344,5 +353,25 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     } else {
       this.currentShippingAddress = null;
     }
+  }
+  private getOrderDetails(): void {
+    this.appState.loading = true;;
+    this.accountOrderService.getOrderById(this.currentUserPlan?.orderId).then((order) => {
+      if (!!order) {
+        this.appState.loading = false;
+        if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
+          this.barCodeValues = JSON.stringify({
+            customerId: this.customerId,
+            itemId: order?.cards[0]?.itemId,
+            orderId: order?.id,
+            FulfilledBy: order?.cards[0]?.supplier
+          })
+        }
+        console.log('order', order)
+      }
+    }).catch((error) => {
+      console.error(error);
+      this.appState.loading = false;
+    });
   }
 }

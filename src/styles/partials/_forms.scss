@@ -40,6 +40,7 @@ input {
     transform: translateY(-0.075em);
     display: grid;
     place-content: center;
+    margin-top: 10px;
   }
   &[type="radio"]:hover {
     outline: max(2px, 0.2em) solid #faf9f8;
@@ -189,8 +190,6 @@ input {
 input {
   &[type="checkbox"],
   &[type="radio"] {
-    display: inline;
-
     &.hidden {
       display: none;
     }

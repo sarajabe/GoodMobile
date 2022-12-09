@@ -31,7 +31,7 @@ export class CompatibleDeviceComponent implements OnInit, OnDestroy {
   public SendTmoPhysicalSim(): void {
     const device  = this.cart.planDevice;
     device.skuIdentifier = 'T';
-    device.skuNumber = 'SIMG2GTMO4GLTE';
+    device.skuNumber = 'SIMGWLTMO4GLTE';
     this.cartService.setPlanDevice(device);
     this.cartService.seteSIM(false);
     this.goToCart();
