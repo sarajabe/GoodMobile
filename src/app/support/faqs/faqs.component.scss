@@ -22,6 +22,8 @@
 
           @media (max-width: 393.9px) {
             gap: 10px;
+            flex-wrap: unset;
+            flex-direction: column;
           }
 
           .cat {
@@ -56,7 +58,7 @@
             }
 
             @media (max-width: 393.9px) {
-              width: 288px;
+              width: 100%;
             }
           }
         }
