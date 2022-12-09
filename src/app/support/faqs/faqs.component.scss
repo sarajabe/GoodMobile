@@ -4,65 +4,84 @@
 ::ng-deep {
   .faqs-container {
     margin-top: 100px;
+
     @media (max-width: $tablet-min-width-minus) {
       &.internal-page-margins {
         margin-top: 60px;
       }
     }
+
     .categories {
       margin-top: 50px;
+
       .row {
-        .cat {
-          background-color: #7cbadb;
-          color: white;
-          border: 1px solid #7cbadb;
-          margin: 0 9px;
-          padding: 7px 10px;
-          text-align: center;
-          font-size: rem-calc(18px);
-          font-family: $base-font-family;
-          font-weight: normal;
-          cursor: pointer;
-          &.active {
-            background-color: transparent;
-            a {
-              color: $black;
+        .flex-wrap {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+
+          @media (max-width: 393.9px) {
+            gap: 10px;
+          }
+
+          .cat {
+            background-color: #E5EEF4;
+            border-radius: 10px;
+            text-align: center;
+            font-size: rem-calc(20px);
+            line-height: 20px;
+            font-family: $secondary-font-family-bold;
+            width: 218px;
+            height: 68px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.active {
+              background-color: #669BBF;
+
+              a {
+                color: white;
+              }
             }
-          }
-          a {
-            color: white;
-          }
-          @media (#{$larger-than-desktop}) {
-            width: 18%;
-            margin: 10px;
-          }
-          @media (max-width: $desktop-min-width-minus) {
-            width: 45%;
-            margin: 10px 10px;
-          }
-          @media (max-width: $phablet-min-width-minus) {
-            width: 100%;
-            margin: 10px auto;
+
+            a {
+              color: #004064;
+            }
+
+            @media (max-width: $phablet-min-width-minus) {
+              width: 171px;
+              height: 48px;
+            }
+
+            @media (max-width: 393.9px) {
+              width: 288px;
+            }
           }
         }
       }
     }
+
     &.covid-container {
       padding: 0;
       margin: 0;
       max-width: 100%;
     }
+
     .header-section {
       h2 {
         font-size: rem-calc(33px);
         font-family: $secondary-font-family;
         margin-bottom: 30px;
       }
+
       .subtitle {
         font-size: rem-calc(22px);
         font-family: $base-font-family;
       }
     }
+
     .tool-tip-text {
       visibility: hidden;
       font-size: rem-calc(10px);
@@ -76,18 +95,22 @@
       z-index: 1;
       right: 68px;
       margin-top: -7px;
+
       @media (max-width: $desktop-min-width-minus) {
         right: 62px;
         margin-top: -3px;
       }
+
       @media (max-width: $phablet-min-width-minus) {
         width: 100px;
         right: 16px;
       }
     }
+
     .copy-icon-link:hover .tool-tip-text {
       visibility: visible;
     }
+
     .copied {
       font-size: rem-calc(10px);
       width: 120px;
@@ -100,15 +123,18 @@
       z-index: 1;
       right: 68px;
       margin-top: -7px;
+
       @media (max-width: $desktop-min-width-minus) {
         right: 62px;
         margin-top: -3px;
       }
+
       @media (max-width: $phablet-min-width-minus) {
         width: 100px;
         right: 16px;
       }
     }
+
     .copy-icon {
       z-index: 1;
       cursor: pointer;
@@ -116,11 +142,13 @@
       right: 61px;
       width: 24px;
       height: 54px;
+
       @media (max-width: $desktop-min-width-minus) {
         right: 51px;
       }
-      @media(max-width:$phablet-min-width-minus){
-        height:51px;
+
+      @media(max-width:$phablet-min-width-minus) {
+        height: 51px;
       }
     }
   }
