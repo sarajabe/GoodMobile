@@ -35,175 +35,185 @@
     </div>
     <h1 class="step-title">How do you want to get your package?</h1>
     <form [formGroup]="pickupOptionsForm" class="pickups-form">
-      <div class="radioBtn" *ngFor="let item of pickupsOptions">
-        <label class="form-control" [for]="item?.id">
-          <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id">
-          <img [src]="item?.img" alt="pickup icon" class="input-icon">
+      <div class="radioBtn">
+        <label class="form-control" for="home">
+          <input type="radio" value="home" formControlName="option" id="home">
+          <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
           <div class="input-details">
-          <p class="value">{{item?.value}}</p>
-          <p class="caption">{{item?.desc}}</p>
+          <p class="value">Home Delivery</p>
+          <p class="caption">I’d like to have my package delivered to my door.</p>
         </div>
         </label>
       </div>
-    </form>
-    <div *ngIf="!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'home'">
-      <div class="error-banner" *ngIf="!!showAddressRequiredError">
-        <img src="assets/icon/red-alert.svg" alt="alert" />
-        <p class="note">Please select a shipping address or add a new address.</p>
-      </div>
-      <div class="checkout-card">
-        <p class="card-title">Shipping Details</p>
-        <div class="card-content" id="addressDetails">
-          <p class="info" id="selectAddress">Please select a shipping address or add a new address:</p>
-          <div class="methods-list" *ngIf="!!addressesList && addressesList?.length > 0" id="addresses">
-            <label class="form-control" *ngFor="let address of addressesList; let i = index"
-              [class.hidden]="i > 1 && !showAllAddresses"
-              [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
-              <div class="radio-container">
-                <input title="{{ !!address.name ? address?.name : address?.alias }}" type="radio"
-                  data-cy="shippingAddress" [(ngModel)]="selectedShippingAddress" name="shippingAddress"
-                  [id]="address.id" [value]="address" [id]="address.id" [value]="address"
-                  (ngModelChange)="toggleSelectedAddress()">
-              </div>
-              <div class="details">
-                <label for="{{address.id}}"><b>{{!!address?.name ? address?.name: address?.alias}}</b></label>
-                <p> {{ address?.address1 }}
-                  {{ !!address?.address2 ? ", " + address?.address2 : "" }}
-                  , {{ address?.city }} , {{ address?.state }} {{ address?.postalCode }}</p>
-              </div>
-            </label>
-          </div>
-          <div class="showMore" *ngIf="addressesList?.length > 2" (click)="showAllAddresses = !showAllAddresses">
-            <p class="more" data-cy="showMoreAndLess">{{!!showAllAddresses ? 'Show less' : 'Show more'}}</p>
-            <i class="arrow down" [class.rotate]="!!showAllAddresses"></i>
-          </div>
-          <div class="add-new">
-            <div class="add-trigger" (click)="ShowShippingForm()">
-              <img class="add" [src]="!showShippingForm ? '/assets/icon/plus.svg' : '/assets/icon/minus.svg'"
-                alt="add" />
-              <p class="add-text" data-cy="addNewAddress">Add a new address</p>
+      <div *ngIf="!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'home'">
+        <div class="error-banner" *ngIf="!!showAddressRequiredError">
+          <img src="assets/icon/red-alert.svg" alt="alert" />
+          <p class="note">Please select a shipping address or add a new address.</p>
+        </div>
+        <div class="checkout-card">
+          <p class="card-title">Shipping Details</p>
+          <div class="card-content" id="addressDetails">
+            <p class="info" id="selectAddress">Please select a shipping address or add a new address:</p>
+            <div class="methods-list" *ngIf="!!addressesList && addressesList?.length > 0" id="addresses">
+              <label class="form-control" *ngFor="let address of addressesList; let i = index"
+                [class.hidden]="i > 1 && !showAllAddresses"
+                [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
+                <div class="radio-container">
+                  <input title="{{ !!address.name ? address?.name : address?.alias }}" type="radio"
+                    data-cy="shippingAddress" [(ngModel)]="selectedShippingAddress" name="shippingAddress"
+                    [id]="address.id" [value]="address" [id]="address.id" [value]="address"
+                    (ngModelChange)="toggleSelectedAddress()">
+                </div>
+                <div class="details">
+                  <label for="{{address.id}}"><b>{{!!address?.name ? address?.name: address?.alias}}</b></label>
+                  <p> {{ address?.address1 }}
+                    {{ !!address?.address2 ? ", " + address?.address2 : "" }}
+                    , {{ address?.city }} , {{ address?.state }} {{ address?.postalCode }}</p>
+                </div>
+              </label>
             </div>
-            <section class="add-new-card-section" *ngIf="!!showShippingForm">
-              <form #shippingMethodForm="ngForm" class="shipping-method-form">
-                <fieldset class="address-lookup">
-                  <app-address-lookup [displayedAddress]="shippingAddress" (isValid)="setValidAddress($event)"
-                    (addressChange)="addressLookUpChanged($event)" [touchForm]="touchShippingForm" [showAlias]="true">
-                  </app-address-lookup>
-                </fieldset>
-                <div class="action">
-                  <a class="cancel-link" data-cy="cancel" aria-label="cancel" (click)="toggleSelectedAddress()">
-                    Cancel
-                  </a>
-                  <button class="button primary" data-cy="saveBtn" aria-label="Add address" (click)="addAddress()">
-                    Save
-                  </button>
+            <div class="showMore" *ngIf="addressesList?.length > 2" (click)="showAllAddresses = !showAllAddresses">
+              <p class="more" data-cy="showMoreAndLess">{{!!showAllAddresses ? 'Show less' : 'Show more'}}</p>
+              <i class="arrow down" [class.rotate]="!!showAllAddresses"></i>
+            </div>
+            <div class="add-new">
+              <div class="add-trigger" (click)="ShowShippingForm()">
+                <img class="add" [src]="!showShippingForm ? '/assets/icon/plus.svg' : '/assets/icon/minus.svg'"
+                  alt="add" />
+                <p class="add-text" data-cy="addNewAddress">Add a new address</p>
+              </div>
+              <section class="add-new-card-section" *ngIf="!!showShippingForm">
+                <form #shippingMethodForm="ngForm" class="shipping-method-form">
+                  <fieldset class="address-lookup">
+                    <app-address-lookup [displayedAddress]="shippingAddress" (isValid)="setValidAddress($event)"
+                      (addressChange)="addressLookUpChanged($event)" [touchForm]="touchShippingForm" [showAlias]="true">
+                    </app-address-lookup>
+                  </fieldset>
+                  <div class="action">
+                    <a class="cancel-link" data-cy="cancel" aria-label="cancel" (click)="toggleSelectedAddress()">
+                      Cancel
+                    </a>
+                    <button class="button primary" data-cy="saveBtn" aria-label="Add address" (click)="addAddress()">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
+          <div class="sub-card-content">
+            <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="shippingMethodItems" />
+            <label class="sub-label" for="items">Shipping Method <img class="icon" src="assets/icon/arrow_circle.svg"
+                alt="arrow icon" /></label>
+            <div class="tab-content">
+              <p class="info">Please select a shipping method and a delivery option for your order:</p>
+              <!-- <div class="alert-box" *ngIf="!hasPhone">
+              <img src="/assets/icon/red-alert.svg" alt="alert">
+              <p class="alert-info"><b>Note:</b> Due to global shipping delays, expedited shipping methods are currently
+                temporarily unavailable.</p>
+            </div> -->
+              <form #packageForm="ngForm" class="options-form">
+                <div class="form-row">
+                  <div class="form-field half">
+                    <label *ngIf="!!shippingServiceType">Shipping Service</label>
+                    <div class="floating-label">
+                      <select class="floating-select" [(ngModel)]="shippingServiceType" id="Courier" placeholder=" "
+                        #courier="ngModel" name="courier" [class.dirty]="!!shippingServiceType"
+                        (ngModelChange)="changedShippingMethod(shippingServiceType)" required>
+                        <option disabled selected value="">Shipping Service</option>
+                        <option *ngFor="let item of shippingDeliveryService" [value]="item">
+                          {{ item | titlecase }}
+                        </option>
+                      </select>
+                      <!-- <label class="long" [class.medium]="shippingServiceType">Shipping Service</label> -->
+                    </div>
+                    <div class="validation-message" *ngIf="courier.errors?.required && courier.touched"
+                      id="required-shipping-service-msg">
+                      Shipping service is required
+                    </div>
+                  </div>
+                  <div class="form-field half">
+                    <label *ngIf="!!selectedShippingServiceOption">Delivery Options</label>
+                    <div class="floating-label">
+                      <select class="floating-select" [(ngModel)]="selectedShippingServiceOption" name="shippingMethod"
+                        id="Service" placeholder=" " #service="ngModel" [class.dirty]="!!selectedShippingServiceOption"
+                        (ngModelChange)="changedDeliveryOption()" required>
+                        <option disabled selected value="">Delivery Options</option>
+  
+                        <option *ngFor="let item of shippingDeliveryOptions" [value]="item.id">
+                          {{ item.title }}
+                        </option>
+                      </select>
+                      <!-- <label class="long" [class.medium]="selectedShippingServiceOption">Delivery Options</label> -->
+                    </div>
+                    <div class="validation-message" *ngIf="service.errors?.required && service.touched"
+                      id="required-shipping-service-msg">
+                      Delivery option is required
+                    </div>
+                  </div>
                 </div>
               </form>
-            </section>
-          </div>
-        </div>
-        <div class="sub-card-content">
-          <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="shippingMethodItems" />
-          <label class="sub-label" for="items">Shipping Method <img class="icon" src="assets/icon/arrow_circle.svg"
-              alt="arrow icon" /></label>
-          <div class="tab-content">
-            <p class="info">Please select a shipping method and a delivery option for your order:</p>
-            <!-- <div class="alert-box" *ngIf="!hasPhone">
-            <img src="/assets/icon/red-alert.svg" alt="alert">
-            <p class="alert-info"><b>Note:</b> Due to global shipping delays, expedited shipping methods are currently
-              temporarily unavailable.</p>
-          </div> -->
-            <form #packageForm="ngForm" class="options-form">
-              <div class="form-row">
-                <div class="form-field half">
-                  <label *ngIf="!!shippingServiceType">Shipping Service</label>
-                  <div class="floating-label">
-                    <select class="floating-select" [(ngModel)]="shippingServiceType" id="Courier" placeholder=" "
-                      #courier="ngModel" name="courier" [class.dirty]="!!shippingServiceType"
-                      (ngModelChange)="changedShippingMethod(shippingServiceType)" required>
-                      <option disabled selected value="">Shipping Service</option>
-                      <option *ngFor="let item of shippingDeliveryService" [value]="item">
-                        {{ item | titlecase }}
-                      </option>
-                    </select>
-                    <!-- <label class="long" [class.medium]="shippingServiceType">Shipping Service</label> -->
-                  </div>
-                  <div class="validation-message" *ngIf="courier.errors?.required && courier.touched"
-                    id="required-shipping-service-msg">
-                    Shipping service is required
-                  </div>
+              <div class="shipping-options-result"
+                *ngIf="!!shippingServiceType && !!selectedShippingServiceOption && !!orderShippingMethod">
+                <p class="option-note">United States Postal Service</p>
+                <div class="option-details">
+                  <p class="option">{{orderShippingMethod?.title}}</p>
+                  <p class="option price">{{orderShippingMethod.price > 0 ? (orderShippingMethod.price |
+                    currency:'USD':'symbol':0) : 'Free'}}</p>
                 </div>
-                <div class="form-field half">
-                  <label *ngIf="!!selectedShippingServiceOption">Delivery Options</label>
-                  <div class="floating-label">
-                    <select class="floating-select" [(ngModel)]="selectedShippingServiceOption" name="shippingMethod"
-                      id="Service" placeholder=" " #service="ngModel" [class.dirty]="!!selectedShippingServiceOption"
-                      (ngModelChange)="changedDeliveryOption()" required>
-                      <option disabled selected value="">Delivery Options</option>
-
-                      <option *ngFor="let item of shippingDeliveryOptions" [value]="item.id">
-                        {{ item.title }}
-                      </option>
-                    </select>
-                    <!-- <label class="long" [class.medium]="selectedShippingServiceOption">Delivery Options</label> -->
-                  </div>
-                  <div class="validation-message" *ngIf="service.errors?.required && service.touched"
-                    id="required-shipping-service-msg">
-                    Delivery option is required
-                  </div>
-                </div>
-              </div>
-            </form>
-            <div class="shipping-options-result"
-              *ngIf="!!shippingServiceType && !!selectedShippingServiceOption && !!orderShippingMethod">
-              <p class="option-note">United States Postal Service</p>
-              <div class="option-details">
-                <p class="option">{{orderShippingMethod?.title}}</p>
-                <p class="option price">{{orderShippingMethod.price > 0 ? (orderShippingMethod.price |
-                  currency:'USD':'symbol':0) : 'Free'}}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'store'" class="stores-option-section">
-      <div class="store-section">
-      <div class="inner-paddings">
-        <h4 class="sub-head">You can pick up your package from these two stores.</h4>
-        <h5 class="sub-title">More stores are coming soon</h5>
+      <div class="radioBtn">
+        <label class="form-control" for="store">
+          <input type="radio" value="store" formControlName="option" id="store">
+          <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
+          <div class="input-details">
+          <p class="value">Store Pickup</p>
+          <p class="caption">I’d like to collect my package frome store.</p>
+        </div>
+        </label>
       </div>
-      <hr class="border">
-      <div class="inner-paddings end">
-         <div class="stores-section">
-             <div *ngFor="let store of stores" class="stores">
-               <img src="/assets/icon/store-alt.svg" alt="store-icon">
-               <div class="store-details">
-                <h4 class="store-name">{{store?.name}}</h4>
-                <p class="smaller">{{store?.address1}}</p>
-                <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+      <div *ngIf="!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'store'" class="stores-option-section">
+        <div class="store-section">
+        <div class="inner-paddings">
+          <h4 class="sub-head">You can pick up your package from these two stores.</h4>
+          <h5 class="sub-title">More stores are coming soon</h5>
+        </div>
+        <hr class="border">
+        <div class="inner-paddings end">
+           <div class="stores-section">
+               <div *ngFor="let store of stores" class="stores">
+                 <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                 <div class="store-details">
+                  <h4 class="store-name">{{store?.name}}</h4>
+                  <p class="smaller">{{store?.address1}}</p>
+                  <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                 </div>
                </div>
-             </div>
-         </div>
+           </div>
+        </div>
       </div>
+      <div class="info-banner default-background">
+        <div class="flex">
+            <img src="assets/icon/info-icon.svg" alt="Info Icon">
+            <div class="banner-content">
+                <p class="title">The barcode is required to get your package from the store!</p>
+                <p class="description last">This barcode will be in your purchased plans and your order receipt.</p>
+                <div class="actions">
+                  <form #barCodeCheck="ngForm" class="barCoder-form">
+                    <input type="checkbox" [(ngModel)]="barCode" name="br" required
+                        #barCodeVal="ngModel">
+                    <label class="label">I understand that.</label>
+                </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="info-banner default-background">
-      <div class="flex">
-          <img src="assets/icon/info-icon.svg" alt="Info Icon">
-          <div class="banner-content">
-              <p class="title">The barcode is required to get your package from the store!</p>
-              <p class="description last">This barcode will be in your purchased plans and your order receipt.</p>
-              <div class="actions">
-                <form #barCodeCheck="ngForm" class="barCoder-form">
-                  <input type="checkbox" [(ngModel)]="barCode" name="br" required
-                      #barCodeVal="ngModel">
-                  <label class="label">I understand that.</label>
-              </form>
-              </div>
-          </div>
       </div>
-  </div>
-    </div>
+    </form>
   </div>
 </section>
 <section class="navigation-section" [class.blur]="!!showShippingForm || !pickupOptionsForm.valid || (!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'store' && !barCode)">

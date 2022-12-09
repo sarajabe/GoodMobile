@@ -64,8 +64,6 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public showAddressRequiredError = false;
   public homeDeliveryOption = false;
   public pickupOptionsForm: FormGroup;
-  public pickupsOptions = [{ id: 'home', value: 'Home Delivery' , img: '/assets/icon/home.svg', desc:'I’d like to have my package delivered to my door.'},
-   { id: 'store', value: 'Store Pickup', img: '/assets/icon/store.svg', desc: 'I’d like to collect my package frome store.' }];
   public stores = [];
   public barCode = false;
 
