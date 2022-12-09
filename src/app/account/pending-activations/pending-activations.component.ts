@@ -362,7 +362,6 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
         if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
           this.barCodeValues = `${order?.cards[0]?.itemId}`;
         }
-        console.log('order', order)
       }
     }).catch((error) => {
       console.error(error);
