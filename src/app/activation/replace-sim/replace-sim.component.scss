@@ -1,106 +1,65 @@
 @import "../../../styles/modules/_variables.scss";
 @import "../../../styles/modules/_mixins.scss";
 
-.replace-sim {
-    .header {
-        font-size: rem-calc(38px);
-        line-height: 50px;
-        margin-bottom: 15px;
-        max-width: 626px;
-    }
-    .actions-container {
-        text-align: center;
+.page-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 48px 0 80px;
+   .current-mobile-form {
         margin-top: 40px;
-        
-        .mdn-size {
-            display: block;
-            width: 345px;
-            height: 35px;
-            padding: 0 5px;
-            margin: auto;
-            font-size: rem-calc(17px);
-            font-weight: bold;
-            font-family: $base-font-family;
+        @media(max-width: $phablet-min-width-minus) {
+            margin-top: 32px;
         }
-        .button {
-            width: 213px;
-            padding: 11px;
-            font-size: rem-calc(20px);
-            margin-top: 40px;
-        }
-        .note-section {
-            margin-top: 40px;
-            .alert-note{
-                font-family: $secondary-font-family-bold;
-                font-size: rem-calc(20px);
-                line-height: 26px;
-                margin-bottom: 14px;
-                color: $red;
-            }
-            .note {
-                font-family: $secondary-font-family;
-                font-size: rem-calc(18px);
-                line-height: 24px;
-                font-weight: bold;
-                max-width: 590px;
-                margin: auto;
-                a {
-                    white-space: nowrap;
-                }
-            }
+   }
+    .action {
+        margin-top: 28px;
+        display: flex;
+        gap: 40px;
+        @media(max-width: $phablet-min-width-minus) {
+            margin-top: 20px;
         }
     }
-    @media (max-width: $desktop-min-width-minus) {
-        .flex-center {
-            margin-top: 30px;
+    select {
+        height: 40px;
+        width: 354px;
+        padding: 8px;
+    }
+    .validation-message {
+        text-align: left;
+    }
+    //TODO: fix the common select style and use it
+    .floating-label {
+        text-align: left;
+        label {
+            top: 10px;
+            left: 8px;
         }
-        .header {
-            font-size: rem-calc(28px);
-            line-height: 37px;
-            max-width: 460px;
-        }
-        .actions-container {
-            .button {
-                width: 168px;
-                font-size: rem-calc(15px);
-            }
-            .mdn-size {
-                width: 272px;
-                height: 44px;
-            }
-            .note-section {
-                .note {
-                    font-size: rem-calc(15px);
-                    line-height: 20px;
-                    a {
-                        font-size: rem-calc(15px);
+        .floating-select {
+            &.dirty {
+                border-color: #868686;
+                &:valid {
+                  ~ {
+                    label {
+                      top: -6px;
+                      left: 8px;
+                      font-size: rem-calc(12px);
+                      background-color: white;
+                      width: 116px;
+                      color: #5e5e5e;
                     }
+                  }
                 }
-            }
+              }
         }
     }
-    @media (max-width: $phablet-min-width-minus) {
-        .flex-center {
-            margin-top: 15px;
-        }
-        .header {
-            font-size: rem-calc(26px);
-            line-height: 30px;
-        }
-        .actions-container {
-            margin-top: 30px;
-            .button {
-                width: 180px;
-                font-size: rem-calc(20px);
-            }
-            .note-section {
-                .note {
-                    font-size: rem-calc(16px);
-                    a {
-                        font-size: rem-calc(16px);
-                    }
-                }
-            }
+    @media(max-width: $phablet-min-width-minus) {
+        margin: 32px 0 40px;
+        .action {
+            margin-top: 24px;
+            gap: 16px;
         }
     }
 }

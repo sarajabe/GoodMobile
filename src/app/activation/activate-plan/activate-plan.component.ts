@@ -18,10 +18,9 @@ export class ActivatePlanComponent {
   public userPlans: IUserPlan[];
   public activateForm: FormGroup;
   public prefundedPlanId: string;
-  public processingRequest = false;
-  public validationFailed = false;
   public isPrefundedSIM = false;
   public customerCareNumber = CUSTOMER_CARE_NUMBER;
+  public showErrorMessage = false;
 
   constructor(private router: Router,
               private simActivationService: SimActivationService,
@@ -29,8 +28,8 @@ export class ActivatePlanComponent {
               private metaService: MetaService,
               private formBuilder: FormBuilder,
               private toastHelper: ToastrHelperService) {
-    if (sessionStorage.getItem('activation_step') !== 'step2') {
-      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_SIM_SOURCE}`]);
+    if (sessionStorage.getItem('activation_step') !== 'step1' && sessionStorage.getItem('activation_step') !== 'step2') {
+      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
     }
     this.activateForm = formBuilder.group({
       code: ['', Validators.compose([Validators.required, Validators.pattern('^[A-Z]+\\d{6}|\\d{7}$')])]
@@ -38,29 +37,36 @@ export class ActivatePlanComponent {
     this.metaService.createCanonicalUrl();
   }
 
-
+  public goToSimCheck(): void {
+    sessionStorage.setItem('activation_step', 'step2');
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
+  }
   public checkSimActivationCode(): void {
-    this.appState.loading = true;
-    this.processingRequest = true;
-    this.simActivationService.checkActivationCodeWithNoAuth(this.activateForm.get('code').value)
-      .then((sim) => {
-        if (!!sim) {
-          sessionStorage.setItem('activation', JSON.stringify(sim));
-        }
-        this.appState.loading = false;
-        this.processingRequest = false;
-        const params = {};
-        params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activateForm.get('code').value;
-        params[ROUTE_URLS.PARAMS.NETWORK] = sim.network;
-        sessionStorage.setItem('activation_step', 'step3');
-        this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
-      }).catch((error) => {
-        // Failed to detect the sim by activation code
-        this.processingRequest = false;
-        this.appState.loading = false;
-        this.validationFailed = true;
-        this.toastHelper.showAlert(error.message);
-      });
+    this.activateForm.markAllAsTouched();
+    if (this.activateForm.valid) {
+      this.appState.loading = true;
+      this.simActivationService.checkActivationCodeWithNoAuth(this.activateForm.get('code').value)
+        .then((sim) => {
+          if (!!sim) {
+            sessionStorage.setItem('activation', JSON.stringify(sim));
+          }
+          this.appState.loading = false;
+          const params = {};
+          params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activateForm.get('code').value;
+          params[ROUTE_URLS.PARAMS.NETWORK] = sim.network;
+          sessionStorage.setItem('activation_step', 'step2');
+          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_PLANS_PATH}`, params]);
+        }).catch((error) => {
+          // Failed to detect the sim by activation code
+          this.appState.loading = false;
+          if (error.status === 400) {
+            this.showErrorMessage = true;
+            this.activateForm.controls.code.setErrors({ invalid: true });
+          } else {
+            this.toastHelper.showAlert(error.message);
+          }
+        });
+    }
   }
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {

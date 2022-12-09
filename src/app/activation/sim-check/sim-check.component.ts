@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ACTIVATION_ROUTE_URLS } from 'src/app/app.routes.names';
 import { MetaService } from 'src/services/meta-service.service';
@@ -9,20 +9,23 @@ import { MetaService } from 'src/services/meta-service.service';
   styleUrls: ['./sim-check.component.scss']
 })
 export class SIMCheckComponent {
+  @ViewChild('optionRef') optionRef;
+  public option;
   constructor(private router: Router,
               private metaService: MetaService) {
 
     sessionStorage.setItem('activation_step', 'step0');
     this.metaService.createCanonicalUrl();
   }
-
-  public goToNoSimPath(): void {
-    sessionStorage.setItem('activation_step', 'step1');
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.No_SIM}`]);
-  }
-
-  public goToSimSource(): void {
-    sessionStorage.setItem('activation_step', 'step1');
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_SIM_SOURCE}`]);
+  public selectOption(): void {
+    this.optionRef.control.markAllAsTouched();
+    if (!!this.option) {
+      sessionStorage.setItem('activation_step', 'step1');
+      if (this.option === 'no') {
+        this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.No_SIM}`]);
+      } else {
+        this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_PLAN}`]);
+      }
+    }
   }
 }
