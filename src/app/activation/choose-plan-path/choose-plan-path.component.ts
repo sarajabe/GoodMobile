@@ -29,8 +29,8 @@ export class ChoosePlanPathComponent implements OnDestroy {
               private userPlansService: UserPlansService,
               private simpleAuthService: SimpleAuthService) {
 
-    if (sessionStorage.getItem('activation_step') !== 'step2' && sessionStorage.getItem('activation_step') !== 'step3') {
-      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_SIM_PATH}`]);
+    if (sessionStorage.getItem('activation_step') !== 'step1' && sessionStorage.getItem('activation_step') !== 'step2') {
+      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_PLAN}`]);
     }
     this.metaService.createCanonicalUrl();
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
@@ -73,6 +73,10 @@ export class ChoosePlanPathComponent implements OnDestroy {
         this.goToPendingPlans();
         break;
       }
+      case ('replace'): {
+        this.goToReplaceSIM();
+        break;
+      }
     }
   }
   public purchasePlan(): void {
@@ -84,10 +88,17 @@ export class ChoosePlanPathComponent implements OnDestroy {
   }
 
   public goToPendingPlans(): void {
-    sessionStorage.setItem('activation_step', 'step4');
+    sessionStorage.setItem('activation_step', 'step2');
     this.mobileCustomPlansService.setSimCard('');
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
   }
+
+  public goToReplaceSIM(): void {
+    sessionStorage.setItem('activation_step', 'step2');
+    this.mobileCustomPlansService.setSimCard('');
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.REPLACE_SIM}`]);
+  }
+
 
   public goToVerifyActivation(): void {
     sessionStorage.setItem('activation_step', 'step2');

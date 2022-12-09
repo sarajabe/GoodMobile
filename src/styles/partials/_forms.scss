@@ -466,97 +466,169 @@ legend {
     top: 8px;
   }
   select {
-      box-sizing: border-box;
-      margin: 0;
-      border: solid 1px; /* Safari */
-      border-color: #dadada;
-      border-top-color: transparent;
-      border-radius: 4px;
-      padding: 15px 13px 15px;
-      width: 100%;
-      height: inherit;
-      color: #000000DE;
-      background-color: transparent;
-      box-shadow: none; /* Firefox */
-      font-family: inherit;
-      font-size: inherit;
-      line-height: inherit;
-      caret-color: $primary-color;
-      transition: border 0.2s, box-shadow 0.2s;
+    font-size: rem-calc(16px);
+    padding: 4px 4px;
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: #5e5e5e;
+    border: solid 1px; /* Safari */
+    border-color: #dadada;
+    border-radius: 4px;
+    caret-color: $primary-color;
+    &:focus {
+      outline: none;
+      border: 2px solid $primary-color;
+      span {
+        width: 50%;
+        top: -6px;
+        font-size: 12px;
+        color: $primary-color;
+        width: 42px;
+        background-color: #fff;
+        &.long {
+          width: 168px;
+        }
+      }
+    }
+    &.dirty {
+      border-color: #868686;
+      &:valid {
+        ~ {
+          span {
+            top: -6px;
+            font-size: rem-calc(12px);
+            background-color: white;
+            width: 42px;
+            color: #5e5e5e;
+            &.long {
+              width: 168px;
+            }
+          }
+        }
+      }
+    }
+    &.ng-invalid {
+      &.ng-touched {
+        border-color: $alert !important;
+        box-shadow: inset 1px 0 $alert, inset -1px 0 $alert, inset 0 -1px $alert;
+        outline: none;
+        + {
+          span {
+            color: $alert;
+            &:before {
+              border-top-color: $alert !important;
+              box-shadow: inset 0 1px $alert;
+            }
+            &:after {
+              border-top-color: $alert !important;
+              box-shadow: inset 0 1px $alert;
+            }
+          }
+        }
+        &:not(:focus) {
+          border-top-color: $alert !important;
+          border-top-width: 3px;
+        }
+      }
+      &.ng-dirty {
+        border-color: $alert !important;
+        box-shadow: inset 1px 0 $alert, inset -1px 0 $alert, inset 0 -1px $alert;
+        outline: none;
+        + {
+          span {
+            color: $alert;
+            &:before {
+              border-top-color: $alert !important;
+              box-shadow: inset 0 1px $alert;
+            }
+            &:after {
+              border-top-color: $alert !important;
+              box-shadow: inset 0 1px $alert;
+            }
+          }
+        }
+        &:not(:focus) {
+          border-top-color: $alert !important;
+          border-top-width: 3px;
+        }
+      }
+    }
       &:disabled {
         background-color: $disabled-grey;
         cursor: not-allowed;
       }
-      &:not(:focus) {
-          border-top-color: #dadada;
-          + {
-              span {
-                  font-size: inherit;
-                  line-height: 54px;
-                  &:before {
-                      border-top-color: transparent;
-                  }
-              }
-          }
-      }
-      &.ng-invalid {
-        &.ng-touched {
-          border-color: $alert!important;
-          border-top-color: transparent!important;
-          box-shadow: inset 1px 0 $alert, inset -1px 0 $alert, inset 0 -1px $alert;
-          outline: none;
-          + {
-              span {
-                  color: $alert;
-                  &:before {
-                      border-top-color: $alert !important;
-                      box-shadow: inset 0 1px $alert;
-                  }
-                  &:after {
-                      border-top-color: $alert !important;
-                      box-shadow: inset 0 1px $alert;
-                  }
-              }
-          }
-          &:not(:focus) {
-            border-top-color: $alert !important;
-            border-top-width: 3px;
-          }
-          &:after {
-            background-image: url('/assets/icon/alert-note.svg');
-            background-size: 20px 20px;
-            width: 19px; 
-            position: absolute;
-            top: 16px;
-            right: 7px;
-            height: 20px;
-            content:"";
-          }
-        }
-        &.ng-dirty {
-          border-color: $alert!important;
-          border-top-color: transparent!important;
-          box-shadow: inset 1px 0 $alert, inset -1px 0 $alert, inset 0 -1px $alert;
-          outline: none;
-          + {
-              span {
-                  color: $alert;
-                  &:before {
-                      border-top-color: $alert !important;
-                      box-shadow: inset 0 1px $alert;
-                  }
-                  &:after {
-                      border-top-color: $alert !important;
-                      box-shadow: inset 0 1px $alert;
-                  }
-              }
-          }
-          &:not(:focus) {
-            border-top-color: $alert !important;
-            border-top-width: 3px;
-          }
-        }
-    }
+    //   &:not(:focus) {
+    //       border-top-color: #dadada;
+    //       + {
+    //           span {
+    //               font-size: inherit;
+    //               line-height: 54px;
+    //               &:before {
+    //                   border-top-color: transparent;
+    //               }
+    //           }
+    //       }
+    //   }
+    //   &.ng-invalid {
+    //     &.ng-touched {
+    //       border-color: $alert!important;
+    //       border-top-color: transparent!important;
+    //       box-shadow: inset 1px 0 $alert, inset -1px 0 $alert, inset 0 -1px $alert;
+    //       outline: none;
+    //       + {
+    //           span {
+    //               color: $alert;
+    //               &:before {
+    //                   border-top-color: $alert !important;
+    //                   box-shadow: inset 0 1px $alert;
+    //               }
+    //               &:after {
+    //                   border-top-color: $alert !important;
+    //                   box-shadow: inset 0 1px $alert;
+    //               }
+    //           }
+    //       }
+    //       &:not(:focus) {
+    //         border-top-color: $alert !important;
+    //         border-top-width: 3px;
+    //       }
+    //       &:after {
+    //         background-image: url('/assets/icon/alert-note.svg');
+    //         background-size: 20px 20px;
+    //         width: 19px; 
+    //         position: absolute;
+    //         top: 16px;
+    //         right: 7px;
+    //         height: 20px;
+    //         content:"";
+    //       }
+    //     }
+    //     &.ng-dirty {
+    //       border-color: $alert!important;
+    //       border-top-color: transparent!important;
+    //       box-shadow: inset 1px 0 $alert, inset -1px 0 $alert, inset 0 -1px $alert;
+    //       outline: none;
+    //       + {
+    //           span {
+    //               color: $alert;
+    //               &:before {
+    //                   border-top-color: $alert !important;
+    //                   box-shadow: inset 0 1px $alert;
+    //               }
+    //               &:after {
+    //                   border-top-color: $alert !important;
+    //                   box-shadow: inset 0 1px $alert;
+    //               }
+    //           }
+    //       }
+    //       &:not(:focus) {
+    //         border-top-color: $alert !important;
+    //         border-top-width: 3px;
+    //       }
+    //     }
+    // }
   }
   input {
       box-sizing: border-box;
@@ -565,7 +637,7 @@ legend {
       border-color: #dadada;
       border-top-color: transparent;
       border-radius: 4px;
-      padding: 15px 13px 15px;
+      padding: 8px;
       width: 100%;
       height: inherit;
       color: #000000DE;

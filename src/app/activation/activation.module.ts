@@ -14,12 +14,8 @@ import { ActivationSummaryComponent } from './activation-summary/activation-summ
 import { CheckCompatibilityResultComponent } from './check-compatibility-result/check-compatibility-result.component';
 import { ChooseActivationPathComponent } from './choose-activation-path/choose-activation-path.component';
 import { ChoosePlanPathComponent } from './choose-plan-path/choose-plan-path.component';
-import { ChooseSimPathComponent } from './choose-sim-path/choose-sim-path.component';
-import { ChooseSimSourceComponent } from './choose-sim-source/choose-sim-source.component';
 import { NoSIMComponent } from './no-sim/no-sim.component';
-import { ReplaceResultComponent } from './replace-result/replace-result.component';
 import { ReplaceSimComponent } from './replace-sim/replace-sim.component';
-import { SIMArrivalComponent } from './sim-arrival/sim-arrival.component';
 import { SIMCheckComponent } from './sim-check/sim-check.component';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
@@ -35,12 +31,8 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
     CheckCompatibilityResultComponent,
     ChooseActivationPathComponent,
     ChoosePlanPathComponent,
-    ChooseSimPathComponent,
-    ChooseSimSourceComponent,
     NoSIMComponent,
-    ReplaceResultComponent,
     ReplaceSimComponent,
-    SIMArrivalComponent,
     SIMCheckComponent],
   imports: [
     CommonModule,
