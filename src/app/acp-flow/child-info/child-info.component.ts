@@ -140,7 +140,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
     this.codesForm = this.formBuilder.group({
       eligibilityCode: ["", Validators.required],
       selectedItems: ["", Validators.required],
-      housingAssistance: ["", Validators.required],
+      housingAssistance: [""],
       schoolName: [
         "",
         Validators.compose([
@@ -176,13 +176,15 @@ export class ChildInfoComponent implements OnInit, OnChanges {
                   if (item.code === code) {
                     this.selectedItems.push(item);
                     this.selectedCodes.push(code);
+                    if(!!code && code === "E4" && !this.codesForm.controls.housingAssistance.value) {
+                      this.codesForm.controls.housingAssistance.setValidators([
+                        Validators.compose([ Validators.required ])]);
+                      this.codesForm.controls.housingAssistance.updateValueAndValidity();
+                    } 
                   }
                 });
               });
             }
-            console.info('eligible code ', this.eligableCode);
-            console.info('selected codes= ', this.selectedCodes);
-            console.info('seleted items  ', this.selectedItems);
             this.codesForm.controls.eligibilityCode.setValue(this.eligableCode);
             this.codesForm.controls.selectedItems.setValue(this.selectedItems);
           }
@@ -209,9 +211,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
           this.validateChild = this.qualifyingForm.controls.option.value === 'child' ?  true : false;
           if (!!this.validateChild) {
             this.childInfoForm.markAllAsTouched();
-            console.info('mark as touched+++++++++')
           }
-          console.info('&& ', this.codesForm.value)
           if (((!!this.qualifyingForm.valid && !!this.validateChild && !!this.childInfoForm.valid && !this.showInvalidDateError) || (!!this.qualifyingForm.valid && !this.validateChild)) && this.codesForm.valid) {
             if (!!this.validateChild) {
               this.prepareUserData();
@@ -282,23 +282,14 @@ export class ChildInfoComponent implements OnInit, OnChanges {
 
   public onItemSelect(item: any): void {
     if (!!item.code) {
-      this.selectedCodes.push(item.code);
-      if (!!this.selectedItems) {
-        // this case to handle the back button if the user was already selected values and needs to add
-        this.selectedItems.map((elm) => {
-          if (!this.selectedCodes.some((items) => items === elm.code)) {
-            this.selectedCodes.push(elm.code);
-          }
-        });
+      if (!this.selectedCodes.some((codes) => codes === item.code)) {
+        this.selectedCodes.push(item.code);
       }
       this.codesForm.controls.eligibilityCode.setValue(
         this.selectedCodes.toString()
       );
       const selectedValue = this.codesForm.controls.eligibilityCode.value;
-      if (
-        !!selectedValue &&
-        (selectedValue.includes("E50") || selectedValue.includes("E51"))
-      ) {
+      if (!!selectedValue && (selectedValue.includes("E50") || selectedValue.includes("E51"))) {
         this.codesForm.controls.schoolName.setValidators([
           Validators.compose([
             Validators.required,
@@ -312,22 +303,15 @@ export class ChildInfoComponent implements OnInit, OnChanges {
         this.codesForm.controls.schoolName.clearValidators();
         this.codesForm.controls.schoolName.updateValueAndValidity();
       }
-      if( !!selectedValue && selectedValue.includes("E4")) {
+      if(!!selectedValue && selectedValue.includes("E4")) {
         this.codesForm.controls.housingAssistance.setValidators([
-          Validators.compose([
-            Validators.required
-          ]),
-        ]);
+          Validators.compose([ Validators.required ])]);
         this.codesForm.controls.housingAssistance.updateValueAndValidity();
       } else {
+        this.codesForm.controls.housingAssistance.reset();
         this.codesForm.controls.housingAssistance.clearValidators();
         this.codesForm.controls.housingAssistance.updateValueAndValidity();
       }
-      this.codesForm.controls.eligibilityCode.setValue(
-        this.selectedCodes.toString()
-      );
-      console.info('select ', this.selectedCodes);
-      console.info('eligible code select ', this.eligableCode);
     }
   }
   public onItemDeSelect(item: any): void {
@@ -341,11 +325,8 @@ export class ChildInfoComponent implements OnInit, OnChanges {
           this.selectedCodes.toString()
         );
       }
-      
       if (item.code.includes("E50") || item.code.includes("E51")) {
-        console.info('*************************************');
         this.codesForm.controls.schoolName.reset();
-        this.codesForm.controls.schoolName.markAsPristine();
         this.codesForm.controls.schoolName.clearValidators();
         this.codesForm.controls.schoolName.updateValueAndValidity();
       }
@@ -354,8 +335,6 @@ export class ChildInfoComponent implements OnInit, OnChanges {
         this.codesForm.controls.housingAssistance.clearValidators();
         this.codesForm.controls.housingAssistance.updateValueAndValidity();
       }
-      console.info('deselect ', this.selectedCodes);
-      console.info('eligible code deselce ', this.eligableCode);
     }
   }
 
