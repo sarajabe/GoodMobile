@@ -69,16 +69,19 @@
                                                         <button
                                                             [disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0"
                                                             [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0"
-                                                            class="button secondary quantityBtn"
-                                                            (click)="decrementDataAddOn('gig')"> - </button>
+                                                            class="button quantityBtn"
+                                                            (click)="decrementDataAddOn('gig')"><img
+                                                                [src]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0 ? 'assets/icon/disabled-minus.svg' : 'assets/icon/enabled-minus.svg'"
+                                                                alt="Minus Icon"></button>
                                                         <input type="number" step="1" min="0" max="5" value="1"
                                                             [disabled]="!isCompaitableWithGigAddon" class="quantityNum"
-                                                            [(ngModel)]="quantity" readonly/>
-                                                        <button class="button primary quantityBtn"
+                                                            [(ngModel)]="quantity" readonly />
+                                                        <button class="button quantityBtn"
                                                             (click)="incrementDataAddOn('gig')"
                                                             [disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs"
-                                                            [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs">
-                                                            + </button>
+                                                            [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs"><img
+                                                                [src]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs ? 'assets/icon/disabled-plus.svg' : 'assets/icon/enabled-plus.svg'"
+                                                                alt="Plus Icon"></button>
                                                     </div>
                                                 </ng-container>
                                                 <div class="total-section">
@@ -91,8 +94,9 @@
                                                         add-on</button>
                                                     <button class="button primary"
                                                         (click)="setSelectedAddonType('Data');goToCart()"
-                                                        [disabled]="(!userHasActivePlans || quantity == 0) || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed to Checkout
-                                                        </button>
+                                                        [disabled]="(!userHasActivePlans || quantity == 0) || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed
+                                                        to Checkout
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,10 +131,10 @@
                                                 <h4>Stay in touch with family & friends around the world!</h4>
                                                 <p class="hint">Which Calling service are you looking for:</p>
                                                 <ul class="categories">
-                                                    <li [class.active]="showUnlimited"><span
+                                                    <li><span [class.active]="showUnlimited"
                                                             (click)="showUnlimited=true;showPayGo=false">Unlimited
                                                             Calling</span></li>
-                                                    <li [class.active]="showPayGo"><span
+                                                    <li><span [class.active]="showPayGo"
                                                             (click)="showPayGo=true;showUnlimited=false;">Individual
                                                             Country</span></li>
                                                 </ul>
@@ -180,7 +184,8 @@
                                                             add-on</button>
                                                         <button class="button primary"
                                                             (click)="setSelectedAddonType('International');goToCart()"
-                                                            [disabled]="!userHasActivePlans || !isCompaitableWithInternationalAddon || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed to checkout</button>
+                                                            [disabled]="!userHasActivePlans || !isCompaitableWithInternationalAddon || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed
+                                                            to checkout</button>
                                                     </div>
                                                 </section>
                                                 <section *ngIf="showPayGo">
@@ -210,7 +215,8 @@
                                                         <li *ngFor="let country of filteredPayGoCountries"
                                                             value={{country?.name}}><span
                                                                 class="countryName">{{country?.name}}</span><span
-                                                                class="rate">{{country?.value | currency:'USD':'symbol':0}}</span>
+                                                                class="rate">{{country?.value |
+                                                                currency:'USD':'symbol':0}}</span>
                                                         </li>
                                                     </ul>
                                                     <div class="totalCalls">
@@ -226,7 +232,8 @@
                                                             add-on</button>
                                                         <button class="button primary addon"
                                                             (click)="setSelectedAddonType('payGo');goToCart()"
-                                                            [disabled]="!userHasActivePlans || !isCompaitableWithPayGo || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed to checkout</button>
+                                                            [disabled]="!userHasActivePlans || !isCompaitableWithPayGo || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed
+                                                            to checkout</button>
                                                     </div>
                                                 </section>
                                             </div>

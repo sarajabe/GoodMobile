@@ -7,69 +7,111 @@
             padding: 0;
         }
     }
+
     h4 {
         font-size: rem-calc(22px);
     }
+
     .hint {
         font-size: rem-calc(17px);
     }
+
     .tab-nav {
         .add-on-tabs {
             width: 100%;
+
+            @media (max-width: 542.9px) {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
             li {
-                padding: 5px 13px;
+                padding: 0 12px 0 13px;
                 float: left;
                 margin-bottom: 0;
                 width: auto;
-                border-right: 1px solid $grey;
+                border-right: 2px solid #DDDDDD;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 0 10px 0 0;
+                }
+
+                @media (max-width: 542.9px) {
+                    border: none;
+                    padding: 0;
+                }
+
                 &:last-child {
                     border-right: 0;
-                }
-                span {
-                    background-color: transparent;
-                    cursor: pointer;
-                    color: $black;
-                    font-size: rem-calc(18px);
-                    &.active {
-                        background-color: $primary-color;
-                        color: white;
-                        padding: 10px 20px;
-                        border-radius: 5px;
+                    padding-right: 0;
+                    padding-left: 12px;
+
+                    @media (max-width: $phablet-min-width-minus) {
+                        padding-left: 10px;
+                    }
+
+                    @media (max-width: 542.9px) {
+                        padding: 0;
                     }
                 }
-                @media (max-width: 640px) {
-                    width: 100%;
+
+                span {
+                    width: 269px;
+                    height: 68px;
+                    background-color: #E5EEF4;
+                    cursor: pointer;
+                    color: #004064;
+                    font-size: rem-calc(20px);
+                    line-height: 20px;
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     border: none;
-                    margin-bottom: 10px;
-                    border: none;
-                    color: $black;
-                    padding: 10px 0px;
-                    span {
-                        padding: 10px 20px;
-                        background-color: rgba(222, 222, 222, 0.31);
-                        &.active {
-                            background-color: transparent;
-                            color: $black;
-                            background-color: rgba(134, 51, 153, 0.11);
-                        }
+                    font-family: $secondary-font-family-bold;
+
+                    @media (max-width: 1042.9px) {
+                        width: 262px;
+                    }
+
+                    @media (max-width: $phablet-min-width-minus) {
+                        font-size: rem-calc(16px);
+                        line-height: 16px;
+                        width: 225px;
+                        height: 48px;
+                    }
+
+                    @media (max-width: 542.9px) {
+                        width: 100%;
+                    }
+
+                    &.active {
+                        background-color: #669BBF;
+                        color: white;
                     }
                 }
             }
         }
     }
+
     .validation-message {
         font-size: rem-calc(18px);
         text-transform: none;
     }
+
     .addon {
         padding: 11px 30px;
         width: 207px;
+
         @media (min-width: 639px) {
             width: 199px;
             padding: 12px 20px;
         }
+
         &.secondary {
             margin-right: 15px;
+
             @media (max-width: 498px) {
                 &.addon {
                     margin-bottom: 15px;
@@ -77,100 +119,160 @@
             }
         }
     }
+
     .categories {
         width: 100%;
         display: inline-block;
         padding: 0;
         list-style: none;
         margin-top: 0;
+
+        @media (max-width: 542.9px) {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
         li {
-            border: 1px solid #7cbadb;
-            padding: 6px 0;
+            padding: 0;
+            padding-right: 12px;
             float: left;
-            font-size: rem-calc(18px);
-            color: $black;
-            width: 223px;
-            text-align: center;
-            margin-right: 4%;
-            span {
-                background-color: transparent;
+            margin-bottom: 0;
+            width: auto;
+            border-right: 2px solid #DDDDDD;
+
+            @media (max-width: 542.9px) {
+                border: none;
                 padding: 0;
-                cursor: pointer;
-                font-size: rem-calc(18px);
             }
-            &.active {
-                background-color: #7cbadb;
-                color: white;
+
+            &:last-child {
+                border-right: 0;
+                padding-right: 0;
+                padding-left: 12px;
+
+                @media (max-width: 542.9px) {
+                    padding: 0;
+                }
+            }
+
+            span {
+                width: 186px;
+                height: 44px;
+                background-color: #E5EEF4;
+                cursor: pointer;
+                color: #004064;
+                font-size: rem-calc(20px);
+                line-height: 20px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                font-family: $secondary-font-family-bold;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    width: 157px;
+                    height: 32px;
+                    font-size: rem-calc(16px);
+                    line-height: 16px;
+                }
+
+                &.active {
+                    background-color: #669BBF;
+                    color: white;
+                }
             }
         }
     }
+
     .title {
         font-size: rem-calc(20px);
         font-family: $secondary-font-family-bold;
     }
+
     .subtitle {
         font-size: rem-calc(17px);
         font-family: $base-font-family;
     }
+
     .sort-nav {
         display: inline-block;
         padding: 0;
         list-style: none;
+
         li {
             border-right: 1px solid $grey;
             padding: 5px 9px;
             float: left;
             width: 35px;
+
             @media (max-width: 426px) {
                 margin-bottom: 11px;
                 padding: 3px 6px;
             }
+
             &:last-child {
                 border-right: none;
             }
+
             &.active {
                 a {
                     color: $primary-color;
                 }
             }
+
             a {
                 font-size: rem-calc(18px);
                 color: $black;
+
                 &:hover {
                     color: $primary-color;
                 }
             }
         }
     }
+
     .actions {
         display: flex;
         gap: 12px;
         margin-top: 24px;
+
         @media(max-width: $phablet-min-width-minus) {
             flex-direction: column;
         }
     }
+
     .data-addOn-section {
         @media (#{$larger-than-desktop}) {
             margin-top: 30px;
         }
+
         margin-top: 20px;
+
         .quantity-section {
             @media (max-width: 426px) {
                 display: flex;
+                align-items: center;
+
                 .quantityNum {
                     width: 17%;
                     margin-bottom: 0;
                 }
             }
+
             padding: 10px 0;
             font-size: 18px;
+
             span {
                 margin-right: 10px;
             }
+
             input[type="number"] {
                 -moz-appearance: textfield;
             }
+
             input[type="number"]::-webkit-inner-spin-button,
             input[type="number"]::-webkit-outer-spin-button {
                 -moz-appearance: none;
@@ -178,6 +280,7 @@
                 appearance: none;
                 margin: 0;
             }
+
             input[type="number"]:hover::-webkit-inner-spin-button,
             input[type="number"]:hover::-webkit-outer-spin-button {
                 -moz-appearance: none;
@@ -185,42 +288,39 @@
                 appearance: none;
                 margin: 0;
             }
+
             .quantityBtn {
                 cursor: pointer;
-                display: inline-block;
-                font-size: 1em;
-                font-weight: 700;
-                padding: 9px 15px;
                 text-align: center;
-                text-decoration: none;
-                border-radius: 0;
+                background-color: unset;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+
                 &.disabled {
                     cursor: not-allowed;
                 }
             }
+
             .quantityNum {
                 display: inline-block;
-                height: 36.5px;
-                padding: 9px 5px;
+                width: 68px;
+                height: 36px;
                 text-align: center;
-                @media (#{$larger-than-mobile}) {
-                    width: 17%;
-                }
-                @media (#{$larger-than-tablet}) {
-                    width: 8%;
-                }
-                @media (#{$larger-than-desktop}) {
-                    width: 6%;
-                }
             }
         }
+
         .total-section {
             margin-top: 15px;
             margin-bottom: 35px;
+
             span {
                 font-size: rem-calc(18px);
                 margin-right: 10px;
             }
+
             .total {
                 border: 1px solid $grey;
                 color: $primary-color;
@@ -229,6 +329,7 @@
             }
         }
     }
+
     .countriesList {
         font-size: rem-calc(15px);
         list-style: none;
@@ -237,48 +338,62 @@
         flex-direction: column;
         flex-wrap: wrap;
         width: 100%;
+
         &.payGo {
             max-height: none;
+
             @media (#{$larger-than-desktop}) {
                 max-height: 570px;
             }
+
             &.long {
                 max-height: none;
+
                 @media (#{$larger-than-desktop}) {
                     max-height: 1025px;
                 }
             }
         }
+
         &.unlimited {
             li {
                 width: 40%;
+
                 @media (max-width: 1024px) {
                     width: 60%;
                 }
+
                 @media (max-width: 750px) {
                     width: 75%;
                 }
+
                 @media (max-width: 426px) {
                     width: 100%;
                 }
+
                 .rate {
                     padding-right: 10px;
                 }
             }
         }
+
         li {
             padding-bottom: 10px;
             width: 65%;
             height: 6%;
+
             @media (#{$larger-than-desktop}) {
                 width: 44%;
             }
+
             @media (max-width: 426px) {
                 width: 100%;
             }
+
             .countryName {
                 font-size: rem-calc(15px);
             }
+
             .rate {
                 color: $primary-color;
                 font-size: rem-calc(15px);
@@ -287,17 +402,21 @@
             }
         }
     }
+
     .totalCalls {
         border-bottom: 1px solid $grey;
         border-top: 1px solid $grey;
         font-size: rem-calc(17px);
         padding-top: 17px;
         padding-bottom: 40px;
+
         @media (min-width: 818px) {
             padding-bottom: 17px;
         }
+
         span {
             display: block;
+
             &.text-color-primary {
                 font-size: rem-calc(24px);
                 text-transform: capitalize;
@@ -305,26 +424,32 @@
                 font-family: $base-font-family-bold;
                 font-weight: bold;
             }
+
             @media (min-width: 818px) {
                 display: inline;
             }
         }
     }
+
     .action {
         text-align: right;
         margin-top: 40px;
         margin-bottom: 15px;
+
         .secondary {
             margin-right: 15px;
+
             @media (max-width: 498px) {
                 margin-right: 0;
                 margin-bottom: 15px;
             }
         }
+
         @media (max-width: 750px) {
             text-align: center;
         }
     }
+
     .textAddOn {
         font-size: 18px;
         height: 35px;
