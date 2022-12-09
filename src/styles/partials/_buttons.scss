@@ -94,14 +94,11 @@
     &:focus {
       border-color: $blue;
       color: $blue;
-      background: linear-gradient(0deg, #74C0EB, #74C0EB),
-linear-gradient(0deg, #E3F2FB, #E3F2FB);
-
+      background:#E3F2FB;
     }
     &:disabled {
       border-color: $disabled;
-      background: linear-gradient(0deg, #F3F3F3, #F3F3F3),
-linear-gradient(0deg, #B0B0B0, #B0B0B0);
+      background:  #F3F3F3;
       color: $disabled;
     }
     &.disabled {

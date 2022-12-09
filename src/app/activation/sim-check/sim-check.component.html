@@ -1,12 +1,19 @@
-<section class="container-flex internal-page-margins check-sim">
-    <div class="container-flex-row flex-center margin-bottom-20">
-        <div class="text-center">
-            <h1 class="header" id="check-sim-header">Do you have your GoodMobile SIM card?</h1>
-            <h2 class="subhead">To Activate, you need to have a GoodMobile SIM card</h2>
+<section class="page-section check-sim">
+    <app-activation-header></app-activation-header>
+    <div class="page-content">
+        <h1 class="header-color">Hello, I’m Liz! <br>Do you have a Good Mobile SIM card with you?</h1>
+        <h4 class="text-orange">To activate, you need to have a Good Mobile SIM card.</h4>
+        <div class="options">
+            <label class="radio-label" for="yes" >
+                <input type="radio" value="yes" [(ngModel)]="option" id="yes" #optionRef="ngModel">Yes, I have it with me
+            </label>
+            <label class="radio-label" for="no" >
+                <input type="radio" value="no" [(ngModel)]="option"  id="no" #optionRef="ngModel">No, I don’t 
+            </label>
+            <label class="validation-message" *ngIf="optionRef?.touched && !option">Please select one of the options</label>
         </div>
-    </div>
-    <div class="actions-container">
-        <button class="button primary" id="yes-button" (click)="goToSimSource()">Yes</button>
-        <button class="button secondary" id="no-button" (click)="goToNoSimPath()">No</button>
+       <div class="action">
+        <button class="button primary" (click)="selectOption()">Next <img class="icon" src="assets/icon/right-circle-arrow.svg"/></button>
+       </div>
     </div>
 </section>

@@ -206,6 +206,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public ShowShippingForm(): void {
     if (!!this.showShippingForm) {
       this.showShippingForm = false;
+      this.touchShippingForm = false;
     } else {
       this.selectedShippingAddress = null;
       this.touchShippingForm = false;
@@ -218,6 +219,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     this.shippingAddress = { address1: '', address2: '' } as IFirebaseAddress;
     this.showShippingForm = false;
     this.showAddressRequiredError = false;
+    this.touchShippingForm = false;
   }
 
   public updateTotalPrice(): void {
@@ -328,10 +330,11 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
           this.touchShippingForm = true;
         } else if(!this.selectedShippingAddress || !!this.selectedShippingAddress && Object.keys(this.selectedShippingAddress).length === 0) {
           this.showAddressRequiredError = true;
+          this.touchShippingForm = false;
           window.scroll(0,100);
         }
         this.packageForm.form.markAllAsTouched();
-        if (this.packageForm.valid && !!this.selectedShippingAddress &&  Object.keys(this.selectedShippingAddress).length !== 0 && !this.touchShippingForm || (!!this.touchShippingForm && this.shippingMethodForm.form.valid)) {
+        if (this.packageForm.valid && !!this.selectedShippingAddress &&  Object.keys(this.selectedShippingAddress).length !== 0 && (!this.touchShippingForm || (!!this.touchShippingForm && !!this.shippingMethodForm && this.shippingMethodForm.form.valid)) ){
           this.removeEmptyValues(this.selectedShippingAddress);
           this.checkoutService.updateShippingAddress(this.selectedShippingAddress);
           this.checkoutService.updateStorePickup(undefined);

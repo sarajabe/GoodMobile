@@ -1,87 +1,28 @@
 @import "../../../styles/modules/_variables.scss";
-@import "../../../styles/modules/_mixins.scss";
 
-.choose-plan {
-    .subhead {
-        font-size: rem-calc(20px);
-        line-height: 28px;
-        max-width: 675px;
-        margin: 40px auto;
+.page-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 40px 0 64px;
+    h1 {
+        max-width: 879px;
     }
-    .header {
-        font-size: rem-calc(38px);
-        line-height: 50px;
+    .action {
+        margin-top: 28px;
+        display: flex;
+        gap: 40px;
     }
-    .actions-container {
-        text-align: center;
-        margin-bottom: 100px;
-        .button {
-            width: 231px;
-            padding: 11px;
-            margin-right: 15px;
-            font-size: rem-calc(20px);
-        }
-        div {
-            padding: 0 10px;
-            @media (#{$larger-than-desktop}) {
-                padding: 0 32px;
-            }
-
-            &.left-action {
-                text-align: center;
-                margin-bottom: 20px;
-                @media (#{$larger-than-tablet}) {
-                    text-align: right;
-                    margin-bottom: 0px;
-                }
-            }
-
-            &.right-action {
-                text-align: center;
-                @media (#{$larger-than-tablet}) {
-                    text-align: left;
-                }
-            }
-        }
-        @media (max-width: 1024.9px) {
-            margin-bottom: 50px;
-            .button {
-                width: 213px;
-                font-size: rem-calc(15px);
-            }
-        }
-        @media (max-width: 639.9px) {
-            .button {
-                width: 228px;
-                font-size: rem-calc(20px);
-            }
-        }
+   .options {
+        margin-top: 40px;
     }
-    @media (max-width: 1024.9px) {
-        .header {
-            font-size: rem-calc(28px);
-            line-height: 37px;
-        }
-        .subhead {
-            font-size: rem-calc(18px);
-            line-height: 25px;
-            max-width: 500px;
-        }
-    }
-    @media (max-width: 639.9px) {
-        .header {
-            font-size: rem-calc(26px);
-            line-height: 30px;
-        }
-        .subhead {
-            font-size: rem-calc(17px);
-            line-height: 22px;
-        }
-        .actions-container {
-            .button {
-                display: block;
-                margin: 15px auto 20px;
-            }
+    @media(max-width: $phablet-min-width-minus) {
+        margin: 32px 0 40px;
+        .action {
+            margin-top: 24px;
+            gap: 16px;
         }
     }
 }

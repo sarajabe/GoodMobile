@@ -12,11 +12,12 @@ export class PlansAndFeaturesComponent{
   }
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {
-    if (sessionStorage.getItem('activation_step') === 'step2'){
-    event.preventDefault();
-    sessionStorage.setItem('activation_step', 'step1');
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.No_SIM}`]);
-    }
+    // if (sessionStorage.getItem('activation_step') === 'step2'){
+    //   console.info('****************************');
+    // event.preventDefault();
+    // sessionStorage.setItem('activation_step', 'step1');
+    // this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.No_SIM}`]);
+    // }
   }
 
 }

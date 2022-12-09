@@ -969,10 +969,9 @@
           margin: 20px auto 0;
         }
         input {
-          width: 100%;
-          max-width: 300px;
-          height: 45px;
-          padding: 0 10px;
+          width: 240px;
+          height: 40px;
+          padding: 0 8px;
         }
         .label {
           font-size: rem-calc(16px);
@@ -984,12 +983,13 @@
           padding: 0 10px;
         }
         a {
-          font-size: rem-calc(14px);
+          font-size: rem-calc(16px);
+          font-family: $secondary-font-family-bold;
         }
       }
       .modal-actions {
         .button {
-           width: 250px!important;
+           width: 116px!important;
         }
       }
     }
