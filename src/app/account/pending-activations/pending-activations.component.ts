@@ -360,7 +360,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       if (!!order) {
         this.appState.loading = false;
         if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
-          this.barCodeValues = `${order?.cards[0]?.itemId},${order?.id}`;
+          this.barCodeValues = `${order?.cards[0]?.itemId}`;
         }
         console.log('order', order)
       }
