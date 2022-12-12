@@ -26,20 +26,20 @@ export class FaqsComponent implements OnInit, OnDestroy {
   public isSupport = false;
   public routerSubscription: Subscription;
   constructor(private metaService: MetaService, private router: Router, private contentFulService: ContentfulService, private location: Location,
-              private pageScrollService: PageScrollService, private route: ActivatedRoute, private clipboardService: ClipboardService) {
+    private pageScrollService: PageScrollService, private route: ActivatedRoute, private clipboardService: ClipboardService) {
     this.metaService.createCanonicalUrl();
   }
   ngOnInit(): void {
     this.contentFulService.getContent('faqsSection').subscribe(result => {
       if (!!result) {
         this.faqsCategories = result;
-        this.targetCategory =  this.faqsCategories[0].fields.g2gFaqs[0].fields.categoryId;
+        this.targetCategory = this.faqsCategories[0].fields.g2gFaqs[0].fields.categoryId;
         this.activeCategory = this.targetCategory;
         this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
         this.questions = this.contentFulService.getQuestionsByCategoryId('good2goFaqs', this.targetCategory);
         this.checkParams();
       }
-     });
+    });
   }
   ngOnDestroy(): void {
     if (!!this.routerSubscription) {
@@ -47,7 +47,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
     }
   }
   private checkParams(): void {
-    if ( this.router.url.split('/')[3] === 'support'){
+    if (this.router.url.split('/')[3] === 'support') {
       this.isSupport = true;
       this.activeCategory = 'support';
     }
@@ -58,7 +58,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
         this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
         this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}`);
         this.questions = this.contentFulService.getQuestionsByCategoryId('good2goFaqs', this.targetCategory);
-        if ( this.targetCategory  === 'covid'){
+        if (this.targetCategory === 'covid') {
           this.isCovid = true;
         }
         if (!!params.id) {
@@ -85,6 +85,12 @@ export class FaqsComponent implements OnInit, OnDestroy {
     });
   }
   public setCategory(category, categoryId): void {
+    this.pageScrollService.scroll({
+      document,
+      scrollTarget: '.content-section',
+      scrollOffset: 100,
+      speed: 200
+    });
     if (!!category && !!categoryId) {
       this.isCovid = false;
       this.isSupport = false;
@@ -98,7 +104,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
         if (this.targetCategory === 'covid') {
           this.isCovid = true;
         }
-        else if (this.targetCategory === 'support'){
+        else if (this.targetCategory === 'support') {
           this.isSupport = true;
           this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.SUPPORT_CATEGORY}`]);
           this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.SUPPORT_CATEGORY}`);
@@ -118,7 +124,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
       this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.targetCategory}/${this.questionIdParam}`);
       this.callRichText(answerId);
     }
-    if (!!copy && this.questionIdParam === questionId){
+    if (!!copy && this.questionIdParam === questionId) {
       const url = window.location.host + this.location.path();
       this.clipboardService.copy(url);
       this.isCopied = true;
@@ -126,15 +132,6 @@ export class FaqsComponent implements OnInit, OnDestroy {
         this.isCopied = false;
       }, 1500);
     }
-    const hashId = '#' + this.questionIdParam;
-    setTimeout(() => {
-      this.pageScrollService.scroll({
-        document,
-        scrollTarget: hashId,
-        scrollOffset: 150,
-        speed: 500
-      });
-    }, 50);
   }
   private callRichText(answerId): void {
     this.contentFulService.getRichText('questions', answerId);
