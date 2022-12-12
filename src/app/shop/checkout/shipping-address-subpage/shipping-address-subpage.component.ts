@@ -317,6 +317,16 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       }
     }
   }
+  public pickupOptionChanged(): void {
+    if (this.option === 'store'){
+      this.selectedShippingAddress = null;
+      this.shippingAddress = {} as IFirebaseAddress;
+      this.orderShippingMethod = {} as IShippingMethod;
+      this.selectedShippingServiceOption = '';
+      this.shippingServiceType = '';
+      this.showShippingForm = false;
+    }
+  }
   public nextCheckoutStep(): void {
     this.pickupOptionsForm.form.markAllAsTouched();
     if(!!this.pickupOptionsForm.valid) {

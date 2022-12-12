@@ -37,7 +37,8 @@
     <form #pickupOptionsForm="ngForm" class="pickups-form">
       <div class="radioBtn">
         <label class="form-control" for="home">
-          <input type="radio" value="home" [(ngModel)]="option" id="home" name="home" required>
+          <input type="radio" value="home" [(ngModel)]="option" id="home" name="home" required
+          (change)="pickupOptionChanged()">
           <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
           <div class="input-details">
           <p class="value">Home Delivery</p>
@@ -168,7 +169,8 @@
       </div>
       <div class="radioBtn">
         <label class="form-control" for="store">
-          <input type="radio" value="store" [(ngModel)]="option" id="store" name="store" required>
+          <input type="radio" value="store" [(ngModel)]="option" id="store" name="store" required
+          (change)="pickupOptionChanged()">
           <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
           <div class="input-details">
           <p class="value">Store Pickup</p>
