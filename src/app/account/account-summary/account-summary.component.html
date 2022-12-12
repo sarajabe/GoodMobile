@@ -40,35 +40,33 @@
     <div class="container-flex-row account-info flex-center">
       <div class="col-xl-11 col-xl-offset-1 col-12 col-offset-0" [class.no-account-status-message]="userHasActivePlans">
         <ng-container *ngIf="!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus">
-          <div class="plan-portIn-container">
-            <h3 class="portIn-title">Number Transfer Pending</h3>
-            <div class="portIn-details">
-              <p class="status">Status: <span class="text-color-primary"
-                  *ngIf="selectedPlan?.portInStatus == 'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY'">Pending</span>
-                <span class="text-color-primary" *ngIf="selectedPlan?.portInFailed">OSP Info
-                  Rejected</span>
-              </p>
-              <p class="detail"
-                *ngIf="selectedPlan?.portInStatus == 'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY'">
-                Your Number
-                is in the process of being ported from your previous carrier. This can take
-                a few hours to process. Click Refresh Page to see updates</p>
-              <p class="detail" *ngIf="selectedPlan?.portInFailed">There was an issue that prevented us
-                from processing
-                your port in, please review to fix the issue
-                or call the GoodMobile customer care: <span
-                  class="text-color-primary">{{ customerCareNumber | phone }}</span></p>
-            </div>
-            <div class="portIn-action"
-              *ngIf="selectedPlan?.portInStatus == 'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY'">
-              <button class="button primary" (click)="refresh()">Refresh page</button>
-              <button class="button secondary" (click)="cancelPortIn()" [uiBlockButton]="processingRequest">Cancel port
-                in</button>
-            </div>
-            <div class="portIn-action" *ngIf="!!selectedPlan?.portInFailed">
-              <button class="button primary" (click)="reviewIssue()">Review issue</button>
-              <button class="button secondary" (click)="cancelPortIn()" [uiBlockButton]="processingRequest">Cancel port
-                in</button>
+          <div class="info-banner default-background">
+            <div class="flex">
+              <img src="assets/icon/info-icon.svg" alt="Info Icon">
+              <div class="banner-content">
+                <p class="title">Number Transfer Pending</p>
+                <p class="description">Status: <span class="text-color-primary">{{selectedPlan?.portInStatus ==
+                    'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY' ? 'Pending' : (selectedPlan?.portInFailed ?
+                    'OSP Info Rejected' : '')}}</span></p>
+                <p class="description last"
+                  *ngIf="selectedPlan?.portInStatus == 'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY'">Your Number
+                  is in the process of being ported from your previous carrier. This can take a few hours to process.
+                  Click Refresh Page to see updates</p>
+                <p class="description last" *ngIf="selectedPlan?.portInFailed">There was an issue that prevented us from
+                  processing your port in, please review to fix the issue or call the GoodMobile customer care: <span
+                    class="text-color-primary">{{ customerCareNumber | phone }}</span></p>
+                <div class="actions"
+                  *ngIf="selectedPlan?.portInStatus == 'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY'">
+                  <button class="button primary" (click)="refresh()">Refresh page</button>
+                  <button class="button secondary" (click)="cancelPortIn()" [uiBlockButton]="processingRequest">Cancel
+                    port in</button>
+                </div>
+                <div class="actions" *ngIf="!!selectedPlan?.portInFailed">
+                  <button class="button primary" (click)="reviewIssue()">Review issue</button>
+                  <button class="button secondary" (click)="cancelPortIn()" [uiBlockButton]="processingRequest">Cancel
+                    port in</button>
+                </div>
+              </div>
             </div>
           </div>
         </ng-container>
@@ -93,32 +91,36 @@
           *ngIf="!!userAccount && !!selectedPlan && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.pendingNewSim && !selectedPlan?.canceled && !selectedPlan?.eSimDetails">
           <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                <div class="banner-content">
-                    <p class="title">Your replacement SIM is on the way</p>
-                    <p class="description last">Once your replacement SIM arrives:</p>
-                    <div class="actions">
-                        <button class="button primary" (click)="replaceSIM()">Activate SIM</button>
-                    </div>
+              <img src="assets/icon/info-icon.svg" alt="Info Icon">
+              <div class="banner-content">
+                <p class="title">Your replacement SIM is on the way</p>
+                <p class="description last">Once your replacement SIM arrives:</p>
+                <div class="actions">
+                  <button class="button primary" (click)="replaceSIM()">Activate SIM</button>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
         </ng-container>
-        <ng-container *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!selectedPlan.eSIM  && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.network === 'tmo' && !selectedPlan?.qrScanned && selectedPlan?.mdn && !!selectedPlan?.eSimDetails">
+        <ng-container
+          *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!selectedPlan.eSIM  && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.network === 'tmo' && !selectedPlan?.qrScanned && selectedPlan?.mdn && !!selectedPlan?.eSimDetails">
           <div class="info-banner default-background">
             <div class="flex">
               <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                <div class="banner-content">
-                    <p class="title">Are you ready to swap to eSIM?</p>
-                    <p class="description">Your replacement eSIM is ordered successfully! You may now proceed with <b>downloding your eSIM!</b></p>
-                    <p class="description bottom-8">The SIM will be changed immediately. </p>
-                    <p class="description last"><b>To prevent service loss, you must have your phone ready to scan the QR code to load the SIM on your phone</b></p>
-                    <div class="actions">
-                        <button class="button primary" (click)="activateReplacementEsim()">Swap to eSIM</button>
-                    </div>
+              <div class="banner-content">
+                <p class="title">Are you ready to swap to eSIM?</p>
+                <p class="description">Your replacement eSIM is ordered successfully! You may now proceed with
+                  <b>downloding your eSIM!</b>
+                </p>
+                <p class="description bottom-8">The SIM will be changed immediately. </p>
+                <p class="description last"><b>To prevent service loss, you must have your phone ready to scan the QR
+                    code to load the SIM on your phone</b></p>
+                <div class="actions">
+                  <button class="button primary" (click)="activateReplacementEsim()">Swap to eSIM</button>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
         </ng-container>
         <ng-container
           *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus))">
@@ -139,25 +141,28 @@
         </ng-container>
         <br>
         <ng-container *ngIf="!!selectedPlan && !!selectedPlan?.pendingPlan && !!selectedPlan?.pendingPlan.basePlan">
-          <h4 class="h4 account-section-title">
-            <span class="future-plan">Future plan details</span>
-            <span class="activate-on"><span class="no-wrap">Active on:</span>
-              {{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MM-dd-yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}</span>
-          </h4>
-          <div class="card-container plan-container alt-bg">
-            <div class="future-plan-details-container">
-              <div class="plan-details">
-                <p><b>Your GoodMobile plan:</b></p>
-                <p><b>{{selectedPlan?.pendingPlan?.basePlan.title}}</b></p>
-              </div>
-              <div class="future-price-and-links">
-                <p>
-                  <b>{{!!selectedPlan?.autoRenewPlan ? (!!selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles ? (((selectedPlan?.pendingPlan?.price * 100 / 100 - 5) | number: '2.0-1') / selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles | currency:'USD':'symbol':0) :(selectedPlan?.pendingPlan?.basePlan?.price - 5 | currency:'USD':'symbol':0)) : (!!selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles ? (((selectedPlan?.pendingPlan?.price * 100 / 100) | number: '2.0-1') / selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles | currency:'USD':'symbol':0) :(selectedPlan?.pendingPlan?.basePlan?.price | currency:'USD':'symbol':0))}}/month</b>
+          <div class="info-banner default-background">
+            <div class="flex">
+              <img src="assets/icon/info-icon.svg" alt="Info Icon">
+              <div class="banner-content">
+                <p class="title">Future plan details:</p>
+                <p class="description bottom-8">Active on: <b>{{userAccount?.plan?.subscriptionRenewalDate ?
+                    (userAccount?.plan?.subscriptionRenewalDate |
+                    date:'MM-dd-yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-")))
+                    : '-'}}</b></p>
+                <p class="description last">{{selectedPlan?.pendingPlan?.basePlan.title}}
+                  <b>{{!!selectedPlan?.autoRenewPlan ? (!!selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles ?
+                    (((selectedPlan?.pendingPlan?.price * 100 / 100 - 5) | number: '2.0-1') /
+                    selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles | currency:'USD':'symbol':0)
+                    :(selectedPlan?.pendingPlan?.basePlan?.price - 5 | currency:'USD':'symbol':0)) :
+                    (!!selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles ? (((selectedPlan?.pendingPlan?.price *
+                    100 / 100) | number: '2.0-1') / selectedPlan?.pendingPlan?.basePlan?.subscriptionCycles |
+                    currency:'USD':'symbol':0) :(selectedPlan?.pendingPlan?.basePlan?.price |
+                    currency:'USD':'symbol':0))}}/month</b>
                 </p>
-                <span class="action-links" *ngIf="!userAccount?.billingRenewalPaid">
-                  <span><a (click)="changePlan()">Change plan</a></span>
-                  <span>&nbsp;|&nbsp;<a (click)="cancelChangePlan()">Cancel Plan</a></span>
-                </span>
+                <div class="actions">
+                  <button class="button thirdly" (click)="cancelChangePlan()">Cancel Plan</button>
+                </div>
               </div>
             </div>
           </div>
@@ -165,31 +170,37 @@
         <ng-container *ngIf="!!selectedPlan && !!selectedPlan?.planDevice?.pendingMigrationSim">
           <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                <div class="banner-content">
-                    <p class="title">Are you ready to setup your migration {{!!selectedPlan?.eSimDetails ? 'e': ''}}SIM?</p>
-                    <p class="description last">{{!!selectedPlan?.eSimDetails ? 'You should have received your eSIM for the service migration. Please make sure you have the phone you intend to use ready to scan it, then click on "I receieved my eSIM" to begin the service migration.' : 
-                      'Your SIM for your service migration is on its way. When you receive your Migration SIM, click on the button below to begin the service migration.'}}</p>
-                    <div class="actions">
-                        <button class="button primary" (click)="startMigration()">I received my {{!!selectedPlan?.eSimDetails ? 'e': ''}}SIM</button>
-                    </div>
+              <img src="assets/icon/info-icon.svg" alt="Info Icon">
+              <div class="banner-content">
+                <p class="title">Are you ready to setup your migration {{!!selectedPlan?.eSimDetails ? 'e': ''}}SIM?</p>
+                <p class="description last">{{!!selectedPlan?.eSimDetails ? 'You should have received your eSIM for the
+                  service migration. Please make sure you have the phone you intend to use ready to scan it, then click
+                  on "I receieved my eSIM" to begin the service migration.' :
+                  'Your SIM for your service migration is on its way. When you receive your Migration SIM, click on the
+                  button below to begin the service migration.'}}</p>
+                <div class="actions">
+                  <button class="button primary" (click)="startMigration()">I received my {{!!selectedPlan?.eSimDetails
+                    ? 'e': ''}}SIM</button>
                 </div>
+              </div>
             </div>
           </div>
         </ng-container>
-        <ng-container *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!selectedPlan.eSIM && !!selectedPlan?.iccid && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.network === 'tmo' && !selectedPlan?.qrScanned && selectedPlan?.mdn && !selectedPlan?.eSimDetails">
+        <ng-container
+          *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!selectedPlan.eSIM && !!selectedPlan?.iccid && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.network === 'tmo' && !selectedPlan?.qrScanned && selectedPlan?.mdn && !selectedPlan?.eSimDetails">
           <div class="info-banner default-background">
             <div class="flex">
-                <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                <div class="banner-content">
-                    <p class="title">Are you ready to setup your eSIM?</p>
-                    <p class="description last">Once you've <b>activated your plan</b> you may now proceed with downloding your eSIM!</p>
-                    <div class="actions">
-                        <button class="button primary" (click)="activateEsim()">Setup eSIM</button>
-                    </div>
+              <img src="assets/icon/info-icon.svg" alt="Info Icon">
+              <div class="banner-content">
+                <p class="title">Are you ready to setup your eSIM?</p>
+                <p class="description last">Once you've <b>activated your plan</b> you may now proceed with downloding
+                  your eSIM!</p>
+                <div class="actions">
+                  <button class="button primary" (click)="activateEsim()">Setup eSIM</button>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
         </ng-container>
         <div class="first-row">
           <!-- plan info -->
@@ -206,7 +217,10 @@
               <div [class.displayNone]="innerWidth < 834 && !!hideManageYourPlanCard">
                 <div [class.last-element]="!userAccount && !selectedPlan?.planDevice">
                   <div class="data-height">
-                    <span class="title-text base-plan-title"><span [class.promo-title]="!!isApplicablePromo">{{!!selectedPlan?.basePlan?.specialPromotion && !!isApplicablePromo ? selectedPlan?.basePlan?.specialPromotion?.promotionTitle : selectedPlan?.basePlan?.title}}
+                    <span class="title-text base-plan-title"><span
+                        [class.promo-title]="!!isApplicablePromo">{{!!selectedPlan?.basePlan?.specialPromotion &&
+                        !!isApplicablePromo ? selectedPlan?.basePlan?.specialPromotion?.promotionTitle :
+                        selectedPlan?.basePlan?.title}}
                       </span>
                       <!-- <span class="plan-data"
                         *ngIf="filteredPlan?.data > 0 && !selectedPlan?.canceled && !!userAccount && !!selectedPlan">
@@ -218,16 +232,19 @@
                     <p class="title-text" *ngIf="!!selectedPlan">
                       {{selectedPlan?.basePlan?.subtitle}}</p>
                     <div [class.promoSpace]="!filteredPlan?.data > 0 || !!selectedPlan?.canceled || !userAccount">
-                      <span class="title-info"
-                        *ngIf="!!userAccount && !!selectedPlan"><b>Plan
+                      <span class="title-info" *ngIf="!!userAccount && !!selectedPlan"><b>Plan
                           {{!userAccount?.pastDue ? 'renewal' : 'expiry'}} date &nbsp;</b>
                       </span>
-                      <span class="title-info"
-                        *ngIf="!!userAccount && !userAccount?.pastDue && !!selectedPlan"><b
-                          class="no-wrap">{{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MM/dd/yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}</b></span>
-                      <span class="title-info"
-                        *ngIf="!!userAccount && userAccount?.pastDue && !!selectedPlan"><b
-                          class="no-wrap">{{userAccount?.plan?.startDate ? (userAccount?.plan?.startDate | date:'MM/dd/yyyy': userAccount?.plan?.startDate.substring(userAccount?.plan?.startDate.lastIndexOf("-"))) : '-'}}</b></span>
+                      <span class="title-info" *ngIf="!!userAccount && !userAccount?.pastDue && !!selectedPlan"><b
+                          class="no-wrap">{{userAccount?.plan?.subscriptionRenewalDate ?
+                          (userAccount?.plan?.subscriptionRenewalDate |
+                          date:'MM/dd/yyyy':userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-")))
+                          : '-'}}</b></span>
+                      <span class="title-info" *ngIf="!!userAccount && userAccount?.pastDue && !!selectedPlan"><b
+                          class="no-wrap">{{userAccount?.plan?.startDate ? (userAccount?.plan?.startDate |
+                          date:'MM/dd/yyyy':
+                          userAccount?.plan?.startDate.substring(userAccount?.plan?.startDate.lastIndexOf("-"))) :
+                          '-'}}</b></span>
                     </div>
                   </div>
                   <div class="action-links"
@@ -306,8 +323,10 @@
                     </div>
                     <div class="info flex-container dev-height">
                       <span class="due-date-info"><span class="title-info"> <b>Due date: </b>
-                        </span><span
-                          class="title-info">{{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MM/dd/yyyy': userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}</span>
+                        </span><span class="title-info">{{userAccount?.plan?.subscriptionRenewalDate ?
+                          (userAccount?.plan?.subscriptionRenewalDate | date:'MM/dd/yyyy':
+                          userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-")))
+                          : '-'}}</span>
                       </span>
 
                       <span class="no-wrap amount-info"><span class="title-info"><b>Amount: </b>
@@ -330,15 +349,14 @@
                             <div class="tip-info-border"></div>
                             <div class="tip-info last"> <span class="key"><b>Total
                                   due:</b></span>
-                              <span
-                                class="value">{{(govFess + surchargesFees + renewBreakDownAmounts?.amount) | currency}}</span>
+                              <span class="value">{{(govFess + surchargesFees + renewBreakDownAmounts?.amount) |
+                                currency}}</span>
                             </div>
                           </span>
                         </div>
                       </span>
                     </div>
-                    <div class="custom-checkbox" [class.disabled]="disableAutoRenew"
-                      *ngIf="!!selectedPlan">
+                    <div class="custom-checkbox" [class.disabled]="disableAutoRenew" *ngIf="!!selectedPlan">
                       <div class="checkbox">
                         <input type="checkbox" id="autoRenewCheckbox" name="autoRenewCheckbox"
                           [checked]="autoRenewEnabled" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"
@@ -357,8 +375,7 @@
                   </div>
                   <div class="action-links">
                     <div class="links-container">
-                      <a (click)="makePayment()"
-                        [class.disabled]="!!selectedPlan && !!selectedPlan?.canceled"
+                      <a (click)="makePayment()" [class.disabled]="!!selectedPlan && !!selectedPlan?.canceled"
                         *ngIf="!userAccount?.hasPendingChanges" class="payment-action"><img class="make-payment-icon"
                           src="/assets/icon/$.svg" alt="Make payment"> Make
                         payment</a>
@@ -395,7 +412,10 @@
                     <div class="next-section">
                       <p class="next-title">Next Payment:</p>
                       <p class="date"><b>Next billing cycle:</b>
-                        {{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate | date:'MM/dd/yyyy': userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-"))) : '-'}}
+                        {{userAccount?.plan?.subscriptionRenewalDate ? (userAccount?.plan?.subscriptionRenewalDate |
+                        date:'MM/dd/yyyy':
+                        userAccount?.plan?.subscriptionRenewalDate.substring(userAccount?.plan?.subscriptionRenewalDate.lastIndexOf("-")))
+                        : '-'}}
                       </p>
                     </div>
                   </div>
@@ -437,16 +457,16 @@
                       No data found for this account.
                     </p>
                     <p class="remaining-info" *ngIf="!!userAccount && !!userAccount?.dataRemaining?.balance">
-                      {{userAccount?.dataRemaining?.balance < 1024 ? ( dataRemainingBalance + ' MB of LTE data'): ( dataRemainingBalanceOfLteInGB + ' GB of LTE data' )}}
-                    </p>
-                    <p class="remaining-info"
-                      *ngIf="!!userAccount && userAccount?.minutes?.balance || userAccount?.minutes?.balance == 0">
-                      {{userAccount?.plan.unlimited ? 'Unlimited' : userAccount && userAccount?.minutes?.balance}}
-                      MINS
-                      +
-                      {{userAccount?.plan.unlimited ? 'Unlimited' : userAccount && userAccount?.messages?.balance}}
-                      TEXTS
-                    </p>
+                      {{userAccount?.dataRemaining?.balance < 1024 ? ( dataRemainingBalance + ' MB of LTE data' ): (
+                        dataRemainingBalanceOfLteInGB + ' GB of LTE data' )}} </p>
+                        <p class="remaining-info"
+                          *ngIf="!!userAccount && userAccount?.minutes?.balance || userAccount?.minutes?.balance == 0">
+                          {{userAccount?.plan.unlimited ? 'Unlimited' : userAccount && userAccount?.minutes?.balance}}
+                          MINS
+                          +
+                          {{userAccount?.plan.unlimited ? 'Unlimited' : userAccount && userAccount?.messages?.balance}}
+                          TEXTS
+                        </p>
                   </div>
                   <div *ngIf="!!userAccount?.dataPending">
                     <div class="warning-div"><img src="assets/icon/ic_warning.svg" alt="warning-icon"><span
@@ -606,9 +626,10 @@
                       <div class="flex-container responsive-flex-container">
                         <br>
                         <span class="iccid-section"><span
-                            class="title">{{selectedPlan?.planDevice?.network.toLowerCase() != 'sprint' ? 'IMEI' : 'MEID'}}</span><br><span
-                            class="info">{{selectedPlan?.planDevice?.id}} </span></span>
-                        <span class="title" *ngIf="!!userAccount?.iccid"><br> {{!!selectedPlan?.eSIM ? 'eSIM' : 'SIM'}} ICCID<br /><span class="info">{{userAccount?.iccid}}</span></span>
+                            class="title">{{selectedPlan?.planDevice?.network.toLowerCase() != 'sprint' ? 'IMEI' :
+                            'MEID'}}</span><br><span class="info">{{selectedPlan?.planDevice?.id}} </span></span>
+                        <span class="title" *ngIf="!!userAccount?.iccid"><br> {{!!selectedPlan?.eSIM ? 'eSIM' : 'SIM'}}
+                          ICCID<br /><span class="info">{{userAccount?.iccid}}</span></span>
                       </div>
                       <div class="flex-container responsive-flex-container"
                         *ngIf="!!userAccount?.msid || !!userAccount?.mslCode ">
@@ -662,27 +683,30 @@
                   <div *ngIf="!editPinNumberClicked"
                     [class.disabled]="selectedPlan?.canceled || !userAccount || !!userAccount?.pastDue"
                     class="title-info pin-info" id="pin--align">
-                    <b
-                      class="pass">{{showAccountPin && !!userAccount? userAccount?.pin : '●●●●'}}</b>
+                    <b class="pass">{{showAccountPin && !!userAccount? userAccount?.pin : '●●●●'}}</b>
                     <span class="edit-action" (click)="viewAccountPin()"
-                      [class.disabled]="selectedPlan?.canceled || !userAccount"><img src="assets/img/eye.svg" data-cy="changePin"/> </span>
+                      [class.disabled]="selectedPlan?.canceled || !userAccount"><img src="assets/img/eye.svg"
+                        data-cy="changePin" /> </span>
                   </div>
                   <!-- edit pin pop up  -->
                   <div *ngIf="!!editPinNumberClicked && !equalCurrentPin" class="pin-popUp">
-                    <form #pinCodeForm="ngForm" id="pinForm" name="pinForm" (ngSubmit)="submitCurrentPin();pinCodeForm.resetForm()">
+                    <form #pinCodeForm="ngForm" id="pinForm" name="pinForm"
+                      (ngSubmit)="submitCurrentPin();pinCodeForm.resetForm()">
                       <p>Enter your current PIN number</p>
                       <input placeholder="Current PIN number" type="password" name="currentPin" id="currentPin"
-                        maxlength="4" data-cy="currentPin" minlength="4" restrictNumbers required [(ngModel)]="currentPin"
-                        #currentPinRef="ngModel" [disabled]="!!processingRequest">
+                        maxlength="4" data-cy="currentPin" minlength="4" restrictNumbers required
+                        [(ngModel)]="currentPin" #currentPinRef="ngModel" [disabled]="!!processingRequest">
                       <br>
                       <label class="validation-message"
                         *ngIf="currentPinRef.hasError('required') && currentPinRef.touched"
                         id="current-required-pin-label" data-cy="pinIsRequiredMessage">Account Pin Code required</label>
                       <label class="validation-message"
-                        *ngIf="currentPinRef.hasError('minlength') && currentPinRef.dirty"
-                        id="minlength-pin-label" data-cy="lengthWarningMessage">Account Pin Code minimum length is 4 digits</label>
+                        *ngIf="currentPinRef.hasError('minlength') && currentPinRef.dirty" id="minlength-pin-label"
+                        data-cy="lengthWarningMessage">Account Pin Code minimum length is 4 digits</label>
                       <button type="submit" data-cy="submitBtn" class="button primary"
-                        [class.disabled]="currentPinRef.hasError('minlength') || currentPinRef.hasError('required')" [disabled]="currentPinRef.hasError('minlength') || currentPinRef.hasError('required')" [uiBlockButton]="processingRequest">
+                        [class.disabled]="currentPinRef.hasError('minlength') || currentPinRef.hasError('required')"
+                        [disabled]="currentPinRef.hasError('minlength') || currentPinRef.hasError('required')"
+                        [uiBlockButton]="processingRequest">
                         Submit</button>
                     </form>
                   </div>
@@ -693,7 +717,7 @@
                       <input placeholder="Enter new PIN" type="password" name="pinCode" id="pinCode" maxlength="4"
                         minlength="4" data-cy="pinCode" restrictNumbers [(ngModel)]="pinCode" #pinCodeRef="ngModel"
                         [disabled]="!!processingRequest">
-                        <label class="validation-message"
+                      <label class="validation-message"
                         *ngIf="validatePin() == PIN_VALIDATE.EMPTY && pinCodeRef.touched"
                         id="required-pin-label">Account Pin Code required</label>
                       <label class="validation-message"
@@ -705,12 +729,12 @@
                           rules?</a>
                       </label>
                       <input placeholder="Confirm new PIN" type="password" name="pinCodeConfirm" id="pinCodeConfirm"
-                        maxlength="4" minlength="4" data-cy="pinCodeConfirm" required restrictNumbers [(ngModel)]="pinCodeConfirm"
-                        #pinCodeConfirmRef="ngModel" [disabled]="!!processingRequest">
-                        <label class="validation-message"
+                        maxlength="4" minlength="4" data-cy="pinCodeConfirm" required restrictNumbers
+                        [(ngModel)]="pinCodeConfirm" #pinCodeConfirmRef="ngModel" [disabled]="!!processingRequest">
+                      <label class="validation-message"
                         *ngIf="pinCodeConfirmRef.hasError('required') && pinCodeConfirmRef.touched"
                         id="confirm-required-pin-label">Confirmation Pin Code required</label>
-                        <label class="validation-message" *ngIf="!!pinCodeConfirm && pinCode != pinCodeConfirm"
+                      <label class="validation-message" *ngIf="!!pinCodeConfirm && pinCode != pinCodeConfirm"
                         id="mismatch-label">
                         Pin Code Mismatch
                       </label>
@@ -724,8 +748,8 @@
                       class="edit-action"><img class="action-icon" alt="change PIN" src="/assets/img/white-pin.svg" />
                       Change PIN number</a></div>
                   <div *ngIf="!!equalCurrentPin && !!editPinNumberClicked" class="action-responsive margin-top-31"
-                  [class.disabled]="pinCode != pinCodeConfirm || !pinCode || !pinCodeConfirm || (validatePin() == PIN_VALIDATE.INVALID)"
-                  (click)="editAccountPin()">
+                    [class.disabled]="pinCode != pinCodeConfirm || !pinCode || !pinCodeConfirm || (validatePin() == PIN_VALIDATE.INVALID)"
+                    (click)="editAccountPin()">
                     <a class="edit-action">
                       <img class="action-icon" alt="change PIN" src="/assets/icon/check.svg" />
                       Save new PIN number</a>
@@ -845,7 +869,8 @@
                     </div>
                     <div class="edit-wifi action-responsive" *ngIf="!!userAccount && userAccount?.wifiCallingEnabled">
                       <a class="edit-action" (click)="editWifiCalling()">
-                        <img class="action-icon" data-cy="editWifiCallingLink" alt="Edit wifi address" src="/assets/img/white-pin.svg" /> Edit WiFi
+                        <img class="action-icon" data-cy="editWifiCallingLink" alt="Edit wifi address"
+                          src="/assets/img/white-pin.svg" /> Edit WiFi
                         Calling</a>
                     </div>
                   </div>

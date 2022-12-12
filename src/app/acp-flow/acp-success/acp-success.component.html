@@ -1,28 +1,38 @@
 <section class="acp-success">
-    <div class="success-container">
-      <img src="/assets/icon/success-icon.svg" alt="success-icon">
-      <div class="notes">
-        <p class="head-note">{{title}}</p>
-        <p class="desc" *ngIf="acpStatus !== 'pendingAction'">Your ACP benefits can now be applied to your GoodMobile 6GB ACP plan! </p>
-        <p class="desc" *ngIf="acpStatus === 'pendingAction'"> Please select <b>“Resume Filing”</b> to be redirected to the National Verifier. Once you are done, the National Verifier will redirect you back to GoodMobile to complete the process.
-          <span><b>Please make sure to complete this step within 45 days.</b></span> </p>
-        <button class="button primary" (click)="goToNationalVerifier()" *ngIf="acpStatus === 'pendingAction'">Resume Filing</button>
+  <div class="info-banner success-background">
+    <div class="flex">
+      <img src="/assets/icon/success-icon.svg" alt="Success Icon">
+      <div class="banner-content">
+        <p class="title">{{title}}</p>
+        <p class="description last" *ngIf="acpStatus !== 'pendingAction'">Your ACP benefits can now be applied to your
+          GoodMobile 6GB ACP plan!</p>
+        <p class="description" *ngIf="acpStatus === 'pendingAction'">Please select <b>“Resume Filing”</b> to be
+          redirected to the National Verifier. Once you are done, the National Verifier will redirect you back to
+          GoodMobile to complete the process.</p>
+        <p class="description last" *ngIf="acpStatus === 'pendingAction'"><b>Please make sure to complete this step
+            within 45 days.</b></p>
+        <div class="actions" *ngIf="acpStatus === 'pendingAction'">
+          <button class="button primary" (click)="goToNationalVerifier()">Resume Filing</button>
+        </div>
         <div class="actions" *ngIf="acpStatus !== 'pendingAction'">
           <button class="button primary" (click)="addNewLine()">Add New Line</button>
-          <button class="button secondary" (click)="selectExistingLine()" *ngIf="!!activePlans && activePlans.length > 0">Select Existing Line</button>
+          <button class="button secondary" (click)="selectExistingLine()"
+            *ngIf="!!activePlans && activePlans.length > 0">Select Existing Line</button>
         </div>
       </div>
     </div>
-    <div class="illustration-section">
-      <picture class="picture">
-        <source srcset='/assets/img/Success-Desktop.webp' media="(max-width: 1759.9px)" type="image/webp">
-        <source srcset='/assets/img/success-desktop.svg' media="(max-width: 1759.9px)" type="image/svg">
-        <source srcset='/assets/img/Success-1920.webp' media="(min-width: 1760px)" type="image/webp">
-        <source srcset='/assets/img/Success-1920.svg' media="(min-width: 1760px)" type="image/svg">
-        <img src="assets/img/success-desktop.svg" alt="illustration">
+  </div>
+  <div class="illustration-section">
+    <picture class="picture">
+      <source srcset='/assets/img/Success-Desktop.webp' media="(max-width: 1759.9px)" type="image/webp">
+      <source srcset='/assets/img/success-desktop.svg' media="(max-width: 1759.9px)" type="image/svg">
+      <source srcset='/assets/img/Success-1920.webp' media="(min-width: 1760px)" type="image/webp">
+      <source srcset='/assets/img/Success-1920.svg' media="(min-width: 1760px)" type="image/svg">
+      <img src="assets/img/success-desktop.svg" alt="illustration">
     </picture>
-    </div>
-    <div class="extra-note">
-        <p>If you need further assistance, feel free to call Customer Care at (800) 416-3003 (7AM to 1AM EST - Monday-Sunday) </p>
-    </div>
-  </section>
+  </div>
+  <div class="extra-note">
+    <p>If you need further assistance, feel free to call Customer Care at (800) 416-3003 (7AM to 1AM EST -
+      Monday-Sunday) </p>
+  </div>
+</section>

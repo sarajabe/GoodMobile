@@ -35,9 +35,13 @@
   </div>
   <h1 class="step-title" id="title">How do you want to pay?</h1>
   <ng-container *ngIf="!isMigration || (!!isMigration &&  (!!shippingMethod && shippingMethod.price > 0))">
-    <div class="error-banner" *ngIf="!!morePaymentNeeded">
-      <img src="assets/icon/red-alert.svg" alt="alert"/>
-      <p class="note"><b>Note: </b>Please make sure you specify the payment method to complete your request.</p>
+    <div class="info-banner error-background" *ngIf="!!morePaymentNeeded">
+      <div class="flex center">
+        <img src="assets/icon/error-icon.svg" alt="Error Icon"/>
+        <div class="banner-content">
+          <p class="description last"><b>Note: </b>Please make sure you specify the payment method to complete your request.</p>
+        </div>
+      </div>
     </div>
     <div class="payment-option">
       <label class="payment-container"><img src="assets/icon/credit-card.png" alt="credit card" /> Credit Card

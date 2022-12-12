@@ -4,14 +4,22 @@
         <a class="back-link" (click)="goToReportIssue()">Report an Issue</a>
     </div>
     <h1 class="title">Order not received</h1>
-    <div class="note-banner" *ngIf="!showContactForm">
-        <p class="note">Orders take between 3 to 5 business days to be delivered. Your order should be with you soon. 
-            If you still need help, please <span class="link" data-cy="leaveUsAMessage" (click)="showContactForm=true">leave us a message</span>.</p>
+    <div class="info-banner default-background" *ngIf="!showContactForm">
+        <div class="flex">
+            <img src="/assets/icon/info-icon.svg" alt="Info Icon">
+            <div class="banner-content">
+                <p class="description">Orders take between 3 to 5 business days to be delivered. Your order should be
+                    with you soon.</p>
+                <p class="description last">If you still need help, please <span class="link" data-cy="leaveUsAMessage"
+                        (click)="showContactForm=true">leave us a message</span>.</p>
+            </div>
+        </div>
     </div>
 </section>
 <section class="section-footer" *ngIf="!showContactForm" [class.sticky]="setSticky">
     <div class="btn-container">
-        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="goToReportIssue()">Cancel</button>
+        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel"
+            (click)="goToReportIssue()">Cancel</button>
     </div>
 </section>
 <app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" *ngIf="!!showContactForm">

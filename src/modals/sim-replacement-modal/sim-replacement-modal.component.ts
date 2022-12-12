@@ -14,6 +14,8 @@ export class SIMReplacementModalContext extends BSModalContext {
   public network: string;
   public labelText: string;
   public showRecaptcha?: boolean;
+  public disabledIccid?: boolean;
+  public iccid?: string;
 }
 @Component({
   selector: 'app-sim-replacement-modal',
@@ -25,6 +27,7 @@ export class SimReplacementModalComponent implements CloseGuard, ModalComponent<
   public validLength;
   public showRecaptcha: boolean;
   public SITE_ID = CAPTCHA_SITE_ID;
+  public disabledIccid = false;
   private captchaResponse: string;
   public captchaValid = false;
 
@@ -32,6 +35,10 @@ export class SimReplacementModalComponent implements CloseGuard, ModalComponent<
     this.context = dialog.context;
     this.showRecaptcha = !!this.context.showRecaptcha ? this.context.showRecaptcha : false;
     this.captchaValid = !this.showRecaptcha ? true : false;
+    this.disabledIccid = !!this.context.disabledIccid ? this.context.disabledIccid : false;
+    if (!!this.context && this.context.iccid) {
+      this.userInputValue = this.context.iccid;
+    }
     dialog.setCloseGuard(this);
     location.onPopState(() => this.dialog.close());
     this.validLength = 20;

@@ -7,7 +7,7 @@ import {
   AccountPaymentService, ActionsAnalyticsService, CART_TYPES, ChangePlanService, CustomizableMobilePlan,
   FirebaseUserProfileService, GenericMobilePlanItem, IAccountAddOn, IBasePlan, IChangeDevice, IDeviceCompatibilityV1, IFirebaseAddress, IFirebasePaymentMethod, IPaymentMethod,
   IPlanAddOn, IPortInUserAccountRequest, IUser, IUserAccount, IUserPlan, IVoucherData, MobileCustomPlansService,
-  MobilePlanDetails, PlansConfigurationService, PURCHASE_INTENT, UserAccountPortInService, UserAccountService, UserDeviceService,
+  MobilePlanDetails, PlansConfigurationService, PortInStatusEnum, PURCHASE_INTENT, UserAccountPortInService, UserAccountService, UserDeviceService,
   UserPlansService
 } from '@ztarmobile/zwp-service-backend';
 import { Subscription } from 'rxjs';
@@ -147,7 +147,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
 
     this.accountHeaderService.setPageTitle('Account summary');
     this.userPlansService.selectedUserPlanObservable.pipe(takeWhile(() => this.alive)).subscribe((userPlan) => {
-      this.selectedPlan = userPlan;    
+      this.selectedPlan = userPlan;
       if (userPlan) {
         this.getUserPlan();
       }

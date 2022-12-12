@@ -12,25 +12,30 @@
     <label class="validation-message" *ngIf="!!showAcpValidationMsg">Please select one of the options above to
       continue</label>
   </form>
-  <div class="note-container">
-    <img src="/assets/icon/Information-sec.svg" alt="info-icon">
-    <div class="notes">
-      <p class="head-note">You have an application ID if you were previously verified for the ACP via: </p>
-      <div class="sub-note">
-        <img src="/assets/icon/check-icon.svg" alt="check icon">
-        <p>Lifeline</p>
-      </div>
-      <div class="sub-note">
-        <img src="/assets/icon/check-icon.svg" alt="check icon">
-        <p> The National Verifier</p>
-      </div>
-      <div class="sub-note">
-        <img src="/assets/icon/check-icon.svg" alt="check icon">
-        <p>A School</p>
-      </div>
-      <div class="sub-note last">
-        <img src="/assets/icon/check-icon.svg" alt="check icon">
-        <p>Or any other alternative verification process</p>
+  <div class="info-banner default-background">
+    <div class="flex">
+      <img src="/assets/icon/info-icon.svg" alt="Info Icon">
+      <div class="banner-content">
+        <p class="title">Note:</p>
+        <p class="description">You have an application ID if you were previously verified for the ACP via:</p>
+        <div class="notes">
+          <div class="sub-note">
+            <img src="/assets/icon/note-check.svg" alt="Note Check Icon">
+            <p class="desc">Lifeline</p>
+          </div>
+          <div class="sub-note">
+            <img src="/assets/icon/note-check.svg" alt="Note Check Icon">
+            <p class="desc">The National Verifier</p>
+          </div>
+          <div class="sub-note">
+            <img src="/assets/icon/note-check.svg" alt="Note Check Icon">
+            <p class="desc">A School</p>
+          </div>
+          <div class="sub-note last">
+            <img src="/assets/icon/note-check.svg" alt="Note Check Icon">
+            <p class="desc">Or any other alternative verification process</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

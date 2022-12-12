@@ -15,7 +15,7 @@
               <fieldset>
                 <label class="label" for="userInputField">{{context.labelText}}</label>
                 <input id="userInputField" type="text" name="userInputField" [(ngModel)]="userInputValue" #userInput
-                  required autocomplete="user-input" [minLength]="checkLength()" [maxlength]="checkLength()">
+                  required autocomplete="user-input" [minLength]="checkLength()" [maxlength]="checkLength()" [disabled]="disabledIccid">
                 <div class="primary-col"><a (click)="showIccidModal()">What is an ICCID number?</a></div>
               </fieldset>
               <fieldset class="captcha" *ngIf="!!showRecaptcha">
