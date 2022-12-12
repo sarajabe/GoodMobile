@@ -36,6 +36,11 @@ export class ChoosePlanPathComponent implements OnDestroy {
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
         this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
+      } else {
+        const sim: any = Object.assign({}, JSON.parse(sessionStorage.getItem('activation')));
+        if (!!sim) {
+          this.activationCode = sim.activationCode;
+        }
       }
     });
     this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => {

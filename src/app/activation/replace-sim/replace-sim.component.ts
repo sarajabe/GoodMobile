@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IChangeDevice, IDeviceCompatibilityV1, IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { IChangeDevice, IDeviceCompatibilityV1, IExistingOrder, IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -59,9 +59,14 @@ export class ReplaceSimComponent implements OnDestroy {
     this.currentMobileNumberForm.markAllAsTouched();
     if (!!this.currentMobileNumberForm.valid) {
       const mdn = this.currentMobileNumberForm.controls.mdn.value;
+      const sim: any = Object.assign({}, JSON.parse(sessionStorage.getItem('activation')));
+      let validatedIccid = '';
+      if (!!sim) {
+        validatedIccid = sim.iccid;
+      }
       this.selectedPlan = this.userPlans.find((p) => p.mdn === mdn);
       this.modalHelper.showSIMModal('', 'Enter your Replacement SIM’s ICCID', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
-         '', 'Replacement SIM ICCID', true).result.then((result) => {
+         'tmo', 'Replacement SIM ICCID', true, false, (!!validatedIccid && validatedIccid.length > 0 ? validatedIccid : null)).result.then((result) => {
           if (!!result && result !== false && result.input) {
             const customHTML = '<div class="question"><p>You are about to swap to SIM <p class="iccid"><b>[' + result.input +
             ']</b></p> on Phone Number <b>' + this.selectedPlan.mdn +
