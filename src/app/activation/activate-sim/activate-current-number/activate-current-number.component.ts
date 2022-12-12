@@ -23,6 +23,8 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
   public user: IUser;
   @Input()
   public userPlan: IUserPlan;
+  @Input()
+  public code: string;
   public codePattern = new RegExp('^[A-Z]+\\d{6}|\\d{7}$');
   public voucherData: IVoucherData;
   public portIn: IPortInUserAccountRequest = { address: {} } as IPortInUserAccountRequest;
@@ -72,6 +74,9 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
       if (this.activationCode === '11111' || this.activationCode === '0000000') { // if the activation code is one of the dummy data then empty it
         this.activationCode = '';
       }
+    }
+    if (!!this.code) {
+      this.activationCode = this.code;
     }
     this.userPortAddress = { address1: '', address2: '' } as IFirebaseAddress;
   }

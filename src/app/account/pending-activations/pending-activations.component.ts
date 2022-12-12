@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import {
   AccountPaymentService, FirebaseUserProfileService, IFirebaseAddress, IFirebasePaymentMethod,
@@ -53,6 +53,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public customerId;
   private userId: string;
   private alive = true;
+  activationCode: Params;
 
   constructor(private toastHelper: ToastrHelperService,
               private accountHeaderService: AccountHeaderService,
@@ -66,8 +67,21 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
               private accountPaymentService: AccountPaymentService,
               private metaService: MetaService,
               private contentful: ContentfulService,
+              private route: ActivatedRoute,
               private accountOrderService: UserOrdersService,
               private clipboardService: ClipboardService) {
+              
+    this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
+      if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
+        this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
+      } else {
+        const sim: any = Object.assign({}, JSON.parse(sessionStorage.getItem('activation')));
+        if (!!sim) {
+          this.activationCode = sim.activationCode;
+        }
+      }
+    });
+    
   }
 
   public getDescription(): string {
@@ -96,7 +110,6 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       } else {
         this.currentUserPlan = this.pendingPlans[this.planIndex];
       }
-      console.info('currentUserPlan ', this.currentUserPlan)
       if (!!this.currentUserPlan) {
         this.getShippingAddres();
         this.calculateTotal(this.currentUserPlan);
@@ -158,6 +171,9 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public activatePlan(): void {
     const params = {};
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.currentUserPlan.id;
+    if (!!this.activationCode) {
+      params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activationCode;
+    }
     if (!!this.currentUserPlan && !!this.currentUserPlan.planDevice && this.currentUserPlan.planDevice.id && !this.currentUserPlan.phones) {
       const customHtml = `<p class="note">You will be activating your <b>${this.currentUserPlan.title}</b> Plan on your <b>${this.currentUserPlan.planDevice.marketingName}</b> Device</p>
       <p class="note">Do you wish to proceed or would you like to change the device?</p>`;
@@ -185,7 +201,6 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       this.planIndex = index;
       this.userPlansService.selectUserPlan(this.pendingPlans[index].id);
       this.currentUserPlan = this.pendingPlans[index];
-      console.info('currentUserPlan ', this.currentUserPlan)
       this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb ? true : false;
       this.getShippingAddres();
       this.getUserPlan(this.pendingPlans[index].id);
