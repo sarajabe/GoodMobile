@@ -88,7 +88,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     const purchasedPlan = '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS;
     return `Look out for your new SIM card in the mail. Once your SIM card arrives , go to your
     <a href="${purchasedPlan}"> Purchased Plans </a> tab
-    to activate your SIM with a new number or transfer your existing number to GoodMobile.`;
+    to activate your SIM with a new number or transfer your existing number to Good Mobile.`;
   }
 
   ngOnInit(): void {

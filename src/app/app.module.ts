@@ -48,8 +48,8 @@ import { CommonModule } from '@angular/common';
 
 const metadata: Metadata = {
   author: 'ZtarMobile',
-  keywords: 'GoodMobile, Mobile Plans, 4G LTE network, Nationwide 4G Coverage, Two networks, GOVERNMENT BENEFIT PROGRAM, ACP,',
-  description: 'GoodMobile offers nationwide wireless phone plans with no contracts. Buy the data that you need. Low-cost prepaid phone plans for iPhone and Android devices.'
+  keywords: 'Good Mobile, Mobile Plans, 4G LTE network, Nationwide 4G Coverage, Two networks, GOVERNMENT BENEFIT PROGRAM, ACP,',
+  description: 'Good Mobile offers nationwide wireless phone plans with no contracts. Buy the data that you need. Low-cost prepaid phone plans for iPhone and Android devices.'
 };
 const zwpConfig: ZwpConfig = {
   endpointUrl: `${ENDPOINT_URL || ''}`,

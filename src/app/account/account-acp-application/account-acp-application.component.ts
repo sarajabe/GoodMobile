@@ -128,7 +128,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.ACP_DESCS = {
       'In Progress': {
         title: 'Application in progress',
-        desc1: `Your ACP application has started with GoodMobile. Please complete your application
+        desc1: `Your ACP application has started with Good Mobile. Please complete your application
          as soon as possible and start enjoying your ACP Free Cell phone Service.`,
         desc2: null,
         buttonName: 'Complete Application',
@@ -245,7 +245,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       'PENDING_RESOLUTION': {
         title: 'Action Required:',
         desc1: `Please select <b>“Resume Filing”</b> to be redirected to the National Verifier. Once
-        you are done, the National Verifier will redirect you back to GoodMobile to complete the
+        you are done, the National Verifier will redirect you back to Good Mobile to complete the
         process.`,
         desc2: `<b>Please make sure to complete this step within 45 days.</b>`,
         desc3: null,
@@ -262,7 +262,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       'PENDING_CERT': {
         title: 'Action Required:',
         desc1: `Please select <b>“Resume Filing”</b> to be redirected to the National Verifier. Once
-        you are done, the National Verifier will redirect you back to GoodMobile to complete the
+        you are done, the National Verifier will redirect you back to Good Mobile to complete the
         process.`,
         desc2: `<b>Please make sure to complete this step within 45 days.</b>`,
         desc3: null,
@@ -297,7 +297,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc1: `Your ACP application is currently under review.`,
         desc2: `Please contact <a href="mailto:ACProgram@usac.org"><b>ACProgram@usac.org</b></a> to
         check on your application status before
-        finish the enrollment with GoodMobile.`,
+        finish the enrollment with Good Mobile.`,
         desc3: null,
         desc4: null,
         buttonName: 'Refresh',
@@ -330,7 +330,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc1: `It seems like you <b>have not completed your ACP application with the National
         Verifier</b> yet. Please visit <a href="https://www.affordableconnectivity.gov/"
         target="_blank"><b>ACPbenefit.org</b></a> to complete your application before
-        finish the enrollment with GoodMobile.`,
+        finish the enrollment with Good Mobile.`,
         desc2: null,
         desc3: null,
         desc4: null,
@@ -349,7 +349,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc2: `It may have already been expired because it is too old.`,
         desc3: `<b>No problem!</b>`,
         desc4: `You can always try starting again and enjoy your <b>6GB</b> FREE Cell Phone Service
-        with <span class="bold-nowrap">GoodMobile!</span>`,
+        with <span class="bold-nowrap">Good Mobile!</span>`,
         buttonName: 'Apply Now',
         buttonAction: 'applyNow',
         linkName: null,

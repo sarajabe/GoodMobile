@@ -20,7 +20,7 @@ import { Meta } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  title = 'GoodMobile';
+  title = 'Good Mobile';
   public maintenanceExists = false;
   public alertBannerExists = false;
   public loadMinHeight = true;

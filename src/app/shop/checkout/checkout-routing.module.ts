@@ -14,7 +14,7 @@ const routes: Routes = [
     {path: CHECKOUT_ROUTE_URLS.SHIPPING_SECTION, component: ShippingAddressSubpageComponent, data: {title: 'Shipping',
     description: 'Enter your shipping details to get your SIM'} as IPageMeta},
     {path: CHECKOUT_ROUTE_URLS.PLACE_ORDER, component: PlaceOrderComponent, data: {title: 'Place your order',
-    description: 'Place your order and enjoy GoodMobile services'} as IPageMeta},
+    description: 'Place your order and enjoy Good Mobile services'} as IPageMeta},
     {path: CHECKOUT_ROUTE_URLS.PAYMENT_SECTION, component: PaymentSectionComponent, data: {title: 'Payment',
     description: 'Enter your payment details to proceed with your order'} as IPageMeta},  ]
 }

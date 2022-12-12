@@ -9,7 +9,7 @@
               <div class="plan-details">
                   <p class="plan-details2">Current Plan Details</p>
             <div class="plan-details highlight-card highlight-card1" *ngIf="!!selectedPlanInfo" [@fadeInOut]="'out'">
-              <div class="title-text one-liner t1">Your custom GoodMobile plan:</div>
+              <div class="title-text one-liner t1">Your custom Good Mobile plan:</div>
               <div class="title-text one-liner margin-bottom-20 t1">{{selectedPlanInfo?.basePlan?.title}}, {{selectedPlanInfo?.basePlan?.subtitle}}</div>
               <span class="title-info one-liner t2" (click)="toggleEditMode()">{{selectedPlanInfo?.basePlan?.price | currency:'USD':'symbol':0}}/month</span>
             </div>
