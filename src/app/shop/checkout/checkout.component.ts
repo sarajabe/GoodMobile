@@ -1218,7 +1218,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         simId: this.newSimOrder.id,
         simPrice: this.newSimOrder.price,
         haseSIM: this.currentPlan.eSIM,
-        storePickup: this.storePickup
+        storePickup: !!this.currentPlan?.activationCode ? false : this.storePickup
       },
       orderShippingMethod: this.hasShippingItems && !this.storePickup ? this.orderShippingMethod : null,
       hasShippingItems: this.hasShippingItems,
