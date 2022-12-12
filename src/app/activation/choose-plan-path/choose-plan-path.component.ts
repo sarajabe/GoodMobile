@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
@@ -13,6 +13,7 @@ import { MetaService } from 'src/services/meta-service.service';
   styleUrls: ['./choose-plan-path.component.scss']
 })
 export class ChoosePlanPathComponent implements OnDestroy {
+  @ViewChild('optionRef') optionRef;
   public option;
   public pendingPlans: IUserPlan[];
   public activePlans: IUserPlan[];
@@ -20,6 +21,7 @@ export class ChoosePlanPathComponent implements OnDestroy {
   public isLoggedIn = false;
   public processingRequest = false;
   private alive = true;
+  showValidation: boolean;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -69,6 +71,10 @@ export class ChoosePlanPathComponent implements OnDestroy {
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
   }
   public selectOption(): void {
+    if (!this.option) {
+      this.showValidation = true;
+    }
+    this.optionRef.control.markAllAsTouched();
     switch (this.option) {
       case ('new'): {
         this.purchasePlan();
@@ -95,7 +101,9 @@ export class ChoosePlanPathComponent implements OnDestroy {
   public goToPendingPlans(): void {
     sessionStorage.setItem('activation_step', 'step2');
     this.mobileCustomPlansService.setSimCard('');
-    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
+    const params = {};
+    params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activationCode;
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`, params]);
   }
 
   public goToReplaceSIM(): void {

@@ -4,15 +4,15 @@
         <h1 class="header-color">Awesome! <br> What would you like to do next?</h1>
         <div class="options">
             <label class="radio-label" for="purchased" *ngIf="!!pendingPlans && pendingPlans?.length > 0">
-                <input type="radio" value="purchased" [(ngModel)]="option" id="purchased" #optionRef="ngModel">Activate a purchased plan.
+                <input type="radio" value="purchased" [(ngModel)]="option" id="purchased" #optionRef="ngModel" (ngModelChange)="showValidation = false">Activate a purchased plan.
             </label>
             <label class="radio-label" for="new" >
-                <input type="radio" value="new" [(ngModel)]="option"  id="new" #optionRef="ngModel">Buy a new line plan.
+                <input type="radio" value="new" [(ngModel)]="option"  id="new" #optionRef="ngModel" (ngModelChange)="showValidation = false">Buy a new line plan.
             </label>
             <label class="radio-label" for="replace" *ngIf="!!activePlans && activePlans?.length > 0">
-                <input type="radio" value="replace" [(ngModel)]="option"  id="replace" #optionRef="ngModel">Replace my mobile’s SIM.
+                <input type="radio" value="replace" [(ngModel)]="option"  id="replace" #optionRef="ngModel" (ngModelChange)="showValidation = false">Replace my mobile’s SIM.
             </label>
-            <label class="validation-message" *ngIf="optionRef?.touched && !option">Please select one of the options</label>
+            <label class="validation-message" *ngIf="!!showValidation">Please select one of the options</label>
         </div>
        <div class="action">
         <button class="button secondary" aria-label="back" (click)="goToVerifyActivation()"><img class="icon" src="assets/icon/left-circle-arrow-primary.svg"/> Back </button>

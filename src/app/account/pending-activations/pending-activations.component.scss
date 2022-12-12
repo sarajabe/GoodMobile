@@ -19,7 +19,12 @@
     @media (max-width: $phablet-min-width) {
         margin-bottom: 43px;
     }
-
+    .noMargin {
+        margin: 0;
+    }
+    .noPadding {
+        padding: 0;
+    }
     .promo-title {
         background-color: $secondary-color;
         padding: 5px;
@@ -87,47 +92,19 @@
 
         .order-card-container {
             .card-header-section {
-                background: #8633990d;
-                padding: 16px 24px;
+                background: #E5EEF4;
+                padding: 24px;
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 0;
-
-                .card-header {
-                    font-size: rem-calc(20px);
-                    margin-bottom: 0;
-                    line-height: 20px;
-                    font-weight: bold;
-                }
-
-                .link {
-                    font-size: rem-calc(20px);
-                    margin-bottom: 0;
-                    line-height: 20px;
-                    font-family: $secondary-font-family-bold;
-                }
-
                 @media (max-width: $phablet-min-width-minus) {
-                    padding: 12px 16px;
-
-                    .card-header {
-                        font-size: rem-calc(18px);
-                        margin-bottom: 0;
-                        line-height: 28px;
-                    }
-
-                    .link {
-                        font-size: rem-calc(16px);
-                        line-height: 16px;
-                    }
+                   padding: 16px;
                 }
             }
 
             .alert-note {
                 color: #d22119;
-                font-size: rem-calc(16px);
-                margin: 8px 0 20px 60px;
-                line-height: 24px;
+                margin: 8px 0 20px 55px;
 
                 @media (max-width: $phablet-min-width-minus) {
                     font-size: rem-calc(14px);
@@ -138,7 +115,9 @@
             .card-content {
                 padding: 24px;
                 display: none;
-
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px;
+                }
                 &.shown {
                     display: block;
                 }
@@ -157,7 +136,7 @@
                     .details-side {
                         flex-basis: 80%;
                         display: flex;
-
+                        gap: 4px;
                         &.center {
                             align-items: center;
                         }
@@ -167,12 +146,13 @@
                         }
 
                         .thumbnail {
-                            height: 70px;
-                            margin-right: 16px;
-                            width: 50px;
+                            height: 50px;
+                            width: 60px;
 
                             &.cc {
-                                height: 38px;
+                                height: 39px;
+                                width: 39px;
+                                margin-right: 12px;
                             }
                         }
 
@@ -183,7 +163,7 @@
                             line-height: 24px;
 
                             p {
-                                margin-bottom: 0px;
+                                margin-bottom: 4px;
                             }
 
                             .space {
@@ -194,12 +174,9 @@
 
                     .price-side {
                         flex-basis: 20%;
-
-                        .price {
+                        .smaller {
                             display: flex;
                             justify-content: flex-end;
-                            font-size: rem-calc(16px);
-                            line-height: 24px;
                         }
 
                         img {
@@ -299,27 +276,6 @@
                     .item-details {
                         gap: 8px;
 
-                        .details-side {
-                            .thumbnail {
-                                height: 50px;
-                                width: 38px;
-                            }
-
-                            .details {
-                                font-size: rem-calc(14px);
-                            }
-                        }
-
-                        .price-side {
-                            .price {
-                                font-size: rem-calc(14px);
-                            }
-
-                            img {
-                                width: 18px;
-                                height: 18px;
-                            }
-                        }
                     }
 
                     .information-banner {
@@ -353,10 +309,7 @@
                     }
 
                     .button {
-                        margin-left: 50px;
-                        font-size: rem-calc(16px);
-                        margin-top: 20px;
-
+                        margin-left: 60px;
                         &.no-left {
                             width: 193px;
                         }
@@ -365,15 +318,14 @@
             }
 
             .sub-header {
-                background: #e2e2e233;
-                padding: 12px 20px 12px 30px;
+                background: #F8FCFE;
+                padding: 16px 24px;
                 display: none;
-
                 .title {
-                    font-size: rem-calc(18px);
+                    font-size: rem-calc(16px);
                     margin-bottom: 0;
-                    line-height: 28px;
-                    font-weight: bold;
+                    line-height: 24px;
+                    font-family: $base-font-family-bold;
                 }
 
                 @media (max-width: $phablet-min-width-minus) {
@@ -387,25 +339,26 @@
             }
 
             .sub-label {
-                padding: 16px 24px;
-                background: #8633990d;
+                padding: 24px;
+                background: #E5EEF4;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 0;
-                font-family: $base-font-family-bold;
+                font-family: $secondary-font-family-bold;
                 font-size: rem-calc(20px);
-                line-height: 32px;
+                line-height: 28px;
+                color: $third-color;
                 cursor: pointer;
 
                 img {
                     transform: rotate(-180deg);
-                    width: 32px;
-                    height: 32px;
+                    width: 26px;
+                    height: 26px;
                 }
 
                 @media (max-width: $phablet-min-width-minus) {
-                    padding: 12px 16px;
+                    padding: 16px;
                     font-size: rem-calc(18px);
                     line-height: 28px;
 

@@ -15,7 +15,8 @@
     }
     .pagination-previous {
       
-        background: #863399;
+        background: $primary-color;
+        color: $white;
         height: 30px;
         width: 30px;
         cursor: pointer;
@@ -50,9 +51,10 @@
       }
     }
     .pagination-next{
-        background: #863399;
+        background: $primary-color;
         height: 30px;
         width: 30px;
+        color: $white;
         cursor: pointer;
         &.disabled {
           cursor: not-allowed;

@@ -236,6 +236,9 @@ label {
   &.warning-background {
     background: #FEF4E9;
   }
+  &.main-background {
+    background: $white;
+  }
 
   @media (max-width: $phablet-min-width-minus) {
     padding: 16px;
