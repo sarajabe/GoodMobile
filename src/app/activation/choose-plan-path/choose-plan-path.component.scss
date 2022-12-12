@@ -17,6 +17,11 @@
     }
    .options {
         margin-top: 40px;
+        .radio-label {
+            input[type=radio] {
+                margin-top: 3px;
+            }
+        }
     }
     @media(max-width: $phablet-min-width-minus) {
         margin: 32px 0 40px;

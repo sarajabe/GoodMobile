@@ -1,4 +1,4 @@
-<section class="container-flex internal-page-margins activate-sim">
+<section class="page-section activate-sim">
     <div class="container-flex-row">
         <div class="col-xl-12 col-sm-12 col-12">
             <h1 class="header">Activate | Port your number</h1>
@@ -32,10 +32,10 @@
         <div class="content-holder col-xl-6">
             <div class="tab-content">
                 <ng-container *ngIf="!!isNewNumber && !isPortOnly">
-                    <app-activate-new-number [userPlan]="userPlan"></app-activate-new-number>
+                    <app-activate-new-number [userPlan]="userPlan" [code]="activationCode"></app-activate-new-number>
                 </ng-container>
                 <ng-container *ngIf="!isNewNumber">
-                    <app-activate-current-number [user]="user" [userPlan]="userPlan"></app-activate-current-number>
+                    <app-activate-current-number [user]="user" [userPlan]="userPlan" [code]="activationCode"></app-activate-current-number>
                 </ng-container>
             </div>
         </div>

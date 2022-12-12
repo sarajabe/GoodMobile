@@ -4,6 +4,7 @@
 .activation {
     font-family: $secondary-font-family-bold;
     text-align: center;
+    margin-bottom: 60px;
     @media (#{$larger-than-mobile}) {
         text-align: left;
     }

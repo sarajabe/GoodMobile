@@ -25,6 +25,7 @@ export class ActivateSimComponent implements OnInit, OnDestroy {
   public isNewOnly = false;
   public showVideo = false;
   private alive = true;
+  activationCode: any;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -40,6 +41,9 @@ export class ActivateSimComponent implements OnInit, OnDestroy {
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       // this will be always true if it was any text, i think, so we need to make sure it is NOT (true), anything else by default will be true .
       this.isNewNumber = params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER] ? false : true;
+      if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
+        this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
+      }
       const userPlanId = params[ROUTE_URLS.PARAMS.USER_PLAN_ID];
       if (!!userPlanId) {
         if (userPlanId !== 'prefunded') {

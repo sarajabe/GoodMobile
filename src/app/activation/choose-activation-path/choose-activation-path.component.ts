@@ -30,6 +30,7 @@ export class ChooseActivationPathComponent implements OnDestroy {
   public isNewOnly = false;
   public disableNew = false;
   private alive = true;
+  activationCode: any;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -81,6 +82,9 @@ export class ChooseActivationPathComponent implements OnDestroy {
         this.toastHelper.showAlert('Activation data is missing, please try again!');
         this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
       }
+      if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
+        this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
+      }
     });
     const sim: IExistingOrder = Object.assign({}, JSON.parse(sessionStorage.getItem('activation')));
     if (!!sim) {
@@ -103,6 +107,9 @@ export class ChooseActivationPathComponent implements OnDestroy {
     if (!!this.userPlanId) {
       params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userPlanId;
     }
+    if (!!this.activationCode) {
+      params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activationCode;
+    }
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_SIM}`, params]);
   }
 
@@ -111,6 +118,9 @@ export class ChooseActivationPathComponent implements OnDestroy {
     params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER] = true;
     if (!!this.userPlanId) {
       params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userPlanId;
+    }
+    if (!!this.activationCode) {
+      params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
     }
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_SIM}`, params]);
   }

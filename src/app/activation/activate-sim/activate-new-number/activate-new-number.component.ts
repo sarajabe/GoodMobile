@@ -19,6 +19,8 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
   @ViewChild('activateSimForm') activateSimForm: NgForm;
   @Input()
   public userPlan: IUserPlan;
+  @Input()
+  public code: string;
   public user: IUser;
   public voucherData: IVoucherData;
   public activationCode: string;
@@ -55,6 +57,10 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.metaService.createCanonicalUrl();
+    console.info('code input ', this.code)
+    if (!!this.code) {
+      this.activationCode = this.code;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
