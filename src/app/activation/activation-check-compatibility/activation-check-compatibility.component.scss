@@ -131,7 +131,8 @@
             font-size: rem-calc(12px);
             line-height: 20px;
             text-decoration: underline;
-            font-weight: bold;
+            font-family: $base-font-family-bold;
+            margin-top: 8px;
         }
         input {
             height: 46px;

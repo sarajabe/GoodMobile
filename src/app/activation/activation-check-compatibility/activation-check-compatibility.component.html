@@ -2,7 +2,7 @@
     <div class="container-flex-row container-padd margin-bottom-20">
         <div class="col-xl-9 col-lg-10 col-12">
             <h1 class="compatibility-head">GoodMobile rides on America’s largest and most
-                trusted 4G and 5G<span class="astryic">*</span> LTE wireless networks</h1>
+                trusted 5G<span class="astryic">*</span> and 4G LTE wireless networks</h1>
             <div class="subhead">
                 Let’s find out if your <a class="unlocked" (click)="showUnlockedPopup()"><b>Unlocked Phone</b></a> is
                 compatible with the best coverage in your area.
@@ -12,8 +12,8 @@
                     <div class="compatibility-flex-container">
                         <fieldset class="padding-field-right">
                             <label for="equipmentNumber" class="input-label">
-                                <p class="p-label">Enter device IMEI No.</p>
-                                <p class="p-note">Dial: *#06# on your phone to get your
+                                <p class="primary-font-bold">Enter device IMEI No.</p>
+                                <p class="p-note smallest primary-font">Dial: *#06# on your phone to get your
                                     IMEI{{!!userPlanId && !withDevice ? '' : '/MEID'}}</p>
                             </label>
                             <input type="tel" required [(ngModel)]="equipment" name="equipmentNumber"
@@ -32,8 +32,8 @@
                         </fieldset>
                         <fieldset class="address-lookup">
                             <label for="address" class="input-label">
-                                <p class="p-label">Enter your full address</p>
-                                <p class="p-note">Street Address, City, State, ZIP Code</p>
+                                <p class=" primary-font-bold">Enter your full address</p>
+                                <p class="smallest primary-font">Street Address, City, State, ZIP Code</p>
                             </label>
                             <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" autocomplete="on" #addressRef="ngModel" type="search"
                                 class="geolocate" ngui-auto-complete [source]="findPlace.bind(this)"

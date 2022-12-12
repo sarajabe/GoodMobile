@@ -96,6 +96,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       } else {
         this.currentUserPlan = this.pendingPlans[this.planIndex];
       }
+      console.info('currentUserPlan ', this.currentUserPlan)
       if (!!this.currentUserPlan) {
         this.getShippingAddres();
         this.calculateTotal(this.currentUserPlan);
@@ -184,6 +185,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       this.planIndex = index;
       this.userPlansService.selectUserPlan(this.pendingPlans[index].id);
       this.currentUserPlan = this.pendingPlans[index];
+      console.info('currentUserPlan ', this.currentUserPlan)
       this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb ? true : false;
       this.getShippingAddres();
       this.getUserPlan(this.pendingPlans[index].id);
