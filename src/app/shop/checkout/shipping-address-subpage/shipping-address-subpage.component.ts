@@ -324,7 +324,11 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       this.orderShippingMethod = {} as IShippingMethod;
       this.selectedShippingServiceOption = '';
       this.shippingServiceType = '';
+      sessionStorage.removeItem('shippingMethod');
+      this.checkoutService.updateShippingMethod(undefined);
       this.showShippingForm = false;
+    } else if (this.option === 'home') {
+      this.barCode = false;
     }
   }
   public nextCheckoutStep(): void {
@@ -354,6 +358,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
         this.checkoutService.updateStorePickup(this.barCode);
         sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
         this.checkoutService.updateShippingAddress(undefined);
+        this.checkoutService.updateShippingMethod(undefined);
         sessionStorage.removeItem('shippingAddress');
         sessionStorage.removeItem('shippingMethod');
         this.goToNextStep();
