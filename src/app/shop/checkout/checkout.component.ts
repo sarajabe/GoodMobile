@@ -165,6 +165,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       country: '', expirationDate: '', id: '', postalCode: '', state: ''
     }});
     this.checkoutService.updateShippingAddress({});
+    this.checkoutService.updateStorePickup(false);
     sessionStorage.removeItem('false');
     setTimeout(() => {
       this.paymentSubscription.unsubscribe();
@@ -225,12 +226,18 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     });
     this.checkoutService.storePickupSubject.pipe(takeWhile(() => this.alive)).subscribe((isPickup) => {
      this.storePickup = isPickup;
+     if(!!this.storePickup) {
+      this.orderShippingMethod = {} as IShippingMethod;
+      this.calculateTotal();
+     }
     });
     // listen to shipping method changes
     this.checkoutService.shippingMethodSubject.pipe(takeWhile(() => this.alive)).subscribe((method) => {
       if (!!method) {
         this.orderShippingMethod = method;
         this.calculateTotal();
+      } else {
+        this.orderShippingMethod = {} as IShippingMethod;
       }
     });
 
@@ -616,7 +623,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         total -= total * (discountValue / 100);
       }
       this.baseTotal = total;
-      if (this.hasShippingItems && !!this.orderShippingMethod) {
+      if (this.hasShippingItems && !!this.orderShippingMethod && !!this.orderShippingMethod?.price) {
         total += this.orderShippingMethod.price;
       }
       if (!!this.taxes && this.paymentIsSelected && !!this.isCalculated) {
@@ -650,7 +657,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       if (!this.isCalculated) {
         total = total + this.estimatedFees + this.estimatedTaxes;
       }
-      if (this.hasShippingItems && !!this.orderShippingMethod) {
+      if (this.hasShippingItems && !!this.orderShippingMethod && !!this.orderShippingMethod?.price) {
         total += this.orderShippingMethod.price;
       }
     }
@@ -731,7 +738,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         total = total + this.newSimOrder.price;
       }
       this.baseTotal = total;
-      if (this.hasShippingItems && !!this.orderShippingMethod) {
+      if (this.hasShippingItems && !!this.orderShippingMethod && !!this.orderShippingMethod?.price) {
         total += this.orderShippingMethod.price;
       }
       if (!!this.taxes && !!this.isCalculated && !this.currentPlan.addOns) {
@@ -746,7 +753,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     }
     this.total = total >= 0 ? total : 0;
     this.checkoutService.setTotal(total);
-    this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod.price ? this.orderShippingMethod.price : 0, taxes: this.taxes, fees: this.fees, discount: this.discount, method: !!this.orderShippingMethod ? this.orderShippingMethod : null });
+    this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod?.price ? this.orderShippingMethod.price : 0, taxes: this.taxes, fees: this.fees, discount: this.discount, method: !!this.orderShippingMethod && Object.keys(this.orderShippingMethod).length > 0 ? this.orderShippingMethod : null });
   }
   public checkout(): void {
     if(!!this.currentPlan?.cartType) {
@@ -1419,7 +1426,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!this.isLoggedIn) {
       this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SIGN_IN);
     } else {
-      if (!!this.hasShippingItems && this.storedShippingAddress == null) { // no Activation code then there is a free SIM
+      if (!!this.hasShippingItems && this.storedShippingAddress == null && !this.storePickup) { // no Activation code then there is a free SIM
         this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
 
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
@@ -1479,12 +1486,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     const storedShippingMethod = JSON.parse(sessionStorage.getItem('shippingMethod'));
     if (!!storedShippingMethod) {
       this.orderShippingMethod = storedShippingMethod;
-    } else {
+    } else if (!storedShippingMethod && !this.storePickup){
       this.shippingConfigurationService.shippingMethods.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
         this.orderShippingMethod = methods[0];
       }, (error) => {
         console.error(error);
       });
+    } else {
+      this.orderShippingMethod = {} as IShippingMethod;
     }
     this.storedPaymentId = sessionStorage.getItem('payment_id');
     if (!!this.storedPaymentId) {
