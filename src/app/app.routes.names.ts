@@ -240,7 +240,8 @@ export const ACTIVATION_ROUTE_URLS = {
     NETWORK: 'network',
     ZIP_CODE: 'zipCode',
     ICCID: 'iccid',
-    ESIM: 'eSim'
+    ESIM: 'eSim',
+    ACTIVATION: 'activate'
   },
   BASE: '/activation',
   NAME: 'activation',
@@ -252,14 +253,9 @@ export const ACTIVATION_ROUTE_URLS = {
   ACTIVATION_SUMMARY: 'summary',
   CHECK_PHONE_RESULT: 'check-phone/result',
   VERIFY_PHONE: '',
-  CHOOSE_SIM_PATH: 'choose-sim',
-  CHOOSE_SIM_SOURCE: 'sim-source',
   REPLACE_SIM: 'replace-sim',
-  REPLACE_RESULT: 'replace-result',
   SIM_CHECK: 'sim-check',
-  No_SIM: 'no-sim',
-  SIM_ARRIVAL: 'sim-arrival',
-  CHOOSE_TRIAL: 'upgade-trial'
+  No_SIM: 'no-sim'
 };
 
 export const MIGRATION_ROUTE_URLS = {

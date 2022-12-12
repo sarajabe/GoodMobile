@@ -11,7 +11,7 @@
         </div>
         <div class="categories">
             <div class="row">
-                <div *ngFor="let cat of faqsCategories">
+                <div class="flex-wrap" *ngFor="let cat of faqsCategories">
                     <div *ngFor="let item of cat?.fields?.g2gFaqs">
                         <h1 class="two cat" [class.active]="item?.fields?.categoryId === activeCategory"
                             (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">

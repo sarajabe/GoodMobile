@@ -1,15 +1,13 @@
-<section class="container-flex internal-page-margins no-sim">
-    <div class="container-flex-row flex-center margin-bottom-20">
-        <div class="text-center">
-            <h1 class="header" id="no-sim-header">Ok, no problem,</h1>
-            <h2 class="subheader">if you already purchased a plan from GoodMobile,
-                you will receive a free SIM card by mail.</h2>
-            <h3 class="subhead">Did you purchase a GoodMobile plan?</h3>
+<section class="page-section no-sim">
+    <app-activation-header></app-activation-header>
+    <div class="page-content">
+        <h1 class="header-color">No worries. If you purchased a plan/SIM from our website, please check your order delivery details.</h1>
+        <div class="sub-action">
+            <button class="button thirdly" aria-label="view orders" (click)="goToOrders()">View Orders</button>
         </div>
-    </div>
-    <div class="actions-container">
-        <button class="button primary" id="shop-button" (click)="goToShopPath()">No, go to shop</button>
-        <button class="button secondary" id="arrival-button" (click)="goToSimArrival()">Yes, SIM hasn’t arrived
-            yet</button>
+       <div class="action">
+        <button class="button secondary" aria-label="back" (click)="goToSimCheck()"><img class="icon" src="assets/icon/left-circle-arrow-primary.svg"/> Back </button>
+        <button class="button primary" aria-label="shop plans" (click)="goToShopPath()">Shop Plans</button>
+       </div>
     </div>
 </section>

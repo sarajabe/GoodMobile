@@ -602,14 +602,6 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     }
   }
 
-  public upgradeTrialPlan(): void {
-    if (!!this.selectedPlan && !this.selectedPlan.upgradeDiscountUsed && !this.selectedPlan.canceled) {
-      const params = {};
-      params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
-      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_TRIAL}`, params]);
-    }
-  }
-
   public setDefaultShippingAddress(address): void {
     this.userProfileService.setDefaultShippingAddress(address.id).then(() => {
       this.selectedPlan.shippingAddressId = address.id;

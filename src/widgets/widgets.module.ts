@@ -34,6 +34,7 @@ import { CreditCardPaymentSectionComponent } from './credit-card-payment-section
 import { BannerSwiperAdsComponent } from './banner-swiper-ads/banner-swiper-ads.component';
 import { FeaturedPlansComponent } from './featured-plans/featured-plans.component';
 import { BannersComponent } from './banners/banners.component';
+import { ActivationHeaderComponent } from './activation-header/activation-header.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { BannersComponent } from './banners/banners.component';
     BannerSwiperAdsComponent,
     FeaturedPlansComponent,
     BannersComponent,
+    ActivationHeaderComponent,
    ],
   imports: [
     CommonModule,
@@ -104,7 +106,8 @@ import { BannersComponent } from './banners/banners.component';
     CustomRangeSliderComponent,
     BannerSwiperAdsComponent,
     FeaturedPlansComponent,
-    BannersComponent
+    BannersComponent,
+    ActivationHeaderComponent
   ],
   providers: [SimpleDateFormatPipe, SafePipe, ModalHelperService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

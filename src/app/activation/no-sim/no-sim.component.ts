@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { MetaService } from 'src/services/meta-service.service';
 
 @Component({
@@ -23,10 +23,16 @@ export class NoSIMComponent {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
   }
 
-  public goToSimArrival(): void {
+  public goToSimCheck(): void {
     sessionStorage.setItem('activation_step', 'step2');
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_ARRIVAL}`]);
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
   }
+
+  public goToOrders(): void {
+    sessionStorage.setItem('activation_step', 'step1');
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
+  }
+
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {
     event.preventDefault();
