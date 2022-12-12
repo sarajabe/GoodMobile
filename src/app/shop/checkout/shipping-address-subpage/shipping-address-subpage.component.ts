@@ -2,7 +2,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   FirebaseUserProfileService, IAddress, IFirebaseAddress, IShippingMethod, IUser,
-  ShippingConfigurationService, AccountPaymentService, ActionsAnalyticsService, CustomizableMobilePlan, CART_TYPES, MobileCustomPlansService
+  ShippingConfigurationService, AccountPaymentService, ActionsAnalyticsService, CustomizableMobilePlan, CART_TYPES
 } from '@ztarmobile/zwp-service-backend';
 import { FadeInOutAnimation } from '../../../app.animations';
 import { Router } from '@angular/router';
@@ -29,6 +29,7 @@ import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 })
 export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('shippingMethodForm') shippingMethodForm: NgForm;
+  @ViewChild('pickupOptionsForm') pickupOptionsForm: NgForm;
   @ViewChild('packageForm') packageForm: NgForm;
   @ViewChild('barCodeCheck') barCodeCheck: NgForm;
   @Input() isLoggedIn: boolean;
@@ -63,10 +64,9 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public hasPhone = false;
   public showAddressRequiredError = false;
   public homeDeliveryOption = false;
-  public pickupOptionsForm: FormGroup;
   public stores = [];
   public barCode = false;
-
+  public option;
   private alive = true;
   storedAddress: IFirebaseAddress;
 
@@ -79,12 +79,8 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     private metaService: MetaService,
     public appState: AppState,
     private pageScrollService: PageScrollService,
-    private lookupsService: LookupsService,
-    private mobilePlansService : MobileCustomPlansService) {
+    private lookupsService: LookupsService) {
     this.metaService.createCanonicalUrl();
-    this.pickupOptionsForm = new FormGroup({
-      option: new FormControl('', Validators.required)
-    });
     this.checkoutService.totalSubject.subscribe((t) => {
       this.total = t;
     })
@@ -110,7 +106,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     const storePickup = JSON.parse(sessionStorage.getItem('storePickup'));
     if (!!storedShippingAddress) {
       this.storedAddress = storedShippingAddress as IFirebaseAddress;
-      this.pickupOptionsForm.controls.option.setValue('home');
+      this.option = 'home';
       if (!!this.storedAddress.id) {
         this.storedShippingId = this.storedAddress.id;
       } else {
@@ -120,11 +116,11 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       this.shippingAddress = {} as IFirebaseAddress;
     }
     if(!!storePickup) {
-      this.pickupOptionsForm.controls.option.setValue('store');
+      this.option = 'store';
       this.barCode = storePickup;
     }
     const storedPayment = sessionStorage.getItem('payment_id');
-    if (!!storedPayment && !!storedShippingAddress) {
+    if (!!storedPayment && (!!storedShippingAddress || !!storePickup)) {
       if (storedPayment !== '1') {
         this.accountPaymentService.getPaymentMethod(storedPayment).then((method) => {
           this.checkoutService.updatePaymentMethod(method);
@@ -247,6 +243,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     this.shippingAddress = Object.assign(this.shippingAddress, address);
     this.removeEmptyValues(this.shippingAddress);
   }
+
   public addAddress(): void {
     this.shippingMethodForm.form.markAllAsTouched();
     this.touchShippingForm = true;
@@ -321,8 +318,9 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     }
   }
   public nextCheckoutStep(): void {
+    this.pickupOptionsForm.form.markAllAsTouched();
     if(!!this.pickupOptionsForm.valid) {
-      if(this.pickupOptionsForm.controls.option.value === 'home') {
+      if(this.option === 'home') {
         if (!!this.showShippingForm) {
           this.shippingMethodForm.form.markAllAsTouched();
           this.touchShippingForm = true;
@@ -342,7 +340,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
           sessionStorage.removeItem('storePickup');
           this.goToNextStep();
         }
-      } else if (this.pickupOptionsForm.controls.option.value === 'store') {
+      } else if (this.option === 'store') {
         this.checkoutService.updateStorePickup(this.barCode);
         sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
         this.checkoutService.updateShippingAddress(undefined);

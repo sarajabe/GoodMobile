@@ -34,10 +34,10 @@
       <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
     </div>
     <h1 class="step-title">How do you want to get your package?</h1>
-    <form [formGroup]="pickupOptionsForm" class="pickups-form">
+    <form #pickupOptionsForm="ngForm" class="pickups-form">
       <div class="radioBtn">
         <label class="form-control" for="home">
-          <input type="radio" value="home" formControlName="option" id="home">
+          <input type="radio" value="home" [(ngModel)]="option" id="home" name="home" required>
           <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
           <div class="input-details">
           <p class="value">Home Delivery</p>
@@ -45,7 +45,7 @@
         </div>
         </label>
       </div>
-      <div *ngIf="!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'home'">
+      <div *ngIf="!!option && option === 'home'">
         <div class="error-banner" *ngIf="!!showAddressRequiredError">
           <img src="assets/icon/red-alert.svg" alt="alert" />
           <p class="note">Please select a shipping address or add a new address.</p>
@@ -102,7 +102,7 @@
             </div>
           </div>
           <div class="sub-card-content">
-            <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="shippingMethodItems" />
+            <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="shippingMethodItems" name="items"/>
             <label class="sub-label" for="items">Shipping Method <img class="icon" src="assets/icon/arrow_circle.svg"
                 alt="arrow icon" /></label>
             <div class="tab-content">
@@ -168,7 +168,7 @@
       </div>
       <div class="radioBtn">
         <label class="form-control" for="store">
-          <input type="radio" value="store" formControlName="option" id="store">
+          <input type="radio" value="store" [(ngModel)]="option" id="store" name="store" required>
           <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
           <div class="input-details">
           <p class="value">Store Pickup</p>
@@ -176,7 +176,7 @@
         </div>
         </label>
       </div>
-      <div *ngIf="!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'store'" class="stores-option-section">
+      <div *ngIf="!!option && option === 'store'" class="stores-option-section">
         <div class="store-section">
         <div class="inner-paddings">
           <h4 class="sub-head">You can pick up your package from these two stores.</h4>
@@ -216,7 +216,7 @@
     </form>
   </div>
 </section>
-<section class="navigation-section" [class.blur]="!!showShippingForm || !pickupOptionsForm.valid || (!!pickupOptionsForm.valid && pickupOptionsForm.controls.option.value === 'store' && !barCode)">
+<section class="navigation-section" [class.blur]="!!showShippingForm || !option || (!!option && option === 'store' && !barCode)">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goToCart()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" id="continue-shipping" data-cy="nextBtn">Next</button>
