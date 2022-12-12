@@ -1,9 +1,9 @@
 <section class="pending-activation-section">
-    <div class="info-banner default-background" id="counter">
+    <div class="info-banner main-background" id="counter">
         <div class="flex center">
             <img src="assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">
-                <p class="description last">Your Purchased Plans: {{pendingPlans?.length}}</p>
+                <p class="title noMargin">Your Purchased Plans: <span class="text-orange">{{pendingPlans?.length}}</span></p>
             </div>
         </div>
     </div>
@@ -23,39 +23,29 @@
         <div class="order-card" *ngFor="let pendingPlan of pendingPlans | paginate: config">
             <div class="order-card-container">
                 <div class="card-header-section">
-                    <p class="card-header">Plan</p>
-                    <a class="link" (click)="goToOrderDetails(pendingPlan?.orderId)">Order Details</a>
+                    <h5 class="noMargin text-color-thridly ">Plan</h5>
+                    <button class="button thirdly noPadding" (click)="goToOrderDetails(pendingPlan?.orderId)">Order Details</button>
                 </div>
                 <div class="card-content shown">
                     <div class="item-details">
                         <div class="details-side">
                             <img class="thumbnail"
-                                [src]="!!pendingPlan?.eSIM ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'"
-                                alt="thumbnail">
+                                src="assets/icon/plan_thumbnail.svg"
+                                alt="goodMobile plan">
                             <div class="details">
-                                <p class="title"><b>{{pendingPlan?.basePlan?.subtitle}}</b></p>
-                                <p class="description" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
+                                <p class="smaller primary-font-bold">{{pendingPlan?.basePlan?.subtitle}}</p>
+                                <p class="smaller primary-font" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
                                     {{!!pendingPlan?.basePlan?.ebb ? 'Affordable Connectivity Program Plan' :
                                     (!!pendingPlan?.basePlan?.specialPromotion &&
                                     !!pendingPlan?.basePlan?.specialPromotion?.promotionData ?
                                     pendingPlan?.basePlan?.specialPromotion?.promotionTitle :
                                     pendingPlan?.basePlan?.title )}}</p>
+                                <p class="smaller primary-font-bold">(New Plan)</p>
                             </div>
                         </div>
                         <div class="price-side">
-                            <p class="price"><b>${{!!pendingPlan?.autoRenewPlan ? (pendingPlan?.basePlan.price - 5) :
-                                    pendingPlan?.basePlan.price }}</b></p>
+                            <p class="primary-font-bold smaller">${{pendingPlan?.basePlan.price }}</p>
                         </div>
-                    </div>
-                    <div class="information-banner">
-                        <p class="info">Regular price: {{pendingPlan?.basePlan.price | currency:'USD':'symbol':0}}/mo
-                        </p>
-                        <p class="info" *ngIf="!isEBBPlan">Price with Auto Pay:
-                            {{(!!pendingPlan?.basePlan?.specialPromotion &&
-                            !!pendingPlan?.basePlan?.specialPromotion.promotionDiscount ? (pendingPlan?.basePlan.price -
-                            5) * (discountAmount / 100) : pendingPlan?.basePlan.price - 5) |
-                            currency:'USD':'symbol':0}}/mo</p>
-                        <p class="info" *ngIf="!!isEBBPlan">FREE for ACP</p>
                     </div>
                     <div class="information-banner activation" *ngIf="!!pendingPlan?.eSIM">
                         <p class="title">Your Activation Code</p>
@@ -76,6 +66,21 @@
                             plan is not intended for the purchased device, you may activate the plan on another device.
                         </p>
                         <p class="another" (click)="goToCompatiblity()">Use Another Device</p>
+                    </div>
+                    <hr class="border">
+                    <div class="item-details">
+                        <div class="details-side">
+                            <img class="thumbnail"
+                                src="assets/icon/sim-image.svg"
+                                alt="goodMobile SIM">
+                            <div class="details">
+                                <p class="smaller primary-font-bold">SIM Card</p>
+                                <p class="smaller primary-font-bold">(New SIM)</p>
+                            </div>
+                        </div>
+                        <div class="price-side">
+                            <p class="primary-font-bold smaller">$0</p>
+                        </div>
                     </div>
                     <hr class="border" *ngIf="!!pendingPlan?.storePickup">
                     <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup">
@@ -123,13 +128,15 @@
                                 <div class="details-side">
                                     <img class="thumbnail" src="assets/icon/generic-phone.svg" alt="phone">
                                     <div class="details">
-                                        <p class="title space"><b>{{pendingPlan?.planDevice?.marketingName}}</b></p>
-                                        <p class="title"><b>IMEI</b></p>
-                                        <p class="title">{{pendingPlan?.planDevice?.id}}</p>
+                                        <p class="smaller primary-font-bold">{{pendingPlan?.planDevice?.marketingName}}</p>
+                                        <p class="smaller primary-font-bold">IMEI</p>
+                                        <p class="smaller primary-font">{{pendingPlan?.planDevice?.id}}</p>
+                                        <p class="smaller primary-font-bold" *ngIf="!!pendingPlan?.planDevice?.address1">Checked Coverage Address:</p>
+                                        <p class="smaller primary-font" *ngIf="!!pendingPlan?.planDevice?.address1">{{pendingPlan?.planDevice?.address1}}, {{pendingPlan?.planDevice?.city}}, {{pendingPlan?.planDevice?.state}} {{pendingPlan?.planDevice?.postalCode}}</p>
                                     </div>
                                 </div>
                                 <div class="price-side">
-                                    <p class="price"><img src="assets/icon/edit-square.svg" (click)="editDevice()"
+                                    <p class="smaller"><img src="assets/icon/edit-square.svg" (click)="editDevice()"
                                             alt="edit" /></p>
                                 </div>
                             </div>
@@ -141,8 +148,8 @@
                                 <div class="details-side">
                                     <img class="thumbnail" src="assets/icon/pending-device.svg" alt="phone">
                                     <div class="details">
-                                        <p class="title space"><b>No device was selected</b></p>
-                                        <p class="title">You can add a device once you check compatibility</p>
+                                        <p class="smaller primary-font"><b>No device was selected</b></p>
+                                        <p class="smaller primary-font">You can add a device once you check compatibility</p>
                                         <button class="button primary no-left" aria-label="check compatibility"
                                             (click)="editDevice()">Check Compatibility</button>
                                     </div>
@@ -191,11 +198,11 @@
                             <div class="details-side" *ngIf="!isEBBPlan">
                                 <img class="thumbnail cc" src="assets/icon/payment-card.svg" alt="payment card">
                                 <div class="details">
-                                    <p class="title"><b>{{planPaymentMethod?.method}}</b></p>
-                                    <p class="title">{{!!planPaymentMethod?.name ? planPaymentMethod?.name :
+                                    <p class="smaller primary-font-bold">{{planPaymentMethod?.method}}</p>
+                                    <p class="smaller primary-font">{{!!planPaymentMethod?.name ? planPaymentMethod?.name :
                                         planPaymentMethod?.alias}}</p>
-                                    <p class="title">Ending in {{planPaymentMethod?.last4}}</p>
-                                    <p class="title">Expiration date: {{planPaymentMethod?.expirationDate |
+                                    <p class="smaller primary-font">Ending in {{planPaymentMethod?.last4}}</p>
+                                    <p class="smaller primary-font">Expiration date: {{planPaymentMethod?.expirationDate |
                                         expirationDateFormat}}</p>
                                 </div>
                             </div>
@@ -205,7 +212,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="alert-note" *ngIf="!isEBBPlan">You won't be able to change the payment method at this
+                        <p class="alert-note smaller" *ngIf="!isEBBPlan">You won't be able to change the payment method at this
                             phase for auto-renew feature, until the plan is activated.</p>
                     </div>
                 </div>
