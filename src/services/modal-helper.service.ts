@@ -55,7 +55,7 @@ export interface IModalHelper {
   showSelectCreditCardModal(paymentList: Array<IFirebasePaymentMethod>, title: string, mdn: string, buttonText: string, customClass?: string): DialogRef<any>;
   showShippingAddressModal(title: string, shippingAddress?: IFirebaseAddress, customClass?: string): DialogRef<any>;
   showSIMModal(title: string, message: string, okText?: string, okBtnClass?: string, customClass?: string,
-    network?: string, labelText?: string, showRecaptcha?: boolean): DialogRef<any>;
+    network?: string, labelText?: string, showRecaptcha?: boolean, disabledIccid?: boolean, iccid?: string): DialogRef<any>;
   showWifiCallingModal(title: string, termsRoute: string, customClass?: string, wifiAddress?: IFirebaseAddress): DialogRef<any>;
   showMigrationStepsModal(customClass?: string): DialogRef<any>;
   showReferralPromotionModal(customClass?: string): DialogRef<any>;
@@ -188,9 +188,9 @@ export class ModalHelperService {
   }
 
   showSIMModal(title: string, message: string, okText?: string, okBtnClass?: string, customClass?: string,
-    network?: string, labelText?: string, showRecaptcha?: boolean): DialogRef<any> {
+    network?: string, labelText?: string, showRecaptcha?: boolean, disabledIccid?: boolean, iccid?: string): DialogRef<any> {
     return this.modal.open(SimReplacementModalComponent, overlayConfigFactory({
-      title, message, okText, okBtnClass, customClass, network, labelText, showRecaptcha
+      title, message, okText, okBtnClass, customClass, network, labelText, showRecaptcha, disabledIccid, iccid
     }, BSModalContext));
   }
   showeSIMModal(iccid: string, mdn: string, customClass?: string): DialogRef<any> {
