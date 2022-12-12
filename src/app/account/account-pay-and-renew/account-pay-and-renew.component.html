@@ -22,13 +22,20 @@
                 </div>
             </ng-container>
         </div>
-        <div *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)) "
+        <div *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus))"
             class="col-xl-11 col-xl-offset-1 col-12 col-offset-0 no-padding">
-            <div class="alert-top-banner">
-                <h3 class="alert-action-style">Action required - Don’t lose your number</h3>
-                <p class="alert-sub-title">Please make a payment within 30 days after your past due date to avoid losing
-                    your number</p>
-                <div><a (click)="makePayment()" class="alert-payment">Make payment now</a></div>
+            <div class="info-banner warning-background">
+                <div class="flex">
+                    <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
+                    <div class="banner-content">
+                        <p class="title">Action required - Don’t lose your number</p>
+                        <p class="description last">Please make a payment within 30 days after your past due date to avoid
+                            losing your number</p>
+                        <div class="actions">
+                            <button class="button thirdly" (click)="makePayment()">Make payment now</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

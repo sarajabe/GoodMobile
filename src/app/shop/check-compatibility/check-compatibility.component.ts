@@ -166,14 +166,8 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
       'NOT_COVERED': {
         title: 'We are sorry!',
         desc1: 'Your device is not compatible.',
-        desc2: null,
-        desc3: null,
         buttonName: 'Retry',
-        buttonAction: 'retry',
-        desc4: null,
-        linkName: null,
-        linkAction: null,
-        success: false
+        buttonAction: 'retry'
       }
     }
   }

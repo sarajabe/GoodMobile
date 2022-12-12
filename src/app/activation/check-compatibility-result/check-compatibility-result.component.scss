@@ -28,7 +28,7 @@
                     margin-bottom: 32px;
                 }
 
-                .title {
+                .header {
                     font-family: $secondary-font-family-bold;
                     font-size: rem-calc(40px);
                     line-height: 48px;
@@ -46,7 +46,7 @@
                 text-align: center;
             }
 
-            .description {
+            .desc {
                 font-family: $base-font-family;
                 font-size: rem-calc(22px);
                 line-height: 26px;
@@ -67,64 +67,6 @@
                 }
             }
 
-            .sub-header {
-                max-width: 980px;
-                margin-bottom: 50px;
-
-                .title {
-                    font-family: $base-font-family-bold;
-                    font-size: rem-calc(25px);
-                    font-weight: bold;
-                    line-height: 26px;
-                    margin-bottom: 35px;
-                }
-
-                .subtitle {
-                    font-family: $base-font-family;
-                    font-size: rem-calc(22px);
-                }
-            }
-
-            .new {
-                margin-bottom: 75px;
-
-                .title {
-                    font-family: $secondary-font-family;
-                    font-size: rem-calc(22px);
-                    line-height: 30px;
-                }
-
-                .subtitle {
-                    font-family: $base-font-family;
-                    font-size: rem-calc(20px);
-                }
-
-                .button {
-                    width: 175px;
-                    font-family: $secondary-font-family;
-                    font-size: rem-calc(22px);
-                    padding: 10px 23px;
-                }
-            }
-
-            .plan-availability {
-                margin-bottom: 50px;
-
-                .title {
-                    font-family: $base-font-family-bold;
-                    font-size: rem-calc(25px);
-                    font-weight: bold;
-                    line-height: 26px;
-                    margin-bottom: 35px;
-                }
-
-                .subtitle {
-                    font-family: $base-font-family;
-                    font-size: rem-calc(22px);
-                    max-width: 980px;
-                }
-            }
-
             @media (max-width: $desktop-min-width-minus) {
                 .coverage-area {
                     margin-left: 0;
@@ -136,62 +78,21 @@
                     }
                 }
 
-                .description {
+                .desc {
                     font-size: rem-calc(15px);
                     line-height: 22px;
-                }
-
-                .sub-header {
-                    text-align: center;
-                    margin-bottom: 20px;
-
-                    .title {
-                        font-size: rem-calc(18px);
-                        margin-bottom: 25px;
-                    }
-
-                    .subtitle {
-                        font-size: rem-calc(17px);
-                    }
-                }
-
-                .new {
-                    text-align: center;
-                    margin-bottom: 50px;
-
-                    .title {
-                        font-size: rem-calc(18px);
-                        font-family: $base-font-family-bold;
-                    }
-
-                    .subtitle {
-                        font-size: rem-calc(17px);
-                        margin-bottom: 25px;
-                    }
-                }
-
-                .plan-availability {
-                    text-align: center;
-
-                    .title {
-                        font-size: rem-calc(18px);
-                    }
-
-                    .subtitle {
-                        font-size: rem-calc(17px);
-                    }
                 }
             }
 
             @media (max-width: 639.9px) {
                 .header {
-                    .title {
+                    .header {
                         font-size: rem-calc(26px);
                         margin-bottom: 15px;
                     }
                 }
 
-                .description {
+                .desc {
                     font-size: rem-calc(17px);
                     margin-bottom: 20px;
                 }
@@ -202,7 +103,7 @@
             .header {
                 margin-bottom: 30px;
 
-                .title {
+                .header {
                     font-family: $secondary-font-family-bold;
                     font-size: rem-calc(38px);
                     line-height: 1.2;
@@ -210,25 +111,9 @@
                     text-align: center;
                     margin: auto;
                 }
-
-                .subtitle {
-                    font-family: $base-font-family;
-                    font-size: rem-calc(22px);
-                    max-width: 830px;
-                }
             }
 
-            .sub-header {
-                margin-bottom: 40px;
-
-                .title {
-                    font-family: $base-font-family;
-                    font-size: rem-calc(22px);
-                    color: $secondary-color;
-                }
-            }
-
-            .description {
+            .desc {
                 width: 100%;
                 display: block;
                 margin: 5px auto 0;
@@ -260,18 +145,14 @@
 
             @media (max-width: $desktop-min-width-minus) {
                 .header {
-                    .title {
+                    .header {
                         font-size: rem-calc(27px);
                         line-height: 35px;
                         max-width: 408px;
                     }
-
-                    .subtitle {
-                        font-size: rem-calc(22px);
-                    }
                 }
 
-                .description {
+                .desc {
                     font-size: rem-calc(15px);
                     line-height: 23px;
                 }
@@ -283,14 +164,6 @@
                         width: 200px;
                         padding: 11px;
                         font-size: rem-calc(17px);
-                    }
-                }
-
-                .sub-header {
-                    text-align: center;
-
-                    .title {
-                        color: $primary-color;
                     }
                 }
 
@@ -321,162 +194,9 @@
             margin-top: 17px;
         }
 
-        .success-banner {
+        .info-banner {
             max-width: 1284px;
             width: 100%;
-            padding: 24px 24px 28px;
-            background: #E6F7EE;
-            box-shadow: 0px 3px 4px rgb(234 234 234 / 25%);
-            border-radius: 8px;
-            margin: 0 auto;
-
-            @media (max-width: $phablet-min-width-minus) {
-                padding: 16px 16px 24px;
-            }
-
-            .flex {
-                display: flex;
-                gap: 12px;
-
-                @media (max-width: $phablet-min-width-minus) {
-                    gap: 8px;
-                }
-
-                img {
-                    width: 32px;
-                    height: 32px;
-
-                    @media (max-width: $phablet-min-width-minus) {
-                        width: 24px;
-                        height: 24px;
-                    }
-                }
-
-                .banner-content {
-                    .title {
-                        font-size: rem-calc(20px);
-                        line-height: 24px;
-                        font-family: $secondary-font-family-bold;
-                        margin-bottom: 8px;
-
-                        @media (max-width: $phablet-min-width-minus) {
-                            font-size: rem-calc(18px);
-                            line-height: 24px;
-                        }
-                    }
-
-                    .desc {
-                        font-size: rem-calc(18px);
-                        line-height: 28px;
-                        margin-bottom: 8px;
-
-                        @media (max-width: $phablet-min-width-minus) {
-                            font-size: rem-calc(14px);
-                            line-height: 24px;
-                        }
-                    }
-
-                    .note {
-                        font-size: rem-calc(16px);
-                        line-height: 24px;
-                        margin-top: 16px;
-                        margin-bottom: 24px;
-
-                        @media (max-width: $phablet-min-width-minus) {
-                            font-size: rem-calc(14px);
-                            line-height: 24px;
-                        }
-
-                        .tooltip {
-                            cursor: pointer;
-
-                            .info {
-                                width: 24px;
-                                height: 24px;
-                                margin-left: 4px;
-
-                                @media (max-width: $phablet-min-width-minus) {
-                                    width: 16px;
-                                    height: 16px;
-                                }
-                            }
-
-                            .tooltiptext {
-                                width: 484px;
-                                height: fit-content;
-                                padding: 16px;
-                                top: 50px;
-                                left: 60px;
-                                background: #DAD0DC;
-                                box-shadow: 0px 4px 15px rgb(206 211 214 / 60%);
-                                border-radius: 10px;
-                                font-size: rem-calc(14px);
-                                line-height: 24px;
-
-                                @media(max-width: 849.5px) {
-                                    width: 302px;
-                                    padding: 12px;
-                                    text-align: center;
-                                }
-
-                                @media(max-width: $phablet-min-width-minus) {
-                                    left: 56px;
-                                    top: 45px;
-                                }
-
-                                @media(max-width: 499.5px) {
-                                    width: 201px;
-                                    top: 46px;
-                                    left: -16px;
-                                }
-
-                                p {
-                                    margin-bottom: 0;
-                                }
-
-                                img {
-                                    width: 17px;
-                                    height: 9.32px;
-                                    position: absolute;
-                                    top: -8px;
-                                    left: 27.5px;
-
-                                    @media(max-width: 499.5px) {
-                                        left: 99.5px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    .actions {
-                        button {
-                            padding: 8px 32px;
-                            font-size: rem-calc(20px);
-                            line-height: 20px;
-                            font-weight: 700;
-
-                            @media (max-width: $phablet-min-width-minus) {
-                                font-size: rem-calc(16px);
-                                line-height: 16px;
-                            }
-                        }
-                    }
-
-                    &.att-content {
-                        .desc {
-                            &.bottom {
-                                margin-bottom: 0;
-                            }
-                        }
-
-                        .note {
-                            font-weight: normal;
-                            margin-top: 0;
-                        }
-                    }
-                }
-            }
         }
 
         .physical-flow {

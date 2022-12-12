@@ -3,121 +3,61 @@
 .acp-success {
     margin-top: 60px;
     padding: 0 10%;
+
     @media (max-width: $desktop-min-width-minus) {
         padding: 0 20px;
     }
+
     @media (max-width: $phablet-min-width-minus) {
         margin-top: 32px;
         padding: 0 16px;
     }
-    .success-container {
+
+    .info-banner {
         margin-bottom: 44px;
-        display: flex;
-        align-items: flex-start;
-        padding: 24px;
-        gap: 10px;
-        background: #e6f7ee;
-        box-shadow: 0px 3px 4px rgba(234, 234, 234, 0.25);
-        border-radius: 8px;
         width: 100%;
+
         @media (min-width: 1760px) {
             position: relative;
             max-width: 1000px;
             z-index: 2;
         }
+
         @media (max-width: $phablet-min-width-minus) {
             margin-bottom: 32px;
         }
-        .notes {
-            img {
-                width: 26.67px;
-                height: 26.67px;
-            }
-            .head-note {
-                margin-bottom: 4px;
-                font-size: 22px;
-                line-height: 32px;
-                margin-right: 14.6px;
-                font-family: $secondary-font-family-bold;
-                @media (max-width: $phablet-min-width-minus) {
-                    font-size: 18px;
-                    line-height: 28px;
-                    margin-bottom: 4px;
-                }
-            }
-            .desc {
-                font-size: 22px;
-                line-height: 32px;
-                margin-bottom: 16px;
-                font-family: $base-font-family;
-                span {
-                    display: block;
-                }
-                @media (max-width: $phablet-min-width-minus) {
-                    font-size: 14px;
-                    line-height: 24px;
-                }
-            }
-            button {
-                font-size: 20px;
-                line-height: 20px;
-                padding: 8px 24px;
-                @media (max-width: $phablet-min-width-minus) {
-                    font-size: 16px;
-                    line-height: 16px;
-                }
-            }
-            .actions{
-                display: flex;
-                @media(max-width:$desktop-min-width-minus){
-                    flex-direction: column;
-                    max-width: 300px;
-                }
-                .button {
-                    font-weight: bold;
-                    font-size: 20px;
-                    line-height: 20px;
-                    font-family: $secondary-font-family-bold;
-                    @media(max-width:$phablet-min-width-minus){
-                        font-size: 16px;
-                        line-height: 16px;
-                    }
-                }
-                .primary{
-                    margin-right: 16px;
-                    @media(max-width:$desktop-min-width-minus){
-                        margin-bottom: 16px;
-                        margin-right: 0;
-
-                    }
-                }
-            }
-        }
     }
+
     .illustration-section {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 0px;
         margin-top: 0;
+
         @media (min-width: 1760px) {
             margin-top: 170px;
         }
+
         .picture {
             position: relative;
+
             @media (min-width: 1760px) {
                 width: 100%;
             }
+
             img {
                 width: 499px;
                 height: 331.82px;
                 object-fit: contain;
+
                 @media (min-width: 1760px) {
                     position: absolute;
                     width: 1488px;
                     bottom: 0;
                     left: 0;
                 }
+
                 @media (max-width: $phablet-min-width-minus) {
                     width: 320px;
                     height: 211.82px;
@@ -125,15 +65,18 @@
             }
         }
     }
+
     .extra-note {
         p {
             font-size: 14px;
             line-height: 24px;
             margin-bottom: 292px;
             text-align: center;
+
             @media (min-width: 1760px) {
                 text-align: left;
             }
+
             @media (max-width: $phablet-min-width-minus) {
                 margin-bottom: 114px;
             }

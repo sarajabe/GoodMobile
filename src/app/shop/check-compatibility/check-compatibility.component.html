@@ -52,24 +52,26 @@
       </app-invisible-recaptcha>
     </form>
   </div>
-  <div class="result-banner" *ngIf="!!showAddressResultBanner"
-    [ngClass]="{'success-background': !!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success, 'fail-background': !ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success}">
+  <div class="info-banner" *ngIf="!!showAddressResultBanner"
+    [ngClass]="{'success-background': !!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success, 'error-background': !ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success}">
     <div class="flex">
       <img
-        [src]="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success ? 'assets/icon/green-check.svg' : 'assets/icon/alert-note.svg'"
-        alt="note icon">
+        [src]="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.success ? 'assets/icon/success-icon.svg' : 'assets/icon/error-icon.svg'"
+        alt="Icon">
       <div class="banner-content">
         <p class="title" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.title">
           {{ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.title}}</p>
-        <p class="desc" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"
+        <p class="description" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"
           [innerHTML]="ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"></p>
-        <p class="address-text" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"
+        <p class="description bottom-8" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"
           [innerHTML]="ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"></p>
-        <p class="desc check" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"
+        <p class="description last" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"
           [innerHTML]="ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"></p>
         <div class="actions" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName">
-          <button class="button primary" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName" data-cy="nextStepBtn"
-            (click)="this[ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonAction]()">{{ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName}}</button>
+          <button class="button primary" *ngIf="!!ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName"
+            data-cy="nextStepBtn"
+            (click)="this[ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonAction]()">{{ADDRESS_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName}}
+          </button>
         </div>
       </div>
     </div>
@@ -104,26 +106,19 @@
       </app-invisible-recaptcha>
     </form>
   </div>
-  <div class="result-banner fail-background" *ngIf="!!showDeviceResultBanner">
+  <div class="info-banner error-background" *ngIf="!!showDeviceResultBanner">
     <div class="flex">
-      <img src="assets/icon/alert-note.svg" alt="note icon">
+      <img src="assets/icon/error-icon.svg" alt="Error Icon">
       <div class="banner-content device">
         <p class="title" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.title">
           {{DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.title}}</p>
-        <p class="desc" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"
+        <p class="description last" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"
           [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc1"></p>
-        <p class="desc" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"
-          [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc2"></p>
-        <p class="desc" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"
-          [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc3"></p>
         <div class="actions" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName">
-          <button class="button primary" data-cy="checkAgain" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName"
+          <button class="button primary" data-cy="checkAgain"
+            *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName"
             (click)="this[DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonAction]()">{{DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.buttonName}}</button>
         </div>
-        <p class="desc top-bottom" *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc4"
-          [innerHTML]="DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.desc4"></p>
-        <a (click)="this[DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.linkAction]()"
-          *ngIf="!!DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.linkName">{{DEVICE_COMPATIBILITY_DESCS[compatibilityStatus]?.linkName}}</a>
       </div>
     </div>
   </div>

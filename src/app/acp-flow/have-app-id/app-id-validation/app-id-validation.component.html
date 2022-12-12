@@ -1,43 +1,49 @@
 <section class="content-section" *ngIf="!acpSuccess && !acpError">
-    <div *ngIf="activeStep !== 2">
+  <div *ngIf="activeStep !== 2">
     <h2 class="header">Great!</h2>
-    <h3 class="sub-header" data-cy="personalInfoHeader" >Please provide the following information to verify your application!</h3>
-    <div class="info-box">
-      <img src="/assets/icon/Information-sec.svg" alt="info-icon">
-      <div class="info">
-        <p>Please enter the information <strong>EXACTLY</strong> as you entered in the ACP application including:
-          <strong>(spaces, commas, or any special characters).</strong>
-        </p>
-        <p class="last">Providing inaccurate information could lead you being ineligible for the ACP benefits.</p>
+    <h3 class="sub-header" data-cy="personalInfoHeader">Please provide the following information to verify your
+      application!</h3>
+    <div class="info-banner default-background">
+      <div class="flex">
+        <img src="/assets/icon/info-icon.svg" alt="Info Icon">
+        <div class="banner-content">
+          <p class="description">Please enter the information <b>EXACTLY</b> as you entered in the ACP application
+            including: <b>(spaces, commas, or any special characters).</b>
+          </p>
+          <p class="description last">Providing inaccurate information could lead you being ineligible for the ACP
+            benefits.</p>
+        </div>
       </div>
     </div>
   </div>
   <div *ngIf="activeStep === 2 ">
     <h2 class="header">Almost there!</h2>
-    <h3 class="sub-header step-2" data-cy="noticeAgreementHeader" >Customer Notice and Agreement</h3>
-    <p class="extra-desc">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with GoodMobile, you should agree and initial the following:</p>
+    <h3 class="sub-header step-2" data-cy="noticeAgreementHeader">Customer Notice and Agreement</h3>
+    <p class="extra-desc">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with
+      GoodMobile, you should agree and initial the following:</p>
   </div>
-    <section class="stepper">
-      <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step" [class.done]="activeStep > step">
-        <div class="circle">{{ step }}</div>
-        <div class="border" *ngIf="step < steps.length"></div>
-      </div>
-    </section>
-    <app-app-id-personal-info *ngIf="activeStep === 1" (goToNext)="next($event)"
-      (setUserInfo)="setPersonalInfo($event)" [savedInfo]="{user:acpData?.user, appId: acpData?.providerApplicationId}"
-      [disable]="!!enrolled"></app-app-id-personal-info>
-      <app-signature-info *ngIf="activeStep === 2" (goToNext)="next($event)" [fName]="acpData?.user?.firstName"
-      [lName]="acpData?.user?.lastName" [signed]="userSignedAgreement"
-      (setSignature)="setSignedValue($event)" [disable]="!!enrolled" [appId]="acpData?.providerApplicationId"></app-signature-info>
-  </section>
-  <app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
-  <app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
-  <section class="navigation-section" *ngIf="!acpSuccess && !acpError">
-    <div class="left">
-      <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
-    </div>
-    <div class="right">
-      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 2 ? 'Next' : 'Submit'}}</button>
+  <section class="stepper">
+    <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step" [class.done]="activeStep > step">
+      <div class="circle">{{ step }}</div>
+      <div class="border" *ngIf="step < steps.length"></div>
     </div>
   </section>
+  <app-app-id-personal-info *ngIf="activeStep === 1" (goToNext)="next($event)" (setUserInfo)="setPersonalInfo($event)"
+    [savedInfo]="{user:acpData?.user, appId: acpData?.providerApplicationId}" [disable]="!!enrolled">
+  </app-app-id-personal-info>
+  <app-signature-info *ngIf="activeStep === 2" (goToNext)="next($event)" [fName]="acpData?.user?.firstName"
+    [lName]="acpData?.user?.lastName" [signed]="userSignedAgreement" (setSignature)="setSignedValue($event)"
+    [disable]="!!enrolled" [appId]="acpData?.providerApplicationId"></app-signature-info>
+</section>
+<app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
+<app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
+<section class="navigation-section" *ngIf="!acpSuccess && !acpError">
+  <div class="left">
+    <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
+  </div>
+  <div class="right">
+    <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
+    <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 2 ? 'Next' :
+      'Submit'}}</button>
+  </div>
+</section>

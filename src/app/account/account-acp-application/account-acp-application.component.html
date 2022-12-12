@@ -4,12 +4,12 @@
         <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
-    <div class="approved-banner" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
+    <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
         [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
-        <div class="action-required">
-            <img src="assets/icon/success-nv-icon.svg" alt="note icon">
-            <div class="action-required-content">
-                <p class="desc">Your application with GoodMobile was successfully approved.</p>
+        <div class="flex center">
+            <img src="assets/icon/success-icon.svg" alt="Success Icon">
+            <div class="banner-content">
+                <p class="description last">Your application with GoodMobile was successfully approved.</p>
             </div>
         </div>
     </div>

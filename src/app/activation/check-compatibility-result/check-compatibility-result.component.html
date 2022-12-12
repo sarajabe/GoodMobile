@@ -3,21 +3,22 @@
         <ng-container *ngIf="!!isCompatibile">
             <div class="margin-bottom-20 success">
                 <div class="header">
-                    <h1 class="title">Coverage and Device Summary</h1>
+                    <h1 class="header">Coverage and Device Summary</h1>
                 </div>
                 <div class="esim-networks-part" *ngIf="!!hasNewPlan && (!!eSimCompatiple || !!isAnyNetworkWithNoESim)">
-                    <div class="success-banner">
+                    <div class="info-banner success-background">
                         <div class="flex">
-                            <img src="assets/icon/green-check.svg" alt="note icon">
+                            <img src="assets/icon/success-icon.svg" alt="Success Icon">
                             <div class="banner-content"
                                 [class.att-content]="!!SUCCESS_BANNER_DESCS[paramValue]?.isAttFlow">
-                                <p class="title" data-cy="compatibilityResult" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.title">
+                                <p class="title" data-cy="compatibilityResult"
+                                    *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.title">
                                     {{SUCCESS_BANNER_DESCS[paramValue]?.title}}</p>
-                                <p class="desc bottom" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.desc1"
+                                <p class="description" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.desc1"
                                     [innerHTML]="SUCCESS_BANNER_DESCS[paramValue]?.desc1"></p>
-                                <p class="desc" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.desc2"
+                                <p class="description bottom-8" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.desc2"
                                     [innerHTML]="SUCCESS_BANNER_DESCS[paramValue]?.desc2"></p>
-                                <p class="note" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.desc3"
+                                <p class="description last" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.desc3"
                                     [innerHTML]="SUCCESS_BANNER_DESCS[paramValue]?.desc3"></p>
                                 <div class="actions" *ngIf="!!SUCCESS_BANNER_DESCS[paramValue]?.buttonName">
                                     <button class="button primary" data-cy="nextStepBtn"
@@ -28,15 +29,15 @@
                     </div>
                     <div class="physical-flow" *ngIf="!!eSimCompatiple">
                         <p class="desc"><b>Want to use a physical SIM?</b></p>
-                        <a  data-cy="IWantPhysicalSim" (click)="SendTmoPhysicalSim()">Yes, I want a physical SIM</a>
+                        <a data-cy="IWantPhysicalSim" (click)="SendTmoPhysicalSim()">Yes, I want a physical SIM</a>
                     </div>
                 </div>
                 <div class=""></div>
                 <div class="plans-section" *ngIf="!hasNewPlan">
-                    <p class="description">
+                    <p class="desc">
                         Choose a plan that will work best for your phone
                     </p>
-                    <p class="description">
+                    <p class="desc">
                         No contracts. No overages. Just great wireless service
                     </p>
                     <app-plans-list></app-plans-list>
@@ -52,12 +53,13 @@
         </ng-container>
         <div class="container-flex-row margin-bottom-20 fail" *ngIf="!isCompatibile">
             <div class="col-12 header">
-                <h1 class="title">We’re sorry, your device is not
+                <h1 class="header">We’re sorry, your device is not
                     compatible with GoodMobile</h1>
             </div>
-            <p class="description">You can always <a [routerLink]="['/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">shop
+            <p class="desc">You can always <a
+                    [routerLink]="['/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">shop
                     phones</a> for a compatible phone.</p>
-            <p class="description">You can also buy a compatible phone elsewhere but make sure it’s unlocked. </p>
+            <p class="desc">You can also buy a compatible phone elsewhere but make sure it’s unlocked. </p>
             <div class="actions">
                 <button class="button primary"
                     [routerLink]="[ACTIVATION_ROUTE_URLS.BASE + '/' + ACTIVATION_ROUTE_URLS.CHECK_PHONE]">Try

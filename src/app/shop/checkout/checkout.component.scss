@@ -47,33 +47,8 @@
             }
         }
     }
-    .error-banner {
-        padding: 24px;
-        display: flex;
-        justify-content: flex-start;
-        gap: 10px;
-        background: #FFEFEE;
+    .info-banner {
         margin: 24px 0;
-        border-radius: 8px;
-        box-shadow: 0px 3px 4px 0px #EAEAEA40;
-        img {
-            width: 26px;
-            height: 26px;
-        }
-        .note {
-            font-size: rem-calc(18px);
-            line-height: 28px;
-            margin-bottom: 0px;
-            font-weight: 400;
-        }
-        @media(max-width: $phablet-min-width-minus) {
-            padding: 16px;
-            gap: 8px;
-            .note {
-                font-size: rem-calc(14px);
-                line-height: 24px;
-            }
-        }
     }
     .cart-total {
         padding: 16px 0 8px;

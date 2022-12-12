@@ -32,9 +32,13 @@
       <p data-cy="total" ><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
     </div>
     <h1 class="step-title">Where should we send your order?</h1>
-    <div class="error-banner" *ngIf="!!showAddressRequiredError">
-      <img src="assets/icon/red-alert.svg" alt="alert"/>
-      <p class="note">Please select a shipping address or add a new address.</p>
+    <div class="info-banner error-background" *ngIf="!!showAddressRequiredError">
+      <div class="flex center">
+        <img src="assets/icon/error-icon.svg" alt="Error Icon"/>
+        <div class="banner-content">
+          <p class="description last">Please select a shipping address or add a new address.</p>
+        </div>
+      </div>
     </div>
     <div class="checkout-card">
       <p class="card-title">Shipping Details</p>

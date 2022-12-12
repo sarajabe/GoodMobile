@@ -6,37 +6,49 @@
     <h1 class="title" id="title">Update shipping address</h1>
     <!-- User can update address -->
     <ng-container *ngIf="!showContactForm && !!canUpdateAddress && !isEditAddress && !addressUpdated">
-        <div class="current-address" >
+        <div class="current-address">
             <p class="label">Current shipping address:</p>
             <div class="current-card">
-                <img class="address-icon" src="assets/icon/address.svg" alt="address"/>
+                <img class="address-icon" src="assets/icon/address.svg" alt="address" />
                 <div class="address-details">
                     <p class="name">{{orderInfo?.shippingInfo?.shippingAddress?.shippingName}}</p>
                     <p class="details">{{orderInfo?.shippingInfo?.shippingAddress?.address1}}</p>
-                    <p class="details" *ngIf="!!orderInfo?.shippingInfo?.shippingAddress?.address2">{{orderInfo?.shippingInfo?.shippingAddress?.address2}}</p>
-                    <p class="details">{{orderInfo?.shippingInfo?.shippingAddress?.city}}, {{orderInfo?.shippingInfo?.shippingAddress?.state}} {{orderInfo?.shippingInfo?.shippingAddress?.postalCode}}</p>
+                    <p class="details" *ngIf="!!orderInfo?.shippingInfo?.shippingAddress?.address2">
+                        {{orderInfo?.shippingInfo?.shippingAddress?.address2}}</p>
+                    <p class="details">{{orderInfo?.shippingInfo?.shippingAddress?.city}},
+                        {{orderInfo?.shippingInfo?.shippingAddress?.state}}
+                        {{orderInfo?.shippingInfo?.shippingAddress?.postalCode}}</p>
                 </div>
-                <img class="edit-icon" data-cy="editCurrentAddress" (click)="editAddress(orderInfo?.shippingInfo?.shippingAddress, true)" src="assets/icon/edit.svg" alt="edit"/>
+                <img class="edit-icon" data-cy="editCurrentAddress"
+                    (click)="editAddress(orderInfo?.shippingInfo?.shippingAddress, true)" src="assets/icon/edit.svg"
+                    alt="edit" />
             </div>
         </div>
         <div class="addresses-list-section">
             <p class="desc">To change your order’s shipping address, please select or add a new address:</p>
-            <div class="red-banner"  *ngIf="!!showErrorMessage">
+            <div class="red-banner" *ngIf="!!showErrorMessage">
                 <img src="assets/icon/red-alert.svg" alt="alert">
                 <p class="validation">Please select or add a new address</p>
             </div>
             <div class="list-container">
                 <ng-container *ngIf="!!addressesList">
-                    <div class="address-item" *ngFor="let address of addressesList, let i =index" [class.hidden]="i > 1 && !showAllAddresses" [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
-                        <div class="selection" >
-                            <input type="radio" [id]="address?.id" [value]="address" [(ngModel)]="selectedAddress" (ngModelChange)="updateSelectedAddress();">
+                    <div class="address-item" *ngFor="let address of addressesList, let i =index"
+                        [class.hidden]="i > 1 && !showAllAddresses"
+                        [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
+                        <div class="selection">
+                            <input type="radio" [id]="address?.id" [value]="address" [(ngModel)]="selectedAddress"
+                                (ngModelChange)="updateSelectedAddress();">
                             <label [for]="address?.id">{{address?.name || address?.alias}}
-                                <span class="info">{{address?.address1}} {{!!address?.address2 ? (' ,' + address?.address2) : ''}}, {{address?.city}}, {{address?.state}} {{address?.postalCode}}</span>
+                                <span class="info">{{address?.address1}} {{!!address?.address2 ? (' ,' +
+                                    address?.address2) : ''}}, {{address?.city}}, {{address?.state}}
+                                    {{address?.postalCode}}</span>
                             </label>
                         </div>
-                        <img class="edit-icon" data-cy="editAddress" (click)="editAddress(address, false)" src="assets/icon/edit.svg" alt="edit"/>
+                        <img class="edit-icon" data-cy="editAddress" (click)="editAddress(address, false)"
+                            src="assets/icon/edit.svg" alt="edit" />
                     </div>
-                    <div class="showMore" *ngIf="addressesList?.length > 2" (click)="showAllAddresses = !showAllAddresses">
+                    <div class="showMore" *ngIf="addressesList?.length > 2"
+                        (click)="showAllAddresses = !showAllAddresses">
                         <i class="arrow down" [class.rotate]="!!showAllAddresses"></i>
                         <p class="more" data-cy="showMoreAndLess">{{!!showAllAddresses ? 'Show less' : 'Show more'}}</p>
                     </div>
@@ -48,23 +60,31 @@
                     </div>
                     <div class="form-section" *ngIf="showNewAddress">
                         <form #shippingMethodForm="ngForm">
-                            <div class="shipping-method-form" >
-                              <fieldset class="name">
-                                <label for="name">Address Name<span class="form-text error validation-message">*</span></label>
-                                <input id="name" data-cy="name" type="text" name="name" required [(ngModel)]="newAddressName" autocomplete="name" #addressName="ngModel" (input)="nameRequired = false; showErrorMessage=false" >
-                                <label class="validation-message" data-cy="addressNameIsRequiredMSG" *ngIf="addressName.touched && !addressName.valid || nameRequired">
-                                    Address Name is a required field</label>
-                              </fieldset>
-                              <fieldset class="address-lookup">
-                                <app-address-lookup [displayedAddress]="newAddress" (isValid)="setValidAddress($event)"
-                                  (addressChange)="addressLookUpChanged($event)" [touchForm]="touchShippimgForm" [resetForm]="resetAddressForm">
-                                </app-address-lookup>
-                              </fieldset>
+                            <div class="shipping-method-form">
+                                <fieldset class="name">
+                                    <label for="name">Address Name<span
+                                            class="form-text error validation-message">*</span></label>
+                                    <input id="name" data-cy="name" type="text" name="name" required
+                                        [(ngModel)]="newAddressName" autocomplete="name" #addressName="ngModel"
+                                        (input)="nameRequired = false; showErrorMessage=false">
+                                    <label class="validation-message" data-cy="addressNameIsRequiredMSG"
+                                        *ngIf="addressName.touched && !addressName.valid || nameRequired">
+                                        Address Name is a required field</label>
+                                </fieldset>
+                                <fieldset class="address-lookup">
+                                    <app-address-lookup [displayedAddress]="newAddress"
+                                        (isValid)="setValidAddress($event)"
+                                        (addressChange)="addressLookUpChanged($event)" [touchForm]="touchShippimgForm"
+                                        [resetForm]="resetAddressForm">
+                                    </app-address-lookup>
+                                </fieldset>
                             </div>
                         </form>
                         <div class="form-actions">
-                            <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="toggleNewAddress();resetAddressForm=true;nameRequired=false;newAddressName=''">Cancel</button>
-                            <button class="button primary" data-cy="saveBtn" aria-label="Save" (click)="editShippingAddress()">Save</button>
+                            <button class="button transparent" data-cy="cancelBtn" aria-label="cancel"
+                                (click)="toggleNewAddress();resetAddressForm=true;nameRequired=false;newAddressName=''">Cancel</button>
+                            <button class="button primary" data-cy="saveBtn" aria-label="Save"
+                                (click)="editShippingAddress()">Save</button>
                         </div>
                     </div>
                 </div>
@@ -76,8 +96,15 @@
     </ng-container>
     <!-- User can't update address (order either cancelled or has no shipping) -->
     <ng-container *ngIf="!showContactForm && !canUpdateAddress && !isEditAddress && !addressUpdated">
-        <div class="note-banner">
-            <p class="note">Your shipping address can’t be updated. If you still need help, please <span class="link" (click)="showContactForm=true">leave us a message</span>.</p>
+        <div class="info-banner default-background">
+            <div class="flex center">
+                <img src="/assets/icon/info-icon.svg" alt="Info Icon">
+                <div class="banner-content">
+                    <p class="description last">Your shipping address can’t be updated. If you still need help, please
+                        <span class="link" (click)="showContactForm=true">leave us a message</span>.
+                    </p>
+                </div>
+            </div>
         </div>
     </ng-container>
     <!-- User wants to edit address -->
@@ -87,18 +114,24 @@
             <div class="edit-card">
                 <div class="form-section edit">
                     <form #editShippingMethodForm="ngForm">
-                        <div class="shipping-method-form" >
-                          <fieldset class="name long">
-                            <label for="editName">Address Name<span class="form-text error validation-message">*</span></label>
-                            <input id="editName" data-cy="name" type="text" name="editName" required [(ngModel)]="shippingName" autocomplete="name" #editName="ngModel" (input)="nameRequired = false" >
-                            <label class="validation-message" data-cy="addressNameRequiredMsg" *ngIf="editName.touched && !editName.valid || nameRequired">
-                                Address Name is a required field</label>
-                          </fieldset>
-                          <fieldset class="address-lookup">
-                            <app-address-lookup [displayedAddress]="editedAddress" (isValid)="setValidAddress($event, true)"
-                              (addressChange)="addressLookUpChanged($event, true)" [touchForm]="touchShippimgForm">
-                            </app-address-lookup>
-                          </fieldset>
+                        <div class="shipping-method-form">
+                            <fieldset class="name long">
+                                <label for="editName">Address Name<span
+                                        class="form-text error validation-message">*</span></label>
+                                <input id="editName" data-cy="name" type="text" name="editName" required
+                                    [(ngModel)]="shippingName" autocomplete="name" #editName="ngModel"
+                                    (input)="nameRequired = false">
+                                <label class="validation-message" data-cy="addressNameRequiredMsg"
+                                    *ngIf="editName.touched && !editName.valid || nameRequired">
+                                    Address Name is a required field</label>
+                            </fieldset>
+                            <fieldset class="address-lookup">
+                                <app-address-lookup [displayedAddress]="editedAddress"
+                                    (isValid)="setValidAddress($event, true)"
+                                    (addressChange)="addressLookUpChanged($event, true)"
+                                    [touchForm]="touchShippimgForm">
+                                </app-address-lookup>
+                            </fieldset>
                         </div>
                     </form>
                 </div>
@@ -108,20 +141,27 @@
             <p class="help" data-cy="needHelp?" (click)="showContactForm=true">Still need more help?</p>
         </div>
     </ng-container>
-      <!-- User wants to edit address -->
-      <ng-container *ngIf="!showContactForm && !isEditAddress && !!addressUpdated">
-        <div class="note-banner update">
-            <p class="note"><img class="check" src="assets/icon/green-check.svg" />Successfully updated your shipping address!</p>
+    <!-- User wants to edit address -->
+    <ng-container *ngIf="!showContactForm && !isEditAddress && !!addressUpdated">
+        <div class="info-banner success-background">
+            <div class="flex center">
+                <img src="/assets/icon/success-icon.svg" alt="Success Icon">
+                <div class="banner-content">
+                    <p class="description last">Successfully updated your shipping address!</p>
+                </div>
+            </div>
         </div>
         <div class="current-address success">
             <p class="label">Your updated shipping address:</p>
             <div class="current-card">
-                <img class="address-icon" src="assets/icon/address.svg" alt="address"/>
+                <img class="address-icon" src="assets/icon/address.svg" alt="address" />
                 <div class="address-details">
                     <p class="name">{{currentShippingAddress?.name}}</p>
                     <p class="details">{{currentShippingAddress?.address1}}</p>
-                    <p class="details" *ngIf="!!currentShippingAddress?.address2">{{currentShippingAddress?.address2}}</p>
-                    <p class="details">{{currentShippingAddress?.city}}, {{currentShippingAddress?.state}} {{currentShippingAddress?.postalCode}}</p>
+                    <p class="details" *ngIf="!!currentShippingAddress?.address2">{{currentShippingAddress?.address2}}
+                    </p>
+                    <p class="details">{{currentShippingAddress?.city}}, {{currentShippingAddress?.state}}
+                        {{currentShippingAddress?.postalCode}}</p>
                 </div>
             </div>
         </div>
@@ -132,14 +172,18 @@
 </section>
 <section class="section-footer" *ngIf="!showContactForm && !!canUpdateAddress" [class.sticky]="setSticky">
     <div class="btn-container">
-        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="cancel()" [class.hidden]="!!addressUpdated">Cancel</button>
-        <button class="button primary" data-cy="updateBtn" aria-label="update" (click)="updateAddress()">{{!!addressUpdated ? 'Done' : 'Update'}}</button>
+        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="cancel()"
+            [class.hidden]="!!addressUpdated">Cancel</button>
+        <button class="button primary" data-cy="updateBtn" aria-label="update"
+            (click)="updateAddress()">{{!!addressUpdated ? 'Done' : 'Update'}}</button>
     </div>
 </section>
 <section class="section-footer" *ngIf="!showContactForm && !canUpdateAddress" [class.sticky]="setSticky">
     <div class="btn-container">
-        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="goToReportIssue()">Cancel</button>
+        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel"
+            (click)="goToReportIssue()">Cancel</button>
     </div>
 </section>
-<app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" (backOneStep)="showContactForm=false" [hasBack]=true *ngIf="!!showContactForm">
+<app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" (backOneStep)="showContactForm=false"
+    [hasBack]=true *ngIf="!!showContactForm">
 </app-contact-form>
