@@ -225,12 +225,12 @@
                                                             TOTAL: ${{unlimitedCalls?.price}}
                                                         </span>
                                                     </div>
-                                                    <div class="action">
-                                                        <button class="button secondary addon"
+                                                    <div class="actions">
+                                                        <button class="button secondary"
                                                             (click)="selectAddOn('payGo')"
                                                             [disabled]="!userHasActivePlans || !isCompaitableWithPayGo || isPayGoSelected() || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Select
                                                             add-on</button>
-                                                        <button class="button primary addon"
+                                                        <button class="button primary"
                                                             (click)="setSelectedAddonType('payGo');goToCart()"
                                                             [disabled]="!userHasActivePlans || !isCompaitableWithPayGo || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed
                                                             to checkout</button>
