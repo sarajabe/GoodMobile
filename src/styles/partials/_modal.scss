@@ -2124,6 +2124,9 @@
     }
     &.manage-payment-modal {
       .modal-body {
+        .account-address-details-container {
+          background: #F1F9FD;
+        }
         .note {
           font-size: rem-calc(17px);
           margin-bottom: 0;
