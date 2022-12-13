@@ -391,6 +391,9 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           } else {
             params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = checkoutSimCardItem.userPlanId;
             params[SHOP_ROUTE_URLS.PARAMS.ORDER_SIM] = true;
+            if(!!checkoutSimCardItem?.storePickup) {
+              params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
+            }
             this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
           }
           resolve();
@@ -549,19 +552,19 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     const orderShippingMethod: IShippingMethod = checkoutNewPlan.orderShippingMethod;
     return new Promise<INewPlanCartItem>((resolve, reject) => {
       try {
-        if (!!cardInfo && cardInfo.address1) {
+        if (!!cardInfo && cardInfo?.address1) {
           cardInfo.address1 = AccountPaymentService.shortenAddress(cardInfo.address1, 30);
         }
-        if (!!cardInfo && !!cardInfo.address2) {
+        if (!!cardInfo && !!cardInfo?.address2) {
           cardInfo.address2 = AccountPaymentService.shortenAddress(cardInfo.address2, 30);
         }
-        if (!!cardInfo && !!cardInfo.city) {
+        if (!!cardInfo && !!cardInfo?.city) {
           cardInfo.city = AccountPaymentService.shortenAddress(cardInfo.city, 20);
         }
-        if (!!cardInfo && !!cardInfo.id) {
+        if (!!cardInfo && !!cardInfo?.id) {
           cardInfo.type = 'creditCardProfile';
         }
-        if (!!cardInfo && !!cardInfo.cardNumber) {
+        if (!!cardInfo && !!cardInfo?.cardNumber) {
           cardInfo.type = 'creditCard';
         }
         const requestBody = {
@@ -578,7 +581,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           haseSIM: options.haseSIM,
           storePickup: options.storePickup
         };
-        if (!cardInfo.cardNumber && !cardInfo.id && !!currentPlan.voucherData && currentPlan.voucherData.code) {
+        if (!cardInfo?.cardNumber && !cardInfo?.id && !!currentPlan?.voucherData && currentPlan?.voucherData?.code) {
           delete requestBody.paymentInfo; // if user enter enough voucher remove payment info property from request
         }
         resolve(requestBody);

@@ -166,12 +166,16 @@ input {
     &[type="checkbox"] {
       background-color: #b0b0b0;
       border: 2px solid #b0b0b0;
+      cursor: not-allowed;
     }
     &[type="checkbox"]:checked {
       border: 2px solid #b0b0b0;
+      cursor: not-allowed;
+
     }
     &[type="checkbox"]:checked::before {
       background-color: #b0b0b0;
+      cursor: not-allowed;
     }
   }
 }

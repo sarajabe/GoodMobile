@@ -84,7 +84,7 @@
     "@types/grecaptcha": "^3.0.1",
     "@ztarmobile/zwp-service": "0.0.81",
     "@ztarmobile/zwp-service-backend": "0.1.48",
-    "@ztarmobile/zwp-service-backend-v2": "0.1.20",
+    "@ztarmobile/zwp-service-backend-v2": "0.1.21",
     "@ztarmobile/zwp-services-auth": "0.0.81",
     "@ztarmobile/zwp-services-util": "0.0.81",
     "allure-commandline": "^2.13.0",

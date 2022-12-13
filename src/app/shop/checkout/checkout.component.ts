@@ -908,8 +908,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   public calculateTaxesAndFees(): void {
     if (!!this.currentPlan) {
       let purchaseDetails = {};
-      if (!!this.cardInfo && !!this.cardInfo.cardNumber) {
-        this.cardInfo.cardNumber = this.cardInfo.cardNumber.toString().replace(/\t\s+|-/g, '');
+      if (!!this.cardInfo && !!this.cardInfo?.cardNumber) {
+        this.cardInfo.cardNumber = this.cardInfo?.cardNumber.toString().replace(/\t\s+|-/g, '');
       }
       const storedAutoRenew = sessionStorage.getItem('auto_renew');
       const autoRenew = storedAutoRenew === 'true' ? true : false;
@@ -917,14 +917,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         purchaseDetails = {
           basePlanId: this.currentPlan.basePlan.id,
           simsQuantity: this.currentPlan.simsQuantity,
-          paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+          paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
           shippingAddress: !this.storePickup ? this.shippingAddress: null,
-          usingPaymentProfile: !!this.cardInfo && !!this.cardInfo.id ? true : false,
+          usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
           voucherCode: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
           orderShipMethod: !!this.orderShippingMethod && !this.storePickup  ? this.orderShippingMethod.id : null,
           autoRenewPlan: this.autoRenewPlan,
           promoCode: !!this.autoRenewPlan ? '' + this.currentPlan.basePlan.promoPrice : null,
-          savePaymentMethod: !!this.cardInfo && (!!this.cardInfo.cardNumber || !!this.cardInfo.id) && this.saveCcInfo ? true : false,
+          savePaymentMethod: !!this.cardInfo && (!!this.cardInfo?.cardNumber || !!this.cardInfo?.id) && this.saveCcInfo ? true : false,
           storePickup: this.storePickup
         };
         this.appState.loading = true;
@@ -941,21 +941,21 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             this.changeRequestMdn = plan.mdn;
           }
           if (this.currentPlan.cartType === CART_TYPES.CHANGE_PLAN) {
-            if (!!this.cardInfo && this.cardInfo.id) {
+            if (!!this.cardInfo && this.cardInfo?.id) {
               this.cardInfo.type = 'creditCardProfile';
             }
-            if (!!this.cardInfo && this.cardInfo.cardNumber) {
+            if (!!this.cardInfo && this.cardInfo?.cardNumber) {
               this.cardInfo.type = 'creditCard';
             }
             purchaseDetails = {
               autoRenewPlan: this.autoRenewPlan,
               basePlanId: this.currentPlan.basePlan.id,
               nextCycleRenew: this.nextCycleRenew,
-              paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
-              usingPaymentProfile: !!this.cardInfo && !!this.cardInfo.id ? true : false,
+              paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+              usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
               voucherCode: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
               promoCode: !!this.autoRenewPlan ? '' + this.currentPlan.basePlan.promoPrice : null,
-              savePaymentMethod: !!this.cardInfo && (!!this.cardInfo.cardNumber || !!this.cardInfo.id) && this.saveCcInfo ? true : false,
+              savePaymentMethod: !!this.cardInfo && (!!this.cardInfo?.cardNumber || !!this.cardInfo?.id) && this.saveCcInfo ? true : false,
               mdn: this.changeRequestMdn,
               userPlanId: this.currentPlan.activePlanId,
               rewardsAmount: this.useFromRewardStored,
@@ -974,7 +974,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             purchaseDetails = {
               basePlanId: this.currentPlan.basePlan.id,
               voucherCode: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
-              paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+              paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
               autoRenewPlan: storedAutoRenew === 'true' ? true : false,
               mdn: this.changeRequestMdn,
               userPlanId: this.currentPlan.activePlanId,
@@ -992,10 +992,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           }
           if (this.currentPlan.cartType === CART_TYPES.PLAN_ITEMS) {
             if (this.currentPlan.simsQuantity < 1 && !!this.currentPlan.addOns) { // addons
-              if (!!this.cardInfo && this.cardInfo.id) {
+              if (!!this.cardInfo && this.cardInfo?.id) {
                 this.cardInfo.type = 'creditCardProfile';
               }
-              if (!!this.cardInfo && this.cardInfo.cardNumber) {
+              if (!!this.cardInfo && this.cardInfo?.cardNumber) {
                 this.cardInfo.type = 'creditCard';
               }
               purchaseDetails = {
@@ -1003,7 +1003,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 userPlanId: this.currentPlan.activePlanId,
                 addOns: this.currentPlan.addOns,
                 addOnRenewable: false,
-                paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+                paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
                 nextCycle: false,
                 newAddOnId: '',
                 refillVoucher: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
@@ -1019,10 +1019,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 this.toastHelper.showAlert('Sorry, we are having an internal issue at the moment. Please contact customer care for help.');
               });
             } else if (!this.currentPlan.addOns && this.currentPlan.simsQuantity > 0) {
-              if (!!this.cardInfo && this.cardInfo.id) {
+              if (!!this.cardInfo && this.cardInfo?.id) {
                 this.cardInfo.type = 'creditCardProfile';
               }
-              if (!!this.cardInfo && this.cardInfo.cardNumber) {
+              if (!!this.cardInfo && this.cardInfo?.cardNumber) {
                 this.cardInfo.type = 'creditCard';
               }
               purchaseDetails = {
@@ -1030,9 +1030,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 orderShipMethod: !this.storePickup ? this.orderShippingMethod.id: null,
                 userPlanId: this.activeUserPlanId,
                 simsQuantity: 1,
-                paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
-                usingPaymentProfile: (!!this.cardInfo && !!this.cardInfo.id ? true : false),
-                savePaymentMethod: (!!this.cardInfo && !!this.cardInfo.id ? false : this.saveCcInfo),
+                paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+                usingPaymentProfile: (!!this.cardInfo && !!this.cardInfo?.id ? true : false),
+                savePaymentMethod: (!!this.cardInfo && !!this.cardInfo?.id ? false : this.saveCcInfo),
                 mdn: this.changeRequestMdn,
                 rewardsAmount: this.useFromRewardStored,
                 balanceAmount: this.useFromBalanceStored,
@@ -1047,10 +1047,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               });
             } else {
               if (!!this.currentPlan.addOns && this.currentPlan.simsQuantity > 0) {
-                if (!!this.cardInfo && !!this.cardInfo.id) {
+                if (!!this.cardInfo && !!this.cardInfo?.id) {
                   this.cardInfo.type = 'creditCardProfile';
                 }
-                if (!!this.cardInfo && !!this.cardInfo.cardNumber) {
+                if (!!this.cardInfo && !!this.cardInfo?.cardNumber) {
                   this.cardInfo.type = 'creditCard';
                 }
                 purchaseDetails = {
@@ -1060,10 +1060,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                   orderShipMethod: !this.storePickup ? this.orderShippingMethod.id: null,
                   userPlanId: this.activeUserPlanId,
                   simsQuantity: 1,
-                  paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+                  paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
                   refillVoucher: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
-                  usingPaymentProfile: (!!this.cardInfo.id ? true : false),
-                  savePaymentMethod: (!!this.cardInfo && !!this.cardInfo.id ? false : this.saveCcInfo),
+                  usingPaymentProfile: (!!this.cardInfo?.id ? true : false),
+                  savePaymentMethod: (!!this.cardInfo && !!this.cardInfo?.id ? false : this.saveCcInfo),
                   rewardsAmount: this.useFromRewardStored,
                   balanceAmount: this.useFromBalanceStored,
                   storePickup: this.storePickup
@@ -1081,7 +1081,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           if (this.currentPlan.cartType === CART_TYPES.GENERIC_CART) {
             purchaseDetails = {
               simsQuantity: this.currentPlan.simsQuantity,
-              paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+              paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
               shippingAddress: !this.storePickup ? this.shippingAddress: null,
               orderShipMethod: !!this.orderShippingMethod && !this.storePickup ? this.orderShippingMethod.id : null,
               autoRenewPlan: false,
@@ -1102,14 +1102,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   private checkoutPlanItem(): void {
-    if (!!this.cardInfo && this.cardInfo.id) {
+    if (!!this.cardInfo && this.cardInfo?.id) {
       this.cardInfo.type = 'creditCardProfile';
     }
-    if (!!this.cardInfo && this.cardInfo.cardNumber) {
+    if (!!this.cardInfo && this.cardInfo?.cardNumber) {
       this.cardInfo.type = 'creditCard';
     }
     const purchaseDetails: any = {
-      paymentInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
+      paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
       refillVoucher: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
       mdn: this.changeRequestMdn,
       userPlanId: this.currentPlan.activePlanId,
@@ -1207,12 +1207,12 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     const cart = {
       currentPlan: this.currentPlan,
       shippingAddress: this.hasShippingItems && !this.storePickup ? this.shippingAddress : null,
-      cardInfo: !!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber) ? this.cardInfo : null,
+      cardInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber) ? this.cardInfo : null,
       options: {
         autoRenewPlan: this.currentPlan.autoRenewPlan,
         isVoucherPayment: this.isVoucherPayment,
-        saveCcInfo: !!this.cardInfo && !!this.cardInfo.cardNumber ? !!this.saveCcInfo : false,
-        usingPaymentProfile: !!this.cardInfo && !!this.cardInfo.id ? true : false,
+        saveCcInfo: !!this.cardInfo && !!this.cardInfo?.cardNumber ? !!this.saveCcInfo : false,
+        usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
         taxes: this.taxes,
         fees: this.fees,
         simId: this.newSimOrder.id,
@@ -1244,20 +1244,20 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!!storedNextCycle) {
       this.nextCycleRenew = storedNextCycle === 'true' ? true : false;
     }
-    if (!!this.cardInfo && this.cardInfo.id) {
+    if (!!this.cardInfo && this.cardInfo?.id) {
       this.cardInfo.type = 'creditCardProfile';
     }
-    if (!!this.cardInfo && this.cardInfo.cardNumber) {
+    if (!!this.cardInfo && this.cardInfo?.cardNumber) {
       this.cardInfo.type = 'creditCard';
     }
     this.checkoutService.checkoutChangePlan({
       currentPlan: this.currentPlan,
-      cardInfo: (!!this.cardInfo && (this.cardInfo.id || this.cardInfo.cardNumber)) ? this.cardInfo : null,
+      cardInfo: (!!this.cardInfo && (this.cardInfo?.id || this.cardInfo?.cardNumber)) ? this.cardInfo : null,
       options: {
         autoRenewPlan: this.currentPlan.autoRenewPlan,
         isVoucherPayment: this.isVoucherPayment,
         saveCcInfo: this.saveCcInfo,
-        usingPaymentProfile: !!this.cardInfo.id ? true : false,
+        usingPaymentProfile: !!this.cardInfo?.id ? true : false,
         taxes: this.taxes,
         fees: this.fees,
         rewardsAmount: this.useFromRewardStored,
@@ -1306,19 +1306,19 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     // if (!!storedAutoRenew) {
     //   this.autoRenewPlan = storedAutoRenew === 'true' ? true : false;
     // }
-    if (!!this.cardInfo && this.cardInfo.id) {
+    if (!!this.cardInfo && this.cardInfo?.id) {
       this.cardInfo.type = 'creditCardProfile';
     }
-    if (!!this.cardInfo && this.cardInfo.cardNumber) {
+    if (!!this.cardInfo && this.cardInfo?.cardNumber) {
       this.cardInfo.type = 'creditCard';
     }
     this.checkoutService.checkoutTopUpPlan({
       currentPlan: this.currentPlan,
-      cardInfo: (!!this.cardInfo && (this.cardInfo.id || this.cardInfo.cardNumber)) ? this.cardInfo : null,
+      cardInfo: (!!this.cardInfo && (this.cardInfo?.id || this.cardInfo?.cardNumber)) ? this.cardInfo : null,
       options: {
         isVoucherPayment: this.isVoucherPayment,
         saveCcInfo: this.saveCcInfo,
-        usingPaymentProfile: !!this.cardInfo && !!this.cardInfo.id ? true : false,
+        usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
         autoRenewPlan: this.currentPlan.autoRenewPlan,
         isEnoughVoucher: !this.noMoreFundsRequired,
         taxes: this.taxes,
@@ -1347,7 +1347,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       addOnId: '',
       addOns: this.currentPlan.addOns,
       currentPlan: this.currentPlan,
-      cardInfo: (!!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber)) ? this.cardInfo : null,
+      cardInfo: (!!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber)) ? this.cardInfo : null,
       mdn: this.changeRequestMdn,
       options: {
         autoRenewPlan: this.autoRenewPlan,
@@ -1370,10 +1370,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     });
   }
   private orderNewSim(): void {
-    if (!!this.cardInfo && this.cardInfo.id) {
+    if (!!this.cardInfo && this.cardInfo?.id) {
       this.cardInfo.type = 'creditCardProfile';
     }
-    if (!!this.cardInfo && this.cardInfo.cardNumber) {
+    if (!!this.cardInfo && this.cardInfo?.cardNumber) {
       this.cardInfo.type = 'creditCard';
     }
     if (!!this.cardInfo && !!this.cardInfo.address1) {
@@ -1387,9 +1387,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     }
     this.checkoutService.checkoutNewSIM(
       {
-        paymentInfo: (!!this.cardInfo && (!!this.cardInfo.id || !!this.cardInfo.cardNumber)) ? this.cardInfo : null,
-        usingPaymentProfile: (!!this.cardInfo && !!this.cardInfo.id ? true : false),
-        savePaymentMethod: (!!this.cardInfo && !!this.cardInfo.id ? false : this.saveCcInfo),
+        paymentInfo: (!!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber)) ? this.cardInfo : null,
+        usingPaymentProfile: (!!this.cardInfo && !!this.cardInfo?.id ? true : false),
+        savePaymentMethod: (!!this.cardInfo && !!this.cardInfo?.id ? false : this.saveCcInfo),
         rewardsAmount: this.useFromRewardStored, balanceAmount: this.useFromBalanceStored,
         shippingAddress: !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup ? this.shippingAddress : null, orderShipMethod: !!this.orderShippingMethod && !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup? this.orderShippingMethod.id : null, userPlanId: this.activeUserPlanId, simsQuantity: 1, haseSIM: this.currentPlan.eSIM,
         storePickup: this.storePickup

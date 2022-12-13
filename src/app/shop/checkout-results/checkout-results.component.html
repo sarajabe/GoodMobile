@@ -14,7 +14,7 @@
         </div>
         <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
           <ng-container *ngIf="!!purchasedPlanId">
-            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM">Look out for your <b>new SIM card</b> in the
+            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !isStorePickup">Look out for your <b>new SIM card</b> in the
               mail! Once your SIM card <b>arrives</b> in a couple of days,
               we will help you get your SIM card <b>activated</b> with a brand new phone number, or transfer your
               active number (port in) from another provider. You can view your plan details and
@@ -78,7 +78,7 @@
         </div>
         <div class="centered top" *ngIf="isOrderSim && !isPlanAddon && !isChangePlanSummary">
           <p class="info extra">Your <b>Replacement {{!!purchasedPlan?.eSimDetails ? 'e':''}}SIM</b> has been successfully purchased!.</p>
-          <p class="info noSpace" *ngIf="!purchasedPlan?.eSimDetails">Your <b>SIM</b> has been successfully ordered. Look out it’s arrival in the mail!</p>
+          <p class="info noSpace" *ngIf="!purchasedPlan?.eSimDetails && !isStorePickup">Your <b>SIM</b> has been successfully ordered. Look out it’s arrival in the mail!</p>
           <p class="info noSpace" *ngIf="!!purchasedPlan?.eSimDetails">Your eSIM is ready for activation at your convience from your Account Summary.</p>
           <p class="info" *ngIf="!purchasedPlan?.eSimDetails">You may proceed to your <b>Account Summary</b> to set up your {{!!purchasedPlan?.eSimDetails ? 'e':''}}SIM.</p>
           <div class="result-actions">

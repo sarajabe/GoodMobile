@@ -367,6 +367,20 @@
             <div class="tab-content">
               <div class="items-sub-content">
                 <div class="sub-item-section">
+                  <div class="item-details" *ngIf="!!userCart?.voucherData?.code">
+                    <img src="assets/icon/overview-voucher.svg" alt="Voucher image" />
+                    <div class="details">
+                      <div class="details-flex">
+                        <div class="flex">
+                          <p class="title smaller bold">Top-up Card / Voucher</p>
+                        </div>
+                        <div class="amount">
+                          <p class="key smaller bold">Deducted Amount</p>
+                          <p class="value">{{-userCart?.voucherData?.limit | currency}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="item-details" *ngIf="!!showBillingAddress && !!cardInfo">
                     <img src="assets/icon/credit-card.png" alt="Payment Card image" />
                     <div class="details">

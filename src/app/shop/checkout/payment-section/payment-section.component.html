@@ -44,12 +44,12 @@
       </div>
     </div>
     <div class="payment-option">
-      <label class="payment-container"><img src="assets/icon/credit-card.png" alt="credit card" /> Credit Card
+      <label class="payment-container">
         <input type="checkbox" [(ngModel)]="payWithCard" class="title-checkbox" (change)="togglePayWithCard()">
-        <span class="checkmark withImage"></span>
+        <img src="assets/icon/credit-card.png" alt="credit card" /> 
+        <h6 class="checkbox-label">Credit Card</h6>
       </label>
     </div>
-    
     <div class="checkout-card" *ngIf="!!payWithCard">
       <p class="card-title">Pay with Credit Card</p>
       <div class="card-content">
@@ -83,9 +83,9 @@
             </div>
           </label>
         </div>
-        <label class="payment-container autopay" *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART">Allow Auto Payment 
-          <input type="checkbox" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"  class="title-checkbox" >
-          <span class="checkmark"></span>
+        <label class="payment-container autopay" *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART"> 
+          <input type="checkbox" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"  class="auto-pay-checkbox" >
+          <h5 class="checkbox-label">Allow Auto Payment</h5>
         </label>
         <div class="showMore" *ngIf="methodsList?.length > 2" (click)="showAllPayments = !showAllPayments">
           <p class="more" data-cy="showMoreAndLess">{{!!showAllPayments ? 'Show less' : 'Show more'}}</p>
@@ -185,7 +185,6 @@
                 <input type="checkbox" d="saveCardDetailsCheckbox" name="saveCardDetailsCheckbox" [checked]="saveCCInfo"
                 [(ngModel)]="saveCCInfo" (change)="updateSaveCCInfoChanged()"
                 [disabled]="!!autoRenew" [class.disabled]="!!autoRenew" >
-                <span class="checkmark"></span>
                <b> Save card details</b>
               </label>
             </div>
@@ -194,7 +193,6 @@
               <label class="payment-container"  *ngIf="!!shippingAddress">
                 <input type="checkbox" id="billingSameAsShipping" name="billingSameAsShipping"
                   [(ngModel)]="billingSameAsShipping" (change)="toggleSharedAddress()">
-                <span class="checkmark"></span>
                 <b>Same as shipping address.</b>
               </label>
               <div class="shipping-banner" *ngIf="!!billingSameAsShipping">
@@ -221,9 +219,9 @@
       </div>
     </div>
     <div class="payment-option" *ngIf="totalBalance > 0">
-      <label class="payment-container balance"><img src="assets/icon/balance.svg" alt="Balance" /> <div class="balance-amounts"><span>Account Balance</span><span class="amount">{{(totalBalance - balanceAmount - rewardAmount) | currency}}</span></div> 
+      <label class="payment-container balance">
         <input type="checkbox" [(ngModel)]="payWithTotalBalance" class="title-checkbox" (change)="togglePayWithTotalBalance()">
-        <span class="checkmark withImage"></span>
+        <img src="assets/icon/balance.svg" alt="Balance" /> <div class="balance-amounts"><span>Account Balance</span><span class="amount">{{(totalBalance - balanceAmount - rewardAmount) | currency}}</span></div> 
       </label>
     </div>
     <div class="checkout-card" *ngIf="payWithTotalBalance">
@@ -235,7 +233,6 @@
         <div class="balance-section" *ngIf="!!userAccount && userAccount.accountBalance > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
           <label class="payment-container amounts">Pay from Account Balance
             <input type="checkbox" [(ngModel)]="payWithBalance" class="title-checkbox"  (change)="togglePayWithBalance()">
-            <span class="checkmark"></span>
           </label>
           <div class="available-section">
             <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
@@ -262,7 +259,6 @@
         <div class="balance-section" *ngIf="!!userAccount && !!userAccount.rewards && userAccount.rewards.available > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
           <label class="payment-container amounts">Pay from Refer a Friend Reward
             <input type="checkbox" [(ngModel)]="payWithReward" class="title-checkbox" (change)="togglePayWithReward()">
-            <span class="checkmark"></span>
           </label>
           <div class="available-section">
             <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
@@ -289,10 +285,56 @@
         </div>
       </div>
     </div>
+    <div class="payment-option" *ngIf="!!showVoucherSection">
+      <label class="payment-container voucher">
+        <input type="checkbox" [(ngModel)]="payWithVoucher" class="title-checkbox" (change)="togglePayWithVoucher()">
+        <img src="assets/icon/voucher-illu.svg" alt="Voucher" /> 
+        <h6 class="checkbox-label">Top-up Card / Voucher</h6>
+      </label>
+    </div>
+    <div class="checkout-card" *ngIf="!!payWithVoucher">
+      <p class="card-title">Top-up / Voucher Details</p>
+      <div class="card-content">
+        <p class="smaller">Got a top-up card or voucher? Fill out the PIN in the field below:</p>
+        <form [formGroup]="voucherForm" class="voucher-form">
+          <label for="voucher" class="label">Top-up / Voucher PIN</label>
+          <div class="actions">
+            <div class="input-field">
+            <input id="voucher" data-cy="voucher" type="text" name="voucher"  formControlName="voucher"
+            placeholder="Enter Voucher Code here" restrictNumbers minlength="12" maxlength="12" required (input)="voucherInputChanged()">
+            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('required')">PIN is required</label>
+            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('minlength')">PIN is invalid</label>
+          </div>
+            <button class="button primary" (click)="applyVoucher()">Apply</button>
+          </div>
+        </form>
+        <div *ngIf="!!showVoucherSuccess" class="info-banner success-background">
+          <div class="flex">
+          <img src="assets/icon/success-icon.svg" alt="Icon">
+          <div class="banner-content">
+            <p class="title">Success!</p>
+            <p class="description">Successfully deducted</p>
+             <h5>{{voucherDetuctedAmount | currency}}</h5>
+            <p class="description last">Remaining amount</p>
+            <h5>{{voucherRemainingAmount | currency}}</h5>
+          </div>
+        </div>
+        </div>
+        <div *ngIf="!!showVoucherError" class="info-banner error-background">
+          <div class="flex">
+          <img src="assets/icon/error-icon.svg" alt="Icon">
+          <div class="banner-content">
+          <p class="title">Oops!</p>
+          <p class="description">Invalid PIN enetred, please try again.</p>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div>
   </ng-container>
 </div>
 </section>
-<section class="navigation-section" [class.blur]="showAddCardSection">
+<section class="navigation-section" [class.blur]="showAddCardSection || (!payWithCard && !payWithVoucher && !payWithTotalBalance) || (!!payWithVoucher && ((!!voucherForm.invalid || !!showVoucherError) || (!applyVoucherCalled)))">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goBack()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn">Next</button>

@@ -154,7 +154,8 @@ export const SHOP_ROUTE_URLS = {
     MDN: 'mdn',
     REFERRAL_CODE: 'referralCode',
     PHONE_PURCHASE: 'phonePurchase',
-    REPLACE_PLAN: 'replacePlan'
+    REPLACE_PLAN: 'replacePlan',
+    STORE_PICKUP: 'storePickup',
   },
 };
 
