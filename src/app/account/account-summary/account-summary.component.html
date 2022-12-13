@@ -683,9 +683,9 @@
                   <div *ngIf="!editPinNumberClicked"
                     [class.disabled]="selectedPlan?.canceled || !userAccount || !!userAccount?.pastDue"
                     class="title-info pin-info" id="pin--align">
-                    <b class="pass">{{showAccountPin && !!userAccount? userAccount?.pin : '●●●●'}}</b>
+                    <b class="pass">{{showAccountPin && !!userAccount ? userAccount?.pin : '●●●●'}}</b>
                     <span class="edit-action" (click)="viewAccountPin()"
-                      [class.disabled]="selectedPlan?.canceled || !userAccount"><img src="assets/img/eye.svg"
+                      [class.disabled]="selectedPlan?.canceled || !userAccount"><img src="assets/icon/eye.svg"
                         data-cy="changePin" /> </span>
                   </div>
                   <!-- edit pin pop up  -->

@@ -372,7 +372,7 @@
                 flex-direction: row;
                 border: 0.4px solid;
                 max-width: 215px;
-                color: #80008099;
+                color: #1A619F;
 
                 &.disabled {
                     color: #9595958f;
@@ -402,6 +402,10 @@
                         opacity: 0.4;
                         filter: alpha(opacity=40);
                         pointer-events: none;
+                    }
+
+                    img {
+                        margin-top: 1px;
                     }
 
                     @media (max-width: $desktop-min-width-minus) {
@@ -1556,9 +1560,11 @@
             p {
                 font-size: rem-calc(15px);
                 line-height: 1.13;
+                margin-bottom: 15px;
 
                 @media (max-width: $desktop-min-width-minus) {
                     font-size: rem-calc(12px);
+                    margin-bottom: 12px;
                 }
             }
 
@@ -1569,6 +1575,10 @@
                     max-width: 260px;
                     width: 100%;
                 }
+            }
+
+            .button {
+                margin-top: 10px;
             }
         }
 
@@ -1640,6 +1650,13 @@
         }
 
         .custom-checkbox {
+            display: flex;
+            gap: 8px;
+
+            @media (max-width: $desktop-min-width-minus) {
+                gap: 16px;
+            }
+
             @media (max-width: $ipad-min-width-minus) and (min-width: 450px) {
                 margin-top: 30px;
             }
@@ -1677,7 +1694,18 @@
                     font-size: rem-calc(12px);
                     line-height: 1.17;
                     white-space: nowrap;
-                    margin-top: 6px;
+                    margin-top: 4px;
+                }
+
+                .note {
+                    @media (min-width: $desktop-min-width) and (max-width: 1072.9px) {
+                        width: 96%;
+                    }
+
+                    @media (max-width: 387.9px) {
+                        width: 89%;
+                        margin-bottom: 16px;
+                    }
                 }
             }
         }

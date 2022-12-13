@@ -2129,35 +2129,43 @@
           margin-bottom: 0;
         }
       }
+    
       .modal-hint {
         font-size: rem-calc(16px);
         line-height: 20px;
         margin: 0 auto 15px;
       }
+    
       .account-address-details-container {
         &.highlight-card {
           width: 100%;
           text-align: left;
-
+    
           .custom-checkbox {
+            display: flex;
+            gap: 8px;
+            height: 40px;
+    
             .checkbox-label {
               text-transform: capitalize;
               font-size: rem-calc(15px);
               font-family: $base-font-family;
+              margin-top: 12px;
             }
           }
-
+    
           .details {
             text-align: left;
             padding-top: 0;
-
+            padding-left: 38px;
+    
             p {
               font-size: rem-calc(15px);
               font-family: $base-font-family;
               margin-bottom: 0;
             }
           }
-
+    
           @media (#{$larger-than-phablet}) {
             .custom-checkbox {
               .checkbox-label {
@@ -2165,13 +2173,13 @@
               }
             }
           }
-
+    
           @media (max-width: $phablet-min-width) {
             display: block;
-
+    
             .custom-checkbox {
               width: 100%;
-
+    
               .checkbox-label {
                 width: auto;
               }
@@ -2179,13 +2187,15 @@
           }
         }
       }
+    
       .modal-actions {
-        flex-direction: column!important;
+        flex-direction: column !important;
+    
         .button {
-           width: 100px!important;
-           padding: 8px !important;
-           margin-right: 0!important;
-           margin-bottom: 14px!important;
+          width: 100px !important;
+          padding: 8px !important;
+          margin-right: 0 !important;
+          margin-bottom: 14px !important;
         }
       }
     }
