@@ -16,7 +16,7 @@
     }
     .banner-section {
         .banner-container {
-            background: #7DD0DE26;
+            background: linear-gradient(180deg, #d6e1ff 0%, #e3efff 100%);
             height: 472px;
             position: relative;
             display: flex;
@@ -56,7 +56,6 @@
                 .header {
                     font-size: rem-calc(72px);
                     line-height: 84px;
-                    color: $primary-color;
                 }
              
                 @media(max-width: 1300px) {
@@ -330,7 +329,7 @@
         
         .road-step {
             position: relative;
-            border: solid #BF9DC6;
+            border: solid #C7E6F7;
         }
         
         /* setting padding based on even or odd */
@@ -415,7 +414,7 @@
         
         /* Title of the card */
         .title {
-            color: $primary-color;
+            color: $header-color;
             position: relative;
             font-size: rem-calc(32px);
             line-height: 40px;
@@ -540,7 +539,7 @@
                 align-items: flex-start;
                 &::before {
                     content: "\2022";
-                    color: $secondary-color;
+                    color: #6DB9E4;
                     font-weight: bold;
                     display: inline-block;
                     font-size: rem-calc(35px);

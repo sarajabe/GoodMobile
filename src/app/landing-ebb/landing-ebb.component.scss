@@ -18,8 +18,8 @@
         display: flex;
         flex-direction: column;
         .banner-container {
-            background: #BDE4E3;
-            color: #383838;
+            background: linear-gradient(180deg,#d6e1ff 0%,#e3efff 100%);
+            color: $third-color;
             height: 556px;
             position: relative;
             display: flex;
@@ -61,7 +61,7 @@
                 padding-left: 8%;
                 z-index: 1;
                 .title {
-                    background: #7DD0DE;
+                    background: #6DB9E4;
                     color: white;
                     padding: 3px 16px;
                     font-size: rem-calc(20px);
@@ -79,6 +79,7 @@
                     line-height: 64px;
                     margin-top: 28px;
                     margin-bottom: 8px;
+                    color: $header-color;
                 }
                 .plan-note {
                     font-size: rem-calc(16px);
@@ -93,6 +94,7 @@
                     font-size: rem-calc(40px);
                     line-height: 48px;
                     margin-bottom: 16px;
+                    color: $header-color;
                     .month {
                         font-size: rem-calc(22px);
                         span {
@@ -238,7 +240,7 @@
             }
         }
         .sup-container {
-            background: #7DD0DE33;
+            background: #F1F9FD;
             padding: 20px 8%;
             .banner-note {
                 color: #A5A3A3;
@@ -449,7 +451,7 @@
         }
     }
     .icons-row {
-        background: #A5A3A30D;
+        background: $white;
         box-shadow: 0px 3px 15px 0px #2929291A;
         padding: 32px 8%;
         display: flex;
@@ -474,7 +476,7 @@
         }
     }
     .acp-condition {
-        background: #7DD0DE33;
+        background: #F1F9FD;
         display: flex;
         padding: 64px 5px 64px 8%;
         align-items: center;
@@ -538,7 +540,7 @@
                     align-items: flex-start;
                     &::before {
                         content: "\2022";
-                        color: $secondary-color;
+                        color: #6DB9E4;
                         font-weight: bold;
                         display: inline-block;
                         font-size: rem-calc(35px);
@@ -774,6 +776,7 @@
                     width: 144px;
                     padding: 8px;
                     font-weight: 700;
+                    margin-top: 16px;
                     font-size: rem-calc(20px);
                 }
                 .card-link {
@@ -853,7 +856,7 @@
         }
     }
     .faqs-section {
-        background-color: #f2f3f5;
+        background-color: $white;
         .faqs-content {
             display: flex;
             width: 100%;
