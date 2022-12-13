@@ -111,7 +111,7 @@
                             <img src="assets/icon/info-icon.svg" alt="Info Icon">
                             <div class="banner-content">
                                 <p class="description">If you plan to change your device you have to check if your
-                                    device is compatible with GoodMobile network. Most devices work on our network.
+                                    device is compatible with Good Mobile network. Most devices work on our network.
                                     Let’s confirm if yours is one of them.</p>
                                 <div class="actions" *ngIf="!showCompatibleForm">
                                     <button class="button thirdly" (click)="openDeviceForm()"
@@ -155,7 +155,7 @@
                                         <p class="title">You’re Set!</p>
                                         <p class="description">The following device: {{checkedDevice?.name}} is
                                             <b>compatible
-                                                with GoodMobile {{checkedDevice?.eSimCapable && deviceNetwork == 'tmo' ?
+                                                with Good Mobile {{checkedDevice?.eSimCapable && deviceNetwork == 'tmo' ?
                                                 ' and supports eSIM.': '.'}}</b> The phone must be unlocked.
                                         </p>
                                         <p class="description bottom-8"
@@ -172,7 +172,7 @@
                                                         around.</p>
                                                 </span>
                                             </span></p>
-                                        <p class="description bottom-8">Please use your GoodMobile SIM to your new
+                                        <p class="description bottom-8">Please use your Good Mobile SIM to your new
                                             phone, and restart the phone. As long as the new phone is unlocked, network
                                             will automatically detect and register the device.</p>
                                         <p class="description bottom-8">Once the phone registers on the network, it will
@@ -250,7 +250,7 @@
                     <div class="item-details">
                         <div class="details-side center">
                             <img class="thumbnail"
-                                [src]="!!selectedPlan?.eSIM ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg'"
+                                [src]="!!selectedPlan?.eSIM ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'"
                                 alt="SIM">
                             <div class="details-info" [class.multiple]="!!selectedPlan?.eSIM">
                                 <div class="details ">

@@ -48,11 +48,11 @@
                 [class.no-account-status-message]="userHasActivePlans">
                 <div class="account-sub-details-header" *ngIf="!!userAccount && !!selectedPlan && selectedPlan?.mdn">
                     <h3 class="pay-refill-title">
-                        You can pay and refill your GoodMobile account
+                        You can pay and refill your Good Mobile account
                     </h3>
                     <div class="details margin-bottom-35">
-                        With GoodMobile you can always pay due payment on your plan here, you can choose to pay through a
-                        GoodMobile voucher or
+                        With Good Mobile you can always pay due payment on your plan here, you can choose to pay through a
+                        Good Mobile voucher or
                         through your credit card. The remaining un-used amount of your voucher will go directly to your
                         account balance.
                     </div>
@@ -61,7 +61,7 @@
                 <ng-container *ngIf="!!selectedPlan && selectedPlan?.mdn">
                     <div class="card-container plan-container">
                         <div class="title last-element">
-                            <span class="title-text one-liner">Your custom GoodMobile plan:</span>
+                            <span class="title-text one-liner">Your custom Good Mobile plan:</span>
                             <span class="title-text one-liner">{{selectedPlan?.basePlan?.title}}</span>
                             <span
                                 class="title-info one-liner account-plan-price"><b>{{selectedPlan?.basePlan?.price | currency:'USD':'symbol':0}}/month</b></span>

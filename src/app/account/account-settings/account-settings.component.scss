@@ -4,8 +4,15 @@
 
 .first-row {
   display: flex;
+
   @media (max-width: $ipad-min-width-minus) {
     flex-direction: column;
+  }
+
+  .editable-action {
+    .second-label {
+      margin-top: 16px;
+    }
   }
 }
 .second-row {
@@ -76,6 +83,12 @@
         display: block;
         margin-bottom: 10px;
       }
+
+      &.edit-email-style {
+        display: block;
+        margin-top: 10px;
+      }
+
       .de-enroll-icon {
         background-color: $primary-color;
         padding: 6px 4px;
@@ -127,6 +140,9 @@
     }
   }
   &.CC {
+    .card-subtitle {
+      font-family: $base-font-family;
+    }
     .card-content {
       margin-bottom: 30px;
       .flex-display {

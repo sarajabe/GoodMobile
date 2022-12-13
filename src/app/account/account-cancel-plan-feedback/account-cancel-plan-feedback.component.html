@@ -4,9 +4,9 @@
         <p class="subtitle" *ngIf="!!cancelDate">Effective on:<b> {{cancelDate | date}}</b></p>
     </div>
     <form (ngSubmit)="submitUserFeedback()" #feedbackForm="ngForm" class="cancel-plan-form">
-        <p class="note" *ngIf="!!cancelDate">As requested, your GoodMobile plan has been cancelled, and your service
+        <p class="note" *ngIf="!!cancelDate">As requested, your Good Mobile plan has been cancelled, and your service
             is now canceled / will discontinue on {{userAccount?.billingRenewalPaymentDate | date}}.</p>
-        <p class="note" *ngIf="!cancelDate">As requested, your GoodMobile plan has been cancelled.</p>
+        <p class="note" *ngIf="!cancelDate">As requested, your Good Mobile plan has been cancelled.</p>
         <p class="note common">Please let us know a little about your decision so we can get better: </p>
         <div class="radio-checkbox" *ngFor="let issue of cancelPlanProblems">
             <input title="{{issue.title}}" type="radio" required [(ngModel)]="cancelPlanProblem" name="issue"

@@ -37,7 +37,7 @@ import { AccountEsimSetupComponent } from './account-esim-setup/account-esim-set
 const routes: Routes = [
   {
     path: '', component: UserAccountComponent, children: [
-      { path: ACCOUNT_ROUTE_URLS.PAYMENTS, component: AccountPaymentHistoryComponent, data: { title: 'GoodMobile | Payment History', description: 'Access your account payments and reciepts easily' } as IPageMeta, canActivate: [AuthEmailGuardService] },
+      { path: ACCOUNT_ROUTE_URLS.PAYMENTS, component: AccountPaymentHistoryComponent, data: { title: 'Good Mobile | Payment History', description: 'Access your account payments and reciepts easily' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACCOUNT_ROUTE_URLS.USAGE, component: AccountUsageHistoryComponent, data: { title: 'Usage History' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS, component: AccountPlanAddOnsComponent, data: { title: 'Plan addOns' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       {

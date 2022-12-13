@@ -53,7 +53,7 @@
                   is in the process of being ported from your previous carrier. This can take a few hours to process.
                   Click Refresh Page to see updates</p>
                 <p class="description last" *ngIf="selectedPlan?.portInFailed">There was an issue that prevented us from
-                  processing your port in, please review to fix the issue or call the GoodMobile customer care: <span
+                  processing your port in, please review to fix the issue or call the Good Mobile customer care: <span
                     class="text-color-primary">{{ customerCareNumber | phone }}</span></p>
                 <div class="actions"
                   *ngIf="selectedPlan?.portInStatus == 'SUBMITTED' || selectedPlan?.portInStatus == 'DELAY'">
@@ -130,7 +130,7 @@
               <div class="banner-content">
                 <p class="title">Action required - Don’t lose your number</p>
                 <p class="description last">Your Plan has expired, but we understand these are trying times, so
-                  GoodMobile has added 250 minutes and 250 texts to your account for use within the 30 days after your
+                  Good Mobile has added 250 minutes and 250 texts to your account for use within the 30 days after your
                   plan expired.</p>
                 <div class="actions">
                   <button class="button thirdly" (click)="makePayment()">Make payment now</button>

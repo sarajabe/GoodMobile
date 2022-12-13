@@ -198,7 +198,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   this.userPlanService.setPlanDeviceFromBFF(this.userPlanId, { planDevice: device }).then(() => {
                     const customHTML = `<div class="success-message">
                         <p class="message">Your phone is ready and able to join our network!</p>
-                        <p class="note">It must also be unlocked to work on the GoodMobile Network.</p>
+                        <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                       </div>`;
                     this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then(() => {
                       const params = {};
@@ -315,7 +315,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                 if (this.simValidity.prefunded) {
                   const customHTML = `<div class="success-message">
                       <p class="message">Your phone is ready and able to join our network!</p>
-                      <p class="note">It must also be unlocked to work on the GoodMobile Network.</p>
+                      <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                     </div>`;
                   this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then(() => {
                     const params = {};
@@ -378,7 +378,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   let customHTML;
                   customHTML = `<div class="success-message">
                 <p class="message">Your phone is ready and able to join our network!</p>
-                <p class="note">It must also be unlocked to work on the GoodMobile Network.</p>
+                <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                 </div>`;
                 this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then((result) => {
                   if (!!result) {
@@ -427,7 +427,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
     this.userPlanService.setPlanDeviceFromBFF(this.userPlanId, { planDevice: device }).then(() => {
       const customHTML = `<div class="success-message">
           <p class="message">Your phone is ready and able to join our network!</p>
-          <p class="note">It must also be unlocked to work on the GoodMobile Network.</p>
+          <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
           </div>`;
       this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then(() => {
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);

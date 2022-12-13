@@ -12,17 +12,17 @@ import { AcpSignupComponent } from './acp-signup/acp-signup.component';
 
 const routes: Routes = [
   {path: '', component: UserLoginComponent, children: [
-  { path: LOGIN_ROUTE_URLS.LOGIN, component: LoginComponent, data: {title: 'Login To Your GoodMobile Account | GoodMobile', description:
-  'Login to your GoodMobile account to top up, renew, or edit your profile.'} as IPageMeta },
-  { path: LOGIN_ROUTE_URLS.SIGN_UP, component: SignUpComponent, data: {title: 'Sign Up  | GoodMobile', description: 'Create your GoodMobile account'} as IPageMeta},
-  { path: LOGIN_ROUTE_URLS.WELCOME, component: WelcomeNewUserComponent, data: {title: 'Welcome onboard!', description: `Welcome to GoodMobile, With GoodMobile you can purchase plans
+  { path: LOGIN_ROUTE_URLS.LOGIN, component: LoginComponent, data: {title: 'Login To Your Good Mobile Account | Good Mobile', description:
+  'Login to your Good Mobile account to top up, renew, or edit your profile.'} as IPageMeta },
+  { path: LOGIN_ROUTE_URLS.SIGN_UP, component: SignUpComponent, data: {title: 'Sign Up  | Good Mobile', description: 'Create your Good Mobile account'} as IPageMeta},
+  { path: LOGIN_ROUTE_URLS.WELCOME, component: WelcomeNewUserComponent, data: {title: 'Welcome onboard!', description: `Welcome to Good Mobile, With Good Mobile you can purchase plans
   with a competitive price and high speed data`} as IPageMeta},
-  { path: LOGIN_ROUTE_URLS.FORGOT_PASSWORD, component: ForgetPasswordComponent, data: {title: 'Forgot Password | GoodMobile',
+  { path: LOGIN_ROUTE_URLS.FORGOT_PASSWORD, component: ForgetPasswordComponent, data: {title: 'Forgot Password | Good Mobile',
   description: 'Forgot your password'} as IPageMeta},
-  { path: LOGIN_ROUTE_URLS.RESET_PASSWORD, component: ResetPasswordComponent, data: {title: 'Reset Password | GoodMobile',
-  description: 'Reset your GoodMobile account password'} as IPageMeta},
-  { path: LOGIN_ROUTE_URLS.ACP_SIGNUP, component: AcpSignupComponent, data: {title: 'ACP signup | GoodMobile',
-  description: 'Your GoodMobile account allows you to fill out the Affordable Connectivity Program form and sign the consent. Once your enrollment is confirmed, you will be able  to manage your service. Let’s get you signed up!'} as IPageMeta}
+  { path: LOGIN_ROUTE_URLS.RESET_PASSWORD, component: ResetPasswordComponent, data: {title: 'Reset Password | Good Mobile',
+  description: 'Reset your Good Mobile account password'} as IPageMeta},
+  { path: LOGIN_ROUTE_URLS.ACP_SIGNUP, component: AcpSignupComponent, data: {title: 'ACP signup | Good Mobile',
+  description: 'Your Good Mobile account allows you to fill out the Affordable Connectivity Program form and sign the consent. Once your enrollment is confirmed, you will be able  to manage your service. Let’s get you signed up!'} as IPageMeta}
 ]}];
 
 @NgModule({

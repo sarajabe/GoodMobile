@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import {
   AccountPaymentService, FirebaseUserProfileService, IFirebaseAddress, IFirebasePaymentMethod,
-  IPaymentMethod, IUser, IUserPlan, ShippingService, UserOrdersService, UserPlansService
+  IPaymentMethod, IUser, IUserPlan, ShippingConfigurationService, ShippingService, UserOrdersService, UserPlansService
 } from '@ztarmobile/zwp-service-backend';
 import { PaginationInstance } from 'ngx-pagination';
 import { takeWhile, take } from 'rxjs/operators';
@@ -51,6 +51,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public paymentExpanded = true;
   public barCodeValues;
   public customerId;
+  public newSimOrder: { price: number, fees: number, id?: string };
   private userId: string;
   private alive = true;
   activationCode: Params;
@@ -68,6 +69,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
               private metaService: MetaService,
               private contentful: ContentfulService,
               private route: ActivatedRoute,
+              private shippingConfigurationService: ShippingConfigurationService,
               private accountOrderService: UserOrdersService,
               private clipboardService: ClipboardService) {
               
@@ -81,14 +83,16 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
         }
       }
     });
-    
+    this.shippingConfigurationService.newSimOrder.pipe(takeWhile(() => this.alive)).subscribe((order) => {
+      this.newSimOrder = order;
+    });
   }
 
   public getDescription(): string {
     const purchasedPlan = '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS;
     return `Look out for your new SIM card in the mail. Once your SIM card arrives , go to your
     <a href="${purchasedPlan}"> Purchased Plans </a> tab
-    to activate your SIM with a new number or transfer your existing number to GoodMobile.`;
+    to activate your SIM with a new number or transfer your existing number to Good Mobile.`;
   }
 
   ngOnInit(): void {

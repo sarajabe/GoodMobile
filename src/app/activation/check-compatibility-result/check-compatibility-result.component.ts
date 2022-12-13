@@ -91,7 +91,7 @@ export class CheckCompatibilityResultComponent implements OnDestroy, AfterConten
         title: 'Congrats!',
         desc1: '<b>Your device is compatible for great coverage</b>',
         desc2: 'Get unlimited talk and text + data access',
-        desc3: 'Proceed to checkout to order your new plan and FREE SIM card from GoodMobile.',
+        desc3: 'Proceed to checkout to order your new plan and FREE SIM card from Good Mobile.',
         buttonName: 'Proceed to checkout',
         buttonAction: 'proceedToCheckout',
         isAttFlow: true

@@ -11,7 +11,7 @@
           <label for="currentPassword">Current Password</label>
           <input class="card-input" placeholder="Current Password" type="password" [(ngModel)]="currentPassword"
             id="currentPassword" data-cy="currentPassword" name="currentPassword" />
-          <label for="password">New Password</label>
+          <label for="password" class="second-label">New Password</label>
           <input class="card-input" placeholder="New Password" type="password" [(ngModel)]="password" id="password" data-cy="password"
             name="password" (input)="validatePassword()" />
           <label class="validation-message" *ngIf="isEditingPassword && !isValidPassword && !!password">
@@ -45,7 +45,7 @@
               (input)="validateName('first')" />
             <label class="validation-message alert" *ngIf="!firstNameValidation && !!firstName"> First name
               is invalid </label>
-            <label for="lastName">Last Name</label>
+            <label for="lastName" class="second-label">Last Name</label>
             <input class="card-input" type="text" [(ngModel)]="lastName" [pattern]="namePattern" id="lastName" data-cy="lastName"
               (input)="validateName('last')" />
             <label class="validation-message alert" *ngIf="!lastNameValidation && !!lastName"> Last name is
@@ -84,11 +84,11 @@
         <div class="action editing" *ngIf="!!isEditingEmail">
           <button id="cancelEmailButton"  data-cy="cancelEmailButton" class="button secondary" (click)="cancelEmailClicked()">Cancel</button>
         </div>
-        <div class="action" *ngIf="!isEditingUserName" (click)="isEditingUserName = true">
+        <div class="action" [class.edit-email-style]="!!isEditingEmail" *ngIf="!isEditingUserName" (click)="isEditingUserName = true">
           <img class="action-icon" src="/assets/img/white-pin.svg" alt="change name" name="change name" />
           <p id="changeName" data-cy="changeName" class="action-title">Change name</p>
         </div>
-        <div class="action" [class.right]="!isEditingUserName" (click)="isEditingEmail=true" *ngIf="!isEditingEmail">
+        <div class="action" [class.right]="!isEditingUserName" (click)="isEditingEmail = true" *ngIf="!isEditingEmail">
           <img class="action-icon" src="/assets/img/white-pin.svg" alt="change email" name="change email" />
           <p id="changeEmail" data-cy="changeEmail" class="action-title">Change email</p>
         </div>

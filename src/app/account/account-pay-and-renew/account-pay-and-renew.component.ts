@@ -102,7 +102,7 @@ export class AccountPayAndRenewComponent implements OnInit, OnDestroy {
       title = this.selectedPlan.title;
     }
     if (!!this.userHasActivePlans) {
-      return `<div class="page-description plan-selector-space">Payment is due <b> ${date} </b>for your GoodMobile plan: ${title}</div>`;
+      return `<div class="page-description plan-selector-space">Payment is due <b> ${date} </b>for your Good Mobile plan: ${title}</div>`;
     } else {
       return `<div class="page-description plan-selector-space pay">You can always update your account details and settings here. You can also manage
       devices and activated accounts or add numbers to your existing account.</div>`;
