@@ -167,9 +167,9 @@
                     <div class="details">
                       <div class="detail">
                         <div class="detail-info">
-                          <p class="smaller bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                          <p class="smaller primary-font-bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
                         </div>
-                        <p class="smaller price">$0</p>
+                        <p class="smaller price">${{newSimOrder?.price}}</p>
                       </div>
                       <p class="smaller quantity" data-cy="simQuantity">Quantity: 1</p>
                     </div>
@@ -372,11 +372,11 @@
                     <div class="details">
                       <div class="details-flex">
                         <div class="flex">
-                          <p class="title smaller bold">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
-                          <p class="desc">Debit card ending in {{ cardInfo?.last4 }}</p>
+                          <p class="title smaller primary-font-bold">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
+                          <p class="desc smaller">Ending in {{ cardInfo?.last4 }}</p>
                         </div>
                         <div class="amount">
-                          <p class="key smaller bold">Deducted Amount</p>
+                          <p class="key smaller primary-font-bold">Deducted Amount</p>
                           <p class="value">{{(total - balanceAmount) | currency}}</p>
                         </div>
                       </div>

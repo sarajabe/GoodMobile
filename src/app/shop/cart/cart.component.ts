@@ -460,8 +460,8 @@ export class CartComponent implements OnInit, OnDestroy {
         const discountValue = parseInt(discountAmountValue, 10);
         total -= total * (discountValue / 100);
       }
-      if (this.isTrialUpgrade) {
-        total = total - 5;
+      if (!this.userCart.activationCode) {
+        total = total + this.newSimOrder.price;
       }
       if (!!this.estimatedResult && !subTotal) {
         total = total + this.estimatedFees + this.estimatedTaxes;

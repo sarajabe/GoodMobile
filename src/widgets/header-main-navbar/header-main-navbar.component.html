@@ -78,7 +78,7 @@
                 [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Coverage</a></li>
             <li class="responsive-item"> 
               <img class="item-icon" src="assets/icon/toggle.svg" alt="activate" />
-              <a id="activate" data-cy="activate"
+              <a id="activate-responsive" data-cy="activate"
                 [routerLink]="[ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.SIM_CHECK]" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Activate</a></li>
           </ul>
@@ -89,7 +89,7 @@
       </div>
       <div class="list-section desktop">
         <ul class="menu" >
-          <li class="menu-item"><a id="shopMenu" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
+          <li class="menu-item"><a id="shopMenu-header" data-cy="shopMenu" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
             routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">shop</a></li>
           <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header" [routerLink]="[ROUTE_URLS.BRING_PHONE]"
               routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">bring

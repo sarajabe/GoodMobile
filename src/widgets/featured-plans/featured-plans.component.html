@@ -22,7 +22,7 @@
       <div class="cards-section">
         <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="viewAllPlans()">
           <div class="featured-plan-card" >
-            <div class="ribbon" *ngIf="!!plan?.ebb"><img class="ribbon" src="assets/img/new-ribbon.svg"></div>
+            <div class="ribbon" *ngIf="!!plan?.ebb"><img class="ribbon" src="assets/img/new-ribbon.svg" alt="ribbon"></div>
             <div class="card-header-section">
               <p class="card-header caption">{{plan?.category}}</p>
             </div>

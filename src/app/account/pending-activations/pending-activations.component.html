@@ -72,14 +72,14 @@
                         <div class="details-side">
                             <img class="thumbnail"
                                 src="assets/icon/sim-image.svg"
-                                alt="goodMobile SIM">
+                                alt="good Mobile SIM">
                             <div class="details">
                                 <p class="smaller primary-font-bold">SIM Card</p>
                                 <p class="smaller primary-font-bold">(New SIM)</p>
                             </div>
                         </div>
                         <div class="price-side">
-                            <p class="primary-font-bold smaller">$0</p>
+                            <p class="primary-font-bold smaller">${{newSimOrder?.price}}</p>
                         </div>
                     </div>
                     <hr class="border" *ngIf="!!pendingPlan?.storePickup">

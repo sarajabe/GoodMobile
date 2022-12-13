@@ -58,7 +58,7 @@
         <div class="checkout-card">
           <p class="card-title">Shipping Details</p>
           <div class="card-content" id="addressDetails">
-            <p class="info" id="selectAddress">Please select a shipping address or add a new address:</p>
+            <p class="info primary-font-bold" id="selectAddress">Please select a shipping address or add a new address:</p>
             <div class="methods-list" *ngIf="!!addressesList && addressesList?.length > 0" id="addresses">
               <label class="form-control" *ngFor="let address of addressesList; let i = index"
                 [class.hidden]="i > 1 && !showAllAddresses"
@@ -111,7 +111,7 @@
             <label class="sub-label" for="items">Shipping Method <img class="icon" src="assets/icon/arrow_circle.svg"
                 alt="arrow icon" /></label>
             <div class="tab-content">
-              <p class="info">Please select a shipping method and a delivery option for your order:</p>
+              <p class="info primary-font-bold" >Please select a shipping method and a delivery option for your order:</p>
               <!-- <div class="alert-box" *ngIf="!hasPhone">
               <img src="/assets/icon/red-alert.svg" alt="alert">
               <p class="alert-info"><b>Note:</b> Due to global shipping delays, expedited shipping methods are currently
@@ -120,14 +120,14 @@
               <form #packageForm="ngForm" class="options-form">
                 <div class="form-row">
                   <div class="form-field half">
-                    <label *ngIf="!!shippingServiceType">Shipping Service</label>
+                    <label *ngIf="!!shippingServiceType" class="primary-font-bold">Shipping Service</label>
                     <div class="floating-label">
                       <select class="floating-select" [(ngModel)]="shippingServiceType" id="Courier" placeholder=" "
                         #courier="ngModel" name="courier" [class.dirty]="!!shippingServiceType"
                         (ngModelChange)="changedShippingMethod(shippingServiceType)" required>
                         <option disabled selected value="">Shipping Service</option>
                         <option *ngFor="let item of shippingDeliveryService" [value]="item">
-                          {{ item | titlecase }}
+                          {{ item | uppercase }}
                         </option>
                       </select>
                       <!-- <label class="long" [class.medium]="shippingServiceType">Shipping Service</label> -->
@@ -138,7 +138,7 @@
                     </div>
                   </div>
                   <div class="form-field half">
-                    <label *ngIf="!!selectedShippingServiceOption">Delivery Options</label>
+                    <label *ngIf="!!selectedShippingServiceOption" class="primary-font-bold">Delivery Options</label>
                     <div class="floating-label">
                       <select class="floating-select" [(ngModel)]="selectedShippingServiceOption" name="shippingMethod"
                         id="Service" placeholder=" " #service="ngModel" [class.dirty]="!!selectedShippingServiceOption"

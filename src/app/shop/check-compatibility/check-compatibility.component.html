@@ -31,8 +31,8 @@
     <form (ngSubmit)="checkAddressCompatibility()" #addressCompatibilityForm="ngForm">
       <fieldset>
         <label for="address" class="input-label">
-          <p class="p-label">Enter your full address</p>
-          <p class="p-note">Street Number, Address Line, City, State, ZIP Code</p>
+          <p class="p-label primary-font-bold">Enter your full address</p>
+          <p class="p-note smallest">Street Number, Address Line, City, State, ZIP Code</p>
         </label>
         <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" #addressRef="ngModel" type="search"
           class="geolocate" ngui-auto-complete [source]="findPlace.bind(this)" list-formatter="description"
@@ -80,9 +80,9 @@
     <form (ngSubmit)="checkDeviceCompatibility()" #equipmentCompatibilityForm="ngForm">
       <fieldset>
         <label for="address" class="input-label">
-          <p class="p-label">Enter your device’s <a (click)="showWhatIsIMEI()">IMEI<img
-                src="assets/icon/Information.svg"></a></p>
-          <p class="p-note">Dial: *#06# on your device to get your IMEI/MEID</p>
+          <p class="p-label primary-font-bold">Enter your device’s <a (click)="showWhatIsIMEI()">IMEI<img
+                src="assets/icon/info-icon.svg"></a></p>
+          <p class="p-note smallest">Dial: *#06# on your device to get your IMEI/MEID</p>
         </label>
         <input type="tel" required [(ngModel)]="equipment" name="equipmentNumber" id="equipmentNumber"
           data-cy="equipmentNumber" restrictNumbers minlength="11" maxlength="18" #equipmentNumber="ngModel"

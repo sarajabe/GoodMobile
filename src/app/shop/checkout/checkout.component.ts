@@ -622,6 +622,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         this.discount += (total * (discountValue / 100));
         total -= total * (discountValue / 100);
       }
+      if (!this.currentPlan.activationCode) {
+        total = total + this.newSimOrder.price;
+      }
       this.baseTotal = total;
       if (this.hasShippingItems && !!this.orderShippingMethod && !!this.orderShippingMethod?.price) {
         total += this.orderShippingMethod.price;

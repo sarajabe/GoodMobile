@@ -202,13 +202,13 @@
             }
 
             .action {
-                margin-top: 10px;
+                margin-top: 24px;
                 display: flex;
                 align-items: center;
                 gap: 24px;
 
                 @media (max-width: $phablet-min-width-minus) {
-                    margin-top: 6px;
+                    margin-top: 12px;
                     gap: 20px;
                 }
 
