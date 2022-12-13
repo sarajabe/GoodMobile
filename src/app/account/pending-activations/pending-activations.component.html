@@ -148,8 +148,8 @@
                                 <div class="details-side">
                                     <img class="thumbnail" src="assets/icon/pending-device.svg" alt="phone">
                                     <div class="details">
-                                        <p class="smaller primary-font"><b>No device was selected</b></p>
-                                        <p class="smaller primary-font">You can add a device once you check compatibility</p>
+                                        <p class="smaller primary-font-bold">No device was selected</p>
+                                        <p class="smallest primary-font">You can add a device once you check compatibility</p>
                                         <button class="button primary no-left" aria-label="check compatibility"
                                             (click)="editDevice()">Check Compatibility</button>
                                     </div>
@@ -161,7 +161,7 @@
                 <div class="tab-content">
                     <input type="checkbox" id="payment" [(ngModel)]="paymentExpanded">
                     <label class="sub-label" for="payment">
-                        <span>{{!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup ? 'Delivery & Payment Details' : 'Payment Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                        <span>{{!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup ? (!!planPaymentMethod ? 'Delivery & Payment Details' : 'Delivery Details') : 'Payment Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
                     </label>
                     <ng-container *ngIf="!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup">
                         <div class="sub-header">
@@ -184,16 +184,16 @@
                                     </div>
                                 </div>
                                 <div class="price-side" *ngIf="!!pendingPlan?.shippingAddress">
-                                    <p class="price"><img src="assets/icon/edit-square.svg"
+                                    <p class="smaller"><img src="assets/icon/edit-square.svg"
                                             (click)="editShippingAddress()" alt="edit" data-cy="editIcon" /></p>
                                 </div>
                             </div>
                         </div>
                     </ng-container>
-                    <div class="sub-header">
+                    <div class="sub-header" *ngIf="!!planPaymentMethod">
                         <p class="title">Preferred Payment Method</p>
                     </div>
-                    <div class="card-content sub">
+                    <div class="card-content sub" *ngIf="!!planPaymentMethod">
                         <div class="item-details">
                             <div class="details-side" *ngIf="!isEBBPlan">
                                 <img class="thumbnail cc" src="assets/icon/payment-card.svg" alt="payment card">

@@ -259,14 +259,10 @@
 
                 .button {
                     margin-left: 60px;
-                    font-size: rem-calc(20px);
-                    font-weight: bold;
                     margin-top: 24px;
-                    padding: 8px 24px;
-
+                    max-width: 223px;
                     &.no-left {
                         margin-left: 0;
-                        width: 229px;
                     }
                 }
 
