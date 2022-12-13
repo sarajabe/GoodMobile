@@ -96,7 +96,6 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       } else {
         this.currentUserPlan = this.pendingPlans[this.planIndex];
       }
-      console.info('currentUserPlan ', this.currentUserPlan)
       if (!!this.currentUserPlan) {
         this.getShippingAddres();
         this.calculateTotal(this.currentUserPlan);
