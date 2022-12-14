@@ -405,24 +405,39 @@
       .modal-body {
         overflow-x: visible;
         overflow-y: visible;
+        .modal-content {
+          @media(max-width: $phablet-min-width-minus) {
+            padding: 0!important;
+          }
+        }
       }
       .modal-actions {
-        @media(max-width: $phablet-min-width-minus) {
-          flex-direction: column;
-        }
+        flex-direction: column;
+        gap: 16px;
         .button {
-           width: 300px!important;
-           &.primary {
-            @media(max-width: $phablet-min-width-minus) {
-            margin-bottom: 12px;
+          width: 100%!important;
+          max-width: 311px;
+          padding: 8px!important;
+          &.primary {
             margin-right: 0!important;
-            }
-           }
+          }
+          @media(max-width: $phablet-min-width-minus) {
+            padding: 12px!important;
+          }
         }
       }
       @media (max-width: $tablet-min-width) {
         .modal-body {
           overflow-y: auto;
+        }
+      }
+      &.expiry {
+        .modal-actions {
+          .button {
+            &.primary {
+              display: none;
+            }
+          }
         }
       }
     }

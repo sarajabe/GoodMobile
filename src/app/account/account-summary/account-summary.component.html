@@ -123,7 +123,7 @@
           </div>
         </ng-container>
         <ng-container
-          *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus))">
+          *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)) && !selectedPlan?.basePlan?.ebb">
           <div class="info-banner warning-background">
             <div class="flex">
               <img src="assets/icon/warning-icon.svg" alt="Warning Icon">

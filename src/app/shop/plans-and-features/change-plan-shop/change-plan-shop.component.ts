@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { FadeInOutAnimation } from '../../../app.animations';
-import { IUserAccount, IUser, IUserPlan, CustomizableMobilePlan, UserPlansService, FirebaseUserProfileService, MobileCustomPlansService, UserAccountService, ActionsAnalyticsService, PURCHASE_INTENT } from '@ztarmobile/zwp-service-backend';
-import { ROUTE_URLS, SHOP_ROUTE_URLS } from '../../../app.routes.names';
+import { IUserAccount, IUser, IUserPlan, CustomizableMobilePlan, UserPlansService, FirebaseUserProfileService, MobileCustomPlansService, UserAccountService, ActionsAnalyticsService, PURCHASE_INTENT, CART_TYPES, MobilePlanItem } from '@ztarmobile/zwp-service-backend';
+import { ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
 import { PlansShopService } from '../plans-shop.service';
 import { MetaService } from '../../../../services/meta-service.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalHelperService } from '../../../../services/modal-helper.service';
 import { takeWhile, combineLatest } from 'rxjs/operators';
 import { Location } from '@angular/common';
@@ -12,36 +12,39 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-change-plan-shop',
   templateUrl: './change-plan-shop.component.html',
+  styleUrls: ['./change-plan-shop.component.scss'],
   animations: [FadeInOutAnimation],
 })
 export class ChangePlanShopComponent implements OnInit, OnDestroy {
-  @Input() isChangePlan: boolean;
-  public selectedPlan: IUserPlan;
+  public selectedPlan: MobilePlanItem;
+  public userPlan: IUserPlan;
   public isPlanSelected = false;
   public selectedPlanInfo: CustomizableMobilePlan;
-  public userProfile: IUser;
   public isExpiredPlan = false;
   public userAccount: IUserAccount;
+  public cardExpanded;
+  public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
   private alive = true;
+  allBasePlans: any;
+  filteredPlans: any;
+  innerWidth: number;
 
   constructor(
     public plansShopService: PlansShopService,
     private userPlansService: UserPlansService,
-    private firebaseUserProfileService: FirebaseUserProfileService,
+    private router: Router,
     private metaService: MetaService,
     private route: ActivatedRoute,
     private mobilePlansService: MobileCustomPlansService,
-    private location: Location,
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
     private analyticsService: ActionsAnalyticsService) {
 
-    this.plansShopService.reset();
 
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((userPlanReady) => {
       if (userPlanReady) {
-        this.selectedPlan = this.userPlansService.selectedUserPlan;
-        this.selectedPlanInfo = this.userPlansService.getCustomizableMobilePlanFromUserPlan(this.selectedPlan);
+        this.userPlan = this.userPlansService.selectedUserPlan;
+        this.selectedPlanInfo = this.userPlansService.getCustomizableMobilePlanFromUserPlan(this.userPlan);
       }
     });
     this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
@@ -50,48 +53,79 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
         this.isExpiredPlan = true;
       }
     });
-    this.firebaseUserProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((userProfile) => this.userProfile = userProfile);
-    this.mobilePlansService.isConfigurationReady.pipe(combineLatest(this.route.params,
-      (isReady, params: Params) => {
-        if (isReady) {
-          if (!!params[ROUTE_URLS.PARAMS.SELECTED_PLAN]) {
-            const selectedPlanId = params[ROUTE_URLS.PARAMS.SELECTED_PLAN];
-            const nextCycle = params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE] === 'true';
-            const selectedPlan = this.mobilePlansService.allBasePlans.find((plan) => plan.id === selectedPlanId);
-            if (!!selectedPlan) {
-              sessionStorage.removeItem('useFromBalance');
-              sessionStorage.removeItem('useFromReward');
-              this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.CHANGE, [selectedPlan]);
-              this.mobilePlansService.setBasePlan(selectedPlan);
-              this.isPlanSelected = true;
-            } else {
-              console.warn(`Mobile Plan with ID [${selectedPlanId}] not found`);
-              this.location.back();
-            }
-          } else {
-            this.plansShopService.hidePlanSummaryPage();
-          }
-
-        }
-      })).subscribe();
+    this.mobilePlansService.isConfigurationReady.pipe(takeWhile(() => this.alive)).subscribe(() => {
+        this.allBasePlans = this.mobilePlansService.allBasePlans;
+        this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && ((!!plan.specialPromotion && !!plan.specialPromotion.isSpecific) || !plan.isSpecialPromotion) && !plan.ebb);
+        this.cardExpanded = Array(this.filteredPlans.length).fill(false);
+    });
   }
+  public showDetails(index): void {
+    this.cardExpanded[index]= !this.cardExpanded[index];
+  }
+  public selectChangePlan(i, event): void {
+    if (!!event) {
+      event.preventDefault();
+    }
+    this.selectedPlan = this.filteredPlans[i];
+    if (!this.isExpiredPlan) {
+      const cusomHtml = `<p>If you choose to change plans now, Your plan change will take affect immediately,
+      and any remaining service balances on your account may be lost.</p>
+      <p >If you choose to change plans on your plan’s expiration date, your plan will change
+      on your <span class="primary-font-bold">rate plan expiration date</span>. At that time, the cost of this new plan will be deducted from your main account balance.</p>`
+      this.modalHelper.showInformationMessageModal('Before we continue', '', 'Yes, make change on expiry date', null, false, 'change-plan-modal', cusomHtml, true, 'No, I want to change plan now').result.then((result) => {
+        if (result !== null) {
+          console.info('result ', result)
+          this.mobilePlansService.clearUserCart().then(() => {
+            sessionStorage.removeItem('shippingAddress');
+            sessionStorage.removeItem('shippingMethod');
+            sessionStorage.removeItem('payment_id');
+            sessionStorage.removeItem('auto_renew');
+            sessionStorage.setItem('changeNextCycle', 'true');
+            sessionStorage.removeItem('useFromBalance');
+            sessionStorage.removeItem('useFromReward');
+            sessionStorage.removeItem('removeFromCart');
+            this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.CHANGE, [this.selectedPlan]);
+            this.mobilePlansService.setCartType(CART_TYPES.CHANGE_PLAN);
+            this.mobilePlansService.setActivePlanId(this.userPlansService.selectedUserPlan.id);
+            this.mobilePlansService.setBasePlan(this.selectedPlan);
+            const params = {};
+            params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE] = result;
+            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHANGE_SUMMARY}`, params]);
+          });
+        }
 
+      });
+    } else {
+      const cusomHtml = `<p class="first">If you choose to change plan now, Your plan change will take affect immediately.</p>
+      <p class="second">The cost of this new plan will be deducted from your main account balance.</p>`;
+      this.modalHelper.showInformationMessageModal('Before we continue', '', '', null, false, 'change-plan-modal expiry', cusomHtml, true, 'Change plan now').result.then((result) => {
+        if (result !== null) {
+          this.mobilePlansService.clearUserCart().then(() => {
+            this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.CHANGE, [this.selectedPlan]);
+            this.mobilePlansService.setBasePlan(this.selectedPlan);
+            this.mobilePlansService.setCartType(CART_TYPES.CHANGE_PLAN);
+            sessionStorage.removeItem('useFromBalance');
+            sessionStorage.removeItem('useFromReward');
+            this.mobilePlansService.setActivePlanId(this.userPlansService.selectedUserPlan.id);
+            const params = {};
+            params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE] = result;
+            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHANGE_SUMMARY}`, params]);
+          });
+        }
+      });
+    }
+  }
   ngOnInit(): void {
     this.metaService.createCanonicalUrl();
+    this.innerWidth = window.innerWidth;
   }
 
   ngOnDestroy(): void {
     this.alive = false;
-    this.plansShopService.reset();
   }
 
-  public userPlanSelected(userPlan: IUserPlan): void {
-    if (!!userPlan && userPlan.id !== this.selectedPlan.id) {
-      this.userPlansService.selectUserPlan(userPlan.id);
-    } else {
-      if (!userPlan) {
-        console.warn('User trying to select undefined user plan, that\'s weird!!');
-      }
-    }
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.innerWidth = window.innerWidth;
   }
 }

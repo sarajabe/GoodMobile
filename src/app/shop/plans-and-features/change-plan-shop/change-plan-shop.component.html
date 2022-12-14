@@ -1,20 +1,77 @@
-  <div class="container-flex" *ngIf="!this.isPlanSelected">
-    <div class="t-center">
-    <h2 class="h2-size">Need a replacement plan?</h2>
-    <p class="p-text bottom">It has never been easier to switch.</p>
-    <p class="p-text">Pick a plan that works best for you, activate and you’re good to go!</p>
+<section class="change-plan">
+  <div class="plans-banner page-section">
+    <h1 class="header-color">Need a replacement plan?</h1>
+    <p>It has never been easier to switch. </p>
+    <p>Pick a plan that works best for you, activate & you’re ready to go!</p>
+    <div class="info-banner main-background">
+        <div class="flex">
+            <img src="assets/icon/info-icon.svg" alt="info Icon">
+            <div class="banner-content">
+                <p class="title noMargin">Your Current Plan is:</p>
+                <div class="details">
+                  <div class="plan">
+                    <p class="smaller">{{selectedPlanInfo?.basePlan?.category | titlecase}}</p>
+                    <p class="smaller primary-font-bold">{{userPlan?.basePlan?.price > 0 ? userPlan?.basePlan?.price : 'FREE'}}</p>
+                  </div>
+                  <p class="smallest">{{userPlan?.basePlan?.subtitle}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
-      <div class="container-flex-row card-width">
-          <div class="col-12 ">
-              <div class="plan-details">
-                  <p class="plan-details2">Current Plan Details</p>
-            <div class="plan-details highlight-card highlight-card1" *ngIf="!!selectedPlanInfo" [@fadeInOut]="'out'">
-              <div class="title-text one-liner t1">Your custom Good Mobile plan:</div>
-              <div class="title-text one-liner margin-bottom-20 t1">{{selectedPlanInfo?.basePlan?.title}}, {{selectedPlanInfo?.basePlan?.subtitle}}</div>
-              <span class="title-info one-liner t2" (click)="toggleEditMode()">{{selectedPlanInfo?.basePlan?.price | currency:'USD':'symbol':0}}/month</span>
+  <div class="replacement-plan-section page-section">
+    <p class="label">CHANGING YOUR PLAN</p>
+    <h2 class="header-color">Choose your replacement plan:</h2>
+    <h5 class="noMargin">Talk, Text and Surf More!</h5>
+    <div class="cards-section">
+      <div class="plan-cards" *ngIf="filteredPlans?.length > 0">
+        <div *ngFor="let plan of filteredPlans; let i = index;" class="plan-card">
+          <div class="card-header" [class.rounded]="!cardExpanded[i]">
+            <p *ngIf="!!plan?.category" class="category">{{plan?.category}}</p>
+            <div class="plan-data">
+              <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
+                'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
+              <p class="sperator"></p>
+              <p class="data">{{plan?.details?.data/1024}}GB</p>
+            </div>
+            <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
+                [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
+          </div>
+          <div class="card-body" *ngIf="!!cardExpanded[i]">
+            <p class="intro">INCLUDES</p>
+            <div class="details">
+              <img src="/assets/icon/green-tick.svg" alt="green-tick">
+              <p class="smaller"><span class="secondary-font-bold">{{plan?.details?.data / 1024}}GB</span> high-speed data per month; speeds reduce after allowance is used</p>
+            </div>
+            <div class="details">
+              <img src="/assets/icon/green-tick.svg" alt="green-tick">
+              <p class="smaller"><span class="secondary-font-bold">Unlimited</span> talk and text + data access on America’s
+                nationwide networks</p>
+            </div>
+            <div class="details">
+              <img src="/assets/icon/green-tick.svg" alt="green-tick">
+              <p class="smaller">Works with network compatible <span class="secondary-font-bold">unlocked iPhone and Android phones</span></p>
+            </div>
+            <div class="details">
+              <img src="/assets/icon/green-tick.svg" alt="green-tick">
+              <p class="smaller"><span class="secondary-font-bold">FREE</span> SIM Card Activation Kit. <span class="secondary-font-bold">FREE</span> Shipping.</p>
             </div>
           </div>
-        </div>
+          <div class="actions">
+            <a (click)="selectChangePlan(i, event)">
+              <img *ngIf="innerWidth > 1024" src="/assets/icon/base-cart-icon.svg" alt="cart-icon"
+            onmouseover="this.src='/assets/icon/cart-long-button.svg'"
+            onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
+          <img *ngIf="innerWidth < 1025" src="/assets/icon/base-cart-icon.svg" alt="cart-icon">
+            </a>
+          </div>
         </div>
       </div>
-      
+    </div>
+  </div>
+  <div class="highdata-section page-section">
+    <p class="smaller">Unless you choose to add-on high-speed data, speeds may be reduced to a maximum of 128Kbps if you exceed your plan’s monthly high speed data allowance. Actual speed varies by device and location.</p>
+    <p class="smaller space">For more information on GoodMobile’s Broadband service, visit </p>
+    <button class="button thirdly" aria-label="Broadband Disclosure" [routerLink]="SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS +'/'+'mobile-broadband-disclosure'">Broadband Disclosure</button>
+  </div>
+</section>

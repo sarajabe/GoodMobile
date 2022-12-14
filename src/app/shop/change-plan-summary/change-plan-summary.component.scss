@@ -1,104 +1,72 @@
 @import "../../../styles/modules/_variables.scss";
 @import "../../../styles/modules/_mixins.scss";
 
-.change-plan-summary-page {
-    font-size: rem-calc(20px);
-    padding: 0;
-    margin-top: 35px;
-      @media (max-width:640px){
-        font-size:17px;
-      }
-    .back-to-plans {
-      font-size: rem-calc(17px);
-      font-weight: normal;
-      line-height: 1.18;
-      color: $primary-color;
-      margin-bottom: 25px;
-    }
-
-    .highlight-card {
-      font-size: rem-calc(17px);
-      padding-bottom: 0;
-    }
-
-    .plan-summary {
-      margin-bottom: 30px;
-    }
-
-    .plan-container {
-      padding: 10px;
-      padding-bottom: 0;
-
-      @media (#{$larger-than-mobile}) {
-        padding: 25px 22px 0 22px;
-      }
-
-      .title {
-       
-        font-weight: bold;
-        &.title-height {
-          height: 64px;
-          @media (max-width: 451px) and (min-width: 320px) {
-            height: 76px;
-          }
-        }
-        @media (#{$larger-than-mobile}) {
-          &.split {
-            padding: 0;
-            justify-content: center;
-            display: flex;
-            align-items: center;
-            height: 80px;
-            flex-direction: row;
-            margin-top: -16px;
-
-            div {
-              height: 100%;
-              &:first-child {
-                border-bottom: none;
-                @include account-border(right);
-                padding-right: 20px;
-              }
-
-              &:last-child {
-                padding-left: 20px;
-              }
-            }
-
-            span {
-              height: 100%;
-              padding: 30px 0;
-            }
-          }
-        }
-        .title-info {
-         
-          &.price {
-            width: 100%;
-            font-weight: bold;
-            text-align: left;
-            padding-top: 20px;
-            @media (max-width: 426px) and (min-width: 320px) {
-              text-align: left;
-              font-size: 15px;
-            }
-            @media(min-width: 426px) {
-              text-align: left;
-              font-size: 15px;
-              white-space: nowrap;
-              width:46%;
-            }
-            @media (#{$larger-than-mobile}) {
-              padding-top: 0;
-              text-align: right;
-            }
-          }
-        }
-
-        &.last-element {
-          border-bottom: none;
-        }
-      }
-    }
-
+.confirm-change-plan {
+  .noMargin {
+    margin: 0;
   }
+  .plans-banner {
+    background: linear-gradient(180deg, #D6E1FF 0%, #E3EFFF 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+    p {
+      max-width: 593px;
+    }
+    @media(max-width: $phablet-min-width-minus) {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+  }
+  .confirm-section {
+    background-color: #F8FCFE;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .details-card {
+      margin-top: 40px;
+      box-shadow: 0px 4px 15px 0px #CED3D699;
+      background: #F1F9FD;
+      padding: 24px;
+      border-radius: 0px 0px 10px 10px;
+      width: 100%;
+      max-width: 520px;
+      @media(max-width: $phablet-min-width-minus) {
+        margin-top: 24px;
+      }
+      .plan-details {
+        display: flex;
+        align-items: center;
+        img {
+          height: 50px;
+          width: 50px;
+          margin-bottom: 5px;
+        }
+        .plan {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      hr {
+        margin: 16px 0;
+      }
+      .price-section {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .actions {
+      margin-top: 32px;
+      display: flex;
+      gap: 16px;
+    }
+  }
+
+}

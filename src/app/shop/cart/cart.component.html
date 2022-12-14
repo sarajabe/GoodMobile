@@ -100,8 +100,8 @@
                                 </div>
                                 <p class="quantity smaller" data-cy="planQuantity">Quantity: {{userCart?.quantity}}</p>
                                 <div class="actions">
-                                    <a class="link first" (click)="goToPlans(true)"
-                                        *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a>
+                                    <!-- <a class="link first" (click)="goToPlans(true)"
+                                        *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a> -->
                                     <a class="link" (click)="clearUserCart('plan')" data-cy="deletPlan">Delete</a>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                                         <div class="detail-info">
                                             <p class="bold smaller" data-cy="simType-CartItems">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
                                         </div>
-                                        <p class="price smaller" data-cy="simPrice">${{newSimOrder?.price}}</p>
+                                        <p class="price smaller" data-cy="simPrice">$0</p>
                                     </div>
                                     <p class="quantity smaller" data-cy="simQuantity">Quantity: 1</p>
                                 </div>

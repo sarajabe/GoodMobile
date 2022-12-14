@@ -5,6 +5,7 @@
     font-family: $secondary-font-family-bold;
     text-align: center;
     margin-bottom: 60px;
+    margin-top: 40px;
     @media (#{$larger-than-mobile}) {
         text-align: left;
     }

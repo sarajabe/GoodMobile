@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ChangePlanService, IPaymentInfo, IUserPlan, MobileCustomPlansService, MobilePlanItem, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { MetaService } from '../../../services/meta-service.service';
@@ -26,6 +26,7 @@ export class ChangePlanSummaryComponent implements OnInit, OnDestroy {
               private userPlansService: UserPlansService,
               private mobilePlansService: MobileCustomPlansService,
               private appState: AppState,
+              private route: ActivatedRoute,
               private toastHelper: ToastrHelperService,
               private changePlanService: ChangePlanService,
               private metaService: MetaService,
@@ -33,11 +34,8 @@ export class ChangePlanSummaryComponent implements OnInit, OnDestroy {
         }
 
   ngOnInit(): void {
+   
     this.metaService.createCanonicalUrl();
-    const storedNextCycle = sessionStorage.getItem('changeNextCycle');
-    if (!!storedNextCycle) {
-      this.nextCycle = storedNextCycle === 'true' ? true : false;
-    }
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((cart) => {
       this.selectedMobilePlan = cart;
       this.parentPlans = this.mobilePlansService.parentBasePlans;
@@ -46,8 +44,13 @@ export class ChangePlanSummaryComponent implements OnInit, OnDestroy {
     });
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
       if (!!ready) {
+        this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: ParameterDecorator) => {
+          if (!!params) {
+            this.nextCycle = params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE] === 'true' ? true : false;
+            this.isCheckoutFlow = !this.nextCycle;
+          }
+        });
         this.selectedUserPlan = this.userPlansService.selectedUserPlan;
-        this.isCheckoutFlow = !this.nextCycle;
       }
     });
   }
