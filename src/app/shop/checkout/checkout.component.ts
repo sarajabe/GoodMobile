@@ -1207,12 +1207,15 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!!this.currentPlan.planExpectedDevice || (!this.currentPlan.planDevice && !this.currentPlan.planExpectedDevice)) {
       this.mobilePlansService.setPlanDevice(device); // send default SIM if the user selects a phone from shop or no device at all
     }
+    if(!!this.isVoucherPayment) {
+      this.mobilePlansService.setAutoRenewPlan(false);
+    }
     const cart = {
       currentPlan: this.currentPlan,
       shippingAddress: this.hasShippingItems && !this.storePickup ? this.shippingAddress : null,
       cardInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber) ? this.cardInfo : null,
       options: {
-        autoRenewPlan: this.currentPlan.autoRenewPlan,
+        autoRenewPlan: !!this.isVoucherPayment? false : this.currentPlan.autoRenewPlan,
         isVoucherPayment: this.isVoucherPayment,
         saveCcInfo: !!this.cardInfo && !!this.cardInfo?.cardNumber ? !!this.saveCcInfo : false,
         usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
