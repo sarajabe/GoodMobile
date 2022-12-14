@@ -27,6 +27,7 @@ export class CheckoutResultsComponent implements OnDestroy {
   public trustedUrl;
   public isPlanAddon = false;
   public isOrderSim = false;
+  public isStorePickup = false;
   public purchasedPlanId: string;
   public purchasedPlan: IUserPlan;
   public isMoneySavingReferral: boolean;
@@ -56,6 +57,8 @@ export class CheckoutResultsComponent implements OnDestroy {
       this.selectedUserPlan = this.userPlansService.selectedUserPlan;
       this.purchasedPlanId = params[ROUTE_URLS.PARAMS.SELECTED_PLAN];
       const orderSimParam = params[SHOP_ROUTE_URLS.PARAMS.ORDER_SIM];
+      const storePickup = params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP];
+      this.isStorePickup = !!storePickup? true: false;
       this.isOrderSim = orderSimParam === 'true' || orderSimParam === 'false';
       const successfulPurchases = params[SHOP_ROUTE_URLS.PARAMS.SUCCESSFUL_PURCHASE];
       this.isSuccessfulMultiplePurchases = successfulPurchases;

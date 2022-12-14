@@ -23,10 +23,15 @@
                 }
             }
         }
+        input[type=checkbox] {
+            margin-right: 12px;
+        }
     }
     .payment-container{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         position: relative;
-        padding-left: 30px;
         margin: 0;
         cursor: pointer;
         font-size: rem-calc(18px);
@@ -36,17 +41,17 @@
         user-select: none;
         &.balance {
             display: flex;
-            // padding-left: 35px;
-            .checkmark {
-                &.withImage {
-                    top: 11px;
-                }
-            }
         }
         &.autopay {
             font-size: rem-calc(16px);
             font-weight: bold;
             margin-bottom: 24px;
+            .auto-pay-checkbox {
+                margin-left: 12px;
+            }
+            .checkbox-label{
+                margin-bottom: 0;
+            }
         }
         &.amounts {
             font-size: rem-calc(16px);
@@ -71,51 +76,6 @@
                 font-family: $secondary-font-family-bold;
             }
         }
-        input {
-          position: absolute;
-          opacity: 0;
-          cursor: pointer;
-          height: 0;
-          width: 0;
-        }
-        input:checked ~ .checkmark{
-            background-color: $primary-color;
-            border: 1px solid $primary-color;
-        }
-        .checkmark {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 18px;
-            width: 18px;
-            background-color: white;
-            border: 2px solid #939699;
-            &:after {
-                content: "";
-                position: absolute;
-                display: none;
-            }
-            &.withImage {
-                top: 13px;
-            }
-        }
-        input:checked ~ .checkmark:after {
-            display: block;
-          }
-          input:checked ~ .radio-option:after {
-              display: block;
-          }
-          .checkmark:after {
-            left: 6px;
-            top: 2px;
-            width: 5px;
-            height: 10px;
-            border: solid white;
-            border-width: 0 3px 3px 0;
-            -webkit-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-          }
         @media (max-width: $phablet-min-width-minus) {
             font-size: rem-calc(16px);
             &.autopay {
@@ -515,16 +475,63 @@
         }
     }
     .payment-option {
-        background: linear-gradient(0deg, #FFFFFF, #FFFFFF), linear-gradient(0deg, #DAD0DC, #DAD0DC);
-        box-shadow: 0px 4px 12px 0px #A5A3A340;
-        border: 1px solid #DAD0DC;
-        padding: 16px 12px;
+        background: #F8FCFE;
+        border: 1px solid $primary-color;
+        box-shadow: 0px 4px 12px rgba(165, 163, 163, 0.25);
+        border-radius: 10px;
+        padding: 18px 12px;
         border-radius: 10px;
         margin-bottom: 24px;
         height: 80px;
         img {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
+            margin-right: 8px;
+        }
+       .checkbox-label{
+        margin-bottom: 0px;
+        font-family: $base-font-family-bold;
+       }
+    }
+    .voucher-form{
+        margin-top: 16px;
+        .label {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 24px;
+            font-family: $base-font-family-bold;
+        }
+        .actions{
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+            @media(max-width: $phablet-min-width-minus) {
+                flex-direction: column;
+            }
+            .input-field {
+                width: 220px;
+                margin-right: 16px;
+                @media(max-width: $phablet-min-width-minus) {
+                    margin-bottom: 16px;
+                    margin-right: 0;
+                    .validation-message {
+                        margin-bottom: 0;
+
+                    }
+                }
+                input {
+                    &::placeholder {
+                        color: $medium-grey;
+                        font-size: 16px;
+                        line-height: 24px;
+                      }
+                }
+            }
+            button {
+                width: 97px;
+                height: 40px;
+                padding: 8px 24px;
+            }
         }
     }
     .navigation-section {

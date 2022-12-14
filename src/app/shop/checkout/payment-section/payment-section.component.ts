@@ -5,8 +5,10 @@ import {
   AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseAccountPaymentService, IAddress,
   ICreditCardInfo, IFirebaseAddress, IFirebasePaymentMethod, IShippingMethod, IUserAccount, IUserPlan,
   IVoucherData, MobileCustomPlansService, ShippingConfigurationService, UserAccountService, UserPlansService,
-  VoucherActivationService, ShippingService
+  VoucherActivationService, ShippingService, PlansConfigurationService
 } from '@ztarmobile/zwp-service-backend';
+import { VoucherService } from '@ztarmobile/zwp-service-backend-v2';
+import { IVoucherValidations } from '@ztarmobile/zwp-service-backend-v2/lib/models';
 import { debounceTime, take, takeWhile } from 'rxjs/operators';
 import { CHECKOUT_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -39,6 +41,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public enteredCard: IFirebasePaymentMethod;
   public showAddCardSection = false;
   public paymentInfoForm: FormGroup;
+  public voucherForm: FormGroup;
   public paymentInfo: ICreditCardInfo = {} as ICreditCardInfo;
   public currentYear;
   public currentMonth;
@@ -78,19 +81,26 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public newSimOrder: { price: number, id?: string };
   public simPrice: number;
   public simId: string;
-
   public showAllPayments = false;
   public resetBillingForm = false;
   public totalBalance = 0;
   public payWithTotalBalance = false;
   public balanceApplied = false;
   public balanceAmount: number = 0;
+  public showVoucherSection = false;
+  public payWithVoucher = false;
+  public showVoucherError = false;
+  public showVoucherSuccess = false;
+  public applyVoucherCalled = false;
+  public voucherDetuctedAmount =0;
+  public voucherRemainingAmount = 0;
   private isNewPayment = false;
   private alive = true;
   private currentDate: Date;
   private savedBalance = 0;
   private savedReward = 0;
   private nextClicked = false;
+  private selectedPlanBundleId;
   private isEditPayment = false;
   private isRewardsChanged = false; // to keep track if the user updated the rewards manually or not
   private isBalanceChanged = false; // to keep track if the user updated the balance manually or not
@@ -105,7 +115,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
               private metaService: MetaService, private router: Router, private userPlansService: UserPlansService, private userAccountService: UserAccountService,
               private modalHelper: ModalHelperService, private voucherActivationService: VoucherActivationService, private cdRef: ChangeDetectorRef,
               private shippingConfigurationService: ShippingConfigurationService, private toastHelper: ToastrHelperService, private appState: AppState,
-              private shippingService: ShippingService) {
+              private shippingService: ShippingService, private voucherService: VoucherService,  private plansConfigurationService: PlansConfigurationService,) {
     this.storedPaymentId = sessionStorage.getItem('payment_id'); // initial value to keep the saved id in case the user wants to edit and he keeps the same payment selection
     this.expirationYearRange = [];
     this.currentDate = new Date();
@@ -115,6 +125,9 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     for (let i = 0; i < 20; i++) {
       this.expirationYearRange.push(year + i);
     }
+    this.voucherForm = formBuilder.group({
+      voucher: new FormControl('', Validators.compose([Validators.required, Validators.minLength(12), Validators.maxLength(12)])),
+    })
     this.paymentInfoForm = formBuilder.group({
       fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
       cardNumber: new FormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
@@ -163,7 +176,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.firebaseAccountPaymentService.paymentMethodsList.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
       if (!!methods) {
         this.methodsList = methods;
-        if (this.methodsList.length === 0 || this.isNewPayment) {
+        if ((this.methodsList.length === 0 || this.isNewPayment) && !this.cart?.activationCode) {
           this.showAddCardSection = true;
           this.autoRenew = true;
           this.payWithCard = true;
@@ -216,7 +229,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
                   this.userAccount = accounts.find((account) => account.mdn === this.userPlan.mdn);
                   const availableRewards = !!this.userAccount.rewards ? this.userAccount.rewards.available : 0; 
                   this.totalBalance = availableRewards + this.userAccount.accountBalance;
-                  if (this.totalBalance === 0) { // if the user doesn't have balance or reward then he will pay with card only
+                  if (this.totalBalance === 0 && !this.cart?.activationCode) { // if the user doesn't have balance or reward then he will pay with card only
                     this.payWithCard = true;
                   }
                   const useFromReward = sessionStorage.getItem('useFromReward');
@@ -253,10 +266,35 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
               });
             }
           });
-        } else {
+        } else if (!this.cart?.activationCode) {
           this.payWithCard = true;
         }
-
+        if(!!this.cart?.activationCode) {
+          this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
+            const allBasePlans = conf.allPlans;
+             if(allBasePlans?.length > 0) {
+               this.selectedPlanBundleId = allBasePlans.find(item => item?.id === this.cart?.basePlan?.id).bundleId;
+             }     
+          });
+          this.showVoucherSection = true;
+          if(!!this.payWithCard && !!this.payWithVoucher) {
+            this.payWithCard = false;
+            this.togglePayWithCard();
+          }
+        } else {
+          this.showVoucherSection = false;
+          this.payWithVoucher = false;
+        }
+        if(!!this.cart?.voucherData && !!this.cart?.voucherData?.code) {
+          this.payWithVoucher = true;
+          this.showVoucherSuccess = true;
+          this.voucherDetuctedAmount = this.cart?.voucherData?.limit;
+          this.voucherRemainingAmount = this.cart?.voucherData?.limit - this.total;
+          this.voucherForm.controls.voucher.setValue(this.cart?.voucherData?.code);
+          this.applyVoucherCalled = true;
+          this.payWithCard = false;
+          this.togglePayWithCard();
+        }
       }
     });
     this.cdRef.detectChanges();
@@ -295,7 +333,37 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       sessionStorage.setItem('useFromBalance', this.usedBalance.toString());
     }
   }
+  public applyVoucher(): void {
+    this.voucherForm.markAllAsTouched();
+    if(!!this.voucherForm.valid) {
+      this.appState.loading = true;
+      const data = {
+        planId: this.selectedPlanBundleId,
+        voucherCode: this.voucherForm.controls.voucher.value
+      } as IVoucherValidations;
+       this.voucherService.validateVoucher(data).then(res => {
+        if(!!res) {
+          this.applyVoucherCalled = true;
+          this.appState.loading = false;
+          this.showVoucherError = false;
+          this.showVoucherSuccess = true;
+          const voucherData = { 
+            limit: res?.pinValue / 100,
+            code : this.voucherForm.controls.voucher.value
+          } as IVoucherData
+          this.mobilePlansService.setVoucherData(voucherData);
+          this.voucherDetuctedAmount = this.total;
+          this.voucherRemainingAmount = (res?.pinValue / 100) - this.total;
+        }
+       }, error => {
+        this.appState.loading = false;
+        this.showVoucherError = true;
+        this.showVoucherSuccess = false;
+        this.applyVoucherCalled = true;
 
+       })
+    }
+  }
   public applyReward(): void {
     this.isEditPayment = false;
     if (!!this.usedReward && this.usedReward <= this.total && this.usedReward <= this.userAccount.rewards.available && this.usedReward >= 0) {
@@ -365,6 +433,10 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   }
   public togglePayWithCard(): void {
     this.isEditPayment = false;
+    if(!!this.payWithVoucher && !!this.payWithCard) {
+      this.payWithVoucher = false;
+      this.togglePayWithVoucher();
+    }
     if (!this.payWithCard) {
       this.selectedPaymentMethod = null;
       this.showAddCardSection = false;
@@ -412,6 +484,23 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       this.rewardAmount = 0;
       this.rewardApplied = false;
     }
+  }
+  public togglePayWithVoucher(): void {
+    if(!!this.payWithVoucher) {
+      this.payWithCard = false;
+      this.togglePayWithCard();
+    }
+    this.voucherForm.reset();
+    this.showVoucherError = false;
+    this.showVoucherSuccess = false;
+    this.applyVoucherCalled = false;
+    this.mobilePlansService.setVoucherCode({} as IVoucherData);
+  }
+  public voucherInputChanged(): void {
+    this.showVoucherError = false;
+    this.showVoucherSuccess = false;
+    this.applyVoucherCalled = false;
+    this.mobilePlansService.setVoucherCode({} as IVoucherData);
   }
   public validExpirationDate(month: string, year: string): any {
     this.isEditPayment = false;
@@ -518,8 +607,9 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     const isValidBalanceUse = this.balanceAmount <= (this.total - this.rewardAmount) && !!this.userAccount && this.userAccount.accountBalance && this.balanceAmount <= this.userAccount.accountBalance;
     const isValidRewardUse = this.rewardAmount <= (this.total - this.balanceAmount)&& !!this.userAccount && !!this.userAccount.rewards && this.userAccount.rewards.available > 0;
     const isValidCardPayment = !!this.payWithCard && (!!this.selectedPaymentMethod || !!this.enteredCard);
+    const isValidPayWithVoucher = !!this.payWithVoucher && !!this.voucherForm.valid && this.showVoucherSuccess;
     if ((!!isValidCardPayment && ((!!this.payWithBalance && isValidBalanceUse) || !this.payWithBalance) && ((!!this.payWithReward && isValidRewardUse) || !this.payWithReward)) ||
-    (!this.payWithCard && ((!!this.payWithBalance && isValidBalanceUse && enoughBalancePayments) || (!!this.payWithReward && isValidRewardUse && enoughBalancePayments)))) {
+    (!this.payWithCard && ((!!this.payWithBalance && isValidBalanceUse && enoughBalancePayments) || (!!this.payWithReward && isValidRewardUse && enoughBalancePayments))) || (!!isValidPayWithVoucher)) {
       this.morePaymentNeeded = false;
       const paymentType = [];
         if (!!isValidBalanceUse) {
@@ -530,6 +620,9 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         }
         if (!!isValidCardPayment) {
           paymentType.push('credit card');
+        }
+        if(!!isValidPayWithVoucher) {
+          paymentType.push('voucher');
         }
         sessionStorage.setItem('useFromBalance', this.balanceAmount.toString());
         sessionStorage.setItem('useFromReward', this.rewardAmount.toString());
