@@ -158,10 +158,10 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="tab-content" *ngIf="!!planPaymentMethod || !!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup">
+                <div class="tab-content">
                     <input type="checkbox" id="payment" [(ngModel)]="paymentExpanded">
                     <label class="sub-label" for="payment">
-                        <span>{{!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup ? (!!planPaymentMethod ? 'Delivery & Payment Details' : 'Delivery Details') : 'Payment Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                        <span>{{!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup ? (!!planPaymentMethod || !!isEBBPlan ? 'Delivery & Payment Details' : 'Delivery Details') : 'Payment Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
                     </label>
                     <ng-container *ngIf="!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup">
                         <div class="sub-header">
@@ -190,10 +190,10 @@
                             </div>
                         </div>
                     </ng-container>
-                    <div class="sub-header" *ngIf="!!planPaymentMethod">
+                    <div class="sub-header" *ngIf="!!planPaymentMethod || !!isEBBPlan">
                         <p class="title">Preferred Payment Method</p>
                     </div>
-                    <div class="card-content sub" *ngIf="!!planPaymentMethod">
+                    <div class="card-content sub" *ngIf="!!planPaymentMethod || !!isEBBPlan">
                         <div class="item-details">
                             <div class="details-side" *ngIf="!isEBBPlan">
                                 <img class="thumbnail cc" src="assets/icon/payment-card.svg" alt="payment card">
@@ -208,7 +208,7 @@
                             </div>
                             <div class="details-side" *ngIf="!!isEBBPlan">
                                 <div class="details">
-                                    <p class="title"><b>Affordable Connectivity Program.</b></p>
+                                    <p class="smallest primary-font">Affordable Connectivity Program(ACP)</p>
                                 </div>
                             </div>
                         </div>

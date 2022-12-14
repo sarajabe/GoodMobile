@@ -1,4 +1,4 @@
-<section class="enrollment-new-line-page">
+<section class="enrollment-new-line-page page-section">
     <div *ngIf="!planPurchased">
         <h1 class="title">ACP Enrollment</h1>
         <div class="success-acp-banner" *ngIf="!successCehck && !errorCheck &&activeStep === 1">
@@ -17,10 +17,9 @@
             </div>
         </section>
        <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
-            <h4 class="main-title">Adding a New Line:</h4>
+            <h3 class="main-title">Adding a New Line:</h3>
             <form [formGroup]="newMobileServiceFrom" *ngIf="!successCehck && !errorCheck ">
                 <p class="sub-desc">Let's find out if the device, that you will use, is compatible with our network!</p>
-                <p class="sub-title">Check Compatibility:</p>
                 <div class="form-row">
                     <div class="form-field">
                         <p class="top-label">Enter your device’s IMEI number</p>
@@ -337,23 +336,24 @@
     </div>
 </section>
 <section class="navigation-section" [class.end]="!!planPurchased">
-    <div class="left" *ngIf="!planPurchased">
-        <p class="no-border" (click)="cancel()">Cancel</p>
+    <div class="page-section navs">
+        <button class="button thirdly noPadding" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
+        <div class="right" *ngIf="!planPurchased">
+            <button class="button secondary" data-cy="backBtn" aria-label="Back"
+                (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
+            <button class="button primary" aria-label="Check" (click)="checkDevice()"
+                *ngIf="!successCehck && !errorCheck && activeStep === 1">Check</button>
+            <button class="button primary" aria-label="Next" (click)="goToStep2()"
+                *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
+                [disabled]="!!errorCheck">Next</button>
+            <button class="button primary" *ngIf="activeStep === 2"
+                [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
+                [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
+                (click)="purchasePlan()">Next</button>
+        </div>
+        <div class="right end" *ngIf="!!planPurchased">
+            <button class="button primary" (click)="goToAcpSummary()">Done</button>
+        </div>
     </div>
-    <div class="right" *ngIf="!planPurchased">
-        <button class="button secondary" data-cy="backBtn" aria-label="Back"
-            (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
-        <button class="button primary" aria-label="Check" (click)="checkDevice()"
-            *ngIf="!successCehck && !errorCheck && activeStep === 1">Check</button>
-        <button class="button primary" aria-label="Next" (click)="goToStep2()"
-            *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
-            [disabled]="!!errorCheck">Next</button>
-        <button class="button primary" *ngIf="activeStep === 2"
-            [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
-            [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
-            (click)="purchasePlan()">Next</button>
-    </div>
-    <div class="right" *ngIf="!!planPurchased">
-        <button class="button primary" (click)="goToAcpSummary()">Done</button>
-    </div>
+    
 </section>
