@@ -352,6 +352,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
             code : this.voucherForm.controls.voucher.value
           } as IVoucherData
           this.mobilePlansService.setVoucherData(voucherData);
+          this.mobilePlansService.setAutoRenewPlan(false);
           this.voucherDetuctedAmount = this.total;
           this.voucherRemainingAmount = (res?.pinValue / 100) - this.total;
         }
