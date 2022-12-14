@@ -193,6 +193,28 @@
                     <div class="sub-header" *ngIf="!!planPaymentMethod">
                         <p class="title">Preferred Payment Method</p>
                     </div>
+                    <div class="card-content sub" *ngIf="!!planPaymentMethod && !pendingPlan?.voucherData?.code">
+                        <div class="item-details">
+                            <div class="details-side" *ngIf="!isEBBPlan">
+                                <img class="thumbnail cc" src="assets/icon/payment-card.svg" alt="payment card">
+                                <div class="details">
+                                    <p class="smaller primary-font-bold">{{planPaymentMethod?.method}}</p>
+                                    <p class="smaller primary-font">{{!!planPaymentMethod?.name ? planPaymentMethod?.name :
+                                        planPaymentMethod?.alias}}</p>
+                                    <p class="smaller primary-font">Ending in {{planPaymentMethod?.last4}}</p>
+                                    <p class="smaller primary-font">Expiration date: {{planPaymentMethod?.expirationDate |
+                                        expirationDateFormat}}</p>
+                                </div>
+                            </div>
+                            <div class="details-side" *ngIf="!!isEBBPlan">
+                                <div class="details">
+                                    <p class="title"><b>Affordable Connectivity Program.</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="alert-note smaller" *ngIf="!isEBBPlan">You won't be able to change the payment method at this
+                            phase for auto-renew feature, until the plan is activated.</p>
+                    </div>
                     <div class="card-content sub" *ngIf="!!pendingPlan?.voucherData?.code">
                         <div class="item-details">
                             <div class="details-side">
