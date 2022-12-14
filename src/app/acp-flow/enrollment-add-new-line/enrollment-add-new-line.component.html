@@ -1,8 +1,8 @@
-<section class="enrollment-new-line-page">
-    <div *ngIf="!planPurchased" [class.blur]="!!showShippingForm">
+<section class="enrollment-new-line-page page-section">
+    <div *ngIf="!planPurchased">
         <h1 class="title">ACP Enrollment</h1>
         <div class="success-acp-banner" *ngIf="!successCehck && !errorCheck &&activeStep === 1">
-            <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+            <img src="assets/icon/success-icon.svg" alt="Success Icon">
             <div class="descs">
                 <p class="congratulation">Congratulations!</p>
                 <p class="desc">You have been verified successfully into the ACP program!</p>
@@ -16,11 +16,10 @@
                 <div class="border" *ngIf="step < steps.length"></div>
             </div>
         </section>
-        <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
-            <h4 class="main-title">Adding a New Line:</h4>
+       <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
+            <h3 class="main-title">Adding a New Line:</h3>
             <form [formGroup]="newMobileServiceFrom" *ngIf="!successCehck && !errorCheck ">
                 <p class="sub-desc">Let's find out if the device, that you will use, is compatible with our network!</p>
-                <p class="sub-title">Check Compatibility:</p>
                 <div class="form-row">
                     <div class="form-field">
                         <p class="top-label">Enter your device’s IMEI number</p>
@@ -68,7 +67,7 @@
                 </div>
             </form>
             <div *ngIf="!!successCehck && !errorCheck" class="success-check-banner" [class.success-bottom]="!!isEsim">
-                <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+                <img src="assets/icon/success-icon.svg" alt="Success Icon">
                 <div class="notes" *ngIf="!isEsim">
                     <p class="head-note">Your Phone is compatible!</p>
                     <p class="sub-note">You can use the device you have with our network!</p>
@@ -105,7 +104,7 @@
                 </form>
             </div>
             <div *ngIf="!!errorCheck && !successCehck" class="error-check-banner">
-                <img src="/assets/icon/error-enrollment.svg" alt="success-icon">
+                <img src="/assets/icon/error-enrollment.svg" alt="error-icon">
                 <div class="notes">
                     <p class="head-note">Sorry!</p>
                     <p class="sub-note-bold">Your Phone isn’t compatible with our network, BUT...!</p>
@@ -114,137 +113,213 @@
                 </div>
             </div>
         </section>
-        <section class="address-section" *ngIf="!!activeStep && activeStep === 2"
-            [class.disable-blur]="!!showShippingForm">
-            <p class="title">Shipping Address:</p>
-            <div *ngIf="!!addressWithIdSection">
-                <p class="sub-title">Enter your shipping address:</p>
-            </div>
-            <div *ngIf="!!addressNoOptionSection">
-                <p class="sub-title">Do you want to use the same address for shipping as the one entered in the ACP
-                    Application?</p>
-                <div class="address-selection-options" [class.bottom]="!!addressCard">
-                    <div class="radio-check">
-                        <input type="radio" [(ngModel)]="addressOption" name="mailaddress" value="mail"
-                            (change)="optionChanged()" id="mailaddress" />
-                        <div class="details">
-                            <label class="option-label" for="mailaddress"> Use this address: </label>
+        <section class="address-section" *ngIf="!!activeStep && activeStep === 2">
+            <h3 class="address-section-title">How do you want to get your package?</h3>
+            <p class="smaller">Select the preferred method below:</p>
+            <form #pickupOptionsForm="ngForm" class="pickups-form">
+                <div class="radioBtn">
+                    <label class="form-control" for="home">
+                        <input type="radio" value="home" [(ngModel)]="option" id="home" name="home" required
+                            (change)="pickupOptionChanged()">
+                        <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
+                        <div class="input-details">
+                            <p class="value">Home Delivery</p>
+                            <p class="caption">I’d like to have my package delivered to my door.</p>
                         </div>
-                    </div>
-                    <div class="current-address" *ngIf="!!verifiedAddress">
-                        <img src="/assets/icon/location.svg">
-                        <div class="address-details">
-                            <p class="alias">{{!!verifiedAddress?.name? verifiedAddress?.name : verifiedAddress?.alias}}
-                            </p>
-                            <p class="info">{{verifiedAddress?.address1}}</p>
-                            <p class="info" *ngIf="!!verifiedAddress?.address2">{{verifiedAddress?.address2}}</p>
-                            <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
-                                {{verifiedAddress?.postalCode}}</p>
-                        </div>
-                    </div>
-                    <div class="radio-check">
-                        <input type="radio" [(ngModel)]="addressOption" name="anotherAddress" value="another"
-                            (change)="optionChanged()" id="anotherAddress" />
-                        <div class="details">
-                            <label class="option-label" for="anotherAddress"> Select another address</label>
-                        </div>
-                    </div>
+                    </label>
                 </div>
-            </div>
-            <div *ngIf="!!addressNoOptionNotVerfiedSection">
-                <div class="sub-title">The address you entered in the ACP application form couldn't be validated for
-                    shipping:
-                    <div class="address-tooltip">
-                        <img src="/assets/icon/why-arrow.svg" alt="arrow">
-                        <a class="info-link">Why?</a>
-                        <div class="tooltipInfo">
-                            <p class="tip-note">Possible typos or misspellings could have been made, or a conflict in
-                                the city, state and ZIP code.</p>
-                            <div class="address-details">
-                                <p class="top-info">Previously entered address:</p>
-                                <p class="info">{{!!verifiedAddress?.name? verifiedAddress?.name :
-                                    verifiedAddress?.alias}}</p>
-                                <p class="info">{{verifiedAddress?.address1}}</p>
-                                <p class="info" *ngIf="!!verifiedAddress?.address2">{{verifiedAddress?.address2}}</p>
-                                <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
-                                    {{verifiedAddress?.postalCode}}</p>
+                <div *ngIf="!!option && option === 'home'">
+                    <div class="info-banner success-background banner-specific" *ngIf="!!isAdressAddedSuccessfully">
+                    <div class="flex">
+                        <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                        <div class="banner-content">
+                            <p class="title">Awesome!</p>
+                            <p class="description last">Your address has been successfully added!</p>
+                        </div>
+                    </div>
+                  </div>
+                    <div class="address-card">
+                        <h4 class="card-title">Shipping Details</h4>
+                        <div class="card-content" id="addressDetails">
+                            <p class="info" id="selectAddress" *ngIf="!!addressWithIdSection">Please
+                                select a shipping address or add a new one:</p>
+                            <div *ngIf="!!addressNoOptionSection" class="inner-padding">
+                                <p class="info" id="selectAddress">Do
+                                    you want to use the same address for shipping as the one entered in the ACP
+                                    Application?</p>
+                                <div class="address-selection-options">
+                                    <div class="current-address" *ngIf="!!verifiedAddress">
+                                        <input type="radio" [(ngModel)]="addressOption" name="mailaddress" value="mail"
+                                            (change)="optionChanged()" id="mailaddress" />
+                                        <div class="address-details">
+                                            <p class="alias">{{!!verifiedAddress?.name? verifiedAddress?.name :
+                                                verifiedAddress?.alias}}
+                                            </p>
+                                            <p class="info">{{verifiedAddress?.address1}}</p>
+                                            <p class="info" *ngIf="!!verifiedAddress?.address2">
+                                                {{verifiedAddress?.address2}}</p>
+                                            <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
+                                                {{verifiedAddress?.postalCode}}</p>
+                                        </div>
+                                    </div>
+                                    <a class="link" (click)="changeAddressOption()">Use another address <img
+                                            class="arrow-img" alt="arrow"
+                                            [src]="!!addressCard?'/assets/icon/circle-arrow-up-primary.svg': '/assets/icon/circle-arrow-down-primary.svg'"></a>
+                                </div>
+                            </div>
+                            <div *ngIf="!!addressNoOptionNotVerfiedSection" class="inner-padding">
+                                <div class="tooltip-info-section" id="selectAddress">
+                                    <p class="info smaller">The address you entered in the
+                                    ACP application form couldn't be validated for
+                                    shipping:</p>
+                                    <div class="address-tooltip">
+                                        <img src="/assets/icon/why-arrow.svg" alt="arrow" class="why-img">
+                                        <a class="info-link">Why?</a>
+                                        <div class="tooltipInfo">
+                                            <p class="tip-note">Possible <b>typos</b> or <b>misspellings</b> could have been made, or
+                                                a conflict in
+                                                the <b>city</b>, <b>state</b> and <b>ZIP code</b>.</p>
+                                            <div class="address-details">
+                                                <p class="top-info">Previously entered address:</p>
+                                                <p class="info">{{!!verifiedAddress?.name? verifiedAddress?.name :
+                                                    verifiedAddress?.alias}}</p>
+                                                <p class="info">{{verifiedAddress?.address1}}</p>
+                                                <p class="info" *ngIf="!!verifiedAddress?.address2">
+                                                    {{verifiedAddress?.address2}}</p>
+                                                <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
+                                                    {{verifiedAddress?.postalCode}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="sub-title">Please provide another address:</p>
+                            </div>
+                            <div class="shipping-address-card inner-padding" *ngIf="!!addressCard">
+                                <div class="address" *ngFor="let address of addressesList; let i = index"
+                                    [class.hidden]="i > 1 && !showAllAddresses"
+                                    [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
+                                    <div class="radio-check">
+                                        <input title="{{ !!address.name ? address?.name : address?.alias }}"
+                                            type="radio" [(ngModel)]="selectedShippingAddress" name="shippingAddress"
+                                            [id]="address.id" [value]="address"
+                                            (ngModelChange)="isAddressVerified=true;showShippingForm = false; isAdressAddedSuccessfully = false" />
+                                        <div class="details">
+                                            <label class="label" for="{{address.id}}">{{
+                                                !!address?.name ?
+                                                address?.name : address?.alias }}</label>
+                                            <p class="info">
+                                                {{ address?.address1 }}
+                                                {{ !!address?.address2 ? ", " + address?.address2 : "" }}
+                                                , {{ address?.city }} , {{ address?.state }} {{ address?.postalCode }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="border"
+                                        *ngIf="i < addressesList.length -1 && ((i !== 1 && addressesList?.length > 2 && !showAllAddresses) ||  (addressesList?.length > 2 && !!showAllAddresses))">
+                                    </div>
+                                </div>
+                                <div class="showMore" *ngIf="addressesList?.length > 2"
+                                    (click)="showAllAddresses = !showAllAddresses">
+                                    <a class="link">{{!!showAllAddresses ? 'Show less' : 'Show more'}}
+                                        <img
+                                            class="arrow-img" alt="arrow"
+                                            [src]="!!showAllAddresses?'/assets/icon/circle-arrow-up-primary.svg': '/assets/icon/circle-arrow-down-primary.svg'">
+                                    </a>
+                                </div>
+                                <div class="new-address">
+                                    <div class="toggle-title" (click)="
+                                showShippingForm = !showShippingForm;
+                                selectedShippingAddress = null;
+                                isAddressVerified = false;
+                                touchShippingForm = false;
+                            ">
+                                        <p class="icon" [class.minus]="!!showShippingForm">
+                                            <span>{{ !!showShippingForm ? "-" : "+" }}</span>
+                                        </p>
+                                        <p class="smaller text"><b>Add New Address</b></p>
+                                    </div>
+                                    <form #shippingMethodForm="ngForm" *ngIf="!!showShippingForm"
+                                        class="shipping-method-form">
+                                        <fieldset class="address-lookup">
+                                            <app-address-lookup [displayedAddress]="shippingAddress"
+                                                (isValid)="setValidAddress($event)"
+                                                (addressChange)="addressLookUpChanged($event)"
+                                                [touchForm]="touchShippingForm" [showAlias]="true">
+                                            </app-address-lookup>
+                                        </fieldset>
+                                        <div class="action">
+                                            <a class="cancel-link" aria-label="cancel"
+                                                (click)="showShippingForm = false;">
+                                                Cancel
+                                            </a>
+                                            <button class="button primary" aria-label="Add address"
+                                                (click)="addAddress()">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p class="sub-title">Please provide another address:</p>
-            </div>
-            <div *ngIf="!!isAdressAddedSuccessfully" class="address-added-banner"
-                [class.left-card]="addressOption === 'another'">
-                <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
-                <p>Address added successfully!</p>
-            </div>
-            <div class="shipping-address-card" *ngIf="!!addressCard" [class.left-card]="addressOption === 'another'">
-                <div class="address" *ngFor="let address of addressesList; let i = index"
-                    [class.hidden]="i > 1 && !showAllAddresses"
-                    [class.last]="(i === 1 && !showAllAddresses) || (i === (addressesList?.length - 1) && !!showAllAddresses) || (addressesList?.length === 1)">
-                    <div class="radio-check">
-                        <input title="{{ !!address.name ? address?.name : address?.alias }}" type="radio"
-                            [(ngModel)]="selectedShippingAddress" name="shippingAddress" [id]="address.id"
-                            [value]="address"
-                            (ngModelChange)="isAddressVerified=true;showShippingForm = false; isAdressAddedSuccessfully = false" />
-                        <div class="details">
-                            <label class="label" for="{{address.id}}">{{
-                                !!address?.name ?
-                                address?.name : address?.alias }}</label>
-                            <p class="info">
-                                {{ address?.address1 }}
-                                {{ !!address?.address2 ? ", " + address?.address2 : "" }}
-                                , {{ address?.city }} , {{ address?.state }} {{ address?.postalCode }}
-                            </p>
+                <div class="radioBtn">
+                    <label class="form-control" for="store">
+                        <input type="radio" value="store" [(ngModel)]="option" id="store" name="store" required
+                            (change)="pickupOptionChanged()">
+                        <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
+                        <div class="input-details">
+                            <p class="value">Store Pickup</p>
+                            <p class="caption">I’d like to collect my package frome store.</p>
+                        </div>
+                    </label>
+                </div>
+                <div *ngIf="!!option && option === 'store'" class="stores-option-section">
+                    <div class="store-section">
+                        <div class="inner-paddings">
+                            <h4 class="sub-head">You can pick up your package from these two stores.</h4>
+                            <h5 class="sub-title">More stores are coming soon</h5>
+                        </div>
+                        <hr class="border">
+                        <div class="inner-paddings end">
+                            <div class="stores-section">
+                                <div *ngFor="let store of stores" class="stores">
+                                    <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                                    <div class="store-details">
+                                        <h4 class="store-name">{{store?.name}}</h4>
+                                        <p class="smaller">{{store?.address1}}</p>
+                                        <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="border"
-                        *ngIf="i < addressesList.length -1 && ((i !== 1 && addressesList?.length > 2 && !showAllAddresses) ||  (addressesList?.length > 2 && !!showAllAddresses))">
-                    </div>
-                </div>
-                <div class="showMore" *ngIf="addressesList?.length > 2" (click)="showAllAddresses = !showAllAddresses">
-                    <a class="more">{{!!showAllAddresses ? 'Show less' : 'Show more'}}
-                        <i class="arrow down" [class.rotate]="!!showAllAddresses"></i>
-                    </a>
-                </div>
-                <div class="new-address">
-                    <div class="toggle-title" (click)="
-                showShippingForm = !showShippingForm;
-                selectedShippingAddress = null;
-                isAddressVerified = false;
-                touchShippingForm = false;
-              ">
-                        <p class="icon" [class.minus]="!!showShippingForm">
-                            <span>{{ !!showShippingForm ? "-" : "+" }}</span>
-                        </p>
-                        <p class="text"><b>Add New Address</b></p>
-                    </div>
-                    <form #shippingMethodForm="ngForm" *ngIf="!!showShippingForm" class="shipping-method-form">
-                        <fieldset class="address-lookup">
-                            <app-address-lookup [displayedAddress]="shippingAddress" (isValid)="setValidAddress($event)"
-                                (addressChange)="addressLookUpChanged($event)" [touchForm]="touchShippingForm"
-                                [showAlias]="true">
-                            </app-address-lookup>
-                        </fieldset>
-                        <div class="action">
-                            <a class="cancel-link" aria-label="cancel" (click)="showShippingForm = false;">
-                                Cancel
-                            </a>
-                            <button class="button primary" aria-label="Add address" (click)="addAddress()">
-                                Save
-                            </button>
+                    <div class="info-banner default-background">
+                        <div class="flex">
+                            <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                            <div class="banner-content">
+                                <p class="title">The barcode is required to get your package from the store!</p>
+                                <p class="description last">This barcode will be in your purchased plans and your order
+                                    receipt.</p>
+                                <div class="actions">
+                                    <form #barCodeCheck="ngForm" class="barCoder-form">
+                                        <input type="checkbox" [(ngModel)]="barCode" name="br" required
+                                            #barCodeVal="ngModel">
+                                        <label class="label">I understand that.</label>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </section>
         <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha
             *ngIf="!!activeStep && activeStep === 1">
         </app-invisible-recaptcha>
     </div>
     <div *ngIf="!!planPurchased && !isEsim" class="plan-purchased-banner">
-        <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+        <img src="assets/icon/success-icon.svg" alt="Success Icon">
         <div class="descs">
             <p class="top-desc">Purchase successful!</p>
             <p class="sub-desc">Your ACP plan has been successfully purchased! Look out for your SIM card in the mail.
@@ -252,31 +327,33 @@
         </div>
     </div>
     <div *ngIf="!!planPurchased && !!isEsim" class="plan-purchased-banner">
-        <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
+        <img src="assets/icon/success-icon.svg" alt="Success Icon">
         <div class="descs">
             <p class="top-desc">Purchase successful!</p>
-            <p class="sub-desc">Your ACP plan has been successfully purchased! You May proceed to activate you eSIM and start enjoying your ACP benefits!</p>
+            <p class="sub-desc">Your ACP plan has been successfully purchased! You May proceed to activate you eSIM and
+                start enjoying your ACP benefits!</p>
         </div>
     </div>
 </section>
-<section class="navigation-section" [class.blur]="!!showShippingForm" [class.end]="!!planPurchased">
-    <div class="left" *ngIf="!planPurchased">
-        <p class="no-border" (click)="cancel()">Cancel</p>
+<section class="navigation-section" [class.end]="!!planPurchased">
+    <div class="page-section navs">
+        <button class="button thirdly noPadding" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
+        <div class="right" *ngIf="!planPurchased">
+            <button class="button secondary" data-cy="backBtn" aria-label="Back"
+                (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
+            <button class="button primary" aria-label="Check" (click)="checkDevice()"
+                *ngIf="!successCehck && !errorCheck && activeStep === 1">Check</button>
+            <button class="button primary" aria-label="Next" (click)="goToStep2()"
+                *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
+                [disabled]="!!errorCheck">Next</button>
+            <button class="button primary" *ngIf="activeStep === 2"
+                [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
+                [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
+                (click)="purchasePlan()">Next</button>
+        </div>
+        <div class="right end" *ngIf="!!planPurchased">
+            <button class="button primary" (click)="goToAcpSummary()">Done</button>
+        </div>
     </div>
-    <div class="right" *ngIf="!planPurchased">
-        <button class="button secondary" data-cy="backBtn" aria-label="Next"
-            (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
-        <button class="button primary" aria-label="Next" (click)="checkDevice()"
-            *ngIf="!successCehck && !errorCheck">Check</button>
-        <button class="button primary" aria-label="Next" (click)="goToStep2()"
-            *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
-            [disabled]="!!errorCheck">Next</button>
-        <button class="button primary" *ngIf="activeStep === 2"
-            [class.disabled]="!isAddressVerified || (!!addressNoOptionSection && !addressOption)"
-            [disabled]="!isAddressVerified || (!!addressNoOptionSection && !addressOption)"
-            (click)="purchasePlan()">Submit</button>
-    </div>
-    <div class="right" *ngIf="!!planPurchased">
-        <button class="button primary" (click)="goToAcpSummary()">Done</button>
-    </div>
+    
 </section>

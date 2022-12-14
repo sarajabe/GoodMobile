@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { EbbService, EquipmentService, IAddress } from '@ztarmobile/zwp-service-backend-v2';
+import { EbbService, EquipmentService, IAddress, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable } from 'rxjs';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -20,6 +20,7 @@ import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/inv
 export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
   @ViewChild('shippingMethodForm') shippingMethodForm: NgForm;
+  @ViewChild('pickupOptionsForm') pickupOptionsForm: NgForm;
   public steps = [1, 2];
   public activeStep: number;
   public newMobileServiceFrom: FormGroup;
@@ -55,6 +56,10 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public simOption: string;
   public simOptions = [{ id: 'esim', value: 'Yes, let’s go!' }, { id: 'physical', value: 'No, send me a physical SIM' }];
   public utms;
+  public stores = [];
+  public barCode = false;
+  public option;
+  
   private planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
     E8: "Bureau of Indian Affairs General Assistance",
@@ -74,6 +79,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     private userProfileService: FirebaseUserProfileService, private userPlansService: UserPlansService,
     private toastHelper: ToastrHelperService, private shippingService: ShippingService,
     private orderCheckoutService: OrderCheckoutService, private analyticsService: ActionsAnalyticsService,
+    private lookupsService: LookupsService
   ) {
     this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
@@ -97,6 +103,13 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     this.showShippingForm = false;
     this.prepareMarketingDetails();
     const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
+    this.lookupsService.getAvailableStores().then(stores => {
+      if(stores?.storesLocations?.length > 0) {
+        this.stores = stores?.storesLocations;
+      }
+    }, error => {
+      this.toastHelper.showAlert(error.error.errors[0].message);
+    });
     this.userPlansService.userPlans
       .pipe(takeWhile(() => this.alive))
       .pipe(filter((plans) => !!plans))
@@ -238,19 +251,26 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       </div>
         `);
   }
-  public optionChanged(): void {
-    if (!!this.addressOption && this.addressOption === 'another') {
-      this.addressCard = true;
+  public pickupOptionChanged(): void {
+    if (this.option === 'store'){
+      this.selectedShippingAddress = null;
+      this.shippingAddress = {} as IFirebaseAddress;
+      this.addressCard = false;
+      this.selectedShippingAddress = {} as IFirebaseAddress;
       this.isAddressVerified = false;
-      this.isAdressAddedSuccessfully = false;
-    } else {
+      this.showShippingForm = false;
+      this.addressOption = '';
+    } else if (this.option === 'home') {
+      this.barCode = false;
+    }
+  }
+  public optionChanged(): void {
       this.addressCard = false;
       this.showShippingForm = false;
       this.isAddressVerified = true;
       this.isAdressAddedSuccessfully = false;
       this.shippingAddress = {} as IFirebaseAddress;
       this.selectedShippingAddress = {} as IFirebaseAddress;
-    }
   }
   public changedAddress(): void {
     this.displayedAddressModel = null;
@@ -287,9 +307,17 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.activeStep = 2;
     }
   }
+  public changeAddressOption(): void {
+    this.addressOption = 'another';
+    this.addressCard = !this.addressCard;
+    this.isAddressVerified = false;
+    this.isAdressAddedSuccessfully = false;
+    this.selectedShippingAddress = {} as IFirebaseAddress;
+  }
   public purchasePlan(isEsim?): void {
-    if (!!this.newMobileServiceFrom.valid && ((!isEsim && !!this.isAddressVerified) || !!isEsim)) {
+    if (!!this.newMobileServiceFrom.valid && (!isEsim && !!this.option && ((this.option === 'home' && !!this.isAddressVerified) || (this.option === 'store' && !!this.barCode)) || !!isEsim )) {
       this.clearCart();
+      const isStorePickup = this.option === 'store'? true: false;
       this.mobilePlansService.setActivePlanId("");
       this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
       this.mobileCustomPlansService.setPlanExpectedDevice(null);
@@ -300,6 +328,9 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         this.mobilePlansService.seteSIM(true);
         this.mobilePlansService.setQrScanned(false);
       }
+      if(!!isStorePickup) {
+        this.mobilePlansService.setStorePickup(isStorePickup);
+      }
       setTimeout(() => {
         const data: INewPlanCartItem = {
           autoRenewPlan: true,
@@ -307,12 +338,13 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           orderShipMethod: !!isEsim ? null : "usps_first_class_mail/letter",
           promoCode: "5",
           savePaymentMethod: false,
-          shippingAddress: !!isEsim ? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
+          shippingAddress: !!isEsim || !!isStorePickup ? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
           paymentInfo: null,
           simsQuantity: 0,
           usingPaymentProfile: false,
           voucherCode: null,
-          haseSIM: !!isEsim ? true : false
+          haseSIM: !!isEsim ? true : false,
+          storePickup : isStorePickup
         };
         this.appState.loading = true;
         this.orderCheckoutService.checkoutNewPlan(data).then(
