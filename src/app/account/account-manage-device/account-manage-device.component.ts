@@ -65,7 +65,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public showCompatibleForm = false;
   public showErrorBanner = false;
   public errorMessage = '';
-  public showWarningBanner = false;
   public checkedDevice = {} as IDeviceCompatibilityV1;
   public simExpanded = true;
   public showSuccessBanner: boolean;
@@ -377,14 +376,15 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then(res => {
           if (!!res) {
             this.appState.loading = false;
-            if (!!res[this.deviceNetwork].covered) {
+            if (!!res[this.deviceNetwork].covered && !res?.details?.eSimOnly) {
               this.showErrorBanner = false;
               this.address = '';
               this.equipment = '';
               this.showSuccessBanner = true;
               this.checkedDevice = res.details as IDeviceCompatibilityV1;
             } else {
-              this.showWarningBanner = true;
+              this.showErrorBanner = true;
+              this.errorMessage = 'Device is not compatible';
             }
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
@@ -424,9 +424,12 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   }
   public hideBanners() {
     this.showErrorBanner = false;
-    this.showWarningBanner = false;
     this.showSuccessBanner = false;
     this.checkedDevice = {} as IDeviceCompatibilityV1;
+  }
+  public resetCompatibilityForm() {
+    this.equipment = '';
+    this.address = '';
   }
   private setReplacementSim(): void {
     const params = {};

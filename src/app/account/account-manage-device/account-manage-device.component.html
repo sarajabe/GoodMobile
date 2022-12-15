@@ -75,7 +75,7 @@
                         <div class="card-header">
                             <p class="title">Device Compatibility Check</p>
                             <img class="close" src="assets/icon/close.svg" alt="close"
-                                (click)="showCompatibleForm=false; hideBanners()">
+                                (click)="showCompatibleForm=false; hideBanners();resetCompatibilityForm();">
                         </div>
                         <div class="card-form">
                             <p class="card-note">If you plan to change your device you have to check if your device
@@ -87,18 +87,6 @@
                                     <div class="banner-content">
                                         <p class="title">We are sorry!</p>
                                         <p class="description last">{{errorMessage}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info-banner warning-background bottom" *ngIf="showWarningBanner">
-                                <div class="flex">
-                                    <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
-                                    <div class="banner-content">
-                                        <p class="description last">Changing a device might impact your service, please
-                                            contact customer care to ensure that your changes are handled correctly.</p>
-                                        <div class="actions">
-                                            <button class="button thirdly" (click)="goToContactUs()">Contact Us</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
