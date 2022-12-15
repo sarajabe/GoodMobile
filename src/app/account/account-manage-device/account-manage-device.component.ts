@@ -59,11 +59,8 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-  public isESimCapable = false;
   public simOptionsForm: FormGroup;
   public simOption: string;
-  public simOptions = [{ id: 'esim', value: 'eSIM' }, { id: 'physical', value: 'Physical SIM' }];
-
   public deviceExpanded = true;
   public showCompatibleForm = false;
   public showErrorBanner = false;
@@ -74,7 +71,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public showSuccessBanner: boolean;
   public showReplacementForm = false;
   public lteExpanded = true;
-  public eSIMOrdered = false;
   private captchaResponse: string;
   private attSim: IDeviceCompatibilityV1;
   private tmoSim: IDeviceCompatibilityV1;
@@ -82,7 +78,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   private alive = true;
   private methodsObserver: Subscription;
   private streetSearchText: string;
-  
+
   constructor(private userAccountService: UserAccountService,
     private userPlansService: UserPlansService,
     private accountHeaderService: AccountHeaderService,
@@ -105,8 +101,8 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((userPlanReady) => {
       if (userPlanReady && !!this.userPlansService.selectedUserPlan) {
         this.selectedPlan = this.userPlansService.selectedUserPlan;
-        if (!!this.selectedPlan && this.selectedPlan.planDevice) {
-          this.selectedDeviceName = this.selectedPlan.planDevice.model.split('(')[0];
+        if (!!this.selectedPlan && this.selectedPlan?.planDevice) {
+          this.selectedDeviceName = this.selectedPlan?.planDevice?.model?.split('(')[0];
         }
         this.selectedPendingChangePlan = this.userPlansService.selectedPendingUserPlan;
       } else {
@@ -116,7 +112,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
       if (!!plans && !!this.selectedPlan) {
         this.selectedPlan = plans.find((plan) => plan.id === this.selectedPlan.id);
-        this.eSIMOrdered = !!this.selectedPlan && !this.selectedPlan?.canceled  && !!this.selectedPlan?.planDevice && this.selectedPlan?.planDevice?.network === 'tmo' && !this.selectedPlan?.qrScanned && this.selectedPlan?.mdn && !!this.selectedPlan?.eSimDetails && !!this.selectedPlan.planDevice.pendingNewSim;
       }
     });
     this.mobilePlansService.currentPlan.subscribe((cart) => {
@@ -139,10 +134,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     });
     this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
       this.userAccount = account;
-      this.deviceNetwork = this.userAccount.network;
-      if (!!this.userAccount?.deviceDetails?.eSimCapable && this.userAccount?.network === 'tmo') {
-        this.isESimCapable = true;
-      }
+      this.deviceNetwork = this.userAccount?.network;
     });
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       this.userHasPlans = plans.length > 0;
@@ -169,6 +161,28 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     if (!!this.methodsObserver) {
       this.methodsObserver.unsubscribe();
     }
+  }
+  public showWhatIsIMEI(): void {
+    this.modalHelper.showInformationMessageModal('3 Ways to find your MEID or IMEI', '', 'Got it', null,
+      true, 'compatibility-help-modal-IME',
+      `<div class="description-content">
+    <div class="intro">
+    Your IMEI number is needed if you want to unlock your device to use
+    on other networks. Here’s 3 ways how to find it on your phone: </div>
+       <div class="note-dial"> <b>Enter *#06# on your phone’s dial pad.</b></div>
+       <b>OR</b>
+       <div class="menu-margins">
+       <b>Check your phone’s settings menu:</b>
+       <p class="p-nowrap">Android: Go to Settings > About device > Status</p>
+       <p class="p-nowrap">iPhone: Go to Settings > General > About</p>
+       <p class="p-nowrap">Windows Phone: Go to Settings > About > More info</p>
+       </div>
+       <b>OR</b>
+       <div class="menu-margins">
+       <p class="p-nowrap"><b>Check the sticker under your device’s battery.</b></p>
+       <p class="p-nowrap"> Note: It may be listed as “DEC.” </p> </div>
+      </div>
+        `);
   }
   public onOptionChange(): void {
     this.simOption = this.simOptionsForm.get('option').value;
@@ -222,18 +236,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     this.displayedAddressModel = null;
     this.hideBanners();
   }
-  public activateReplacementEsim(): void {
-    const mdn: string = (new PhonePipe()).transform(this.selectedPlan.mdn);
-    if (!!this.selectedPlan.eSimDetails && this.selectedPlan.eSimDetails.iccid !== this.selectedPlan.planDevice.simNumber) {
-      this.modalHelper.showeSIMModal(this.selectedPlan.eSimDetails.iccid, mdn, 'esim-replacement').result.then((response) => {
-        if (!!response) {
-          this.swapSIM(this.selectedPlan.eSimDetails.iccid, response);
-        }
-      })
-    } else {
-      this.goToQrScan();
-    }
-  }
   public changeDevice(iccid, recaptcha): void {
     this.appState.loading = true;
     this.userDeviceService.isSupportedDeviceWithZipCode(this.selectedPlan.planDevice.id, this.selectedPlan.planDevice.postalCode,
@@ -251,7 +253,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
           this.selectedPlan.planDevice = !!this.selectedPlan.planDevice ? Object.assign(this.selectedPlan.planDevice, device) : device;
           this.selectedPlan.planDevice.pendingNewSim = false;
           this.selectedPlan.planDevice.simNumber = iccid;
-          delete this.selectedPlan.eSimDetails;
           this.userPlansService.updateUserPlan(this.selectedPlan.userId, this.selectedPlan).then(() => {
             const mdn: string = (new PhonePipe()).transform(this.selectedPlan.mdn);
             const customHtml = '<div class="subHeader"><p>Your SIM is now active on Phone Number ' + mdn + '.</p></div>' +
@@ -307,38 +308,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
             }
           });
       }
-    });
-  }
-  public swapSIM(iccid, recaptcha): void {
-    const changeRequest: IChangeDevice = {
-      mdn: this.selectedPlan.mdn, equipment: this.selectedPlan.planDevice.id,
-      handsetOS: !!this.selectedPlan.planDevice.os ? this.selectedPlan.planDevice.os : '', iccid
-    };
-    this.appState.loading = true;
-    this.userDeviceService.changeUserDevice(changeRequest, this.selectedPlan.id).then(() => {
-      this.appState.loading = false;
-      this.selectedPlan.planDevice.pendingNewSim = false;
-      this.selectedPlan.planDevice.simNumber = iccid;
-      this.selectedPlan.iccid = iccid;
-      this.userPlansService.updateUserPlan(this.selectedPlan.userId, this.selectedPlan).then(() => {
-        this.userPlansService.selectUserPlan(this.selectedPlan.id);
-        const customHtml = `<div class="content"><p class="info">Your Service is now active.</p>
-        <p class="info">The SIM will be changed immediately.</p>
-        <p class="focus"><b>You must have your phone ready to scan the QR code to load the eSIM on your phone</b></p></div>`;
-        this.modalHelper.showInformationMessageModal('Ready to set up your eSIM', '', 'Setup now', null, true, 'confirm-esim', customHtml).result.then((response) => {
-          if (!!response) {
-            this.goToQrScan()
-          }
-        });
-
-      }, (error) => {
-        this.appState.loading = false;
-        this.toastHelper.showAlert(error.message || error.error ? error.error.message : error);
-      });
-
-    }, (error) => {
-      this.appState.loading = false;
-      this.toastHelper.showAlert(error.message);
     });
   }
   public getDescription(): string {
@@ -441,40 +410,17 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
 
   public getReplacement(): void {
     if (!this.selectedPlan.canceled) {
-      if (!!this.isESimCapable) {
-        this.showReplacementForm = true;
-      } else {
-        this.showReplacementForm = false;
-        this.goToCart();
-      }
+      this.showReplacementForm = false;
+      this.setReplacementSim();
     }
   }
-  public openDeviceForm(): void{
+  public openDeviceForm(): void {
     if (!this.selectedPlan.canceled) {
       this.showCompatibleForm = true;
     }
   }
-  public goToQrScan(): void {
-    const params = {};
-    params[ACCOUNT_ROUTE_URLS.PARAMS.PLAN_ID]= this.selectedPlan.id;
-    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ESIM_SETUP}`, params]);
-  }
-  public goToCart(): void {
-    if (!!this.isESimCapable) {
-      this.simOptionsForm.markAllAsTouched();
-      if (!!this.simOptionsForm.valid) {
-        if (this.simOption === 'esim') {
-          this.setReplacementSim(true);
-        } else if (this.simOption === 'physical') {
-          this.setReplacementSim();
-        }
-      }
-    } else {
-      this.setReplacementSim();
-    }
-  }
   public goToContactUs(): void {
-    this.router.navigate([SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.CONTACT_US]);
+    this.router.navigate([SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.CONTACT_US]);
   }
   public hideBanners() {
     this.showErrorBanner = false;
@@ -482,10 +428,10 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     this.showSuccessBanner = false;
     this.checkedDevice = {} as IDeviceCompatibilityV1;
   }
-  private setReplacementSim(eSim?: boolean): void {
+  private setReplacementSim(): void {
     const params = {};
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
-    this.tmoSim =  { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
+    this.tmoSim = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
     this.attSim = { network: 'att', networkType: 'GSM', skuIdentifier: 'G', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
     const device = this.selectedPlan.planDevice.network === 'att' ? this.attSim : this.tmoSim;
     if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
@@ -502,12 +448,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
             this.mobilePlansService.setSimPurchaseQuantity(1);
             this.mobilePlansService.setActivePlanId(this.selectedPlan.id);
             this.mobilePlansService.setPlanDevice(device);
-            if (!!eSim) {
-              this.mobileCustomPlansService.seteSIM(true);
-              this.mobileCustomPlansService.setQrScanned(false);
-            } else {
-              this.mobileCustomPlansService.seteSIM(false);
-            }
             this.appState.clearSessionStorage();
             this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.REPLACEMENT, [{
               id: device.skuNumber, quantity: this.userCart.simsQuantity,
@@ -525,12 +465,6 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
       this.mobilePlansService.setSimPurchaseQuantity(1);
       this.mobilePlansService.setActivePlanId(this.selectedPlan.id);
       this.mobilePlansService.setPlanDevice(device);
-      if (!!eSim) {
-        this.mobileCustomPlansService.seteSIM(true);
-        this.mobileCustomPlansService.setQrScanned(false);
-      } else {
-        this.mobileCustomPlansService.seteSIM(false);
-      }
       sessionStorage.setItem('plan_id', this.selectedPlan.id);
       this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.REPLACEMENT, [{
         id: device.skuNumber, quantity: this.userCart.simsQuantity,
