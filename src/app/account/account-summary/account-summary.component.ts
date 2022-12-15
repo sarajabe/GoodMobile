@@ -633,17 +633,8 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         this.modalHelper.showInformationMessageModal('Change ACP Plan', '', 'Yes', '', false, 'change-ebb-plan-modal', firstHtml, true, 'No')
           .result.then((result) => {
             if (result) {
-              this.modalHelper.showInformationMessageModal('Change ACP Plan', '', 'Yes', '', false, 'change-ebb-plan-modal', secondHtml, true, 'No')
-                .result.then((res) => {
-                  if (res) {
-                    this.checkClearCartForChangePlan();
-                  }
-                }, (error) => {
-                  console.error('error', error);
-                });
-            } else {
-              this.modalHelper.showInformationMessageModal('Change ACP Plan', 'Ok, no changes will be made to your account.  Your current ACP benefit and plan remains intact.');
-            }
+              this.checkClearCartForChangePlan();
+            } 
           }, (error) => {
             console.error('error', error);
           });
