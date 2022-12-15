@@ -281,14 +281,14 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     });
   }
   public deEnroll(): void {
-    const deEnrollCustomHtml = `To cancel your Federal Affordable Connectivity enrollment, 
-    please contact our customer care number <a href="tel: (800) 416-3003">(800) 416-3003</a> for assistance.`;
+    const deEnrollCustomHtml = `To cancel your Federal Affordable Connectivity enrollment,
+    please contact our customer care number <a href="tel: (800) 840-8515">(800) 840-8515</a> for assistance.`;
     this.modalHelper.showInformationMessageModal('De-Enroll Federal Affordable Connectivity ', '', 'Done', null, true, null,
       deEnrollCustomHtml, false)
       .result.then((result) => {
         if (result) {
           // PRIMARY
-          document.location.href = 'tel:(800) 416-3003';
+          document.location.href = 'tel:(800) 840-8515';
         }
       }, (error) => {
         console.error('error step', error);
@@ -569,7 +569,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
                 this.appState.loading = false;
                 if (!!this.user.duplicatePaymentId) {
                   this.user.duplicatePaymentId = this.user.duplicatePaymentId.filter((p) => !!p.id && p.id !== method.id);
-                  this.user.paymentUpdateNeeded = this.user.duplicatePaymentId.length > 0 ? true : false; 
+                  this.user.paymentUpdateNeeded = this.user.duplicatePaymentId.length > 0 ? true : false;
                 }
                 if (!!data) {
                   this.toastHelper.showSuccess('Payment Method Deleted!');

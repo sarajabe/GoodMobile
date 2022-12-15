@@ -24,9 +24,6 @@
                     <a [class.disabled]="!!isPortIn"> <img class="icon" src="/assets/img/pay-icon.svg" alt="payment icon" /> Pay & refill
                         your account</a>
                 </li>
-                <li (click)="goToReferFriend()" >
-                    <a > <img class="icon" src="/assets/icon/click-white.svg" style="width:24px" alt="payment icon" /> Refer a friend</a>
-                </li>
                 <li (click)="goToAddons($event)" [class.disabled]="!!isExpiredAccount || !!isPortIn">
                     <a [class.disabled]="!!isExpiredAccount || !!isPortIn"><img class="icon"
                             src="/assets/img/addons-icon.svg" alt="addons icon"/>Plan add-ons</a>

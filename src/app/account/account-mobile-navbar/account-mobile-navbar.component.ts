@@ -106,8 +106,4 @@ export class AccountMobileNavbarComponent implements OnInit {
       this.toggleMenu();
     }
   }
-  public goToReferFriend(): void {
-    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.REFER_FRIEND}`]);
-    this.toggleMenu();
-  }
 }
