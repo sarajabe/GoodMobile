@@ -204,7 +204,7 @@ describe('Contact Us Component - Unit Test', async () => {
             const twitterIcon: DebugElement = fixture.debugElement.query(By.css('#twitterLink'));
             fixture.detectChanges();
 
-            expect(twitterIcon.nativeElement.getAttribute('href')).equal('https://twitter.com/GoodMobile');
+            expect(twitterIcon.nativeElement.getAttribute('href')).equal('https://twitter.com/goodmobileusa');
         });
     }));
 
