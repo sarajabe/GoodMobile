@@ -33,7 +33,7 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
   public userPlans: Array<IUserPlan>;
   public userId: string;
   public acpStatus: string;
-  public ebbId:string;
+  public ebbId: string;
   public isExitingPlan = false;
   public acpOptions = [{ id: 'yes', value: 'Yes' },
   { id: 'yes-without-id', value: 'Yes, but I don’t have it now' },
@@ -153,7 +153,7 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
       this.showAcpValidationMsg = false;
       this.showAcpComponents = true;
       if (this.acpOption === 'no') {
-        this.acpData.providerApplicationId =  null;
+        this.acpData.providerApplicationId = null;
         this.newApplication = true;
       } else if (this.acpOption === 'yes') {
         this.yesExistingAppId = true;
@@ -163,7 +163,7 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
         this.acpData.eligibilityCode = null;
         this.acpData.bqpUser = null;
       } else if (this.acpOption === 'yes-without-id') {
-        this.acpData.providerApplicationId =  null;
+        this.acpData.providerApplicationId = null;
         this.yesWithNonExistingApp = true;
         this.acpData.eligibilityCode = null;
         this.acpData.bqpUser = null;
@@ -193,11 +193,11 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
       } else if (result.status === "COMPLETE") {
         this.acpSuccess = true;
         this.acpError = false;
-      }  else if (!result.link && (result?.status === 'PENDING_RESOLUTION'|| result?.status === 'PENDING_CERT') ) {
+      } else if (!result.link && (result?.status === 'PENDING_RESOLUTION' || result?.status === 'PENDING_CERT')) {
         this.acpSuccess = false;
         this.acpStatus = 'not-complete';
         this.acpError = true;
-      } else if (!!result.link && (result?.status === 'PENDING_RESOLUTION'|| result?.status === 'PENDING_CERT') ) {
+      } else if (!!result.link && (result?.status === 'PENDING_RESOLUTION' || result?.status === 'PENDING_CERT')) {
         this.acpStatus = 'pendingAction';
         this.acpLink = result.link;
         this.acpSuccess = true;
@@ -206,21 +206,23 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
     }
   }
   private callAcpPlanExistModal(): void {
-    this.modalHelper
-    .showInformationMessageModal(
-      "ACP Plan Exists",
-      "You already have a Federal Affordable Connectivity plan!",
-      "Account Summary",
-      '',
-      false, 'acp-modal-exists'
-    )
-      .result.then((res) => {
-        if (!!res) {
-          this.router.navigate([
-            `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,
-          ]);
-        }
-      });
+    if (!document.body.classList.contains('modal-open')) {
+      this.modalHelper
+        .showInformationMessageModal(
+          "ACP Plan Exists",
+          "You already have a Federal Affordable Connectivity plan!",
+          "Account Summary",
+          '',
+          false, 'acp-modal-exists'
+        )
+        .result.then((res) => {
+          if (!!res) {
+            this.router.navigate([
+              `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,
+            ]);
+          }
+        });
+    }
   }
   ngOnDestroy(): void {
     this.alive = false;
@@ -229,8 +231,8 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
   onEsc(event: any): void {
     if (event.keyCode === 27) {
       event.preventDefault();
-      if(!!this.isExitingPlan) {
-     this.callAcpPlanExistModal();
+      if (!!this.isExitingPlan) {
+        this.callAcpPlanExistModal();
       }
     }
   }
