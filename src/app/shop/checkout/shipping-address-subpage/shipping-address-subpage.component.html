@@ -144,7 +144,7 @@
                         id="Service" placeholder=" " #service="ngModel" [class.dirty]="!!selectedShippingServiceOption"
                         (ngModelChange)="changedDeliveryOption()" required>
                         <option disabled selected value="">Delivery Options</option>
-  
+
                         <option *ngFor="let item of shippingDeliveryOptions" [value]="item.id">
                           {{ item.title }}
                         </option>
@@ -178,7 +178,7 @@
           <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
           <div class="input-details">
           <p class="value">Store Pickup</p>
-          <p class="caption">I’d like to collect my package frome store.</p>
+          <p class="caption">I’d like to collect my package from a store.</p>
         </div>
         </label>
       </div>

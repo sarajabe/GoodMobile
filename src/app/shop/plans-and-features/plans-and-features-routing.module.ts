@@ -10,11 +10,11 @@ const routes: Routes = [
   {
     path: '', component: PlansAndFeaturesComponent,
     children: [
-      {path: PLANS_SHOP_ROUTE_URLS.NEW_PLAN, component: NewPlanShopComponent, data: {title: `Unlimited Talk & Text 4G LTE Cell Phone Plans | GoodMobile` , description :
+      {path: PLANS_SHOP_ROUTE_URLS.NEW_PLAN, component: NewPlanShopComponent, data: {title: `Unlimited Talk & Text 4G LTE Cell Phone Plans | Good Mobile` , description :
       // eslint-disable-next-line max-len
       `The best cell phone deal just got better! Get all the power of the nation’s largest networks for less.`} as IPageMeta},
       {path: PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN, component: ChangePlanShopComponent, data: {title: 'Change Plan',
-       description: 'Switch and change between GoodMobile cell phone plans'} as IPageMeta},
+       description: 'Switch and change between Good Mobile cell phone plans'} as IPageMeta},
     ]
   }
 ];

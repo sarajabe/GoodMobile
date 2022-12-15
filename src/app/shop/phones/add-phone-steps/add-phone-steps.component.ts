@@ -35,8 +35,8 @@ export class AddPhoneStepsComponent implements OnInit, OnDestroy {
   constructor(private stepsManagement: PhoneManagementService, public router: Router, private mobilePlansService: MobileCustomPlansService,
               private userPlansService: UserPlansService) {
     this.stepsDetails = [
-      { stepNumber: 1, title: 'Before we add to Cart', description: 'Please select an active GoodMobile number or purchase a new line in order to proceed.' },
-      { stepNumber: 2, title: 'Service Coverage Check', description: 'Enter your ZIP code below and find out if GoodMobile is the best fit for your location.' },
+      { stepNumber: 1, title: 'Before we add to Cart', description: 'Please select an active Good Mobile number or purchase a new line in order to proceed.' },
+      { stepNumber: 2, title: 'Service Coverage Check', description: 'Enter your ZIP code below and find out if Good Mobile is the best fit for your location.' },
     ];
     const savedFlow = sessionStorage.getItem('planFlow');
     this.isPlanFlow = !!savedFlow ? true : false;
