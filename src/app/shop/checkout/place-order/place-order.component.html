@@ -311,7 +311,7 @@
               <div class="delivery-methods-section">
                 <img [src]="!!isStorePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon">
                 <div class="details">
-                  <p class="smaller title">{{!!isStorePickup? 'Store Pick up': 'Home Delivery'}}</p>
+                  <p class="smaller title">{{!!isStorePickup? 'Store Pickup': 'Home Delivery'}}</p>
                   <div class="sub-content-show address" *ngIf="!!shippingAddress?.address1">
                     <p class="desc">{{ !!shippingAddress?.name ?  shippingAddress?.name : shippingAddress?.alias}}, {{ shippingAddress?.address1 }}</p>
                     <p class="desc" *ngIf="!!shippingAddress?.address2">{{ shippingAddress?.address2 }}</p>

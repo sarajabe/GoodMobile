@@ -143,7 +143,7 @@ const routes: Routes = [
       {path: SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS, component: TermsAndConditionsComponent,
       data: {title: 'Good Mobile | Support | Terms & Conditions', description: 'Get the Good Mobile Terms & Conditions.'} as IPageMeta},
       {path: SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS_CATEGORY, component: TermsAndConditionsComponent,
-        data: {title: 'Good Mobile | Support | Terms & Conditions', description: 'Get the GoodMobile Terms & Conditions.'} as IPageMeta},
+        data: {title: 'Good Mobile | Support | Terms & Conditions', description: 'Get the Good Mobile Terms & Conditions.'} as IPageMeta},
     ]
   }
 ];

@@ -21,7 +21,7 @@ export class IosGsmComponent {
   public customHTML4 = '<div class="flex-phone-display"><div class="steps"><p>4. Go to ‘Profile’ from your General Settings. </p></div>' +
     '<div><img class="step-image" src="assets/img/step4.png"></div></div>';
   public customHTML5 = `<div class="flex-phone-display"><div class="steps"><p>5. Next,
-  click on the goodMobile LTE Data Settings tab to configure your iPhone LTE settings.</p></div>` +
+  click on the Good Mobile LTE Data Settings tab to configure your iPhone LTE settings.</p></div>` +
     '<div><img class="step-image" src="assets/img/step5.png"></div></div>';
   public customHTML6 = '<div class="flex-phone-display"><div class="steps"><p>6. Click on ‘Install’ to install the LTE iPhone configuration settings on your device.</p></div>' +
     '<div><img class="step-image" src="assets/img/step6.png"></div></div>';
@@ -32,7 +32,7 @@ export class IosGsmComponent {
   public customHTML9 = '<div class="flex-phone-display"><div class="steps"><p>9. Click ‘Install’ again to confirm.</p></div>' +
     '<div><img class="step-image" src="assets/img/step9.png"></div></div>';
   public customHTML10 = '<div class="flex-phone-display">' +
-    '<div class="steps"><p>10. You’re done! The iPhone LTE Data Settings have been successfully downloaded to your device, you can now enjoy your GoodMobile service.</p></div>' +
+    '<div class="steps"><p>10. You’re done! The iPhone LTE Data Settings have been successfully downloaded to your device, you can now enjoy your Good Mobile service.</p></div>' +
     '<div><img class="step-image" src="assets/img/step10.png"></div></div>';
   constructor(private modalHelper: ModalHelperService, private router: Router) { }
   public done(): void {

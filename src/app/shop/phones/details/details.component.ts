@@ -108,12 +108,12 @@ export class DetailsComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.metaService.createCanonicalUrl('', true);
     this.innerWidth = window.innerWidth;
-    this.phoneId = this.route.snapshot.paramMap.get('phoneId');   
+    this.phoneId = this.route.snapshot.paramMap.get('phoneId');
     this.phoneCategory = 'apple_ID';
     this.categoryId = this.contentful.getCategoryId('phoneModel', this.phoneId);
     this.name = this.contentful.getphoneName('phoneModel', this.phoneId);
     this.name.pipe(take(1)).subscribe((d) => {
-      const title = `Buy ${d.phoneName} | Free SIM | GoodMobile`;
+      const title = `Buy ${d.phoneName} | Free SIM | Good Mobile`;
       const description = `Buy an unlocked ${d.phoneName}. 14-days returns and up to 90-days warranty. Great value and a more sustainable option and FREE delivery.`
       this.meta.updateTag( { name: 'title', content: title });
       this.meta.updateTag( { name: 'og:title', content: title });
@@ -141,10 +141,10 @@ export class DetailsComponent implements OnDestroy, OnInit {
               this.availableFinishes.unshift({ color: finsihItem?.fields?.color, finishId: finsihItem?.fields?.finishId, hexCode: finsihItem?.fields?.hexCode, imageUrl: finsihItem?.fields?.imageUrl, marketUrl: finsihItem?.fields?.marketUrl, os: details?.fields?.os, outOfStock });
               this.finishes.unshift({ color: finsihItem?.fields?.color, finishId: finsihItem?.fields?.finishId, hexCode: finsihItem?.fields?.hexCode, imageUrl: finsihItem?.fields?.imageUrl, marketUrl: finsihItem?.fields?.marketUrl, os: details?.fields?.os, outOfStock })
             }
-          });   
-          this.selectedDefaultFinishId.pipe(take(1)).subscribe(defaults => {  
+          });
+          this.selectedDefaultFinishId.pipe(take(1)).subscribe(defaults => {
             if (!!defaults && !!this.catalogData) {
-              const selectedSku = details[0]?.fields?.sku.find((skuItem) => skuItem?.fields?.skuFinishId === defaults?.finishId)?.fields?.sku;              
+              const selectedSku = details[0]?.fields?.sku.find((skuItem) => skuItem?.fields?.skuFinishId === defaults?.finishId)?.fields?.sku;
               this.selectedPhoneFromCatalog = this.catalogData.find((item) => item?.sku === selectedSku);
               const isSelectedPhoneOutOfStock = this.selectedPhoneFromCatalog?.stock > 0 ? false : true;
               if (!!isSelectedPhoneOutOfStock && this.availableFinishes?.length > 0) {

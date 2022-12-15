@@ -55,16 +55,16 @@ export class VoucherPaymentSectionComponent implements OnInit, OnDestroy{
   public showVoucherModal(): void {
     this.modalHelper.showInformationMessageModal('Voucher usage', '', 'Got it!', null, true, 'voucher-info-modal',
       `<div class="text-content-holder">
-                  <p class="text">  You can purchse your GoodMobile vouchers in stores:</p>
+                  <p class="text">  You can purchse your Good Mobile vouchers in stores:</p>
                 </div>
                   <div class="text-content-holder">
-                  You can add balance to your account and purchase items through the GoodMobile website.
-                  You can also use both payment methods (&nbsp;card&nbsp;+&nbsp;voucher&nbsp;) to complete your GoodMobile purchase
+                  You can add balance to your account and purchase items through the Good Mobile website.
+                  You can also use both payment methods (&nbsp;card&nbsp;+&nbsp;voucher&nbsp;) to complete your Good Mobile purchase
                   </div>
                   <div class="image-container">
                   <span class="pointer-holder"></span>
                   <img src="assets/img/voucher-info.png"/>
-                  <span class="image-pointer">Scratch this area on the back of your GoodMobile voucher for PIN</span>
+                  <span class="image-pointer">Scratch this area on the back of your Good Mobile voucher for PIN</span>
                   </div>
 `
     );
@@ -99,7 +99,7 @@ export class VoucherPaymentSectionComponent implements OnInit, OnDestroy{
               userBalance = `<span class="text-color-alert">($0)</span>`;
           }
         }
-        const customHtml = '<div><p class="message">Your GoodMobile voucher code was validated. </p><p class="message balance"> Your account balance is ' +  userBalance + '</p</div>';
+        const customHtml = '<div><p class="message">Your Good Mobile voucher code was validated. </p><p class="message balance"> Your account balance is ' +  userBalance + '</p</div>';
         this.modalHelper.showInformationMessageModal('Your Voucher Code is valid',
           '',
           'Done',
