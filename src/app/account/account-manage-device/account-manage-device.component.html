@@ -19,7 +19,7 @@
         </div>
     </ng-container>
     <ng-container
-        *ngIf="!!selectedPlan && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.pendingNewSim && !selectedPlan?.canceled && !selectedPlan?.eSimDetails">
+        *ngIf="!!selectedPlan && !!selectedPlan?.planDevice && selectedPlan?.planDevice?.pendingNewSim && !selectedPlan?.canceled">
         <div class="info-banner default-background">
             <div class="flex">
                 <img src="assets/icon/info-icon.svg" alt="Info Icon">
@@ -33,49 +33,12 @@
             </div>
         </div>
     </ng-container>
-    <ng-container
-        *ngIf="!!eSIMOrdered && !!selectedPlan.eSimDetails && selectedPlan.eSimDetails.iccid !== selectedPlan.planDevice.simNumber">
-        <div class="info-banner default-background">
-            <div class="flex">
-                <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                <div class="banner-content">
-                    <p class="title">Are you ready to swap to eSIM?</p>
-                    <p class="description">Your replacement eSIM is ordered successfully! You may now proceed with
-                        <b>downloding your eSIM!</b>
-                    </p>
-                    <p class="description bottom-8">The SIM will be changed immediately.</p>
-                    <p class="description last"><b>To prevent service loss, you must have your phone ready to scan the
-                            QR code to load the SIM on your phone</b></p>
-                    <div class="actions">
-                        <button class="button primary" (click)="activateReplacementEsim()">Swap to eSIM</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-container>
-    <ng-container
-        *ngIf="!!eSIMOrdered && !!selectedPlan.eSimDetails && selectedPlan.eSimDetails.iccid === selectedPlan.planDevice.simNumber">
-        <div class="info-banner default-background">
-            <div class="flex">
-                <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                <div class="banner-content">
-                    <p class="title">You still need to set up your eSIM?</p>
-                    <p class="description">The SIM will be changed immediately.</p>
-                    <p class="description last"><b>To prevent service loss, you must have your phone ready to scan the
-                            QR code to load the SIM on your phone</b></p>
-                    <div class="actions">
-                        <button class="button primary" (click)="goToQrScan()">Set up now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-container>
     <div class="order-card" *ngIf="!!userHasActivePlans">
         <div class="order-card-container">
             <div class="tab-content">
                 <input type="checkbox" id="device" [(ngModel)]="deviceExpanded" class="hidden-checkbox">
                 <label class="sub-label" for="device">
-                    <span>Your Device</span><img class="icon" src="assets/icon/arrow-purple.svg" alt="arrow icon">
+                    <span>Your Device</span><img class="icon" src="assets/icon/arrow-blue.svg" alt="arrow icon">
                 </label>
                 <div class="card-content">
                     <div class="item-details">
@@ -87,46 +50,37 @@
                                     <p class="value">{{!!userAccount?.deviceDetails?.model ?
                                         userAccount?.deviceDetails?.model : '-'}}</p>
                                 </div>
-
                                 <div class="details quarter">
                                     <p class="title">Marketing Name</p>
                                     <p class="value">{{!!userAccount?.deviceDetails?.marketingName?
                                         userAccount?.deviceDetails?.marketingName : '-'}}</p>
                                 </div>
                                 <div class="details quarter">
-                                    <p class="title">IMEI</p>
-                                    <p class="value">{{userAccount?.imei}}</p>
-                                </div>
-                                <div class="details quarter">
                                     <p class="title">Manufacturer</p>
                                     <p class="value">{{!!userAccount?.deviceDetails?.manufacturer?
                                         userAccount?.deviceDetails?.manufacturer : '-'}}</p>
                                 </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-banner" [class.border-after]="!!showCompatibleForm">
-                        <div class="flex">
-                            <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                            <div class="banner-content">
-                                <p class="description">If you plan to change your device you have to check if your
-                                    device is compatible with Good Mobile network. Most devices work on our network.
-                                    Let’s confirm if yours is one of them.</p>
-                                <div class="actions" *ngIf="!showCompatibleForm">
-                                    <button class="button thirdly" (click)="openDeviceForm()"
-                                        [class.disabled]="selectedPlan?.canceled">Check Device</button>
+                                <div class="details quarter">
+                                    <p class="title">IMEI</p>
+                                    <p class="value">{{userAccount?.imei}}</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="check-another-device" *ngIf="!showCompatibleForm">
+                        <button class="button thirdly" (click)="openDeviceForm()"
+                            [class.disabled]="selectedPlan?.canceled">Check Another Device</button>
                     </div>
                     <div class="action-card" *ngIf="!!showCompatibleForm">
                         <div class="card-header">
                             <p class="title">Device Compatibility Check</p>
                             <img class="close" src="assets/icon/close.svg" alt="close"
-                                (click)="showCompatibleForm=false">
+                                (click)="showCompatibleForm=false; hideBanners();resetCompatibilityForm();">
                         </div>
                         <div class="card-form">
+                            <p class="card-note">If you plan to change your device you have to check if your device
+                                is compatible with Good Mobile network. Most devices work on our network. Let’s confirm
+                                if yours is one of them.</p>
                             <div class="info-banner error-background bottom" *ngIf="showErrorBanner">
                                 <div class="flex">
                                     <img src="assets/icon/error-icon.svg" alt="Alert Icon">
@@ -136,42 +90,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="info-banner warning-background bottom" *ngIf="showWarningBanner">
-                                <div class="flex">
-                                    <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
-                                    <div class="banner-content">
-                                        <p class="description last">Changing a device might impact your service, please
-                                            contact customer care to ensure that your changes are handled correctly.</p>
-                                        <div class="actions">
-                                            <button class="button thirdly" (click)="goToContactUs()">Contact Us</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="info-banner success-background bottom" *ngIf="showSuccessBanner">
                                 <div class="flex">
                                     <img src="assets/icon/success-icon.svg" alt="Success Icon">
                                     <div class="banner-content">
                                         <p class="title">You’re Set!</p>
                                         <p class="description">The following device: {{checkedDevice?.name}} is
-                                            <b>compatible
-                                                with Good Mobile {{checkedDevice?.eSimCapable && deviceNetwork == 'tmo' ?
-                                                ' and supports eSIM.': '.'}}</b> The phone must be unlocked.
+                                            <b>compatible with Good Mobile.</b> The phone must be unlocked.
                                         </p>
-                                        <p class="description bottom-8"
-                                            *ngIf="checkedDevice?.eSimCapable && deviceNetwork == 'tmo'"><b>What is an
-                                                eSim?</b><span class="tooltip">
-                                                <img src="assets/icon/Information-sec.svg" class="info"
-                                                    alt="Info icon" />
-                                                <span class="tooltiptext">
-                                                    <img src="assets/icon/why-arrow.svg" alt="Info icon" />
-                                                    <p>An eSIM is an industry-standard digital SIM that allows you to
-                                                        activate a cellular plan from your carrier without having to use
-                                                        a physical SIM.</p>
-                                                    <p>The activation process is immediate without having to wait
-                                                        around.</p>
-                                                </span>
-                                            </span></p>
                                         <p class="description bottom-8">Please use your Good Mobile SIM to your new
                                             phone, and restart the phone. As long as the new phone is unlocked, network
                                             will automatically detect and register the device.</p>
@@ -206,6 +132,9 @@
                                                 *ngIf="(equipmentNumber.errors) && (equipmentNumber.dirty || equipmentNumber.touched)">
                                                 Field should be filled out with correct IMEI Number.
                                             </label>
+                                            <div class="imei-link">
+                                                <a (click)="showWhatIsIMEI()">What is an IMEI/MEID number?</a>
+                                            </div>
                                         </div>
                                         <div class="address-input flex-action-container no-padding">
                                             <label for="address" class="input-label">
@@ -231,7 +160,7 @@
                                     <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID"
                                         #reCaptcha>
                                     </app-invisible-recaptcha>
-                                    <div class="">
+                                    <div>
                                         <button type="submit" class="button primary" data-cy="validateBtn"
                                             aria-label="validate">Validate</button>
                                     </div>
@@ -244,21 +173,16 @@
             <div class="tab-content">
                 <input type="checkbox" id="sim" [(ngModel)]="simExpanded" class="hidden-checkbox">
                 <label class="sub-label" for="sim">
-                    <span>Your SIM</span><img class="icon" src="assets/icon/arrow-purple.svg" alt="arrow icon">
+                    <span>Your SIM</span><img class="icon" src="assets/icon/arrow-blue.svg" alt="arrow icon">
                 </label>
                 <div class="card-content">
                     <div class="item-details">
                         <div class="details-side center">
-                            <img class="thumbnail"
-                                [src]="!!selectedPlan?.eSIM ? 'assets/icon/e-sim.svg' : 'assets/icon/sim-image.svg'"
-                                alt="SIM">
-                            <div class="details-info" [class.multiple]="!!selectedPlan?.eSIM">
+                            <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM">
+                            <div class="details-info">
                                 <div class="details ">
-                                    <p class="title">{{!!selectedPlan?.eSIM ?'e': ''}}SIM ICCID</p>
+                                    <p class="title">SIM ICCID</p>
                                     <p class="value">{{userAccount?.iccid}}</p>
-                                </div>
-                                <div class="qr" *ngIf="!!selectedPlan?.eSIM">
-                                    <p class="qr-link" (click)="goToQrScan()">eSIM QR Code</p>
                                 </div>
                             </div>
                         </div>
@@ -278,33 +202,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="info-banner default-background"
-                        *ngIf="!!eSIMOrdered && !!selectedPlan.eSimDetails && selectedPlan.eSimDetails.iccid !== selectedPlan.planDevice.simNumber">
-                        <div class="flex">
-                            <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                            <div class="banner-content">
-                                <p class="description last"><b>Ready to swap to eSIM?</b></p>
-                                <div class="actions">
-                                    <button class="button thirdly" (click)="activateReplacementEsim()">Swap to
-                                        eSIM</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-banner default-background"
-                        *ngIf="!!eSIMOrdered && !!selectedPlan.eSimDetails && selectedPlan.eSimDetails.iccid === selectedPlan.planDevice.simNumber">
-                        <div class="flex">
-                            <img src="assets/icon/info-icon.svg" alt="Info Icon">
-                            <div class="banner-content">
-                                <p class="description last"><b>You still need to set up your eSIM!</b></p>
-                                <div class="actions">
-                                    <button class="button thirdly" (click)="goToQrScan()">Set Up Now!</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-banner default-background"
-                        *ngIf="!!selectedPlan?.planDevice?.pendingNewSim && !selectedPlan?.eSimDetails">
+                    <div class="info-banner default-background" *ngIf="!!selectedPlan?.planDevice?.pendingNewSim">
                         <div class="flex">
                             <img src="assets/icon/info-icon.svg" alt="Info Icon">
                             <div class="banner-content">
@@ -322,37 +220,13 @@
                             <img class="close" src="assets/icon/close.svg" alt="close"
                                 (click)="showReplacementForm=false">
                         </div>
-                        <div class="card-form">
-                            <div class="sim-options-part"
-                                *ngIf="!!isESimCapable && !selectedPlan?.planDevice?.pendingNewSim">
-                                <p class="options-title">Please choose from the options below:</p>
-                                <form [formGroup]="simOptionsForm">
-                                    <div class="radioBtn" *ngFor="let item of simOptions">
-                                        <label class="form-control" [for]="item?.id">
-                                            <input type="radio" [value]="item?.id" formControlName="option"
-                                                [id]="item?.id" (change)="onOptionChange()">{{item?.value}}
-                                        </label>
-                                    </div>
-                                    <label class="validation-message margin-bottom-20"
-                                        *ngIf="simOptionsForm.controls.option.hasError('required') && simOptionsForm.controls.option.touched">Please
-                                        select one of the options above to continue</label>
-                                </form>
-                                <div class="actions">
-                                    <button class="button primary large" (click)="goToCart()"
-                                        aria-label="proceed to checkout" [disabled]="selectedPlan?.canceled"
-                                        id="proceedToCheckoutButton" data-cy="proceedToCheckoutButton">Proceed to
-                                        checkout</button>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="tab-content">
                 <input type="checkbox" id="lte" [(ngModel)]="lteExpanded" class="hidden-checkbox">
                 <label class="sub-label" for="lte">
-                    <span>Your LTE Data</span><img class="icon" src="assets/icon/arrow-purple.svg" alt="arrow icon">
+                    <span>Your LTE Data</span><img class="icon" src="assets/icon/arrow-blue.svg" alt="arrow icon">
                 </label>
                 <div class="card-content">
                     <p class="data">
