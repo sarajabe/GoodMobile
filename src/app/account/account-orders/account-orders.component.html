@@ -1,5 +1,5 @@
 <section class="orders-section col-xl-offset-1" #container>
-   
+
     <div class="filter-actions">
         <div class="search-side">
             <input class="search-input" data-cy="ID" placeholder="Search by order ID" type="search" [(ngModel)]="orderId" (keyup.enter)="searchOrderByID()">
@@ -99,22 +99,22 @@
     </div>
     <div class="no-orders result" *ngIf="!!viewedOrders && viewedOrders?.length === 0 && !searchByID" [class.expand]="!!showFilter">
         <p class="title" [class.noBorder]="!filterApplied">{{!!filterApplied ? 'No orders found that match your filter criteria' : 'No Orders Found'}}</p>
-        <p class="reset" (click)="clearFilters()" *ngIf="!!filterApplied">Reset Filters</p> 
+        <p class="reset" (click)="clearFilters()" *ngIf="!!filterApplied">Reset Filters</p>
     </div>
     <div class="no-orders result" *ngIf="!!viewedOrders && viewedOrders?.length === 0 && !!searchByID" [class.expand]="!!showFilter">
         <p class="title">No orders found for your search</p>
-        <p class="reset" (click)="clearFilters()">Clear Searches</p> 
+        <p class="reset" (click)="clearFilters()">Clear Searches</p>
     </div>
     <div class="result" *ngIf="!!viewedOrders && viewedOrders?.length > 0 && (!!searchByID || !!filterApplied)  && filterCount > 0" [class.expand]="!!showFilter">
-        <p class="title">{{!!searchByID ? 'Your Search Results': (config?.totalItems + ' order(s) found matching your filter criteria')}}</p> 
-        <p class="reset" (click)="clearFilters()">{{!!searchByID ? 'Clear Searches' : 'Reset Filters'}}</p> 
+        <p class="title">{{!!searchByID ? 'Your Search Results': (config?.totalItems + ' order(s) found matching your filter criteria')}}</p>
+        <p class="reset" (click)="clearFilters()">{{!!searchByID ? 'Clear Searches' : 'Reset Filters'}}</p>
     </div>
     <div class="order-cards-container">
         <div class="order-card" *ngFor="let order of viewedOrders | paginate: config">
             <div class="order-card-container">
                 <div class="card-header-section">
                     <h2 class="card-header" data-cy="orderId">Order ID: {{order?.id}}</h2>
-                    <p class="order-info"  [class.action-status]="order?.status ===  ORDER_STATUS.UPDATE_NEEDED">Status:  
+                    <p class="order-info"  [class.action-status]="order?.status ===  ORDER_STATUS.UPDATE_NEEDED">Status:
                         <img class="help-icon" src="assets/icon/warning-circle.svg" alt="warning" *ngIf="order?.status ===  ORDER_STATUS.UPDATE_NEEDED">
                         <span class="status"  data-cy="status" [ngClass]="{ 'cancled': order?.status ===  ORDER_STATUS.CANCELED || order?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[order?.status] === STATUS_TITLE.PENDING, 'help': order?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{STATUS_TITLE[order?.status]}}</span>
                     </p>
@@ -154,7 +154,7 @@
                                 </ng-container>
                                 <div class="item-details" [class.multiple]="!!order?.planAddOns && !!order?.cards">
                                     <img class="item sim" [class.indent]="order?.intent === ORDER_INTENT.NEW && !order.devices" [class.esim]="order?.skuNumber === 'TE'" [src]="(order?.intent === ORDER_INTENT.NEW || order?.intent === ORDER_INTENT.NEW_SIM) ?
-                                         (!!order?.skuNumber && order?.skuNumber === 'TE' ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg') : 'assets/icon/replacement-sim.svg'" alt="goodMobile SIM" *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'">
+                                         (!!order?.skuNumber && order?.skuNumber === 'TE' ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg') : 'assets/icon/replacement-sim.svg'" alt="Good Mobile SIM" *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'">
                                     <div class="image-container" *ngIf="!!order?.devices && order?.devices?.length > 0">
                                         <img class="item device" [src]="phonesImages[order.id]" alt="Mobile">
                                         <div class="colored-icon"  [class.canceled]="order?.status === ORDER_STATUS.CANCELED"></div>

@@ -3,17 +3,17 @@
         <div class="col-xl-12 col-sm-12 col-12">
             <h1 class="header">Let’s set up your phone and get you started!</h1>
             <div class="subhead compatability">
-                <h2 class="subtitle">Let’s find out if your phone is compatible with GoodMobile:</h2>
+                <h2 class="subtitle">Let’s find out if your phone is compatible with Good Mobile:</h2>
                 <p class="help-text">This will ensure we provide the correct data settings information for your device</p>
                 <form #formCtrl="ngForm" class="compatibility-form">
                     <div class="compatability-card">
                         <fieldset>
-                            <label class="label" for="phoneNumber">Enter your GoodMobile phone number:</label>
+                            <label class="label" for="phoneNumber">Enter your Good Mobile phone number:</label>
                             <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber"
                                 id="phoneNumber" data-cy="phoneNumber" restrictNumbers maxlength="10">
                             <label class='validation-message'
                             *ngIf="(phoneNumber.hasError('pattern') && (phoneNumber.dirty))">
-                                The field should be filled out with a valid GoodMobile number.
+                                The field should be filled out with a valid Good Mobile number.
                             </label>
                             <label id='phoneNumber-invalid-msg' class='validation-message'
                             *ngIf="(phoneNumber.dirty && phoneNumber.hasError('minlength'))" translate>

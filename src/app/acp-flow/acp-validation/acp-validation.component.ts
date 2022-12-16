@@ -96,7 +96,7 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
       4: {
         stepTitle: 'Almost there!',
         stepDesc: 'Customer Notice and Agreement',
-        stepExtraDesc: 'To apply for service under the Federal ACP with GoodMobile, you should agree and initial the following:'
+        stepExtraDesc: 'To apply for service under the Federal ACP with Good Mobile, you should agree and initial the following:'
       }
     }
   }

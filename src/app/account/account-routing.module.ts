@@ -80,7 +80,7 @@ const routes: Routes = [
       { path: ACCOUNT_ROUTE_URLS.SUMMARY, component: AccountSummaryComponent, data: { title: 'Account Summary' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACCOUNT_ROUTE_URLS.SETTINGS, component: AccountSettingsComponent, data: { title: 'Settings' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACCOUNT_ROUTE_URLS.PHONE_DETAILS, component: AccountPhoneDetailsComponent, data: {title: 'Phone Details'} as IPageMeta, canActivate: [AuthEmailGuardService]},
-      // { path: ACCOUNT_ROUTE_URLS.RMA, data: {title: '', description: 'Friends who are new to GoodMobile get $10 and you get $10 after they activate their first purchase'} as IPageMeta, canActivate: [AuthEmailGuardService], 
+      // { path: ACCOUNT_ROUTE_URLS.RMA, data: {title: '', description: 'Friends who are new to Good Mobile get $10 and you get $10 after they activate their first purchase'} as IPageMeta, canActivate: [AuthEmailGuardService],
       //   children: [
       //   {
       //      path: '',
