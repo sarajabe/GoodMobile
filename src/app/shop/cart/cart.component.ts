@@ -303,23 +303,10 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   public updateAutoRenew(): void {
     if (!this.autoRenew) {
-      this.modalHelper.showConfirmMessageModal(
-        `Are you sure you want to remove Auto Pay Discount?`, 'By removing the Auto Pay option, you are missing out on the $5 discount on your plan.',
-        'Yes', 'No', 'confirm-change-checkout-modal')
-        .result.then((result) => {
-          if (result) {
-            this.autoRenew = false;
-            this.checkoutService.updateAutoRenew(this.autoRenew);
-            this.mobilePlansService.setAutoRenewPlan(this.autoRenew);
-            this.calculateTotal();
-          } else {
-            this.autoRenew = true;
-          }
-        }, (error) => {
-          console.error('error', error);
-          this.toastHelper.showAlert(error.message);
-          this.appState.loading = false;
-        });
+      this.autoRenew = false;
+      this.checkoutService.updateAutoRenew(this.autoRenew);
+      this.mobilePlansService.setAutoRenewPlan(this.autoRenew);
+      this.calculateTotal();
     }
     if (this.autoRenew) {
       this.checkoutService.updateAutoRenew(this.autoRenew);
@@ -570,8 +557,8 @@ export class CartComponent implements OnInit, OnDestroy {
   private applyEstimatedTaxes(result): void {
     this.estimatedTaxes = result.taxes;
     this.estimatedFees = result.fees;
-    this.taxes = this.estimatedTaxes;
     this.estimatedResult = true;
+    this.taxes = this.estimatedTaxes === 0 || !!this.estimatedTaxes ? true : false;
     this.appState.loading = false;
   }
   private applyResetEstimatedTaxes(error): void {

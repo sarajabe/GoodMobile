@@ -258,6 +258,7 @@
                         font-family: $base-font-family-bold;
                         margin-bottom: 0;
                         margin-left: 12px;
+                        cursor: pointer;
                         @media (max-width: $phablet-min-width-minus) {
                             line-height: 28px;
                         }

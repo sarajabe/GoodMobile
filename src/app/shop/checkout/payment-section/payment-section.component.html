@@ -92,9 +92,9 @@
           <i class="arrow down" [class.rotate]="!!showAllPayments"></i>
         </div>
         <div class="add-new" *ngIf="!!methodsList && (methodsList?.length < 10 || methodsList?.length == 0) && !disableCard">
-          <div class="add-trigger">
+          <div class="add-trigger" (click)="toggleNewCardForm()">
             <img class="add" [src]="!showAddCardSection ? '/assets/icon/plus.svg' : '/assets/icon/minus.svg'" alt="add" />
-            <p class="add-text" data-cy="addAnotherCard" (click)="toggleNewCardForm()">{{!!methodsList && methodsList?.length < 10 && methodsList?.length > 0 ? 'Add another card' : 'Add new card'}}</p>
+            <p class="add-text" data-cy="addAnotherCard">{{!!methodsList && methodsList?.length < 10 && methodsList?.length > 0 ? 'Add another card' : 'Add new card'}}</p>
           </div>
           <section class="add-new-card-section" *ngIf="!!showAddCardSection">
             <form [formGroup]="paymentInfoForm" class="checkout-payment-form">

@@ -85,13 +85,14 @@ export class ActivationSummaryComponent implements OnDestroy {
     }
   }
   public setUpPhoneData(): void {
-    if (this.network === 'att') {
-      if (this.os === 'ios') {
-        this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
-      } else {
-        this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
-      }
-    } else {
+    // if (this.network === 'att') {
+    //   if (this.os === 'ios') {
+    //     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
+    //   } else {
+    //     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
+    //   }
+    // } 
+    if (this.network === 'tmo') {
       if (this.os === 'ios') {
         this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.TMO_IPHONE}`]);
       } else {
