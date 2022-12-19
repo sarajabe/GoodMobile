@@ -52,10 +52,10 @@ const routes: Routes = [
         title: 'Data Setup',
         description: 'Learn how to setup data services for your iPhone or Androind cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
-      { path: SUPPORT_ROUTE_URLS.IPHONE, component: IosGsmComponent , data: {
-        title: 'Data Setup | IPhone',
-        description: 'Learn how to setup data services for your iPhone cell phones on the Good Mobile wireless network.'
-      } as IPageMeta},
+      // { path: SUPPORT_ROUTE_URLS.IPHONE, component: IosGsmComponent , data: {
+      //   title: 'Data Setup | IPhone',
+      //   description: 'Learn how to setup data services for your iPhone cell phones on the Good Mobile wireless network.'
+      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.TMO_IPHONE, component: TMobileComponent , data: {
         title: 'Data Setup | IPhone',
         description: 'Learn how to setup data services for your iPhone cell phones on the Good Mobile wireless network.'
@@ -72,10 +72,10 @@ const routes: Routes = [
         title: 'Data Setup | Android',
         description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
-      { path: SUPPORT_ROUTE_URLS.ANDROID, component: AndroidGsmComponent , data: {
-        title: 'Data Setup | Android',
-        description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
-      } as IPageMeta},
+      // { path: SUPPORT_ROUTE_URLS.ANDROID, component: AndroidGsmComponent , data: {
+      //   title: 'Data Setup | Android',
+      //   description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
+      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.ANDROID4G, component: FourthGenerationPageComponent , data: {
         title: 'Data Setup | Android | 4G',
         description: 'Fourth Generation for 4G Android Good Mobile network.'

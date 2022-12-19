@@ -210,9 +210,9 @@
                 <p class="description last">This barcode will be in your purchased plans and your order receipt.</p>
                 <div class="actions">
                   <form #barCodeCheck="ngForm" class="barCoder-form">
-                    <input type="checkbox" [(ngModel)]="barCode" name="br" required
-                        #barCodeVal="ngModel">
-                    <label class="label">I understand that.</label>
+                    <input type="checkbox" [(ngModel)]="barCode" name="barCodeVal" required
+                        #barCodeVal="ngModel" id="barCodeVal">
+                    <label class="label" for="barCodeVal">I understand that.</label>
                 </form>
                 </div>
             </div>

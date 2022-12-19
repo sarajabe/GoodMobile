@@ -93,6 +93,8 @@ input {
     transform: translateY(-0.075em);
     display: grid;
     place-content: center;
+    margin-right: 5px;
+
   }
   &[type="checkbox"]:hover {
     outline: max(2px, 0.2em) solid #faf9f8;
@@ -171,7 +173,6 @@ input {
     &[type="checkbox"]:checked {
       border: 2px solid #b0b0b0;
       cursor: not-allowed;
-
     }
     &[type="checkbox"]:checked::before {
       background-color: #b0b0b0;

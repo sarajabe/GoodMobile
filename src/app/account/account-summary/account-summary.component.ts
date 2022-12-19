@@ -697,13 +697,14 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     } else if (this.selectedPlan.planDevice.network.toLowerCase() === 'att') {
       network = 'att';
     }
-    if (network === 'att') {
-      if (os === 'ios') {
-        this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
-      } else {
-        this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
-      }
-    } else {
+    // if (network === 'att') {
+    //   if (os === 'ios') {
+    //     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
+    //   } else {
+    //     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
+    //   }
+    // } 
+    if (network === 'tmo') {
       if (os === 'ios') {
         this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.TMO_IPHONE}`]);
       } else {

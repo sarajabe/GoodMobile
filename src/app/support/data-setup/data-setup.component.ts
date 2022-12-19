@@ -115,21 +115,23 @@ export class DataSetupComponent implements OnDestroy {
         this.processingRequestIos = false;
         if (!!result) {
           this.compatibilityChecked = true;
-          if (result.network.toLowerCase() === 'att') {
-            if (this.os === 'ios') {
-              this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
-            } else {
-              this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
-            }
-          }
-          else  {
+          if (result.network.toLowerCase() === 'tmo') { 
             this.isTmo = true;
             if (this.os === 'ios') {
               this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.TMO_IPHONE}`]);
             } else {
               this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.TMO_Android}`]);
             }
-          }
+          } else if (result.network.toLowerCase() === 'att') {
+              // if (this.os === 'ios') {
+              //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
+              // } else {
+              //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
+              // }
+              this.processingRequest = false;
+              this.processingRequestIos = false;
+              this.toastHelper.showWarning('Device not supported! Please try again later')
+            }
         } else {
           this.processingRequest = false;
           this.processingRequestIos = false;
