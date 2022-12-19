@@ -93,6 +93,10 @@
                             gap: 32px;
                             flex-wrap: wrap;
 
+                            @media (min-width: 1450px) {
+                                flex-wrap: unset;
+                            }
+
                             @media(max-width: $phablet-min-width-minus) {
                                 gap: 12px;
                             }
