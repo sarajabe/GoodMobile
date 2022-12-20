@@ -94,6 +94,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public applyVoucherCalled = false;
   public voucherDetuctedAmount =0;
   public voucherRemainingAmount = 0;
+  public voucherAmount = 0;
   private isNewPayment = false;
   private alive = true;
   private currentDate: Date;
@@ -347,14 +348,17 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           this.appState.loading = false;
           this.showVoucherError = false;
           this.showVoucherSuccess = true;
+          this.voucherAmount = (res?.pinValue / 100);
+          this.checkoutService.setPayments({card: null, balanceAmount: 0, rewardsAmount: 0, voucherAmount: this.voucherAmount});
           const voucherData = { 
             limit: res?.pinValue / 100,
             code : this.voucherForm.controls.voucher.value
-          } as IVoucherData
+          } as IVoucherData;
           this.mobilePlansService.setVoucherData(voucherData);
           this.mobilePlansService.setAutoRenewPlan(false);
           this.voucherDetuctedAmount = this.total;
           this.voucherRemainingAmount = (res?.pinValue / 100) - this.total;
+
         }
        }, error => {
         this.appState.loading = false;
@@ -489,6 +493,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public togglePayWithVoucher(): void {
     if(!!this.payWithVoucher) {
       this.payWithCard = false;
+      this.checkoutService.detailsSubject.next(null);
       this.togglePayWithCard();
     }
     this.voucherForm.reset();
@@ -628,7 +633,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         sessionStorage.setItem('useFromBalance', this.balanceAmount.toString());
         sessionStorage.setItem('useFromReward', this.rewardAmount.toString());
         this.analyticsService.trackAddPaymentInfoGA4(this.cart, paymentType, this.simPrice, this.simId);
-        this.checkoutService.setPayments({card: !this.isNewPayment ? this.selectedPaymentMethod: this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount})
+        this.checkoutService.setPayments({card: !this.isNewPayment ? this.selectedPaymentMethod: this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount})
         // this.checkoutService.updatePaymentMethod(this.selectedPaymentMethod);
         // this.checkoutService.updateCreditBalance({balanceAmount: this.balanceAmount, rewardsAmount: this.rewardAmount});
         this.processPayment();
@@ -652,10 +657,10 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   }
   public goBack(): void {
     if(!!this.cart?.eSIM && (!this.cart?.phones || (!!this.cart?.phones && this.cart?.phones.length === 0)) || !!this.cart?.activationCode) {
-      this.checkoutService.setPayments({card: !this.isNewPayment ? this.selectedPaymentMethod: this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount})
+      this.checkoutService.setPayments({card: !this.isNewPayment ? this.selectedPaymentMethod: this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount})
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
     } else {
-      this.checkoutService.setPayments({card: !this.isNewPayment ? this.selectedPaymentMethod: this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount})
+      this.checkoutService.setPayments({card: !this.isNewPayment ? this.selectedPaymentMethod: this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount})
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
     }
   }

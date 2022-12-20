@@ -570,7 +570,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         const requestBody = {
           basePlanId: currentPlan.basePlan.id,
           simsQuantity: currentPlan.simsQuantity,
-          paymentInfo: cardInfo,
+          paymentInfo: !currentPlan.voucherData ? cardInfo: null,
           shippingAddress: checkoutNewPlan.shippingAddress,
           usingPaymentProfile: options.usingPaymentProfile,
           voucherCode: !!currentPlan.voucherData ? currentPlan.voucherData.code : null,
