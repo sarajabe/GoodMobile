@@ -274,6 +274,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             }
           }
           this.calculateTaxesAndFees();
+        } else {
+           this.paymentIsSelected = false;
+           this.calculateTotal();
         }
       } else {
         this.cardInfo = null;
@@ -756,7 +759,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     }
     this.total = total >= 0 ? total : 0;
     this.checkoutService.setTotal(total);
-    this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod?.price ? this.orderShippingMethod.price : 0, taxes: this.taxes, fees: this.fees, discount: this.discount, method: !!this.orderShippingMethod && Object.keys(this.orderShippingMethod).length > 0 ? this.orderShippingMethod : null });
+    this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod?.price ? this.orderShippingMethod.price : 0, taxes: !!this.paymentIsSelected ? this.taxes: 0, fees: !!this.paymentIsSelected ? this.fees: 0, discount: this.discount, method: !!this.orderShippingMethod && Object.keys(this.orderShippingMethod).length > 0 ? this.orderShippingMethod : null });
   }
   public checkout(): void {
     if(!!this.currentPlan?.cartType) {

@@ -302,8 +302,8 @@
             <div class="input-field">
             <input id="voucher" data-cy="voucher" type="text" name="voucher"  formControlName="voucher"
             placeholder="Enter Voucher Code here" restrictNumbers minlength="12" maxlength="12" required (input)="voucherInputChanged()">
-            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('required')">PIN is required</label>
-            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('minlength')">PIN is invalid</label>
+            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('required')">Voucher PIN is required</label>
+            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('minlength')">Voucher PIN is invalid</label>
           </div>
             <button class="button primary" (click)="applyVoucher()">Apply</button>
           </div>
@@ -325,7 +325,7 @@
           <img src="assets/icon/error-icon.svg" alt="Icon">
           <div class="banner-content">
           <p class="title">Oops!</p>
-          <p class="description">Invalid PIN enetred, please try again.</p>
+          <p class="description">Invalid Voucher PIN enetred, please try again.</p>
             </div>
         </div>
       </div>
