@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
-import { ALPHANUMERIC_PATTERN, EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
+import { EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
 import { EbbManager } from 'src/services/ebb.service';
 
 @Component({
@@ -96,7 +96,7 @@ export class QualifyingInfoComponent implements OnInit, OnDestroy, OnChanges {
       ],
       tribalId: [
         "",
-        Validators.compose([Validators.minLength(2), Validators.maxLength(20), Validators.pattern(ALPHANUMERIC_PATTERN)]),
+        Validators.compose([Validators.minLength(2), Validators.maxLength(20)]),
       ],
     });
   }

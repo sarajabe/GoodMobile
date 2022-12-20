@@ -123,7 +123,12 @@ export class CheckoutResultsComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.alive = false;
   }
-
+  
+  public goToOrderDetails(orderId) : void {
+    const params = {};
+    params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = orderId;
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDER_DETAILS}`, params]);
+  }
   public goToAccountSummary(isSIM?): void {
     if (!!isSIM) {
       this.userPlansService.selectUserPlan(this.userPlansService.selectedUserPlan.id);

@@ -224,11 +224,6 @@
             id="required-tribal-msg">
             Tribal ID is required
           </label>
-          <label class="validation-message"
-            *ngIf="personalInfoForm.controls.tribalId.dirty && !personalInfoForm.controls.tribalId.valid && !!personalInfoForm.controls.tribalId.value"
-            id="invalid-tribal-msg">
-            Tribal ID is invalid
-          </label>
         </div>
       </div>
       <label class="validation-message"
@@ -259,11 +254,6 @@
       <span>Receive phone calls or text messages to update you on your ACP enrollment status.</span>
     </label>
   </div>
-  <label class="validation-message left"
-    *ngIf="!!personalInfoForm.controls.phoneNumber.value && !personalInfoForm.controls.getPhones.value"
-    id="required-receive-calls-msg">
-    Receiving calls is required
-  </label>
   <div class="form-row">
     <p class="fields-title top bottom">Your Preferred Email Address <span class="red">*</span></p>
     <div class="form-field half">
@@ -290,9 +280,4 @@
       <span>Receive emails regarding the ACP enrollment status.</span>
     </label>
   </div>
-  <label class="validation-message left"
-    *ngIf="!!personalInfoForm.controls.email.value && !personalInfoForm.controls.getEmails.value"
-    id="required-receive-emails-msg">
-    Receiving emails is required
-  </label>
 </form>
