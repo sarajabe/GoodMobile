@@ -10,7 +10,7 @@
           [class.centered]="(!isChangePlanSummary && !isOrderSim && !!isPlanAddon) || (isOrderSim && !isPlanAddon && !isChangePlanSummary)">
           <h2 class="title"><img src="assets/icon/green-check.svg">Your Order has been placed!</h2>
           <p class="banner-note">Order ID is:</p>
-          <p class="banner-note"><b>{{orderId}}</b></p>
+          <a class="banner-note" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a>
         </div>
         <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
           <ng-container *ngIf="!!purchasedPlanId">

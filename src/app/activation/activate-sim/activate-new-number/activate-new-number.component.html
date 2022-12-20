@@ -7,6 +7,10 @@
                     <input type="text" name="activationCode" [class.disabled]="!!userPlan?.eSIM && !!userPlan?.activationCode" [(ngModel)]="activationCode" [readonly]="!!userPlan?.eSIM && !!userPlan?.activationCode"
                         id="activationCode" data-cy="activationCode" #activationCodeRef="ngModel" required minlength="7" maxlength="8" [pattern]="codePattern" 
                         [disabled]="!!processingRequest">
+                        <label class="validation-message" id="activation-label">
+                            <a (click)="showActivationModal()" id="activation-link">Where to find your Activation
+                                Code</a>
+                        </label>     
                     <label class="validation-message"
                         *ngIf="activationCodeRef.touched && !activationCodeRef.valid && !processingRequest && !activationCodeRef.value"
                         id="required-activation-code-label">Activation Code is required. </label>

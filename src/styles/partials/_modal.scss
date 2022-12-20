@@ -1823,6 +1823,7 @@
         }
       }
       .modal-content {
+        padding: 12px 13px;
         .row {
           display: block;
           .text-content-holder {
@@ -1841,17 +1842,13 @@
           }
 
           .image-container {
-            margin-bottom: 30px;
-            @media (max-width: 633.9px) {
-              margin-bottom: 38px;
-            }
             .activation-image {
               width: 288.9px;
               height: 181.9px;
 
               @media (max-width: 633.9px) {
-                height: 155px;
-                width: 180px;
+                height: 144px;
+                width: 230px;
               }
             }
           }

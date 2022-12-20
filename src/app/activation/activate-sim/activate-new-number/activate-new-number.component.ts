@@ -71,7 +71,16 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
       }
     }
   }
-
+  public showActivationModal(): void {
+    this.modalHelper.showInformationMessageModal('Where to find your Activation Code', '', 'Got it!', null, true, 'activation-info-modal',
+      `<div class="text-content-holder">
+        <p class="text">Your Activation Code is on the back of your SIM card, you can find it on the bottom of the card. It is a 7 digit number.</p>
+     </div>
+     <div class="image-container">
+      <img class="activation-image" src="assets/img/simActivation.png"/>
+     </div>`
+    );
+  }
   public resolvedCaptcha(captchaResponse: string): void {
     this.captchaResponse = captchaResponse;
     this.captchaValid = !!captchaResponse;

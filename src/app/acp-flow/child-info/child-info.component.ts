@@ -134,7 +134,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
       ],
       tribalId: [
         "",
-        Validators.compose([Validators.minLength(2), Validators.maxLength(20), Validators.pattern(ALPHANUMERIC_PATTERN)]),
+        Validators.compose([Validators.minLength(2), Validators.maxLength(20)]),
       ],
     });
     this.codesForm = this.formBuilder.group({

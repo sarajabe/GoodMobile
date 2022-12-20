@@ -8,6 +8,10 @@
                     maxlength="7"  placeholder=" " (input)="showErrorMessage=false">
                 <span>Activation Code</span>
             </label>
+            <label class="validation-message" id="activation-label">
+                <a (click)="showActivationModal()" id="activation-link">Where to find your Activation
+                    Code</a>
+            </label>  
             <label class="validation-message" *ngIf="activateForm.controls.code.touched && !activateForm.controls.code.value"
                 id="required-activation-code-label">Activation Code is required. </label>
             <label class="validation-message"

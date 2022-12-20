@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
 import { CustomValidators } from 'ng4-validators';
 import { takeWhile } from 'rxjs/operators';
-import { ALPHANUMERIC_PATTERN, EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
+import { EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
 import { EbbManager } from 'src/services/ebb.service';
 
 @Component({
@@ -34,8 +34,8 @@ export class PersonalInfoNonExisitngAppComponent implements OnInit, OnDestroy, O
       month: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       year: ['', Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       option: ['', Validators.required],
-      ssn: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(4), Validators.maxLength(4)])],
-      tribalId: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(20), Validators.pattern(ALPHANUMERIC_PATTERN)])],
+      ssn: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN),Validators.minLength(4), Validators.maxLength(4)])],
+      tribalId: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(20)])],
       email: ['', Validators.compose([Validators.required, CustomValidators.email, Validators.maxLength(50)])],
     });
   }

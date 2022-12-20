@@ -6,6 +6,7 @@ import { ACTIVATION_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { CUSTOMER_CARE_NUMBER } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
+import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class ActivatePlanComponent {
               private appState: AppState,
               private metaService: MetaService,
               private formBuilder: FormBuilder,
-              private toastHelper: ToastrHelperService) {
+              private toastHelper: ToastrHelperService,
+              private modalHelper: ModalHelperService) {
     if (sessionStorage.getItem('activation_step') !== 'step1' && sessionStorage.getItem('activation_step') !== 'step2') {
       this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
     }
@@ -40,6 +42,16 @@ export class ActivatePlanComponent {
   public goToSimCheck(): void {
     sessionStorage.setItem('activation_step', 'step2');
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
+  }
+  public showActivationModal(): void {
+    this.modalHelper.showInformationMessageModal('Where to find your Activation Code', '', 'Got it!', null, true, 'activation-info-modal',
+      `<div class="text-content-holder">
+        <p class="text">Your Activation Code is on the back of your SIM card, you can find it on the bottom of the card. It is a 7 digit number.</p>
+     </div>
+     <div class="image-container">
+      <img class="activation-image" src="assets/img/simActivation.png"/>
+     </div>`
+    );
   }
   public checkSimActivationCode(): void {
     this.activateForm.markAllAsTouched();
