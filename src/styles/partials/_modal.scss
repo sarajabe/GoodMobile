@@ -36,22 +36,26 @@
     background: #FCFCFB;
     box-shadow: 0px 4px 15px rgba(206, 211, 214, 0.6);
     border-radius: 16px;
-    padding: 24px!important;
+    padding: 24px !important;
     border-radius: 19px;
     max-height: 90vh;
     overflow: hidden;
     width: 700px;
+
     @media(max-width: $ipad-min-width-minus) {
       width: 600px;
     }
+
     @media(max-width: $phablet-min-width-minus) {
-      padding: 16px!important;
+      padding: 16px !important;
       max-width: 320px;
     }
+
     @media(max-width: $mobile-min) {
       max-width: 288px;
     }
-    .modal-header{
+
+    .modal-header {
       width: 100%;
       padding: 16px 12px;
       font-size: 28px;
@@ -61,21 +65,25 @@
       background-color: #FCFCFB;
       text-align: center;
       position: relative;
+
       @media(max-width: $phablet-min-width-minus) {
         font-size: 22px;
         line-height: 32px;
       }
-      .modal-heading{
+
+      .modal-heading {
         font-size: 28px;
         line-height: 36px;
         width: 100%;
         margin-bottom: 0;
         font-weight: bold;
+
         @media(max-width: $phablet-min-width-minus) {
           font-size: 22px;
           line-height: 32px;
         }
       }
+
       .modal-close {
         background: none;
         background-color: #FCFCFB;
@@ -84,6 +92,7 @@
         position: absolute;
         border: 0;
         cursor: pointer;
+
         .icon-close {
           color: $primary-color;
           font-size: 30px;
@@ -92,61 +101,75 @@
 
       }
     }
+
     .modal-body {
       .modal-content {
         padding: 8px 12px;
         text-align: center;
+
         @media(max-width: $phablet-min-width-minus) {
           padding: 12px 20px;
         }
-        .modal-actions{
-           display: flex;
-           width: 100%;
-           justify-content: center;
-           align-items: center;
-           margin: 0;
-           margin-top: 16px;
-           margin-bottom: 12px;
-           padding: 0;
-           text-align: center;
-           @media(max-width: $phablet-min-width-minus) {
+
+        .modal-actions {
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          margin-top: 16px;
+          margin-bottom: 12px;
+          padding: 0;
+          text-align: center;
+
+          @media(max-width: $phablet-min-width-minus) {
             margin-top: 20px;
-           }
-           .button {
+          }
+
+          .button {
             width: 75px;
             padding: 8px 24px;
             height: 42px;
             margin: 0;
-           }
-           .primary {
+          }
+
+          .primary {
             margin-right: 16px;
-           }
-           .transparent {
+          }
+
+          .transparent {
             margin-right: 0;
-           }
+          }
         }
       }
     }
+
     &.add-number-modal {
       input {
         max-width: 300px;
       }
+
       .modal-actions {
-        margin: 0!important;
+        margin: 0 !important;
+
         .cancel {
           display: none;
         }
+
         .primary {
-          margin-right: 0!important;
+          margin-right: 0 !important;
         }
+      }
     }
-    }
+
     &.skip-tmo-modal {
       width: 100%;
       max-width: 700px;
+
       b {
         font-family: $base-font-family-bold;
       }
+
       @media (max-width: $desktop-min-width-minus) {
         width: 600px;
       }
@@ -312,26 +335,32 @@
         }
       }
     }
+
     &.confirm-password-modal {
       .modal-body {
         .modal-content {
           padding: 0 32px;
           margin-top: 0px;
-          .label-msg{
+
+          .label-msg {
             font-size: 18px;
             line-height: 22px;
             margin-bottom: 10px;
+
             @media(max-width: $phablet-min-width-minus) {
               font-size: 16px;
               line-height: 18px;
             }
           }
-          input{
+
+          input {
             max-width: 300px;
           }
         }
+
         .modal-actions {
-          margin-top:0!important;
+          margin-top: 0 !important;
+
           .button {
             width: 130px;
             padding: 6px 12px;
@@ -339,6 +368,7 @@
         }
       }
     }
+
     &.esim-replacement {
       .modal-body {
         .content {
@@ -347,6 +377,7 @@
           align-items: center;
           justify-content: center;
           min-height: 150px;
+
           .re-captcha--resizing {
             min-height: 80px;
             display: flex;
@@ -355,17 +386,20 @@
             justify-content: center;
             gap: 12px;
             margin-bottom: 18px;
+
             @media(max-width: 370px) {
               padding-left: 36px;
             }
           }
         }
+
         .button {
           width: 137px;
           padding: 8px;
         }
       }
     }
+
     &.five-toggle-modal {
       .modal-body {
         .modal-content {
@@ -388,11 +422,13 @@
               }
             }
           }
+
           .modal-actions {
             a {
               font-family: $lato-font-family;
               font-size: rem-calc(16px);
               font-weight: 700;
+
               .arrow {
                 margin-left: 16px;
               }
@@ -401,36 +437,44 @@
         }
       }
     }
+
     &.change-plan-modal {
       .modal-body {
         overflow-x: visible;
         overflow-y: visible;
+
         .modal-content {
           @media(max-width: $phablet-min-width-minus) {
-            padding: 0!important;
+            padding: 0 !important;
           }
         }
       }
+
       .modal-actions {
         flex-direction: column;
         gap: 16px;
+
         .button {
-          width: 100%!important;
+          width: 100% !important;
           max-width: 311px;
-          padding: 8px!important;
+          padding: 8px !important;
+
           &.primary {
-            margin-right: 0!important;
+            margin-right: 0 !important;
           }
+
           @media(max-width: $phablet-min-width-minus) {
-            padding: 12px!important;
+            padding: 12px !important;
           }
         }
       }
+
       @media (max-width: $tablet-min-width) {
         .modal-body {
           overflow-y: auto;
         }
       }
+
       &.expiry {
         .modal-actions {
           .button {
@@ -441,6 +485,7 @@
         }
       }
     }
+
     &.select-addon-modal {
       .modal-content {
         .row {
@@ -452,22 +497,26 @@
             display: none;
           }
         }
+
         .modal-actions {
           @media(max-width: $phablet-min-width-minus) {
             flex-direction: column;
           }
+
           .button {
-             width: 250px!important;
-             &.primary {
+            width: 250px !important;
+
+            &.primary {
               @media(max-width: $phablet-min-width-minus) {
-              margin-bottom: 12px;
-              margin-right: 0!important;
+                margin-bottom: 12px;
+                margin-right: 0 !important;
               }
-             }
+            }
           }
         }
       }
     }
+
     &.edit-payment-modal {
       width: 100%;
 
@@ -483,9 +532,11 @@
       .modal-body {
         .modal-content {
           text-align: left;
+
           .content {
             display: flex;
             text-align: left;
+
             .note {
               font-size: rem-calc(17px);
               line-height: 26px;
@@ -508,13 +559,16 @@
             text-align: left;
             width: 100%;
             margin-top: 13px;
+
             .button {
-              margin-top: 14px!important;
-              margin-bottom: 44px!important;
+              margin-top: 14px !important;
+              margin-bottom: 44px !important;
             }
+
             input {
               width: auto;
             }
+
             label {
               display: inline;
               font-size: rem-calc(15px);
@@ -621,12 +675,13 @@
                     }
                   }
                 }
+
                 @media (max-width: 639.9px) {
                   .address {
                     .edit {
                       display: block;
-                      margin-top: 14px!important;
-                      padding-left: 0!important;
+                      margin-top: 14px !important;
+                      padding-left: 0 !important;
                     }
                   }
 
@@ -900,13 +955,16 @@
         }
       }
     }
+
     &.information-message-modal {
       .modal-content {
         .row {
           width: 100%;
-          .msg{
+
+          .msg {
             font-size: 16px;
             line-height: 18px;
+
             @media(max-width: $phablet-min-width-minus) {
               font-size: 14px;
               line-height: 16px;
@@ -915,12 +973,14 @@
         }
       }
     }
+
     &.success-swap-modal {
-      .modal-close{
+      .modal-close {
         @media(max-width: $phablet-min-width-minus) {
           top: -15px;
         }
       }
+
       .modal-content {
         .subHeader {
           font-size: rem-calc(17px);
@@ -936,6 +996,7 @@
         }
       }
     }
+
     &.SIM-replacement-modal {
       .modal-content {
         padding: 0;
@@ -954,6 +1015,7 @@
           font-weight: bold;
           line-height: 34px;
         }
+
         @media (max-width: 640px) {
           .question {
             font-size: rem-calc(20px);
@@ -967,12 +1029,14 @@
         }
       }
     }
+
     &.Sim-replacement-iccid-modal {
       .modal-content {
         overflow: hidden;
-        margin-top: 0!important;
-        padding: 0!important;
-        .row{
+        margin-top: 0 !important;
+        padding: 0 !important;
+
+        .row {
           width: 100%;
           display: flex;
           flex-direction: column;
@@ -980,14 +1044,17 @@
           justify-content: center;
           text-align: center;
         }
+
         &.captcha {
           margin: 20px auto 0;
         }
+
         input {
           width: 240px;
           height: 40px;
           padding: 0 8px;
         }
+
         .label {
           font-size: rem-calc(16px);
           font-family: $base-font-family;
@@ -997,54 +1064,66 @@
           text-align: center;
           padding: 0 10px;
         }
+
         a {
           font-size: rem-calc(16px);
           font-family: $secondary-font-family-bold;
         }
       }
+
       .modal-actions {
         .button {
-           width: 116px!important;
+          width: 116px !important;
         }
       }
     }
+
     &.confirm-swap-modal {
       .modal-content {
         padding: 0;
+
         p {
           margin-bottom: 5px;
         }
-        .subhead{
+
+        .subhead {
           font-size: 22px;
           line-height: 24px;
         }
+
         .question {
           font-size: rem-calc(22px);
           font-family: $secondary-font-family;
           line-height: 28px;
           margin-bottom: 0;
         }
+
         .confirm {
           font-size: rem-calc(22px);
           font-family: $secondary-font-family;
           line-height: 28px;
         }
+
         .details {
           font-size: rem-calc(13px);
           font-family: $base-font-family;
           line-height: 15px;
         }
+
         @media (max-width: 640px) {
           overflow: hidden;
+
           .question {
             font-size: rem-calc(18px);
             line-height: 20px;
           }
+
           .confirm {
             font-size: rem-calc(18px);
             line-height: 20px;
           }
         }
+
         @media (max-width: 425.9px) {
           b {
             display: block;
@@ -1052,28 +1131,34 @@
           }
         }
       }
-      .modal-content > * {
+
+      .modal-content>* {
         padding: 0.5em 2em;
       }
     }
+
     &.confirm-esim {
       .modal-actions {
         .button {
-           width: 150px!important;
+          width: 150px !important;
         }
       }
+
       .modal-body {
         margin-top: 0px;
+
         .content {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
+
           .info {
             font-size: rem-calc(20px);
             line-height: 32px;
             margin-bottom: 8px;
           }
+
           .focus {
             font-size: rem-calc(22px);
             line-height: 32px;
@@ -1081,9 +1166,11 @@
             font-weight: bold;
           }
         }
+
         .row {
           margin-bottom: 0;
         }
+
         @media (max-width: $phablet-min-width-minus) {
           .content {
             .info {
@@ -1091,6 +1178,7 @@
               line-height: 24px;
               margin-bottom: 4px;
             }
+
             .focus {
               font-size: rem-calc(18px);
               line-height: 28px;
@@ -1099,41 +1187,62 @@
         }
       }
     }
+
     &.usp-pop-up-modal {
       @media(min-width:730px) {
-        width: 700px!important;
+        width: 700px !important;
       }
+
       @media (max-width: 888.9px) {
         overflow: scroll;
       }
-      .modal-header{
+
+      .modal-header {
         text-align: left;
       }
+
       .modal-actions {
-        justify-content: flex-start!important;
+        justify-content: flex-start !important;
+
         @media(max-width: 729.9px) {
           flex-direction: column;
-          align-items: flex-start!important;
-          margin-top: 0!important;
+          align-items: flex-start !important;
+          margin-top: 0 !important;
         }
+
         .button {
-           width: 250px!important;
-           &.primary {
+          width: 250px !important;
+
+          &.primary {
             @media(max-width: 729.9px) {
-            margin-bottom: 12px;
-            margin-right: 0!important;
+              margin-bottom: 12px;
+              margin-right: 0 !important;
             }
-           }
+          }
+
+          &.transparent {
+            @media (min-width: 1200px) {
+              margin-left: 48px;
+            }
+
+            @media (min-width: 730px) and (max-width: 1199.9px) {
+              margin-left: 31px;
+            }
+          }
         }
       }
+
       .modal-body {
         overflow: hidden;
         max-height: unset;
+
         .row {
           width: 100%;
         }
+
         .modal-content {
           text-align: left;
+
           .flex-container {
             display: flex;
 
@@ -1166,25 +1275,31 @@
         }
       }
     }
+
     &.usp-pop-up-modal2 {
       .modal-header {
         text-align: left;
       }
+
       .modal-actions {
-        justify-content: flex-start!important;
+        justify-content: flex-start !important;
+
         @media(max-width: 729.9px) {
           flex-direction: column;
-          align-items: flex-start!important;
+          align-items: flex-start !important;
         }
+
         .button {
-           width: 250px!important;
-           &.primary {
+          width: 250px !important;
+
+          &.primary {
             @media(max-width: 729.9px) {
-            margin-bottom: 12px;
+              margin-bottom: 12px;
             }
-           }
+          }
         }
       }
+
       .modal-body {
         overflow: hidden;
         max-height: unset;
@@ -1192,13 +1307,16 @@
         .modal-content {
           text-align: left;
           padding-top: 3px;
+
           .row {
             width: 100%;
           }
+
           .flex-container {
             display: flex;
             flex-direction: column;
           }
+
           .pop-header1 {
             display: inline-block;
             padding-right: 52px;
@@ -1207,6 +1325,7 @@
             font-size: rem-calc(17px);
             line-height: 1.18;
             margin-bottom: 20px;
+
             @media (max-width: 729.9px) {
               width: 100%;
               margin-bottom: 15px;
@@ -1229,20 +1348,24 @@
           .sub-padding {
             padding-left: 18px;
           }
-        
+
         }
       }
     }
+
     &.custom-modal-view-updates {
       .modal-header {
         text-align: left;
       }
+
       .modal-body {
         .modal-content {
           padding-top: 0;
           text-align: left;
+
           .row {
             width: 100%;
+
             .track-font-size {
               font-size: rem-calc(21px);
 
@@ -1281,12 +1404,14 @@
               }
             }
           }
+
           button {
             display: none;
           }
         }
       }
     }
+
     &.custom-modal-voucher-results {
       .modal-content {
         .message {
@@ -1306,7 +1431,7 @@
           }
         }
       }
-     
+
       @media (max-width: 640px) {
         .modal-content {
           .message {
@@ -1316,15 +1441,18 @@
         }
       }
     }
+
     &.change-ebb-plan-modal {
       .row {
-       width: 100%;
+        width: 100%;
       }
+
       .approve-remove-ebb {
         font-weight: bold;
         font-size: 20px;
       }
     }
+
     &.wifi-result-modal {
       .modal-body {
         .modal-content {
@@ -1335,6 +1463,7 @@
         }
       }
     }
+
     &.successful-activation-modal {
       .modal-body {
         .row {
@@ -1343,6 +1472,7 @@
           width: 100%;
         }
       }
+
       @media (max-width: $phablet-min-width) {
         .modal-body {
           .row {
@@ -1352,26 +1482,31 @@
         }
       }
     }
+
     &.pending-confirmation {
       .modal-actions {
         @media(max-width: $phablet-min-width-minus) {
           flex-direction: column;
         }
+
         .button {
-           width: 200px!important;
-           &.primary {
+          width: 200px !important;
+
+          &.primary {
             @media(max-width: $phablet-min-width-minus) {
-            margin-bottom: 12px;
-            margin-right: 0!important;
+              margin-bottom: 12px;
+              margin-right: 0 !important;
             }
-           }
+          }
         }
       }
+
       .modal-body {
         .modal-content {
           .row {
             padding: 0;
           }
+
           .note {
             font-size: rem-calc(18px);
             line-height: 28px;
@@ -1381,15 +1516,18 @@
         }
       }
     }
+
     &.send-receipt-email-modal {
       .modal-actions {
         .button {
-           width: 150px!important;
+          width: 150px !important;
         }
       }
+
       .modal-content {
         .row {
           width: 100%;
+
           .details {
             font-size: rem-calc(18px);
             line-height: 25px;
@@ -1401,22 +1539,26 @@
         }
       }
     }
-    &.acp-modal-exists{
+
+    &.acp-modal-exists {
       .modal-actions {
         .button {
-           width: 220px!important;
+          width: 220px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
     }
+
     &.ebb-validation {
       .modal-header {
         .modal-heading {
           color: #d94a47;
         }
-        .modal-close{
+
+        .modal-close {
           .icon-close {
             color: #d94a47;
           }
@@ -1426,6 +1568,7 @@
       .modal-content {
         display: flex;
         flex-direction: column;
+
         .modal-actions {
           .button {
             background-color: #d94a47;
@@ -1437,16 +1580,19 @@
         }
       }
     }
+
     &.compatibility-help-modal-IME {
       @media (min-width: 641px) and (max-width: 725.9px) {
         overflow: scroll;
       }
+
       .modal-body {
         .modal-content {
           .row {
             width: 100%;
             padding: 0;
           }
+
           .description-content {
             margin-bottom: 22px;
             max-width: 558px;
@@ -1460,6 +1606,7 @@
             align-items: center;
             margin: 0 auto;
           }
+
           .intro {
             margin-top: 16px;
             margin-bottom: 30px;
@@ -1473,6 +1620,7 @@
               font-size: rem-calc(14px);
             }
           }
+
           .note-dial {
             margin-bottom: 9px;
 
@@ -1484,6 +1632,7 @@
               font-size: rem-calc(13px);
             }
           }
+
           .p-nowrap {
             @media (min-width: 1025px) {
               white-space: nowrap;
@@ -1499,6 +1648,7 @@
 
             margin-bottom: 0px;
           }
+
           .menu-margins {
             margin-top: 9px;
             margin-bottom: 9px;
@@ -1515,10 +1665,11 @@
 
           .button {
             width: 149.8px;
-            margin-bottom: 20px!important;
+            margin-bottom: 20px !important;
           }
         }
       }
+
       @media (max-width: $phablet-min-width) {
         .modal-body {
           .modal-content {
@@ -1543,15 +1694,19 @@
         }
       }
     }
+
     &.usp-pop-up-modal3 {
       @media (max-width: $phablet-min-width-minus) {
         overflow: scroll;
       }
+
       .modal-body {
         overflow: hidden;
         max-height: unset;
+
         .modal-content {
           text-align: center;
+
           .row {
             padding: 0;
             width: 100%;
@@ -1560,6 +1715,7 @@
           .flex-container {
             display: flex;
             flex-direction: column;
+
             @media (max-width: $phablet-min-width-minus) {
               width: 272px;
               height: 197px;
@@ -1617,37 +1773,46 @@
         }
       }
     }
-    &.big-button{
+
+    &.big-button {
       .modal-actions {
         .button {
-           width: 360px!important;
+          width: 360px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
     }
+
     &.iccid-info-modal {
-      width: 94%!important;
-      max-width: 100%!important;
+      width: 94% !important;
+      max-width: 100% !important;
+
       .row {
         padding: 10px;
         width: 100%;
       }
+
       .modal-actions {
         @media (max-width: 540.9px) {
-          margin-top: 140px!important;
-          margin-bottom: 50px!important;
+          margin-top: 140px !important;
+          margin-bottom: 50px !important;
         }
+
         .button {
-           width: 180px!important;
+          width: 180px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .text-content-holder {
         margin-bottom: 25px;
+
         .text {
           font-size: rem-calc(18px);
           margin-bottom: 20px;
@@ -1684,11 +1849,13 @@
             font-weight: bold;
           }
         }
+
         img {
           width: 221.7px;
           height: 138.7px;
           left: 0;
         }
+
         .image-pointer {
           font-size: 0.9rem;
           line-height: 22px;
@@ -1705,6 +1872,7 @@
             font-weight: bold;
           }
         }
+
         .rect {
           background-color: #f2e8f4;
           width: 90.7px;
@@ -1731,6 +1899,7 @@
             display: none;
           }
         }
+
         .big-rect {
           background-color: #f2e8f4;
           height: 9.4px;
@@ -1757,8 +1926,10 @@
             top: 94px;
           }
         }
+
         @media (max-width: 833.9px) {
           margin-left: 40px;
+
           .image-pointer {
             top: 25px;
             width: 230px;
@@ -1766,6 +1937,7 @@
             text-align: center;
           }
         }
+
         @media (max-width: 825px) {
           .image-pointer {
             width: 188px;
@@ -1779,6 +1951,7 @@
             left: 189px;
           }
         }
+
         @media (max-width: 689px) {
           .image-pointer {
             width: 151px;
@@ -1792,14 +1965,17 @@
             left: 189px;
           }
         }
+
         @media (max-width: 540.9px) {
-            margin-left: 0px!important;
-            justify-content: center!important;
+          margin-left: 0px !important;
+          justify-content: center !important;
+
           .pointer-holder {
             top: 26px;
             height: 100%;
             transform: none;
           }
+
           .image-pointer {
             top: 186px;
             width: 100%;
@@ -1807,34 +1983,42 @@
             left: 0px;
             position: absolute;
           }
+
           .button {
             margin-top: -64px;
           }
+
           .rect {
             left: 121px;
           }
         }
       }
     }
+
     &.activation-info-modal {
       .modal-actions {
         .button {
-           width: 120px!important;
+          width: 120px !important;
         }
       }
+
       .modal-content {
         padding: 12px 13px;
+
         .row {
           display: block;
+
           .text-content-holder {
             width: 100%;
             max-width: 609px;
             margin: 0 auto;
             margin-bottom: 30px;
             font-size: rem-calc(18px);
+
             @media (max-width: 833.9px) {
               max-width: 404px;
             }
+
             @media (max-width: 633.9px) {
               max-width: 296px;
               font-size: rem-calc(17px);
@@ -1855,15 +2039,18 @@
         }
       }
     }
+
     &.successPhoneModal {
       .modal-actions {
         .button {
-           width: 180px!important;
+          width: 180px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .modal-body {
         .modal-content {
           .row {
@@ -1887,21 +2074,26 @@
         }
       }
     }
+
     &.unlockedModal {
       .modal-actions {
-        margin-top: 0!important;
-        margin-bottom: 20px!important;
+        margin-top: 0 !important;
+        margin-bottom: 20px !important;
+
         .button {
-           width: 180px!important;
+          width: 180px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .modal-body {
         .modal-content {
           .row {
             text-align: left;
+
             .question-section {
               .question {
                 font-weight: bold;
@@ -1920,6 +2112,7 @@
         }
       }
     }
+
     &.invalid-card {
       .modal-body {
         .modal-content {
@@ -1951,6 +2144,7 @@
         }
       }
     }
+
     &.duplicate-result-modal {
       &.error {
         .modal-header {
@@ -1959,11 +2153,13 @@
           }
         }
       }
+
       .modal-actions {
-        .primary{
-          margin-right:0!important;
-         }
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .modal-body {
         .modal-content {
           display: flex;
@@ -1971,49 +2167,59 @@
         }
       }
     }
+
     &.archived-plan {
       .modal-actions {
         .button {
-          width: 145px!important;
+          width: 145px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .modal-body {
         .modal-content {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
+
           .content {
             .info {
               font-size: rem-calc(18px);
               margin-bottom: 8px;
-            }   
+            }
           }
         }
-        
+
       }
     }
+
     &.voucher-info-modal {
       .modal-actions {
-        margin-bottom: 50px!important;
+        margin-bottom: 50px !important;
+
         @media (max-width: 1024.9px) {
-          margin-top: 140px!important;
+          margin-top: 140px !important;
         }
+
         @media (max-width: 639.9px) {
-          margin-top: 160px!important;
+          margin-top: 160px !important;
         }
+
         .button {
-          width: 145px!important;
+          width: 145px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .row {
-       width: 100%;
+        width: 100%;
       }
 
       .text-content-holder {
@@ -2088,10 +2294,12 @@
         }
       }
     }
+
     &.autoPay-help-modal {
       .modal-header {
         text-align: left;
       }
+
       .modal-content {
         text-align: left;
         font-size: rem-calc(16px);
@@ -2109,58 +2317,64 @@
         }
       }
     }
+
     &.ios-setup-modal {
       .modal-header {
         .modal-heading {
-          text-align: center!important;
-          margin: 0 auto!important;
+          text-align: center !important;
+          margin: 0 auto !important;
         }
       }
+
       height: 100%;
     }
+
     &.tyy-message-modal {
       .modal-content {
         width: 100%;
         text-align: center;
+
         .info {
           p {
             font-size: rem-calc(15px);
             font-family: $base-font-family;
           }
-    
+
           .note {
             font-style: italic;
           }
         }
       }
     }
+
     &.manage-payment-modal {
       .modal-body {
         .account-address-details-container {
           background: #F1F9FD;
         }
+
         .note {
           font-size: rem-calc(17px);
           margin-bottom: 0;
         }
       }
-    
+
       .modal-hint {
         font-size: rem-calc(16px);
         line-height: 20px;
         margin: 0 auto 15px;
       }
-    
+
       .account-address-details-container {
         &.highlight-card {
           width: 100%;
           text-align: left;
-    
+
           .custom-checkbox {
             display: flex;
             gap: 8px;
             height: 40px;
-    
+
             .checkbox-label {
               text-transform: capitalize;
               font-size: rem-calc(15px);
@@ -2168,19 +2382,19 @@
               margin-top: 12px;
             }
           }
-    
+
           .details {
             text-align: left;
             padding-top: 0;
             padding-left: 38px;
-    
+
             p {
               font-size: rem-calc(15px);
               font-family: $base-font-family;
               margin-bottom: 0;
             }
           }
-    
+
           @media (#{$larger-than-phablet}) {
             .custom-checkbox {
               .checkbox-label {
@@ -2188,13 +2402,13 @@
               }
             }
           }
-    
+
           @media (max-width: $phablet-min-width) {
             display: block;
-    
+
             .custom-checkbox {
               width: 100%;
-    
+
               .checkbox-label {
                 width: auto;
               }
@@ -2202,10 +2416,10 @@
           }
         }
       }
-    
+
       .modal-actions {
         flex-direction: column !important;
-    
+
         .button {
           width: 100px !important;
           padding: 8px !important;
@@ -2214,14 +2428,17 @@
         }
       }
     }
+
     &.payment-method-modal {
       width: 100%;
-      max-width: 960px!important;
+      max-width: 960px !important;
+
       .modal-content {
         >* {
           display: flex;
           justify-content: flex-start;
         }
+
         .form-section {
           .credit-image {
             display: none;
@@ -2267,8 +2484,9 @@
 
         .modal-actions {
           .button {
-            width: 213px!important;
-            padding: 10px!important;;
+            width: 213px !important;
+            padding: 10px !important;
+            ;
           }
         }
 
@@ -2287,24 +2505,29 @@
         }
       }
     }
+
     &.mdn-list {
       .modal-actions {
         .button {
-           width: 133px!important;
-           padding: 8px !important;
+          width: 133px !important;
+          padding: 8px !important;
         }
-        .primary{
-          margin-right:0!important;
-         }
+
+        .primary {
+          margin-right: 0 !important;
+        }
       }
+
       .modal-body {
         .modal-content {
           display: flex;
           flex-direction: column;
+
           p {
             font-size: rem-calc(20px);
             line-height: 32px;
             margin-bottom: 10px;
+
             @media (max-width: $phablet-min-width-minus) {
               font-size: rem-calc(16px);
               line-height: 24px;
@@ -2313,20 +2536,24 @@
         }
       }
     }
+
     &.migration-confirmation {
       .modal-actions {
         .button {
-           width: 280px!important;
-           padding: 8px !important;
+          width: 280px !important;
+          padding: 8px !important;
         }
+
         @media(max-width:$desktop-min-width-minus) {
           flex-direction: column;
-          .primary{
-            margin-right: 0!important;
-            margin-bottom: 14px!important;
+
+          .primary {
+            margin-right: 0 !important;
+            margin-bottom: 14px !important;
           }
         }
       }
+
       .modal-body {
         .modal-content {
           display: flex;
@@ -2334,23 +2561,28 @@
           align-items: center;
           justify-content: center;
           gap: 24px;
+
           .message {
             font-size: rem-calc(20px);
             line-height: 32px;
             font-weight: bold;
           }
+
           .info {
             font-size: rem-calc(16px);
             line-height: 24px;
             margin-bottom: 0;
             font-weight: bold;
+
             .light {
               font-weight: 400;
             }
           }
         }
+
         @media(max-width: $phablet-min-width-minus) {
           margin-top: 0;
+
           .content {
             .message {
               font-size: rem-calc(18px);
@@ -2360,23 +2592,29 @@
         }
       }
     }
+
     &.migration-flows-popup {
-      .modal-header{
-        padding:0!important
+      .modal-header {
+        padding: 0 !important
       }
+
       .modal-heading {
         text-align: left;
+
         @media (max-width: 610.9px) {
           text-align: center;
           margin-left: auto;
         }
       }
+
       .modal-body {
         overflow-x: hidden;
+
         .swiper-container {
           width: 100%;
           max-width: 100%;
         }
+
         .swiper-pagination {
           text-align: left;
 
@@ -2438,6 +2676,7 @@
           margin-bottom: 60px;
           align-items: center;
           margin-top: 14px;
+
           @media (max-width: 610px) {
             justify-content: center;
             align-items: center;
@@ -2468,33 +2707,39 @@
         }
       }
     }
+
     &.out-of-stock-modal {
       .modal-body {
         .modal-content {
           .row {
             font-size: 20px;
             line-height: 32px;
-            max-width: 100%;    
+            max-width: 100%;
+
             @media (max-width: $ipad-min-width-minus) {
               font-size: 18px;
               line-height: 28px;
             }
           }
+
           .modal-actions {
             display: flex;
             justify-content: center;
-            align-items: center;    
+            align-items: center;
+
             @media (max-width: $ipad-min-width-minus) {
               flex-direction: column;
-              .primary{
-                margin-right: 0!important;
-                margin-bottom: 14px!important;
+
+              .primary {
+                margin-right: 0 !important;
+                margin-bottom: 14px !important;
               }
             }
+
             a {
               font-size: 20px;
               line-height: 28px;
-    
+
               @media (max-width: $ipad-min-width-minus) {
                 font-size: 16px;
                 line-height: 20px;
@@ -2504,77 +2749,94 @@
         }
       }
     }
+
     &.impacted-modal {
       .modal-actions {
         display: flex;
         justify-content: center;
-        align-items: center;    
+        align-items: center;
         flex-direction: column;
+
         button {
-          width: 360px!important;
-          padding: 6px!important;
+          width: 360px !important;
+          padding: 6px !important;
         }
-        .primary{
-          margin-right: 0!important;
-          margin-bottom: 14px!important;
+
+        .primary {
+          margin-right: 0 !important;
+          margin-bottom: 14px !important;
         }
-        .transparent{
-          margin-bottom: 14px!important;
+
+        .transparent {
+          margin-bottom: 14px !important;
         }
       }
+
       .modal-content {
         @media (max-width: 641px) {
           overflow-y: visible;
           max-height: 300px;
           margin-top: 0;
+
           &.row {
             margin-bottom: 0;
           }
         }
+
         margin: 20px;
       }
-      .not-working-link {
-          color: $secondary-color;
-          cursor: pointer;
 
-          @media (max-width: 641px) {
-            margin-bottom: 0;
-          }
+      .not-working-link {
+        color: $secondary-color;
+        cursor: pointer;
+
+        @media (max-width: 641px) {
+          margin-bottom: 0;
         }
+      }
     }
+
     &.need-phone-popUp {
       .modal-actions {
         display: flex;
         justify-content: center;
-        align-items: center;    
+        align-items: center;
         flex-direction: column;
+
         button {
-          width: 360px!important;
-          padding: 6px!important;
+          width: 360px !important;
+          padding: 6px !important;
         }
-        .primary{
-          margin-right: 0!important;
-          margin-bottom: 14px!important;
+
+        .primary {
+          margin-right: 0 !important;
+          margin-bottom: 14px !important;
         }
-        .transparent{
-          margin-bottom: 14px!important;
+
+        .transparent {
+          margin-bottom: 14px !important;
         }
       }
     }
+
     &.select-cc-modal {
       .modal-header {
         width: 100%;
         text-align: left;
+
         .modal-heading {
           text-align: left;
+
           @media (max-width: 750px) {
             text-align: center;
           }
         }
       }
+
       .modal-body {
         .modal-content {
           text-align: left;
+
           .content {
             padding: 13px;
             display: block;
@@ -2637,23 +2899,29 @@
         }
       }
     }
+
     &.shipping-address-modal {
       .modal-actions {
         display: flex;
-        justify-content: flex-start!important;
-        align-items: flex-start!important;    
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+
         button {
-          width: 140px!important;
+          width: 140px !important;
         }
       }
+
       .modal-header {
         text-align: left;
+
         .modal-heading {
           text-align: left;
         }
       }
+
       .modal-content {
         text-align: left;
+
         .twelve {
           width: 100%;
           margin: 0;
@@ -2692,6 +2960,7 @@
           margin-bottom: 0;
         }
       }
+
       @media (max-width: $phablet-min-width) {
         .modal-body {
           label {
@@ -2706,6 +2975,7 @@
         }
       }
     }
+
     &.delivery {
       .modal-body {
         .modal-content {
@@ -2776,16 +3046,19 @@
         }
       }
     }
+
     &.wifi-calling-modal {
       max-width: 375px;
       border: 2px solid $primary-color;
       border-radius: 11px;
       width: 100%;
+
       .modal-actions {
         button {
-          width: 140px!important;
+          width: 140px !important;
         }
       }
+
       .modal-body {
         max-height: calc(80vh - 65px);
         overflow-x: hidden;
@@ -2927,6 +3200,7 @@
         }
       }
     }
+
     &.edit-wifi-modal {
       .modal-body {
         .modal-content {
@@ -2936,98 +3210,120 @@
         }
       }
     }
+
     &.skip-modal {
       .modal-body {
         .modal-content {
           .row {
             width: 100%;
-            .msg{
+
+            .msg {
               font-size: 18px;
               line-height: 28px;
+
               @media(max-width: $phablet-min-width-minus) {
                 font-size: 16px;
                 line-height: 24px;
               }
             }
           }
+
           .modal-actions {
             display: flex;
             justify-content: center;
-            align-items: center;    
+            align-items: center;
+
             @media(max-width: $phablet-min-width-minus) {
               flex-direction: column;
-              .primary{
-                margin-right: 0!important;
-                margin-bottom: 14px!important;
+
+              .primary {
+                margin-right: 0 !important;
+                margin-bottom: 14px !important;
               }
-              .transparent{
-                margin-bottom: 14px!important;
+
+              .transparent {
+                margin-bottom: 14px !important;
               }
             }
+
             button {
-              width: 160px!important;
-              padding: 6px!important;
+              width: 160px !important;
+              padding: 6px !important;
             }
           }
         }
       }
     }
+
     &.clear-phone-modal {
       .modal-actions {
         display: flex;
         justify-content: center;
-        align-items: center;    
+        align-items: center;
+
         @media(max-width: $phablet-min-width-minus) {
           flex-direction: column;
-          .primary{
-            margin-right: 0!important;
-            margin-bottom: 14px!important;
+
+          .primary {
+            margin-right: 0 !important;
+            margin-bottom: 14px !important;
           }
-          .transparent{
-            margin-bottom: 14px!important;
+
+          .transparent {
+            margin-bottom: 14px !important;
           }
         }
+
         button {
-          width: 260px!important;
-          padding: 6px!important;
+          width: 260px !important;
+          padding: 6px !important;
         }
       }
+
       .modal-body {
         .modal-content {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
+
           .row {
             width: 100%;
           }
         }
       }
     }
+
     &.disable-wifi-modal {
       .modal-actions {
         display: flex;
         justify-content: center;
-        align-items: center;    
+        align-items: center;
+
         @media(max-width: $phablet-min-width-minus) {
           flex-direction: column;
-          .primary{
-            margin-right: 0!important;
-            margin-bottom: 14px!important;
+
+          .primary {
+            margin-right: 0 !important;
+            margin-bottom: 14px !important;
           }
-          .transparent{
-            margin-bottom: 14px!important;
+
+          .transparent {
+            margin-bottom: 14px !important;
           }
         }
+
         button {
-          width: 120px!important;
-          padding: 6px!important;
+          width: 120px !important;
+          padding: 6px !important;
         }
       }
     }
+
     &.confirm-modal {
       &.delete-duplicate {
         width: 100%;
+
         .modal-header {
           .modal-close {
             display: none;
@@ -3043,22 +3339,26 @@
         }
       }
     }
+
     &.confirm-change-checkout-modal {
       .modal-content {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        .row{
+
+        .row {
           width: 100%;
         }
       }
+
       .msg {
         font-size: rem-calc(17px);
         line-height: 20px;
         padding: 10px 30px 0;
         width: 100%;
       }
+
       @media (max-width: $tablet-min-width) {
         .row {
           .msg {
@@ -3067,9 +3367,11 @@
         }
       }
     }
+
     &.clean-cart-modal {
       .modal-body {
         text-align: center;
+
         .msg {
           font-size: rem-calc(17px);
           line-height: 20px;
@@ -3089,6 +3391,7 @@
         }
       }
     }
+
     &.referral-promo-modal {
       max-width: 740px;
       width: 100%;
@@ -3262,46 +3565,56 @@
         }
       }
     }
+
     &.auto-renew-modal {
       .msg {
         font-size: 18px;
         line-height: 28px;
+
         @media(max-width: $phablet-min-width-minus) {
           font-size: 16px;
-        line-height: 24px;
+          line-height: 24px;
         }
       }
-      &.large{
+
+      &.large {
         .modal-actions {
           display: flex;
           justify-content: center;
-          align-items: center;    
+          align-items: center;
+
           @media(max-width: $phablet-min-width-minus) {
             flex-direction: column;
-            .primary{
-              margin-right: 0!important;
-              margin-bottom: 14px!important;
+
+            .primary {
+              margin-right: 0 !important;
+              margin-bottom: 14px !important;
             }
-            .transparent{
-              margin-bottom: 14px!important;
+
+            .transparent {
+              margin-bottom: 14px !important;
             }
           }
+
           button {
-            width: 240px!important;
-            padding: 6px!important;
+            width: 240px !important;
+            padding: 6px !important;
           }
         }
       }
+
       .modal-close {
         display: none;
       }
     }
   }
+
   .modal-body {
     max-height: calc(90vh - 65px);
     overflow-y: auto;
   }
 }
+
 .modal.is-visible,
 .modal.fade.in {
   visibility: visible;
@@ -3348,4 +3661,3 @@
   transform: translateY(0);
   opacity: 1;
 }
-
