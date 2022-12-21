@@ -40,7 +40,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   public questionIdParam: any;
   public collapsed: boolean;
   public plansQuestions;
-
+  private activationFlow = false;
   private allBasePlans: Array<MobilePlanItem>;
   private alive = true;
   private utmSource: string;
@@ -84,6 +84,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
         if (!!this.filteredPlans) {
           this.analyticsService.trackProductsImpressions(this.filteredPlans, 'plans-list');
         }
+        this.activationFlow = !!params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION] ? true : false;
         /* eslint-disable @typescript-eslint/dot-notation */
         if (!!params && params['id']) {
           const selectedPlanId = params['id'];
@@ -245,11 +246,13 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   }
   private addPlan(plan): void {
     sessionStorage.setItem('planID', JSON.stringify(plan.id));
-    this.analyticsService.trackAddToCart(PURCHASE_INTENT.NEW, [plan], plan.price);
     this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.NEW, [plan], plan.price);
     if (!!this.userHasDevice) {
       this.mobilePlansService.setBasePlan(plan);
       this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
+    }
+    if (!this.activationFlow) {
+      this.mobilePlansService.setSimCard('');
     }
     this.mobilePlansService.setAutoRenewPlan(true);
     sessionStorage.removeItem('useFromBalance');
@@ -272,7 +275,6 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
         removedItems.push(this.currentPlan.addOns);
       }
     }
-    this.analyticsService.trackRermoveFromCart(removedItems);
     this.analyticsService.trackRermoveFromCartGA4(removedItems);
     this.mobilePlansService.setSimPurchaseQuantity(0);
     this.mobilePlansService.setAddonsList(null, this.currentPlan);
