@@ -14,8 +14,7 @@
         </div>
         <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
           <ng-container *ngIf="!!purchasedPlanId">
-            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !!isStorePickup">Your Store pickup barcode
-              is available in your purchased order details.</p>
+            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !!isStorePickup">Your Store pickup barcode is available in your purchased plans page.</p>
             <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !isStorePickup">Look out for your <b>new
                 SIM card</b> in the
               mail! Once your SIM card <b>arrives</b> in a couple of days,
@@ -30,15 +29,12 @@
               eSIM, we advise you wait for the device to <b>arrive</b> before proceeding to
               activate your eSIM & Plan.</p>
             <div class="result-actions">
-              <button class="button primary" *ngIf="!isStorePickup" data-cy="purchasedPlansBtn"
+              <button class="button primary" data-cy="purchasedPlansBtn"
                 (click)="goToPurchasedPlans()">
                 Purchased Plans
               </button>
               <button class="button secondary" *ngIf="!isStorePickup" (click)="goToPlans()" data-cy="continueShopping">
                 Continue Shopping
-              </button>
-              <button class="button primary" *ngIf="!!isStorePickup" (click)="goToOrderDetails(orderId)">
-                View Order Details
               </button>
             </div>
           </ng-container>
