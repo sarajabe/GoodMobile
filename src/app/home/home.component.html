@@ -2,18 +2,16 @@
 <h1 class="hidden">Free Cell Phone Service Every Month</h1>
 <app-banners></app-banners>
 <section class="featured-plans-section">
-    <app-featured-plans [isPromo]="showPromoPlan"></app-featured-plans>
+  <app-featured-plans [isPromo]="showPromoPlan"></app-featured-plans>
 </section>
 <section class="why-us">
   <div class="page-section section-container">
     <div class="image-section">
       <picture>
-        <source width="250" srcset='assets/img/why-us-mobile.svg' media="(max-width: 639.9px)"
-          type="image/svg">
+        <source width="250" srcset='assets/img/why-us-mobile.svg' media="(max-width: 639.9px)" type="image/svg">
         <source width="400" height="316" srcset='assets/img/why-us-tablet.svg' media="(max-width: 1024.9px)"
           type="image/svg">
-        <source width="429" height="400" srcset='assets/img/why-us.svg' media="(min-width: 1025px)"
-          type="image/svg">
+        <source width="429" height="400" srcset='assets/img/why-us.svg' media="(min-width: 1025px)" type="image/svg">
         <img width="429" height="400" src="assets/img/why-us.svg" alt="Why Good Mobile">
       </picture>
     </div>
@@ -21,7 +19,8 @@
       <p class="note label">WHY US</p>
       <h2 class="header">Every purchase powers Goodwill mission</h2>
       <p class="details">Your purchase changes lives!</p>
-      <p class="smaller description">Good Mobile sales support the Goodwill mission to help people overcome the challenge to build skills, finding jobs & grow their careers through the power of work</p>
+      <p class="smaller description">Good Mobile sales support the Goodwill mission to provide skills training, job
+        development, and social services to the community.</p>
     </div>
   </div>
 </section>
@@ -33,17 +32,18 @@
       <p class="details mb-20">Keep your phone number or get a new one</p>
       <div class="action">
         <button class="button primary" id="Bring-phone" data-cy="Bring-phone"
-        [routerLink]="ACTIVATION_ROUTE_URLS.BASE +'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE" title="Check compatibility"
-        value="Bring phone" aria-label="Bring phone">Bring your Device</button>
+          [routerLink]="ACTIVATION_ROUTE_URLS.BASE +'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE" title="Check compatibility"
+          value="Bring phone" aria-label="Bring phone">Bring your Device</button>
       </div>
     </div>
     <div class="image-section center">
-      <picture>
-        <source  height="344" srcset='assets/img/home-bring-device-responsive.png' media="(max-width: 1169.9px)"
-        type="image/png">
-        <source  height="400" srcset='assets/img/home-bring-device.png' media="(min-width: 1025px)"
+      <!-- <img src="assets/img/love-your-device.svg" alt="Love Device Image" class="love-device"> -->
+      <picture class="relative">
+        <img src="assets/img/love-your-device.svg" alt="Love Device Image" class="love-device">
+        <source height="344" srcset='assets/img/home-bring-device-responsive.png' media="(max-width: 1169.9px)"
           type="image/png">
-        <img  height="400" src="assets/img/home-bring-device.png" alt="Why Good Mobile">
+        <source height="400" srcset='assets/img/home-bring-device.png' media="(min-width: 1025px)" type="image/png">
+        <img height="400" src="assets/img/home-bring-device.png" alt="Why Good Mobile">
       </picture>
     </div>
   </div>
@@ -52,10 +52,8 @@
   <div class="page-section section-container">
     <div class="image-section">
       <picture>
-        <source srcset='assets/img/home-acp.webp' media="(max-width: 1919.9px)"
-          type="image/webp">
-        <source srcset='assets/img/home-acp.png' media="(max-width: 1919.9px)"
-          type="image/png">
+        <source srcset='assets/img/home-acp.webp' media="(max-width: 1919.9px)" type="image/webp">
+        <source srcset='assets/img/home-acp.png' media="(max-width: 1919.9px)" type="image/png">
         <source srcset='assets/img/home-acp-2000.webp' media="(min-width: 1920px)" type="image/webp">
         <source srcset='assets/img/home-acp-2000.png' media="(min-width: 1920px)" type="image/png">
         <img height="400" src="assets/img/home-acp-2000.png" alt="ACP Banner ">
@@ -64,10 +62,11 @@
     <div class="details-section">
       <p class="note label">GOVERNMENT BENEFIT PROGRAM</p>
       <h2 class="header">Affordable Connectivity Program</h2>
-      <p class="details">Good Mobile is excited to bring you the (ACP), that provides temporary relief to eligible households to lower the cost of wireless service.</p>
+      <p class="details">Good Mobile is excited to bring you the (ACP), that provides temporary relief to eligible
+        households to lower the cost of wireless service.</p>
       <div class="action">
-        <button class="button primary"  [routerLink]="['/' + ROUTE_URLS.ACP]" fragment="acpDiscount" title="Do I Qualify?" value="Do I Qualify?"
-        aria-label="Do I Qualify?">Do I Qualify?</button>
+        <button class="button primary" [routerLink]="['/' + ROUTE_URLS.ACP]" fragment="acpDiscount"
+          title="Do I Qualify?" value="Do I Qualify?" aria-label="Do I Qualify?">Do I Qualify?</button>
       </div>
     </div>
   </div>
@@ -77,21 +76,18 @@
     <div class="details-section">
       <p class="note label">CHECK COVERAGE </p>
       <h2 class="header">Powered by America’s best network</h2>
-      <p class="details break">We’re powered by the same network as the bigger carrier covering 99% of America</p>
+      <p class="details break">We’re powered by the same network as the bigger carriers covering <b>99%</b> of America</p>
       <div class="action">
         <button class="button primary" id="Check-Coverage" data-cy="Check-Coverage"
-        [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE" title="Check Coverage"
-        value="Check Coverage" aria-label="Check Coverage">Check Coverage</button>
+          [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE" title="Check Coverage"
+          value="Check Coverage" aria-label="Check Coverage">Check Coverage</button>
       </div>
     </div>
     <div class="image-section center">
       <picture>
-        <source  height="400" srcset='assets/img/home-map.svg'
-          type="image/svg">
-        <img  height="400" src="assets/img/home-map.svg" alt="coverage map">
+        <source height="400" srcset='assets/img/home-map.svg' type="image/svg">
+        <img height="400" src="assets/img/home-map.svg" alt="coverage map">
       </picture>
     </div>
   </div>
 </section>
-
-
