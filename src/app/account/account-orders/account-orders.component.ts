@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { OrderInfo, UserOrdersService } from '@ztarmobile/zwp-service-backend';
+import { IOrderItem, Order, OrderInfo, UserOrdersService } from '@ztarmobile/zwp-service-backend';
 import { PaginationInstance } from 'ngx-pagination';
 import { take } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -185,9 +185,15 @@ export class AccountOrdersComponent implements OnInit {
   public calendarClosed(): void {
     this.showFilter = true;
   }
-  public goToReceiptDetails(orderID): void {
+  public goToReceiptDetails(order): void {
     const params = {};
-    params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = orderID;
+    params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = order?.id;
+    if(!!order?.storePickup) {
+      params[ACCOUNT_ROUTE_URLS.PARAMS.STORE_PICKUP] = order?.storePickup;
+      if(!!order?.cards && order?.cards?.length > 0) {
+        params[ACCOUNT_ROUTE_URLS.PARAMS.ITEM_ID] = order?.cards[0]?.itemId;
+      }
+    }
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS_RECEIPT_DETAILS}`, params]);
   }
   

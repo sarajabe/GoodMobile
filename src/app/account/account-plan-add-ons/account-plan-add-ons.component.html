@@ -128,80 +128,23 @@
                                                         [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]"
                                                         routerLinkActive="active"
                                                         [routerLinkActiveOptions]="{exact: true}">renew now?</a></h4>
-                                                <h4>Stay in touch with family & friends around the world!</h4>
-                                                <p class="hint">Which Calling service are you looking for:</p>
-                                                <ul class="categories">
-                                                    <li><span [class.active]="showUnlimited"
-                                                            (click)="showUnlimited=true;showPayGo=false">Unlimited
-                                                            Calling</span></li>
-                                                    <li><span [class.active]="showPayGo"
-                                                            (click)="showPayGo=true;showUnlimited=false;">Individual
-                                                            Country</span></li>
-                                                </ul>
-                                                <section *ngIf="showUnlimited">
-                                                    <h4 class="validation-message"
-                                                        *ngIf="!isCompaitableWithInternationalAddon && !selectedPlan?.canceled">
-                                                        Your plan is NOT compatible with this add-on</h4>
-                                                    <h4 class="validation-message"
-                                                        *ngIf="isCompaitableWithInternationalAddon && isILDSelected()">
-                                                        Unlimited international calling add-on has already been added to
-                                                        your shopping cart</h4>
-
-                                                    <p class="title">Unlimited Calling</p>
-                                                    <p class="subtitle">Get unlimited calling to over 60 countries from
-                                                        the U.S., including landline and cellular to Mexico and Canada,
-                                                        the UK, Germany, China, India, Colombia, and Israel. Below are
-                                                        the listed countries for International Calling, you can have
-                                                        unlimited minutes for ${{unlimitedCalls.price}} per month</p>
-                                                    <ul class="sort-nav">
-                                                        <li *ngFor="let letter of letters" value="{{letter}}"
-                                                            [class.active]="selected == letter"><a
-                                                                (click)="filterCountries(letter);selected=letter">{{letter}}</a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="countriesList unlimited">
-                                                        <li *ngFor="let country of filteredCountries"
-                                                            value={{country?.name}}>
-                                                            <span class="countryName">{{country?.name}}</span>
-                                                            <span class="rate"
-                                                                *ngIf="country?.isLandline">Landline</span><span
-                                                                class="rate"
-                                                                *ngIf="country?.isLandline && country?.isCellular">+</span><span
-                                                                class="rate" *ngIf="country?.isCellular">Cellular</span>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="totalCalls">
-                                                        <span>Total for unlimited minutes on {{countries?.length}}
-                                                            countries above</span>
-                                                        <span class="text-color-primary">
-                                                            TOTAL: ${{unlimitedCalls?.price}}
-                                                        </span>
-                                                    </div>
-                                                    <div class="actions">
-                                                        <button class="button secondary"
-                                                            (click)="selectAddOn('International')"
-                                                            [disabled]="!userHasActivePlans || !isCompaitableWithInternationalAddon || isILDSelected() || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Select
-                                                            add-on</button>
-                                                        <button class="button primary"
-                                                            (click)="setSelectedAddonType('International');goToCart()"
-                                                            [disabled]="!userHasActivePlans || !isCompaitableWithInternationalAddon || selectedPlan?.canceled || userAccount?.pastDue || selectedPlan?.portInRequestNumber">Proceed
-                                                            to checkout</button>
-                                                    </div>
-                                                </section>
-                                                <section *ngIf="showPayGo">
+                                                <h5 class="primary-font-bold header-color header">Stay in touch with family & friends around the world!</h5>
+                                                <p class="smaller note">Here’s the list of countries that are included in for Individual Country</p>
+                                                <section >
                                                     <h4 class="validation-message" *ngIf="isPayGoSelected()">Pay Go
                                                         International calling add-on has already been added to your
                                                         shopping cart</h4>
                                                     <h4 class="validation-message"
                                                         *ngIf="!isCompaitableWithPayGo && !selectedPlan?.canceled">Your
                                                         plan is NOT compatible with this add-on</h4>
-                                                    <p class="title"><strong>Pay Go International Calling</strong></p>
-                                                    <p>
+                                                    <h5 class="primary-font-bold">Pay Go International Calling</h5>
+                                                    <p class="smaller">
                                                         Need to call a country not on your Unlimited Calling Country
-                                                        list? You can purchase $5 of additional International minutes to
-                                                        call globally. Rates vary by destination.
+                                                        list?
                                                     </p>
-                                                    <p>
+                                                    <p class="smaller">You can purchase <b class="primary-font-bold">$5</b> of additional International minutes to
+                                                        call globally. Rates vary by destination.</p>
+                                                    <p class="smaller">
                                                         Check below on a specific destinations Rates
                                                     </p>
                                                     <ul class="sort-nav">
@@ -220,7 +163,7 @@
                                                         </li>
                                                     </ul>
                                                     <div class="totalCalls">
-                                                        <span>International Calling Increment</span>
+                                                        <span>Total for unlimited minutes on 61 countries above</span>
                                                         <span class="text-color-primary">
                                                             TOTAL: ${{unlimitedCalls?.price}}
                                                         </span>

@@ -117,13 +117,18 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.REPORT_ISSUE}`, params]);
   }
 
-  public goToReceiptDetails(orderID): void {
+  public goToReceiptDetails(order): void {
     const params = {};
-    params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = orderID;
+    params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = order?.id;
     params[ACCOUNT_ROUTE_URLS.PARAMS.FROM_DETAILS] = true;
+    if(!!order?.storePickup) {
+      params[ACCOUNT_ROUTE_URLS.PARAMS.STORE_PICKUP] = order?.storePickup;
+      if(!!order?.cards && order?.cards?.length > 0) {
+        params[ACCOUNT_ROUTE_URLS.PARAMS.ITEM_ID] = order?.cards[0]?.itemId;
+      }
+    }
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS_RECEIPT_DETAILS}`, params]);
   }
-
   public editShippingAddress(currentAddress, orderId): void {
     let selectedAddress = {} as IFirebaseAddress;
     this.currentShippingAddress = currentAddress;

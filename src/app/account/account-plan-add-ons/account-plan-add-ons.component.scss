@@ -12,8 +12,11 @@
         font-size: rem-calc(22px);
     }
 
-    .hint {
-        font-size: rem-calc(17px);
+    .header{
+        margin-bottom: 8px;
+    }
+    .note {
+       margin-bottom: 16px;
     }
 
     .tab-nav {
@@ -119,79 +122,6 @@
             }
         }
     }
-
-    .categories {
-        width: 100%;
-        display: inline-block;
-        padding: 0;
-        list-style: none;
-        margin-top: 0;
-
-        @media (max-width: 542.9px) {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin: 24px 0;
-        }
-
-        li {
-            padding: 0;
-            padding-right: 12px;
-            float: left;
-            margin-bottom: 0;
-            width: auto;
-            border-right: 2px solid #DDDDDD;
-
-            @media (max-width: 542.9px) {
-                border: none;
-                padding: 0;
-            }
-
-            &:last-child {
-                border-right: 0;
-                padding-right: 0;
-                padding-left: 12px;
-
-                @media (max-width: 542.9px) {
-                    padding: 0;
-                }
-            }
-
-            span {
-                width: 186px;
-                height: 44px;
-                background-color: #E5EEF4;
-                cursor: pointer;
-                color: #004064;
-                font-size: rem-calc(20px);
-                line-height: 20px;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: none;
-                font-family: $secondary-font-family-bold;
-
-                @media (max-width: $phablet-min-width-minus) {
-                    width: 157px;
-                    height: 32px;
-                    font-size: rem-calc(16px);
-                    line-height: 16px;
-                }
-
-                &.active {
-                    background-color: #669BBF;
-                    color: white;
-                }
-            }
-        }
-    }
-
-    .title {
-        font-size: rem-calc(20px);
-        font-family: $secondary-font-family-bold;
-    }
-
     .subtitle {
         font-size: rem-calc(17px);
         font-family: $base-font-family;
@@ -409,13 +339,15 @@
         font-size: rem-calc(17px);
         padding-top: 17px;
         padding-bottom: 40px;
-
         @media (min-width: 818px) {
             padding-bottom: 17px;
         }
 
         span {
             display: block;
+            font-size: 16px;
+            line-height: 18px;
+            margin-bottom: 10px;
 
             &.text-color-primary {
                 font-size: rem-calc(24px);
