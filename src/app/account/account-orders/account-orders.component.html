@@ -125,7 +125,7 @@
                             <p class="description" data-cy="orderDetails" >Order Details</p>
                             <img src="assets/icon/arrow_circle.svg" alt="arrow" class="rotate">
                         </div>
-                        <div class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(order?.id)" *ngIf="!!order?.paymentSuccessful">
+                        <div class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(order)" *ngIf="!!order?.paymentSuccessful">
                             <img src="assets/icon/primary-invoice.svg" alt="invoice" class="invoice">
                             <p class="description" >View Invoice</p>
                         </div>

@@ -1,24 +1,17 @@
 <div class="receipt-details-page" id="print-receipt">
-    <div class="back-link" *ngIf="page === 'orders'">
-        <a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]">
-            <span class="bold">My Orders</span>
-            &nbsp;<img src="/assets/icon/black-arrow-back.svg"></a>
-        <a (click)="goToOrderDetail()" *ngIf="isDetails">
-                <span class="bold"> Order Details</span>
-                &nbsp;<img src="/assets/icon/black-arrow-back.svg"></a>
-        <span> {{orderId}}</span>
-    </div>
-    <div class="back-link" *ngIf="page === 'payments'"><a
-            [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PAYMENTS]">
-            <span class="bold">Payments</span>
-            &nbsp;<img src="/assets/icon/black-arrow-back.svg"></a><span> {{orderId}}</span>
+    <div class="top-links">
+        <a *ngIf="page === 'orders'" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
+            class="top-link">My Orders</a>
+        <a *ngIf="page === 'payments'" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PAYMENTS]"></a>
+        <img src="/assets/icon/black-arrow-back.svg">
+        <a class="top-link">{{orderId}}</a>
     </div>
     <div id="div">
         <div class="title-receipt-options-section">
-            <h1 class="title">Receipt</h1>
+            <h2 class="title">Order Reciept</h2>
             <div class="receipt-options mobile-display">
                 <button class="print-option" [useExistingCss]="true" printSectionId="print-receipt" ngxPrint><img
-                        src="/assets/icon/print-icon.svg"><span class="option-text secondary">Print</span></button>
+                        src="/assets/icon/print-icon.svg"><span class="option-text">Print</span></button>
                 <button class="email-option" (click)="sendEmail()"><img src="/assets/icon/email-icon.svg"><span
                         class="option-text">Email</span></button>
             </div>
@@ -27,7 +20,8 @@
             <div class="details-part-one">
                 <div class="key-value">
                     <p><span class="key">Merchant:</span>
-                        <span class="value"> {{order?.brand}}</span></p>
+                        <span class="value">Good Mobile</span>
+                    </p>
                 </div>
                 <div class="key-value">
                     <p>
@@ -41,10 +35,16 @@
                         <span class="value">{{order?.orderId}}</span>
                     </p>
                 </div>
-                <div class="key-value">
+                <div class="key-value" *ngIf="!!order?.transactionDate">
                     <p>
                         <span class="key">Date:</span>
                         <span class="value"> {{order?.transactionDate | date: 'short'}}</span>
+                    </p>
+                </div>
+                <div class="key-value" *ngIf="!!order?.voucherAmount && order?.voucherAmount > 0">
+                    <p>
+                        <span class="key">Voucher Amount:</span>
+                        <span class="value"> {{order?.voucherAmount | currency}}</span>
                     </p>
                 </div>
                 <div class="key-value" *ngIf="!!order?.shippingAddress">
@@ -94,19 +94,19 @@
                         <span class="value"> {{order?.rewardsTrxNumber}}</span>
                     </p>
                 </div>
-                <div class="key-value">
+                <div class="key-value" *ngIf="!!order?.total">
                     <p>
                         <span class="key">Payment Card Amount:</span>
                         <span class="value"> {{order?.total | currency}}</span>
                     </p>
                 </div>
-                <div class="key-value">
+                <div class="key-value" *ngIf="!!order?.paymentStatus">
                     <p>
                         <span class="key">Payment Status:</span>
                         <span class="value"> {{order?.paymentStatus}}</span>
                     </p>
                 </div>
-                <div class="key-value">
+                <div class="key-value" *ngIf="!!order?.paymentTrxNumber">
                     <p>
                         <span class="key">Confirmation #:</span>
                         <span class="value"> {{order?.paymentTrxNumber}}</span>
@@ -180,9 +180,16 @@
             </div>
         </div>
     </div>
+    <div class="barCodes-details" *ngIf="!!isStorePickup">
+        <h3 class="primary-font-bold title">Scan your barcode</h3>
+        <p class="smaller note">Check with the store clerk to pick up your package</p>
+        <ngx-barcode
+            [bc-value]="barCodeValues"
+            [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
+    </div>
     <div class="receipt-options">
         <button class="print-option" [useExistingCss]="true" printSectionId="print-receipt" ngxPrint><img
-                src="/assets/icon/print-icon.svg"><span class="option-text secondary">Print</span></button>
+                src="/assets/icon/print-icon.svg"><span class="option-text">Print</span></button>
         <button class="email-option" (click)="sendEmail()"><img src="/assets/icon/email-icon.svg"><span
                 class="option-text">Email</span></button>
     </div>

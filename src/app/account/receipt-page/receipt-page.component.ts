@@ -19,6 +19,8 @@ export class ReceiptPageComponent implements OnInit {
   public orderId: string;
   public page: string;
   public email: string;
+  public isStorePickup = false;
+  public barCodeValues;
   public cartItems = [];
   // eslint-disable-next-line @typescript-eslint/naming-convention
   public ACCOUNT_ROUTE_URLS = ACCOUNT_ROUTE_URLS;
@@ -46,6 +48,10 @@ export class ReceiptPageComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       if (!!params) {
         this.orderId = params.id;
+        if(!!params?.storePickup && !!params?.itemId) {
+          this.isStorePickup = params?.storePickup;
+          this.barCodeValues = params?.itemId;
+        }
         if (!!params.fromDetails) {
           this.isDetails = true;
         }
