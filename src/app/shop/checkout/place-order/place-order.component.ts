@@ -147,7 +147,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
               this.cardInfo = Object.assign(this.cardInfo, method);
               this.showBillingAddress = true;
             });
-          } else {
+        } else {
             this.cardInfo = method?.card;
             this.showBillingAddress = true;
           }

@@ -173,6 +173,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
       this.lastName = this.user.lastName;
       this.userForm.controls.email.setValue(this.user.email);
       this.currentUserInfo = Object.assign({}, user);
+      this.paymentMethodList = this.user.paymentMethods;
       this.shippingAddressList = !!this.user.shippingAddresses && this.user.shippingAddresses.length > 0 ? this.user.shippingAddresses : [];
       if (!!this.user.ebbId) {
         this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
@@ -196,9 +197,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     this.userAccountService.selectedAccount.subscribe((account) => {
       this.isActiveAccount = !!account && !!account.mdn;
     });
-    this.firebaseAccountPaymentService.paymentMethodsList.pipe(takeWhile(() => this.alive)).subscribe((list) => {
-      this.paymentMethodList = list;
-    });
+   
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       const pendingActivationPlans = plans.filter((plan) => !plan.mdn && !plan.basePlan.ebb);
       this.activatedPlans = plans.filter((plan) => !!plan.mdn);
