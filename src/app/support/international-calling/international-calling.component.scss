@@ -117,6 +117,16 @@
           width: 100%;
         }
       }
+
+      .desc {
+        margin-bottom: 12px;
+      }
+    }
+
+    .subtitle {
+      b {
+        font-family: $base-font-family-bold;
+      }
     }
 
     @media (#{$larger-than-desktop}) {
