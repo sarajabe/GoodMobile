@@ -387,7 +387,7 @@
                       <div class="details-flex">
                         <div class="flex">
                           <p class="title smaller primary-font-bold">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
-                          <p class="desc smaller">Ending in {{ cardInfo?.last4 }}</p>
+                          <p class="desc smaller">Ending in {{ !!cardInfo?.last4 ? cardInfo?.last4 : (cardInfo?.cardNumber | slice:-4) }}</p>
                         </div>
                         <div class="amount">
                           <p class="key smaller primary-font-bold">Deducted Amount</p>
