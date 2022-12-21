@@ -498,13 +498,16 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           checkoutNewPlan.options.fees, cart.autoRenewPlan, includeFreeSIM, { id: checkoutNewPlan.options.simId, price: checkoutNewPlan.options.simPrice });
         resolve();
         const params = {};
-        if (checkoutNewPlan.hasShippingItems && !!shippingAddress) {
+        if ((checkoutNewPlan.hasShippingItems && !!shippingAddress) || (!!cart?.storePickup)) {
           params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = response.userPlanId;
         } else { // activation flow
           params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = response.userPlanId;
         }
         if (isPhoneOnly) {
           params[ROUTE_URLS.PARAMS.PHONE_PURCHASE] = true;
+        }
+        if(!!cart?.storePickup) {
+          params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
         }
         params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = response.orderId;
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
