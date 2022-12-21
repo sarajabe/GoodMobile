@@ -160,6 +160,7 @@ export class PersonalInfoNonExisitngAppComponent implements OnInit, OnDestroy, O
     this.personalInfoForm?.controls.ssn.setValue(this.savedInfo?.last4ssn);
     this.personalInfoForm?.controls.tribalId.setValue(this.savedInfo?.tribalId);
     this.personalInfoForm?.controls.email.setValue(this.savedInfo?.consumerEmail);
+    this.checkIdentityType();
     if (!!this.savedInfo?.dob) {
       this.personalInfoForm?.controls.day.setValue(this.savedInfo?.dob.split('/')[1]);
       this.personalInfoForm?.controls.month.setValue(this.savedInfo?.dob.split('/')[0]);
