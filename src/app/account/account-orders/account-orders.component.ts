@@ -45,7 +45,6 @@ export class AccountOrdersComponent implements OnInit {
     REPLACEMENT: 'REPLACEMENT_SIM',
     ADDON: 'ADDON',
     REFILL: 'REFILL',
-    MIGRATION: 'MIGRATION_SIM',
     CHANGE: 'CHANGE_PLAN',
     NEW_SIM: 'NEW_SIM'
   };
@@ -98,8 +97,6 @@ export class AccountOrdersComponent implements OnInit {
   public orderIntents: Array<{name: string, value: string,checked: boolean}> = [
     { name: 'Add-on' , value: 'addon', checked: false},
     { name: 'Change plan' , value: 'change_plan', checked: false},
-    { name: 'Migration' , value: 'migration_sim', checked: false},
-    { name: 'New phone' , value: 'new_phone', checked: false},
     { name: 'New plan' , value: 'new', checked: false},
     { name: 'Refill' , value: 'refill', checked: false},
     { name: 'Replacement SIM' , value: 'replacement_sim', checked: false}
@@ -284,7 +281,7 @@ export class AccountOrdersComponent implements OnInit {
       this.filterCriteria = {
         status: statuses,
         dateFrom: new Date(this.range.controls.start.value).getTime(),
-        dateTo: new Date(this.range.controls.end.value).getTime() > 0 ? new Date(this.range.controls.end.value).getTime() : new Date().getTime(),
+        dateTo: new Date(this.range.controls.end.value).getTime() > 0 ? new Date(this.range.controls.end.value.setHours(23, 59, 59, 999)).getTime() : new Date(new Date().setHours(23, 59, 59, 999)).getTime(),
         sortBy: "createdDate",
         sortDirection: this.sortValue,
         intent: intents,
@@ -435,7 +432,7 @@ export class AccountOrdersComponent implements OnInit {
     this.accountOrderService.getFilteredOrders(this.filterCriteria).then((data) => {
       this.viewedOrders = [];
       this.viewedOrders = data.orders;
-      this.getPhoneImage();
+      // this.getPhoneImage();
       this.filterApplied = true;
       this.appState.loading = false;
       this.totalPages = data.meta.totalPages;
