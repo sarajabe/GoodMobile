@@ -114,7 +114,7 @@
     "ngx-page-scroll-core": "^7.0.3",
     "ngx-pagination": "^5.0.0",
     "ngx-pipes": "2.7.5",
-    "ngx-print": "^1.2.1",
+    "ngx-print": "1.2.1",
     "ngx-sharebuttons": "8.0.5",
     "ngx-swiper-wrapper": "^9.0.1",
     "ngx-toastr": "^13.1.0",
