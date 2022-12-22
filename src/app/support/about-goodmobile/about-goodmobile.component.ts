@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MetaService } from 'src/services/meta-service.service';
 
 @Component({
@@ -7,11 +7,19 @@ import { MetaService } from 'src/services/meta-service.service';
   styleUrls: ['./about-goodmobile.component.scss']
 })
 export class AboutGoodMobileComponent implements OnInit {
+
+  public innerWidth: any;
   public viewContent = false;
 
   constructor(private metaService: MetaService) { }
 
   ngOnInit(): void {
     this.metaService.createCanonicalUrl();
+    this.innerWidth = window.innerWidth;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.innerWidth = window.innerWidth;
   }
 }

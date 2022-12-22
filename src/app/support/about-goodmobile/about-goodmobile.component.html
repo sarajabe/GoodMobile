@@ -24,7 +24,7 @@
         <p class="desc smaller">Not necessarily when it comes to cell phone plans, UNLIMITED data plans and wireless
           service carriers.<br>You may not have heard of us, but for the past fifteen years our parent company <b>Ztar
             Mobile</b> has been driving innovation, helping to keep prices down and service levels up.</p>
-        <ng-container *ngIf="!!viewContent">
+        <ng-container *ngIf="(!!viewContent && innerWidth < 640) || innerWidth > 639">
           <p class="desc smaller bottom"><b>Every purchase powers Goodwill mission.</b></p>
           <p class="desc smaller">Good Mobile sales support the Goodwill mission to help people overcome the challenge
             to build skills, finding jobs & grow their careers through the power of work. Our mission is equally simple.
