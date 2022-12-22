@@ -41,10 +41,11 @@
         font-family: $secondary-font-family;
         font-weight: 400;
         text-align: center;
-        max-width: 298px;
+        max-width: 330px;
 
         @media (max-width: $phablet-min-width-minus) {
           margin-bottom: 4px;
+          max-width: 298px;
         }
 
         &.last {
