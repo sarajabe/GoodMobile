@@ -1,268 +1,171 @@
 @import "../../../styles/modules/variables";
 @import "../../../styles/modules/_mixins.scss";
 
-.white-color{
-  color: white;
-}
+.why-goodmobile-page {
+  .banner-section {
+    position: relative;
 
-.black-color{
-  color: black;
-}
-.max-content{
-  min-width: max-content;
-}
-.display-grid{
-  display: grid;
-}
+    .banner-image-container {
+      img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+    }
 
-.display-block{
-  display: block;
-}
+    .banner-text-content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      top: 40px;
 
-.center-left-right{
-  margin-right: auto;
-  margin-left: auto;
-}
+      @media (max-width: $phablet-min-width-minus) {
+        top: 32px;
+      }
 
-.text-align-center{
-  text-align: center;
-}
+      .header {
+        color: $header-color;
+        text-align: center;
 
-.bold{
-  font-weight: bold;
-}
+        @media (min-width: $phablet-min-width) {
+          margin-bottom: 12px;
+        }
+      }
 
-.margin-bottom-0{
-  margin-bottom: 0px;
-}
+      .sub-header {
+        margin-bottom: 8px;
+        font-family: $secondary-font-family;
+        font-weight: 400;
+        text-align: center;
+        max-width: 298px;
 
-.margin-sides-center{
-  margin-left: auto;
-  margin-right: auto;
-}
-.banner__background{
-  background-repeat: no-repeat;
-  background-size: cover;
-  @media (min-width: $desktop-min-width) {
-    height: 556px;
-  }
-  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
-    height: 456px;
-  }
-  @media (max-width: $phablet-min-width) {
-    height: 609px;
-  }
-}
+        @media (max-width: $phablet-min-width-minus) {
+          margin-bottom: 4px;
+        }
 
-.banner__text{
-  @media (min-width: $desktop-min-width) {
-    margin-left: 15%;
-    padding-top: 127px;
-    padding-bottom:120px;
-  }
-  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
-    margin-left: 7%;
-    padding-top: 116px;
-    padding-bottom: 71px;
-  }
-  @media (max-width: $phablet-min-width) {
-    margin-left: 7%;
-    padding-top: 212px;
-    padding-bottom: 145px;
-  }
-}
-.banner__title{
-  @media (min-width: $desktop-min-width) {
-    font-size: rem-calc(70px);
-    line-height: rem-calc(80px);
-    margin-bottom: 16px;
-    width: 490px;
-  }
-  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
-    font-size: rem-calc(45px);
-    line-height: rem-calc(50px);
-    margin-bottom: 23px;
-    width: 315px;
-  }
-  @media (max-width: $phablet-min-width) {
-    font-size: rem-calc(42px);
-    line-height: rem-calc(47px);
-    margin-bottom: 22px;
-    width: 294px;
-  }
-}
+        &.last {
+          margin-bottom: 0;
+          max-width: 390px;
 
-.banner__paragraphs{
-  @media (min-width: $desktop-min-width) {
-    width: 436px;
-    font-size: rem-calc(18px);
-    line-height: rem-calc(25px);
+          @media (max-width: $phablet-min-width-minus) {
+            max-width: 350px;
+          }
+        }
+      }
+    }
   }
-  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
-    width: 317px;
-    font-size: rem-calc(15px);
-    line-height: rem-calc(25px);
-  }
-  @media (max-width: $phablet-min-width) {
-    width: 295px;
-    font-size: rem-calc(14px);
-    line-height: rem-calc(25px);
-  }
-}
 
-.promises__container{
-  justify-content: center;
-  @media (min-width: $desktop-min-width) {
-    padding-top: 103px;
-    padding-bottom: 94px;
-  }
-  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
-    padding-top: 73px;
-    padding-bottom: 51px;
-  }
-  @media (max-width: $phablet-min-width) {
-    padding-top: 35px;
-    padding-bottom: 51px;
-  }
-}
+  .promises-section {
+    display: flex;
+    justify-content: center;
+    padding-top: 64px;
+    padding-bottom: 64px;
 
-.promises--layout{
-  @media (min-width: $desktop-min-width) {
-    grid-template-columns: 198px 180px 186px 180px;
-    grid-column-gap: 99px;
-  }
-  @media (max-width: $desktop-min-width) and (min-width: $phablet-min-width) {
-    grid-template-rows: 323px 304px;
-    grid-template-columns: 198px 180px;
-    grid-column-gap: 99px;
-    grid-row-gap: 70px;
-  }
-  @media (max-width: $phablet-min-width) {
-    grid-template-rows: 243px 257px 265px 240px;
-    grid-row-gap: 40px;
-  }
-}
+    @media (max-width: $phablet-min-width-minus) {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
 
-.image__container{
-  height: 130px;
-  @media (max-width: $phablet-min-width) {
-    height: max-content;
-  }
-}
+    .promises-flex {
+      display: flex;
+      max-width: 1520px;
+      width: 100%;
+      margin: 0 auto;
+      justify-content: space-between;
+      flex-wrap: wrap;
 
-.promise__img-one{
-  width: 142px;
-  height: 124px;
-  @media (max-width: $phablet-min-width) {
-    width: 100px;
-    height: 87px;
-  }
-}
+      @media (max-width: 1799.9px) {
+        justify-content: center;
+        max-width: 640px;
+        gap: 64px;
+      }
 
-.promise__img-two{
-  width: 127px;
-  height: 131px;
-  @media (max-width: $phablet-min-width) {
-    width: 109px;
-    height: 112px;
-  }
-}
+      @media (max-width: 829.9px) {
+        gap: 16px;
+      }
 
-.promise__img-three{
-  width: 114px;
-  height: 127px;
-  @media (max-width: $phablet-min-width) {
-    width: 87px;
-    height: 97px;
-  }
-}
+      @media (max-width: $phablet-min-width-minus) {
+        gap: 40px;
+      }
 
-.promise__img-four{
-  width: 108px;
-  height: 127px;
-  @media (max-width: $phablet-min-width) {
-    width: 76px;
-    height: 89px;
-  }
-}
+      .promise-part {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 288px;
 
-.promise__sparator{
-  width: 75px;
-  border-color: black;
-  margin-bottom: 30px;
-  margin-top: 27px;
-  @media (max-width: $phablet-min-width) {
-    margin-top: 29px;
-  }
-}
+        &.top {
+          @media (min-width: $phablet-min-width) and (max-width: 829.9px) {
+            margin-top: 48px;
+          }
+        }
 
-.text__container-one{
-  width: 198px;
-  @media (max-width: $phablet-min-width) {
-    width: 163px;
-  }
-}
+        .promise-content {
+          text-align: center;
+          margin-top: 24px;
 
-.text__container-two{
-  width: 180px;
-  @media (max-width: $phablet-min-width) {
-    width: 270px;
-  }
-}
+          .title {
+            margin-bottom: 8px;
+          }
 
-.text__container-three{
-  width: 186px;
-  @media (max-width: $phablet-min-width) {
-    width: 285px;
-  }
-}
+          .desc {
+            b {
+              font-family: $base-font-family-bold;
+            }
 
-.text__container-four{
-  width: 180px;
-  @media (max-width: $phablet-min-width) {
-    width: 167px;
-  }
-}
+            &.high-width {
+              max-width: 160px;
+            }
 
-.container__title{
-  font-size: rem-calc(17px);
-  line-height: rem-calc(20px);
-  @media (max-width: $phablet-min-width) {
-    line-height: rem-calc(17px);
-  }
-}
+            &.support-width {
+              max-width: 288px;
+            }
 
-.container__paragraph{
-  font-size: rem-calc(15px);
-  line-height: rem-calc(20px);
-  @media (max-width: $phablet-min-width) {
-    line-height: rem-calc(17px);
-  }
-}
+            &.bring-width {
+              max-width: 260px;
+            }
 
-.why-goodmobile-last-section{
+            &.save-width {
+              max-width: 210px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .last-section {
     width: 100%;
     background-color: $secondary-color;
     margin-top: 35px;
     padding: 80px 0;
+
     @media (max-width: $phablet-min-width) {
       padding: 35px 0;
     }
+
     .description {
       color: white;
       font-size: rem-calc(30px);
       line-height: rem-calc(40px);
       font-family: $secondary-font-family-bold;
       padding: 10px 10px;
+
       @media (max-width: $desktop-min-width-minus) {
         font-size: rem-calc(25px);
       }
+
       @media (max-width: 640px) {
         text-align: center;
         margin-bottom: 35px;
         display: inline;
       }
     }
+
     .button {
       padding: 13px 40px;
       float: right;
@@ -270,10 +173,12 @@
       font-family: $secondary-font-family;
       font-size: rem-calc(18px);
       line-height: rem-calc(24px);
+
       @media (max-width: 1024px) and (min-width: 640px) {
         font-size: rem-calc(17px);
         line-height: rem-calc(21px);
         width: 200px;
       }
     }
+  }
 }

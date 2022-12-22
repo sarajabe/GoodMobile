@@ -1,126 +1,86 @@
-<section class="padding-banner" *ngFor="let item of whyGoodmobile | async">
-    <section class="why-goodmobile__banner">
-      <div class="banner__background" title="{{item?.fields?.bannerImageAlt}}" *ngIf="innerWidth >= 1025; else TabletBanner"
-           [ngStyle]="{'background-image':
-           'linear-gradient(rgba(20,20,20,0.3),rgba(20,20,20,0.3)),url('+ item?.fields?.desktopImage.fields.file.url + ')'}">
-        <div class="banner__text white-color">
-          <p class="banner__title secondary-font-bold">
-            {{item?.fields?.bannerTitleOne}}
-            <br>
-            {{item?.fields?.bannerTitleTwo}}
-          </p>
-          <div class="banner__paragraphs primary-font">
-            <p>
-              {{item?.fields?.bannerFirstParagraph}}
-            </p>
-            <p>
-              {{item?.fields?.bannerSecondParagraph}}
-            </p>
-          </div>
-        </div>
-      </div>
-      <ng-template #TabletBanner>
-        <div class="banner__background" title="{{item?.fields?.bannerImageAlt}}" *ngIf="innerWidth >= 640; else PhoneBanner"
-             [ngStyle]="{'background-image': 'linear-gradient(rgba(20,20,20,0.3),rgba(20,20,20,0.3)),url('+ item?.fields?.tabletImage.fields.file.url + ')'}">
-          <div class="banner__text white-color">
-            <p class="banner__title secondary-font-bold">
-              {{item?.fields?.bannerTitleOne}}
-              <br>
-              {{item?.fields?.bannerTitleTwo}}
-            </p>
-            <div class="banner__paragraphs primary-font">
-              <p>
-                {{item?.fields?.bannerFirstParagraph}}
-              </p>
-              <p>
-                {{item?.fields?.bannerSecondParagraph}}
-              </p>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template #PhoneBanner>
-      <div class="banner__background" title="{{item?.fields?.bannerImageAlt}}"
-           [ngStyle]="{'background-image': 'linear-gradient(rgba(20,20,20,0.3),rgba(20,20,20,0.3)),url('+ item?.fields?.phoneImage.fields.file.url + ')'}">
-        <div class="banner__text white-color">
-          <p class="banner__title secondary-font-bold">
-            {{item?.fields?.bannerTitleOne}}
-            <br>
-            {{item?.fields?.bannerTitleTwo}}
-          </p>
-          <div class="banner__paragraphs primary-font">
-            <p>
-              {{item?.fields?.bannerFirstParagraph}}
-            </p>
-            <p>
-              {{item?.fields?.bannerSecondParagraph}}
-            </p>
-          </div>
-        </div>
-      </div>
-      </ng-template>
-    </section>
-    <section class="why-goodmobile__promises">
-      <div class="promises__container promises--layout display-grid">
-        <div class="promise__container">
-          <div class="image__container">
-          <img class="promise__img-one display-block center-left-right" src="{{item?.fields?.promiseOneImage.fields.file.url}}"
-               alt="{{item?.fields?.promiseOneImageAlt}}">
-          </div>
-          <hr class="promise__sparator">
-          <div class="text__container-one margin-sides-center">
-            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseOneTitle}}</p>
-            <p class="text-align-center container__paragraph primary-font">{{item?.fields?.promiseOneParagraph}}</p>
-          </div>
-        </div>
-        <div class="promise__container">
-          <div class="image__container">
-            <img class="promise__img-two display-block center-left-right" src="{{item?.fields?.promiseTwoImage.fields.file.url}}"
-                 alt="{{item?.fields?.promiseTwoImageAlt}}">
-          </div>
-          <hr class="promise__sparator">
-          <div class="text__container-two margin-sides-center">
-            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseTwoTitle}}</p>
-            <p class="text-align-center container__paragraph primary-font">{{item?.fields?.promiseTwoParagraph}}</p>
-          </div>
-        </div>
-        <div class="promise__container">
-          <div class="image__container">
-            <img class="promise__img-three display-block center-left-right" src="{{item?.fields?.promiseThreeImage.fields.file.url}}"
-                 alt="{{item?.fields?.promiseThreeImageAlt}}">
-          </div>
-          <hr class="promise__sparator">
-          <div class="text__container-three margin-sides-center">
-            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseThreeTitle}}</p>
-            <p class="text-align-center container__paragraph primary-font">{{item?.fields?.promiseThreeParagraph}}</p>
-          </div>
-        </div>
-        <div class="promise__container">
-          <div class="image__container">
-            <img class="promise__img-four display-block center-left-right" src="{{item?.fields?.promiseFourImage.fields.file.url}}"
-                 alt="{{item?.fields?.promiseFourImageAlt}}">
-          </div>
-          <hr class="promise__sparator">
-          <div class="text__container-four margin-sides-center">
-            <p class="text-align-center container__title secondary-font-bold">{{item?.fields?.promiseFourTitle}}</p>
-            <p class="text-align-center container__paragraph primary-font margin-bottom-0">{{item?.fields?.promiseFourParagraphOne}}</p>
-            <p class="text-align-center container__paragraph primary-font bold">{{item?.fields?.promiseFourParagraphTwo}}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="why-goodmobile-last-section">
-      <div class="container-flex">
-        <div class="container-flex-row flex-center">
-          <div class="description">
-            <span> {{item?.fields?.proceedToPlansParagraphOne}}</span><br>
-            <span>{{item?.fields?.proceedToPlansParagraphTwo}}</span>
-          </div>
-          <div class="col-md-3">
-            <button class="button primary" data-cy="goToPlans" [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">{{item?.fields?.goToPlansButton}}</button>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="why-goodmobile-page">
+  <section class="banner-section">
+    <picture class="banner-image-container">
+      <source srcset='assets/img/banners/why-goodmobile-banner-mobile-breakpoint.webp' media="(max-width: 449.9px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/why-goodmobile-banner-mobile-breakpoint.png' media="(max-width: 449.9px)"
+        type="image/png">
+      <source srcset='assets/img/banners/why-goodmobile-banner-mobile.webp' media="(max-width: 639.9px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/why-goodmobile-banner-mobile.png' media="(max-width: 639.9px)"
+        type="image/png">
+      <source srcset='assets/img/banners/why-goodmobile-banner-tablet.webp' media="(max-width: 1024.9px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/why-goodmobile-banner-tablet.png' media="(max-width: 1024.9px)"
+        type="image/png">
+      <source srcset='assets/img/banners/why-goodmobile-banner-desktop.webp' media="(min-width: 1025px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/why-goodmobile-banner-desktop.png' media="(min-width: 1025px)"
+        type="image/png">
+      <img src="assets/img/banners/why-goodmobile-banner-desktop.png" alt="My Global Talk Home Page Banner">
+    </picture>
+    <div class="page-section banner-text-content">
+      <h1 class="header">Say Hello to Better Wireless!</h1>
+      <h5 class="sub-header">We believe that everyone has a right to a dependable high-quality wireless plan.</h5>
+      <h5 class="sub-header last">We offer some of the nation’s best cell phone plans powered by the US best 5G
+        network. Plans that help you stay on budget.</h5>
+    </div>
   </section>
-  
+  <section class="page-section promises-section">
+    <div class="promises-flex">
+      <div class="promise-part">
+        <div class="promise-image">
+          <img src="assets/img/high-speed-data.svg" alt="High Speed Data Image">
+        </div>
+        <div class="promise-content">
+          <h5 class="title">High-Speed Data</h5>
+          <p class="desc smaller high-width">Ultra-dependable <b>5G/4G LTE</b> networks</p>
+        </div>
+      </div>
+      <div class="promise-part">
+        <div class="promise-image">
+          <img src="assets/img/iphone-android-support.svg" alt="iPhone-Android Support Image">
+        </div>
+        <div class="promise-content">
+          <h5 class="title">iPhone & Android Support</h5>
+          <p class="desc smaller support-width">Unlike some smaller carriers that can only support Android devices, Good
+            Mobile works with iPhone</p>
+        </div>
+      </div>
+      <div class="promise-part top">
+        <div class="promise-image">
+          <img src="assets/img/bring-your-phone.svg" alt="Bring Phone Image">
+        </div>
+        <div class="promise-content">
+          <h5 class="title">Bring your Phone</h5>
+          <p class="desc smaller bring-width">With Good Mobile, you can bring you <b>unlocked 5G/4G</b> device and keep
+            your phone number</p>
+        </div>
+      </div>
+      <div class="promise-part top">
+        <div class="promise-image">
+          <img src="assets/img/save-money.svg" alt="Save Money Image">
+        </div>
+        <div class="promise-content">
+          <h5 class="title">Save Money</h5>
+          <p class="desc smaller save-width">Offering our Best Value Plan for only <b>$30/mo</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="last-section">
+    <div class="container-flex">
+      <div class="container-flex-row flex-center">
+        <div class="description">
+          <span>Affordable phone plans shouldn’t mean sacrifice.</span><br>
+          <span>For the best cell phone deals, try Good Mobile</span>
+        </div>
+        <div class="col-md-3">
+          <button class="button primary" data-cy="goToPlans"
+            [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">Go
+            to plans</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
