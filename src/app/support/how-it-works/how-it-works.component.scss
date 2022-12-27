@@ -77,6 +77,11 @@ b {
 }
 .steps-container {
   .steps-section {
+    .step-description {
+      a {
+        white-space: nowrap;
+      }
+    }
     h5 {
       font-family: $secondary-font-family;
       font-weight: 400;
@@ -91,6 +96,20 @@ b {
         gap: 32px;
         .button {
           width: 225px;
+        }
+      }
+      @media(max-width: $phablet-min-width-minus) {
+        margin-top: 24px;
+        &.multiple {
+          gap: 16px;
+          .button {
+            width: 183px;
+          }
+        }
+      }
+      @media(max-width: 499.9px) {
+        &.multiple {
+          flex-direction: column;
         }
       }
     }
@@ -134,10 +153,13 @@ b {
           }
         }
       }
-      @media (min-width: $phablet-min-width-minus) {
+      @media (max-width: $phablet-min-width-minus) {
+        padding-top: 48px;
+        padding-bottom: 48px;
         .step-image {
           img {
-            max-width: 340px;
+            max-width: 240px;
+            max-height: 240px;
           }
         }
       }
@@ -183,12 +205,18 @@ b {
           }
         }
       }
-      @media (min-width: $phablet-min-width-minus) {
+      @media (max-width: $phablet-min-width-minus) {
+        .page-section {
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
         .step-image {
           img {
-            max-width: 340px;
+            max-width: 240px;
+            max-height: 240px;
           }
         }
+
       }
     }
   }
