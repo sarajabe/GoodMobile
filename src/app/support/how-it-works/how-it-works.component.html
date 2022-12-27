@@ -1,120 +1,108 @@
-<section class="how-it-works-container">
-    <div class="container-flex">
-        <div class="container-flex-row flex-center text-center">
-            <div class="content">
-                <h1>How. It. Works.</h1>
-                <p>Start saving now</p>
-                <img src="/assets/img/banners/how-it-works-image (2).jpg"
-                    alt="Bundled up for winter weather and living life with the ease of a no contract wireless network."
-                    class="hidden">
-            </div>
-        </div>
+<section class="banner-section">
+    <picture class="banner-image-container">
+        <source srcset='assets/img/banners/how-it-works-mobile.webp' media="(max-width: 499.9px)"
+            type="image/webp">
+        <source srcset='assets/img/banners/how-it-works-mobile.png' media="(max-width: 499.9px)"
+            type="image/png">
+        <source srcset='assets/img/banners/how-it-works-500.webp' media="(max-width: 639.9px)" type="image/webp">
+        <source srcset='assets/img/banners/how-it-works-500.png' media="(max-width: 639.9px)" type="image/png">
+        <source srcset='assets/img/banners/how-it-works-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+        <source srcset='assets/img/banners/how-it-works-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+        <source srcset='assets/img/banners/How-it-works-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+        <source srcset='assets/img/banners/hiw-desktop.svg' media="(min-width: 1025px)" type="image/svg">
+        <img src="assets/img/banners/hiw-desktop.svg" alt="How it works">
+    </picture>
+    <div class="page-section banner-text-content">
+      <h1 class="header">How. It. Works.</h1>
+      <h3 class="sub-header">Start saving now</h3>
     </div>
 </section>
+<section class="info-section page-section">
+    <h2 class="header-color">Technology should make life easier.</h2>
+    <p class="smaller space">Cell phone plans shouldn’t be confusing.</p>
+    <p class="smaller">With Good Mobile there are no contracts and no funny business in the fine print.
+        <span>We are powered by premium carriers that boasts the best <b>5G/4G LTE</b> networks in the United States.</span></p>
+</section>
 <section class="steps-container">
-    <div class="container-flex">
-        <div class="title">
-            <h2 class="header">Technology should make life easier.</h2>
-            <h2 class="subHeader"><span class="text-color-primary">Cell phone plans</span> shouldn’t be confusing.</h2>
-            <p>With Good Mobile there are no contracts and no funny business in the fine print. We are powered by
-                premium carriers that boasts the best 5G/4G LTE networks in the United States.</p>
-        </div>
-        <div class="steps-section">
-            <div class="ltr-step">
-                <div class="description">
-                    <h3>1- Keep your phone</h3>
-                    <p class="step-description first">Keep the unlocked iPhone or Android phone you already love.</p>
-                    <div class="action">
-                        <button class="button primary" data-cy="bringYourPhoneHowItWorksPage"
-                            [routerLink]="ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE">Bring your
-                            phone</button>
-                    </div>
-                </div>
-                <div class="step-image">
-                    <img src="assets/img/HIW-first-step.jpg"
-                        alt="Keep the unlocked iPhone or Android phone you already love or we’ll help you buy a new phone from top manufacturers like Apple, Samsung or Google.">
-                </div>
-                <div class="mobile">
-                    <button class="button primary"
+    <div class="steps-section">
+        <div class="ltr-step page-section">
+            <div class="description">
+                <h2 class="header-color">1- Keep your phone</h2>
+                <h5 class="step-description">Keep the unlocked iPhone or Android phone you already love.</h5>
+                <div class="action">
+                    <button class="button primary" data-cy="bringYourPhoneHowItWorksPage"
                         [routerLink]="ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE">Bring your
                         phone</button>
                 </div>
             </div>
-            <div class="rtl-step">
+            <div class="step-image">
+                <picture class="banner-image-container">
+                    <source srcset='assets/img/HIW-first-step.svg' type="image/svg">
+                    <source srcset='assets/img/HIW-first-step.webp' type="image/webp">
+                    <img src="assets/img/HIW-first-step.svg"  alt="Keep the unlocked iPhone or Android phone you already love or we’ll help you buy a new phone from top manufacturers like Apple, Samsung or Google.">
+                </picture>
+            </div>
+        </div>
+        <div class="rtl-step">
+            <div class="page-section">
                 <div class="step-image">
-                    <img src="assets/img/HIW-second-step.jpg">
+                    <picture class="banner-image-container">
+                        <source srcset='assets/img/HIW-second-step.svg' type="image/svg">
+                        <source srcset='assets/img/HIW-second-step.webp' type="image/webp">
+                        <img src="assets/img/HIW-second-step.svg"  alt="Good Mobile is about what’s best for you">
+                    </picture>
                 </div>
                 <div class="description">
-                    <h3>2- Pick a plan</h3>
-                    <p class="step-description">Good Mobile is about what’s best for you. All plans include unlimited
+                    <h2 class="header-color">2- Pick a plan</h2>
+                    <h5 class="step-description">Good Mobile is about what’s best for you. All plans include unlimited
                         talk and text in the US. High-speed data – it’s whatever you need. Add more at any time. The
-                        plans include unlimited calling to over 60 countries.</p>
+                        plans include unlimited calling to over<b> 60 countries</b>.</h5>
                     <div class="action">
-                        <button class="button secondary" data-cy="viewAllPlans"
+                        <button class="button primary" data-cy="viewAllPlans"
                             [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">View
                             all plans</button>
                     </div>
                 </div>
-                <div class="mobile-image">
-                    <img src="assets/img/HIW-second-step.jpg"
-                        alt="Good Mobile is about what’s best for you. All plans include unlimited talk and text in the US + Canada and Mexico.">
-                </div>
-                <div class="mobile">
-                    <button class="button secondary"
-                        [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES">View Plans</button>
-                </div>
             </div>
-            <div class="ltr-step">
-                <div class="description">
-                    <h3>3- Activate your SIM</h3>
-                    <p class="step-description second">Once you have your SIM, you can activate it online. Soon you’ll
-                        be Good Mobile. We’re always here to help online or give us a call at:<a
-                            href="tel: (800) 840-8515"> (800) 840-8515</a></p>
-                    <p>You can also check our FAQs for more answers:</p>
-                    <div class="action">
-                        <button class="button primary" data-cy="g2gFAQs"
-                            [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS">Good Mobile FAQs</button>
-                    </div>
-                </div>
-                <div class="step-image">
-                    <img src="assets/img/HIW-third-step.jpg"
-                        alt="Your SIM arrives by mail, and you activate it online. Soon you’ll be Good Mobile.">
-                </div>
-                <div class="mobile">
-                    <button class="button primary"
+        </div>
+        <div class="ltr-step page-section">
+            <div class="description">
+                <h2 class="header-color">3- Activate your SIM</h2>
+                <h5 class="step-description">Once you have your SIM, you can activate it online. Soon you’ll
+                    be Good Mobile. We’re always here to help online or give us a call at:<a
+                        href="tel: (800) 840-8515"> {{CUSTOMER_CARE_NUMBER | phone}}</a></h5>
+                <h5>You can also check our FAQs for more answers:</h5>
+                <div class="action">
+                    <button class="button primary" data-cy="g2gFAQs"
                         [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS">Good Mobile FAQs</button>
                 </div>
             </div>
+            <div class="step-image">
+                <picture class="banner-image-container">
+                    <source srcset='assets/img/HIW-third-step.svg' type="image/svg">
+                    <source srcset='assets/img/HIW-third-step.webp' type="image/webp">
+                    <img src="assets/img/HIW-third-step.svg"  alt="Once you have your SIM, you can activate it online">
+                </picture>
+            </div>
         </div>
-    </div>
-    <div class="banner-step">
-        <div class="container-flex">
-            <div class="description">
-                <h3>4- Change anything you’d like, anytime</h3>
-                <p class="step-description">AAdd more high-speed data anytime you want. Change your plan. You decide.
-                </p>
-                <div class="action">
-                    <button class="button secondary" data-cy="internationalCalling"
-                        (click)="goToAddons('intl')">International Calling</button>
-                    <button class="button primary" data-cy="dataAddOns" (click)="goToAddons()">Data Add-ons</button>
+        <div class="rtl-step last">
+            <div class="page-section">
+                <div class="step-image">
+                    <picture class="banner-image-container">
+                        <source srcset='assets/img/HIW-forth-step.svg' type="image/svg">
+                        <source srcset='assets/img/HIW-forth-step.webp' type="image/webp">
+                        <img src="assets/img/HIW-forth-step.svg"  alt="Add on international calling to 60 countries. Add more high-speed data anytime you want. Change your plan. You decide.">
+                    </picture>
                 </div>
-                <img class="hidden" src="/assets/img/HIW-img1.jpg"
-                    alt="Add on international calling to 60 countries. Add more high-speed data anytime you want. Change your plan. You decide.">
-            </div>
-        </div>
-    </div>
-</section>
-<section class="get-started hiw">
-    <div class="container-flex">
-        <div class="container-flex-row flex-center">
-            <div class="description">
-                <p>Cheap phone plans shouldn’t mean sacrifice. <span>For the best cell phone deals, try Good
-                        Mobile</span></p>
-            </div>
-            <div class="">
-                <button class="button primary" data-cy="goToPlans"
-                    [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">Go
-                    to plans</button>
+                <div class="description">
+                    <h2 class="header-color">4- Change anything you’d like, anytime</h2>
+                    <h5 class="step-description">Add more high-speed data anytime you want. Change your plan. You decide.</h5>
+                    <div class="action multiple">
+                        <button class="button primary" data-cy="dataAddOns" (click)="goToAddons()">Data Add-ons</button>
+                        <button class="button secondary" data-cy="internationalCalling"
+                            (click)="goToAddons('intl')">International Calling</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
