@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { DOCUMENT, Location } from '@angular/common';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router, RouterStateSnapshot, RoutesRecognized } from '@angular/router';
 import { AppHelperService, IPageMeta } from '@ztarmobile/zwp-service';
 import { AuthHttp, SimpleAuthService } from '@ztarmobile/zwp-services-auth';
@@ -31,11 +31,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private isCampaignChecked = false;
   private alive = true;
 
-  constructor(
+  constructor( 
+    //FIX ME
+    @Inject(DOCUMENT) private document: any,
+    //END of FIX ME
     public appState: AppState, private location: Location, private appHelper: AppHelperService, private simpleAuthService: SimpleAuthService,
     private actionsAnalyticsService: ActionsAnalyticsService, private router: Router, private modalHelper: ModalHelperService,
     private userProfileService: FirebaseUserProfileService, private authHttp: AuthHttp, private meta: Meta,
     private contentfulService: ContentfulService, private changeDetector: ChangeDetectorRef) {
+      //FIX ME
+      if (this.document.location.indexOf('https://gm-prod.ztarmobile.io/') > -1) {
+        window.open('https://www.goodmobile.org/affordable-connectivity-program/application', '_self');
+      }
+      //END of FIX ME
   }
 
   ngOnInit(): void {
