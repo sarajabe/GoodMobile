@@ -40,7 +40,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private userProfileService: FirebaseUserProfileService, private authHttp: AuthHttp, private meta: Meta,
     private contentfulService: ContentfulService, private changeDetector: ChangeDetectorRef) {
       //FIX ME
-      if (this.document.location.indexOf('https://gm-prod.ztarmobile.io/') > -1) {
+      const domain: string = document.location.href;
+      if (domain.indexOf('gm-prod.ztarmobile.io') > -1) {
         window.open('https://www.goodmobile.org/affordable-connectivity-program/application', '_self');
       }
       //END of FIX ME
