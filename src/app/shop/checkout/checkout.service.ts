@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AppState } from '../../app.service';
 import { ToastrHelperService } from '../../../services/toast-helper.service';
-import { SHOP_ROUTE_URLS, ROUTE_URLS, MIGRATION_ROUTE_URLS, OFFERS_ROUTE_URLS } from '../../app.routes.names';
+import { SHOP_ROUTE_URLS, ROUTE_URLS, MIGRATION_ROUTE_URLS, OFFERS_ROUTE_URLS, ACTIVATION_ROUTE_URLS } from '../../app.routes.names';
 import { filter } from 'rxjs/operators';
 
 export interface CheckoutCartOptions {
@@ -508,6 +508,9 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         }
         if(!!cart?.storePickup) {
           params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
+        }
+        if (!!currentPlan.activationCode) {
+          params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION]=true;
         }
         params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = response.orderId;
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);

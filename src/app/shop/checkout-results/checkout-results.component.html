@@ -38,6 +38,14 @@
               </button>
             </div>
           </ng-container>
+          <ng-container *ngIf="!!isActivationFlow">
+            <p class="info">Your Good Mobile plan has been successfully purchased. You can <b>activate</b> your plan right now.</p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToActivation()">
+                Activate Now
+              </button>
+            </div>
+          </ng-container>
           <ng-container *ngIf="!!userPlanId && !!purchasedPlan && !!purchasedPlan.eSIM">
             <p class="info">Your <b>Plan</b> & <b>eSIM</b> can be found in your <b>Purchased Plans</b> section. </p>
             <p class="info">Both are ready for activation, anytime, anywhere at your convenience! </p>

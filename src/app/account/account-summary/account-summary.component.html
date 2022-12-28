@@ -9,10 +9,7 @@
       <ng-container *ngIf="!userHasActivePlans">
         <div class="plan-selector-override">
           <div class="account-status-message">
-            <div class="margin-bottom-15">You have no active phone number at the moment <span class="activate"> <a
-                  (click)="addActivatedAccount()">
-                  <span class="text-color-primary">Add activated phone number?</span>
-                </a></span></div>
+            <div class="margin-bottom-15">You have no active phone number at the moment </div>
             <p *ngIf="userHasPendingPlans">Proceed to <a (click)="goToPendingPlans()">Purchased plans</a> to
               activate
               your plan</p>
@@ -593,7 +590,7 @@
                 </div>
                 <div class="action-links" [class.disabled]="!!selectedPlan?.canceled || !userAccount">
                   <div class="links-container column-direction">
-                    <a class="change-action" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges">
+                    <a class="change-action hidden" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges">
                       <img class="action-icon" src="/assets/icon/refill-voucher-icon.svg"> Refill
                       with Voucher</a>
                     <a class="top-action" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges">

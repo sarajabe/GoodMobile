@@ -67,8 +67,8 @@
                         </p>
                         <p class="another" (click)="goToCompatiblity()">Use Another Device</p>
                     </div>
-                    <hr class="border">
-                    <div class="item-details">
+                    <hr class="border" *ngIf="!pendingPlan?.activationCode">
+                    <div class="item-details" *ngIf="!pendingPlan?.activationCode">
                         <div class="details-side">
                             <img class="thumbnail"
                                 src="assets/icon/sim-image.svg"

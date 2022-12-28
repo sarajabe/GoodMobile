@@ -8,8 +8,6 @@
         <div class="plan-selector-override">
             <div class="usage-history-message">
                 <p>You have no active phone number at the moment
-                    <small class="text-color-primary" (click)="addActivatedAccount()">Add activated
-                        phone&nbsp;number?</small>
                 </p>
                 <p *ngIf="userHasPendingPlans">Proceed to <a
                         [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased

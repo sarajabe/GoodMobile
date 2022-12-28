@@ -11,10 +11,7 @@
                     <ng-container *ngIf="!userHasActivePlans">
                         <div class="plan-selector-override">
                             <div class="account-status-message">
-                                <p>You have no active phone number at the moment. <span class="activate"> <a
-                                            (click)="addActivatedAccount()">
-                                            <small class="text-color-primary">Add activated phone number?</small>
-                                        </a></span></p>
+                                <p>You have no active phone number at the moment.</p>
                                 <p *ngIf="userHasPendingPlans">Proceed to <a
                                         [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased
                                         plans</a> to activate your plan</p>

@@ -195,7 +195,9 @@
         }
     }
 }
-
+.hidden {
+    visibility: hidden;
+}
 .account-section-title {
     @media (max-width: $phablet-min-width-minus-one) {
         background: none;

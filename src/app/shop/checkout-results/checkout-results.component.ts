@@ -40,6 +40,7 @@ export class CheckoutResultsComponent implements OnDestroy {
   public isPhoneOnly = false;
   public purchasedPhone: any;
   public phoneImageLink: string;
+  public isActivationFlow: boolean;
   private alive = true;
   orderId: any;
   constructor(private route: ActivatedRoute, private router: Router, private userPlansService: UserPlansService, private appState: AppState,
@@ -65,6 +66,9 @@ export class CheckoutResultsComponent implements OnDestroy {
       this.orderId = params[ROUTE_URLS.PARAMS.USER_ORDER_ID];
       if (params[ROUTE_URLS.PARAMS.PHONE_PURCHASE]) {
         this.isPhoneOnly = true;
+      }
+      if (!!params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION]) {
+        this.isActivationFlow = true;
       }
       if (this.isChangePlanSummary && !this.selectedUserPlan.mdn) {
         this.goToAccountSummary();
@@ -102,18 +106,18 @@ export class CheckoutResultsComponent implements OnDestroy {
         }
     })).subscribe();
     this.appState.loading = false;
-    this.appState.isMoneySavingProCampaign.pipe(takeWhile(() => this.alive)).subscribe((result) => {
-      if (!!result) {
-        this.isMoneySavingReferral = true;
-        this.utmContent = sessionStorage.getItem('MoneyProContent');
-        this.trustedUrl = 'https://services.moneysavingpro.com/v1/conversion/?pid=834&cid=' + this.utmContent;
-        this.analyticsService.trackMoneySavingProClick(this.utmContent);
-        sessionStorage.setItem('MoneyProReferral', 'false');
-        sessionStorage.removeItem('MoneyProContent');
-      } else {
-        this.isMoneySavingReferral = false;
-      }
-    });
+    // this.appState.isMoneySavingProCampaign.pipe(takeWhile(() => this.alive)).subscribe((result) => {
+    //   if (!!result) {
+    //     this.isMoneySavingReferral = true;
+    //     this.utmContent = sessionStorage.getItem('MoneyProContent');
+    //     this.trustedUrl = 'https://services.moneysavingpro.com/v1/conversion/?pid=834&cid=' + this.utmContent;
+    //     this.analyticsService.trackMoneySavingProClick(this.utmContent);
+    //     sessionStorage.setItem('MoneyProReferral', 'false');
+    //     sessionStorage.removeItem('MoneyProContent');
+    //   } else {
+    //     this.isMoneySavingReferral = false;
+    //   }
+    // });
     this.metaService.createCanonicalUrl();
     setTimeout(() => {
       this.appState.clearSessionStorage();
