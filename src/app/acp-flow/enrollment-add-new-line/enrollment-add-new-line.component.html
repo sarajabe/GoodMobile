@@ -1,6 +1,6 @@
 <section class="enrollment-new-line-page page-section">
+    <h1 class="title">ACP Enrollment</h1>
     <div *ngIf="!planPurchased">
-        <h1 class="title">ACP Enrollment</h1>
         <div class="success-acp-banner" *ngIf="!successCehck && !errorCheck &&activeStep === 1">
             <img src="assets/icon/success-icon.svg" alt="Success Icon">
             <div class="descs">
@@ -322,8 +322,8 @@
         <img src="assets/icon/success-icon.svg" alt="Success Icon">
         <div class="descs">
             <p class="top-desc">Purchase successful!</p>
-            <p class="sub-desc">Your ACP plan has been successfully purchased! Look out for your SIM card in the mail.
-                Once recieved, you may proceed with the activation process</p>
+            <p class="sub-desc">Your ACP plan has been <b>successfully</b> purchased! {{!!isStorePickup ? 'You may pick up your SIM Card from the store.' : 'Look out for your SIM card in the mail.'}}
+                Once <b>{{!!isStorePickup ? 'acquired' : 'recieved'}}</b>, you may proceed with the activation process from your <b>ACP Status Summary</b> page.</p>
         </div>
     </div>
     <div *ngIf="!!planPurchased && !!isEsim" class="plan-purchased-banner">
@@ -352,7 +352,7 @@
                 (click)="purchasePlan()">Next</button>
         </div>
         <div class="right end" *ngIf="!!planPurchased">
-            <button class="button primary" (click)="goToAcpSummary()">Done</button>
+            <button class="button primary" (click)="goToPendingActivation()">Done</button>
         </div>
     </div>
     
