@@ -324,4 +324,14 @@
             }
         }
     }
+    .qr-section {
+        margin-top: 24px;
+        padding-left: 43px;
+        .qr {
+            margin: 12px 0;
+        }
+        b {
+            font-family: $base-font-family-bold;
+        }
+    }
 }

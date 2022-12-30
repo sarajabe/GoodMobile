@@ -207,6 +207,12 @@
                             [innerHTML]="NV_DESCS[nvStatus]?.note"></p>
                     </div>
                 </div>
+                <div class="qr-section" *ngIf="!!showQrCode">
+                    <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application on <b>your phone</b>.</p>
+                    <div class="qr">
+                      <qrcode [qrdata]="verificationDetails?.link" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

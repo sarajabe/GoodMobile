@@ -12,7 +12,12 @@
         margin-top: 32px;
         padding: 0 16px;
     }
-
+    .qr-section {
+        margin-top: 24px;
+        .qr {
+            margin: 12px 0;
+        }
+    }
     .info-banner {
         margin-bottom: 44px;
         width: 100%;
@@ -27,7 +32,9 @@
             margin-bottom: 32px;
         }
     }
-
+    b {
+        font-family: $base-font-family-bold;
+    }
     .illustration-section {
         display: flex;
         align-items: center;

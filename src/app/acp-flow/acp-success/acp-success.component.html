@@ -19,6 +19,12 @@
           <button class="button secondary" (click)="selectExistingLine()"
             *ngIf="!!activePlans && activePlans.length > 0">Select Existing Line</button>
         </div>
+        <div class="qr-section" *ngIf="acpStatus === 'pendingAction'">
+          <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application on <b>your phone</b>.</p>
+          <div class="qr">
+            <qrcode [qrdata]="link" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+          </div>
+        </div>
       </div>
     </div>
   </div>

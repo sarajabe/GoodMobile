@@ -88,6 +88,7 @@
     "@ztarmobile/zwp-services-auth": "0.0.81",
     "@ztarmobile/zwp-services-util": "0.0.81",
     "allure-commandline": "^2.13.0",
+    "angularx-qrcode": "13.0.15",
     "autoprefixer": "10.4.7",
     "contentful": "^7.14.6",
     "core-js": "^3.7.0",

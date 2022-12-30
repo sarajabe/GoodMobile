@@ -80,7 +80,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showAcpPlanActivationCard = false;
   public activePlans: Array<IUserPlan>;
   public appDetails: any = {};
-
+  public showQrCode = false;
   private callBackUrl: string;
   private alive = true;
 
@@ -586,6 +586,11 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   this.showNVCard = true;
                   this.verificationDetails = details;
                   this.nvStatus = this.verificationDetails?.status;
+                  if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION) {
+                    this.showQrCode = true;
+                  } else {
+                    this.showQrCode = false;
+                  }
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.IN_PROGRESS || this.verificationDetails?.status === 'PENDING_ELIGIBILITY') {
                     this.showCardDesc = true;
                   }
