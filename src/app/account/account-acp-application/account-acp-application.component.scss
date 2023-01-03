@@ -86,7 +86,6 @@
 
         .info-banner {
             margin-top: 40px;
-            max-width: 941px;
 
             @media (max-width: $phablet-min-width-minus) {
                 margin-top: 24px;
@@ -98,7 +97,6 @@
         }
 
         .acp-application-card {
-            max-width: 941px;
             width: 100%;
             background: rgba(165, 163, 163, 0.05);
             box-shadow: 0px 3px 15px rgba(41, 41, 41, 0.2);
