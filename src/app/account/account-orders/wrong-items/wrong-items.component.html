@@ -28,7 +28,9 @@
                             <div class="sub-content">
                                 <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox" [value]="plan?.itemId" [(ngModel)]="selectedItem" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox"
+                                            [value]="plan?.itemId" [(ngModel)]="selectedItem"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="plan?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail">
@@ -68,9 +70,11 @@
                                 <hr *ngIf="!!orderInfo?.devices">
                                 <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox" [value]="device?.itemId" [(ngModel)]="selectedDevice" (ngModelChange)="showValidationError=false">
-                                            <label [for]="device?.itemId" class="checkbox-label">
-                                            </label>
+                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox"
+                                            [value]="device?.itemId" [(ngModel)]="selectedDevice"
+                                            (ngModelChange)="showValidationError=false">
+                                        <label [for]="device?.itemId" class="checkbox-label">
+                                        </label>
                                         <div class="phone-image-container">
                                             <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
                                         </div>
@@ -95,7 +99,9 @@
                             <div class="sub-content">
                                 <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox" [value]="sim?.itemId" [(ngModel)]="selectedSIM" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox"
+                                            [value]="sim?.itemId" [(ngModel)]="selectedSIM"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="sim?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
@@ -113,7 +119,9 @@
                                 <hr *ngIf="!!orderInfo?.devices">
                                 <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox" [value]="device?.itemId" [(ngModel)]="selectedDevice" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox"
+                                            [value]="device?.itemId" [(ngModel)]="selectedDevice"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="device?.itemId" class="checkbox-label">
                                         </label>
                                         <div class="phone-image-container">
@@ -140,7 +148,9 @@
                             <div class="sub-content" *ngFor="let addon of orderInfo?.planAddOns; let i = index">
                                 <div class="item-details">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="addon?.itemId" type="checkbox" [value]="addon?.itemId" [(ngModel)]="selectedAddon" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="addon?.itemId" type="checkbox"
+                                            [value]="addon?.itemId" [(ngModel)]="selectedAddon"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="addon?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail"
@@ -163,13 +173,15 @@
                         <ng-container *ngIf="orderInfo?.intent === ORDER_INTENT.REFILL">
                             <input type="checkbox" id="lines" [(ngModel)]="line">
                             <label class="sub-label new" for="lines">
-                                <span translate>Line {{plan?.mdn | phone }}</span><img class="icon"
-                                    data-cy="arrowIcon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
+                                <span translate>Line {{plan?.mdn | phone }}</span><img class="icon" data-cy="arrowIcon"
+                                    src="assets/icon/arrow_circle.svg" alt="arrow icon">
                             </label>
                             <div class="sub-content">
                                 <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox" [value]="plan?.itemId" [(ngModel)]="selectedItem" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox"
+                                            [value]="plan?.itemId" [(ngModel)]="selectedItem"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="plan?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail">
@@ -195,7 +207,9 @@
                             <div class="sub-content">
                                 <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox" [value]="plan?.itemId" [(ngModel)]="selectedItem" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="plan?.itemId" type="checkbox"
+                                            [value]="plan?.itemId" [(ngModel)]="selectedItem"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="plan?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="plan">
@@ -221,7 +235,9 @@
                             <div class="sub-content">
                                 <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox" [value]="device?.itemId" [(ngModel)]="selectedDevice" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="device?.itemId" type="checkbox"
+                                            [value]="device?.itemId" [(ngModel)]="selectedDevice"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="device?.itemId" class="checkbox-label">
                                         </label>
                                         <div class="phone-image-container">
@@ -237,7 +253,9 @@
                                 <hr *ngIf="orderInfo?.cards && orderInfo?.devices">
                                 <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox" [value]="sim?.itemId" [(ngModel)]="selectedSIM" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox"
+                                            [value]="sim?.itemId" [(ngModel)]="selectedSIM"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="sim?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
@@ -257,7 +275,9 @@
                                     <div class="item-details"
                                         *ngFor="let addon of orderInfo?.planAddOns; let i = index">
                                         <div class="details-side">
-                                            <input class="styled-checkbox" [id]="addon?.itemId" type="checkbox" [value]="addon?.itemId" [(ngModel)]="selectedAddon" (ngModelChange)="showValidationError=false">
+                                            <input class="styled-checkbox" [id]="addon?.itemId" type="checkbox"
+                                                [value]="addon?.itemId" [(ngModel)]="selectedAddon"
+                                                (ngModelChange)="showValidationError=false">
                                             <label [for]="addon?.itemId" class="checkbox-label">
                                             </label>
                                             <img class="thumbnail"
@@ -287,7 +307,9 @@
                             <div class="sub-content">
                                 <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
                                     <div class="details-side">
-                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox" [value]="sim?.itemId" [(ngModel)]="selectedSIM" (ngModelChange)="showValidationError=false">
+                                        <input class="styled-checkbox" [id]="sim?.itemId" type="checkbox"
+                                            [value]="sim?.itemId" [(ngModel)]="selectedSIM"
+                                            (ngModelChange)="showValidationError=false">
                                         <label [for]="sim?.itemId" class="checkbox-label">
                                         </label>
                                         <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
@@ -311,8 +333,10 @@
     </div>
 </section>
 <section class="section-footer" *ngIf="!showContactForm">
-    <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="goToReportIssue()">Cancel</button>
+    <button class="button transparent" data-cy="cancelBtn" aria-label="cancel"
+        (click)="goToReportIssue()">Cancel</button>
     <button class="button primary" aria-label="next" data-cy="nextBtn" (click)="setItems()">Next</button>
 </section>
-<app-contact-form (backToMain)="goToReportIssue()" (backOneStep)="showContactForm=false" [orderInfo]="orderInfo" [hasBack]=true *ngIf="!!showContactForm">
+<app-contact-form (backToMain)="goToReportIssue()" (backOneStep)="showContactForm=false" [orderInfo]="orderInfo"
+    [hasBack]=true *ngIf="!!showContactForm">
 </app-contact-form>

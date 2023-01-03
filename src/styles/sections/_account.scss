@@ -290,15 +290,13 @@
         }
     }
     .title {
-        font-size: rem-calc(32px);
-        line-height: 40px;
-        margin-bottom: 40px;
-        @media(max-width: $desktop-min-width-minus) {
-            margin-bottom: 32px;
-        }
+        font-size: rem-calc(28px);
+        line-height: 36px;
+        margin-bottom: 32px;
+
         @media(max-width: $phablet-min-width-minus) {
             margin-bottom: 24px;
-            font-size: rem-calc(24px);
+            font-size: rem-calc(22px);
             line-height: 32px;
         }
     }

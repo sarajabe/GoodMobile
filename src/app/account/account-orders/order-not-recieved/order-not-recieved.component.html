@@ -8,10 +8,13 @@
         <div class="flex">
             <img src="/assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">
-                <p class="description">Orders take between 3 to 5 business days to be delivered. Your order should be
-                    with you soon.</p>
-                <p class="description last">If you still need help, please <span class="link" data-cy="leaveUsAMessage"
-                        (click)="showContactForm=true">leave us a message</span>.</p>
+                <p class="title">Note:</p>
+                <p class="description">Orders take between 3 to 5 business days to be delivered.</p>
+                <p class="description last">Your order should be with you soon. If you still need help,</p>
+                <div class="actions">
+                    <button class="button thirdly" data-cy="leaveUsAMessage" (click)="showContactForm=true">Please leave
+                        us a message</button>
+                </div>
             </div>
         </div>
     </div>

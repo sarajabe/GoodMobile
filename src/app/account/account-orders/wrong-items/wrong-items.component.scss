@@ -4,31 +4,33 @@
 ::ng-deep {
     .styled-checkbox {
         @media(max-width: $phablet-min-width-minus) {
-            & + label:before {
+            &+label:before {
                 content: '';
                 margin-right: 5px;
                 width: 15px;
                 height: 15px;
-              }
-           
-            &:checked + label:after {
+            }
+
+            &:checked+label:after {
                 content: '';
                 left: 2px;
                 top: 7px;
-            } 
+            }
         }
     }
 }
+
 .missing-items {
-    .desc {
-        font-size: rem-calc(20px);
-        line-height: 32px;
-        margin-bottom: 0;
-        @media(max-width: $phablet-min-width-minus) {
-            font-size: rem-calc(16px);
-            line-height: 24px;
-        }
+    .title {
+        margin-bottom: 12px;
     }
+
+    .desc {
+        font-size: rem-calc(16px);
+        line-height: 24px;
+        margin-bottom: 0;
+    }
+
     .red-banner {
         padding: 26px;
         display: flex;
@@ -37,30 +39,37 @@
         border-radius: 8px;
         align-items: center;
         margin-top: 40px;
+
         .validation {
             font-size: rem-calc(18px);
             line-height: 28px;
             margin-bottom: 0;
             margin-left: 5px;
         }
+
         @media (max-width: $phablet-min-width-minus) {
             align-items: flex-start;
         }
     }
+
     .order-cards-container {
         display: flex;
         flex-direction: column;
-        margin-top: 40px;
+        margin-top: 32px;
+
         @media(max-width: $phablet-min-width-minus) {
-            margin-top: 24px;
+            margin-top: 16px;
         }
+
         .order-card {
-            background-color: #F4F4F4;
+            background: #FBFBFB;
+            box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08), 0px 5px 16px rgba(0, 60, 117, 0.02);
+            border-radius: 9.08442px;
             flex-basis: 100%;
-            box-shadow: 0px 1px 15px rgba(41, 41, 41, 0.2);
-            border-radius: 10px;
+
             .order-card-container {
                 padding-bottom: 48px;
+
                 @media(max-width: $phablet-min-width-minus) {
                     padding-bottom: 32px;
                 }
@@ -226,7 +235,7 @@
                     justify-content: space-between;
                     align-items: center;
                     padding: 18px 24px;
-                    background: #8633990D;
+                    background: #E5EEF4;
                     color: $black;
                     cursor: pointer;
                     margin-bottom: 0;
@@ -264,7 +273,7 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    background: #EDEDED;
+                    background: #F8FCFE;
                     padding: 18px 16px 18px 24px;
                     margin-bottom: 0;
                     font-family: $base-font-family-bold;
@@ -280,7 +289,7 @@
                     }
 
                     &.new {
-                        color: $secondary-color;
+                        color: #6A509B;
                     }
 
                     @media (max-width: $desktop-min-width-minus) {
@@ -306,7 +315,7 @@
                 .sub-content {
                     display: none;
                     transition: max-height 0.15s cubic-bezier(0, 1, 0, 1);
-                    background-color: #F4F4F4;
+                    background-color: #FBFBFB;
 
                     .item-details {
                         display: flex;
@@ -314,12 +323,15 @@
                         .details-side {
                             flex-basis: 80%;
                             display: flex;
+
                             .checkbox-label {
                                 width: 40px;
                                 margin-top: 10px;
                             }
+
                             @media(max-width: $phablet-min-width-minus) {
                                 position: relative;
+
                                 .checkbox-label {
                                     width: 20px;
                                     position: absolute;
@@ -328,6 +340,7 @@
                                     left: -3px;
                                 }
                             }
+
                             &.refill {
                                 padding-bottom: 32px;
 
@@ -356,9 +369,24 @@
                                 flex-direction: column;
                                 font-size: rem-calc(16px);
                                 line-height: 24px;
+
                                 .item-title {
                                     font-size: rem-calc(16px);
+                                    line-height: 24px;
+                                    font-family: $base-font-family-bold;
                                 }
+
+                                .description {
+                                    font-size: rem-calc(16px);
+                                    line-height: 24px;
+                                }
+
+                                .category {
+                                    font-size: rem-calc(16px);
+                                    line-height: 24px;
+                                    font-family: $base-font-family-bold;
+                                }
+
                                 p {
                                     margin-bottom: 5px;
                                 }
@@ -396,6 +424,7 @@
                                 justify-content: flex-end;
                                 font-size: rem-calc(16px);
                                 line-height: 24px;
+                                font-family: $base-font-family-bold;
                             }
                         }
                     }
@@ -501,10 +530,11 @@
                 }
             }
         }
-    @media(max-width: $desktop-min-width-minus) {
-        .order-card {
-            margin-bottom: 40px;
+
+        @media(max-width: $desktop-min-width-minus) {
+            .order-card {
+                margin-bottom: 40px;
+            }
         }
-    }
     }
 }

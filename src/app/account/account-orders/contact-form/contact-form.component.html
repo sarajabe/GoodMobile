@@ -1,48 +1,54 @@
 <section class="report-form" *ngIf="!ticketSubmitted">
     <div class="info-banner default-background">
-        <div class="flex center">
-            <img class="icon" src="assets/icon/Envelope.svg" alt="envelope" />
+        <div class="flex">
+            <img class="icon" src="assets/icon/info-icon.svg" alt="envelope" />
             <div class="banner-content">
+                <p class="title">Note:</p>
                 <p class="description last">{{!isSomethingElse ? 'A support request will be submitted on your behalf.' :
                     'Let us know how we can improve your experience with Good Mobile!'}}</p>
             </div>
         </div>
     </div>
-    <p class="desc">Please provide a valid mobile number & leave a message.
-        Our agents will get back to you as soon as possible.</p>
-    <form [formGroup]="contactForm" class="contact-form">
-        <fieldset class="field">
-            <label for="phoneNumber" class="input-label">Enter phone number:<span class="required">
-                    Required</span></label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" data-cy="phoneNumber" formControlName="phoneNumber"
-                restrictNumbers maxlength="10" minlength="10" required data-cy="phoneNumber" class="phone">
-            <label class="validation-message" data-cy="phoneIsRequired"
-                *ngIf="contactForm.controls.phoneNumber.hasError('required') && contactForm.controls.phoneNumber.touched">Phone
-                number is required</label>
-            <label class="validation-message" data-cy="phoneNumberIsInvalid"
-                *ngIf="contactForm.controls.phoneNumber.hasError('pattern') || contactForm.controls.phoneNumber.hasError('minlength')">
-                Phone number is invalid </label>
-        </fieldset>
-        <fieldset class="field">
-            <label for="description" class="input-label">Issue description:<span class="required">
-                    Required</span></label>
-            <textarea rows="6" class="description-input" id="description" name="description" data-cy="description"
-                formControlName="description" required></textarea>
-            <label class="validation-message" data-cy="issueDescriptionIsRequired"
-                *ngIf="!contactForm.controls.description.valid &&contactForm.controls.description.touched">Issue
-                description
-                is required</label>
-        </fieldset>
-    </form>
+    <p class="desc">Please provide a valid mobile number & leave a message. Our agents will get back to you as soon as
+        possible.</p>
+    <div class="contact-box">
+        <div class="box-header">
+            <h4>Support Request</h4>
+        </div>
+        <form [formGroup]="contactForm" class="contact-form">
+            <fieldset class="field">
+                <input type="tel" id="phoneNumber" name="phoneNumber" data-cy="phoneNumber"
+                    formControlName="phoneNumber" restrictNumbers maxlength="10" minlength="10" required
+                    data-cy="phoneNumber" class="phone" placeholder="Enter phone number">
+                <span class="required" [class.none]="!!contactForm.controls.phoneNumber.value">*</span>
+                <label class="validation-message" data-cy="phoneIsRequired"
+                    *ngIf="contactForm.controls.phoneNumber.hasError('required') && contactForm.controls.phoneNumber.touched">Phone
+                    number is required</label>
+                <label class="validation-message" data-cy="phoneNumberIsInvalid"
+                    *ngIf="contactForm.controls.phoneNumber.hasError('pattern') || contactForm.controls.phoneNumber.hasError('minlength')">
+                    Phone number is invalid </label>
+            </fieldset>
+            <fieldset class="field last">
+                <textarea rows="6" class="description-input" id="description" name="description" data-cy="description"
+                    formControlName="description" required placeholder="Issue Description"></textarea>
+                <span class="required textarea" [class.none]="!!contactForm.controls.description.value">*</span>
+                <label class="validation-message" data-cy="issueDescriptionIsRequired"
+                    *ngIf="!contactForm.controls.description.valid &&contactForm.controls.description.touched">Issue
+                    description is required</label>
+            </fieldset>
+        </form>
+    </div>
 </section>
 <section class="report-form" *ngIf="!!ticketSubmitted">
     <div class="info-banner success-background success">
         <div class="flex">
             <img class="icon" src="assets/icon/success-icon.svg" alt="Success Icon" />
             <div class="banner-content">
-                <p class="title">Thank you for contacting us.</p>
-                <p class="description last">Your issue has been submitted and your reference ticket number is: <span
-                        class="text-color-primary"> {{ticketNumber}}</span></p>
+                <p class="title">Issue submitted</p>
+                <p class="description">Thank you got contacting us.</p>
+                <p class="description last">Your issue has been submitted and your reference ticket number is:
+                    <b>{{ticketNumber}}</b>
+                </p>
             </div>
         </div>
     </div>
