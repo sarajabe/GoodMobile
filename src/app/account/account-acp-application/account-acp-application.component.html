@@ -175,7 +175,48 @@
                 Applicants must complete the ACP application via Good Mobile. Upon completion,
                 applicants will be redirected to the National Verifier to <b>{{verificationDetails?.status ===
                     ACP_STATUS.PENDING_CERT ? 'complete the ACP Qualification.' : 'upload necessary documents to certify
-                    their eligibility.'}}</b></p>
+                    their eligibility.'}}</b>
+            </p>
+            <div class="info-banner warning-background documents-banner">
+                <div class="flex">
+                    <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
+                    <div class="banner-content">
+                        <p class="title" (click)="showMoreDocuments = !showMoreDocuments"><span class="">Need more Documents!</span> <img class="arrow" src="assets/icon/arrow-blue.svg" [class.rotate]="!showMoreDocuments"></p>
+                        <div class="content" *ngIf="showMoreDocuments">
+                            <p class="description">FCC National Verifier needs more information or documents to confirm your eligibility</p>
+                            <div class="docs-section">
+                                <div class="document-item">
+                                    <p class="smaller primary-font-bold">1. Valid government ID <span class="showHide" (click)="showValidDocs = !showValidDocs">Show {{showValidDocs ? 'Less' : 'More'}}</span></p>
+                                    <div class="more-details" *ngIf="showValidDocs">
+                                        <p class="smaller">That includes first and last name and date of birth such as:</p>
+                                        <ul class="details-list">
+                                            <li>Military state or Tribal ID</li>
+                                            <li>U.S. Driver’s license</li>
+                                            <li>Passport</li>
+                                            <li>Permanent Resident Card <span class="or">or</span> <br>Government assistance program document</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="smaller primary-font-bold and">And</p>
+                                <div class="document-item">
+                                    <p class="smaller primary-font-bold">2. Provide a letter or official document as proof <span class="showHide" (click)="showProofDocs = !showProofDocs">Show {{showProofDocs ? 'Less' : 'More'}}</span></p>
+                                    <div class="more-details" *ngIf="showProofDocs">
+                                        <p class="smaller">If you participate in qualifying programs,:</p>
+                                        <ul class="details-list">
+                                            <li>Your (or your dependent’s) first and last name,</li>
+                                            <li>Benefit award letter</li>
+                                            <li>Approval letter</li>
+                                            <li>Statement of benefits</li>
+                                            <li>Benefit verification letter</li>
+                                            <li>School documentation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="info-banner default-background" [class.error-background]="!!showAlert"
                 [class.success-background]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE">
                 <div class="flex" [class.center]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE">

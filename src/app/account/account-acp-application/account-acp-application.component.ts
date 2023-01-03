@@ -37,6 +37,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public seconds: any = 0;
   public minutes: any = 0;
   public showExpiredSection = false;
+  public showMoreDocuments = false;
+  public showValidDocs = false;
+  public showProofDocs = false;
   public ACP_STATUS = {
     COMPLETE: 'COMPLETE',
     PENDING_RESOLUTION: 'PENDING_RESOLUTION',
