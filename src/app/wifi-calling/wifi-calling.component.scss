@@ -227,6 +227,11 @@
     .caption {
       margin-bottom: 16px;
     }
+    @media (max-width: 999.9px) {
+     .caption {
+      text-align: center;
+     }
+    }
     @media (max-width: $phablet-min-width-minus) {
       padding-top: 32px;
       padding-bottom: 32px;
