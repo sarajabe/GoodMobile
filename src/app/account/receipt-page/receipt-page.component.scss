@@ -2,15 +2,14 @@
 @import "../../../styles/modules/_mixins.scss";
 
 .receipt-details-page {
-    max-width: 1000px;
-    @media(max-width: $phablet-min-width-minus){
+    @media (max-width: $phablet-min-width-minus) {
         margin-top: 32px;
     }
     .top-links {
         display: flex;
         align-items: center;
-        margin-bottom: 44px;
-        @media(max-width: $phablet-min-width-minus){
+        margin-bottom: 42px;
+        @media (max-width: $phablet-min-width-minus) {
             margin-bottom: 32px;
         }
         .top-link {
@@ -18,9 +17,13 @@
             line-height: 18px;
             font-family: $secondary-font-family-bold;
             margin-bottom: 0;
-            @media(max-width: $phablet-min-width-minus){
+            @media (max-width: $phablet-min-width-minus) {
                 font-size: 16px;
                 line-height: 16px;
+            }
+            &.normal {
+                font-family: $secondary-font-family;
+                font-weight: normal;
             }
         }
         img {
@@ -28,29 +31,72 @@
             height: 15px;
             margin-left: 17px;
             margin-right: 15.5px;
-            @media(max-width: $phablet-min-width-minus){
+            @media (max-width: $phablet-min-width-minus) {
                 width: 5px;
                 height: 10px;
                 margin-left: 14px;
                 margin-right: 13px;
             }
         }
-
     }
-    .title-receipt-options-section {
+    .title {
+        margin-bottom: 8px;
+        @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 0;
+        }
+    }
+    .sub-note {
+        margin-bottom: 16px;
+        font-weight: normal;
+        font-family: $secondary-font-family;
+    }
+    .key-value {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        .title {
-            margin-bottom: 8px;
-            @media(max-width: $phablet-min-width-minus){
-                margin-bottom: 0;
+        margin-bottom: 4px;
+        &.payment {
+            margin-bottom: 0px;
+            @media (max-width: $phablet-min-width-minus) {
+                flex-direction: column;
+                .value {
+                    margin-left: 0;
+                }
+            }
+            .key {
+                width: 122px;
+            }
+        }
+        .key {
+            font-family: $base-font-family;
+            font-weight: bold;
+            white-space: nowrap;
+            color: #727272;
+            width: 97px;
+        }
+        .value {
+            font-family: $base-font-family-bold;
+            margin-left: 8px;
+            color: #727272;
+            @media (max-width: $phablet-min-width-minus) {
+                margin-left: 0px;
             }
         }
     }
-    .receipt-options {
-        text-align: right;
+    .receipt-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 42px;
+        @media (max-width: $desktop-min-width-minus) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .details {
+            @media (max-width: $desktop-min-width-minus) {
+                margin-bottom: 30px;
+            }
+        }
+    }
+    .receipt-actions {
         button {
             background-color: unset;
             border: none;
@@ -61,206 +107,234 @@
             font-size: rem-calc(16px);
             color: $primary-color;
             margin-left: 6px;
-            &.secondary {
-                color: $secondary-color;
-            }
         }
         .email-option {
             margin-left: 16px;
         }
-        &.mobile-display {
-            @media (max-width: 399.9px) {
-                display: flex;
-                flex-direction: column;
-                .email-option {
-                    margin-left: 0;
-                    margin-top: 12px;
-                }
-            }
-        }
     }
-    .receipt-details-section {
+    .cards-flex {
+        margin-top: 32px;
         display: flex;
-        width: 100%;
-        margin-bottom: 25px;
-        @media (max-width: 699.9px) {
+        flex-direction: row;
+        align-items: flex-start;
+        height: max-content;
+        counter-reset: brick;
+        gap: 40px;
+        @media (max-width: $desktop-min-width-minus) {
             flex-direction: column;
         }
-        .details-part-one, .details-part-two{
+        @media (max-width: $phablet-min-width-minus) {
+            margin-top: 24px;
+        }
+        .left,
+        .right {
+            display: flex;
+            flex-direction: column;
             flex-basis: 50%;
-        }
-        .key-value {
-            display: flex;
-            p {
-                margin-bottom: 10px;
-            }
-            .max-width {
-                max-width: 90%;
-                line-height: 24px;
-                @media(max-width:699.9px){
-                    max-width: 100%;
-                }
-            }
-            .key {
-                font-family: $base-font-family-bold;
-                font-weight: bold;
-                font-size: rem-calc(16px);
-                line-height: 19px;
-                white-space: nowrap;
-            }
-            .value {
-                font-family: $base-font-family;
-                font-size: rem-calc(16px);
-                line-height: 19px;
-                margin-left: 8px;
-                word-break: break-word;
-              
+            gap: 40px;
+            @media (max-width: $desktop-min-width-minus) {
+                width: 100%;
+                flex-direction: column-reverse;
             }
         }
-    }
-    .receipt-details-container {
-        width: 100%;
-        .title-part {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            background-color: $primary-color;
-            padding: 0 8px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            .title {
-                font-family: $base-font-family-bold;
-                font-size: rem-calc(18px);
-                margin-bottom: 0;
-                color: white;
+        .receipt-card {
+            background: $white;
+            box-shadow: 0 8px 30px #5e5e5e1f;
+            border-radius: 10px;
+            min-height: 200px;
+            @media (max-width: $desktop-min-width-minus) {
+                width: 100%;
             }
-        }
-        .receipt-details-box {
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-            border-top: none;
-            border-radius: 5px;
-            width: 100%;
-            margin: 0 auto;
-            margin-bottom: 55px;
-            padding: 16px 8px;
-            .line-info-part {
-                .border {
-                    border-bottom: 0.25px solid #000000;
-                    margin-bottom: 24px;
-                    &.no-border {
-                        border-bottom: none;
-                        margin-bottom: 0px;
-                    }
-                }
-                &:last-child {
-                    border-top: none;
-                    border-bottom-left-radius: 5px;
-                    border-bottom-right-radius: 5px;
-                }
-                .sub-total {
-                    display: flex;
-                    justify-content: flex-end;
-                    .value {
-                        font-size: rem-calc(16px);
-                        font-family: $base-font-family-bold;
-                        line-height: 19px;
-                    }
-                }
-                .name {
-                    font-size: rem-calc(18px);
-                    line-height: 22px;
-                    font-weight: bold;
-                    margin-bottom: 8px;
-                    margin-top: 0px;
-                    font-family: $base-font-family-bold;
-                }
-                .unit-price {
-                    font-size: rem-calc(16px);
-                    line-height: 19px;
-                    font-family: $base-font-family;
-                    margin-bottom: 24px;
-                }
-                .imei {
-                    font-size: rem-calc(16px);
-                    font-family: $base-font-family-bold;
-                    line-height: 19px;
-                    margin-bottom: 8px;
-                }
-                .notes {
-                    font-size: rem-calc(16px);
-                    font-family: $base-font-family-bold;
-                    line-height: 19px;
-                    margin-bottom: 29px;
-                }
-                .key-value {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 24px;
-                    padding-left: 8px;
-                    .key,
-                    .value {
-                        font-size: rem-calc(16px);
-                        font-family: $base-font-family-bold;
-                        line-height: 19px;
-                        margin-bottom: 13px;
-                    }
-                }
+            @media (max-width: $phablet-min-width-minus) {
+                min-height: 160px;
             }
-        }
-    }
-    .taxes-fees-box {
-        width: 100%;
-        margin-top: 52px;
-        margin-bottom: 36px;
-        .title-part {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            background-color: #f6f6f6;
-            padding: 0 8px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            &.no-border-radius {
-                border-radius: unset;
-            }
-            .title {
-                font-family: $base-font-family-bold;
-                font-size: rem-calc(18px);
-                margin-bottom: 0;
-            }
-        }
-        .taxes-desc-part {
-            border: 1px solid #f0eded;
-            border-top: unset;
-            border-bottom: unset;
-            padding: 24px 8px;
-            .key-value {
+            .card-header {
+                padding: 24px;
                 display: flex;
+                align-items: center;
                 justify-content: space-between;
-                font-size: rem-calc(16px);
-                .bottom {
+                box-shadow: inset 0px -1px 0px rgba(206, 211, 214, 0.25);
+
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 24px 16px 16px;
+                }
+                .title {
+                    margin-bottom: 0px;
+                }
+            }
+            .tab-conatiner {
+                background: #e5eef4;
+                border-radius: 0px;
+                padding: 16px 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 12px 16px;
+                }
+                .sub-title {
+                    margin-bottom: 0px;
+                }
+            }
+            .lines-container {
+                padding: 16px 24px;
+                background: #f8fcfe;
+                border-bottom: 1px solid #e5eef4;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 12px 16px;
+                }
+                .line {
+                    margin-bottom: 0;
+                    color: #6a509b;
+                    font-family: $base-font-family-bold;
+                }
+                .sub-header {
                     margin-bottom: 0;
                 }
             }
-        }
-        .total-part {
-            font-family: $base-font-family-bold;
-            font-size: rem-calc(18px);
-            height: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f6f6f6;
-            padding: 0 8px;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-            .value {
-                font-size: rem-calc(16px);
+            .flex-display {
+                display: flex;
+                justify-content: space-between;
+                &.discount {
+                    p {
+                        color: #f58e25;
+                    }
+                }
             }
-            .bottom {
-                margin-bottom: 0;
+            hr {
+                border-top: 1px solid #ced3d6;
+                margin: 24px 0;
+                width: 100%;
+            }
+            .line-info-conatiner {
+                padding: 32px 24px 48px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 24px 16px 48px;
+                }
+                .line-info-part {
+                    .info {
+                        font-family: $base-font-family-bold;
+                        margin-bottom: 0px;
+                    }
+                    .notes {
+                        color: $sg-orange;
+                        margin-bottom: 2px;
+                    }
+                }
+            }
+            .summary-details {
+                padding: 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px;
+                }
+                .price {
+                    font-family: $base-font-family-bold;
+                }
+                .smaller {
+                    margin-bottom: 12px;
+                }
+                .summary {
+                    margin: 24px 0 16px;
+                }
+                .right {
+                    text-align: right;
+                    margin-bottom: 0;
+                }
+            }
+            .payment-and-transactions {
+                padding: 16px 24px 24px;
+                background: #e5eef4;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 12px 16px 20px;
+                }
+                .title {
+                    margin-bottom: 8px;
+                }
+                .key {
+                    color: #727272;
+                    margin-bottom: 8px;
+                    @media (max-width: $phablet-min-width-minus) {
+                        margin-bottom: 4px;
+                    }
+                    .status {
+                        background: #5cd673;
+                        border-radius: 50px;
+                        padding: 3px 12px 4px;
+                        color: #fbfbfb;
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+                }
+            }
+            .payment-methods {
+                padding: 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px;
+                }
+                .methods-info {
+                    display: flex;
+                    align-items: center;
+                    @media (max-width: $phablet-min-width-minus) {
+                        align-items: flex-start;
+                    }
+                    .img-section {
+                        img {
+                            width: 88px;
+                            height: 88px;
+                            margin-right: 24px;
+                            @media (max-width: $phablet-min-width-minus) {
+                                width: 56px;
+                                height: 56px;
+                            }
+                        }
+                    }
+                    .method-info {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        width: 100%;
+                        flex-wrap: wrap;
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+                            .title {
+                                margin-bottom: 8px;
+                                font-family: $base-font-family-bold;
+                            }
+                            .note {
+                                color: #727272;
+                                margin-bottom: 0px;
+                            }
+                        }
+                        .payment-info {
+                            display: flex;
+                            @media (max-width: $phablet-min-width-minus) {
+                                flex-direction: column;
+                            }
+                            .sub-title {
+                                color: #727272;
+                                margin-right: 8px;
+                            }
+                            .price {
+                                color: #5cd673;
+                            }
+                        }
+                    }
+                }
+                .transactions-hr {
+                    margin: 24px 0;
+                }
+            }
+            .billing-info {
+                padding: 24px 24px 56px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px 16px 40px;
+                }
             }
         }
+    }
+    .dashed-border {
+        border-top: 1px dashed #090909;
+        max-width: 2000px;
+        width: 100%;
+        margin: 44px 0 32px;
     }
 }
 
@@ -283,195 +357,310 @@
     .back-link {
         display: none;
     }
-    .receipt-options {
+    .receipt-actions {
         display: none;
     }
-    .receipt-details-section {
+    .key-value {
         display: flex;
-        width: 100%;
-        @media (max-width: 499.9px) {
-            flex-direction: column;
-        }
-        .details-part-one, .details-part-two{
-            flex-basis: 50%;
-        }
-        .key-value {
-            display: flex;
-            .max-width {
-                max-width: 90%;
-                line-height: 24px;
+        margin-bottom: 4px;
+        &.payment {
+            margin-bottom: 0px;
+            @media (max-width: $phablet-min-width-minus) {
+                flex-direction: column;
+                .value {
+                    margin-left: 0;
+                }
             }
             .key {
-                font-family: $base-font-family-bold;
-                font-weight: bold;
-                font-size: rem-calc(16px);
-                line-height: 19px;
+                width: 122px;
             }
-            .value {
-                font-family: $base-font-family;
-                font-size: rem-calc(16px);
-                line-height: 19px;
-                margin-left: 8px;
-                word-break: break-word;
+        }
+        .key {
+            font-family: $base-font-family;
+            font-weight: bold;
+            white-space: nowrap;
+            color: #727272;
+            width: 97px;
+        }
+        .value {
+            font-family: $base-font-family-bold;
+            margin-left: 8px;
+            color: #727272;
+            @media (max-width: $phablet-min-width-minus) {
+                margin-left: 0px;
             }
         }
     }
-    .receipt-details-container {
-        margin-top: 12px;
-        .title-part {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            background-color: #863399;
-            padding: 0 16px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            .title {
-                font-family: $base-font-family-bold;
-                font-size: rem-calc(18px);
-                margin-bottom: 0;
-                color: white;
-            }
+    .receipt-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 42px;
+        @media (max-width: $desktop-min-width-minus) {
+            flex-direction: column;
+            align-items: flex-start;
         }
-        .receipt-details-box {
-            width: 100%;
-            margin: 0 auto;
-            margin-top: 52px;
-            margin-bottom: 36px;
-            .line-info-part {
-                border: 1px solid rgba(0, 0, 0, 0.25);
-                padding: 24px 16px;
-                .border:first-child {
-                    border-top: none;
-                }
-                .border {
-                    border-top: 0.25px solid #000000;
-                    padding-bottom: 13px;
-                }
-                &:last-child {
-                    border-top: none;
-                    border-bottom-left-radius: 5px;
-                    border-bottom-right-radius: 5px;
-                }
-                .sub-total {
-                    display: flex;
-                    justify-content: flex-end;
-                    .value {
-                        font-size: rem-calc(16px);
-                        font-family: $base-font-family-bold;
-                        line-height: 19px;
-                    }
-                }
-                .name {
-                    font-size: rem-calc(18px);
-                    line-height: 22px;
-                    font-weight: bold;
-                    margin-bottom: 8px;
-                    margin-top: 0px;
-                    font-family: $base-font-family-bold;
-                }
-                .unit-price {
-                    font-size: rem-calc(16px);
-                    line-height: 19px;
-                    font-family: $base-font-family;
-                    margin-bottom: 24px;
-                }
-                .imei {
-                    font-size: rem-calc(16px);
-                    font-family: $base-font-family-bold;
-                    line-height: 19px;
-                    margin-bottom: 8px;
-                }
-                .notes {
-                    font-size: rem-calc(16px);
-                    font-family: $base-font-family-bold;
-                    line-height: 19px;
-                    margin-bottom: 29px;
-                }
-                .key-value {
-                    display: flex;
-                    justify-content: space-between;
-                    .key,
-                    .value {
-                        font-size: rem-calc(16px);
-                        font-family: $base-font-family-bold;
-                        line-height: 19px;
-                        margin-bottom: 13px;
-                    }
-                }
+        .details {
+            @media (max-width: $desktop-min-width-minus) {
+                margin-bottom: 30px;
             }
         }
     }
-    .taxes-fees-box {
-        width: 100%;
-        margin: 0 auto;
-        margin-top: 52px;
-        margin-bottom: 36px;
-        .title-part {
-            height: 40px;
+    .receipt-actions {
+        button {
+            background-color: unset;
+            border: none;
+            cursor: pointer;
+        }
+        .option-text {
+            font-family: $base-font-family-bold;
+            font-size: rem-calc(16px);
+            color: $primary-color;
+            margin-left: 6px;
+        }
+        .email-option {
+            margin-left: 16px;
+        }
+    }
+    .cards-flex {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        height: max-content;
+        counter-reset: brick;
+        gap: 40px;
+        @media (max-width: $desktop-min-width-minus) {
+            flex-direction: column;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            margin-top: 24px;
+        }
+        .left,
+        .right {
             display: flex;
-            align-items: center;
-            background-color: #f6f6f6;
-            padding: 0 16px;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            &.no-border-radius {
-                border-radius: unset;
-            }
-            .title {
-                font-family: $base-font-family-bold;
-                font-size: rem-calc(18px);
-                margin-bottom: 0;
+            flex-direction: column;
+            flex-basis: 50%;
+            gap: 40px;
+            @media (max-width: $desktop-min-width-minus) {
+                width: 100%;
+                flex-direction: column-reverse;
             }
         }
-        .taxes-desc-part {
-            border: 1px solid #f0eded;
-            border-top: unset;
-            border-bottom: unset;
-            padding: 24px 16px;
-            .key-value {
+        .receipt-card {
+            background: $white;
+            box-shadow: 0 8px 30px #5e5e5e1f;
+            border-radius: 10px;
+            min-height: 200px;
+            @media (max-width: $desktop-min-width-minus) {
+                width: 100%;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                min-height: 160px;
+            }
+            .card-header {
+                padding: 24px;
                 display: flex;
+                align-items: center;
                 justify-content: space-between;
-                font-size: rem-calc(16px);
-                .bottom {
+                box-shadow: inset 0px -1px 0px rgba(206, 211, 214, 0.25);
+
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 24px 16px 16px;
+                }
+                .title {
+                    margin-bottom: 0px;
+                }
+            }
+            .tab-conatiner {
+                background: #e5eef4;
+                border-radius: 0px;
+                padding: 16px 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 12px 16px;
+                }
+                .sub-title {
+                    margin-bottom: 0px;
+                }
+            }
+            .lines-container {
+                padding: 16px 24px;
+                background: #f8fcfe;
+                border-bottom: 1px solid #e5eef4;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 12px 16px;
+                }
+                .line {
+                    margin-bottom: 0;
+                    color: #6a509b;
+                    font-family: $base-font-family-bold;
+                }
+                .sub-header {
                     margin-bottom: 0;
                 }
             }
-        }
-        .total-part {
-            font-family: $base-font-family-bold;
-            font-size: rem-calc(18px);
-            height: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f6f6f6;
-            padding: 0 16px;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-            .value {
-                font-size: rem-calc(16px);
+            .flex-display {
+                display: flex;
+                justify-content: space-between;
+                &.discount {
+                    p {
+                        color: #f58e25;
+                    }
+                }
             }
-            .bottom {
-                margin-bottom: 0;
+            hr {
+                border-top: 1px solid #ced3d6;
+                margin: 24px 0;
+                width: 100%;
+            }
+            .line-info-conatiner {
+                padding: 32px 24px 48px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 24px 16px 48px;
+                }
+                .line-info-part {
+                    .info {
+                        font-family: $base-font-family-bold;
+                        margin-bottom: 0px;
+                    }
+                    .notes {
+                        color: $sg-orange;
+                        margin-bottom: 2px;
+                    }
+                }
+            }
+            .summary-details {
+                padding: 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px;
+                }
+                .price {
+                    font-family: $base-font-family-bold;
+                }
+                .smaller {
+                    margin-bottom: 12px;
+                }
+                .summary {
+                    margin: 24px 0 16px;
+                }
+                .right {
+                    text-align: right;
+                    margin-bottom: 0;
+                }
+            }
+            .payment-and-transactions {
+                padding: 16px 24px 24px;
+                background: #e5eef4;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 12px 16px 20px;
+                }
+                .title {
+                    margin-bottom: 8px;
+                }
+                .key {
+                    color: #727272;
+                    margin-bottom: 8px;
+                    @media (max-width: $phablet-min-width-minus) {
+                        margin-bottom: 4px;
+                    }
+                    .status {
+                        background: #5cd673;
+                        border-radius: 50px;
+                        padding: 3px 12px 4px;
+                        color: #fbfbfb;
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+                }
+            }
+            .payment-methods {
+                padding: 24px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px;
+                }
+                .methods-info {
+                    display: flex;
+                    align-items: center;
+                    @media (max-width: $phablet-min-width-minus) {
+                        align-items: flex-start;
+                    }
+                    .img-section {
+                        img {
+                            width: 88px;
+                            height: 88px;
+                            margin-right: 24px;
+                            @media (max-width: $phablet-min-width-minus) {
+                                width: 56px;
+                                height: 56px;
+                            }
+                        }
+                    }
+                    .method-info {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        width: 100%;
+                        flex-wrap: wrap;
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+                            .title {
+                                margin-bottom: 8px;
+                                font-family: $base-font-family-bold;
+                            }
+                            .note {
+                                color: #727272;
+                                margin-bottom: 0px;
+                            }
+                        }
+                        .payment-info {
+                            display: flex;
+                            @media (max-width: $phablet-min-width-minus) {
+                                flex-direction: column;
+                            }
+                            .sub-title {
+                                color: #727272;
+                                margin-right: 8px;
+                            }
+                            .price {
+                                color: #5cd673;
+                            }
+                        }
+                    }
+                }
+                .transactions-hr {
+                    margin: 24px 0;
+                }
+            }
+            .billing-info {
+                padding: 24px 24px 56px;
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 16px 16px 40px;
+                }
             }
         }
     }
-    .barCodes-details{
-        .title{
+    .barCodes-details {
+        .title {
             margin-bottom: 8px;
         }
-        .note{
+        .note {
             margin-bottom: 32px;
         }
     }
+    .dashed-border {
+        border-top: 1px dashed #090909;
+        max-width: 2000px;
+        width: 100%;
+        margin: 44px 0 32px;
+    }
 }
 ::ng-deep {
-    .barcode{
+    .barcode {
         svg {
-            max-width: 420px!important;
-            @media(max-width: $phablet-min-width-minus) {
-                max-width: 280px!important;
+            max-width: 420px !important;
+            @media (max-width: $phablet-min-width-minus) {
+                max-width: 280px !important;
             }
         }
     }

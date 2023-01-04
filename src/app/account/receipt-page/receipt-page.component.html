@@ -4,193 +4,179 @@
             class="top-link">My Orders</a>
         <a *ngIf="page === 'payments'" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PAYMENTS]"></a>
         <img src="/assets/icon/black-arrow-back.svg">
-        <a class="top-link">{{orderId}}</a>
+        <a class="top-link normal">{{orderId}}</a>
     </div>
     <div id="div">
-        <div class="title-receipt-options-section">
-            <h2 class="title">Order Reciept</h2>
-            <div class="receipt-options mobile-display">
+        <h2 class="title">Order Reciept</h2>
+        <h5 class="sub-note">Your order has been confirmed!</h5>
+        <div class="receipt-info">
+            <div class="details">
+                <div class="key-value">
+                    <p class="smaller key">Merchant:</p>
+                    <p class="smaller value">Good Mobile</p>
+                </div>
+                <div class="key-value">
+                    <p class="smaller key">Order #:</p>
+                    <p class="smaller value">{{order?.orderId}}</p>
+                </div>
+                <div class="key-value">
+                    <p class="smaller key">CustomerID:</p>
+                    <p class="smaller value">{{order?.customerInfo?.customerId}}</p>
+                </div>
+                <div class="key-value" *ngIf="!!order?.transactionDate">
+                    <p class="smaller key">Date:</p>
+                    <p class="smaller value">{{order?.transactionDate | date: 'short'}}</p>
+                </div>
+            </div>
+            <div class="receipt-actions">
                 <button class="print-option" [useExistingCss]="true" printSectionId="print-receipt" ngxPrint><img
                         src="/assets/icon/print-icon.svg"><span class="option-text">Print</span></button>
                 <button class="email-option" (click)="sendEmail()"><img src="/assets/icon/email-icon.svg"><span
                         class="option-text">Email</span></button>
             </div>
         </div>
-        <div class="receipt-details-section">
-            <div class="details-part-one">
-                <div class="key-value">
-                    <p><span class="key">Merchant:</span>
-                        <span class="value">Good Mobile</span>
-                    </p>
+    </div>
+    <div class="cards-flex">
+        <div class="left">
+            <div class="receipt-card">
+                <div class="card-header">
+                    <h4 class="title">Order Details</h4>
                 </div>
-                <div class="key-value">
-                    <p>
-                        <span class="key">Customer ID:</span>
-                        <span class="value"> {{order?.customerInfo?.customerId}}</span>
-                    </p>
+                <div class="tab-conatiner">
+                    <h5 class="sub-title">Items</h5>
                 </div>
-                <div class="key-value">
-                    <p>
-                        <span class="key">Order #:</span>
-                        <span class="value">{{order?.orderId}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.transactionDate">
-                    <p>
-                        <span class="key">Date:</span>
-                        <span class="value"> {{order?.transactionDate | date: 'short'}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.voucherAmount && order?.voucherAmount > 0">
-                    <p>
-                        <span class="key">Voucher Amount:</span>
-                        <span class="value"> {{order?.voucherAmount | currency}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.shippingAddress">
-                    <p class="max-width">
-                        <span class="key">Shipping Address:</span>
-                        <span class="value">{{order?.shippingAddress?.name }}
-                            {{order?.shippingAddress?.address1}}
-                            {{order?.shippingAddress?.city}}, {{order?.shippingAddress?.state}}
-                            {{order?.shippingAddress?.postalCode}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.shippingAddress">
-                    <p>
-                        <span class="key">Shipping Service:</span>
-                        <span class="value"> {{order?.shippingMethod}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.shippingAddress && !!order?.shippingCost">
-                    <p>
-                        <span class="key">Shipping Cost:</span>
-                        <span class="value"> {{order?.shippingCost | currency}}</span>
-                    </p>
+                <div *ngFor="let cart of cartItems">
+                    <div class="lines-container">
+                        <p class="line">Line {{ !!cart?.mdn || !!order?.mdn? ( cart?.mdn | phone ) || (order?.mdn |
+                            phone) : '#1'
+                            }}</p>
+                    </div>
+                    <div class="line-info-conatiner" id="div">
+                        <div class="line-info-part" *ngFor="let item of cart?.items; let i =index">
+                            <div class="flex-display">
+                                <p class="smaller info">{{item?.name}}</p>
+                                <p class="smaller info">{{item?.unitPrice | currency}}</p>
+                            </div>
+                            <p class="smallest notes" *ngIf="order?.autoPayEnabled">Auto Pay</p>
+                            <p class="smallest">Quantity: {{item?.quantity}}</p>
+                            <hr *ngIf="i !== (cart?.items.length - 1)">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="details-part-two">
-                <div class="key-value" *ngIf="order?.balanceAmount">
-                    <p>
-                        <span class="key">Credit Balance Used:</span>
-                        <span class="value">{{order?.balanceAmount | currency }}</span>
-                    </p>
+        </div>
+        <div class="right">
+            <div class="receipt-card">
+                <div class="card-header">
+                    <h4 class="title">Order Summary</h4>
                 </div>
-                <div class="key-value" *ngIf="order?.balanceTrxNumber">
-                    <p>
-                        <span class="key">Credit Balance txn #:</span>
-                        <span class="value"> {{order?.balanceTrxNumber}}</span>
-                    </p>
+                <div class="tab-conatiner">
+                    <h5 class="sub-title">Summary</h5>
                 </div>
-                <div class="key-value" *ngIf="order?.rewardsAmount > 0">
-                    <p>
-                        <span class="key">Rewards Balance Used:</span>
-                        <span class="value">{{order?.rewardsAmount}}</span>
-                    </p>
+                <div class="summary-details" id="div">
+                    <div class="flex-display" *ngIf="order?.subTotal">
+                        <p class="smaller">Subtotal</p>
+                        <p class="smaller price">{{order?.subTotal | currency}}</p>
+                    </div>
+                    <div class="flex-display discount" *ngIf="order?.discount > 0">
+                        <p class="smaller">Discount total </p>
+                        <p class="smaller price">-{{order?.discount | currency}}</p>
+                    </div>
+                    <div class="flex-display">
+                        <p class="smaller">Shipping fees</p>
+                        <p class="smaller price">{{order?.shippingCost | currency}}</p>
+                    </div>
+                    <div class="flex-display">
+                        <p class="smaller">Govt. taxes & fees</p>
+                        <p class="smaller price">{{order?.govtTaxesAndFees | currency}}</p>
+                    </div>
+                    <div class="flex-display">
+                        <p class="smaller">Surcharges & fees</p>
+                        <p class="smaller price">{{order?.surchargesAndFees | currency}}</p>
+                    </div>
+                    <hr class="summary">
+                    <p class="smaller price right">Total:{{order?.total | currency}}</p>
                 </div>
-                <div class="key-value" *ngIf="order?.rewardsAmount > 0">
-                    <p>
-                        <span class="key">Rewards Balance txn #:</span>
-                        <span class="value"> {{order?.rewardsTrxNumber}}</span>
-                    </p>
+                <div class="payment-and-transactions">
+                    <h5 class="title">Payments & Transactions</h5>
+                    <p class="smaller key" *ngIf="!!order?.paymentStatus">Status: <span
+                            class="status">{{order?.paymentStatus}}</span></p>
+                    <div class="key-value payment" *ngIf="!!order?.paymentTrxNumber">
+                        <p class="smaller key">Confirmation #:</p>
+                        <p class="smaller value">{{order?.paymentTrxNumber}}</p>
+                    </div>
+                    <div class="key-value payment" *ngIf="!!order?.transactionDate">
+                        <p class="smaller key">Date &Time:</p>
+                        <p class="smaller value">{{order?.transactionDate | date: 'short'}}</p>
+                    </div>
                 </div>
-                <div class="key-value" *ngIf="!!order?.total">
-                    <p>
-                        <span class="key">Payment Card Amount:</span>
-                        <span class="value"> {{order?.total | currency}}</span>
-                    </p>
+                <div class="payment-methods">
+                    <div class="methods-info" *ngIf="!!order?.paymentCard || !!order?.paymentTrxNumber">
+                        <div class="img-section">
+                            <img src="assets/icon/credit-card.png" alt="Payment Card image" />
+                        </div>
+                        <div class="method-info">
+                            <div class="details">
+                                <p class="smaller title">Visa Card </p>
+                                <p class="smaller note" *ngIf="!!order?.paymentCard">{{order?.paymentCard}}</p>
+                            </div>
+                            <div class="payment-info">
+                                <p class="smallest sub-title">Deducted Amount</p>
+                                <p class="smaller price">-{{order?.total | currency}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="transactions-hr"
+                        *ngIf="!!order?.balanceAmount && (!!order?.paymentCard || !!order?.paymentTrxNumber)">
+                    <div class="methods-info" *ngIf="!!order?.balanceAmount">
+                        <div class="img-section">
+                            <img src="assets/icon/balance.svg" alt="Account Balance image" />
+                        </div>
+                        <div class="method-info">
+                            <div class="details">
+                                <p class="smaller title">Account Balance </p>
+                            </div>
+                            <div class="payment-info">
+                                <p class="smallest sub-title">Deducted Amount</p>
+                                <p class="smaller price">-{{order?.balanceAmount | currency}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="transactions-hr"
+                        *ngIf="!!order?.voucherAmount && order?.voucherAmount > 0 && (!!order?.balanceAmount || !!order?.paymentTrxNumber)">
+                    <div class="methods-info" *ngIf="!!order?.voucherAmount && order?.voucherAmount > 0">
+                        <div class="img-section">
+                            <img src="assets/icon/voucher-illu.svg" alt="Voucher" />
+                        </div>
+                        <div class="method-info">
+                            <div class="details">
+                                <p class="smaller title">Top-up Card / Voucher </p>
+                            </div>
+                            <div class="payment-info">
+                                <p class="smallest sub-title">Deducted Amount</p>
+                                <p class="smaller price">-{{order?.voucherAmount | currency}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="key-value" *ngIf="!!order?.paymentStatus">
-                    <p>
-                        <span class="key">Payment Status:</span>
-                        <span class="value"> {{order?.paymentStatus}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.paymentTrxNumber">
-                    <p>
-                        <span class="key">Confirmation #:</span>
-                        <span class="value"> {{order?.paymentTrxNumber}}</span>
-                    </p>
-                </div>
-                <div class="key-value" *ngIf="!!order?.billingAddress">
-                    <p class="max-width">
-                        <span class="key">Billing Address:</span>
-                        <span class="value"> {{order?.billingAddress?.name }}
-                            {{order?.billingAddress?.address1}}
-                            {{order?.billingAddress?.city}}, {{order?.billingAddress?.state}}
+                <div *ngIf="!!order?.billingAddress && !!order?.billingAddress?.address1">
+                    <div class="lines-container">
+                        <h5 class="sub-header">Billing Address</h5>
+                    </div>
+                    <div class="billing-info">
+                        <p class="smaller">{{order?.billingAddress?.address1}} {{order?.billingAddress?.city}},
+                            {{order?.billingAddress?.state}}
                             {{order?.billingAddress?.postalCode}}
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="receipt-details-container" *ngFor="let cart of cartItems">
-        <div class="title-part">
-            <p class="title">Line {{ !!cart?.mdn || !!order?.mdn? ( cart?.mdn | phone ) || (order?.mdn | phone) : '#1'
-                }}</p>
-        </div>
-        <div class="receipt-details-box" id="div">
-            <div class="line-info-part" *ngFor="let item of cart?.items; let i =index">
-                <div class="border" [class.no-border]="i == (cart?.items.length - 1)">
-                    <p class="name">{{item?.name}}</p>
-                    <p class="unit-price">Unit Price: {{item?.unitPrice | currency}}</p>
-                    <p class="imei" *ngIf="order?.imei">Phone IMEI# {{item?.iemi}}</p>
-                    <p class="notes" *ngIf="order?.autoPayEnabled">Auto Pay Enabled</p>
-                    <div class="key-value">
-                        <p class="key">Price:</p>
-                        <p class="value">{{(item?.unitPrice * item?.quantity) | currency}}</p>
-                    </div>
-                    <div class="key-value" *ngIf="order?.autoPayDiscount">
-                        <p class="key">Autopay discount</p>
-                        <p class="value">-$5.5</p>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="div">
-        <div class="taxes-fees-box">
-            <div class="title-part">
-                <p class="title">Order Discounts</p>
-            </div>
-            <div class="taxes-desc-part">
-                <div class="key-value">
-                    <p class="key bottom">Amount</p>
-                    <p class="value bottom"><span *ngIf="order?.discount > 0">- </span>{{order?.discount | currency}}
-                    </p>
-                </div>
-            </div>
-            <div class="title-part no-border-radius">
-                <p class="title">Taxes & Fees</p>
-            </div>
-            <div class="taxes-desc-part">
-                <div class="key-value">
-                    <p class="key">Govt. taxes & fees</p>
-                    <p class="value">{{order?.govtTaxesAndFees | currency}}</p>
-                </div>
-                <div class="key-value">
-                    <p class="key bottom">Surcharges & fees</p>
-                    <p class="value bottom">{{order?.surchargesAndFees | currency}}</p>
-                </div>
-            </div>
-            <div class="total-part">
-                <p class="key bottom">Total:</p>
-                <p class="value bottom">{{order?.total | currency}}</p>
-            </div>
-        </div>
-    </div>
+    <p class="dashed-border" *ngIf="!!isStorePickup"></p>
     <div class="barCodes-details" *ngIf="!!isStorePickup">
         <h3 class="primary-font-bold title">Scan your barcode</h3>
         <p class="smaller note">Check with the store clerk to pick up your package</p>
-        <ngx-barcode
-            [bc-value]="barCodeValues"
-            [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
-    </div>
-    <div class="receipt-options">
-        <button class="print-option" [useExistingCss]="true" printSectionId="print-receipt" ngxPrint><img
-                src="/assets/icon/print-icon.svg"><span class="option-text">Print</span></button>
-        <button class="email-option" (click)="sendEmail()"><img src="/assets/icon/email-icon.svg"><span
-                class="option-text">Email</span></button>
+        <ngx-barcode [bc-value]="barCodeValues" [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
     </div>
 </div>
