@@ -504,7 +504,7 @@ legend {
       content:"";
     }
   }
-  &:has(input.ng-valid) {
+  &:has(input.ng-dirty.ng-valid) {
     &:after {
       background-image: url('/assets/icon/green-check.svg');
       background-size: 20px 20px;
