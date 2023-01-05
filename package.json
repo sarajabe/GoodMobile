@@ -83,7 +83,7 @@
     "@types/facebook-js-sdk": "^3.3.2",
     "@types/grecaptcha": "^3.0.1",
     "@ztarmobile/zwp-service": "0.0.81",
-    "@ztarmobile/zwp-service-backend": "0.1.65",
+    "@ztarmobile/zwp-service-backend": "0.1.68",
     "@ztarmobile/zwp-service-backend-v2": "0.1.21",
     "@ztarmobile/zwp-services-auth": "0.0.81",
     "@ztarmobile/zwp-services-util": "0.0.81",
