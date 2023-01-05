@@ -1,13 +1,13 @@
 <section class="edit-address report-page" [class.space]="!!showContactForm">
     <div class="back-section">
         <img src="/assets/icon/back-arrow.svg">
-        <a class="back-link" (click)="goToReportIssue()">Report an Issue</a>
+        <h6 class="back-link" (click)="goToReportIssue()">Report an Issue</h6>
     </div>
-    <h1 class="title" id="title">Update shipping address</h1>
+    <h3 id="title">Update shipping address</h3>
     <!-- User can update address -->
     <ng-container *ngIf="!showContactForm && !!canUpdateAddress && !isEditAddress && !addressUpdated">
         <div class="current-address">
-            <p class="label">Current shipping address:</p>
+            <h6 class="label">Current shipping address:</h6>
             <div class="info-banner default-background">
                 <div class="flex">
                     <img src="/assets/icon/info-icon.svg" alt="Info Icon">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="addresses-list-section">
-            <p class="desc">To change your order’s shipping address, please select or add a new address:</p>
+            <p class="smaller">To change your order’s shipping address, please select or add a new address:</p>
             <div class="info-banner error-background" *ngIf="!!showErrorMessage">
                 <div class="flex center">
                     <img src="/assets/icon/error-icon.svg" alt="Error Icon">
@@ -69,7 +69,7 @@
                     <div class="new-address">
                         <div class="section-hightligt" (click)="toggleNewAddress()">
                             <p class="icon">{{!showNewAddress ? '+' : '-'}}</p>
-                            <p class="section-title" data-cy="addAnewAddress">Add a new address</p>
+                            <p class="section-title smaller" data-cy="addAnewAddress">Add a new address</p>
                         </div>
                         <div class="form-section" *ngIf="showNewAddress">
                             <form #shippingMethodForm="ngForm">
@@ -187,18 +187,16 @@
         </div>
     </ng-container>
 </section>
-<section class="section-footer" *ngIf="!showContactForm && !!canUpdateAddress" [class.sticky]="setSticky">
-    <div class="btn-container">
-        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel" (click)="cancel()"
-            [class.hidden]="!!addressUpdated">Cancel</button>
+<section class="navigation-section" *ngIf="!showContactForm && !!canUpdateAddress">
+    <div class="page-section navs">
+        <p class="no-border" (click)="cancel()" [class.hidden]="!!addressUpdated">Cancel</p>
         <button class="button primary" data-cy="updateBtn" aria-label="update"
             (click)="updateAddress()">{{!!addressUpdated ? 'Done' : 'Update'}}</button>
     </div>
 </section>
-<section class="section-footer" *ngIf="!showContactForm && !canUpdateAddress" [class.sticky]="setSticky">
-    <div class="btn-container">
-        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel"
-            (click)="goToReportIssue()">Cancel</button>
+<section class="navigation-section" *ngIf="!showContactForm && !canUpdateAddress">
+    <div class="page-section navs">
+        <p class="no-border" (click)="goToReportIssue()">Cancel</p>
     </div>
 </section>
 <app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" (backOneStep)="showContactForm=false"
