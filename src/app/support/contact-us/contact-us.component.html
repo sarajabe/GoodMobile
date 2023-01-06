@@ -1,4 +1,166 @@
-<section class="container-flex internal-page-margins contact-us-container" *ngIf="!!submittedRequest">
+<div class="contact-us-page" *ngIf="!!submittedRequest">
+    <section class="contact-us-banner page-section">
+        <h1 class="header">We're Here to Help!</h1>
+        <h5 class="sub-header">Let us know how we can assist in making Good Mobile a better experience for you.</h5>
+    </section>
+    <section class="grey-boxes-section page-section">
+        <div class="flex">
+            <div class="page-section">
+                <div class="box contact-form-part">
+                    <h5 class="form-title">Please fill in the below form, and we'll be in touch within one business day.
+                    </h5>
+                    <form (ngSubmit)="sendMessage()" [formGroup]="contactUsForm" class="contactUsForm">
+                        <div class="category">
+                            <select class="bold" id="category" data-cy="category" [class.opened]="!!isOpened"
+                                formControlName="category" (focus)="isOpened = true" (blur)="isOpened = false"
+                                (change)="isOpened = false">
+                                <option class="bold" data-cy="billing" value="Billing"> Billing </option>
+                                <option class="bold" data-cy="technicalSupport" value="Technical">Technical Support
+                                </option>
+                                <option class="bold" data-cy="salesSupport" value="Sales">Sales Support</option>
+                                <option class="bold" data-cy="orderSupport" value="Order">Order Support</option>
+                                <option class="bold" data-cy="newCustomer" value="New_Customer"><b>New Customer</b>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-fields">
+                            <div class="flex-input">
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input id="name" data-cy="name" type="text" name="name" placeholder=" "
+                                            formControlName="name" required autocomplete="given-name" />
+                                        <span>Name<i>*</i></span>
+                                    </label>
+                                    <label class="validation-message alert" id="required-name-msg"
+                                        *ngIf="contactUsForm.controls.name.touched && contactUsForm.controls.name.hasError('required')">
+                                        Name is required
+                                    </label>
+                                    <label class="validation-message alert" id="invalid-name-msg"
+                                        *ngIf="contactUsForm.controls.name.hasError('pattern')">
+                                        Name is invalid
+                                    </label>
+                                </div>
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input id="email" data-cy="email" type="text" name="email" placeholder=" "
+                                            formControlName="email" required autocomplete="email" />
+                                        <span>Email<i>*</i></span>
+                                    </label>
+                                    <label class="validation-message alert" id="required-email-msg"
+                                        data-cy="required-email-msg"
+                                        *ngIf="contactUsForm.controls.email.touched && contactUsForm.controls.email.hasError('required')">
+                                        Email is required
+                                    </label>
+                                    <label class="validation-message" id="invalid-email-msg"
+                                        *ngIf="contactUsForm.controls.email.hasError('email')">
+                                        Email is invalid.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex-input">
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input restrictNumbers minlength="10" maxlength="10" id="phone" data-cy="phone"
+                                            type="tel" name="phone" placeholder=" " formControlName="phone"
+                                            autocomplete="tel">
+                                        <span>My GM Phone number</span>
+                                    </label>
+                                    <label class="validation-message alert" id="invalid-phone-msg"
+                                        data-cy="invalid-phone-msg"
+                                        *ngIf="contactUsForm.controls.phone.hasError('minlength')">
+                                        Invalid phone number</label>
+                                </div>
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input restrictNumbers minlength="10" maxlength="10" id="contact" type="tel"
+                                            name="contact" placeholder=" " formControlName="contact" autocomplete="tel">
+                                        <span>My Contact Number</span>
+                                    </label>
+                                    <label class="validation-message alert" id="invalid-contact-msg"
+                                        *ngIf="contactUsForm.controls.contact.hasError('minlength')">
+                                        Invalid contact number</label>
+                                </div>
+                            </div>
+                            <fieldset class="form-field last">
+                                <textarea cols="30" rows="15" class="description-input" id="message" name="message"
+                                    data-cy="message" formControlName="message" required
+                                    placeholder="Your Message"></textarea>
+                                <span class="required" [class.none]="!!contactUsForm.controls.message.value">*</span>
+                                <label class="validation-message alert" id="required-msg"
+                                    *ngIf="contactUsForm.controls.message.touched && contactUsForm.controls.message.hasError('required')">
+                                    Message is required
+                                </label>
+                            </fieldset>
+                            <div class="recaptcha-part">
+                                <app-re-captcha class="float-left" id="captcha-box" (resolved)="resolvedCaptcha($event)"
+                                    [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="button primary" id="submitButton" data-cy="submitButton"
+                                name="contact-submit" [disabled]="!contactUsForm.valid || !captchaClicked"
+                                [uiBlockButton]="processingRequest">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="contact-options-part">
+                <div class="box call-center">
+                    <div class="box-icon">
+                        <img src="assets/icon/contact-call-center.svg" alt="Call Center Icon">
+                    </div>
+                    <div class="box-content">
+                        <p class="title">Call center</p>
+                        <a class="link" href="tel: (800) 840-8515">(800) 840-8515</a>
+                        <p class="smallest">Available: 7AM to 1AM EST - Monday-Sunday</p>
+                    </div>
+                </div>
+                <div class="box email">
+                    <div class="box-icon">
+                        <img src="assets/icon/contact-email.svg" alt="Email Icon">
+                    </div>
+                    <div class="box-content">
+                        <p class="title top">Email</p>
+                        <a class="link" href="mailto:support@goodmobile.org">support@goodmobile.org</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="more-questions-section page-section">
+        <h2 class="title">More Questions?</h2>
+        <h5 class="sub-title">Learn about:</h5>
+        <div class="links-part">
+            <a (click)="goToILDaddon()">International calling</a>
+            <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">How to set up your phone data</a>
+            <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">LTE Network - what is it?</a>
+        </div>
+        <div class="social-media-part">
+            <p class="follow-us">Follow Us</p>
+            <div class="social-media-icons">
+                <a href="https://www.facebook.com/goodmobileusa/" id="facebookLink" target="_blank"><img
+                        src="assets/icon/follow-by-fb.svg" alt="FB Icon"></a>
+                <a href="https://twitter.com/goodmobileusa" id="twitterLink" target="_blank"><img
+                        src="assets/icon/follow-by-twitter.svg" alt="Twitter Icon"></a>
+                <a href="https://www.instagram.com/goodmobileusa/" id="instagramLink" target="_blank"><img
+                        src="assets/icon/follow-by-instagram.svg" alt="Instagram Icon"></a>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+<!-- <section class="container-flex internal-page-margins contact-us-container" *ngIf="!!submittedRequest">
     <div class="container-flex-row form-holder">
         <div class="content-holder col-xl-8 col-md-12 form-section">
             <div class="form-holder">
@@ -167,7 +329,17 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
+
+
+
+
+
+
+
+
+
+
 <section class="container-flex internal-page-margins contact-us-after-submition" *ngIf="!submittedRequest">
     <h1 class="align-center main-title">Thank you for your feedback!</h1>
     <p class="align-center main-paragraph">
