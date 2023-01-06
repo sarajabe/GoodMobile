@@ -44,12 +44,12 @@ const routes: Routes = [
       },
       {
         path: SUPPORT_ROUTE_URLS.COVERAGE, component: CoveragesComponent, data: {
-          title: 'Coverage',
+          title: 'Good Mobile | Support | Coverage',
           description: 'Stay connected to friends and family from coast to coast with Good Mobile. We ride on the nation’s largest and most trusted wireless network'
         } as IPageMeta
       },
       { path: SUPPORT_ROUTE_URLS.DATA_SETUP, component: DataSetupComponent , data: {
-        title: 'Data Setup',
+        title: 'Good Mobile | Support | Data Setup',
         description: 'Learn how to setup data services for your iPhone or Androind cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
       // { path: SUPPORT_ROUTE_URLS.IPHONE, component: IosGsmComponent , data: {
@@ -114,19 +114,19 @@ const routes: Routes = [
       },
       {
         path: SUPPORT_ROUTE_URLS.HOW_IT_WORKS, component: HowItWorksComponent, data: {
-          title: 'Good Mobile| How It Works', description:
+          title: 'Good Mobile | Support | How It Works', description:
             'With Good Mobile there are no contracts. We are powered by a premium carrier* that boasts the best 4G LTE network in the United States.'
         } as IPageMeta
       },
       {
         path: SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING, component: InternationalCallingComponent, data: {
-          title: 'Good Mobile| International Calling',
+          title: 'Good Mobile | Support | International Calling',
           description: 'Good Mobile International plans offer unlimited talk and text to over 60 countries including Canada and Mexico for just $5 a month.'
         } as IPageMeta
       },
       {
         path: SUPPORT_ROUTE_URLS.LANDING_COVERAGE, component: LandingCoverageComponent, data: {
-          title: 'Good Mobile Coverage',
+          title: 'Good Mobile | Support | Coverage',
           description: 'Check if Good Mobile wireless service has coverage in your area using our cell phone service coverage map. Enter your address or zip code to see coverage zones.'
         } as IPageMeta
       },

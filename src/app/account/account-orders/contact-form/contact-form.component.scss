@@ -2,111 +2,119 @@
 @import "../../../../styles/modules/_mixins.scss";
 
 .report-form {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1360px;
-    padding-left: 50px;
-    padding-right: 50px;
     @media (max-width: $desktop-min-width-minus) {
         padding-top: 32px;
         margin-bottom: 60px;
     }
+
     @media (max-width: $phablet-min-width-minus) {
-        padding-left: 16px;
-        padding-right: 16px;
         margin-bottom: 40px;
         padding-top: 0px;
     }
+
     .info-banner {
+        margin-top: 40px;
+
         &.success {
             margin-bottom: 173px;
+
             @media (max-width: $desktop-min-width-minus) {
                 margin-bottom: 60px;
             }
+
             @media (max-width: $phablet-min-width-minus) {
                 margin-bottom: 40px;
             }
         }
     }
-    .desc {
-        font-size: rem-calc(20px);
-        line-height: 32px;
-        margin: 24px 0 32px;
-        max-width: 548px;
+
+    .smaller {
+        margin: 32px 0 24px;
+
         @media (max-width: $phablet-min-width-minus) {
-            font-size: rem-calc(16px);
-            line-height: 24px;
+            margin: 24px 0 16px;
         }
     }
-    .contact-form {
-        background: #A5A3A30D;
-        box-shadow: 0px 3px 15px 0px #29292933;
-        padding: 24px;
+
+    .contact-box {
+        background: #FBFBFB;
+        box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08), 0px 5px 16px rgba(0, 60, 117, 0.02);
         border-radius: 10px;
-        height: 440px;
         margin-bottom: 50px;
-        .validation-message {
-            font-size: rem-calc(12px);
-            margin: 0 0 10px;
-        }
-        fieldset {
-            height: 87px;
-        }
-        .input-label {
-            font-size: rem-calc(14px);
-            line-height: 24px;
-            margin-bottom: 5px;
-            .required {
-                color: #D61D33;
-                font-size: rem-calc(12px);
-                font-weight: bold;
+
+        .box-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #D9E6EF;
+
+            @media (max-width: $phablet-min-width-minus) {
+                padding: 16px;
+            }
+
+            h4 {
+                margin: 0;
             }
         }
-        input, textarea {
-            border-radius: 0;
-            border-color: $border-color;
-            background-color: #A5A3A30D;
-        }
-        .phone {
-            max-width: 300px;
-            height: 40px;
-        }
-        .description-input {
-            height: 250px;
-        }
-    } 
-}
-.section-footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 24px 55px;
-    margin-bottom: 2px;
-    box-shadow: 0px 1px 0px 0px #E2E2E2 inset;
-    .transparent {
-        background-color: transparent;
-        border: none;
-        color: $primary-color;
-        font-family: $secondary-font-family-bold;
-        font-size: rem-calc(16px);
-        margin-bottom: 0;
-        &.hidden {
-            visibility: hidden;
-        }
-    }
-    .button {
-        width: 100px;
-        font-size: rem-calc(16px);
-        line-height: 16px;
-        padding: 8px;
-        font-family: $secondary-font-family-bold;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-        .btn-container {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-        .flex {
-            display: flex;
+
+        .contact-form {
+            padding: 24px 24px 32px;
+
+            @media (max-width: $phablet-min-width-minus) {
+                padding: 16px 16px 24px;
+            }
+
+            .validation-message {
+                font-size: rem-calc(12px);
+                margin: 8px 0 0;
+            }
+
+            fieldset {
+                position: relative;
+                margin-bottom: 16px;
+                max-width: 500px;
+                width: 100%;
+
+                &.last {
+                    margin-bottom: 0;
+                }
+            }
+
+            input,
+            textarea {
+                background: #FBFBFB;
+                border: 1px solid #868686;
+                border-radius: 4px;
+                font-size: rem-calc(16px);
+                line-height: 24px;
+
+                &::placeholder {
+                    color: #868686;
+                }
+            }
+
+            .required {
+                position: absolute;
+                left: 160px;
+                top: 8px;
+                font-size: rem-calc(16px);
+                line-height: 24px;
+                color: #D61D33;
+
+                &.textarea {
+                    left: 135px;
+                }
+
+                &.none {
+                    display: none;
+                }
+            }
+
+            .phone {
+                height: 40px;
+            }
+
+            .description-input {
+                height: 115px;
+            }
         }
     }
 }

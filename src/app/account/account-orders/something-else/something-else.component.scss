@@ -1,0 +1,11 @@
+@import "../../../../styles/modules/_variables.scss";
+
+.something-else {
+    h3 {
+        margin-bottom: 32px;
+
+        @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+        }
+    }
+}

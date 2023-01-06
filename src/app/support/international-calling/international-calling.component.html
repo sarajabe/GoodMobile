@@ -1,115 +1,154 @@
-<section class="international-calling-container">
-    <div class="container-flex">
-        <div class="container-flex-row flex-center text-center">
-            <div class="content">
-                <h1>Good Mobile International</h1>
-                <img src="assets/img/banners/intrnational-image-res.jpg"
-                    alt="Good Mobile offers the world at your fingertips. All plans include unlimited talk and text in the US + Canada and Mexico." />
-                <p class="hide-on-phone">The world. At your fingertips.</p>
-                <p class="hide-on-large">The world.<br> At your fingertips.</p>
-            </div>
-        </div>
+<section class="banner-section">
+    <picture class="banner-image-container">
+        <source srcset='assets/img/banners/Int-calling-mobile.webp' media="(max-width: 499.9px)"
+            type="image/webp">
+        <source srcset='assets/img/banners/Int-calling-mobile.png' media="(max-width: 499.9px)"
+            type="image/png">
+        <source srcset='assets/img/banners/Int-calling-500.webp' media="(max-width: 639.9px)" type="image/webp">
+        <source srcset='assets/img/banners/Int-calling-500.png' media="(max-width: 639.9px)" type="image/png">
+        <source srcset='assets/img/banners/Int-calling-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+        <source srcset='assets/img/banners/Int-calling-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+        <source srcset='assets/img/banners/Int-calling-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+        <source srcset='assets/img/banners/Int-calling-desktop.png' media="(min-width: 1025px)" type="image/png">
+        <img src="assets/img/banners/Int-calling-desktop.png" alt="International calling">
+    </picture>
+    <div class="page-section banner-text-content">
+      <h1 class="header">Good Mobile International</h1>
+      <h3 class="sub-header">The world, at your fingertips.</h3>
     </div>
 </section>
-<section class="international-calling-details">
-    <div class="container-flex">
+<section class="international-calling-details section-space">
+    <div class="page-section">
         <div class="title">
-            <h2 class="width-80">Prepaid that’s world made</h2>
-            <p class="desc">Louis Armstrong sings it best: “What a wonderful world it is.”</p>
-            <p class="desc">From Canada to Venezuela and plenty of places in between, we’ve got you covered. Unlike some prepaid cell
-                phone plans, Good Mobile International plans offer unlimited talk & text to over 60 countries including
-                Canada & Mexico for FREE. With the ability to add on Individual countries’ minutes for just $5 a month.
+            <p class="label">START WITH GOOD MOBILE</p>
+            <h2 class="header-color">Prepaid that's world made</h2>
+            <p class="smaller space">Louis Armstrong sings it best: “What a wonderful world it is.”
             </p>
-            <p class="desc">Simply sign in to your account, add-on the Individual Countries you want (or discontinue) at any time.
+            <p class="smaller p-space">From Canada to Venezuela and plenty of places in between, <b>we’ve got you covered</b>. Unlike some prepaid 
+                cell phone plans, Good Mobile International plans offer unlimited talk & text to over <b>60</b> countries including 
+                <b>Canada & Mexico</b> for <b>FREE</b>. With the ability to add on Individual countries’ minutes for just <b>$5 a month</b>.</p>
+            <p class="smaller">Simply sign in to your account, add-on the Individual Countries you want (or discontinue) at any time. 
                 It’s one of the best cell phone deals around!</p>
         </div>
-        <div>
-            <h4>Stay in touch with family & friends around the world!</h4>
-            <p class="hint">Here’s the List of countries that are included in each service:</p>
-            <ul class="categories">
-                <li [class.active]="!!showUnlimited" (click)="showUnlimited=true;showPayGo=false;">Unlimited
-                    Calling</li>
-                <li [class.active]="!!showPayGo" (click)="showPayGo=true;showUnlimited=false;">Individual
-                    Country</li>
-            </ul>
-            <section *ngIf="!!showUnlimited">
-                <p class="title">Unlimited Calling</p>
-                <p class="subtitle">Get unlimited calling to over 60 countries from the US, including landline &
-                    cellular to Mexico & Canada for <b>FREE</b> with your plan.</p>
-                <ul class="sort-nav">
-                    <li *ngFor="let letter of letters" value="{{letter}}" [class.active]="selected == letter"><a
-                            (click)="filterCountries(letter);selected=letter">{{letter}}</a>
-                    </li>
-                </ul>
-                <ul class="countriesList unlimited" *ngIf="filteredCountries.length > 0">
-                    <li *ngFor="let country of filteredCountries" value={{country?.name}}>
-                        <span class="countryName">{{country?.name}}</span>
-                        <span class="rate" *ngIf="country?.isLandline">Landline</span><span class="rate"
-                            *ngIf="country?.isLandline && country?.isCellular">+</span><span class="rate"
-                            *ngIf="country?.isCellular">Cellular</span>
-                    </li>
-                </ul>
-                <div *ngIf="filteredCountries.length === 0">
-                    <p>No countries found.</p>
-                </div>
-            </section>
-            <section *ngIf="!!showPayGo">
-                <p class="title"><strong>Pay Go International Calling</strong></p>
-                <p>
-                    Need to call a country not on your Unlimited Calling Country
-                    list? You can purchase $5 of additional International minutes to
-                    call globally. Rates vary by destination.
-                </p>
-                <p>
-                    Check below on a specific destinations Rates
-                </p>
-                <ul class="sort-nav">
-                    <li *ngFor="let letter of letters" value="{{letter}}"
-                        [class.active]="selectedPayGoLetter == letter"><a
-                            (click)="filterCountries(letter,'payGo');selectedPayGoLetter=letter">{{letter}}</a>
-                    </li>
-                </ul>
-                <ul class="countriesList payGo" *ngIf="filteredPayGoCountries.length > 0"
-                    [class.long]="selectedPayGoLetter == 'M' || selectedPayGoLetter == 'S' || selectedPayGoLetter == 'B' || selectedPayGoLetter == 'C'">
-                    <li *ngFor="let country of filteredPayGoCountries" value={{country?.name}}><span
-                            class="countryName">{{country?.name}}</span><span class="rate">{{country?.value |
-                            currency:'USD':'symbol':0}}</span>
-                    </li>
-                </ul>
-                <div *ngIf="filteredPayGoCountries.length === 0">
-                    <p>No countries found.</p>
-                </div>
-            </section>
-        </div>
     </div>
 </section>
-<section class="international-calling-info">
-    <div class="container-flex">
-        <h3>How to get Unlimited Calling and Texting with Good Mobile</h3>
-        <p>To get International Unlimited Calling and Texting you need to <a
-                [routerLink]="['/'+LOGIN_ROUTE_URLS.BASE +'/'+ LOGIN_ROUTE_URLS.LOGIN]">sign in</a> with Good Mobile and
-            purchase an <a
-                [routerLink]="['/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Unlimited
-                Plan</a> that will work best for you.
-            The rest is pretty simple, just follow the Add-ons on your Account Summary menu and click on the
-            International Calling tab. Click on ‘Add International Calling’ and you’re good to go!</p>
-        <p>If you need to call a country that’s not on our Unlimited Calling country list, you can purchase $5 of
-            additional International minutes to call globally through our Pay Go Calling. Rates may vary by destination.
-        </p>
+<section class="international-info-section section-space">
+    <div class="page-section">
+        <div class="title-section">
+            <p class="label">INTERNATIONAL CALLING</p>
+            <h2 class="header-color">Stay in touch with family & friends around the world!</h2>
+            <p class="smaller">Here’s the list of countries that are included in each service:</p>
+            <div class="tabs">
+                <div class="tabs-header">
+                    <div class="tab-label" [class.active]="type === 'int-calling'">
+                        <input type="radio" name="tabs" id="unlimitedCountries"  value="int-calling" [(ngModel)]="type" (ngModelChange)="changeCategory()">
+                        <label for="unlimitedCountries">Unlimited Calling</label>
+                    </div>
+                    <div class="tab-label" [class.active]="type === 'pay-go'">
+                        <input type="radio" name="tabs" id="payGoCountries"  value="pay-go" [(ngModel)]="type" (ngModelChange)="changeCategory()">
+                        <label for="payGoCountries">{{innerWidth < 500 ? 'Indv. Countries' : 'Individual Countries'}}</label>
+                    </div>
+                </div>
+                <div class="tabs-content" >
+                    <div class="tab-content" >
+                        <h5 *ngIf="type === 'int-calling'">Unlimited Calling</h5>
+                        <h5 *ngIf="type === 'pay-go'">Pay Go International Calling</h5>
+                        <p class="smaller" *ngIf="type === 'int-calling'">Get unlimited calling to over 60 countries from the US, including landline & cellular to Mexico & Canada for <b>FREE</b>  with your plan.</p>
+                        <p class="smller" *ngIf="type === 'pay-go'">Need to call a country not on your Unlimited Calling Country list? You can purchase <b>$5</b> of additional international minutes to call globally. Rates vary by destination. Check below on a specific destination rates:</p>
+                        <div class="search-section">
+                            <input type="text" placeholder="Search for a Country" [(ngModel)]="filterText"
+                            (ngModelChange)="filterTextChanged(filterText)">
+                            <div class="search-icon">
+                                <img src="assets/icon/search-white.svg" alt="search" />
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <p class="smaller primary-font-bold">Filter by Region:</p>
+                            <div class="filter-options" >
+                                <div class="option" *ngFor="let option of filterOptions">
+                                    <p class="region" (click)="selectOption(option)" [class.active]="selected === option">{{option}}</p>
+                                </div>
+                            </div>
+                            <div class="result-section">
+                                <p class="caption number" data-cy="resultsNumber" *ngIf="countriesLength != 0"><b>{{countriesLength}}</b> 
+                                    result{{countriesLength > 1 ? 's' : ''}} for "<span data-cy="filter">{{selected}}</span>"
+                                </p>
+                                <p class="validation-message alert caption" *ngIf="countriesLength === 0" >No Results found</p>
+                                <section class="international-calling-section" *ngIf="!!type && countriesLength > 0" id="contentSection">
+                                    <div *ngFor="let country of internationalCountriesContent;">
+                                        <div class="header-section">
+                                            <div class="titles-container" *ngIf="type === 'int-calling'"
+                                                [class.split-style]="countriesLength > 0">
+                                                <div class="titles-container1">
+                                                    <div class="titles">
+                                                        <p class="smaller primary-font-bold">Countries</p>
+                                                        <p class="smaller primary-font-bold">Minutes</p>
+                                                    </div>
+                                                </div>
+                                                <div class="titles-container2" *ngIf="countriesLength > 0">
+                                                    <div class="titles">
+                                                        <p class="smaller primary-font-bold">Countries</p>
+                                                        <p class="smaller primary-font-bold">Minutes</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="titles-container" *ngIf="type === 'pay-go'"
+                                                [class.split-style]="countriesLength > splitLimit">
+                                                <div class="titles-container1">
+                                                    <div class="titles">
+                                                        <p class="smaller primary-font-bold">Countries</p>
+                                                        <p class="smaller primary-font-bold">Price</p>
+                                                    </div>
+                                                </div>
+                                                <div class="titles-container2" *ngIf="countriesLength > 0">
+                                                    <div class="titles">
+                                                        <p class="smaller primary-font-bold">Countries</p>
+                                                        <p class="smaller primary-font-bold">Price</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="contents-section" [class.content-section-split-style]="countriesLength > 0">
+                                            <div class="contents" *ngFor="let item of countries  | paginate : config ;let i =index;">
+                                                <div class="top-section"><img class="flag-icon"
+                                                        src="https://{{item?.fields?.countryFlagUrl.fields?.file.url}}">
+                                                    <p class="country-name smallest primary-font-bold">{{item?.fields?.countryName}}</p>
+                                                </div>
+                                                <div class="offerings" *ngIf="item?.fields?.countryOfferings">
+                                                    <div class="offers" *ngFor="let offer of item?.fields?.countryOfferings">
+                                                        <p class="offer-key caption">{{offer?.fields?.key ? offer?.fields?.key : '--'}}</p>
+                                                        <p class="offer-value caption">{{offer?.fields?.value ? offer?.fields?.value : '--'}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="pages" *ngIf="!!countriesLength && countriesLength > 30 && !filtered">
+                                    <app-custom-pagination [config]="config" (configChange)="pageChanged($event)"></app-custom-pagination>
+                                </div>
+                                <div class="pages" *ngIf="!!countriesLength && countriesLength > 30 && !!filtered">
+                                    <app-custom-pagination [config]="config" (configChange)="filteringPageChanged($event)"></app-custom-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="footer primary-font-bold">If you need to call a country that’s not on our Unlimited Calling country list, you can purchase $5 of additional International minutes to call globally through our <span class="text-orange">Pay Go Calling</span>. 
+                Rates may vary by destination.</p>
+        </div>
     </div>
 </section>
 <section class="get-started">
-    <div class="container-flex">
-        <div class="container-flex-row flex-center">
-            <div class="description">
-                <span>Cheap phone plans shouldn’t mean sacrifice.</span>
-                <span>For the best cell phone deals, try Good Mobile</span>
-            </div>
-            <div class="col-md-3">
-                <button class="button primary" data-cy="goToPlans"
-                    [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">Go
-                    to plans</button>
-            </div>
+    <div class="page-section section-space">
+        <p class="label">PREMIUM WIRLESS</p>
+        <h2 class="header-color">Cheap Phone Plans Shouldn’t Mean Sacrifice.</h2>
+        <h5>For the best cell phone deals, try Good Mobile.</h5>
+        <div class="actions">
+            <button class="button primary" data-cy="goToPlans"
+            [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">Go
+            to plans</button>
         </div>
     </div>
 </section>
