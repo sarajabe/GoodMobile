@@ -12,15 +12,22 @@
         }
 
         .form-section {
+            max-width: 512px;
+
             &.edit {
                 max-width: 550px;
             }
 
             .name {
                 max-width: 305px;
+                margin-bottom: 30px;
 
                 &.long {
                     max-width: 350px;
+                }
+
+                .validation-message {
+                    margin-bottom: 0;
                 }
             }
 
@@ -30,6 +37,14 @@
 
             .four {
                 padding-left: 0;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-top: 20px;
+                }
+
+                .validation-message {
+                    margin-bottom: 0 !important;
+                }
             }
 
             .address-lookup {
@@ -52,9 +67,12 @@
         }
 
         .current-address {
-            .label {
-                font-family: $secondary-font-family-bold;
-                margin-bottom: 16px;
+            .smaller {
+                margin-bottom: 24px;
+
+                b {
+                    font-family: $base-font-family-bold;
+                }
             }
 
             .info-banner {
@@ -194,8 +212,6 @@
                     }
 
                     .new-address {
-                        max-width: 480px;
-
                         .section-hightligt {
                             background: #E5EEF4;
                             color: $primary-color;
@@ -354,8 +370,6 @@
                         }
 
                         .new-address {
-                            max-width: 480px;
-
                             .section-hightligt {
                                 .icon {
                                     font-size: rem-calc(28px);

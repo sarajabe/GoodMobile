@@ -1,4 +1,4 @@
-<section class="edit-address report-page" [class.space]="!!showContactForm">
+<section class="edit-address report-page page-section" [class.space]="!!showContactForm">
     <div class="back-section">
         <img src="/assets/icon/back-arrow.svg">
         <h6 class="back-link" (click)="goToReportIssue()">Report an Issue</h6>
@@ -7,7 +7,7 @@
     <!-- User can update address -->
     <ng-container *ngIf="!showContactForm && !!canUpdateAddress && !isEditAddress && !addressUpdated">
         <div class="current-address">
-            <h6 class="label">Current shipping address:</h6>
+            <h6 class="smaller">Current shipping address:</h6>
             <div class="info-banner default-background">
                 <div class="flex">
                     <img src="/assets/icon/info-icon.svg" alt="Info Icon">
@@ -124,7 +124,7 @@
     <!-- User wants to edit address -->
     <ng-container *ngIf="!showContactForm && !!isEditAddress && !addressUpdated">
         <div class="current-address">
-            <p class="label"> {{ !!isCurrent ? 'Current shipping address:' : 'Ship to this address:'}}</p>
+            <p class="smaller"> {{ !!isCurrent ? 'Current shipping address:' : 'Ship to this address:'}}</p>
             <div class="edit-card">
                 <div class="form-section edit">
                     <form #editShippingMethodForm="ngForm">
@@ -158,15 +158,16 @@
     <!-- User wants to edit address -->
     <ng-container *ngIf="!showContactForm && !isEditAddress && !!addressUpdated">
         <div class="info-banner success-background">
-            <div class="flex center">
+            <div class="flex">
                 <img src="/assets/icon/success-icon.svg" alt="Success Icon">
                 <div class="banner-content">
-                    <p class="description last">Successfully updated your shipping address!</p>
+                    <p class="title">Great News!</p>
+                    <p class="description last">You have successfully updated your shipping address!</p>
                 </div>
             </div>
         </div>
         <div class="current-address success">
-            <p class="label">Your updated shipping address:</p>
+            <p class="smaller"><b>Your updated shipping address:</b></p>
             <div class="info-banner default-background">
                 <div class="flex">
                     <img src="/assets/icon/info-icon.svg" alt="Info Icon">
@@ -187,14 +188,14 @@
         </div>
     </ng-container>
 </section>
-<section class="navigation-section" *ngIf="!showContactForm && !!canUpdateAddress">
+<section class="navigation-section page-section" *ngIf="!showContactForm && !!canUpdateAddress">
     <div class="page-section navs">
         <p class="no-border" (click)="cancel()" [class.hidden]="!!addressUpdated">Cancel</p>
         <button class="button primary" data-cy="updateBtn" aria-label="update"
             (click)="updateAddress()">{{!!addressUpdated ? 'Done' : 'Update'}}</button>
     </div>
 </section>
-<section class="navigation-section" *ngIf="!showContactForm && !canUpdateAddress">
+<section class="navigation-section page-section" *ngIf="!showContactForm && !canUpdateAddress">
     <div class="page-section navs">
         <p class="no-border" (click)="goToReportIssue()">Cancel</p>
     </div>
