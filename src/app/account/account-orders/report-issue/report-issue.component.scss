@@ -8,9 +8,6 @@
 
     .back-section {
         display: flex;
-        font-family: $base-font-family;
-        font-size: rem-calc(16px);
-        line-height: 24px;
         margin-bottom: 32px;
         align-items: center;
         flex-wrap: wrap;
@@ -24,7 +21,7 @@
         }
 
         .id {
-            font-family: $base-font-family;
+            font-family: $secondary-font-family-bold;
             color: $primary-color;
             margin-bottom: 0;
         }
@@ -45,30 +42,12 @@
         margin-bottom: 40px;
 
         .header {
-            font-size: rem-calc(32px);
             font-family: $secondary-font-family-bold;
-            line-height: 40px;
-            margin-bottom: 8px;
-        }
-
-        .description {
-            font-size: rem-calc(20px);
-            line-height: 32px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         @media (max-width: $phablet-min-width-minus) {
             margin-bottom: 24px;
-
-            .header {
-                font-size: rem-calc(24px);
-                line-height: 30px;
-            }
-
-            .description {
-                font-size: rem-calc(16px);
-                line-height: 24px;
-            }
         }
     }
 
@@ -111,9 +90,6 @@
             }
 
             .option-title {
-                margin-bottom: 0;
-                font-size: rem-calc(16px);
-                line-height: 24px;
                 font-family: $base-font-family-bold;
             }
         }

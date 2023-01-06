@@ -3,6 +3,14 @@
 
 ::ng-deep {
     .edit-address {
+        h3 {
+            margin-bottom: 32px;
+
+            @media(max-width: $phablet-min-width-minus) {
+                margin-bottom: 24px;
+            }
+        }
+
         .form-section {
             &.edit {
                 max-width: 550px;
@@ -46,8 +54,6 @@
         .current-address {
             .label {
                 font-family: $secondary-font-family-bold;
-                font-size: rem-calc(18px);
-                line-height: 28px;
                 margin-bottom: 16px;
             }
 
@@ -93,9 +99,7 @@
                 margin-top: 24px;
             }
 
-            .desc {
-                font-size: rem-calc(16px);
-                line-height: 24px;
+            .smaller {
                 margin-bottom: 24px;
 
                 @media (max-width: $phablet-min-width-minus) {
@@ -202,8 +206,6 @@
                             cursor: pointer;
 
                             .section-title {
-                                font-size: rem-calc(16px);
-                                line-height: 24px;
                                 margin-bottom: 0;
                                 font-family: $base-font-family-bold;
                             }
@@ -377,19 +379,13 @@
             .help {
                 color: $primary-color;
                 font-family: $secondary-font-family-bold;
-                font-size: rem-calc(20px);
-                line-height: 20px;
+                line-height: 18px;
                 margin-bottom: 0;
                 cursor: pointer;
             }
 
             @media (max-width: $phablet-min-width-minus) {
                 margin: 24px 0 0;
-
-                .help {
-                    font-size: rem-calc(16px);
-                    line-height: 16px;
-                }
             }
         }
     }
@@ -408,34 +404,6 @@
 
             fieldset {
                 margin: 0;
-            }
-        }
-    }
-
-    .section-footer {
-        padding: 24px 0;
-        position: inherit;
-        background-color: white;
-        z-index: 999;
-
-        .btn-container {
-            max-width: 1360px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding-right: 50px;
-            padding-left: 50px;
-
-            .transparent {
-                padding-left: 0;
-                text-align: left;
-            }
-
-            @media (max-width: $phablet-min-width-minus) {
-                padding-left: 16px;
-                padding-right: 16px;
             }
         }
     }
