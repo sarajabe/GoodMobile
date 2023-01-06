@@ -72,6 +72,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   private alive = true;
   private captchaResponse: string;
   private streetSearchText: string;
+  isStorePickup: boolean;
   constructor(private formBuilder: FormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
     private accountPaymentService: AccountPaymentService, private appState: AppState, private modalHelper: ModalHelperService,
     private router: Router, private equipmentService: EquipmentService, private mobileCustomPlansService: MobileCustomPlansService,
@@ -282,6 +283,9 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public goToAcpSummary(): void {
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
   }
+  public goToPendingActivation(): void {
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
+  }
   public goToStep2(): void {
     if (!!this.isEsim) {
       this.simOptionsForm.markAllAsTouched();
@@ -317,7 +321,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public purchasePlan(isEsim?): void {
     if (!!this.newMobileServiceFrom.valid && (!isEsim && !!this.option && ((this.option === 'home' && !!this.isAddressVerified) || (this.option === 'store' && !!this.barCode)) || !!isEsim )) {
       this.clearCart();
-      const isStorePickup = this.option === 'store'? true: false;
+      this.isStorePickup = this.option === 'store'? true: false;
       this.mobilePlansService.setActivePlanId("");
       this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
       this.mobileCustomPlansService.setPlanExpectedDevice(null);
@@ -328,8 +332,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         this.mobilePlansService.seteSIM(true);
         this.mobilePlansService.setQrScanned(false);
       }
-      if(!!isStorePickup) {
-        this.mobilePlansService.setStorePickup(isStorePickup);
+      if(!!this.isStorePickup) {
+        this.mobilePlansService.setStorePickup(this.isStorePickup);
       }
       setTimeout(() => {
         const data: INewPlanCartItem = {
@@ -338,13 +342,13 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           orderShipMethod: !!isEsim ? null : "usps_first_class_mail/letter",
           promoCode: "5",
           savePaymentMethod: false,
-          shippingAddress: !!isEsim || !!isStorePickup ? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
+          shippingAddress: !!isEsim || !!this.isStorePickup ? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
           paymentInfo: null,
           simsQuantity: 0,
           usingPaymentProfile: false,
           voucherCode: null,
           haseSIM: !!isEsim ? true : false,
-          storePickup : isStorePickup
+          storePickup : this.isStorePickup
         };
         this.appState.loading = true;
         this.orderCheckoutService.checkoutNewPlan(data).then(

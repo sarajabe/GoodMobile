@@ -1,35 +1,26 @@
 <section class="page-section activate-sim">
-    <div class="container-flex-row">
-        <div class="col-xl-12 col-sm-12 col-12">
-            <h1 class="header">Activate | Port your number</h1>
-        </div>
-    </div>
-    <div *ngIf="!!userPlan && userPlan?.planDevice" class="container-flex-row form-holder">
-        <div class="content-holder col-xl-12">
-            <div class="tab-nav">
+    <h1 class="header-color">Activate | Port your number</h1>
+    <div *ngIf="!!userPlan && userPlan?.planDevice" class="form-holder">
+        <div class="content-holder">
+            <div class="activation-tabs">
                 <ul class="tab-list">
-                    <li class="tab-title" [class.active]="isNewNumber" *ngIf="!isPortOnly"><span class="tab-content"
-                            [class.active]="isNewNumber" (click)="isNewNumber = true" id="activate-new-span">Activate
-                            with a new
-                            number</span></li>
-                    <li class="tab-title" [class.active]="!isNewNumber" *ngIf="!isNewOnly"><span class="tab-content"
-                            [class.active]="!isNewNumber" (click)="isNewNumber = false"
-                            id="keep-current-number-span">Keep your current number</span></li>
+                    <li class="tab-title" [class.active]="isNewNumber" *ngIf="!isPortOnly" (click)="isNewNumber = true">Activate with a new number</li>
+                    <li class="tab-title" [class.active]="!isNewNumber" *ngIf="!isNewOnly" (click)="isNewNumber = false">Keep your current number</li>
                 </ul>
             </div>
         </div>
 
-        <div class="content-holder port-bottom col-xl-8" *ngIf="!isNewNumber">
-            <p class="port-note">
+        <div class="content-holder port-bottom " *ngIf="!isNewNumber">
+            <h5 >
                 In order to port your current number we need the information below. Please insure the fields are
                 complete and
                 correct before submitting. Any incorrect information may result in your number not porting to your new
                 Good Mobile account.
-            </p>
+            </h5>
         </div>
     </div>
-    <div *ngIf="!!userPlan?.planDevice" class="container-flex-row form-holder">
-        <div class="content-holder col-xl-6">
+    <div *ngIf="!!userPlan?.planDevice" class="activate-content">
+        <div class="content-holder">
             <div class="tab-content">
                 <ng-container *ngIf="!!isNewNumber && !isPortOnly">
                     <app-activate-new-number [userPlan]="userPlan" [code]="activationCode"></app-activate-new-number>

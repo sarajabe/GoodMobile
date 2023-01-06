@@ -86,7 +86,6 @@
 
         .info-banner {
             margin-top: 40px;
-            max-width: 941px;
 
             @media (max-width: $phablet-min-width-minus) {
                 margin-top: 24px;
@@ -98,7 +97,6 @@
         }
 
         .acp-application-card {
-            max-width: 941px;
             width: 100%;
             background: rgba(165, 163, 163, 0.05);
             box-shadow: 0px 3px 15px rgba(41, 41, 41, 0.2);
@@ -321,6 +319,61 @@
                         }
                     }
                 }
+            }
+        }
+    }
+    .qr-section {
+        margin-top: 24px;
+        padding-left: 43px;
+        .qr {
+            margin: 12px 0;
+        }
+        b {
+            font-family: $base-font-family-bold;
+        }
+    }
+    .documents-banner {
+        margin-bottom: 24px!important;
+        .banner-content {
+            width: 100%;
+            .title {
+                display: flex;
+                justify-content: space-between;
+                color: $primary-color;
+                span {
+                    text-decoration: underline;
+                }
+                cursor: pointer;
+                .arrow {
+                    width: 24px;
+                    &.rotate {
+                        transform: rotate(-180deg);
+                    }
+                }
+            }
+            .and {
+                margin: 12px 0;
+            }
+            .description {
+                margin-bottom: 12px!important;
+            }
+            .more-details {
+                margin-top: 8px;
+            }
+            .showHide {
+                cursor: pointer;
+                color: $primary-color;
+            }
+            .or {
+                font-family: $base-font-family;
+                font-size: rem-calc(14px);
+            }
+            .details-list {
+                font-size: rem-calc(14px);
+                line-height: 24px;
+                font-family: $base-font-family-bold;
+                padding-inline-start: 23px;
+                margin-top: 8px;
             }
         }
     }

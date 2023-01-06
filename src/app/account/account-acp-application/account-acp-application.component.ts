@@ -37,6 +37,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public seconds: any = 0;
   public minutes: any = 0;
   public showExpiredSection = false;
+  public showMoreDocuments = false;
+  public showValidDocs = false;
+  public showProofDocs = false;
   public ACP_STATUS = {
     COMPLETE: 'COMPLETE',
     PENDING_RESOLUTION: 'PENDING_RESOLUTION',
@@ -80,7 +83,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showAcpPlanActivationCard = false;
   public activePlans: Array<IUserPlan>;
   public appDetails: any = {};
-
+  public showQrCode = false;
   private callBackUrl: string;
   private alive = true;
 
@@ -586,6 +589,11 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   this.showNVCard = true;
                   this.verificationDetails = details;
                   this.nvStatus = this.verificationDetails?.status;
+                  if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION) {
+                    this.showQrCode = true;
+                  } else {
+                    this.showQrCode = false;
+                  }
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.IN_PROGRESS || this.verificationDetails?.status === 'PENDING_ELIGIBILITY') {
                     this.showCardDesc = true;
                   }

@@ -20,6 +20,7 @@ import { UtilModule } from '@ztarmobile/zwp-services-util';
 import { BackendModule } from '@ztarmobile/zwp-service-backend';
 import { BackendV2Module } from '@ztarmobile/zwp-service-backend-v2';
 import { SWIPER_CONFIG, SwiperConfigInterface, SwiperModule } from 'ngx-swiper-wrapper';
+import { QRCodeModule } from 'angularx-qrcode';
 import { ToastrModule } from 'ngx-toastr';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import 'leaflet';
@@ -99,6 +100,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         ModalsModule,
         SwiperModule,
         NguiAutoCompleteModule,
+        QRCodeModule,
         AppRoutingModule,
         ModalModule.forRoot(),
         BootstrapModalModule,

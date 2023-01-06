@@ -51,6 +51,7 @@ import { ChangeOfMindComponent } from './order-rma/change-of-mind/change-of-mind
 import { ReturnFormComponent } from './order-rma/return-form/return-form.component';
 import { AccountEsimSetupComponent } from './account-esim-setup/account-esim-setup.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [UserAccountComponent,
@@ -103,6 +104,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    QRCodeModule,
     NgCircleProgressModule.forRoot({
       showTitle: true,
       showSubtitle: false,

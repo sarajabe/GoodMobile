@@ -9,6 +9,7 @@ import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { NoticeAgreementComponent } from './notice-agreement/notice-agreement.component';
 import { AcpValidationComponent } from './acp-validation/acp-validation.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { QRCodeModule } from 'angularx-qrcode';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { WidgetsModule } from 'src/widgets/widgets.module';
 import { ModalsModule } from 'src/modals/modals.module';
@@ -57,6 +58,7 @@ import { EnrollmentAddExistingLineComponent } from './enrollment-add-existing-li
     NgMultiSelectDropDownModule.forRoot(),
     WidgetsModule,
     ModalsModule,
+    QRCodeModule,
     NguiAutoCompleteModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

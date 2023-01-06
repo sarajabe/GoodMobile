@@ -1,6 +1,6 @@
 <section class="enrollment-new-line-page page-section">
+    <h1 class="title">ACP Enrollment</h1>
     <div *ngIf="!planPurchased">
-        <h1 class="title">ACP Enrollment</h1>
         <div class="success-acp-banner" *ngIf="!successCehck && !errorCheck &&activeStep === 1">
             <img src="assets/icon/success-icon.svg" alt="Success Icon">
             <div class="descs">
@@ -321,9 +321,10 @@
     <div *ngIf="!!planPurchased && !isEsim" class="plan-purchased-banner">
         <img src="assets/icon/success-icon.svg" alt="Success Icon">
         <div class="descs">
-            <p class="top-desc">Purchase successful!</p>
-            <p class="sub-desc">Your ACP plan has been successfully purchased! Look out for your SIM card in the mail.
-                Once recieved, you may proceed with the activation process</p>
+            <p class="top-desc">ACP Application successful!</p>
+            <p class="sub-desc"><b>Next Steps -  {{!!isStorePickup ? 'In Store SIM Card Pickup.' : 'We are shipping your SIM card.'}}</b></p>
+            <p class="sub-desc" *ngIf="!!isStorePickup">Click <b>"Continue"</b> to get your barcode.<br>Show the bardcode to your local goodwill store to receive your SIM Card.<br> Activate the SIM with your Good Mobile <b>ACP plan!</b></p>
+            <p class="sub-desc" *ngIf="!isStorePickup">When you receive your SIM card, follow the instructions on the package to activate the SIM with your Good Mobile <b>ACP plan!</b></p>
         </div>
     </div>
     <div *ngIf="!!planPurchased && !!isEsim" class="plan-purchased-banner">
@@ -335,8 +336,8 @@
         </div>
     </div>
 </section>
-<section class="navigation-section" [class.end]="!!planPurchased">
-    <div class="page-section navs">
+<section class="navigation-section" >
+    <div class="page-section navs" [class.end]="!!planPurchased">
         <button class="button thirdly noPadding" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
         <div class="right" *ngIf="!planPurchased">
             <button class="button secondary" data-cy="backBtn" aria-label="Back"
@@ -352,7 +353,7 @@
                 (click)="purchasePlan()">Next</button>
         </div>
         <div class="right end" *ngIf="!!planPurchased">
-            <button class="button primary" (click)="goToAcpSummary()">Done</button>
+            <button class="button primary" (click)="goToPendingActivation()">{{!!isStorePickup ? 'Continue' : 'Done'}}</button>
         </div>
     </div>
     

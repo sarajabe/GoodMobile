@@ -41,7 +41,6 @@
                                     <div class="item-details" *ngFor="let plan of orderInfo?.plans; let i = index">
                                         <div class="details-side">
                                             <img class="thumbnail" src="assets/icon/plan_thumbnail.svg" alt="thumbnail" *ngIf="!plan?.promotionCode" >
-                                            <img class="thumbnail" [src]="promoDetails[plan?.promotionCode].img" alt="g2g-plan" *ngIf="!!plan?.promotionCode && orderInfo?.intent === ORDER_INTENT.NEW"/>
                                             <div class="details">
                                                 <p class="smaller primary-font-bold">{{plan?.subtitle}}</p>
                                                 <p class="smaller primary-font" [class.promo]="!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW">{{!!plan?.promotionTitle && orderInfo?.intent === ORDER_INTENT.NEW ? plan?.promotionTitle : plan?.title}}</p>
@@ -229,7 +228,7 @@
                                                     *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING && orderInfo?.skuNumber !== 'TE'"
-                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                                    (click)="cancelOrderWithRefund(true)">Cancel</p>
                                                 <hr *ngIf="!!orderInfo?.planAddOns">
                                             </div>
                                         </div>

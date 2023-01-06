@@ -72,11 +72,6 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     { shippingMethod: 'USPS Priority', shipmentMethodId: 'usps_priority_mail/large_envelope_or_flat' },
     { shippingMethod: 'USPS Priority Express', shipmentMethodId: 'usps_priority_mail_express/large_envelope_or_flat' }
   ];
-  public promoDetails = {
-    "2X2GHolidays2022": {img: "assets/icon/2X2GHolidays2022.svg"},
-    "2X6GHolidays2022": {img: "assets/icon/2X6GHolidays2022.svg"},
-    "2X3GHolidays2022": {img: "assets/icon/2X3GHolidays2022.svg"},
-  }
   public trackingInfo: IShipmentTracking;
   public phoneImageSrc = 'assets/img/loading-copy.gif';
 
@@ -213,7 +208,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     return mdn;
   }
 
-  public cancelOrderWithRefund(): void {
+  public cancelOrderWithRefund(isReplacement?: boolean): void {
     this.modalHelper.showConfirmMessageModal('Cancel order', 'Are you sure you want to cancel your order ?',
       'Yes', 'No', 'clean-cart-modal')
       .result.then((result) => {
@@ -221,11 +216,11 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
           this.appState.loading = true;
             this.accountOrderService.cancelWithRefund(this.orderId).then((order) => {
               this.appState.loading = false;
-              if (!!this.orderInfo.mdn && !!this.orderInfo.devices && this.orderInfo.devices.length > 0) {
+              if (!!isReplacement) {
                 this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
                   const associatedPlan = plans.find((p) => p.mdn === this.orderInfo.mdn);
                   if (!!associatedPlan) {
-                    associatedPlan.phonePurchaseDate = new Date(0);
+                    associatedPlan.planDevice.pendingNewSim = false;
                     this.userPlansService.updateUserPlan(associatedPlan.userId, associatedPlan);
                   }
                 });
