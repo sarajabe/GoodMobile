@@ -101,6 +101,11 @@ p {
     line-height: 12px;
     font-family: $secondary-font-family;
   }
+  &.footer {
+    font-size: rem-calc(10px);
+    line-height: 16px;
+    font-family: $secondary-font-family;
+  }
   
 }
 a {

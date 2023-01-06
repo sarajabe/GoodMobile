@@ -23,7 +23,7 @@ const routes: Routes = [{
         { path: '', component: AddPhoneStepsComponent, pathMatch: 'full' },
         {path: PHONES_SHOP_ROUTE_URLS.SELECT_LINE, component: SelectLineComponent, data: { title: 'Good Mobile| Cells Phones | Select Line',
           description : 'Please select an active Good Mobile number or purchase a new line in order to proceed.'}},
-        {path: PHONES_SHOP_ROUTE_URLS.CHECK_COVERAGE, component: CheckPhoneCoverageComponent, data: { title: 'Good Mobile| Cells Phones | Check Coverage',
+        {path: PHONES_SHOP_ROUTE_URLS.CHECK_COVERAGE, component: CheckPhoneCoverageComponent, data: { title: 'Good Mobile | Cells Phones | Check Coverage',
           description : 'Service Coverage Check'}}
       ]}
   ]

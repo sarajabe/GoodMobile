@@ -261,4 +261,17 @@ export class ContentfulService {
         map(entry => entry.items)
       );
   }
+  public getInternationalCallingContentByCategory(contentId, limit, catgeory, locale?): Observable<any> {
+    const p = this.client.getEntries({
+      'fields.categoryId': catgeory,
+      include: 2,
+      limit,
+      content_type: contentId,
+      locale
+    });
+    return from(p)
+      .pipe(
+        map(entry => entry.items)
+      );
+  }
 }
