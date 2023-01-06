@@ -45,7 +45,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
       month: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       year: ['', Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       option: ['', Validators.required],
-      ssn: ['', Validators.compose([ Validators.pattern(NUMBERS_ONLY_PATTERN),Validators.minLength(4), Validators.maxLength(4)])],
+      ssn: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(4), Validators.maxLength(4)])],
       tribalId: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(20)])],
       phoneNumber: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(10), Validators.maxLength(10)])],
       email: ['', Validators.compose([Validators.required, CustomValidators.email, Validators.maxLength(50)])],
@@ -134,6 +134,12 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  public checkMiddleName(): void {
+    if (!this.personalInfoForm.controls.middleName.value) {
+      this.personalInfoForm.controls.middleName.markAsPristine();
+    }
+  }
+
   public checkPhoneNumber(): void {
     if (!!this.personalInfoForm.controls.phoneNumber.value && this.personalInfoForm.controls.phoneNumber.valid) {
       this.personalInfoForm.controls.getPhones.setValue(true);
@@ -141,6 +147,20 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
       this.personalInfoForm.controls.getPhones.updateValueAndValidity();
     } else {
       this.personalInfoForm.controls.getPhones.setValue(false);
+      this.personalInfoForm.controls.phoneNumber.markAsPristine();
+    }
+  }
+
+  public checkGetPhone(): void {
+    if (!!this.personalInfoForm.controls.getPhones.value && !this.personalInfoForm.controls.phoneNumber.value) {
+      this.personalInfoForm.controls.phoneNumber.setValidators([
+        Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(10), Validators.maxLength(10)])]);
+      this.personalInfoForm.controls.phoneNumber.updateValueAndValidity()
+    } else {
+      this.personalInfoForm.controls.phoneNumber.clearValidators();
+      this.personalInfoForm.controls.phoneNumber.setValidators([
+        Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(10), Validators.maxLength(10)])]);
+      this.personalInfoForm.controls.phoneNumber.updateValueAndValidity();
     }
   }
 
@@ -161,13 +181,13 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.leapYear = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0) ? true : false
     if (this.personalInfoForm.controls.month.value && this.personalInfoForm.controls.year.value && this.personalInfoForm.controls.day.value) {
       let selectedDate = new Date(parseInt(this.personalInfoForm.controls.year.value), parseInt(this.personalInfoForm.controls.month.value) - 1, parseInt(this.personalInfoForm.controls.day.value));
-      if (selectedDate.getTime() > todaysDate.getTime() || (!this.leapYear && this.personalInfoForm.controls.day.value === '29' && this.personalInfoForm.controls.month.value === '02' ) || ((this.personalInfoForm.controls.day.value === '30' || this.personalInfoForm.controls.day.value === '31')  && this.personalInfoForm.controls.month.value === '02' )) {
+      if (selectedDate.getTime() > todaysDate.getTime() || (!this.leapYear && this.personalInfoForm.controls.day.value === '29' && this.personalInfoForm.controls.month.value === '02') || ((this.personalInfoForm.controls.day.value === '30' || this.personalInfoForm.controls.day.value === '31') && this.personalInfoForm.controls.month.value === '02')) {
         this.showInvalidDateError = true;
       } else {
         this.showInvalidDateError = false;
       }
     }
-    
+
   }
   private trackEvent(): void {
     const data = {

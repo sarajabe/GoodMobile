@@ -13,10 +13,10 @@ import { EbbManager } from 'src/services/ebb.service';
 })
 export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
   @Output() goToNext: EventEmitter<number> = new EventEmitter<number>();
-  @Output() setUserInfo: EventEmitter<{user:IAcpUser, appId:string}> = new EventEmitter<{user:IAcpUser, appId:string}>();
-  @Input() savedInfo: {user:IAcpUser, appId:string};
+  @Output() setUserInfo: EventEmitter<{ user: IAcpUser, appId: string }> = new EventEmitter<{ user: IAcpUser, appId: string }>();
+  @Input() savedInfo: { user: IAcpUser, appId: string };
   @Input() disable: boolean;
-  
+
   public personalInfoForm: FormGroup;
   public userInfo: IAcpUser;
   public namePattern = new RegExp(EBB_NAME_PATTERN);
@@ -24,7 +24,7 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
   public years = [];
   private alive = true;
   leapYear: boolean;
-  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager) { 
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager) {
     this.getYearsValues();
     this.personalInfoForm = this.formBuilder.group({
       applicationId: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z]{1}\d{5}\-\d{5}$/)])],
@@ -44,7 +44,7 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       if (!!step && step === 1) {
         this.personalInfoForm.markAllAsTouched();
         if (!!this.personalInfoForm.valid && !this.showInvalidDateError) {
-          this.userInfo = { address: { primary : {} as IAcpAddress }} as IAcpUser;
+          this.userInfo = { address: { primary: {} as IAcpAddress } } as IAcpUser;
           const dayFormat = this.personalInfoForm?.controls.day.value;
           this.userInfo.firstName = this.personalInfoForm?.controls.firstName.value.replace(/\s/g, "");;
           this.userInfo.middleName = !!this.personalInfoForm.controls.middleName.value ? this.personalInfoForm.controls.middleName.value : '';
@@ -53,7 +53,7 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
           this.userInfo.consumerEmail = this.personalInfoForm?.controls.email.value;
           this.userInfo.dob = this.personalInfoForm?.controls.month.value + '/' + dayFormat + '/' + this.personalInfoForm.controls.year.value;
           this.goToNext.emit(2);
-          this.setUserInfo.emit({user: this.userInfo, appId: this.personalInfoForm?.controls.applicationId.value});
+          this.setUserInfo.emit({ user: this.userInfo, appId: this.personalInfoForm?.controls.applicationId.value });
         }
       }
     });
@@ -75,6 +75,11 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
   }
   ngOnDestroy(): void {
     this.alive = false;
+  }
+  public checkMiddleName(): void {
+    if (!this.personalInfoForm.controls.middleName.value) {
+      this.personalInfoForm.controls.middleName.markAsPristine();
+    }
   }
   public checkMonth(): void {
     if (
@@ -103,18 +108,18 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
     this.leapYear = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0) ? true : false
     if (this.personalInfoForm.controls.month.value && this.personalInfoForm.controls.year.value && this.personalInfoForm.controls.day.value) {
       let selectedDate = new Date(parseInt(this.personalInfoForm.controls.year.value), parseInt(this.personalInfoForm.controls.month.value) - 1, parseInt(this.personalInfoForm.controls.day.value));
-      if (selectedDate.getTime() > todaysDate.getTime() || (!this.leapYear && this.personalInfoForm.controls.day.value === '29' && this.personalInfoForm.controls.month.value === '02' ) || ((this.personalInfoForm.controls.day.value === '30' || this.personalInfoForm.controls.day.value === '31')  && this.personalInfoForm.controls.month.value === '02' )) {
+      if (selectedDate.getTime() > todaysDate.getTime() || (!this.leapYear && this.personalInfoForm.controls.day.value === '29' && this.personalInfoForm.controls.month.value === '02') || ((this.personalInfoForm.controls.day.value === '30' || this.personalInfoForm.controls.day.value === '31') && this.personalInfoForm.controls.month.value === '02')) {
         this.showInvalidDateError = true;
       } else {
         this.showInvalidDateError = false;
       }
     }
   }
-  private getYearsValues() : void {
+  private getYearsValues(): void {
     const today = new Date();
     const currentYear = today.getFullYear();
-    for(let i = 1892; i <= currentYear; i++) {
-       this.years.push(i);
+    for (let i = 1892; i <= currentYear; i++) {
+      this.years.push(i);
     }
   }
   private populateForm(): void {
