@@ -5,7 +5,8 @@
   .personalInfoForm {
     select option:disabled {
       color: $disabled-grey;
-   }
+    }
+
     &.acp-disabled {
       .outlined-label-input input:disabled {
         background-color: #95959530;
@@ -127,12 +128,18 @@
       }
 
       &.quarter {
+        max-width: 120px;
+        width: 100%;
         margin-top: 9.4px;
         margin-left: 28px;
 
         input,
         span {
           width: 120px;
+        }
+
+        .validation-message {
+          white-space: nowrap;
         }
       }
 

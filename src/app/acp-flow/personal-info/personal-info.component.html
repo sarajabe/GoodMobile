@@ -24,7 +24,7 @@
       <div class="form-field half">
         <label class="outlined-label-input">
           <input placeholder=" " formControlName="middleName" maxlength="50" type="text" id="middleName"
-            data-cy="middleName" />
+            data-cy="middleName" (input)="checkMiddleName()" />
           <span>Middle Name (Optional)</span>
         </label>
         <label class="validation-message" *ngIf="personalInfoForm.controls.middleName.hasError('pattern')"
@@ -43,7 +43,8 @@
           id="required-lname-msg" data-cy="required-lname-msg">
           Last name is required
         </label>
-        <label class="validation-message" *ngIf="personalInfoForm.controls.lastName.dirty && !personalInfoForm.controls.lastName.valid && !!personalInfoForm.controls.lastName.value"
+        <label class="validation-message"
+          *ngIf="personalInfoForm.controls.lastName.dirty && !personalInfoForm.controls.lastName.valid && !!personalInfoForm.controls.lastName.value"
           id="invalid-lname-msg" data-cy="invalid-lname-msg">
           Last name is invalid
         </label>
@@ -215,7 +216,7 @@
         <div class="form-field quarter"
           *ngIf="!!personalInfoForm.controls.option.value && personalInfoForm.controls.option.value == 'tribal'">
           <label class="outlined-label-input">
-            <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal" 
+            <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal"
               data-cy="tribalID" />
             <span>Tribal ID</span>
           </label>
@@ -249,7 +250,7 @@
   </div>
   <div class="checkbox">
     <input formControlName="getPhones" type="checkbox" id="getPhones" class="custom-checkbox"
-      [class.checked]="!!personalInfoForm.controls.getPhones.value" />
+      [class.checked]="!!personalInfoForm.controls.getPhones.value" (change)="checkGetPhone()" />
     <label class="toggle-label">
       <span>Receive phone calls or text messages to update you on your ACP enrollment status.</span>
     </label>

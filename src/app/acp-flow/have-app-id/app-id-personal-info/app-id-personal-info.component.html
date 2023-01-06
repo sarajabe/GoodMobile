@@ -42,7 +42,7 @@
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="middleName" maxlength="50" type="text" id="middleName"
-          data-cy="middleName" />
+          data-cy="middleName" (input)="checkMiddleName()" />
         <span>Middle Name (Optional)</span>
       </label>
       <label class="validation-message" *ngIf="personalInfoForm.controls.middleName.hasError('pattern')"
