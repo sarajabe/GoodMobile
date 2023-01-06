@@ -1,25 +1,27 @@
-<section class="order-not-recieved report-page" [class.space]="!!showContactForm">
+<section class="order-not-recieved report-page page-section" [class.space]="!!showContactForm">
     <div class="back-section">
         <img src="/assets/icon/back-arrow.svg">
-        <a class="back-link" (click)="goToReportIssue()">Report an Issue</a>
+        <h6 class="back-link" (click)="goToReportIssue()">Report an Issue</h6>
     </div>
-    <h1 class="title">Order not received</h1>
+    <h3>Order not received</h3>
     <div class="info-banner default-background" *ngIf="!showContactForm">
         <div class="flex">
             <img src="/assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">
-                <p class="description">Orders take between 3 to 5 business days to be delivered. Your order should be
-                    with you soon.</p>
-                <p class="description last">If you still need help, please <span class="link" data-cy="leaveUsAMessage"
-                        (click)="showContactForm=true">leave us a message</span>.</p>
+                <p class="title">Note:</p>
+                <p class="description">Orders take between 3 to 5 business days to be delivered.</p>
+                <p class="description last">Your order should be with you soon. If you still need help,</p>
+                <div class="actions">
+                    <button class="button thirdly" data-cy="leaveUsAMessage" (click)="showContactForm=true">Please leave
+                        us a message</button>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<section class="section-footer" *ngIf="!showContactForm" [class.sticky]="setSticky">
-    <div class="btn-container">
-        <button class="button transparent" data-cy="cancelBtn" aria-label="cancel"
-            (click)="goToReportIssue()">Cancel</button>
+<section class="navigation-section page-section" *ngIf="!showContactForm">
+    <div class="page-section navs">
+        <p class="no-border" (click)="goToReportIssue()">Cancel</p>
     </div>
 </section>
 <app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" *ngIf="!!showContactForm">

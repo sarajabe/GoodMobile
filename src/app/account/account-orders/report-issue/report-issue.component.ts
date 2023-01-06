@@ -30,13 +30,13 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
   public showMainSection = true;
   private alive = true;
   constructor(private accountHeaderService: AccountHeaderService,
-              private metaService: MetaService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private accountOrderService: UserOrdersService,
-              private appState: AppState,
-              private userProfileService: FirebaseUserProfileService,
-              private toastHelper: ToastrHelperService) {
+    private metaService: MetaService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private accountOrderService: UserOrdersService,
+    private appState: AppState,
+    private userProfileService: FirebaseUserProfileService,
+    private toastHelper: ToastrHelperService) {
 
     this.accountHeaderService.setAccountMenuVisibility(false);
     this.accountHeaderService.setRemovePadding(false);
@@ -64,14 +64,6 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
       isDisabled: false
     },
     {
-      title: 'Return device',
-      icon: 'assets/img/return-device.svg',
-      id: 'return-device',
-      disabledIcon: 'assets/img/return-device-disabled.svg',
-      url: `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.RETURN_DEVICE}`,
-      isDisabled: false
-    },
-    {
       title: 'FAQs',
       icon: 'assets/img/faqs.svg',
       id: 'faqs'
@@ -82,7 +74,7 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
       id: 'somthing-else',
       url: `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SOMETHING_ELSE}`
     }
-  ]
+    ]
   }
 
   ngOnInit(): void {
@@ -107,7 +99,7 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
     params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = this.orderId;
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDER_DETAILS}`, params]);
   }
- 
+
   public hiddenContactForm(event): void {
     this.showContactForm = event;
   }
@@ -117,7 +109,7 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
     const params = {};
     params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = this.orderId;
     switch (this.selectedOption) {
-      case('faqs'): {
+      case ('faqs'): {
         this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/order-help`])
         break;
       }
@@ -127,7 +119,7 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
         }
         break;
       }
-      
+
     }
   }
 
