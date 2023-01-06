@@ -1,128 +1,85 @@
 <div class="wifi-calling-page">
     <section class="banner-section">
-        <div class="banner-img">
-            <picture>
-                <source srcset='assets/img/Picture-shows-phone-with-Wi-Fi-Calling-mob.webp' media="(max-width: 639.9px)"
-                    type="image/webp">
-                <source srcset='assets/img/Picture-shows-phone-with-Wi-Fi-Calling-mob.png' media="(max-width: 639.9px)"
-                    type="image/png">
-                <source srcset='assets/img/Picture-shows-phone-with-Wi-Fi-Calling-tablet.webp' media="(max-width: 1024.9px)"
-                    type="image/webp">
-                <source srcset='assets/img/Picture-shows-phone-with-Wi-Fi-Calling-tablet.png'media="(max-width: 1024.9px)"
-                    type="image/png">
-                <source srcset='assets/img/Picture-shows-phone-with-Wi-Fi-Calling-desktop.webp'
-                    media="(min-width: 1025px)" type="image/webp">
-                <source srcset='assets/img/Picture-shows-phone-with-Wi-Fi-Calling-desktop.png'
-                    media="(min-width: 1025px)" type="image/png">
-                <img src="assets/img/Picture-shows-phone-with-Wi-Fi-Calling-desktop.png"
-                    alt="Wi-Fi Calling is now available from GoodMobile.">
-            </picture>
-        </div>
-        <div class="wifi-banner-text-content">
-            <h1 class="header">Wi-Fi Calling</h1>
-            <p class="sub-header">Talk in more places</p>
+        <picture class="banner-image-container">
+            <source srcset='assets/img/banners/wifi-calling-mobile-400.webp' media="(max-width: 399.9px)" type="image/webp">
+            <source srcset='assets/img/banners/wifi-calling-mobile-400.svg' media="(max-width: 399.9px)" type="image/svg">
+            <source srcset='assets/img/banners/wifi-calling-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+            <source srcset='assets/img/banners/wifi-calling-mobile.svg' media="(max-width: 639.9px)" type="image/svg">
+            <source srcset='assets/img/banners/wifi-calling-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+            <source srcset='assets/img/banners/wifi-calling-tablet.svg' media="(max-width: 1024.9px)" type="image/svg">
+            <source srcset='assets/img/banners/wifi-calling-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+            <source srcset='assets/img/banners/wifi-calling-desktop.svg' media="(min-width: 1025px)" type="image/svg">
+            <img height="400" src="assets/img/banners/wifi-calling-desktop.svg" alt="How it works">
+        </picture>
+        <div class="page-section banner-text-content">
+          <h1 class="header-color">Wi-Fi Calling</h1>
+          <h3 class="sub-header">Talk in more places</h3>
         </div>
     </section>
-    <section class="second-section">
-        <div class="img-desc-part bottom">
-            <div class="image-part">
-                <picture>
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-lets-you-talk-and-text-from-indoor-locations-when-you-have-access-to-a-Wi-Fi-network.-Woman-using-Wi-Fi-Calling-to-talk-on-phone-indoors-mob.webp'
-                        media="(max-width: 639.9px)" type="image/webp">
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-lets-you-talk-and-text-from-indoor-locations-when-you-have-access-to-a-Wi-Fi-network.-Woman-using-Wi-Fi-Calling-to-talk-on-phone-indoors-mob.png'
-                        media="(max-width: 639.9px)" type="image/png">
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-lets-you-talk-and-text-from-indoor-locations-when-you-have-access-to-a-Wi-Fi-network.-Woman-using-Wi-Fi-Calling-to-talk-on-phone-indoors-desktop.webp'
-                        media="(min-width: 640px)" type="image/webp" media="(min-width: 640px)">
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-lets-you-talk-and-text-from-indoor-locations-when-you-have-access-to-a-Wi-Fi-network.-Woman-using-Wi-Fi-Calling-to-talk-on-phone-indoors-desktop.png'
-                        media="(min-width: 640px)" type="image/png" media="(min-width: 640px)">
-                    <img src="assets/img/Wi-Fi-Calling-lets-you-talk-and-text-from-indoor-locations-when-you-have-access-to-a-Wi-Fi-network.-Woman-using-Wi-Fi-Calling-to-talk-on-phone-indoors-desktop.png"
-                        alt="Wi-Fi Calling lets you talk from indoor">
-                </picture>
+    <section class="steps-container">
+        <div class="steps-section">
+            <div class="ltr-step page-section">
+                <div class="description">
+                    <h2 class="header-color">Beat Poor Cellular Reception with Wi-Fi Calling</h2>
+                    <p class="smaller space">Wi-Fi Calling lets you talk from indoor locations where it’s hard even for a strong cellular signal to reach (skyscraper buildings, the basement, areas that have a lot of metal in the walls, areas with heavy foliage, etc.)</p>
+                    <p class="smaller space">With Wi-Fi Calling, you can talk on your mobile phone as you do on the cellular network. (Your phone must be <b>HD Voice compatible</b> and <b>VoLTE must be enabled </b>
+                        to use Wi-Fi Calling).</p>
+                    <div class="action">
+                       <button class="button thirdly no-padding" (click)="showPopup()">TYY limitations for 911 calls.</button>
+                    </div>
+                </div>
+                <div class="step-image first">
+                    <picture class="banner-image-container">
+                        <source srcset='assets/img/wifi-calling-1.svg' type="image/svg">
+                        <source srcset='assets/img/wifi-calling-1.webp' type="image/webp">
+                        <img src="assets/img/wifi-calling-1.svg"  alt="Beat Poor Cellular Reception with Wi-Fi Calling">
+                    </picture>
+                </div>
             </div>
-            <div class="description-part">
-                <h2>Beat Poor Cellular Reception with Wi-Fi Calling </h2>
-                <p class="step-description">Wi-Fi Calling lets you talk from indoor locations where
-                    it’s hard even for a strong cellular signal to reach (skyscraper buildings, the basement, areas that
-                    have a lot of metal in the walls, areas with heavy foliage, etc.) </p>
-                <p class="step-description">With Wi-Fi Calling, you can talk on your mobile
-                    phone as you do on the cellular network. (Your phone must be HD Voice
-                    compatible and VoLTE must be enabled to use Wi-Fi Calling). </p>
-                <a class="link" (click)="showPopup()">TYY limitations for 911 calls.</a>
+            <div class="rtl-step">
+                <div class="page-section">
+                    <div class="step-image">
+                        <picture class="banner-image-container">
+                            <source srcset='assets/img/wifi-calling-2.svg' type="image/svg">
+                            <source srcset='assets/img/wifi-calling-2.webp' type="image/webp">
+                            <img src="assets/img/wifi-calling-2.svg"  alt="Call and Text with Wi-Fi">
+                        </picture>
+                    </div>
+                    <div class="description">
+                        <h2 class="header-color">Call and Text with Wi-Fi</h2>
+                       <ul class="step-list">
+                        <li class="space"><p class="smaller">Wi-Fi Calling is easy to set up and use and allows you to make and receive calls and texts over a wireless Internet connection versus the cell network.</p></li>
+                        <li class="space"><p class="smaller">Once enabled, Wi-Fi Calling works automatically – no new number or app required.</p></li>
+                        <li class="space"><p class="smaller">Calls to U.S. numbers via Wi-Fi from anywhere in the world can be made at no additional charge.</p></li>
+                        <li class="space"><p class="smaller">Calls to international numbers from the U.S. are billed at your international long-distance rates. <a [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING">Good Mobile International Calling. </a></p></li>
+                        <li class="space"><p class="smaller">Calls to premium numbers such as 411 are billed at standard premium rates.</p></li>
+                       </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="desc-img-part bottom">
-            <div class="description-part">
-                <h2>Call and text with Wi-Fi</h2>
-                <ul class="step-description">
-                    <li><span>Wi-Fi Calling is easy to set up and use and allows you to make and receive calls and texts
-                            over a wireless Internet connection versus the cell network.
-                        </span></li>
-                    <li><span>Once enabled, Wi-Fi Calling works automatically – no new number or app required.</span>
-                    </li>
-                    <li><span>Calls to U.S. numbers via Wi-Fi from anywhere in the world can be made at no additional
-                            charge.</span></li>
-                    <li><span>Calls to international numbers from the U.S. are billed at your international
-                            long-distance rates. <a
-                                [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING]">GoodMobile International Calling.</a></span></li>
-                    <li><span>Calls to premium numbers such as 411 are billed at standard premium rates.</span></li>
-                </ul>
-            </div>
-            <div class="image-part">
-                <picture>
-                    <source
-                        srcset='assets/img/Picture-of-phone-settings-showing-option-to-turn-on-Wi-Fi-Calling-mob.webp'
-                        media="(max-width: 639.9px)" type="image/webp">
-                    <source
-                        srcset='assets/img/Picture-of-phone-settings-showing-option-to-turn-on-Wi-Fi-Calling-mob.png'
-                        media="(max-width: 639.9px)" type="image/png">
-                    <source
-                        srcset='assets/img/Picture-of-phone-settings-showing-option-to-turn-on-Wi-Fi-Calling-desktop.webp'
-                        media="(min-width: 640px)" type="image/webp" media="(min-width: 640px)">
-                    <source
-                        srcset='assets/img/Picture-of-phone-settings-showing-option-to-turn-on-Wi-Fi-Calling-desktop.png'
-                        media="(min-width: 640px)" type="image/png" media="(min-width: 640px)">
-                    <img src="assets/img/Picture-of-phone-settings-showing-option-to-turn-on-Wi-Fi-Calling-desktop.png"
-                        alt="Wi-Fi Calling lets you talk and text just like you were using the cellular network. ">
-                </picture>
-            </div>
-        </div>
-        <div class="img-desc-part">
-            <div class="image-part">
-                <picture>
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-makes-it-easy-to-stay-connected-when-traveling.-Man-using-Wi-Fi-Calling-in-a-hotel-room-mob.webp'
-                        media="(max-width: 639.9px)" type="image/webp">
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-makes-it-easy-to-stay-connected-when-traveling.-Man-using-Wi-Fi-Calling-in-a-hotel-room-mob.png'
-                        media="(max-width: 639.9px)" type="image/png">
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-makes-it-easy-to-stay-connected-when-traveling.-Man-using-Wi-Fi-Calling-in-a-hotel-room-desktop.webp'
-                        media="(min-width: 640px)" type="image/webp" media="(min-width: 640px)">
-                    <source
-                        srcset='assets/img/Wi-Fi-Calling-makes-it-easy-to-stay-connected-when-traveling.-Man-using-Wi-Fi-Calling-in-a-hotel-room-desktop.png'
-                        media="(min-width: 640px)" type="image/png" media="(min-width: 640px)">
-                    <img src="assets/img/Wi-Fi-Calling-makes-it-easy-to-stay-connected-when-traveling.-Man-using-Wi-Fi-Calling-in-a-hotel-room-desktop.png"
-                        alt="Wi-Fi Calling makes it easy to stay connected when traveling. Man using Wi-Fi Calling in a hotel room.">
-                </picture>
-            </div>
-            <div class="description-part">
-                <h2>Stay connected while traveling internationally</h2>
-                <p class="step-description">Wi-Fi Calling is especially handy while traveling outside of the US so you
-                    don’t pay
-                    international long distance or roaming. Please note Wi-Fi Calling is restricted in some countries.
-                </p>
-                <p class="step-description">Restrictions apply – <a
-                        [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS + '/wifi-calling']">see
-                        Wi-Fi Calling Frequently Asked Questions</a></p>
+            <div class="ltr-step page-section last">
+                <div class="description">
+                    <h2 class="header-color">Stay Connected While Traveling Internationally</h2>
+                    <p class="smaller space">Wi-Fi Calling is especially handy while traveling outside of the US so you don’t pay international long distance or roaming. Please note Wi-Fi Calling is restricted in some countries.</p>
+                    <p class="smaller">Restrictions apply – <a [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS">see Wi-Fi Calling Frequently Asked Questions</a></p>
+                   
+                </div>
+                <div class="step-image last">
+                    <picture class="banner-image-container">
+                        <source srcset='assets/img/wifi-calling-3.svg' type="image/svg">
+                        <source srcset='assets/img/wifi-calling-3.webp' type="image/webp">
+                        <img src="assets/img/wifi-calling-3.svg"  alt="Once you have your SIM, you can activate it online">
+                    </picture>
+                </div>
             </div>
         </div>
     </section>
-    <section class="faqs-section">
-        <h2 class="title">Frequently Asked Questions</h2>
+    <section class="faqs-section page-section">
+        <div class="title-section">
+            <p class="label">FAQ QUESTIONS</p>
+            <h2 class="header-color">We are here to help you!</h2>
+            <h5>Browse through the most frequently asked questions.</h5>
+        </div>
         <div class="wifi-calling-questions">
             <div class="row">
                 <div class="twelve questions">
@@ -136,47 +93,41 @@
                 </div>
             </div>
         </div>
-        <p class="more-or-less-faqs"><a
-                [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS + '/wifi-calling']">More FAQs</a>
+        <p class="more-or-less-faqs"><button class="button thirdly no-padding"
+                [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS + '/wifi-calling']">More FAQs</button>
         </p>
-        <div class="wifi-calling-info">
-            <p>GoodMobile Wi-Fi Calling: Requires a Wi-Fi Calling capable smartphone and accessible Wi-Fi network.
-                Once enabled, phone automatically makes/receives calls/text messages over Wi-Fi in the U.S., Puerto
-                Rico, and the U.S. Virgin Islands (“Domestic Coverage Area”) if wireless network coverage is weak or
-                unavailable, or outside the Domestic Coverage Area anytime you connect to a Wi-Fi network. Wi-Fi Calling
-                is available on select devices. </p>
-            <p>Charges: (Voice) In the U.S. or internationally, you can use Wi-Fi Calling to call numbers in the U.S.
-                (the “Domestic Coverage Area” or “DCA”) at no additional charge (excluding 411 calls and other premium
-                numbers). International long distance rates apply when calling international numbers from the DCA.
-                International roaming rates apply when calling international numbers while traveling outside the DCA.
-            </p>
-            <p>
-                Go to <a
-                    [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING]">available
-                    rates</a> for international rates and options. (SMS/MMS) Text messages sent/received through
-                Wi-Fi Calling count against the messaging usage limits of your plan.
-            </p>
-            <p>Service limits: Use of Wi-Fi Calling may be restricted in some countries. <a
-                    [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS + '/wifi-calling/where-will-wi-fi-calling-work']">See
-                    excluded countries in the
-                    FAQ.</a></p>
-            <p>If you move in or out of Wi-Fi coverage while on a Wi-Fi call, your call will disconnect unless you have
-                HD Voice coverage (911 calls will disconnect even if you are within HD Voice coverage). HD Voice not
-                available everywhere. </p>
-            <p>To enable Wi-Fi Calling, must have a wireless account provisioned for HD Voice.Visit
-                <a [routerLink]="['/' + ROUTES_URLS.HD_VOICE]">goodmobile.org/hd-voice.com</a> or our <a
-                    [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS]">FAQs</a> for more details.
-            </p>
-            <p>Cannot use Wi-Fi Calling to call 211, 311, 511, and 811. See Wi-Fi Calling FAQ for more information. 911
-                calling with TTY and Real-Time Text: Due to technical limitations, Wi-Fi Calling cannot be used with TTY
-                devices and will not support 911 calls over TTY devices. Persons with communication disabilities can use
-                Real-Time Text as an alternative to TTY. 911 services can be reached by either (1) calling 911 using
-                Real-Time Text, or (2) calling 911 directly using a TTY over the cellular network or from a landline
-                telephone, or (3) sending a text message to 911 directly (in areas where text-to-911 is available) from
-                a wireless device, or (4) using relay services to place a TTY or captioned telephone service (CTS) call
-                from a wireless phone over the cellular network or from a landline telephone, or (5) using relay
-                services to place an IP relay or IP CTS call over a cellular data or other IP network.
-            </p>
-        </div>
+    </section>
+    <section class="page-section wifi-calling-info">
+        <p class="caption">Good Mobile Wi-Fi Calling: Requires a Wi-Fi Calling capable smartphone and accessible Wi-Fi network. Once enabled, phone automatically makes/receives calls/text messages over Wi-Fi in the U.S., Puerto Rico, and the U.S. Virgin Islands (“Domestic Coverage Area”) if wireless network coverage is weak or unavailable, or outside the Domestic Coverage Area anytime you connect to a Wi-Fi network. Wi-Fi Calling is available on select devices.</p>
+        <p class="caption">Charges: (Voice) In the U.S. or internationally, you can use Wi-Fi Calling to call numbers in the U.S. (the “Domestic Coverage Area” or “DCA”) at no additional charge (excluding 411 calls and other premium numbers). International long distance rates apply when calling international numbers from the DCA. International roaming rates apply when calling international numbers while traveling outside the DCA.
+        </p>
+        <p class="caption">
+            Go to <a
+                [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.INTERNATIONAL_CALLING]">available
+                rates</a> for international rates and options. (SMS/MMS) Text messages sent/received through
+            Wi-Fi Calling count against the messaging usage limits of your plan.
+        </p>
+        <p class="caption">Service limits: Use of Wi-Fi Calling may be restricted in some countries. <a
+                [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS + '/wifi-calling/where-will-wi-fi-calling-work']">See
+                excluded countries in the
+                FAQ.</a></p>
+        <p class="caption">If you move in or out of Wi-Fi coverage while on a Wi-Fi call, your call will disconnect unless you have
+            HD Voice coverage (911 calls will disconnect even if you are within HD Voice coverage). HD Voice not
+            available everywhere. </p>
+        <p class="caption">To enable Wi-Fi Calling, must have a wireless account provisioned for HD Voice.Visit
+            <a [routerLink]="['/' + ROUTES_URLS.HD_VOICE]">goodmobile.org/hd-voice.com</a> or our <a
+                [routerLink]="[SUPPORT_ROUTE_URLS.BASE + '/' + SUPPORT_ROUTE_URLS.FAQS]">FAQs</a> for more details.
+        </p>
+        <p class="caption">Cannot use Wi-Fi Calling to call 211, 311, 511, and 811. See Wi-Fi Calling FAQ for more information. 911
+            calling with TTY and Real-Time Text: Due to technical limitations, Wi-Fi Calling cannot be used with TTY
+            devices and will not support 911 calls over TTY devices. Persons with communication disabilities can use
+            Real-Time Text as an alternative to TTY. 911 services can be reached by either (1) calling 911 using
+            Real-Time Text, or (2) calling 911 directly using a TTY over the cellular network or from a landline
+            telephone, or (3) sending a text message to 911 directly (in areas where text-to-911 is available) from
+            a wireless device, or (4) using relay services to place a TTY or captioned telephone service (CTS) call
+            from a wireless phone over the cellular network or from a landline telephone, or (5) using relay
+            services to place an IP relay or IP CTS call over a cellular data or other IP network.
+        </p>
+      
     </section>
 </div>

@@ -177,7 +177,7 @@
                     ACP_STATUS.PENDING_CERT ? 'complete the ACP Qualification.' : 'upload necessary documents to certify
                     their eligibility.'}}</b>
             </p>
-            <div class="info-banner warning-background documents-banner">
+            <div class="info-banner warning-background documents-banner" *ngIf="!!showQrCode">
                 <div class="flex">
                     <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
                     <div class="banner-content">
