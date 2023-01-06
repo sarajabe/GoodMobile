@@ -2,25 +2,19 @@
 @import "../../../../styles/modules/_mixins.scss";
 
 .report-form {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1360px;
-    padding-left: 50px;
-    padding-right: 50px;
-
     @media (max-width: $desktop-min-width-minus) {
         padding-top: 32px;
         margin-bottom: 60px;
     }
 
     @media (max-width: $phablet-min-width-minus) {
-        padding-left: 16px;
-        padding-right: 16px;
         margin-bottom: 40px;
         padding-top: 0px;
     }
 
     .info-banner {
+        margin-top: 40px;
+
         &.success {
             margin-bottom: 173px;
 
@@ -38,7 +32,6 @@
         margin: 32px 0 24px;
 
         @media (max-width: $phablet-min-width-minus) {
-            max-width: 288px;
             margin: 24px 0 16px;
         }
     }
@@ -48,10 +41,6 @@
         box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08), 0px 5px 16px rgba(0, 60, 117, 0.02);
         border-radius: 10px;
         margin-bottom: 50px;
-
-        @media (max-width: $phablet-min-width-minus) {
-            max-width: 288px;
-        }
 
         .box-header {
             padding: 16px 24px;

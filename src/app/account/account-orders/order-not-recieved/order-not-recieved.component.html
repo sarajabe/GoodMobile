@@ -1,4 +1,4 @@
-<section class="order-not-recieved report-page" [class.space]="!!showContactForm">
+<section class="order-not-recieved report-page page-section" [class.space]="!!showContactForm">
     <div class="back-section">
         <img src="/assets/icon/back-arrow.svg">
         <h6 class="back-link" (click)="goToReportIssue()">Report an Issue</h6>
@@ -19,7 +19,7 @@
         </div>
     </div>
 </section>
-<section class="navigation-section">
+<section class="navigation-section page-section" *ngIf="!showContactForm">
     <div class="page-section navs">
         <p class="no-border" (click)="goToReportIssue()">Cancel</p>
     </div>
