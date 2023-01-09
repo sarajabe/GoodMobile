@@ -1,183 +1,176 @@
-<section class="container-flex internal-page-margins contact-us-container" *ngIf="!!submittedRequest">
-    <div class="container-flex-row form-holder">
-        <div class="content-holder col-xl-8 col-md-12 form-section">
-            <div class="form-holder">
-                <div class="title-section">
-                    <h1 class="title">We're here to help!</h1>
-                    <p class="pitch">Let us know how we can assist in making Good Mobile a better experience for you.</p>
-                    <h2 class="pitch">Please fill in the below form, and we'll be in touch within one business day.</h2>
-                </div>
-                <form (ngSubmit)="sendMessage()" [formGroup]="contactUsForm" class="contactUsForm">
-                    <div class="four category">
-                        <select class="bold" id="category" data-cy="category" [class.opened]="!!isOpened" formControlName="category"
-                            (focus)="isOpened = true" (blur)="isOpened = false" (change)="isOpened = false">
-                            <option class="bold" data-cy="billing" value="Billing"> Billing </option>
-                            <option class="bold" data-cy= "technicalSupport" value="Technical">Technical Support</option>
-                            <option class="bold" data-cy="salesSupport" value="Sales">Sales Support</option>
-                            <option class="bold" data-cy="orderSupport" value="Order">Order Support</option>
-                            <option class="bold" data-cy="newCustomer" value="New_Customer"><b>New Customer</b></option>
-                        </select>
-                    </div>
-                    <div class="twelve form-row">
-                        <div class="six input-section">
-                            <label for="name">Name<span class="text-color-secondary">*</span></label>
-                            <input class="bold" id="name" data-cy="name" type="text" name="name" formControlName="name" required
-                                autocomplete="given-name">
-                            <fieldset class="validation-message">
-                                <label class="validation-message alert" id="required-name-msg"
-                                    *ngIf="contactUsForm.controls.name.touched && contactUsForm.controls.name.hasError('required')">
-                                    Name is required
-                                </label>
-                                <label class="validation-message alert" id="invalid-name-msg"
-                                    *ngIf="contactUsForm.controls.name.hasError('pattern')">
-                                    Name is invalid
+<div class="contact-us-page" *ngIf="!!submittedRequest">
+    <section class="contact-us-banner page-section">
+        <h1 class="header">We're Here to Help!</h1>
+        <h5 class="sub-header">Let us know how we can assist in making Good Mobile a better experience for you.</h5>
+    </section>
+    <section class="grey-boxes-section page-section">
+        <div class="flex">
+            <div class="page-section">
+                <div class="box contact-form-part">
+                    <h5 class="form-title">Please fill in the below form, and we'll be in touch within one business day.
+                    </h5>
+                    <form (ngSubmit)="sendMessage()" [formGroup]="contactUsForm" class="contactUsForm">
+                        <div class="category">
+                            <select class="bold" id="category" data-cy="category" [class.opened]="!!isOpened"
+                                formControlName="category" (focus)="isOpened = true" (blur)="isOpened = false"
+                                (change)="isOpened = false">
+                                <option class="bold" data-cy="billing" value="Billing"> Billing </option>
+                                <option class="bold" data-cy="technicalSupport" value="Technical">Technical Support
+                                </option>
+                                <option class="bold" data-cy="salesSupport" value="Sales">Sales Support</option>
+                                <option class="bold" data-cy="orderSupport" value="Order">Order Support</option>
+                                <option class="bold" data-cy="newCustomer" value="New_Customer"><b>New Customer</b>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-fields">
+                            <div class="flex-input">
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input id="name" data-cy="name" type="text" name="name" placeholder=" "
+                                            formControlName="name" required autocomplete="given-name" />
+                                        <span>Name<i>*</i></span>
+                                    </label>
+                                    <label class="validation-message alert" id="required-name-msg"
+                                        *ngIf="contactUsForm.controls.name.touched && contactUsForm.controls.name.hasError('required')">
+                                        Name is required
+                                    </label>
+                                    <label class="validation-message alert" id="invalid-name-msg"
+                                        *ngIf="contactUsForm.controls.name.hasError('pattern')">
+                                        Name is invalid
+                                    </label>
+                                </div>
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input id="email" data-cy="email" type="text" name="email" placeholder=" "
+                                            formControlName="email" required autocomplete="email" />
+                                        <span>Email<i>*</i></span>
+                                    </label>
+                                    <label class="validation-message alert" id="required-email-msg"
+                                        data-cy="required-email-msg"
+                                        *ngIf="contactUsForm.controls.email.touched && contactUsForm.controls.email.hasError('required')">
+                                        Email is required
+                                    </label>
+                                    <label class="validation-message" id="invalid-email-msg"
+                                        *ngIf="contactUsForm.controls.email.hasError('email')">
+                                        Email is invalid.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="flex-input">
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input restrictNumbers minlength="10" maxlength="10" id="phone" data-cy="phone"
+                                            type="tel" name="phone" placeholder=" " formControlName="phone"
+                                            autocomplete="tel" (input)="checkGMNumber()">
+                                        <span>My GM Phone number</span>
+                                    </label>
+                                    <label class="validation-message alert" id="invalid-phone-msg"
+                                        data-cy="invalid-phone-msg"
+                                        *ngIf="contactUsForm.controls.phone.hasError('minlength')">
+                                        Invalid phone number</label>
+                                    <p class="tooltip-note caption">What is GM phone number<span class="tooltip">
+                                            <img src="assets/icon/tooltip-info-icon.svg" class="info"
+                                                alt="Tooltip Info Icon" />
+                                            <span class="tooltiptext">
+                                                <img src="assets/icon/why-arrow.svg" alt="Info icon" />
+                                                <p class="smaller">Your Good Mobile phone number, or number you are
+                                                    transferring will
+                                                    help us assist you more quickly.</p>
+                                            </span>
+                                        </span></p>
+                                </div>
+                                <div class="form-field">
+                                    <label class="outlined-label-input">
+                                        <input restrictNumbers minlength="10" maxlength="10" id="contact" type="tel"
+                                            name="contact" placeholder=" " formControlName="contact" autocomplete="tel"
+                                            (input)="checkContactNumber()">
+                                        <span>My Contact Number</span>
+                                    </label>
+                                    <label class="validation-message alert" id="invalid-contact-msg"
+                                        *ngIf="contactUsForm.controls.contact.hasError('minlength')">
+                                        Invalid contact number</label>
+                                </div>
+                            </div>
+                            <fieldset class="form-field last">
+                                <textarea cols="30" rows="15" class="description-input" id="message" name="message"
+                                    data-cy="message" formControlName="message" required
+                                    placeholder="Your Message"></textarea>
+                                <span class="required" [class.none]="!!contactUsForm.controls.message.value">*</span>
+                                <label class="validation-message alert" id="required-msg"
+                                    *ngIf="contactUsForm.controls.message.touched && contactUsForm.controls.message.hasError('required')">
+                                    Message is required
                                 </label>
                             </fieldset>
-                        </div>
-                        <div class="six input-section">
-                            <label for="email">Email<span class="text-color-secondary">*</span></label>
-                            <input class="bold" id="email"  data-cy="email" type="text" name="email" formControlName="email" required
-                                autocomplete="email">
-                            <label class="validation-message alert" id="required-email-msg" data-cy="required-email-msg"
-                                *ngIf="contactUsForm.controls.email.touched && contactUsForm.controls.email.hasError('required')">
-                                Email is required
-                            </label>
-                            <label class="validation-message" id="invalid-email-msg"
-                                *ngIf="contactUsForm.controls.email.hasError('email')">
-                                Email is invalid.
-                            </label>
-                        </div>
-                    </div>
-                    <div class="twelve form-row numbers">
-                        <div class="six input-section">
-                            <div class="g2g-number">
-                                <label for="phone">My Good Mobile Phone number</label>
-                                <label class="note">Your Good Mobile phone number, or number you are transferring will help
-                                    us assist you more quickly.</label>
-                                <input restrictNumbers minlength="10" maxlength="10" class="bold" id="phone" data-cy="phone" type="tel"
-                                    name="phone" formControlName="phone" autocomplete="tel">
-                                <label class="validation-message alert" id="invalid-phone-msg" data-cy="invalid-phone-msg"
-                                    *ngIf="contactUsForm.controls.phone.hasError('minlength')">
-                                    Invalid phone number</label>
-                            </div>
-                            <div class="phoneNumber">
-                                <label for="contact">My Contact Number</label>
-                                <input restrictNumbers minlength="10" maxlength="10" class="bold" id="contact"
-                                    type="tel" name="contact" formControlName="contact" autocomplete="tel">
-                                <label class="validation-message alert" id="invalid-contact-msg"
-                                    *ngIf="contactUsForm.controls.contact.hasError('minlength')">
-                                    Invalid contact number</label>
+                            <div class="recaptcha-part">
+                                <app-re-captcha class="float-left" id="captcha-box" (resolved)="resolvedCaptcha($event)"
+                                    [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
                             </div>
                         </div>
-                        <div class="six input-section">
-                            <label for="message">Message<span class="text-color-secondary">*</span></label>
-                            <textarea class="bold" id="message" data-cy="message" name="message"  cols="30" rows="15"
-                                formControlName="message" required></textarea><br>
-                            <label class="validation-message alert" id="required-msg"
-                                *ngIf="contactUsForm.controls.message.touched && contactUsForm.controls.message.hasError('required')">
-                                Message is required
-                            </label>
+                        <div class="actions">
+                            <button type="submit" class="button primary" id="submitButton" data-cy="submitButton"
+                                name="contact-submit" [disabled]="!contactUsForm.valid || !captchaClicked"
+                                [uiBlockButton]="processingRequest">
+                                Submit
+                            </button>
                         </div>
+                    </form>
+                </div>
+            </div>
+            <div class="contact-options-part">
+                <div class="box call-center">
+                    <div class="box-icon">
+                        <img src="assets/icon/contact-call-center.svg" alt="Call Center Icon">
                     </div>
-                    <div class="twelve form-row ">
-                        <div class="six input-section">
-                            <p class="required"><span class="text-color-secondary">*</span>Required fields</p>
-                        </div>
-                        <div class="six input-section float-right">
-                            <app-re-captcha class="float-right" id="captcha-box" (resolved)="resolvedCaptcha($event)"
-                                [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
-                        </div>
+                    <div class="box-content">
+                        <p class="title">Call center</p>
+                        <a class="link" href="tel: (800) 840-8515">(800) 840-8515</a>
+                        <p class="smallest">Available: 7AM to 1AM EST - Monday-Sunday</p>
                     </div>
-                    <div class="twelve form-row">
-                        <div>
-                            <p class="required-res"><span class="text-color-secondary">*</span>Required fields</p>
-                        </div>
-                        <button type="submit" class="button primary max-content float-right " id="submitButton" data-cy="submitButton"
-                            name="contact-submit" [disabled]="!contactUsForm.valid || !captchaClicked"
-                            [uiBlockButton]="processingRequest">
-                            Submit
-                        </button>
+                </div>
+                <div class="box email">
+                    <div class="box-icon">
+                        <img src="assets/icon/contact-email.svg" alt="Email Icon">
                     </div>
-                </form>
-                <div class="twelve contact-info-section">
-                    <div class="left-section">
-                        <p class="call"><img class="social-icon" src="assets/img/phone.svg" /> <b>Call center:</b><a
-                                class="tel" href="tel: (800) 840-8515"> (800) 840-8515 </a></p>
-                        <p class="call time">Available: 7AM to 1AM EST - Monday-Sunday</p>
-                    </div>
-                    <div class="right-section">
-                        <span class="call right"> <b>Follow us on: </b>
-                            <a href="https://www.facebook.com/goodmobileusa/" id="facebookLink" target="_blank"><img
-                                    class="social-icon" src="assets/img/fb.svg" /></a>
-                            <a href="https://twitter.com/goodmobileusa" id="twitterLink" target="_blank"><img
-                                    class="social-icon" src="assets/img/twitter.svg" /></a>
-                            <a href="https://www.instagram.com/goodmobileusa/" id="instagramLink" target="_blank"><img
-                                    class="social-icon" src="assets/img/instagram.svg" /></a>
-                        </span>
+                    <div class="box-content">
+                        <p class="title top">Email</p>
+                        <a class="link" href="mailto:support@goodmobile.org">support@goodmobile.org</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="content-holder col-xl-4 col-md-12 width-on-tablet">
-            <div class="questions-holder">
-                <div class="questions-title">
-                    <h2 class="title">More questions?</h2>
-                    <p class="subtitle">Learn about:</p>
-                </div>
-                <div class="questions">
-                    <h3 class="question"><a (click)="goToILDaddon()">International calling</a></h3>
-                    <h3 class="question"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]"
-                            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">How to set up your phone
-                            data</a></h3>
-                    <h3 class="question"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]"
-                            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">LTE Network - what is
-                            it?</a></h3>
-                </div>
-            </div>
-            <div class="twelve contact" id="hide-section-two">
-                <div class="six padding-bottom-10">
-                    <span class="call__sub"> <b class="font-size-20">Call center:</b> <b
-                            class="text-color-primary">(800) 840-8515</b></span>
-                    <br>
-                    <span class="call__sub"><b>Available: 7AM to 1AM EST</b></span>
-                    <br>
-                    <span class="call__sub"><b> Monday-Sunday</b></span>
-                    <br>
-                    <br>
-                </div>
-                <div class="six">
-                    <span class="call-us right">
-                        <div class="orange-rectangular">
-                            <a class="center-block" href="" target="_blank"><img src="assets/img/call-us.png" /></a>
-                        </div>
-                        <div class="purple-rectangular">
-                            <a class="center-block" href="https://www.facebook.com/goodmobileusa/" target="_blank"><img
-                                    id="fb" src="assets/img/fb.png" /></a>
-                        </div>
-                        <div class="purple-rectangular">
-                            <a class="center-block" href="https://twitter.com/goodmobileusa" target="_blank"><img
-                                    id="tweet" src="assets/img/tweet.png" /></a>
-                        </div>
-                        <div class="purple-rectangular">
-                            <a class="center-block" href="https://www.instagram.com/goodmobileusa/" target="_blank"><img
-                                    id="insta" src="assets/img/insta.png" /></a>
-                        </div>
-                    </span>
-                </div>
+    </section>
+    <section class="more-questions-section page-section">
+        <h2 class="title">More Questions?</h2>
+        <h5 class="sub-title">Learn about:</h5>
+        <div class="links-part">
+            <a (click)="goToILDaddon()">International calling</a>
+            <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">How to set up your phone data</a>
+            <a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">LTE Network - what is it?</a>
+        </div>
+        <div class="social-media-part">
+            <p class="follow-us">Follow Us</p>
+            <div class="social-media-icons">
+                <a href="https://www.facebook.com/goodmobileusa/" id="facebookLink" target="_blank"><img
+                        src="assets/icon/follow-by-fb.svg" alt="FB Icon"></a>
+                <a href="https://twitter.com/goodmobileusa" id="twitterLink" target="_blank"><img
+                        src="assets/icon/follow-by-twitter.svg" alt="Twitter Icon"></a>
+                <a href="https://www.instagram.com/goodmobileusa/" id="instagramLink" target="_blank"><img
+                        src="assets/icon/follow-by-instagram.svg" alt="Instagram Icon"></a>
             </div>
         </div>
+    </section>
+</div>
+<div class="contact-us-submition-page page-section" *ngIf="!submittedRequest">
+    <h1 class="header">Thank you for your Feedback!</h1>
+    <p class="description">Our support team will reach out to you shortly. We live to make our customers happy! <br>If
+        you have more questions or comments please don't hesitate to call us on the customer care line.</p>
+    <div class="actions">
+        <button class="button primary" data-cy="backToSupport" (click)="goBack()">Back to Support</button>
     </div>
-</section>
-<section class="container-flex internal-page-margins contact-us-after-submition" *ngIf="!submittedRequest">
-    <h1 class="align-center main-title">Thank you for your feedback!</h1>
-    <p class="align-center main-paragraph">
-        Our support team will reach out to you shortly. We live to make our customers happy!
-        If you have any more questions or comments please don’t hesitate to call us on our
-        customer care line.
-    </p>
-    <div class="align-center button-margin">
-        <button class="button primary max-content main-button" data-cy="backToSupport" (click)="goBack()">
-            Back to support
-        </button>
+    <div class="feedback-image">
+        <img src="assets/img/contact-us-feedback-image.svg" alt="Submition Image" />
     </div>
-</section>
+</div>
