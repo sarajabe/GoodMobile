@@ -62,18 +62,29 @@
                                     <label class="outlined-label-input">
                                         <input restrictNumbers minlength="10" maxlength="10" id="phone" data-cy="phone"
                                             type="tel" name="phone" placeholder=" " formControlName="phone"
-                                            autocomplete="tel">
+                                            autocomplete="tel" (input)="checkGMNumber()">
                                         <span>My GM Phone number</span>
                                     </label>
                                     <label class="validation-message alert" id="invalid-phone-msg"
                                         data-cy="invalid-phone-msg"
                                         *ngIf="contactUsForm.controls.phone.hasError('minlength')">
                                         Invalid phone number</label>
+                                    <p class="tooltip-note caption">What is GM phone number<span class="tooltip">
+                                            <img src="assets/icon/tooltip-info-icon.svg" class="info"
+                                                alt="Tooltip Info Icon" />
+                                            <span class="tooltiptext">
+                                                <img src="assets/icon/why-arrow.svg" alt="Info icon" />
+                                                <p class="smaller">Your Good Mobile phone number, or number you are
+                                                    transferring will
+                                                    help us assist you more quickly.</p>
+                                            </span>
+                                        </span></p>
                                 </div>
                                 <div class="form-field">
                                     <label class="outlined-label-input">
                                         <input restrictNumbers minlength="10" maxlength="10" id="contact" type="tel"
-                                            name="contact" placeholder=" " formControlName="contact" autocomplete="tel">
+                                            name="contact" placeholder=" " formControlName="contact" autocomplete="tel"
+                                            (input)="checkContactNumber()">
                                         <span>My Contact Number</span>
                                     </label>
                                     <label class="validation-message alert" id="invalid-contact-msg"
@@ -152,16 +163,14 @@
         </div>
     </section>
 </div>
-<section class="container-flex internal-page-margins contact-us-after-submition" *ngIf="!submittedRequest">
-    <h1 class="align-center main-title">Thank you for your feedback!</h1>
-    <p class="align-center main-paragraph">
-        Our support team will reach out to you shortly. We live to make our customers happy!
-        If you have any more questions or comments please don’t hesitate to call us on our
-        customer care line.
-    </p>
-    <div class="align-center button-margin">
-        <button class="button primary max-content main-button" data-cy="backToSupport" (click)="goBack()">
-            Back to support
-        </button>
+<div class="contact-us-submition-page page-section" *ngIf="!submittedRequest">
+    <h1 class="header">Thank you for your Feedback!</h1>
+    <p class="description">Our support team will reach out to you shortly. We live to make our customers happy! <br>If
+        you have more questions or comments please don't hesitate to call us on the customer care line.</p>
+    <div class="actions">
+        <button class="button primary" data-cy="backToSupport" (click)="goBack()">Back to Support</button>
     </div>
-</section>
+    <div class="feedback-image">
+        <img src="assets/img/contact-us-feedback-image.svg" alt="Submition Image" />
+    </div>
+</div>

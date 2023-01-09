@@ -198,6 +198,50 @@
                   .validation-message {
                     margin-bottom: 0;
                   }
+
+                  .tooltip-note {
+                    margin-left: 8px;
+
+                    .tooltip {
+                      cursor: pointer;
+
+                      .info {
+                        width: 24px;
+                        height: 24px;
+                      }
+
+                      .tooltiptext {
+                        width: 330px;
+                        top: 44px;
+                        left: -70px;
+                        height: fit-content;
+                        padding: 8px 12px;
+                        background: #5E5E5E;
+                        box-shadow: 0 4px 12px #5e5e5e08, 0 8px 30px #5e5e5e14, 0 5px 16px #003c7505;
+                        border-radius: 8px;
+                        color: white;
+
+                        @media(max-width: $phablet-min-width-minus) {
+                          width: 200px;
+                          text-align: center;
+                          top: 45px;
+                          left: -8px;
+                        }
+
+                        img {
+                          width: 17px;
+                          height: 9.32px;
+                          position: absolute;
+                          top: -8px;
+                          left: 153.5px;
+
+                          @media(max-width: $phablet-min-width-minus) {
+                            left: 91.5px;
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
 
@@ -271,8 +315,6 @@
             text-align: center;
 
             .title {
-              font-size: 18px;
-              line-height: 28px;
               margin-bottom: 12px;
               font-family: $base-font-family-bold;
 
@@ -375,8 +417,6 @@
       }
 
       .follow-us {
-        font-size: 18px;
-        line-height: 18px;
         font-family: $base-font-family-bold;
       }
 
@@ -388,73 +428,59 @@
   }
 }
 
-.contact-us-after-submition {
-  .align-center {
-    text-align: center;
+.contact-us-submition-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: 40px;
+
+  @media (max-width: $desktop-min-width-minus) {
+    margin-top: 32px;
   }
 
-  .main-title {
-    margin-top: 70px;
-    font-family: $secondary-font-family-bold;
-    line-height: rem-calc(30px);
-    font-size: rem-calc(26px);
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
-
-    @media (min-width: $desktop-min-width) {
-      font-size: rem-calc(38px);
-      line-height: rem-calc(50px);
-      margin-bottom: 40px;
-    }
-
-    @media (max-width: 640px) {
-      width: 62%;
-    }
+  @media (max-width: $phablet-min-width-minus) {
+    margin-top: 24px;
   }
 
-  .main-paragraph {
-    font-size: rem-calc(17px);
-    line-height: rem-calc(22px);
-    font-family: $base-font-family;
-    margin-left: auto;
-    margin-right: auto;
-    width: 84%;
+  .header {
+    color: $header-color;
+    margin-bottom: 20px;
 
-    @media (max-width: 640px) {
-      height: 115px;
-    }
-
-    @media (min-width: $desktop-min-width) {
-      font-size: rem-calc(22px);
-      line-height: rem-calc(33px);
+    @media (max-width: $phablet-min-width-minus) {
+      margin-bottom: 16px;
     }
   }
 
-  .button-margin {
-    @media (max-width: 640px) {
-      margin-top: 40px;
-    }
+  .description {
+    max-width: 830px;
+    width: 100%;
+    margin: 0 auto;
 
-    margin-top: 60px;
-    margin-bottom: 70px;
-  }
-
-  .main-button {
-    @media (min-width: $desktop-min-width) {
-      width: 215px;
-      font-size: 20px;
-      line-height: 27px;
-      font-weight: bold;
+    br {
+      @media (max-width: 739.9px) {
+        display: none;
+      }
     }
   }
 
-  .button-max {
-    min-width: max-content;
-    width: 230px;
-    font-family: $secondary-font-family-bold;
-    font-weight: normal;
-    font-size: rem-calc(20px);
-    line-height: rem-calc(27px);
+  .actions {
+    margin: 32px 0 52px;
+
+    @media (max-width: $phablet-min-width-minus) {
+      margin: 24px 0 36px;
+    }
+  }
+
+  .feedback-image {
+    img {
+      width: 373px;
+      height: 175px;
+
+      @media (max-width: $phablet-min-width-minus) {
+        width: 300px;
+        height: 141px;
+      }
+    }
   }
 }
