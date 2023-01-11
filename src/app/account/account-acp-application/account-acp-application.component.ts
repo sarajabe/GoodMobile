@@ -413,20 +413,33 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
 
   public cancelApplication(): void {
     if (!!this.userProfile) {
-      this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel application?', 'By clicking yes you agree to cancel your ACP application.', 'Yes', 'Cancel', 'clean-cart-modal')
+      this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel application?', 'By clicking yes you agree to cancel your ACP application.', 'Yes', 'Cancel', 'clear-cart-modal')
         .result.then((res) => {
           if (!!res) {
             this.appState.loading = true;
-            delete this.userProfile.ebbId;
-            this.userAccountService.deleteEbb().then(() => {
-              this.ebbService.deleteEbbData(this.userProfile?.id);
-              this.appState.loading = false;
-              this.toastHelper.showSuccess('Your application is cancelled successfully');
-              this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
-            }).catch((error) => {
+            this.ebbService.getInternalApplication(this.userProfile.customerId, this.userProfile.ebbId).then((res) => {
+              if (!!res) {
+                this.ebbService.deleteAcpApplication(this.userProfile.customerId, res.data.applicationId).then(() => {
+                  delete this.userProfile.ebbId;
+                  this.userAccountService.deleteEbb().then(() => {
+                    this.ebbService.deleteEbbData(this.userProfile?.id);
+                    this.appState.loading = false;
+                    this.toastHelper.showSuccess('Your application is cancelled successfully');
+                    this.router.navigate([`${ACP_ROUTE_URLS.BASE}`]);
+                  }).catch((error) => {
+                    this.appState.loading = false;
+                    this.toastHelper.showAlert(error.message);
+                  });
+                }, (error) => {
+                    this.appState.loading = false;
+                    this.toastHelper.showAlert(error.message);
+                });
+              }
+            }, (error) => {
               this.appState.loading = false;
               this.toastHelper.showAlert(error.message);
             });
+         
           }
         });
     }
