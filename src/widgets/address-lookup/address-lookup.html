@@ -51,7 +51,7 @@
         <label id="state-msg" data-cy="stateIsRequired" class="validation-message" *ngIf="addressFieldsForm.controls.state.touched && addressFieldsForm.controls.state.hasError('required')">State is a Required Field </label>
       </div>
       <div class='form-text error'
-        *ngIf="addressFieldsForm.controls.state.dirty && addressFieldsForm.controls.state.hasError('pattern')">
+        *ngIf="addressFieldsForm.controls.state.dirty && !!addressFieldsForm.controls.state.value && !addressFieldsForm.controls.state.valid">
         <label id="state-invalid-msg" data-cy="invalidStateMsg" class="validation-message">Invalid State </label>
       </div>
     </fieldset>

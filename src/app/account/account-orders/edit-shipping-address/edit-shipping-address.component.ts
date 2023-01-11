@@ -190,7 +190,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
 
   public setValidAddress(isValid: boolean, isEdit?: boolean): void {
     if (!!isEdit) {
-      this.isValidAddress = !!this.editedAddress.address1 && !!this.editedAddress.city && !!this.editedAddress.postalCode && !!this.editedAddress.state;
+      this.isValidAddress = isValid;
     } else {
       this.isValidAddress = !!this.newAddress && !!this.newAddress.address1 && !!this.newAddress.city && !!this.newAddress.postalCode && !!this.newAddress.state;
     }
@@ -207,7 +207,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
     if (!this.addressUpdated) {
       if (!!this.isEditAddress) {
         this.touchShippimgForm = true;
-        this.nameRequired = !this.shippingName ? true : false;
+        this.nameRequired = !!this.shippingName ? false : true;
         if (!!this.isValidAddress && !this.nameRequired) {
           let selectedAddress = {} as IFirebaseAddress;
           this.appState.loading = true;
@@ -279,7 +279,6 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
     if (!!isEdit) {
       let value = JSON.stringify(address);
       this.editedAddress = Object.assign(this.editedAddress, JSON.parse(value));
-      this.isValidAddress = !!this.editedAddress.address1 && !!this.editedAddress.city && !!this.editedAddress.postalCode && !!this.editedAddress.state && !this.nameRequired;
       this.appState.removeEmptyValues(this.editedAddress);
     } else {
       this.showErrorMessage = false;

@@ -37,7 +37,7 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   constructor(private cdRef: ChangeDetectorRef, private placesAutoCompleteService: PlacesAutocompleteService,
               private formBuilder: FormBuilder) {
     this.addressFieldsForm = formBuilder.group({
-      alias: ['', Validators.required],
+      alias: [''],
       address1: ['', Validators.required],
       address2: [''],
       country: [''],
@@ -56,6 +56,13 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
 
   ngOnInit(): void {
     this.cdRef.detectChanges();
+    if (!!this.showAlias) {
+      this.addressFieldsForm.controls.alias.setValidators(Validators.required);
+      this.addressFieldsForm.controls.alias.updateValueAndValidity();
+    } else {
+      this.addressFieldsForm.controls.alias.clearValidators();
+      this.addressFieldsForm.controls.alias.updateValueAndValidity();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
