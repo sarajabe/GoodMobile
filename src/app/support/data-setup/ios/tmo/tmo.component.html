@@ -17,6 +17,7 @@
     <li class="smaller">Select the <b>Settings</b> icon on your home screen.</li>
     <li class="smaller">Select the <b>Cellular</b> menu option in the first section of the menu.</li>
     <li class="smaller">Select <b>Cellular Data Options</b></li>
+    <li class="smaller">Select <b>Voice & Data</b>, Select <b>LTE</b> and turn on <b>VoLTE</b></li>
     <li class="smaller"><p class="smaller">Select the <b>Cellular Data Network</b> option and enter the following information into the fields:</p>
       <div class="card-info">
         <div class="card-section">
@@ -73,9 +74,12 @@
         </div>
       </div>
     </li>
-    <li class="smaller"><b>Restart</b> your iPhone.</li>
+    <li class="smaller">
+      <p class="smaller"><b>Restart</b> your iPhone.</p>
+      <div class="action">
+        <button class="button primary" aria-label="done" (click)="goToDataSetup()">Done</button>
+      </div>
+    </li>
   </ul>
-  <div class="action">
-    <button class="button primary" aria-label="done" (click)="goToDataSetup()">Done</button>
-  </div>
 </section>
+
