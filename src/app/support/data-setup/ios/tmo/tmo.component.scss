@@ -1,121 +1,73 @@
 @import "../../../../../styles/modules/variables";
 @import "../../../../../styles/modules/mixins";
 
-.ios-tmo-container {
-    margin-left: 8%;
-    margin-right: 8%;
-    @media (min-width: 1400px) {
-        margin-left: 18%;
-        margin-right: 10%;
-    }
-    .first-section {
-        margin-bottom: 31px;
-        @media (max-width: $desktop-min-width-minus) {
-            margin-bottom: 29px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-            margin-bottom: 27px;
-        }
-        .ios-title {
-            font-size: rem-calc(20px);
-            line-height: 27px;
-            margin-bottom: 31px;
-            @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(19px);
-                line-height: 34px;
-                margin-bottom: 29px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(18px);
-                line-height: 24px;
-                margin-bottom: 23px;
-            }
-        }
-        .ios-desc {
-            font-size: rem-calc(18px);
-            line-height: 45px;
-            @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(16px);
-                line-height: 39px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(15px);
-                line-height: 38px;
-                margin-bottom: 28px;
-            }
+.iphone {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    background: #FBFBFB;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .header-section {
+        text-align: center;
+        margin-bottom: 20px;
+        .label {
+            color: #5E5E5E;
         }
     }
-    .instructions-section {
-        .title {
-            font-weight: bold;
-            font-size: rem-calc(20px);
-            line-height: 27px;
-            margin-top: 31px;
-            margin-bottom: 31px;
-            @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(19px);
-                line-height: 34px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(18px);
+    b {
+        font-family: $base-font-family-bold;
+    }
+    .info-banner {
+        max-width: 1268px;
+        margin-bottom: 40px;
+        width: 100%;
+        @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+        }
+    }
+    ul {
+        padding-inline-start: 24px;
+        li {
+            margin-bottom: 16px;
+            &.smaller {
+                font-size: rem-calc(16px);
                 line-height: 24px;
-                margin-top: 28px;
-                margin-bottom: 28px;
             }
         }
-        .info{
-            font-size: rem-calc(18px);
-            line-height: 26px;
-            margin-bottom: 31px;
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(16px);
+        .card-info {
+            background: #FBFBFB;
+            border-radius: 0px 0px 10px 10px;
+            width: 100%;
+            max-width: 500px;
+            padding: 24px;
+            box-shadow: 0px 4px 15px rgb(206 211 214 / 60%);
+            margin-top: 16px;
+            @media(max-width: $phablet-min-width-minus) {
+                padding: 16px;
             }
-        }
-        .list {
-            max-width: 1186px;
-            font-size: rem-calc(18px);
-            line-height: 45px;
-            @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(16px);
-                line-height: 39px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(15px);
-                line-height: 38px;
-            }
-            &.numbers {
-                list-style-type: decimal;
-                padding-left: 15px;
-            }
-            &.disc {
-                list-style-type: disc;
-                padding-left: 15px;
-            }
-            .margin-top {
-                margin-top: 35px;
-                @media (min-width: 1555px) {
-                    white-space: nowrap;
+            .card-section {
+                margin-top: 8px;
+                .info {
+                    margin-left: 16px;
+                    padding-bottom: 10px;
+                    padding-top: 10px;
+                    border-bottom: 1px solid #B0B0B0;
+                    display: flex;
+                    gap: 16px;
+                    &.last {
+                        border-bottom: none;
+                    }
+                    .name {
+                        flex-basis: 40%;
+                        max-width: 170px;
+                    }
+                    .value {
+                        flex-basis: 60%;
+                        max-width: 250px;
+                        word-break: break-all;
+                    }
                 }
-            }
-            .word-break {
-                word-break: break-word;
-            }
-        }
-        .restart-iphone {
-            font-weight: bold;
-            font-size: rem-calc(18px);
-            line-height: 45px;
-            margin-top: 52px;
-            margin-bottom: 52px;
-            @media (max-width: $desktop-min-width-minus) {
-                font-size: rem-calc(16px);
-                line-height: 39px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(15px);
-                line-height: 38px;
-                margin-top: 40px;
-                margin-bottom: 45px;
             }
         }
     }

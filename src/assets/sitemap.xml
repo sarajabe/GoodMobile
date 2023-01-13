@@ -463,29 +463,6 @@
 
    <url>
 
-      <loc>https://www.goodmobile.org/support/data-setup/android</loc>
-
-      <lastmod>2022-02-01</lastmod>
-
-      <changefreq>monthly</changefreq>
-
-      <priority>0.7</priority>
-
-   </url>
-   <url>
-
-      <loc>https://www.goodmobile.org/support/data-setup/ios</loc>
-
-      <lastmod>2022-02-01</lastmod>
-
-      <changefreq>monthly</changefreq>
-
-      <priority>0.7</priority>
-
-   </url>
-
-   <url>
-
       <loc>https://www.goodmobile.org/support/data-setup/tmo/ios</loc>
 
       <lastmod>2022-02-01</lastmod>

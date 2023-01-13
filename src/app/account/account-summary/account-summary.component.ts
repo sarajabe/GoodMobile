@@ -1107,11 +1107,11 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
                   if (!!result) {
                     this.fiveGEnabled = true;
                     this.userAccount.tech5gEnabled = true;
-                    if (os === 'ios') {
-                      this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE5G}`]);
-                    } else {
-                      this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID5G}`]);
-                    }
+                    // if (os === 'ios') {
+                    //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE5G}`]);
+                    // } else {
+                    //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID5G}`]);
+                    // }
                     this.appState.loading = false;
                   }
                 }, (error) => {
@@ -1136,11 +1136,11 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
                   if (!!result) {
                     this.fiveGEnabled = false;
                     this.userAccount.tech5gEnabled = false;
-                    if (os === 'ios') {
-                      this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE4G}`]);
-                    } else {
-                      this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID4G}`]);
-                    }
+                    // if (os === 'ios') {
+                    //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE4G}`]);
+                    // } else {
+                    //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID4G}`]);
+                    // }
                     this.appState.loading = false;
                   }
                 }, (error) => {

@@ -1,40 +1,81 @@
-<div class="ios-tmo-container">
-    <div class="first-section">
-      <p class="ios-title"><b>IPHONE</b></p>
-      <div class="ios-desc">
-        <p>iPhone LTE Instructions:</p>
-      </div>
-    </div>
-    <div class="instructions-section">
-      <p class="title">All iPhone Models:</p>
-      <p class="info">To ensure your carrier settings are up to date, go to <b> Settings > General > About > Carrier.</b>
-          If prompted to update your carrier settings, select <b>Update.</b></p>
-      <ol class="list numbers">
-          <li>Select the <b>Settings</b> icon on your homescreen.</li>
-          <li>Select the <b>Cellular</b> menu option in the first section of the menu.</li>
-          <li>Select <b>Cellular Data Options</b></li>
-          <li>Select <b>Voice & Data,</b> Select <b>LTE</b> and turn on <b>VoLTE</b></li>
-          <li>Go Back to <b>Cellular</b> settings.</li>
-          <li>Select the <b>Cellular Data Network</b> option and enter the following information into the fields:</li>
-      </ol>
-      <p class="title">Cellular Data</p>
-      <ul class="list disc">
-        <li>APN – <b>wholesale</b></li>
-        <li>Username – (leave blank)</li>
-        <li>Password – (leave blank)</li>
-      </ul>
-      <p class="title">MMS</p>
-      <ul class="list disc">
-        <li>APN – <b>wholesale</b></li>
-        <li>Username – (leave blank)</li>
-        <li>Password – (leave blank)</li>
-        <li>MMSC – <a class="word-break" href="http://wholesale.mmsmvno.com/mms/wapenc"
-            rel="nofollow"><b>http://wholesale.mmsmvno.com/mms/wapenc</b></a></li>
-        <li>MMS Proxy – (leave blank)</li>
-        <li>MMS Max Message Size – <b>1048576</b></li>
-        <li>MMS UA Prof URL – <a class="word-break" href="http://www.apple.com/mms/uaprof.rdf"
-            rel="nofollow"><b>http://www.apple.com/mms/uaprof.rdf</b></a></li>
-      </ul>
-      <p class="restart-iphone"><b>Restart your iPhone.</b></p>
+<section class="iphone page-section">
+  <div class="header-section">
+    <p class="label">SMARTPHONE LTE INSTRUCTIONS</p>
+    <h2 class="header-color">iPhone LTE Instructions:</h2>
+  </div>
+  <div class="info-banner default-background">
+    <div class="flex">
+        <img src="assets/icon/info-icon.svg" alt="Info Icon">
+        <div class="banner-content">
+            <p class="title">Note:</p>
+            <p class="description">To ensure your carrier settings are up to date, go to <b>Settings > General > About > Carrier</b>.</p>
+            <p class="description">If prompted to update your carrier settings, select <b>Update</b>.</p>
+        </div>
     </div>
   </div>
+  <ul class="list">
+    <li class="smaller">Select the <b>Settings</b> icon on your home screen.</li>
+    <li class="smaller">Select the <b>Cellular</b> menu option in the first section of the menu.</li>
+    <li class="smaller">Select <b>Cellular Data Options</b></li>
+    <li class="smaller"><p class="smaller">Select the <b>Cellular Data Network</b> option and enter the following information into the fields:</p>
+      <div class="card-info">
+        <div class="card-section">
+          <p class="smallest primary-font-bold">Cellular Data</p>
+          <div class="section-info">
+            <div class="info">
+              <p class="name smallest primary-font-bold">APN:</p>
+              <p class="value smallest">wholesale</p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">Username:</p>
+              <p class="value smallest">(Leave blank)</p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">Password:</p>
+              <p class="value smallest">(Leave blank)</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-section">
+          <p class="smallest primary-font-bold">MMS:</p>
+          <div class="section-info">
+            <div class="info">
+              <p class="name smallest primary-font-bold">APN:</p>
+              <p class="value smallest">wholesale</p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">Username:</p>
+              <p class="value smallest">(Leave blank)</p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">Password:</p>
+              <p class="value smallest">(Leave blank)</p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">MMSC:</p>
+              <p class="value smallest"><a class="word-break" href="http://wholesale.mmsmvno.com/mms/wapenc"
+                rel="nofollow">http://wholesale.mmsmvno.com/mms/wapenc</a></p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">MMS Proxy:</p>
+              <p class="value smallest">(Leave blank)</p>
+            </div>
+            <div class="info">
+              <p class="name smallest primary-font-bold">MMS Max Message Size:</p>
+              <p class="value smallest">1048576</p>
+            </div>
+            <div class="info last">
+              <p class="name smallest primary-font-bold">MMS UA Prof URL:</p>
+              <p class="value smallest"><a class="word-break" href="http://www.apple.com/mms/uaprof.rdf"
+                rel="nofollow">http://www.apple.com/mms/uaprof.rdf</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="smaller"><b>Restart</b> your iPhone.</li>
+  </ul>
+  <div class="action">
+    <button class="button primary" aria-label="done" (click)="goToDataSetup()">Done</button>
+  </div>
+</section>

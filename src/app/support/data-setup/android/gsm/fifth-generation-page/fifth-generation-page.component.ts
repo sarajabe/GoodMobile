@@ -12,7 +12,7 @@ export class FifthGenerationPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  public done(): void {
-    this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
-  }
+  // public done(): void {
+  //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.ANDROID}`]);
+  // }
 }

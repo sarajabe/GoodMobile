@@ -1,40 +1,56 @@
-<div class="t-mobile-page">
-    <div class="t-mobile-banner-img">
-      <picture>
-        <source srcset='assets/img/banners/TMO-setup-image-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
-        <source srcset='assets/img/banners/TMO-setup-image-mobile.png' media="(max-width: 639.9px)" type="image/png">
-        <source srcset='assets/img/banners/TMO-setup-image-desktop.webp' media="(min-width: 640px)" type="image/webp">
-        <source srcset='assets/img/banners/TMO-setup-image-desktop.png' media="(min-width: 640px)" type="image/png">
-        <img src="assets/img/banners/TMO-setup-image-desktop.png" alt="t-mobile-image">
-      </picture>
-      <div class="header">
-        <h1 class="title">Get Started</h1>
-        <h2 class="title">Setup your phone</h2>
-      </div>
-    </div>
-    <div class="common-t-mobile-text">
-      <div class="text-section">
-        <p class="title"><b>First things first…..</b></p>
-        <p class="description">If you just activated your phone, are using a new phone, or took a recent software update,
-          please make sure to turn the phone off and back on with the Good Mobile SIM installed. This ensures your phone will
-          get its first set of programming direct from the towers, and will force your phone to register quickly.</p>
-      </div>
-      <div class="text-section">
-        <p class="title"><b>Secondly…</b></p>
-        <p class="description">Important data settings need to be programmed into your phone. These settings are like the
-          ‘key’ to the data portion of the network. Without this, your mobile data will not work.</p>
-      </div>
-      <div class="text-section">
-        <p class="title"><b>Normally, these settings will be programmed into your phone automatically.</b></p>
-        <p class="description">Depending on your phone model, you may get a text saying “We see your phone does not have
-          access to the internet or send MMS. Settings will be sent to your handset.”</p>
-        <p class="note"><b>If you do NOT get the settings automatically,</b> please follow the instructions below to
-          manually
-          enter the settings.</p>
-      </div>
-    </div>
-    <section>
-      <app-ios-tmo *ngIf="!!isIos"></app-ios-tmo>
-      <app-android-tmo *ngIf="!isIos"></app-android-tmo>
-    </section>
+<section class="t-mobile-page">
+  <div class="top-banner page-section">
+    <h1 class="header-color">{{!!isIos ? 'iPhone' : 'Android'}} Smartphone LTE Instructions:</h1>
+    <p>{{!!isIos ? 'Setup your data:' : 'Android Version 4.0 (Ice cream sandwich) and up...'}}</p>
   </div>
+  <div class="setup-section page-section">
+    <div class="header-section">
+      <p class="label">LTE SETUP</p>
+      <h2 class="header-color">Setup your phone:</h2>
+      <h5>Check the following notes below before you start:</h5>
+    </div>
+    <div class="steps-section">
+      <div class="step-info">
+        <div class="image">
+          <img src="assets/img/data-setup-1.svg" alt="step 1">
+        </div>
+        <h5>First thing first...</h5>
+        <div class="data">
+          <p class="smaller">If you just <b>activated</b> your phone, are using a <b>new</b> phone, or took a recent <b>software update</b>, please make sure to turn the phone off and back on with the Good Mobile SIM <b>installed</b>.</p>
+          <p class="smaller">This ensures your phone will get its first set from the towers, & will force your phone to register quickly.</p>
+        </div>
+      </div>
+      <div class="step-info">
+        <div class="image">
+          <img src="assets/img/data-setup-2.svg" alt="step 2">
+        </div>
+        <h5>Secondly...</h5>
+        <div class="data">
+          <p class="smaller">Important data settings need to be programmed into your phone.</p>
+          <p class="smaller">These settings are like the <b>‘key’</b> to the data portion of the network. Without this, your mobile data will <b>not</b> work.</p>
+        </div>
+      </div>
+    </div>
+    <div class="info-banner main-background">
+      <div class="flex">
+          <img src="assets/icon/info-icon.svg" alt="Info Icon">
+          <div class="banner-content">
+              <p class="title">Note:</p>
+              <p class="description">Normally, <b>these settings will be programmed</b> into your phone <b>automatically</b>.</p>
+              <p class="description">Depending on your phone model, you may get a text saying “We see your phone does not have access to the internet or send MMS. Settings will be sent to your handset.”</p>
+              <p class="description last">If you <b>do NOT get the settings automatically</b>, please follow the instructions below to <b>manually enter the settings</b>.</p>
+              <div class="actions">
+                <button class="button thirdly" (click)="scrollToDetails()">Go to Instructions</button>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="done-section">
+      <button class="button primary" aria-label="Done" (click)="goToDataSetup()">Done</button>
+    </div>
+  </div>
+  <div id="details">
+    <app-ios-tmo *ngIf="!!isIos" ></app-ios-tmo>
+    <app-android-tmo *ngIf="!isIos"></app-android-tmo>
+  </div>
+</section>
