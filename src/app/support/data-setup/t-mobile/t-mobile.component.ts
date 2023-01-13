@@ -18,4 +18,13 @@ export class TMobileComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public goToDataSetup(): void {
+      this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.DATA_SETUP}`]);
+  }
+
+  public scrollToDetails(): void {
+    let el = document.getElementById('details');
+    el.scrollIntoView();
+  }
+
 }

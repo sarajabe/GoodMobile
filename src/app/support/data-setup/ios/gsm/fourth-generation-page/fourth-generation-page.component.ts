@@ -40,9 +40,9 @@ click on the Good Mobile LTE Data Settings tab to configure your iPhone LTE sett
 
   ngOnInit(): void {
   }
-  public done(): void {
-    this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
-  }
+  // public done(): void {
+  //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE}`]);
+  // }
   public showLTEsettingPopUp(): void {
     this.modalHelper.showInformationMessageModal('How to download your iPhone LTE settings',
       '',

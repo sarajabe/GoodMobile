@@ -220,10 +220,10 @@ export class IosGsmComponent {
         console.error('error step', error);
       });
   }
-  public fourthGen(): void {
-    this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE4G}`]);
-  }
-  public fifthGen(): void {
-    this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE5G}`]);
-  }
+  // public fourthGen(): void {
+  //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE4G}`]);
+  // }
+  // public fifthGen(): void {
+  //   this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.IPHONE5G}`]);
+  // }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 
 @Component({
   selector: 'app-ios-tmo',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IosTmoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+  public goToDataSetup(): void {
+    this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.DATA_SETUP}`]);
   }
 
 }

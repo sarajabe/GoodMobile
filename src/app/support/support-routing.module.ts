@@ -60,14 +60,14 @@ const routes: Routes = [
         title: 'Data Setup | IPhone',
         description: 'Learn how to setup data services for your iPhone cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
-      { path: SUPPORT_ROUTE_URLS.IPHONE4G, component: IosFourthGenerationPageComponent , data: {
-        title: 'Data Setup | IPhone | 4G',
-        description: 'Fourth Generation for 4G Iphone Good Mobile network.'
-      } as IPageMeta},
-      { path: SUPPORT_ROUTE_URLS.IPHONE5G, component: IosFifthGenerationPageComponent , data: {
-        title: 'Data Setup | IPhone | 5G',
-        description: 'Fifth Generation for 5G Iphone Good Mobile network.'
-      } as IPageMeta},
+      // { path: SUPPORT_ROUTE_URLS.IPHONE4G, component: IosFourthGenerationPageComponent , data: {
+      //   title: 'Data Setup | IPhone | 4G',
+      //   description: 'Fourth Generation for 4G Iphone Good Mobile network.'
+      // } as IPageMeta},
+      // { path: SUPPORT_ROUTE_URLS.IPHONE5G, component: IosFifthGenerationPageComponent , data: {
+      //   title: 'Data Setup | IPhone | 5G',
+      //   description: 'Fifth Generation for 5G Iphone Good Mobile network.'
+      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.TMO_Android, component: TMobileComponent , data: {
         title: 'Data Setup | Android',
         description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
@@ -76,14 +76,14 @@ const routes: Routes = [
       //   title: 'Data Setup | Android',
       //   description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
       // } as IPageMeta},
-      { path: SUPPORT_ROUTE_URLS.ANDROID4G, component: FourthGenerationPageComponent , data: {
-        title: 'Data Setup | Android | 4G',
-        description: 'Fourth Generation for 4G Android Good Mobile network.'
-      } as IPageMeta},
-      { path: SUPPORT_ROUTE_URLS.ANDROID5G, component: FifthGenerationPageComponent , data: {
-        title: 'Data Setup | Android | 5G',
-        description: 'Fifth Generation for 5G Android Good Mobile network.'
-      } as IPageMeta},
+      // { path: SUPPORT_ROUTE_URLS.ANDROID4G, component: FourthGenerationPageComponent , data: {
+      //   title: 'Data Setup | Android | 4G',
+      //   description: 'Fourth Generation for 4G Android Good Mobile network.'
+      // } as IPageMeta},
+      // { path: SUPPORT_ROUTE_URLS.ANDROID5G, component: FifthGenerationPageComponent , data: {
+      //   title: 'Data Setup | Android | 5G',
+      //   description: 'Fifth Generation for 5G Android Good Mobile network.'
+      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.IPHONE_DATA_SETUP, redirectTo: SUPPORT_ROUTE_URLS.DATA_SETUP, pathMatch: 'full' },
       {
         path: SUPPORT_ROUTE_URLS.FAQS, component: FaqsComponent, data: {
