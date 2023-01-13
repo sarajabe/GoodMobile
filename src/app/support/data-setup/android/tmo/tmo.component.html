@@ -100,9 +100,12 @@
       </div>
     </li>
     <li class="smaller">Press <b>Menu</b> button on your device the <b>Save</b> on the screen.</li>
-    <li class="smaller">Go to <a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SUMMARY]"><b>Account Summary</b></a>  to manage your account</li>
+    <li class="smaller">
+      <p class="smaller"> Go to <a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SUMMARY]"><b>Account Summary</b></a>  to manage your account</p>
+      <div class="action">
+        <button class="button primary" aria-label="done" (click)="goToDataSetup()">Done</button>
+      </div>
+   </li>
   </ul>
-  <div class="action">
-    <button class="button primary" aria-label="done" (click)="goToDataSetup()">Done</button>
-  </div>
+  
 </section>
