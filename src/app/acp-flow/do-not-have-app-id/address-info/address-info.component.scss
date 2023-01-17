@@ -18,13 +18,50 @@
             cursor: not-allowed;
         }
     }
-    margin-bottom: 159px;
-    @media (max-width: $desktop-min-width-minus) {
-        margin-bottom: 49.59px;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-        margin-bottom: 55.59px;
-    }
+    margin-bottom: 60px;
+    .tooltip-note {
+        .tooltip {
+          cursor: pointer;
+          .info {
+            width: 24px;
+            height: 24px;
+          }
+
+          .tooltiptext {
+            width: 330px;
+            top: 44px;
+            left: -70px;
+            height: fit-content;
+            padding: 8px 12px;
+            background: #5E5E5E;
+            box-shadow: 0 4px 12px #5e5e5e08, 0 8px 30px #5e5e5e14, 0 5px 16px #003c7505;
+            border-radius: 8px;
+            color: white;
+
+            @media(max-width: $phablet-min-width-minus) {
+              width: 200px;
+              text-align: center;
+              top: 45px;
+            }
+
+            img {
+              width: 17px;
+              height: 9.32px;
+              position: absolute;
+              top: -8px;
+              left: 153.5px;
+
+              @media(max-width: $phablet-min-width-minus) {
+                left: 91.5px;
+              }
+            }
+          }
+        }
+      }
+      .question {
+        display: flex;
+        gap: 5px;
+      }
     .fields-title{
         font-weight: normal;
         font-size: 24px;
@@ -38,7 +75,10 @@
         }
     }
     .red {
-        color: #D22119;
+        color: #D10000;
+    }
+    .space {
+        margin-bottom: 20px;
     }
     .form-field {
         &.half {
@@ -46,19 +86,14 @@
             width: 100%;
             margin-bottom: 10px;
         }
-        &.quarter{
-            input, span {
-            width: 120px;
-            }
-            margin-left: 28px;
-            margin-bottom: 22.2px;
-            @media (max-width: $phablet-min-width-minus) {
-                margin-bottom: 16.2px;
-            }
-        }
-        span {
-            color: #A5A3A3;
-        }
+       &.double {
+        display: flex;
+        gap: 16px;
+       }
+    }
+    .form-section {
+        display: flex;
+        flex-basis: 50%;
     }
     .three-fields{
         display: flex;

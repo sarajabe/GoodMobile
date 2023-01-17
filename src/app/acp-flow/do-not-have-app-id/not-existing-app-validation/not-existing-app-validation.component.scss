@@ -1,98 +1,30 @@
 @import "../../../../styles/modules/variables";
 
-.content-section {
-    margin-top: 60px;
-    padding: 0 10%;
-
-    @media (max-width: $desktop-min-width-minus) {
-        padding: 0 20px;
-    }
-
+.no-app {
+    margin-top: 40px;
     @media (max-width: $phablet-min-width-minus) {
         margin-top: 32px;
-        padding: 0 16px;
     }
-
-    .header {
-        font-size: 32px;
-        line-height: 40px;
-        font-weight: normal;
-        letter-spacing: -0.02em;
-        color: #383838;
-        font-family: $secondary-font-family;
-        margin-bottom: 8px;
-
-        @media (max-width: $phablet-min-width-minus) {
-            font-size: 24px;
-            line-height: 32px;
-            margin-bottom: 4px;
-        }
-    }
-
-    .sub-header {
-        font-size: 24px;
-        line-height: 32px;
-        font-weight: bold;
-        letter-spacing: -0.02em;
-        color: #383838;
-        font-family: $secondary-font-family-bold;
-        margin-bottom: 40px;
-
-        &.step-4 {
-            margin-bottom: 4px;
-        }
-
-        @media (max-width: $phablet-min-width-minus) {
-            font-size: 20px;
-            line-height: 28px;
-            margin-bottom: 32px;
-        }
-    }
-
-    .extra-desc {
-        font-size: 18px;
-        line-height: 32px;
-        font-weight: 500;
-        font-family: $secondary-font-family;
-        color: #383838;
-        letter-spacing: -0.02em;
-        max-width: 849px;
-        margin-bottom: 44px;
-
-        @media (max-width: $phablet-min-width-minus) {
-            font-size: 16px;
-            line-height: 24px;
-            margin-bottom: 34px;
-        }
-    }
-
     .info-banner {
-        max-width: 1000px;
         width: 100%;
-        margin-bottom: 40.8px;
-
-        @media (max-width: $phablet-min-width-minus) {
-            margin-bottom: 34px;
-        }
+        margin-top: 24px;
     }
 
     .stepper {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 39px;
-        max-width: 1000px;
-
+        margin-bottom: 32px;
+        margin-top: 32px;
         .step {
             color: $primary-color;
             display: flex;
             align-items: center;
-
             .circle {
-                font-family: $base-font-family;
-                background: transparent;
+                font-family: $base-font-family-bold;
+                background: #F3F3F3;
                 border-radius: 100%;
-                color: #a5a3a3;
+                color: #B0B0B0;
                 text-align: center;
                 box-shadow: 0 0 0 3px #fff;
                 border: 0.712388px solid #a5a3a3;
@@ -115,7 +47,7 @@
             }
 
             .border {
-                border: 0.617264px solid #a5a3a3;
+                border: 1.25px solid #765BA7;
                 transform: rotate(90deg);
                 width: 0;
                 height: 24px;
@@ -126,11 +58,11 @@
                 color: $primary-color;
 
                 .circle {
-                    background: rgba(134, 51, 153, 0.1);
+                    background: #D9E6EF;
                     color: $primary-color;
-                    border-right: 0.66px solid #ff9811;
+                    border-right: 0.66px solid $primary-color;
                     border-left: 0.66px solid #863399;
-                    border-top: 0.66px solid #ff9811;
+                    border-top: 0.66px solid $primary-color;
                     border-bottom: 0.66px solid #863399;
                     width: 40px;
                     height: 40px;
@@ -171,66 +103,41 @@
 
 .navigation-section {
     border-top: 1px solid #e3e3ea;
-    padding: 16px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 16px 0px;
     background-color: #ffffff;
     position: sticky;
     z-index: 2;
     bottom: 0;
     width: 100%;
-
-    .left {
-        .no-border {
-            color: $primary-color;
-            font-size: 20px;
-            line-height: 20px;
-            font-family: $secondary-font-family-bold;
-            font-weight: 700;
-            margin-bottom: 0;
-            cursor: pointer;
-
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: 16px;
-                line-height: 16px;
-            }
-        }
+    .navs {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-
-    .right {
-        padding: 0 30px;
-        cursor: pointer;
-        font-family: $secondary-font-family-bold;
-    }
-
-    .button {
+    .no-border {
+        color: $primary-color;
         font-size: 20px;
         line-height: 20px;
-        padding: 8px 35px;
         font-family: $secondary-font-family-bold;
         font-weight: 700;
+        margin-bottom: 0;
         cursor: pointer;
-
-        &.secondary {
-            margin-right: 16px;
-        }
 
         @media (max-width: $phablet-min-width-minus) {
             font-size: 16px;
             line-height: 16px;
         }
     }
-
-    @media (max-width: $desktop-min-width-minus) {
-        padding: 20px 20px 30px;
-
-        .right {
-            padding: 0;
+    .right {
+        display: flex;
+    }
+    .button {
+        height: 40px;
+        @media (max-width: $phablet-min-width-minus) {
+            width: 96px;
+            padding: 10px;
         }
     }
 
-    @media (max-width: $phablet-min-width-minus) {
-        padding: 16px 16px 24px;
-    }
+
 }

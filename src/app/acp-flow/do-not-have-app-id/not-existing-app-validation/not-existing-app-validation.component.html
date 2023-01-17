@@ -1,11 +1,12 @@
-<section class="content-section" *ngIf="!acpSuccess && !acpError">
+<section class="page-section no-app" *ngIf="!acpSuccess && !acpError">
   <div *ngIf="activeStep !== 4">
-    <h2 class="header">Don’t Worry!</h2>
-    <h3 class="sub-header">Please provide the following information to verify your application!</h3>
+    <h2 class="header-color">Don’t Worry!</h2>
+    <h4 class="secondary-font">Please provide the following information to verify your application!</h4>
     <div class="info-banner default-background">
       <div class="flex">
         <img src="/assets/icon/info-icon.svg" alt="Info Icon">
         <div class="banner-content">
+          <p class="title">Note:</p>
           <p class="description">Please enter the information <b>EXACTLY</b> as you entered in the ACP application
             including: <b>(spaces, commas, or any special characters).</b>
           </p>
@@ -15,10 +16,10 @@
       </div>
     </div>
   </div>
-  <div *ngIf="activeStep === 4 ">
-    <h2 class="header">Almost there!</h2>
-    <h3 class="sub-header step-4">Customer Notice and Agreement</h3>
-    <p class="extra-desc">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with
+  <div *ngIf="activeStep === 4">
+    <h2 class="header-color">Almost there!</h2>
+    <h4 class="sub-header step-4">Customer Notice and Agreement</h4>
+    <p class="smaller">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with
       Good Mobile, you should agree and initial the following:</p>
   </div>
   <section class="stepper">
@@ -43,12 +44,13 @@
 <app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
 <app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
 <section class="navigation-section" *ngIf="!acpSuccess && !acpError">
-  <div class="left">
+  <div class="page-section navs">
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
+    <div class="right">
+      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
+      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
+        'Submit'}}</button>
+    </div>
   </div>
-  <div class="right">
-    <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-    <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
-      'Submit'}}</button>
-  </div>
+
 </section>

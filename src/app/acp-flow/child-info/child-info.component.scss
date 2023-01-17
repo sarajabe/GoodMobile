@@ -9,6 +9,12 @@
     select option:disabled {
         color: $disabled-grey;
     }
+    .space {
+        margin-bottom: 20px;
+    }
+    .grey {
+        color:  #9B9B9B;
+    }
 
     .childInfoForm {
         margin-left: 20px;
@@ -27,7 +33,7 @@
         }
 
         .red {
-            color: #D22119;
+            color: #D10000;
         }
 
         .field-note {
@@ -307,15 +313,9 @@
 
         .border-section {
             width: 0;
-            height: 602px;
-            border: 4px solid #dad0dc;
+            border: 4px solid #CCDEEA;
             margin-right: 16px;
             border-radius: 6px;
-
-            @media (max-width: $phablet-min-width-minus) {
-                height: 657.31px;
-
-            }
         }
 
         .fields-title {
@@ -356,10 +356,9 @@
         }
 
         .bottom {
-            margin-bottom: 32.2px;
-
+            margin-bottom: 28px;
             @media (max-width: $phablet-min-width-minus) {
-                margin-bottom: 28.2px;
+                margin-bottom: 20px;
             }
         }
 
@@ -374,22 +373,14 @@
             }
 
             &.quarter {
-
-                input,
-                span {
-                    width: 120px;
-                }
-
+                max-width: 120px;
+                width: 100%;
                 margin-left: 28px;
                 margin-bottom: 22.2px;
 
                 @media (max-width: $phablet-min-width-minus) {
                     margin-bottom: 16.2px;
                 }
-            }
-
-            span {
-                color: #a5a3a3;
             }
         }
 
@@ -437,27 +428,14 @@
         }
 
         .form-control {
-            font-size: 20px;
-            line-height: 32px;
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             font-weight: bold;
             font-family: $base-font-family-bold;
-
+            gap: 8px;
             @media (max-width: $phablet-min-width-minus) {
                 align-items: flex-start;
-                font-size: 16px;
-                line-height: 24px;
-            }
-
-            &.child {
-                font-size: 16px;
-                line-height: 24px;
-
-                @media (max-width: $phablet-min-width-minus) {
-                    font-size: 14px;
-                }
             }
         }
 

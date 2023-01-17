@@ -6,7 +6,12 @@
     select option:disabled {
       color: $disabled-grey;
     }
-
+    .grey {
+      color:  #9B9B9B;
+    }
+    .space {
+      margin-bottom: 20px;
+    }
     &.acp-disabled {
       .outlined-label-input input:disabled {
         background-color: #95959530;
@@ -29,7 +34,7 @@
       }
     }
 
-    margin-bottom: 159px;
+    margin-bottom: 80px;
 
     @media (max-width: $desktop-min-width-minus) {
       margin-bottom: 49.59px;
@@ -59,23 +64,20 @@
 
       &.top {
         margin-top: 36px;
-
         @media (max-width: $phablet-min-width-minus) {
           margin-top: 28px;
         }
       }
+    }
+    .bottom {
+      margin-bottom: 28px;
 
-      &.bottom {
-        margin-bottom: 22px;
-
-        @media (max-width: $phablet-min-width-minus) {
-          margin-bottom: 18px;
-        }
+      @media (max-width: $phablet-min-width-minus) {
+        margin-bottom: 20px;
       }
     }
-
     .red {
-      color: #D22119;
+      color: #D10000;
     }
 
     .fields-note {
@@ -190,16 +192,12 @@
     }
 
     .form-control {
-      font-size: rem-calc(16px);
-      line-height: 24px;
-      font-weight: 700;
       display: flex;
       align-items: center;
-
+      gap: 8px;
+      margin-bottom: 18px;
       @media (max-width: $phablet-min-width-minus) {
-        font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 4.8px;
+        align-items: flex-start;
       }
     }
 

@@ -25,13 +25,7 @@
       }
     }
 
-    &.bottom {
-      margin-bottom: 60px;
-
-      @media (max-width: $phablet-min-width-minus) {
-        margin-bottom: 32px;
-      }
-    }
+    
 
     .fields-title {
       font-weight: normal;
@@ -45,11 +39,22 @@
         line-height: 28px;
       }
     }
+    .bottom {
+      margin-bottom: 28px;
 
+      @media (max-width: $phablet-min-width-minus) {
+        margin-bottom: 20px;
+      }
+    }
     .red {
       color: #D22119;
     }
-
+    .grey {
+      color: #9B9B9B;
+    }
+    .space {
+      margin-bottom: 20px;
+    }
     .fields-note {
       font-weight: normal;
       font-size: rem-calc(16px);
@@ -73,24 +78,14 @@
         margin-bottom: 10px;
       }
 
-      &.quarter {
-
-        input,
-        span {
-          width: 120px;
-        }
-
-        margin-left: 28px;
-        margin-bottom: 22.2px;
-
-        @media (max-width: $phablet-min-width-minus) {
-          margin-bottom: 16.2px;
-        }
-      }
-
-      span {
-        color: #A5A3A3;
-      }
+      &.double {
+        display: flex;
+        gap: 16px;
+       }
+    }
+    .form-section {
+        display: flex;
+        flex-basis: 50%;
     }
 
     .three-fields {

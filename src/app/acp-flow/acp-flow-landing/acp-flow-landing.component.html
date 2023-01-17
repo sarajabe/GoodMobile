@@ -1,10 +1,10 @@
 <section class="acp-flow page-section" *ngIf="!showAcpComponents && !acpSuccess && !acpError">
-  <h1 class="header">Before we begin...</h1>
-  <p class="sub-header" data-cy="id-decision">Do you have an
-    ACP application ID?</p>
+  <h2 class="header-color">Before we begin...</h2>
+  <h4 class="secondary-font" data-cy="id-decision">Do you have an
+    ACP application ID?</h4>
   <form [formGroup]="acpFlowForm" class="acp-form-flow" [class.acp-disabled]="!!enrolled">
     <div class="radioBtn" *ngFor="let item of acpOptions">
-      <label class="form-control" [for]="item?.id">
+      <label class="form-control primary-font-bold" [for]="item?.id">
         <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id" [data-cy]="item?.id"
           (change)="onOptionChange()">{{item?.value}}
       </label>
@@ -63,10 +63,8 @@
 <app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
 <app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
 <section class="navigation-section" *ngIf="!showAcpComponents && !acpSuccess && !acpError">
-  <div class="left">
+  <div class="page-section navs">
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
-  </div>
-  <div class="right">
     <button class="button primary" data-cy="nextButton" aria-label="Next" (click)="goNext()"
       *ngIf="!enrolled">Next</button>
   </div>

@@ -1,7 +1,7 @@
 <form [formGroup]="personalInfoForm" class="personalInfoFormAppID" [class.acp-disabled]="!!disable">
   <div class="form-row bottom">
-    <p class="fields-title">What’s your App ID? <span class="red">*</span></p>
-    <p class="fields-note">Example: B12345-67890</p>
+    <p class="text-color-thridly">What’s your App ID?<span class="red">*</span></p>
+    <p class="smallest grey space">Example: B12345-67890</p>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="applicationId" type="text" id="applicationId" data-cy="applicationId" />
@@ -19,10 +19,9 @@
     </div>
   </div>
   <div class="form-row bottom">
-    <p class="fields-title">What’s your Full Name? <span class="red">*</span></p>
-    <p class="fields-note">The name you use on official documents, like your Social Security Card or State ID.
-      Not a nickname.
-    </p>
+    <p class="text-color-thridly">What’s your Full Name?<span class="red">*</span></p>
+    <p class="smallest grey">The name you use on official documents, like your Social Security Card or State ID.</p>
+    <p class="smallest grey space">Not a nickname.</p>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="firstName" maxlength="50" type="text" id="firstName"
@@ -67,7 +66,7 @@
     </div>
   </div>
   <div class="form-row bottom">
-    <p class="fields-title">What’s your Date of Birth? <span class="red">*</span></p>
+    <p class="space text-color-thridly">What’s your Date of Birth?<span class="red">*</span></p>
     <div class="form-row half-row">
       <div class="three-fields">
         <div class="form-field">
@@ -180,7 +179,7 @@
     </div>
   </div>
   <div class="form-row bottom">
-    <p class="fields-title extra-space">What State do you live in? <span class="red">*</span></p>
+    <p class="space text-color-thridly">Please enter your state as writter in your application:<span class="red">*</span></p>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="state" type="text" maxlength="2" id="state" data-cy="state" minlength="2"/>
@@ -198,7 +197,7 @@
     </div>
   </div>
   <div class="form-row bottom">
-    <p class="fields-title extra-space">Email address used in your application: <span class="red">*</span></p>
+    <p class="space text-color-thridly">Email address used in your application:<span class="red">*</span></p>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="email" maxlength="50" type="text" id="email" data-cy="email" />

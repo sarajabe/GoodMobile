@@ -1,8 +1,8 @@
 <div [class.acp-disabled]="!!disable">
   <form [formGroup]="codesForm" class="childInfoForm codes">
-    <div class="form-row">
-      <p class="field-title">What program do you qualify through? <span class="red">*</span></p>
-      <p class="field-note">Choose which program you qualify through for the Afforadable Connectivity Program.</p>
+    <div class="form-row bottom">
+      <p >What program do you qualify through?<span class="red">*</span></p>
+      <p class="smallest grey space">Choose which program you qualify through for the Afforadable Connectivity Program.</p>
       <div class="form-field width">
         <div class="drop-down-floating-label">
           <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'options'" [data]="eligibilityCodes"
@@ -19,7 +19,7 @@
         </label>
       </div>
     </div>
-    <div class="form-row"
+    <div class="form-row bottom"
       *ngIf="!!codesForm.controls.eligibilityCode.value && codesForm.controls.eligibilityCode.value.includes('E4')">
       <p class="specify">Please specify:</p>
       <div class="form-field width">
@@ -37,7 +37,7 @@
         </label>
       </div>
     </div>
-    <div class="form-row"
+    <div class="form-row bottom"
       *ngIf="!!codesForm.controls.eligibilityCode.value && (codesForm.controls.eligibilityCode.value.includes('E50') || codesForm.controls.eligibilityCode.value.includes('E51'))">
       <p class="specify">Please specify:</p>
       <div class="form-field width">
@@ -60,7 +60,7 @@
 
   <section class="qualifying" [class.acp-disabled]="!!disable">
     <form [formGroup]="qualifyingForm" class="qualifying-form-flow">
-      <p class="main-title" data-cy="qualificationHeader">How do you Qualify? <span class="red">*</span></p>
+      <p class="space" data-cy="qualificationHeader">How do you Qualify?<span class="red">*</span></p>
       <div class="radioBtn" *ngFor="let item of options">
         <label class="form-control" [for]="item?.id">
           <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id">{{item?.value}}
@@ -75,11 +75,11 @@
     <form [formGroup]="childInfoForm" class="childInfoFormNonExistingApp"
       *ngIf="qualifyingForm.controls.option.value === 'child'">
       <div class="border-section"></div>
-      <div class="form-section">
-        <p class="bbq-info">Please provide the Beneficiary Qualifying Person (BQP) information: <span
+      <div class="form-section bottom">
+        <p class="space">Please provide the Beneficiary Qualifying Person (BQP) information:<span
             class="red">*</span></p>
         <div class="form-row bottom">
-          <p class="fields-title">BQP Full Name: <span class="red">*</span></p>
+          <p class="fields-title">BQP Full Name:<span class="red">*</span></p>
           <div class="form-field half">
             <label class="outlined-label-input">
               <input placeholder=" " formControlName="firstName" maxlength="50" type="text" id="firstName"
@@ -126,7 +126,7 @@
           </div>
         </div>
         <div class="form-row bottom">
-          <p class="fields-title">BQP Date of Birth: <span class="red">*</span></p>
+          <p class="space">BQP Date of Birth:<span class="red">*</span></p>
           <div class="form-row half-row">
             <div class="three-fields">
               <div class="form-field">
@@ -218,8 +218,8 @@
           </div>
         </div>
         <div class="form-row bottom">
-          <p class="fields-title note">BQP Government ID type: <span class="red">*</span></p>
-          <p class="fields-note">Please select the ID you used during your National Verifier process</p>
+          <p class="">BQP Government ID type:<span class="red">*</span></p>
+          <p class="smallest grey space">Please select the ID you used during your National Verifier process</p>
           <div class="radioBtn child">
             <label class="form-control child" for="ssn">
               <input type="radio" value="ssn" formControlName="identityType" id="ssn" data-cy="ssn"

@@ -4,6 +4,12 @@
     select option:disabled {
         color: $disabled-grey;
     }
+    .grey {
+      color: #9B9B9B;  
+    }
+    .space {
+        margin-bottom: 15px;
+    }
     &.acp-disabled {
         .outlined-label-input input:disabled {
             background-color: #95959530;
@@ -28,49 +34,17 @@
     @media (max-width: $phablet-min-width-minus) {
         margin-bottom: 55.59px;
     }
-    .fields-title {
-        font-weight: normal;
-        font-size: 24px;
-        line-height: 36px;
-        margin-bottom: 2px;
-        font-family: $base-font-family;
-        &.extra-space {
-            margin-bottom: 23.8px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-            font-size: 18px;
-            line-height: 28px;
-            &.extra-space {
-                margin-bottom: 19.8px;
-            }
-        }
-    }
     .red {
-        color: #d22119;
-    }
-    .fields-note {
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 23.8px;
-        color: #a5a3a3;
-        max-width: 849px;
-        @media (max-width: $phablet-min-width-minus) {
-            font-size: 14px;
-            line-height: 24px;
-            margin-bottom: 18.61px;
-        }
+        color: #D10000;
     }
     .bottom {
-        margin-bottom: 32.2px;
-        @media (max-width: $phablet-min-width-minus) {
-            margin-bottom: 28.2px;
-        }
+        margin-bottom: 24px;
     }
     .form-field {
         &.half {
             max-width: 308px;
             width: 100%;
+            margin-bottom: 5px;
         }
         &.quarter {
             input,
@@ -83,15 +57,11 @@
                 margin-bottom: 16.2px;
             }
         }
-        span {
-            color: #a5a3a3;
-        }
     }
     .three-fields {
         display: flex;
         justify-content: space-between;
         max-width: 308px;
-        margin-top: 21px;
         margin-bottom: 12px;
         select {
             width: 92px;

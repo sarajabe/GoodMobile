@@ -1,7 +1,7 @@
-<section class="content-section" *ngIf="!acpSuccess && !acpError">
-  <h1 class="header">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h1>
-  <p class="sub-header">{{STEPS_CONTENT[activeStep]?.stepDesc}}</p>
-  <p class="extra-desc" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}
+<section class="page-section no-flow" *ngIf="!acpSuccess && !acpError">
+  <h2 class="header-color">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
+  <h4 class="secondary-font">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h4>
+  <p class="smaller" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}
   </p>
   <section class="stepper">
     <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step" [class.done]="activeStep > step">
@@ -26,12 +26,12 @@
 <app-acp-success *ngIf="!!acpSuccess" [acpData]="acpData" [acpStatus]="acpStatus" [link]="acpLink"></app-acp-success>
 <app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
 <section class="navigation-section" *ngIf="!acpSuccess && !acpError">
-  <div class="left">
+  <div class="page-section navs">
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
-  </div>
-  <div class="right">
-    <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-    <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
-      'Verify'}}</button>
+    <div class="right">
+      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
+      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
+        'Verify'}}</button>
+    </div>
   </div>
 </section>
