@@ -2,436 +2,196 @@
 @import "../../../styles/modules/mixins";
 
 .landing-coverage-page {
-  width: 100%;
-  display: inline-block;
-  margin-bottom: 60px;
   .banner-section {
     position: relative;
     .banner-image-container {
-      position: relative;
       img {
-        object-fit: cover;
         width: 100%;
-        height: 555.5px;
-        filter: brightness(0.7);
-        @media (max-width: $desktop-min-width-minus) {
-          height: 407.5px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          height: 459px;
+        height: 600px;
+        object-fit: cover;
+        @media (min-width: 500px) {
+          object-position: 51%;
         }
       }
     }
+
     .banner-text-content {
       position: absolute;
-      top: 110px;
-      @media (min-width: 1300px) {
-        left: 16%;
-      }
-      @media (min-width: 1025px) and (max-width: 1299.9px) {
-        left: 8%;
-      }
-      @media (max-width: $desktop-min-width-minus) {
-        width: 100%;
-        text-align: center;
-        top: 48px;
-      }
-      @media (max-width: $tablet-min-width-minus) {
-        top: 48px;
-      }
-      @media (max-width: $phablet-min-width-minus) {
-        top: 30px;
-      }
-      .header {
-        color: white;
-        font-size: rem-calc(56px);
-        line-height: 80px;
-        margin-bottom: 8px;
-        @media (max-width: $desktop-min-width-minus) {
-          font-size: rem-calc(27px);
-          line-height: 40px;
-          margin-bottom: 12px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          margin: auto;
-          width: 210px;
-          font-size: rem-calc(22px);
-          line-height: 27px;
-          margin-bottom: 12px;
-        }
-      }
-      .sub-header {
-        font-family: $secondary-font-family;
-        color: white;
-        font-size: rem-calc(32px);
-        line-height: 33px;
-        margin-bottom: 38px;
-        @media (min-width: $desktop-min-width) {
-          max-width: 960px;
-        }
-        @media (max-width: $desktop-min-width-minus) {
-          max-width: 532px;
-          margin: 0 auto;
-          font-size: rem-calc(18px);
-          line-height: 22px;
-          margin-bottom: 30px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          line-height: 20px;
-          margin-bottom: 20px;
-          padding: 0 12px;
-        }
-      }
-      .fields-section {
-        display: flex;
-        width: 100%;
-        align-items: flex-end;
-        @media (max-width: $desktop-min-width-minus) {
-          flex-direction: column;
-          align-items: center;
-        }
-        .input-section {
-          max-height: 118px;
-          label {
-            font-family: $base-font-family-bold;
-            color: white;
-            font-size: rem-calc(15px);
-            line-height: 18px;
-            margin-bottom: 9px;
-            @media (max-width: $desktop-min-width-minus) {
-              font-size: rem-calc(12px);
-              line-height: 14px;
-              text-align: left;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-              text-align: center;
-              margin-bottom: 8px;
-              line-height: 4px;
-            }
-          }
-          @media (max-width: $desktop-min-width-minus) {
-           max-height: 145px;
-          }
-          input {
-            min-width: 400px;
-            max-width: 400px;
-            width: 100%;
-            height: 56px;
-            padding: 4px 12px;
-            &::placeholder {
-              font-family: $base-font-family;
-              font-size: rem-calc(12px);
-              line-height: 14px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-              margin-bottom: 10px;
-              max-width: 400px;
-              min-width: 300px;
-              width: 100%;
-              font-size: rem-calc(11px);
-            }
-          }
-          .input-label {
-            margin-bottom: 0;
-            font-size: rem-calc(22px);
-            line-height: 32px;
-            font-family: $base-font-family;
-            .p-label {
-                font-weight: bold;
-                margin-bottom: 0px;
-            }
-            .p-note {
-                font-size: rem-calc(12px);
-                line-height: 16px;
-            }
-            @media (max-width: $desktop-min-width-minus) {
-                text-align: center;
-            }
-            @media (max-width: $phablet-min-width) {
-              font-size: rem-calc(18px);
-          }
-        }
-          .note {
-            font-family: $base-font-family-bold;
-            position: absolute;
-            font-size: rem-calc(12px);
-            line-height: 14px;
-            @media (min-width: $phablet-min-width) {
-              width: 300px;
-            }
-            a {
-              color: white;
-              text-decoration: underline;
-            }
-          }
-          .blur-background {
-            background: rgba(0, 0, 0, 0.81);
-            opacity: 0.76;
-            @media (max-width: $phablet-min-width-minus) {
-              margin: 0 auto;
-              max-width: 299px;
-            }
-          }
-          .validation-message {
-            color: $alert;
-            position: relative;
-            bottom: 16px;
-            padding: 8px 15px;
-            font-size: rem-calc(12px);
-            background: #FFEAEA;
-            border-radius: 0px 0px 2px 2px;
-            opacity: inherit;
-            @media (max-width: $phablet-min-width-minus) {
-              bottom: 10px;
-              max-width: none;
-              padding: 8px 15px;
-            }
-          }
-        }
-        .check-coverage-button {
-          margin: 6px;
-          margin-left: 16px;
-          @media (max-width: $desktop-min-width-minus) {
-            margin-left: 0;
-            margin-top: 10px;
-          }
-          button {
-            width: 200px;
-            height: 43px;
-            &.disabled {
-              background-color: #f58520;
-              color: white;
-            }
-          }
-        }
-      }
-    }
-  }
-  .us-map-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: 101px;
-    margin-bottom: 75px;
-    @media (max-width: $desktop-min-width-minus) {
-      margin-top: 55px;
-      margin-bottom: 65px;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-      margin-top: 50px;
-      margin-bottom: 50px;
-    }
-    .title {
-      font-size: rem-calc(40px);
-      line-height: 80px;
-      margin-bottom: 0;
-      @media (max-width: $desktop-min-width-minus) {
-        font-size: rem-calc(27px);
-      }
-      @media (max-width: $phablet-min-width-minus) {
-        width: 300px;
-        font-size: rem-calc(27px);
-        line-height: 28px;
-      }
-    }
-    .us-image {
-      margin-top: 60px;
-      margin-bottom: 74px;
-      @media (max-width: $desktop-min-width-minus) {
-        margin-top: 21px;
-        margin-bottom: 42px;
-      }
-      @media (max-width: $phablet-min-width-minus) {
-        margin-top: 25px;
-        margin-bottom: 25px;
-      }
-      img {
-        object-fit: cover;
-        width: 733.8px;
-        height: 482.4px;
-        @media (max-width: $desktop-min-width-minus) {
-          width: 500px;
-          height: 359px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          max-width: 338px;
-          width: 100%;
-          height: 205px;
-        }
-      }
-    }
-    .desc {
-      max-width: 787px;
+      bottom: 0;
       width: 100%;
-      font-size: rem-calc(12px);
-      line-height: 20px;
-      @media (max-width: $desktop-min-width-minus) {
-        max-width: 558px;
-      }
-      @media (max-width: $phablet-min-width-minus) {
-        max-width: 300px;
-      }
-    }
-  }
-  .prepaid-phone-section {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    background-color: #f2f2f2;
-    max-height: 780px;
-    padding: 40px 5%;
-    @media (max-width: $desktop-min-width-minus) {
-      flex-direction: column-reverse;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-      height: 1166px;
-    }
-    .text-section {
-      flex-basis: 50%;
-      text-align: left;
-      margin-right: 5%;
-      @media (max-width: $desktop-min-width-minus) {
-        text-align: center;
-        margin-right: 0;
-        margin-top: 60px;
-      }
-      .title {
-        max-width: 364px;
-        font-family: $base-font-family-bold;
-        font-size: rem-calc(24px);
-        line-height: 35px;
-        @media (max-width: $desktop-min-width-minus) {
-          max-width: 250px;
-          margin: auto;
-          font-size: rem-calc(18px);
-          margin-bottom: 24px;
-        }
-        @media (max-width: $phablet-min-width-minus) {
-          max-width: 280px;
-        }
-      }
-      .desc1 {
-        font-family: $base-font-family;
-        font-size: rem-calc(18px);
-        line-height: 35px;
-        max-width: 508px;
-        @media (max-width: $desktop-min-width-minus) {
-          margin: auto;
-          font-size: rem-calc(16px);
-          margin-bottom: 24px;
-        }
-      }
-    }
-    .image-section {
-      img {
-        object-fit: cover;
-        max-width: 660px;
-        width: 100%;
-        max-height: 555.5px;
-        @media (max-width: $phablet-min-width-minus) {
-          width: 300px;
-        }
-      }
-    }
-  }
-  .check-phone-section {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: $blue;
-    height: 450px;
-    @media (max-width: $desktop-min-width-minus) {
-      height: 390px;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-      height: 340px;
-    }
-    .title {
-      color: white;
-      max-width: 642.4px;
-      font-size: rem-calc(40px);
-      line-height: 53px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      margin-bottom: 30px;
-      @media (max-width: $desktop-min-width-minus) {
-        max-width: 450px;
-        font-size: rem-calc(27px);
-        line-height: 35px;
+      top: 40px;
+      .p1 {
+        max-width: 592px;
+        margin-bottom: 24px;
+      }
+      
+      .input-section {
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 16px;
+        max-width: 500px;
+        input {
+          max-width: 500px;
+          width: 100%;
+        }
+        .validation-message {
+          font-size: rem-calc(12px);
+        }
       }
       @media (max-width: $phablet-min-width-minus) {
-        max-width: 230px;
-        font-size: rem-calc(22px);
-        line-height: 28px;
+        top: 32px;
       }
+
+    }
+  }
+  ::ng-deep {
+    @media (min-width: $phablet-min-width) {
+      .ngui-auto-complete-wrapper {
+        ngui-auto-complete {
+            right: 0px!important;
+        }
+      }
+    }
+  }
+  .light-blue {
+    background: #F8FCFE;
+  }
+  .white {
+    background: $white;
+  }
+  .label {
+    color: #5E5E5E;
+  }
+  .coverage-page-section {
+    .page-section {
+      padding-bottom: 48px;
+      padding-top: 48px;
+      display: flex;
+      align-items: center;
     }
     .description {
-      font-family: $base-font-family;
-      color: white;
-      font-size: rem-calc(18px);
-      line-height: 25px;
-      margin-bottom: 60px;
-      text-align: center;
-      @media (max-width: $desktop-min-width-minus) {
-        max-width: 416px;
-        font-size: rem-calc(16px);
-      }
-      @media (max-width: $phablet-min-width-minus) {
-        max-width: 300px;
-        margin-bottom: 40px;
+      flex-basis: 50%;
+      .button {
+        margin-top: 32px;
       }
     }
-    button {
-      width: 227px;
-      height: 43px;
+    .step-image {
+      flex-basis: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.start {
+        justify-content: flex-start;
+      }
+      .map {
+        max-width: 480px;
+        max-height: 320px;
+        @media (max-width: 1439.9px) {
+          max-width: 380px;
+          max-height: 250px;
+        }
+      }
+      .girls {
+        max-width: 400px;
+        max-height: 400px;
+        @media (max-width: 1439.9px) {
+          max-width: 300px;
+          max-height: 300px;
+        }
+      }
+    }
+    
+    @media (max-width: 999.9px) {
+      .page-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        &.reverse {
+          flex-direction: column-reverse;
+        }
+      }
+      .description {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+    @media (max-width: $phablet-min-width-minus) {
+      .step-image {
+        .map {
+          max-width: 240px;
+          max-height: 240px;
+        }
+        .girls {
+          max-width: 240px;
+          max-height: 240px;
+        }
+      }
+      .description {
+        .button {
+          margin-top: 24px;
+        }
+      }
+    }
+  }
+
+  .check-phone-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $section-blue-background;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    text-align: center;
+    .button {
+     margin-top: 32px;
     }
   }
 }
 .faqs-section {
-  display: flex;
-  max-width: 1420px;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 0 100px;
-  margin-top: 87px;
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background-color: $white;
   @media (max-width: $phablet-min-width-minus) {
-    padding: 0 30px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
-  .title {
+  .title-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    font-size: rem-calc(40px);
-    line-height: 53px;
-    margin-bottom: 55px;
+    margin-bottom: 40px;
     @media (max-width: $phablet-min-width-minus) {
-      font-size: rem-calc(22px);
-      line-height: 28px;
+      margin-bottom: 32px;
     }
   }
-  .more-faqs {
-    font-size: rem-calc(18px);
-    line-height: 21px;
-    margin-top: 20px;
-    margin-bottom: 37px;
-    @media (max-width: $phablet-min-width-minus) {
-      font-size: rem-calc(16px);
-      line-height: 18px;
-      margin-top: 40px;
-    }
-    a {
-      color: #f58520;
+  .landing-questions {
+    width: 100%;
+    .questions {
+      padding: 0;
+      ::ng-deep {
+        .toggle {
+          .toggle-title {
+            margin-bottom: 16px;
+            .title {
+              .title-name {
+                color: #6A509B!important;
+              }
+            }
+          }
+        }
+      }
     }
   }
-  .coverage-map-info {
-    font-size: rem-calc(13px);
-    line-height: 30px;
-    .note {
-      color: $primary-color;
-    }
+  .no-padding {
+    padding: 0;
   }
 }

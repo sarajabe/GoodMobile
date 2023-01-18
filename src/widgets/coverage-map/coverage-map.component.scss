@@ -35,7 +35,7 @@
         border: 1px solid transparent;
         height: 35px;
         @media(max-width: 414px) {
-          margin-left: 209px;
+          margin-left: 185px;
         }
       }
       
@@ -47,7 +47,9 @@
         font-size: 15px;
         color: rgb(142, 142, 142);
         @media(max-width: 414px) {
-          margin-left: 0px;
+          margin-left: 5px;
+          width: 185px;
+          font-size: 10px;
         }
       }
       #map {

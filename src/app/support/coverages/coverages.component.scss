@@ -1,11 +1,102 @@
+
+@import "../../../styles/modules/variables";
+.coverage-summary {
+  background: linear-gradient(180deg, #D6E1FF 0%, #E3EFFF 100%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 40px;
+  padding-bottom: 64px;
+  .title-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .info-banner {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 654px;
+  }
+  @media (max-width: $phablet-min-width-minus) {
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+}
+.map-section {
+  background-color: $white;
+  display: flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 64px;
+  padding-bottom: 64px;
+  @media (max-width: $phablet-min-width-minus) {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .title-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .map-container {
+    box-shadow: 0px 4px 15px rgb(206 211 214 / 60%);
+    padding: 24px 44px;
+    width: 100%;
+    margin-top: 40px;
+    @media(max-width: $phablet-min-width-minus) {
+      padding: 16px;
+    }
+  }
+  .lte-card {
+    background: #FBFBFB;
+    padding: 24px;
+    width: 100%;
+    margin-top: 40px;
+    box-shadow: 0px 4px 15px rgb(206 211 214 / 60%);
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      .arrow {
+        height: 24px;
+        width: 24px;
+      }
+      .question {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .rotate {
+        transform: rotate(-180deg);
+      }
+    }
+    .lte-details {
+      padding: 12px 45px;
+      hr {
+        margin: 12px 0;
+      }
+      b {
+        font-family: $base-font-family-bold;
+      }
+    }
+    @media(max-width: $phablet-min-width-minus) {
+      padding: 16px;
+    }
+  }
+}
 #map {
     display: block;
     position: relative !important;
     width: 100%;
     height: 570px;
     z-index: 1;
-    max-width: 1230px;
-  }
+}
   
   .on-map {
     position: absolute;
@@ -21,14 +112,26 @@
     cursor: help !important;
     text-align: left !important;
   }
-  
+  .leaflet-touch .leaflet-bar {
+    margin-top: 70px !important;
+  }
+  ::ng-deep {
+    .leaflet-control-zoom .leaflet-bar .leaflet-control {
+      @media (max-width: $phablet-min-width-minus) {
+        margin-top: 110px;
+      }
+    }
+  }
+
   ul.color-options {
     display: inline-block;
     list-style: none;
     margin: 0;
     padding: 0;
-    border: 1px solid black;
-  
+    border: 1px solid $input-border;
+    border-radius: 10px;
+    margin-top: 12px;
+    padding: 12px;
     li {
       cursor: help;
       border: 1px solid white;

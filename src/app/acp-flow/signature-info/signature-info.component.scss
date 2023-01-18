@@ -24,24 +24,25 @@
         display: flex;
         flex-direction: column;
         @media (max-width: $desktop-min-width-minus) {
-            padding: 0 20px;
-            margin-bottom: 54.2px;
+            margin-bottom: 40px;
         }
         .captcha {
             margin-bottom: 60px;
         }
         .form-row {
             display: flex;
-            margin-bottom: 16px;
-            background: rgba(134, 51, 153, 0.05);
-            border-radius: 10px;
-            padding: 16px;
+            margin-bottom: 20px;
+            gap: 16px;
+            background: #F1F9FD;
+            border-radius: 0 0 10px 10px;
+            padding: 24px;
             align-items: flex-start;
-            max-width: 1000px;
+            box-shadow: 0 8px 30px #5e5e5e1f;
+            width: 100%;
             input {
-                width: 46px;
-                height: 46px;
-                border: 1px solid #a5a3a3;
+                width: 53px;
+                height: 40px;
+                border: 1px solid #868686;
                 border-radius: 4px;
                 background: #ffffff;
                 opacity: 0.4;
@@ -54,50 +55,24 @@
                     opacity: 1;
                 }
             }
-            .label {
-                font-size: rem-calc(16px);
-                line-height: 24px;
-                font-family: $lato-font-family;
-                font-weight: 400;
-                margin-left: 16px;
-                margin-bottom: 0;
-                @media (max-width: $phablet-min-width-minus) {
-                    font-size: rem-calc(14px);
-                }
-            }
+         
             span {
                 color: #383838;
             }
         }
         .note {
-            font-size: rem-calc(18px);
-            line-height: 28px;
-            font-family: $base-font-family-bold;
-            font-weight: 700;
-            margin-bottom: 2px;
-            margin-top: 24px;
+            margin-top: 12px;
             @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(16px);
-                line-height: 24px;
-                margin-top: 16px;
+                margin-top: 8px;
             }
         }
         .sub-note {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
             color: #a5a3a3;
-            margin-bottom: 23px;
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: rem-calc(14px);
-                margin-bottom: 19.8px;
-            }
+            margin-bottom: 14px;
         }
         .hint {
-            font-size: rem-calc(12px);
-            line-height: 20px;
             color: #A5A3A3;
-            margin-top: 12px;
+            margin-top: 8px;
         }
         .signed-name {
             width: 60%;

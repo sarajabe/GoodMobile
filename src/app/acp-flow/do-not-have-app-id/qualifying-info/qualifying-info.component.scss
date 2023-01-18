@@ -4,6 +4,9 @@
     select option:disabled {
         color: $disabled-grey;
     }
+    .space {
+        margin-bottom: 20px;
+    }
     &.acp-disabled {
         .outlined-label-input input:disabled {
             background-color: #95959530;
@@ -20,7 +23,7 @@
             cursor: not-allowed;
         }
     }
-    margin-bottom: 194px;
+    margin-bottom: 80px;
     .main-title {
         font-weight: normal;
         font-size: 24px;
@@ -47,14 +50,10 @@
     }
     .border-section {
         width: 0;
-        height: 602px;
-        border: 4px solid #dad0dc;
+        border: 4px solid #CCDEEA;
         margin-right: 16px;
         border-radius: 6px;
-        @media (max-width: $phablet-min-width-minus) {
-            height: 657.31px;
-            
-        }
+        
     }
     .fields-title {
         font-weight: normal;
@@ -102,10 +101,8 @@
             }
         }
         &.quarter {
-            input,
-            span {
-                width: 120px;
-            }
+            max-width: 120px;
+            width: 100%;
             margin-left: 28px;
             margin-bottom: 22.2px;
             @media (max-width: $phablet-min-width-minus) {
@@ -145,24 +142,14 @@
         }
     }
     .form-control {
-        font-size: 20px;
-        line-height: 32px;
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
         font-weight: bold;
+        gap: 8px;
         font-family: $base-font-family-bold;
         @media (max-width: $phablet-min-width-minus) {
             align-items: flex-start;
-            font-size: 16px;
-            line-height: 24px;
-        }
-        &.child {
-            font-size: 16px;
-            line-height: 24px;
-            @media (max-width: $phablet-min-width-minus) {
-                font-size: 14px;
-            }
         }
     }
     label {

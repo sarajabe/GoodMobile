@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS } from '../../app.routes.names';
+import { SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalHelperService } from '../../../services/modal-helper.service';
 import { UserDeviceService, MobileCustomPlansService, IAutoCompletePrediction, PlacesAutocompleteService, IFirebaseAddress, AccountPaymentService, IDeviceCompatibilityV1 } from '@ztarmobile/zwp-service-backend';
@@ -22,6 +22,8 @@ export class LandingCoverageComponent implements OnInit {
 
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
   public ACTIVATION_ROUTE_URLS = ACTIVATION_ROUTE_URLS;
+  public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
+  public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   public processingRequest: boolean;
   public questions: any;
   public questionIdParam: any;
@@ -104,44 +106,26 @@ export class LandingCoverageComponent implements OnInit {
         this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2).then(res => {
           if (!!res) {
-            if (!!res?.tmo?.covered) {
+            const params = {};
+            if (!!res?.tmo?.covered && !res?.details?.eSimOnly) {
               this.processingRequest = false;
-              let compatibleDevice = {} as IDeviceCompatibilityV1;
-              compatibleDevice.manufacturer = res?.details?.make;
-              compatibleDevice.marketingName = res?.details?.name;
-              compatibleDevice.address1 = this.displayedAddressModel?.address1;
-              compatibleDevice.address2 = this.displayedAddressModel?.address2;
-              compatibleDevice.city = this.displayedAddressModel?.city;
-              compatibleDevice.state = this.displayedAddressModel?.state;
-              compatibleDevice.postalCode = this.displayedAddressModel?.postalCode;
-              compatibleDevice.id = res?.details?.serialNumber;
-              compatibleDevice.postalCode = this.displayedAddressModel?.postalCode;
-              compatibleDevice = res?.tmo?.details as IDeviceCompatibilityV1;
-              compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
-              compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
-              compatibleDevice.network = 'tmo';
               this.networkType = 'tmo';
-              if (!res?.details?.eSimOnly) {
-                this.mobilePlansService.setPlanDevice(compatibleDevice);
-                const params = {};
-                params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE] = this.networkType;
-                params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.displayedAddressModel?.postalCode;
-                this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.COVERAGE}`, params]);
-              } else {
-                this.toastHelper.showWarning('Your device is not compatible.');
-              }
-             
+              params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE] = this.networkType;
+              params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.displayedAddressModel?.postalCode;
+            } else {
+              params[SUPPORT_ROUTE_URLS.PARAMS.NO_COVERAGE] = true;
             }
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
+            this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.COVERAGE}`, params]);
           }
         }, (error) => {
           this.processingRequest = false;
-          this.displayValidation = false;
-          const errorMessage = error?.error?.errors[0]?.code === 102 ? 'Sorry, Your address does not have good coverage' : error?.error?.errors[0]?.message;
-          this.toastHelper.showAlert(errorMessage);
           this.reCaptcha.resetReCaptcha();
           this.reCaptcha.execute();
+          const params = {};
+          params[SUPPORT_ROUTE_URLS.PARAMS.NO_COVERAGE] = true;
+          this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.COVERAGE}`, params]);
         });
     } else if (!this.displayedAddressModel && !this.address) {
       this.displayValidation = true;

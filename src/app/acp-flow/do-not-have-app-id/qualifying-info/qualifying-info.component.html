@@ -1,6 +1,6 @@
 <section class="qualifying" [class.acp-disabled]="!!disable">
     <form [formGroup]="qualifyingForm" class="qualifying-form-flow">
-        <p class="main-title" data-cy="qualificationHeader">How do you Qualify? <span class="red">*</span></p>
+        <p class="space" data-cy="qualificationHeader">How do you Qualify? <span class="red">*</span></p>
         <div class="radioBtn" *ngFor="let item of options">
             <label class="form-control" [for]="item?.id">
                 <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id"
@@ -17,9 +17,9 @@
         *ngIf="qualifyingForm.controls.option.value === 'child'">
         <div class="border-section"></div>
         <div class="form-section">
-            <p class="bbq-info">Please provide the Beneficiary Qualifying Person (BQP) information: <span class="red">*</span></p>
+            <p class="space">Please provide the Beneficiary Qualifying Person (BQP) information:<span class="red">*</span></p>
             <div class="form-row bottom">
-                <p class="fields-title">BQP Full Name: <span class="red">*</span></p>
+                <p class="space">BQP Full Name:<span class="red">*</span></p>
                 <div class="form-field half">
                     <label class="outlined-label-input">
                         <input placeholder=" " formControlName="firstName" maxlength="50" type="text" id="firstName"
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="form-row bottom">
-                <p class="fields-title">BQP Date of Birth: <span class="red">*</span></p>
+                <p >BQP Date of Birth:<span class="red">*</span></p>
                 <div class="form-row half-row">
                     <div class="three-fields">
                         <div class="form-field">
@@ -179,10 +179,10 @@
                 </div>
             </div>
             <div class="form-row bottom">
-                <p class="fields-title note">BQP Government ID type: <span class="red">*</span></p>
+                <p>BQP Government ID type:<span class="red">*</span></p>
                 <p class="fields-note">Please select the ID you used during your National Verifier process</p>
                 <div class="radioBtn child">
-                    <label class="form-control child" for="ssn">
+                    <label class="form-control child primary-font-bold" for="ssn">
                         <input type="radio" value="ssn" formControlName="identityType" id="ssn" data-cy="ssn" (change)="updateIdentitiyType()">Social Security Number
                         (SSN)
                     </label>
@@ -205,7 +205,7 @@
                         Last 4 SSN should be 4 digits</label>
                 </div>
                 <div class="radioBtn child">
-                    <label class="form-control child" for="tribal">
+                    <label class="form-control child primary-font-bold" for="tribal">
                         <input type="radio" value="tribal" formControlName="identityType" id="tribal" data-cy="tribalID" (change)="updateIdentitiyType()">Tribal ID
                     </label>
                 </div>

@@ -1,7 +1,8 @@
 <form [formGroup]="personalInfoForm" class="personalInfoForm" [class.acp-disabled]="!!disable">
   <div class="form-row">
-    <p class="fields-title">What’s your Full Name? <span class="red">*</span></p>
-    <p class="fields-note">The name you use on official documents, like your Social Security Card or State ID.
+    <p>What’s your Full Name?<span class="red">*</span></p>
+    <p class="smallest grey">The name you use on official documents, like your Social Security Card or State ID.</p>
+    <p class="smallest grey space">
       Not a nickname.
     </p>
     <div class="name-part">
@@ -51,8 +52,8 @@
       </div>
     </div>
   </div>
-  <div class="form-row">
-    <p class="fields-title">What’s your Date of Birth? <span class="red">*</span></p>
+  <div class="form-row bottom">
+    <p class="space">What’s your Date of Birth?<span class="red">*</span></p>
     <div class="form-row half-row">
       <div class="date-part">
         <div class="three-fields">
@@ -177,13 +178,13 @@
       </div>
     </div>
   </div>
-  <div class="form-row">
-    <p class="fields-title mobile-nowrap">What’s your Government ID Type? <span class="red">*</span></p>
-    <p class="fields-note">Please select the ID you used during your National Verifier process</p>
+  <div class="form-row bottom">
+    <p class="">What’s your Government ID Type? <span class="red">*</span></p>
+    <p class="smallest grey space">Please select the ID you used during your National Verifier process</p>
     <div class="radio-part">
       <div class="ssn-part">
         <div class="radioBtn">
-          <label class="form-control" for="ssn">
+          <label class="form-control primary-font-bold" for="ssn">
             <input type="radio" value="ssn" formControlName="option" id="ssn" data-cy="ssnRadio"
               (change)="checkIdentityType()">Social Security Number (SSN)
           </label>
@@ -208,7 +209,7 @@
       </div>
       <div class="tribal-part">
         <div class="radioBtn" data-cy="tribalBtn">
-          <label class="form-control" for="tribal">
+          <label class="form-control primary-font-bold" for="tribal">
             <input type="radio" value="tribal" formControlName="option" id="tribal" data-cy="tribalID"
               (change)="checkIdentityType()">Tribal ID
           </label>
@@ -235,7 +236,7 @@
     </div>
   </div>
   <div class="form-row">
-    <p class="fields-title bottom">What’s your Contact Phone Number?</p>
+    <p class="space">What’s your Contact Phone Number?</p>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="phoneNumber" restrictNumbers minlength="10" maxlength="10" type="tel"
@@ -248,7 +249,7 @@
       </label>
     </div>
   </div>
-  <div class="checkbox">
+  <div class="checkbox bottom">
     <input formControlName="getPhones" type="checkbox" id="getPhones" class="custom-checkbox"
       [class.checked]="!!personalInfoForm.controls.getPhones.value" (change)="checkGetPhone()" />
     <label class="toggle-label">
@@ -256,7 +257,7 @@
     </label>
   </div>
   <div class="form-row">
-    <p class="fields-title top bottom">Your Preferred Email Address <span class="red">*</span></p>
+    <p class="space">Your Preferred Email Address <span class="red">*</span></p>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="email" maxlength="50" type="text" id="email" data-cy="email"
@@ -274,7 +275,7 @@
       </label>
     </div>
   </div>
-  <div class="checkbox">
+  <div class="checkbox bottom">
     <input formControlName="getEmails" type="checkbox" id="getEmails" class="custom-checkbox"
       [class.checked]="!!personalInfoForm.controls.getEmails.value" />
     <label class="toggle-label">

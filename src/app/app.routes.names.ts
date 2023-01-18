@@ -221,7 +221,8 @@ export const SUPPORT_ROUTE_URLS = {
   PRIVACY_NOTICE: 'privacy-notice',
   PARAMS: {
     TARGETID: 'targetId',
-    NETWORKTYPE: 'networkType'
+    NETWORKTYPE: 'networkType',
+    NO_COVERAGE: 'noCoverage'
   },
 };
 

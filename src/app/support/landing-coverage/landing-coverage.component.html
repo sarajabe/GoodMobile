@@ -1,86 +1,97 @@
 <div class="landing-coverage-page">
   <section class="banner-section">
-    <div class="banner-image-container">
-      <div class="banner-img">
+    <picture class="banner-image-container">
+      <source srcset='assets/img/banners/landing-coverage-mobile.webp' media="(max-width: 499.9px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/landing-coverage-mobile.png' media="(max-width: 499.9px)"
+        type="image/png">
+        <source srcset='assets/img/banners/landing-coverage-500.webp' media="(max-width: 639.9px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/landing-coverage-500.png' media="(max-width: 639.9px)"
+        type="image/png">
+      <source srcset='assets/img/banners/landing-coverage-tablet.webp' media="(max-width: 1024.9px)"
+        type="image/webp">
+      <source srcset='assets/img/banners/landing-coverage-tablet.png' media="(max-width: 1024.9px)"
+        type="image/png">
+      <source srcset='assets/img/banners/landing-coverage-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+      <source srcset='assets/img/banners/landing-coverage-desktop.png' media="(min-width: 1025px)" type="image/png">
+      <img src="assets/img/banners/landing-coverage-desktop.png" alt="Blazing Fast Speeds. Nationwide.">
+    </picture>
+    <div class="page-section banner-text-content">
+      <h1 class="header-color">Blazing Fast Speeds. Nationwide.</h1>
+      <p class="p1">From coast to coast, our networks have more towers in more places which means you get the fastest & best coverage possible.</p>
+      <p class="smaller">Enter your Full Address below to check your coverage:</p>
+      <p class="label">Street Address, City, State, ZIP Code</p>
+      <div class="input-section">
+        <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" autocomplete="on" #addressRef="ngModel" type="search" class="geolocate"
+          ngui-auto-complete [source]="findPlace.bind(this)" list-formatter="description"
+          display-property-name="main_text" (valueChanged)="addressDetails($event)" [tab-to-select]="false"
+          placeholder="Enter an address or location" (focus)="setFoucs = true" (blur)="setFoucs = false"
+          name="addressRef" (input)="changedAddress()" />
+        <label class="blur-background validation-message" *ngIf="(!address && addressRef.touched) || (!!displayValidation && !address)"
+          id="required-address-msg" data-cy="selectAddressValidationMsg">Full Address is required</label>
+        <label class="blur-background validation-message" *ngIf="!displayedAddressModel && !!address"
+          id="required-address-msg" data-cy="selectAddressValidationMsg">Please select address from the autocomplete list</label>
+      </div>
+      <button class="button primary" [uiBlockButton]="processingRequest" id="check-coverage-button"
+        data-cy="check-coverage-button" (click)="checkCoverage()">Check coverage</button>
+    </div>
+  </section>
+  <section class="coverage-page-section light-blue">
+    <div class="page-section">
+      <div class="step-image start">
+        <picture class="banner-image-container">
+          <source srcset='assets/img/us-map-mobile.png' type="image/png" media="(max-width: 639.9px)" type="image/png">
+          <source srcset='assets/img/us-map-mobile.webp' type="image/webp" media="(max-width:  639.9px)" type="image/webp">
+          <source srcset='assets/img/us-map-tablet.png' type="image/png" media="(max-width: 1439.9px)" type="image/png">
+          <source srcset='assets/img/us-map-tablet.webp' type="image/webp" media="(max-width: 1439.9px)" type="image/webp">
+          <source srcset='assets/img/us-map-desktop.png' type="image/png" media="(min-width: 1440px)" type="image/png">
+          <source srcset='assets/img/us-map-desktop.webp' type="image/webp" media="(min-width: 1440px)" type="image/webp">
+          <img class="map" src="assets/img/us-map-desktop.png"  alt="USA Map">
+        </picture>
+      </div>
+      <div class="description">
+        <p class="label">CHECK YOUR COVERAGE</p>
+        <h2 class="header-color">Great Coverage on the Country’s Best Networks</h2>
+        <p class="smaller">5G/4G LTE service requires a compatible device & plan. This map displays approximate coverage. Actual coverage may vary. Coverage isn’t guaranteed & is subject to change without notice.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="coverage-page-section white">
+    <div class="page-section reverse">
+      <div class="description">
+        <p class="label">PREMIUM WIRLESSE</p>
+        <h2 class="header-color">Prepaid Cell Phone Plans with Coast to Coast Coverages</h2>
+        <p class="smaller">Good Mobile partnered with both of the country’s top 5G/4G LTE networks. As a result, Good Mobile customers enjoy fast LTE speeds & great coverage both in the city & when you are out and exploring.</p>
+        <button class="button primary"  [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Shop Plans</button>
+      </div>
+      <div class="step-image">
         <picture>
-          <source srcset='assets/img/banners/landing-banner-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
-          <source srcset='assets/img/banners/landing-banner-mobile.png' media="(max-width: 639.9px)" type="image/png">
-          <source srcset='assets/img/banners/landing-banner-tablet.webp' media="(max-width: 1024.9px)"
-            type="image/webp">
-          <source srcset='assets/img/banners/landing-banner-tablet.png' media="(max-width: 1024.9px)" type="image/png">
-          <source srcset='assets/img/banners/landing-banner-desktop.webp' media="(min-width: 1025px)" type="image/webp">
-          <source srcset='assets/img/banners/landing-banner-desktop.png' media="(min-width: 1025px)" type="image/png">
-          <img src="assets/img/banners/landing-banner-desktop.png" alt="landing-page-banner-image">
+          <source srcset='assets/img/girl-with-phone-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+          <source srcset='assets/img/girl-with-phone-mobile.png' media="(max-width: 639.9px)" type="image/png">
+          <source srcset='assets/img/girl-with-phone-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+          <source srcset='assets/img/girl-with-phone-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+          <source srcset='assets/img/girl-with-phone-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+          <source srcset='assets/img/girl-with-phone-desktop.png' media="(min-width: 1025px)" type="image/png">
+          <img class="girls" src="assets/img/girl-with-phone-desktop.png" alt="Prepaid Cell Phone Plans with Coast to Coast Coverage">
         </picture>
       </div>
     </div>
-    <div class="banner-text-content">
-      <h1 class="header">Blazing Fast Speeds. Nationwide.</h1>
-      <p class="sub-header">From coast to coast, our networks have more towers in more places which means you get the
-        fastest and best coverage possible.</p>
-      <div class="fields-section">
-        <div class="input-section">
-          <label for="address" class="input-label">
-            <p class="p-label">Enter your full address</p>
-            <p class="p-note">Street Address, City, State, ZIP Code</p>
-        </label>
-          <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" autocomplete="on" #addressRef="ngModel" type="search" class="geolocate"
-            ngui-auto-complete [source]="findPlace.bind(this)" list-formatter="description"
-            display-property-name="main_text" (valueChanged)="addressDetails($event)" [tab-to-select]="false"
-            placeholder="Enter an address or location" (focus)="setFoucs = true" (blur)="setFoucs = false"
-            name="addressRef" (input)="changedAddress()" />
-          <label class="blur-background validation-message" *ngIf="(!address && addressRef.touched) || (!!displayValidation && !address)"
-            id="required-address-msg" data-cy="selectAddressValidationMsg">Full Address is required</label>
-          <label class="blur-background validation-message" *ngIf="!displayedAddressModel && !!address"
-            id="required-address-msg" data-cy="selectAddressValidationMsg">Please select address from the autocomplete list</label>
-        </div>
-        <div class="check-coverage-button">
-          <button class="button primary" [uiBlockButton]="processingRequest" id="check-coverage-button"
-            data-cy="check-coverage-button" (click)="checkCoverage()">Check coverage</button>
-        </div>
-      </div>
-    </div>
   </section>
-  <section class="us-map-section">
-    <h2 class="title">Great Coverage on the Country’s Best Networks.</h2>
-    <div class="us-image">
-      <picture>
-        <source srcset='assets/img/us-map-desktop.webp' type="image/webp">
-        <source srcset='assets/img/us-map-desktop.png' type="image/png">
-        <img src="assets/img/us-map-desktop.png" alt="usa-map-image">
-      </picture>
-    </div>
-    <div class="desc">
-      <p>4G LTE service requires a compatible device and compatible plan. This map displays approximate coverage.
-        Actual coverage may vary. Coverage isn’t guaranteed and is subject to change without notice.</p>
-    </div>
-  </section>
-  <section class="prepaid-phone-section">
-    <div class="text-section">
-      <p class="title">Prepaid Cell Phone Plans with Coast to Coast Coverage</p>
-      <p class="desc1">Good Mobile partnered with both of the country’s top GSM networks - As a result, Good Mobile customers enjoy
-        fast LTE speeds and great coverage both in the city and when you are out and about exploring. </p>
-    </div>
-    <div class="image-section">
-      <picture>
-        <source srcset='assets/img/girl-with-phone-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
-        <source srcset='assets/img/girl-with-phone-mobile.png' media="(max-width: 639.9px)" type="image/png">
-        <source srcset='assets/img/girl-with-phone-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
-        <source srcset='assets/img/girl-with-phone-tablet.png' media="(max-width: 1024.9px)" type="image/png">
-        <source srcset='assets/img/girl-with-phone-desktop.webp' media="(min-width: 1025px)" type="image/webp">
-        <source srcset='assets/img/girl-with-phone-desktop.png' media="(min-width: 1025px)" type="image/png">
-        <img src="assets/img/girl-with-phone-desktop.png" alt="girl-with-phone-image">
-      </picture>
-    </div>
-  </section>
-  <section class="check-phone-section">
-    <h2 class="title">Check your phone’s compatibility with the Good Mobile network</h2>
-    <p class="description">Most GSM phones work on our network. Let’s confirm if yours is compatible.</p>
+  <section class="check-phone-section page-section">
+    <p class="label">CHECK COMPATIBILITY</p>
+    <h2 class="header-color">Check your phone’s compatibility with the Good Mobile network</h2>
+    <h5 class="secondary-font">Most 5G/4G LTE phones work on our network. Let’s confirm if yours is compatible.</h5>
     <button class="button primary" [routerLink]="ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.CHECK_PHONE">Check
       your phone</button>
   </section>
-  <section class="faqs-section">
-    <h2 class="title">Got Questions? We’re here to answer</h2>
+  <section class="faqs-section page-section white">
+    <div class="title-section">
+      <p class="label">FAQ QUESTIONS</p>
+      <h2 class="header-color">We are here to help you!</h2>
+      <h5 class="secondary-font">Browse through the most frequently asked questions.</h5>
+    </div>
     <div class="landing-questions">
       <div class="row">
         <div class="twelve questions">
@@ -96,23 +107,7 @@
         </div>
       </div>
     </div>
-    <p class="more-faqs"><a [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS]">More FAQs</a></p>
-    <div class="coverage-map-info">
-      <p><b>Important Information About This Coverage Map</b><br>These maps provide a predicted high-level approximation
-        of wireless coverage. There are gaps in coverage that are not shown by this high-level approximation. Actual
-        coverage may differ from map graphics and may be affected by terrain, weather, network changes, foliage,
-        buildings, construction, signal strength, high-usage periods, customer equipment, and other factors. We cannot
-        guarantee coverage. Our coverage maps are not intended to show actual customer performance on the network or
-        future network needs or build requirements inside or outside of existing coverage areas. Coverage maps may
-        include areas served by unaffiliated carriers. Arrangements with these carriers may change from time to time,
-        and coverage is subject to change without notice. Charges will be based on the location of the site receiving
-        and transmitting the call, not the subscriber’s location. Your phone’s display does not indicate the rate you
-        will be charged. These maps are subject to the Microsoft® Service Agreement and for informational purposes only.
-        No guarantee is made regarding their completeness or accuracy. Construction projects, traffic, or other events
-        may cause actual conditions to differ from these results. Map and traffic data 2013 NAVTEQ®</p>
-      <p class="note">This map shows an approximation of wireless data coverage in the United States, Puerto Rico, and
-        the U.S. Virgin Islands.</p>
-    </div>
+    <button class="button thirdly no-padding" [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.FAQS]">More FAQs</button>
   </section>
   <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
   </app-invisible-recaptcha>
