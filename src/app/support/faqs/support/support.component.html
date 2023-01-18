@@ -1,26 +1,109 @@
-<div class="row">
+<div class="goodmobile-support-faqs-page">
+  <section class="questions-section page-section">
+    <div class="search-part" *ngIf="!!validMDN">
+      <input class="search-input" placeholder="Search by Keyword" type="search" [(ngModel)]="filterText"
+        (ngModelChange)="filterTextChanged(filterText)">
+      <img class="icon-search" src="assets/icon/faqs-search-icon.svg" alt="Search Icon" />
+    </div>
     <div class="mdn-search-section" *ngIf="!validMDN">
       <div class="enter-mdn">
         <label for="phoneNumber">
           Enter your Good Mobile number for better results:
         </label>
-        <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber" data-cy="phoneNumber"
-          restrictNumbers maxlength="10" [disabled]="!!processingRequest">
+        <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber"
+          data-cy="phoneNumber" restrictNumbers maxlength="10" [disabled]="!!processingRequest">
       </div>
       <div class="search-mdn">
-        <button class="button primary desktop" title="search" value="search" aria-label="search" [uiBlockButton]="processingRequest"
-          [class.disabled]="mdn?.length < 10" [disabled]="mdn?.length < 10" (click)="checkMdn(mdn)">Search</button>
+        <button class="button primary" title="search" value="search" aria-label="search"
+          [uiBlockButton]="processingRequest" [class.disabled]="mdn?.length < 10" [disabled]="mdn?.length < 10"
+          (click)="checkMdn(mdn)">Search</button>
       </div>
     </div>
-    <div class="twelve questions" *ngIf="!!validMDN">
-      <div *ngFor="let item of SupportData | async">
-        <div *ngFor="let qst of item?.fields?.supportQuestions">
-            <a class="copy-icon-link" (click)="copy(true,!!isReload,qst?.fields?.questionId,item?.fields?.carrierId,qst?.fields?.answerId)"><img src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a>
-          <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId" [isActive]="qst?.fields?.questionId == questionIdParam"
-            (click)="toggleActive(qst?.fields?.questionId, item?.fields?.carrierId, qst?.fields?.answerId)">
+    <div class="questions-part" *ngIf="!!validMDN">
+      <div class="questions">
+        <div *ngFor="let qst of firstTenQuestions">
+          <a class="copy-icon-link"
+            (click)="copy(true,!!isReload,qst?.fields?.questionId,carrierId,qst?.fields?.answerId)"><img
+              src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text"><img
+                src="assets/icon/why-arrow.svg" class="arrow" alt="Info icon" />Copy question url</span> <span
+              *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a>
+          <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+            [isActive]="qst?.fields?.questionId == questionIdParam"
+            (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
             <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
           </app-question-answer>
         </div>
+        <div *ngIf="!!showMore">
+          <div *ngFor="let qst of restQuestions">
+            <a class="copy-icon-link"
+              (click)="copy(true,!!isReload,qst?.fields?.questionId,carrierId,qst?.fields?.answerId)"><img
+                src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text"><img
+                  src="assets/icon/why-arrow.svg" class="arrow" alt="Info icon" />Copy question url</span> <span
+                *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a>
+            <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+              [isActive]="qst?.fields?.questionId == questionIdParam"
+              (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+              <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+            </app-question-answer>
+          </div>
+        </div>
+        <div class="more-less-faqs" *ngIf="filteredQuestions.length > 10">
+          <p class="text" *ngIf="!showMore"><a (click)="showMore = true">More FAQs</a></p>
+          <p class="text" *ngIf="!!showMore"><a (click)="showMore = false; questionId = 'q0'">Less FAQs</a>
+        </div>
+        <div class="actions" *ngIf="( innerWidth > 1536 && innerHeight > 840 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
+                   innerHeight > 1050 ) || ( ( innerWidth > 639 && innerWidth < 932 ) && innerHeight > 1480 ) ||
+                    ( innerWidth < 640 && innerHeight > 1250 )">
+          <a (click)="scrollTop()">
+            <img *ngIf="innerWidth > 639" src="/assets/icon/hover-button-close.svg" alt="Hover Button Icon"
+              onmouseover="this.src='/assets/icon/hover-button-open.svg'"
+              onmouseout="this.src='/assets/icon/hover-button-close.svg'">
+            <img *ngIf="innerWidth < 640" src="/assets/icon/hover-button-close-mobile.svg" alt="Hover Button Icon"
+              onmouseover="this.src='/assets/icon/hover-button-open-mobile.svg'"
+              onmouseout="this.src='/assets/icon/hover-button-close-mobile.svg'">
+          </a>
+        </div>
+        <div class="no-results-found" *ngIf="filteredQuestions.length < 1">
+          <h3 class="title">No Result Found</h3>
+          <h5 class="sub-title">We can’t find any results matching your search</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+
+<!-- <div class="row">
+  <div class="mdn-search-section" *ngIf="!validMDN">
+    <div class="enter-mdn">
+      <label for="phoneNumber">
+        Enter your Good Mobile number for better results:
+      </label>
+      <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber"
+        data-cy="phoneNumber" restrictNumbers maxlength="10" [disabled]="!!processingRequest">
+    </div>
+    <div class="search-mdn">
+      <button class="button primary desktop" title="search" value="search" aria-label="search"
+        [uiBlockButton]="processingRequest" [class.disabled]="mdn?.length < 10" [disabled]="mdn?.length < 10"
+        (click)="checkMdn(mdn)">Search</button>
+    </div>
+  </div>
+  <div class="twelve questions" *ngIf="!!validMDN">
+    <div *ngFor="let item of SupportData | async">
+      <div *ngFor="let qst of item?.fields?.supportQuestions">
+        <a class="copy-icon-link"
+          (click)="copy(true,!!isReload,qst?.fields?.questionId,item?.fields?.carrierId,qst?.fields?.answerId)"><img
+            src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question
+            url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam"
+            class="copied">Copied!</span></a>
+        <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+          [isActive]="qst?.fields?.questionId == questionIdParam"
+          (click)="toggleActive(qst?.fields?.questionId, item?.fields?.carrierId, qst?.fields?.answerId)">
+          <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+        </app-question-answer>
       </div>
     </div>
   </div>
+</div> -->

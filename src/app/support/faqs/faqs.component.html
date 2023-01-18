@@ -1,46 +1,110 @@
-<section class="faqs-container">
-    <div class="container-flex">
-        <div class="header-section">
-            <div class="col-md-12 col-sm-12 col-12">
-                <h2>Got Questions?</h2>
-                <p class="subtitle">
-                    We understand - when small things don't work... you just want an answer
-                </p>
-                <p class="subtitle">Chances are we've got you covered.</p>
+<div class="goodmobile-faqs-page">
+    <section class="banner-section">
+        <picture class="banner-image-container">
+            <source width="499" height="400" srcset='assets/img/banners/faqs-banner-mobile-bp.webp'
+                media="(max-width: 499.9px)" type="image/webp">
+            <source width="499" height="400" srcset='assets/img/banners/faqs-banner-mobile-bp.png'
+                media="(max-width: 499.9px)" type="image/png">
+            <source width="639" height="400" srcset='assets/img/banners/faqs-banner-mobile.webp'
+                media="(max-width: 639.9px)" type="image/webp">
+            <source width="639" height="400" srcset='assets/img/banners/faqs-banner-mobile.png'
+                media="(max-width: 639.9px)" type="image/png">
+            <source width="970" height="400" srcset='assets/img/banners/faqs-banner-tablet-bp.webp'
+                media="(max-width: 970.9px)" type="image/webp">
+            <source width="970" height="400" srcset='assets/img/banners/faqs-banner-tablet-bp.png'
+                media="(max-width: 970.9px)" type="image/png">
+            <source width="1024" height="400" srcset='assets/img/banners/faqs-banner-tablet.webp'
+                media="(max-width: 1024.9px)" type="image/webp">
+            <source width="1024" height="400" srcset='assets/img/banners/faqs-banner-tablet.png'
+                media="(max-width: 1024.9px)" type="image/png">
+            <source width="1625" height="400" srcset='assets/img/banners/faqs-banner-desktop-bp.webp'
+                media="(max-width: 1625.9px)" type="image/webp">
+            <source width="1625" height="400" srcset='assets/img/banners/faqs-banner-desktop-bp.png'
+                media="(max-width: 1625.9px)" type="image/png">
+            <source width="2000" height="400" srcset='assets/img/banners/faqs-banner-desktop.webp'
+                media="(min-width: 1626px)" type="image/webp">
+            <source width="2000" height="400" srcset='assets/img/banners/faqs-banner-desktop.png'
+                media="(min-width: 1626px)" type="image/png">
+            <img width="2000" height="400" src="assets/img/banners/faqs-banner-desktop.png"
+                alt="GoodMobile FAQs Page Banner">
+        </picture>
+        <div class="page-section banner-text-content">
+            <h1 class="header">Hello, how can we help you?</h1>
+        </div>
+    </section>
+    <section class="category-tabs-section page-section">
+        <div class="categories-flex-wrap" *ngFor="let cat of faqsCategories">
+            <div class="category-tab" *ngFor="let item of cat?.fields?.g2gFaqs"
+                [class.active]="item?.fields?.categoryId === activeCategory"
+                (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
+                <img class="category-icon" src="https://{{item?.fields?.categoryIcon.fields?.file.url}}"
+                    alt="Category Icon">
+                <h5 class="category-title">{{item?.fields?.category}}
+                </h5>
             </div>
         </div>
-        <div class="categories">
-            <div class="row">
-                <div class="flex-wrap" *ngFor="let cat of faqsCategories">
-                    <div *ngFor="let item of cat?.fields?.g2gFaqs">
-                        <h1 class="two cat" [class.active]="item?.fields?.categoryId === activeCategory"
-                            (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
-                            <a>{{item?.fields?.category}}</a></h1>
+    </section>
+    <section class="questions-section page-section">
+        <h2 class="title">{{categoryTitle}}</h2>
+        <div class="search-part" *ngIf="!isSupport">
+            <input class="search-input" placeholder="Search by Keyword" type="search" [(ngModel)]="filterText"
+                (ngModelChange)="filterTextChanged(filterText)">
+            <img class="icon-search" src="assets/icon/faqs-search-icon.svg" alt="Search Icon" />
+        </div>
+        <div class="questions-part">
+            <app-support *ngIf="!!isSupport"></app-support>
+            <div class="questions" *ngIf="!isSupport">
+                <div *ngFor="let qst of firstTenQuestions">
+                    <a class="copy-icon-link"
+                        (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img
+                            src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span
+                            class="tool-tip-text"><img src="assets/icon/why-arrow.svg" class="arrow"
+                                alt="Info icon" />Copy question url</span> <span
+                            *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam"
+                            class="copied">Copied!</span></a>
+                    <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                        [isActive]="qst?.fields?.questionId == questionIdParam"
+                        (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                        <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+                    </app-question-answer>
+                </div>
+                <div *ngIf="!!showMore">
+                    <div *ngFor="let qst of restQuestions">
+                        <a class="copy-icon-link"
+                            (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img
+                                src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span
+                                class="tool-tip-text"><img src="assets/icon/why-arrow.svg" class="arrow"
+                                    alt="Info icon" />Copy question url</span> <span
+                                *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam"
+                                class="copied">Copied!</span></a>
+                        <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+                            [isActive]="qst?.fields?.questionId == questionIdParam"
+                            (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+                            <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+                        </app-question-answer>
                     </div>
+                </div>
+                <div class="more-less-faqs" *ngIf="filteredQuestions.length > 10">
+                    <p class="text" *ngIf="!showMore"><a (click)="showMore = true">More FAQs</a></p>
+                    <p class="text" *ngIf="!!showMore"><a (click)="showMore = false; questionId = 'q0'">Less FAQs</a>
+                </div>
+                <div class="actions" *ngIf="( innerWidth > 1536 && innerHeight > 840 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
+                     innerHeight > 1050 ) || ( ( innerWidth > 639 && innerWidth < 932 ) && innerHeight > 1480 ) ||
+                      ( innerWidth < 640 && innerHeight > 1250 )">
+                    <a (click)="scrollTop()">
+                        <img *ngIf="innerWidth > 639" src="/assets/icon/hover-button-close.svg" alt="Hover Button Icon"
+                            onmouseover="this.src='/assets/icon/hover-button-open.svg'"
+                            onmouseout="this.src='/assets/icon/hover-button-close.svg'">
+                        <img *ngIf="innerWidth < 640" src="/assets/icon/hover-button-close-mobile.svg"
+                            alt="Hover Button Icon" onmouseover="this.src='/assets/icon/hover-button-open-mobile.svg'"
+                            onmouseout="this.src='/assets/icon/hover-button-close-mobile.svg'">
+                    </a>
+                </div>
+                <div class="no-results-found" *ngIf="filteredQuestions.length < 1">
+                    <h3 class="title">No Result Found</h3>
+                    <h5 class="sub-title">We can’t find any results matching your search</h5>
                 </div>
             </div>
         </div>
-    </div>
-<section class="content-section">
-    <div class="container-flex">
-        <app-covid *ngIf="!!isCovid"></app-covid>
-        <app-support *ngIf="!!isSupport"></app-support>
-        <div class="questions-category" *ngIf="!isSupport">
-            <div class="row">
-                <div class="twelve questions">
-                    <div *ngFor="let item of questions | async">
-                        <div *ngFor="let qst of item?.fields?.questions">
-                           <a class="copy-icon-link" (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a> 
-                            <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
-                                [isActive]="qst?.fields?.questionId == questionIdParam"
-                                (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
-                                <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
-                            </app-question-answer>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-</section>
+    </section>
+</div>

@@ -1,109 +1,319 @@
 @import "../../../../styles/modules/variables";
 @import "../../../../styles/modules/_mixins.scss";
 
-::ng-deep {
-  .mdn-search-section {
-    @media (min-width: $phablet-min-width) {
+.goodmobile-support-faqs-page {
+  .questions-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .search-part {
+      position: relative;
+      max-width: 474px;
+      width: 100%;
+
+      @media (max-width: 931.9px) {
+        max-width: 592px;
+      }
+
+      @media (max-width: $phablet-min-width-minus) {
+        margin-bottom: 15px;
+      }
+
+      .search-input {
+        background: $white;
+        border: 1px solid #727272;
+        border-radius: 4px;
+        height: 40px;
+        color: $medium-grey;
+      }
+
+      img {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+
+    .mdn-search-section {
       display: flex;
-      align-items: center;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-  }
-  .enter-mdn {
-    @media (min-width: $phablet-min-width-minus) {
-      padding-right: 20px;
-    }
-    @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
-      padding-left: 10px;
-    }
-    label {
+      align-items: end;
+      gap: 20px;
+
       @media (max-width: $phablet-min-width-minus) {
-        font-size: rem-calc(14px);
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .enter-mdn {
+        label {
+          @media (max-width: $phablet-min-width-minus) {
+            font-size: rem-calc(14px);
+          }
+        }
+
+        input {
+          height: 45px;
+
+          @media (#{$larger-than-desktop}) {
+            width: 565px;
+          }
+
+          @media (min-width: $phablet-min-width) {
+            width: 400px;
+          }
+        }
       }
     }
-    input {
-      height: 45px;
-      @media (#{$larger-than-desktop}) {
-        width: 565px;
-      }
-      @media (min-width: $phablet-min-width) {
-        width: 400px;
-      }
-    }
-  }
-  .search-mdn {
-    @media (min-width: $phablet-min-width) {
-      margin: auto 0;
-    }
-    button {
-      font-size: rem-calc(20px);
-      margin-top: 13px;
+
+    .questions-part {
+      margin-top: 40px;
+      max-width: 1520px;
+      width: 100%;
+
       @media (max-width: $phablet-min-width-minus) {
-        width: 135px;
+        margin-top: 32px;
       }
-    }
-  }
-  .tool-tip-text {
-    visibility: hidden;
-    font-size: rem-calc(10px);
-    width: 120px;
-    background-color: #876dab;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    right: 68px;
-    margin-top: -7px;
-    @media (max-width: $desktop-min-width-minus) {
-      right: 62px;
-      margin-top: -3px;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-      width: 100px;
-      right: 16px;
-    }
-  }
-  .copy-icon-link:hover .tool-tip-text {
-    visibility: visible;
-  }
-  .copied {
-    font-size: rem-calc(10px);
-    width: 120px;
-    background-color: #f58f2b;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    right: 68px;
-    margin-top: -7px;
-    @media (max-width: $desktop-min-width-minus) {
-      right: 62px;
-      margin-top: -3px;
-    }
-    @media (max-width: $phablet-min-width-minus) {
-      width: 100px;
-      right: 16px;
-    }
-  }
-  .copy-icon {
-    z-index: 1;
-    cursor: pointer;
-    position: absolute;
-    right: 61px;
-    width: 24px;
-      height: 54px;
-    @media (max-width: $desktop-min-width-minus) {
-      right: 51px;
-    }
-    @media(max-width:$phablet-min-width-minus){
-      height:51px;
+
+      .questions {
+        position: relative;
+
+        .copy-icon-link {
+          .copy-icon {
+            z-index: 1;
+            cursor: pointer;
+            position: absolute;
+            right: 61px;
+            width: 24px;
+            height: 54px;
+
+            @media (max-width: $desktop-min-width-minus) {
+              right: 51px;
+            }
+
+            @media(max-width:$phablet-min-width-minus) {
+              height: 51px;
+            }
+          }
+
+          .tool-tip-text {
+            visibility: hidden;
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            width: 161px;
+            background-color: #5E5E5E;
+            color: $white;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 1;
+            right: 98px;
+            margin-top: 6px;
+
+            @media (max-width: $desktop-min-width-minus) {
+              right: 85px;
+            }
+
+            .arrow {
+              position: absolute;
+              bottom: 15px;
+              left: 158px;
+              transform: rotate(90deg);
+            }
+          }
+
+          .copied {
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            width: 170px;
+            background-color: #9BD17C;
+            color: $white;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 1;
+            right: 90px;
+            margin-top: 6px;
+
+            @media (max-width: $desktop-min-width-minus) {
+              right: 80px;
+            }
+          }
+        }
+
+        .copy-icon-link:hover .tool-tip-text {
+          visibility: visible;
+        }
+
+        .more-less-faqs {
+          margin-top: 46px;
+
+          @media (max-width: $phablet-min-width-minus) {
+            margin-top: 38px;
+          }
+
+          .text {
+            a {
+              line-height: 18px;
+              color: $primary-color;
+              font-family: $secondary-font-family-bold;
+            }
+          }
+        }
+
+        .actions {
+          margin-top: -38px;
+          box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.16),
+            0px 7px 24px rgba(94, 94, 94, 0.2),
+            0px 5px 16px rgba(57, 117, 181, 0.12);
+          border-radius: 28px;
+          float: right;
+          position: sticky;
+          z-index: 2;
+          bottom: 3%;
+
+          @media (max-width: $phablet-min-width-minus) {
+            margin-top: -34px;
+          }
+        }
+
+        .no-results-found {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .title {
+            margin-bottom: 4px;
+            color: $third-color;
+          }
+
+          .sub-title {
+            margin: 0;
+            font-family: $secondary-font-family;
+            font-weight: 400;
+            color: #514A43;
+          }
+        }
+      }
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+// ::ng-deep {
+//   .mdn-search-section {
+//     @media (min-width: $phablet-min-width) {
+//       display: flex;
+//       align-items: center;
+//     }
+//     @media (max-width: $phablet-min-width-minus) {
+//       padding-top: 40px;
+//       padding-bottom: 40px;
+//     }
+//   }
+//   .enter-mdn {
+//     @media (min-width: $phablet-min-width-minus) {
+//       padding-right: 20px;
+//     }
+//     @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width-minus) {
+//       padding-left: 10px;
+//     }
+//     label {
+//       @media (max-width: $phablet-min-width-minus) {
+//         font-size: rem-calc(14px);
+//       }
+//     }
+//     input {
+//       height: 45px;
+//       @media (#{$larger-than-desktop}) {
+//         width: 565px;
+//       }
+//       @media (min-width: $phablet-min-width) {
+//         width: 400px;
+//       }
+//     }
+//   }
+//   .search-mdn {
+//     @media (min-width: $phablet-min-width) {
+//       margin: auto 0;
+//     }
+//     button {
+//       font-size: rem-calc(20px);
+//       margin-top: 13px;
+//       @media (max-width: $phablet-min-width-minus) {
+//         width: 135px;
+//       }
+//     }
+//   }
+//   .tool-tip-text {
+//     visibility: hidden;
+//     font-size: rem-calc(10px);
+//     width: 120px;
+//     background-color: #876dab;
+//     color: #fff;
+//     text-align: center;
+//     padding: 5px 0;
+//     border-radius: 6px;
+//     position: absolute;
+//     z-index: 1;
+//     right: 68px;
+//     margin-top: -7px;
+//     @media (max-width: $desktop-min-width-minus) {
+//       right: 62px;
+//       margin-top: -3px;
+//     }
+//     @media (max-width: $phablet-min-width-minus) {
+//       width: 100px;
+//       right: 16px;
+//     }
+//   }
+//   .copy-icon-link:hover .tool-tip-text {
+//     visibility: visible;
+//   }
+//   .copied {
+//     font-size: rem-calc(10px);
+//     width: 120px;
+//     background-color: #f58f2b;
+//     color: #fff;
+//     text-align: center;
+//     padding: 5px 0;
+//     border-radius: 6px;
+//     position: absolute;
+//     z-index: 1;
+//     right: 68px;
+//     margin-top: -7px;
+//     @media (max-width: $desktop-min-width-minus) {
+//       right: 62px;
+//       margin-top: -3px;
+//     }
+//     @media (max-width: $phablet-min-width-minus) {
+//       width: 100px;
+//       right: 16px;
+//     }
+//   }
+//   .copy-icon {
+//     z-index: 1;
+//     cursor: pointer;
+//     position: absolute;
+//     right: 61px;
+//     width: 24px;
+//       height: 54px;
+//     @media (max-width: $desktop-min-width-minus) {
+//       right: 51px;
+//     }
+//     @media(max-width:$phablet-min-width-minus){
+//       height:51px;
+//     }
+//   }
+// }

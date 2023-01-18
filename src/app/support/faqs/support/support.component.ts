@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MetaService } from '../../../../services/meta-service.service';
 import { Router } from '@angular/router';
@@ -28,31 +28,44 @@ export class SupportComponent implements OnDestroy, OnInit {
   public validMDN = false;
   public collapsed = false;
   private routerSubscription: Subscription;
+  public showMore = false;
+  public allQuestions = [];
+  public filteredQuestions = [];
+  public firstTenQuestions;
+  public restQuestions;
+  public innerWidth: any;
+  public innerHeight: any;
+  public filterText;
+  public carrierId;
 
-  constructor(private metaService: MetaService,
-              private location: Location,
-              private pageScrollService: PageScrollService,
-              private userDeviceService: UserDeviceService,
-              private contentful: ContentfulService,
-              private toastHelper: ToastrHelperService,
-              private router: Router,
-              private clipboardService: ClipboardService) { }
+  constructor(
+    private metaService: MetaService,
+    private location: Location,
+    private pageScrollService: PageScrollService,
+    private userDeviceService: UserDeviceService,
+    private contentful: ContentfulService,
+    private toastHelper: ToastrHelperService,
+    private router: Router,
+    private clipboardService: ClipboardService) { }
 
   ngOnInit(): void {
-        this.questionIdParam = this.router.url.split('/')[5];
-        if (!!this.questionIdParam){
-        const hashId = '#' + this.questionIdParam;
-        setTimeout(() => {
-          this.pageScrollService.scroll({
-            document,
-            scrollTarget: hashId,
-            scrollOffset: 150,
-            speed: 500
-          });
-        }, 1000);
-      }
-        this.showData();
+    this.innerWidth = window.innerWidth;
+    this.innerHeight = window.pageYOffset;
+    this.questionIdParam = this.router.url.split('/')[5];
+    if (!!this.questionIdParam) {
+      const hashId = '#' + this.questionIdParam;
+      setTimeout(() => {
+        this.pageScrollService.scroll({
+          document,
+          scrollTarget: hashId,
+          scrollOffset: 150,
+          speed: 500
+        });
+      }, 1000);
     }
+    this.showData();
+  }
+
   ngOnDestroy(): void {
     if (!!this.routerSubscription) {
       this.routerSubscription.unsubscribe();
@@ -61,7 +74,7 @@ export class SupportComponent implements OnDestroy, OnInit {
 
   public toggleActive(questionId, carrierID, answerId, copy?): void {
     this.network = carrierID === 'tmo' ? 'tmo' : 'att';
-    if (this.questionIdParam === questionId && !this.collapsed &&!copy) {
+    if (this.questionIdParam === questionId && !this.collapsed && !copy) {
       this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
       this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
       this.questionIdParam = 'q0';
@@ -72,23 +85,24 @@ export class SupportComponent implements OnDestroy, OnInit {
       this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}/${this.questionIdParam}`);
       this.callRichText(answerId);
     }
-    if (!!copy && this.questionIdParam === questionId){
+    if (!!copy && this.questionIdParam === questionId) {
       const url = window.location.host + this.location.path();
       this.clipboardService.copy(url);
       this.isCopied = true;
       setTimeout(() => {
         this.isCopied = false;
       }, 1500);
-   }   
+    }
   }
+
   public checkMdn(mdn): void {
     this.processingRequest = true;
     this.userDeviceService.checkDeviceNetworkByMdn(mdn).then((result) => {
       this.validMDN = true;
       this.network = result.network;
-      this.network === 'att' ? 
-      this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'att') :
-      this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'tmo');
+      this.network === 'att' ?
+        this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'att') :
+        this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'tmo');
       this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
       this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
     }, (error) => {
@@ -97,39 +111,78 @@ export class SupportComponent implements OnDestroy, OnInit {
       this.processingRequest = false;
     });
   }
-  public copy(copy, reload , questionId?, carrierID?, answerId?){
-    if (!!copy && !!questionId && !!carrierID && !!answerId && !reload){
+
+  public copy(copy, reload, questionId?, carrierID?, answerId?) {
+    if (!!copy && !!questionId && !!carrierID && !!answerId && !reload) {
       this.toggleActive(questionId, carrierID, answerId, copy);
     }
-   else if (!!copy && !!reload){
-    const url = window.location.host + this.location.path();
-    this.clipboardService.copy(url);
-    this.isReload = false;
-    this.isCopied = true;
-    setTimeout(() => {
+    else if (!!copy && !!reload) {
+      const url = window.location.host + this.location.path();
+      this.clipboardService.copy(url);
+      this.isReload = false;
+      this.isCopied = true;
+      setTimeout(() => {
         this.isCopied = false;
       }, 1500);
-   }   
+    }
   }
+
+  public filterTextChanged(filterText): void {
+    this.getFilteredQuestions(filterText);
+  }
+
+  private getFilteredQuestions(filterText): void {
+    this.filteredQuestions = this.allQuestions.filter((qst) => {
+      if (qst.fields?.questionText.toLowerCase().includes(filterText.toLowerCase())) {
+        return qst;
+      }
+    });
+    this.firstTenQuestions = this.filteredQuestions.slice(0, 10);
+    if (this.filteredQuestions?.length > 10) {
+      this.restQuestions = this.filteredQuestions.slice(10);
+    } else {
+      this.showMore = false;
+    }
+  }
+
   private showData(): void {
     this.network = this.router.url.split('/')[4];
     this.questionIdParam = this.router.url.split('/')[5];
     if (!!this.network) {
       this.validMDN = true;
-      this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', this.network);
+      this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', this.network).subscribe(questions => {
+        if (!!questions) {
+          this.carrierId = questions[0]?.fields?.carrierId;
+          this.allQuestions = questions[0].fields?.supportQuestions;
+          this.filteredQuestions = this.allQuestions;
+          this.firstTenQuestions = this.allQuestions.slice(0, 10);
+          this.restQuestions = this.allQuestions.slice(10);
+        }
+      });
       this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
       this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
-      if (!!this.questionIdParam){
-      this.isReload = true;
-      this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}/${this.questionIdParam}`);
-      this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}/${this.questionIdParam}`);
-      this.contentful.getAnswerIdByQstId('questions', this.questionIdParam).subscribe(val =>
-        this.callRichText(val['answerId']));
-    }
+      if (!!this.questionIdParam) {
+        this.isReload = true;
+        this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}/${this.questionIdParam}`);
+        this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}/${this.questionIdParam}`);
+        this.contentful.getAnswerIdByQstId('questions', this.questionIdParam).subscribe(val =>
+          this.callRichText(val['answerId']));
+      }
     }
   }
+
   private callRichText(id) {
     this.contentful.getRichText('questions', id);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.innerWidth = window.innerWidth;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.innerHeight = window.pageYOffset;
   }
 }
 
