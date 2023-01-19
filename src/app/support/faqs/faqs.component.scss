@@ -1,319 +1,341 @@
 @import "../../../styles/modules/variables";
 @import "../../../styles/modules/_mixins.scss";
 
-.goodmobile-faqs-page {
-  .banner-section {
-    position: relative;
+::ng-deep {
+  .goodmobile-faqs-page {
+    .banner-section {
+      position: relative;
 
-    .banner-image-container {
-      img {
+      .banner-image-container {
+        img {
+          width: 100%;
+          height: 400px;
+          object-fit: cover;
+
+          @media (max-width: 1625.9px) {
+            object-position: 40%;
+          }
+
+          @media (max-width: $desktop-min-width-minus) {
+            object-position: 49%;
+          }
+
+          @media (max-width: $phablet-min-width-minus) {
+            object-position: 6%;
+          }
+
+          @media (max-width: 499.9px) {
+            object-position: 60%;
+          }
+        }
+      }
+
+      .banner-text-content {
+        position: absolute;
+        bottom: 0;
         width: 100%;
         height: 400px;
-        object-fit: cover;
-
-        @media (max-width: 1625.9px) {
-          object-position: 40%;
-        }
-
-        @media (max-width: $desktop-min-width-minus) {
-          object-position: 49%;
-        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 156px;
 
         @media (max-width: $phablet-min-width-minus) {
-          object-position: 6%;
+          padding-top: 128px;
         }
 
         @media (max-width: 499.9px) {
-          object-position: 60%;
+          padding-top: 63px;
+        }
+
+        .header {
+          color: $header-color;
+          text-align: center;
+          margin: 0;
+
+          @media (min-width: $phablet-min-width) and (max-width: 970.9px) {
+            max-width: 298px;
+          }
+
+          @media (min-width: 500px) and (max-width: 599.9px) {
+            max-width: 234px;
+          }
+
+          @media (max-width: 384.9px) {
+            max-width: 240px;
+          }
         }
       }
     }
 
-    .banner-text-content {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 400px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 156px;
+    .category-tabs-section {
+      background: #FAF9F8;
+      padding-top: 64px;
+      padding-bottom: 64px;
 
       @media (max-width: $phablet-min-width-minus) {
-        padding-top: 128px;
+        padding-top: 48px;
+        padding-bottom: 48px;
       }
 
-      @media (max-width: 499.9px) {
-        padding-top: 63px;
-      }
-
-      .header {
-        color: $header-color;
-        text-align: center;
-        margin: 0;
-
-        @media (min-width: $phablet-min-width) and (max-width: 970.9px) {
-          max-width: 298px;
-        }
-
-        @media (min-width: 500px) and (max-width: 599.9px) {
-          max-width: 234px;
-        }
-
-        @media (max-width: 384.9px) {
-          max-width: 240px;
-        }
-      }
-    }
-  }
-
-  .category-tabs-section {
-    background: #FAF9F8;
-    padding-top: 64px;
-    padding-bottom: 64px;
-
-    @media (max-width: $phablet-min-width-minus) {
-      padding-top: 48px;
-      padding-bottom: 48px;
-    }
-
-    .categories-flex-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-
-      @media (min-width: 1538px) {
-        justify-content: center;
-      }
-
-      @media (max-width: 1537.9px) {
-        max-width: 884px;
-        margin: 0 auto;
-      }
-
-      @media (max-width: $phablet-min-width-minus) {
-        gap: 16px;
-      }
-
-      .category-tab {
+      .categories-flex-wrap {
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
         gap: 24px;
-        padding: 12px;
-        width: 430px;
-        background: #F1F9FD;
-        border: 1px solid #005895;
-        border-radius: 10px;
-        cursor: pointer;
 
-        @media (max-width: 931.9px) {
-          width: 100%;
+        @media (min-width: 1538px) {
+          justify-content: center;
+        }
+
+        @media (max-width: 1537.9px) {
+          max-width: 884px;
+          margin: 0 auto;
         }
 
         @media (max-width: $phablet-min-width-minus) {
           gap: 16px;
         }
 
-        &.active {
-          background: #C7E6F7;
-          border: none;
-        }
-
-        .category-icon {
-          width: 60px;
-          height: 60px;
-
-          @media (max-width: $phablet-min-width-minus) {
-            width: 45px;
-            height: 45px;
-          }
-        }
-
-        .category-title {
-          color: $third-color;
-          margin: 0;
-        }
-      }
-    }
-  }
-
-  .questions-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 64px;
-    padding-bottom: 64px;
-
-    @media (max-width: 931.9px) {
-      padding-top: 48px;
-      padding-bottom: 48px;
-    }
-
-    .title {
-      margin-bottom: 32px;
-      color: $section-header-color;
-
-      @media (max-width: 931.9px) {
-        margin-bottom: 24px;
-      }
-    }
-
-    .search-part {
-      position: relative;
-      max-width: 474px;
-      width: 100%;
-
-      @media (max-width: 931.9px) {
-        max-width: 592px;
-      }
-
-      @media (max-width: $phablet-min-width-minus) {
-        margin-bottom: 15px;
-      }
-
-      .search-input {
-        background: $white;
-        border: 1px solid #727272;
-        border-radius: 4px;
-        height: 40px;
-        color: $medium-grey;
-      }
-
-      img {
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-    }
-
-    .questions-part {
-      margin-top: 40px;
-      max-width: 1520px;
-      width: 100%;
-
-      @media (max-width: $phablet-min-width-minus) {
-        margin-top: 32px;
-      }
-
-      .questions {
-        position: relative;
-
-        .copy-icon-link {
-          .copy-icon {
-            z-index: 1;
-            cursor: pointer;
-            position: absolute;
-            right: 61px;
-            width: 24px;
-            height: 54px;
-
-            @media (max-width: $desktop-min-width-minus) {
-              right: 51px;
-            }
-
-            @media(max-width:$phablet-min-width-minus) {
-              height: 51px;
-            }
-          }
-
-          .tool-tip-text {
-            visibility: hidden;
-            font-size: rem-calc(16px);
-            line-height: 24px;
-            width: 161px;
-            background-color: #5E5E5E;
-            color: $white;
-            text-align: center;
-            padding: 8px 12px;
-            border-radius: 8px;
-            position: absolute;
-            z-index: 1;
-            right: 98px;
-            margin-top: 6px;
-
-            @media (max-width: $desktop-min-width-minus) {
-              right: 85px;
-            }
-
-            .arrow {
-              position: absolute;
-              bottom: 15px;
-              left: 158px;
-              transform: rotate(90deg);
-            }
-          }
-
-          .copied {
-            font-size: rem-calc(16px);
-            line-height: 24px;
-            width: 170px;
-            background-color: #9BD17C;
-            color: $white;
-            text-align: center;
-            padding: 8px 12px;
-            border-radius: 8px;
-            position: absolute;
-            z-index: 1;
-            right: 90px;
-            margin-top: 6px;
-
-            @media (max-width: $desktop-min-width-minus) {
-              right: 80px;
-            }
-          }
-        }
-
-        .copy-icon-link:hover .tool-tip-text {
-          visibility: visible;
-        }
-
-        .more-less-faqs {
-          margin-top: 46px;
-
-          @media (max-width: $phablet-min-width-minus) {
-            margin-top: 38px;
-          }
-
-          .text {
-            a {
-              line-height: 18px;
-              color: $primary-color;
-              font-family: $secondary-font-family-bold;
-            }
-          }
-        }
-
-        .actions {
-          margin-top: -38px;
-          box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.16),
-            0px 7px 24px rgba(94, 94, 94, 0.2),
-            0px 5px 16px rgba(57, 117, 181, 0.12);
-          border-radius: 28px;
-          float: right;
-          position: sticky;
-          z-index: 2;
-          bottom: 3%;
-
-          @media (max-width: $phablet-min-width-minus) {
-            margin-top: -34px;
-          }
-        }
-
-        .no-results-found {
+        .category-tab {
           display: flex;
-          flex-direction: column;
           align-items: center;
+          gap: 24px;
+          padding: 12px;
+          width: 430px;
+          background: #F1F9FD;
+          border: 1px solid #005895;
+          border-radius: 10px;
+          cursor: pointer;
 
-          .title {
-            margin-bottom: 4px;
-            color: $third-color;
+          @media (max-width: 931.9px) {
+            width: 100%;
           }
 
-          .sub-title {
+          @media (max-width: $phablet-min-width-minus) {
+            gap: 16px;
+          }
+
+          &.active {
+            background: #C7E6F7;
+            border: none;
+          }
+
+          .category-icon {
+            width: 60px;
+            height: 60px;
+
+            @media (max-width: $phablet-min-width-minus) {
+              width: 45px;
+              height: 45px;
+            }
+          }
+
+          .category-title {
+            color: $third-color;
             margin: 0;
-            font-family: $secondary-font-family;
-            font-weight: 400;
-            color: #514A43;
+          }
+        }
+      }
+    }
+
+    .questions-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 64px;
+      padding-bottom: 64px;
+
+      @media (max-width: 931.9px) {
+        padding-top: 48px;
+        padding-bottom: 48px;
+      }
+
+      .category-title {
+        margin-bottom: 32px;
+        color: $section-header-color;
+
+        @media (max-width: 931.9px) {
+          margin-bottom: 24px;
+        }
+      }
+
+      .search-part {
+        position: relative;
+        max-width: 474px;
+        width: 100%;
+
+        @media (max-width: 931.9px) {
+          max-width: 592px;
+        }
+
+        .search-input {
+          background: $white;
+          border: 1px solid #727272;
+          border-radius: 4px;
+          height: 40px;
+          color: $medium-grey;
+        }
+
+        img {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      .questions-part {
+        margin-top: 40px;
+        max-width: 1520px;
+        width: 100%;
+
+        @media (max-width: $phablet-min-width-minus) {
+          margin-top: 32px;
+        }
+
+        .questions {
+          position: relative;
+
+          .copy-icon-link {
+            .copy-icon {
+              z-index: 1;
+              cursor: pointer;
+              position: absolute;
+              right: 61px;
+              width: 24px;
+              height: 54px;
+
+              @media (max-width: $desktop-min-width-minus) {
+                right: 51px;
+              }
+
+              @media(max-width:$phablet-min-width-minus) {
+                height: 51px;
+              }
+            }
+
+            .tool-tip-text {
+              visibility: hidden;
+              font-size: rem-calc(16px);
+              line-height: 24px;
+              width: 161px;
+              background-color: #5E5E5E;
+              color: $white;
+              text-align: center;
+              padding: 8px 12px;
+              border-radius: 8px;
+              position: absolute;
+              z-index: 1;
+              right: 98px;
+              margin-top: 6px;
+
+              @media (max-width: $desktop-min-width-minus) {
+                right: 85px;
+              }
+
+              .arrow {
+                position: absolute;
+                bottom: 15px;
+                left: 158px;
+                transform: rotate(90deg);
+              }
+            }
+
+            .copied {
+              font-size: rem-calc(16px);
+              line-height: 24px;
+              width: 170px;
+              background-color: #9BD17C;
+              color: $white;
+              text-align: center;
+              padding: 8px 12px;
+              border-radius: 8px;
+              position: absolute;
+              z-index: 1;
+              right: 90px;
+              margin-top: 6px;
+
+              @media (max-width: $desktop-min-width-minus) {
+                right: 80px;
+              }
+            }
+          }
+
+          .copy-icon-link:hover .tool-tip-text {
+            visibility: visible;
+          }
+
+          .toggle {
+            .toggle-title {
+              border: 1px solid #D9E6EF;
+              border-radius: 4px;
+              margin-bottom: 16px;
+
+              .title {
+                .title-name {
+                  font-size: rem-calc(16px) !important;
+                  line-height: 24px !important;
+                  color: #6A509B;
+                  padding: 20px 24px !important;
+                }
+              }
+
+              .icons {
+                i {
+                  background: url("../../../assets/icon/faqs-plus-sign.svg") 4.6px 4px no-repeat !important;
+                }
+              }
+            }
+          }
+
+          .more-less-faqs {
+            margin-top: 36px;
+
+            @media (max-width: $phablet-min-width-minus) {
+              margin-top: 28px;
+            }
+
+            .text {
+              a {
+                line-height: 18px;
+                color: $primary-color;
+                font-family: $secondary-font-family-bold;
+              }
+            }
+          }
+
+          .actions {
+            margin-top: -38px;
+            box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.16),
+              0px 7px 24px rgba(94, 94, 94, 0.2),
+              0px 5px 16px rgba(57, 117, 181, 0.12);
+            border-radius: 28px;
+            float: right;
+            position: sticky;
+            z-index: 2;
+            bottom: 3%;
+
+            @media (max-width: $phablet-min-width-minus) {
+              margin-top: -34px;
+            }
+          }
+
+          .no-results-found {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            .title {
+              margin-bottom: 4px;
+              color: $third-color;
+            }
+
+            .sub-title {
+              margin: 0;
+              font-family: $secondary-font-family;
+              font-weight: 400;
+              color: #514A43;
+            }
           }
         }
       }
