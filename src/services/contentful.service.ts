@@ -58,7 +58,7 @@ export class ContentfulService {
       .pipe(
         map(entry => entry.items)
       );
-}
+  }
   public getphoneTypes(contentId, categoryId): Observable<any> {
     const p = this.client.getEntries({
       'fields.categoryId': categoryId,
@@ -76,7 +76,7 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields)
+        map(entry => entry?.items[0]?.fields)
       );
   }
   public getCategoryId(contentId, phoneId): Observable<any> {
@@ -86,7 +86,7 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields)
+        map(entry => entry?.items[0]?.fields)
       );
   }
   public getPhoneSpecData(contentId, phoneId): Observable<any> {
@@ -118,7 +118,7 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields)
+        map(entry => entry?.items[0]?.fields)
       );
   }
   public getPhoneImg(contentId, finishId): Observable<any> {
@@ -128,7 +128,7 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields)
+        map(entry => entry?.items[0]?.fields)
       );
   }
   public getPhoneImgBySku(contentId, sku): any {
@@ -138,7 +138,7 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields['skuFinishId'])
+        map(entry => entry?.items[0]?.fields['skuFinishId'])
       );
   }
   public getPhoneCapacity(contentId, capacityId): Observable<any> {
@@ -148,7 +148,7 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields)
+        map(entry => entry?.items[0]?.fields)
       );
   }
   public getContentByCarrierId(contentId, carrierId): Observable<any> {
@@ -206,7 +206,7 @@ export class ContentfulService {
         content_type: contentId
       })
       .then(entry => {
-        const rawRichTextField = entry.items[0].fields;
+        const rawRichTextField = entry?.items[0]?.fields;
         return documentToHtmlString(rawRichTextField['answerText'], this.options);
       })
       .then(renderedHtml => {
@@ -221,15 +221,15 @@ export class ContentfulService {
     });
     return from(p)
       .pipe(
-        map(entry => entry.items[0].fields)
+        map(entry => entry?.items[0]?.fields)
       );
   }
-  public getPopUpDescriptions(contentId, elementId , richTextField): any {
+  public getPopUpDescriptions(contentId, elementId, richTextField): any {
     this.client.getEntries({
       content_type: contentId
     })
       .then(entry => {
-        const rawRichTextField = entry.items[0].fields;
+        const rawRichTextField = entry?.items[0]?.fields;
         return documentToHtmlString(rawRichTextField[`${richTextField}`], this.options);
       })
       .then(renderedHtml => {
@@ -243,7 +243,7 @@ export class ContentfulService {
       content_type: contentId
     })
       .then(entry => {
-        const rawRichTextField = entry.items[0].fields;
+        const rawRichTextField = entry?.items[0]?.fields;
         return documentToHtmlString(rawRichTextField[`${richTextField}`], this.options);
       })
       .then(renderedHtml => {
@@ -272,6 +272,16 @@ export class ContentfulService {
     return from(p)
       .pipe(
         map(entry => entry.items)
+      );
+  }
+  public getCategoryTitle(contentId, categoryId): Observable<any> {
+    const p = this.client.getEntries({
+      'fields.categoryId': categoryId,
+      content_type: contentId
+    });
+    return from(p)
+      .pipe(
+        map(entry => entry?.items[0]?.fields)
       );
   }
 }

@@ -4,12 +4,15 @@
 .toggle {
   overflow: hidden;
   height: 100%;
+
   &.active {
     height: auto !important;
+
     .toggle-inner {
       visibility: visible;
       display: inline-block;
     }
+
     .toggle-title {
       .icons {
         i {
@@ -18,6 +21,7 @@
       }
     }
   }
+
   .toggle-title {
     font-family: $base-font-family;
     position: relative;
@@ -25,6 +29,7 @@
     border: 1px solid $grey;
     margin-bottom: 6px;
     text-align: left;
+
     h2 {
       font-size: rem-calc(18px);
       color: $primary-color;
@@ -33,48 +38,57 @@
       cursor: pointer;
       font-weight: 200;
     }
+
     .title {
       flex-basis: 80%;
+
       .title-name {
         display: block;
         font-weight: 500;
         padding: 14px 25px 14px;
         text-transform: none;
         letter-spacing: 0;
+
         @media (max-width: $desktop-min-width-minus) {
           font-size: rem-calc(16px);
         }
+
         @media (max-width: $phablet-min-width-minus) {
           font-size: 1rem;
           overflow: hidden;
           line-height: 1.6em;
           padding: 10px 35px 25px 11px;
         }
+
         @media (max-width: $phablet-min-width-minus) {
           font-size: rem-calc(14px);
           line-height: 1.4em;
         }
       }
     }
+
     .icons {
       position: relative;
       flex-basis: 20%;
+
       i {
         position: absolute;
         background: url("../../assets/icon/plus-sign.svg") 4.6px 4px no-repeat;
-        border:none;
+        border: none;
         padding: 11px 18px;
         width: 24px;
         height: 24px;
         margin: 11px;
         right: 0;
         top: 0;
+
         @media (max-width: $phablet-min-width-minus) {
           top: 1px;
         }
       }
     }
   }
+
   .toggle-inner {
     visibility: hidden;
     font-size: rem-calc(16px);
@@ -83,17 +97,20 @@
     margin: 0;
     text-align: left;
     display: inline-block;
+
     @media (max-width: $phablet-min-width-minus) {
       padding: 7px 10px 10px 10px;
       width: 100%;
       word-break: break-word;
       font-size: rem-calc(13px);
     }
+
     p {
       @media (max-width: $phablet-min-width-minus) {
         font-size: rem-calc(15px);
       }
     }
+
     div {
       max-width: 100%;
     }
