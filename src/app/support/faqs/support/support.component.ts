@@ -51,6 +51,12 @@ export class SupportComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.pageYOffset;
+    this.pageScrollService.scroll({
+      document,
+      scrollTarget: '#titleTarget',
+      scrollOffset: 0,
+      speed: 500
+    });
     this.questionIdParam = this.router.url.split('/')[5];
     if (!!this.questionIdParam) {
       const hashId = '#' + this.questionIdParam;
@@ -100,11 +106,7 @@ export class SupportComponent implements OnDestroy, OnInit {
     this.userDeviceService.checkDeviceNetworkByMdn(mdn).then((result) => {
       this.validMDN = true;
       this.network = result.network;
-      this.network === 'att' ?
-        this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'att') :
-        this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'tmo');
-      this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
-      this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
+      this.showData(true);
     }, (error) => {
       this.validMDN = false;
       this.toastHelper.showAlert(error.message || error);
@@ -145,9 +147,11 @@ export class SupportComponent implements OnDestroy, OnInit {
     }
   }
 
-  private showData(): void {
-    this.network = this.router.url.split('/')[4];
-    this.questionIdParam = this.router.url.split('/')[5];
+  private showData(isValidMdn?: boolean): void {
+    if(!isValidMdn) {
+      this.network = this.router.url.split('/')[4];
+      this.questionIdParam = this.router.url.split('/')[5];
+    }
     if (!!this.network) {
       this.validMDN = true;
       this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', this.network).subscribe(questions => {

@@ -44,7 +44,7 @@
             </div>
         </div>
     </section>
-    <section class="questions-section page-section">
+    <section class="questions-section page-section" id="titleTarget">
         <h2 class="category-title">{{categoryTitle}}</h2>
         <div class="search-part" *ngIf="!isSupport">
             <input class="search-input" placeholder="Search by Keyword" type="search" [(ngModel)]="filterText"
@@ -88,9 +88,10 @@
                     <p class="text" *ngIf="!showMore"><a (click)="showMore = true">More FAQs</a></p>
                     <p class="text" *ngIf="!!showMore"><a (click)="showMore = false; questionId = 'q0'">Less FAQs</a>
                 </div>
-                <div class="actions" *ngIf="( innerWidth > 1536 && innerHeight > 840 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
+                <div class="actions" *ngIf="(( innerWidth > 1536 && innerHeight > 840 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
                      innerHeight > 1050 ) || ( ( innerWidth > 639 && innerWidth < 932 ) && innerHeight > 1480 ) ||
-                      ( innerWidth < 640 && innerHeight > 1250 ) && filteredQuestions.length > 0">
+                      ( innerWidth < 640 && innerHeight > 1250 )) && filteredQuestions.length > 0"
+                    [class.top-0]="filteredQuestions.length < 11">
                     <a (click)="scrollTop()">
                         <img *ngIf="innerWidth > 639" src="/assets/icon/hover-button-close.svg" alt="Hover Button Icon"
                             onmouseover="this.src='/assets/icon/hover-button-open.svg'"
