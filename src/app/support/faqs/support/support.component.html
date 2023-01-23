@@ -7,24 +7,24 @@
     </div>
     <div class="mdn-search-section" *ngIf="!validMDN">
       <form #mdnSearchForm="ngForm" class="mdn-search-form">
-      <div class="enter-mdn">
-        <label for="phoneNumber">
-          Enter your Good Mobile number for better results:
-        </label>
-        <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber"
-          data-cy="phoneNumber" restrictNumbers minlength="10" maxlength="10">
-        <label class="validation-message" *ngIf="!mdn && phoneNumber.touched">
-          This field is required
-        </label>
-        <label class="validation-message" *ngIf="phoneNumber.hasError('minlength')">
-          Invalid phone number, it should be 10 digits
-        </label>
-      </div>
-      <div class="search-mdn-button">
-        <button class="button primary" title="search" value="search" aria-label="search"
-          (click)="checkMdn(mdn)">Search</button>
-      </div>
-    </form>
+        <div class="enter-mdn">
+          <label for="phoneNumber">
+            Enter your Good Mobile number for better results:
+          </label>
+          <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber"
+            data-cy="phoneNumber" restrictNumbers minlength="10" maxlength="10">
+          <label class="validation-message" *ngIf="!mdn && phoneNumber.touched">
+            This field is required
+          </label>
+          <label class="validation-message" *ngIf="phoneNumber.hasError('minlength')">
+            Invalid phone number, it should be 10 digits
+          </label>
+        </div>
+        <div class="search-mdn-button">
+          <button class="button primary" title="search" value="search" aria-label="search"
+            (click)="checkMdn(mdn)">Search</button>
+        </div>
+      </form>
     </div>
     <div class="questions-part" *ngIf="!!validMDN">
       <div class="questions">
@@ -36,7 +36,7 @@
               *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a>
           <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
             [isActive]="qst?.fields?.questionId == questionIdParam"
-            (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+            (click)="toggleActive(qst?.fields?.questionId, qst?.fields?.answerId)">
             <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
           </app-question-answer>
         </div>
@@ -49,7 +49,7 @@
                 *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a>
             <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
               [isActive]="qst?.fields?.questionId == questionIdParam"
-              (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+              (click)="toggleActive(qst?.fields?.questionId, qst?.fields?.answerId)">
               <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
             </app-question-answer>
           </div>
