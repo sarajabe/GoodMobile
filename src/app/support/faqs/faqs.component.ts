@@ -80,6 +80,7 @@ export class FaqsComponent implements OnInit, OnDestroy {
     if (this.router.url.split('/')[3] === 'support') {
       this.isSupport = true;
       this.activeCategory = 'support';
+      this.categoryTitle = 'Support';
     }
     this.routerSubscription = this.route.params.subscribe(params => {
       if (!!params.category) {

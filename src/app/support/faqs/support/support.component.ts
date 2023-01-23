@@ -82,8 +82,8 @@ export class SupportComponent implements OnDestroy, OnInit {
     }
   }
 
-  public toggleActive(questionId, carrierID, answerId, copy?): void {
-    this.network = carrierID === 'tmo' ? 'tmo' : 'att';
+  public toggleActive(questionId, answerId, copy?): void {
+    this.network = this.carrierId === 'tmo' ? 'tmo' : 'att';
     if (this.questionIdParam === questionId && !this.collapsed && !copy) {
       this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
       this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
@@ -113,7 +113,7 @@ export class SupportComponent implements OnDestroy, OnInit {
         this.appState.loading = false;
         this.validMDN = true;
         this.network = result.network;
-        this.showData(true);
+        this.showData(this.network);
       }, (error) => {
         this.appState.loading = false;
         this.validMDN = false;
@@ -124,7 +124,7 @@ export class SupportComponent implements OnDestroy, OnInit {
 
   public copy(copy, reload, questionId?, carrierID?, answerId?) {
     if (!!copy && !!questionId && !!carrierID && !!answerId && !reload) {
-      this.toggleActive(questionId, carrierID, answerId, copy);
+      this.toggleActive(questionId, answerId, copy);
     }
     else if (!!copy && !!reload) {
       const url = window.location.host + this.location.path();
@@ -155,8 +155,10 @@ export class SupportComponent implements OnDestroy, OnInit {
     }
   }
 
-  private showData(isValidMdn?: boolean): void {
-    if (!isValidMdn) {
+  private showData(network?: string): void {
+    if (!!network) {
+      this.network = network;
+    } else {
       this.network = this.router.url.split('/')[4];
       this.questionIdParam = this.router.url.split('/')[5];
     }
