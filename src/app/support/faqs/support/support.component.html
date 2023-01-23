@@ -6,18 +6,25 @@
       <img class="icon-search" src="assets/icon/faqs-search-icon.svg" alt="Search Icon" />
     </div>
     <div class="mdn-search-section" *ngIf="!validMDN">
+      <form #mdnSearchForm="ngForm" class="mdn-search-form">
       <div class="enter-mdn">
         <label for="phoneNumber">
           Enter your Good Mobile number for better results:
         </label>
         <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber"
-          data-cy="phoneNumber" restrictNumbers maxlength="10" [disabled]="!!processingRequest">
+          data-cy="phoneNumber" restrictNumbers minlength="10" maxlength="10">
+        <label class="validation-message" *ngIf="!mdn && phoneNumber.touched">
+          This field is required
+        </label>
+        <label class="validation-message" *ngIf="phoneNumber.hasError('minlength')">
+          Invalid phone number, it should be 10 digits
+        </label>
       </div>
-      <div class="search-mdn">
+      <div class="search-mdn-button">
         <button class="button primary" title="search" value="search" aria-label="search"
-          [uiBlockButton]="processingRequest" [class.disabled]="mdn?.length < 10" [disabled]="mdn?.length < 10"
           (click)="checkMdn(mdn)">Search</button>
       </div>
+    </form>
     </div>
     <div class="questions-part" *ngIf="!!validMDN">
       <div class="questions">

@@ -51,7 +51,7 @@
                 (ngModelChange)="filterTextChanged(filterText)">
             <img class="icon-search" src="assets/icon/faqs-search-icon.svg" alt="Search Icon" />
         </div>
-        <div class="questions-part">
+        <div class="questions-part" [class.top-0]="!!isSupport">
             <app-support *ngIf="!!isSupport"></app-support>
             <div class="questions" *ngIf="!isSupport">
                 <div *ngFor="let qst of firstTenQuestions">
