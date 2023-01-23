@@ -118,11 +118,8 @@ export class FaqsComponent implements OnInit, OnDestroy {
   }
 
   public setCategory(category, categoryId): void {
-    this.pageScrollService.scroll({
-      document,
-      scrollTarget: '.content-section',
-      scrollOffset: 100,
-      speed: 200
+    document.getElementById("titleTarget").scrollIntoView({
+      behavior: "smooth"
     });
     if (!!category && !!categoryId) {
       this.showMore = false;

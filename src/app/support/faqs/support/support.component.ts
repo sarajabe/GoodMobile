@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MetaService } from '../../../../services/meta-service.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { ENDPOINT_URL } from '../../../../environments/environment';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrHelperService } from '../../../../services/toast-helper.service';
 import { SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
+import { NgForm } from '@angular/forms';
+import { AppState } from 'src/app/app.service';
 
 @Component({
   selector: 'app-support',
@@ -17,6 +19,8 @@ import { SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
   styleUrls: ['./support.component.scss']
 })
 export class SupportComponent implements OnDestroy, OnInit {
+  @ViewChild('mdnSearchForm') mdnSearchForm: NgForm;
+
   public questionIdParam: string;
   public mdn: string;
   public network: string;
@@ -24,7 +28,6 @@ export class SupportComponent implements OnDestroy, OnInit {
   public category = 'support';
   public isReload = false;
   public isCopied = false;
-  public processingRequest = false;
   public validMDN = false;
   public collapsed = false;
   private routerSubscription: Subscription;
@@ -46,11 +49,18 @@ export class SupportComponent implements OnDestroy, OnInit {
     private contentful: ContentfulService,
     private toastHelper: ToastrHelperService,
     private router: Router,
-    private clipboardService: ClipboardService) { }
+    private clipboardService: ClipboardService,
+    private appState: AppState) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.pageYOffset;
+    this.pageScrollService.scroll({
+      document,
+      scrollTarget: '#titleTarget',
+      scrollOffset: 0,
+      speed: 500
+    });
     this.questionIdParam = this.router.url.split('/')[5];
     if (!!this.questionIdParam) {
       const hashId = '#' + this.questionIdParam;
@@ -96,20 +106,20 @@ export class SupportComponent implements OnDestroy, OnInit {
   }
 
   public checkMdn(mdn): void {
-    this.processingRequest = true;
-    this.userDeviceService.checkDeviceNetworkByMdn(mdn).then((result) => {
-      this.validMDN = true;
-      this.network = result.network;
-      this.network === 'att' ?
-        this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'att') :
-        this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', 'tmo');
-      this.location.replaceState(`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
-      this.metaService.createCanonicalUrl(`${ENDPOINT_URL}/${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.FAQS}/${this.category}/${this.network}`);
-    }, (error) => {
-      this.validMDN = false;
-      this.toastHelper.showAlert(error.message || error);
-      this.processingRequest = false;
-    });
+    this.mdnSearchForm.form.markAllAsTouched();
+    if (!!this.mdnSearchForm.valid) {
+      this.appState.loading = true;
+      this.userDeviceService.checkDeviceNetworkByMdn(mdn).then((result) => {
+        this.appState.loading = false;
+        this.validMDN = true;
+        this.network = result.network;
+        this.showData(true);
+      }, (error) => {
+        this.appState.loading = false;
+        this.validMDN = false;
+        this.toastHelper.showAlert(error.message || error);
+      });
+    }
   }
 
   public copy(copy, reload, questionId?, carrierID?, answerId?) {
@@ -145,9 +155,11 @@ export class SupportComponent implements OnDestroy, OnInit {
     }
   }
 
-  private showData(): void {
-    this.network = this.router.url.split('/')[4];
-    this.questionIdParam = this.router.url.split('/')[5];
+  private showData(isValidMdn?: boolean): void {
+    if (!isValidMdn) {
+      this.network = this.router.url.split('/')[4];
+      this.questionIdParam = this.router.url.split('/')[5];
+    }
     if (!!this.network) {
       this.validMDN = true;
       this.SupportData = this.contentful.getContentByCarrierId('supportFaqs', this.network).subscribe(questions => {

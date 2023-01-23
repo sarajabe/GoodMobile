@@ -6,18 +6,25 @@
       <img class="icon-search" src="assets/icon/faqs-search-icon.svg" alt="Search Icon" />
     </div>
     <div class="mdn-search-section" *ngIf="!validMDN">
+      <form #mdnSearchForm="ngForm" class="mdn-search-form">
       <div class="enter-mdn">
         <label for="phoneNumber">
           Enter your Good Mobile number for better results:
         </label>
         <input type="tel" required #phoneNumber="ngModel" [(ngModel)]="mdn" name="phoneNumber" id="phoneNumber"
-          data-cy="phoneNumber" restrictNumbers maxlength="10" [disabled]="!!processingRequest">
+          data-cy="phoneNumber" restrictNumbers minlength="10" maxlength="10">
+        <label class="validation-message" *ngIf="!mdn && phoneNumber.touched">
+          This field is required
+        </label>
+        <label class="validation-message" *ngIf="phoneNumber.hasError('minlength')">
+          Invalid phone number, it should be 10 digits
+        </label>
       </div>
-      <div class="search-mdn">
+      <div class="search-mdn-button">
         <button class="button primary" title="search" value="search" aria-label="search"
-          [uiBlockButton]="processingRequest" [class.disabled]="mdn?.length < 10" [disabled]="mdn?.length < 10"
           (click)="checkMdn(mdn)">Search</button>
       </div>
+    </form>
     </div>
     <div class="questions-part" *ngIf="!!validMDN">
       <div class="questions">
@@ -51,9 +58,10 @@
           <p class="text" *ngIf="!showMore"><a (click)="showMore = true">More FAQs</a></p>
           <p class="text" *ngIf="!!showMore"><a (click)="showMore = false; questionId = 'q0'">Less FAQs</a>
         </div>
-        <div class="actions" *ngIf="( innerWidth > 1536 && innerHeight > 840 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
+        <div class="actions" *ngIf="(( innerWidth > 1536 && innerHeight > 840 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
                    innerHeight > 1050 ) || ( ( innerWidth > 639 && innerWidth < 932 ) && innerHeight > 1480 ) ||
-                    ( innerWidth < 640 && innerHeight > 1250 ) && filteredQuestions.length > 0">
+                    ( innerWidth < 640 && innerHeight > 1250 )) && filteredQuestions.length > 0"
+          [class.top-0]="filteredQuestions.length < 11">
           <a (click)="scrollTop()">
             <img *ngIf="innerWidth > 639" src="/assets/icon/hover-button-close.svg" alt="Hover Button Icon"
               onmouseover="this.src='/assets/icon/hover-button-open.svg'"
