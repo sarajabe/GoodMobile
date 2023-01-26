@@ -84,6 +84,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public activePlans: Array<IUserPlan>;
   public appDetails: any = {};
   public showQrCode = false;
+  public createdDate: any;
   private callBackUrl: string;
   private alive = true;
 
@@ -529,6 +530,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         this.ebbService.getActiveInternalApplication(this.userProfile.customerId).then((res) => {
           if (!!res) {
             this.acpAppDetails = res;
+            this.createdDate = res.createdAt;
             this.appState.loading = false;
             this.appStatus = 'In Progress';
             this.showAcpApplicationCard = true;
@@ -556,6 +558,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.ebbService.getInternalApplication(user.customerId, user.ebbId).then((res) => {
                 if (!!res) {
                   this.verificationDetails = res.data;
+                  this.createdDate = res.data.createdAt;
                   this.showNVCard = true;
                   this.nvStatus = this.ACP_STATUS.COMPLETE;
                   this.showSPCard = true;
@@ -584,6 +587,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 this.appState.loading = false;
                 if (!!details) {
                   this.appDetails = details;
+                  this.createdDate = details.createdAt;
                   if (details.status === this.ACP_STATUS.COMPLETE) {
                     this.showSPCard = true;
                     this.hideSuccessBanner();
@@ -601,6 +605,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   }
                   this.showNVCard = true;
                   this.verificationDetails = details;
+                  this.createdDate = details.createdAt;
                   this.nvStatus = this.verificationDetails?.status;
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION) {
                     this.showQrCode = true;

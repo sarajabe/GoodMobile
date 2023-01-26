@@ -1,5 +1,6 @@
 <section class="acp-section col-xl-offset-1">
     <p class="summary-title">ACP Summary</p>
+    <p class="created-date smaller" *ngIf="!!createdDate">Created Date: <span>{{createdDate | date}}</span></p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
         <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
@@ -28,7 +29,7 @@
                 </div>
                 <div class="status-date" *ngIf="!showAlert">
                     <p class="key bottom">Status: <span class="value status">{{appStatus}}</span></p>
-                    <p class="key">Date: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span></p>
+                    <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span></p>
                 </div>
             </div>
         </div>
@@ -67,7 +68,7 @@
                     <p class="key bottom">Status: <span class="value status bold"
                             [class.complete-status]="(!!planActivationStatus && planActivationStatus === 'ENROLLED')">{{ACP_PLAN_STATUS_TITLE[planActivationStatus]}}</span>
                     </p>
-                    <p class="key">Date: <span class="value">{{!!appDetails ? (appDetails?.updatedAt | date) :
+                    <p class="key">Last modified: <span class="value">{{!!appDetails ? (appDetails?.updatedAt | date) :
                             'N/A'}}</span></p>
                 </div>
             </div>
@@ -128,7 +129,7 @@
                 <p class="title">Service Provider<span><img src="assets/icon/green-dot.svg" alt="dot icon"></span></p>
                 <div class="status-date">
                     <p class="key bottom">Status: <span class="value complete-status bold">Complete</span></p>
-                    <p class="key">Date: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
+                    <p class="key">Last modified: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
                             date) : 'N/A'}}</span></p>
                 </div>
             </div>
@@ -161,7 +162,7 @@
                             [class.complete-status]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE)"
                             [class.alert-status]="!!showNVOnHoldSection">{{STATUS_TITLE[nvStatus]}}</span>
                     </p>
-                    <p class="key">Date: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
+                    <p class="key">Last modified: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
                             date) : 'N/A'}}</span></p>
                 </div>
             </div>
