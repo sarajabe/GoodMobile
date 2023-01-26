@@ -1,33 +1,51 @@
-<div class="internal-page-margins terms-container margin-bottom-50">
-    <div class="container">
-        <h1 class="margin-top-30">Good Mobile terms & conditions</h1>
-        <div class="container-flex-row">
-            <div class="display-flex">
-                <div class="col-xl-3 col-12 terms-list-container" id="listContainer" name="listContainer"
-                    #listContainer>
-                    <ul class="terms-list" *ngFor="let cat of categories">
-                        <li *ngFor="let item of cat?.fields?.termsAndSectionCategories">
-                            <a [class.active]="item?.fields?.categoryId === activeCategory"
-                                (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
-                                {{item?.fields?.category}}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xl-8 col-12 col-offset-0 terms-data" id="dataContainer" name="dataContainer">
-                        <div *ngIf="!!isShowFirst">
-                            <p id="rich-text-desc-1"></p>
-                            <div *ngIf="!isShowSecond && !!isDesc2Exist" class="text-right">
-                                <a class="next-btn btn-arrow" (click)="goSecond()"></a>
-                            </div>
-                        </div>
-                        <div *ngIf="!!isShowSecond && !!isDesc2Exist">
-                            <p id ="rich-text-desc-2"></p>
-                            <div class="text-right">
-                                <a class="prev-btn btn-arrow" (click)="backFirst()"></a>
-                            </div>
-                        </div>
-                </div>
+<div class="terms-and-conditions-page">
+    <div class="top-banner">
+        <h1 class="banner-head">Terms and Conditions</h1>
+        <p class="banner-subtitle">Revised February 5, 2020.</p>
+        <div *ngIf="innerWidth < 1000" class="categories-container" (click)="showCategories()">
+          <p class="text">Good Mobile Terms</p>
+          <img class="img" src="/assets/icon/terms-arrow.svg" alt="arrow">
+        </div>
+        <div *ngIf="!!showCategoriesResponsiveList && innerWidth < 1000" class="categories-list" id="listContainer" name="listContainer">
+            <div class="terms-list" *ngFor="let cat of categories">
+                <div *ngFor="let item of cat?.fields?.termsAndSectionCategories; let i =index" class="category">
+                    <a [class.active]="item?.fields?.categoryId === activeCategory"
+                        (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
+                        {{item?.fields?.category}}</a>
+                    <p class="active-border" *ngIf="item?.fields?.categoryId === activeCategory"></p>    
+                    <hr class="list-border" *ngIf="i !== cat?.fields?.termsAndSectionCategories?.length - 1">    
+                </div>    
             </div>
         </div>
     </div>
+    <div class="flex-container">
+    <div class="sidebar-banner" *ngIf="innerWidth > 999" id="listContainer" name="listContainer">
+        <div class="terms-list" *ngFor="let cat of categories">
+            <div *ngFor="let item of cat?.fields?.termsAndSectionCategories; let i =index" class="category">
+                <a [class.active]="item?.fields?.categoryId === activeCategory"
+                    (click)="setCategory(item?.fields?.category, item?.fields?.categoryId)">
+                    {{item?.fields?.category}}</a>
+                <p class="active-border" *ngIf="item?.fields?.categoryId === activeCategory"></p>    
+                <hr class="list-border" *ngIf="i !== cat?.fields?.termsAndSectionCategories?.length - 1">    
+            </div>    
+        </div>
+    </div>
+    <div class="content" id="dataContainer" name="dataContainer" [class.page-section]="innerWidth < 1000" [class.blur]="!!showCategoriesResponsiveList && innerWidth < 1000">
+        <h2 class="category-title">{{categoryTitle}}</h2>
+        <p id="rich-text-desc-1" class="smaller"></p>
+        <p id ="rich-text-desc-2" class="smaller" *ngIf="!!isDesc2Exist"></p>
+    </div>
+</div>
+<div class="actions" *ngIf="(( innerWidth > 1536 && innerHeight > 733 ) || ( ( innerWidth > 931 && innerWidth < 1537 ) &&
+    innerHeight > 751 ) || ( ( innerWidth > 639 && innerWidth < 932 ) && innerHeight > 266 ) ||
+     ( innerWidth < 640 && innerHeight > 244 )) ">
+   <a (click)="scrollTop()">
+       <img *ngIf="innerWidth > 639" src="/assets/icon/hover-button-close.svg" alt="Hover Button Icon"
+           onmouseover="this.src='/assets/icon/hover-button-open.svg'"
+           onmouseout="this.src='/assets/icon/hover-button-close.svg'">
+       <img *ngIf="innerWidth < 640" src="/assets/icon/hover-button-close-mobile.svg"
+           alt="Hover Button Icon" onmouseover="this.src='/assets/icon/hover-button-open-mobile.svg'"
+           onmouseout="this.src='/assets/icon/hover-button-close-mobile.svg'">
+   </a>
+</div>
 </div>
