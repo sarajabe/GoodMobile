@@ -243,6 +243,10 @@
           id="phoneNumber" data-cy="phoneNumber" (input)="checkPhoneNumber()" />
         <span>Phone Number</span>
       </label>
+      <label class="validation-message" *ngIf="personalInfoForm.controls.phoneNumber.touched && personalInfoForm.controls.phoneNumber.hasError('required')"
+      id="invalid-phone-msg" data-cy="invalid-phone-msg">
+      Phone Number is required
+    </label>
       <label class="validation-message" *ngIf="personalInfoForm.controls.phoneNumber.hasError('minlength')"
         id="invalid-phone-msg" data-cy="invalid-phone-msg">
         Phone Number must have 10 digits
