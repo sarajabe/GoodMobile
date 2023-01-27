@@ -136,6 +136,11 @@ class ShippingPage {
         cy.get('[data-cy="saveBtn"]').click({force:true});
         return this;
     };
-
+    clickOnHomeDelivery(){
+        cy.get('[data-cy="homeDelivery"]').click();
+    }
+    clickOnStorePickup(){
+        cy.get('[data-cy="storePickup"]').click();
+    }
 };
 export default new ShippingPage();
