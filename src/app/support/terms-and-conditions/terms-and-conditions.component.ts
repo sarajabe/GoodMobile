@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ContentfulService } from '../../../services/contentful.service';
 import { SUPPORT_ROUTE_URLS } from '../../app.routes.names';
 import { Location } from '@angular/common';
@@ -19,11 +19,15 @@ export class TermsAndConditionsComponent implements OnInit, OnDestroy {
   public info: Subscription;
   public routerSubscription: Subscription;
   public isDesc2Exist = false;
-  public isShowFirst = true;
-  public isShowSecond = false;
+  public categoryTitle;
+  public innerWidth: any;
+  public innerHeight: any;
+  public showCategoriesResponsiveList = false;
   constructor(private contentFulService: ContentfulService, private location: Location, private metaService: MetaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.innerWidth = document.documentElement.clientWidth;
+    this.innerHeight = window.pageYOffset;
     this.contentFulService.getContent('termsAndConditionsSection').subscribe(result => {
       if (!!result) {
         this.categories = result;
@@ -36,6 +40,11 @@ export class TermsAndConditionsComponent implements OnInit, OnDestroy {
             this.targetCategory = this.categories[0].fields.termsAndSectionCategories[0].fields.categoryId;
             this.activeCategory = this.targetCategory;
           }
+          this.contentFulService.getCategoryTitle('termsAndConditions',this.activeCategory).subscribe(res => {
+            if(!!res) {
+              this.categoryTitle = res?.category
+            }
+          })
           this.info = this.contentFulService.getQuestionsByCategoryId('termsAndConditions', this.targetCategory).subscribe((result) => {
             this.contentFulService.getDescriptions('termsAndConditions', 'rich-text-desc-1', this.targetCategory, 'description');
             this.isDesc2Exist = false;
@@ -56,11 +65,21 @@ export class TermsAndConditionsComponent implements OnInit, OnDestroy {
       this.info.unsubscribe();
     }
   }
+  public showCategories(): void {
+   this.showCategoriesResponsiveList = true;
+  }
   public setCategory(category, categoryId): void {
     if (!!category && !!categoryId) {
       this.targetCategory = categoryId;
+      this.showCategoriesResponsiveList = false;
       if (category !== this.activeCategory) {
         this.activeCategory = this.targetCategory;
+        this.contentFulService.getCategoryTitle('termsAndConditions',this.activeCategory).subscribe(res => {
+          if(!!res) {
+            this.categoryTitle = res?.category
+
+          }
+        })
         this.info = this.contentFulService.getQuestionsByCategoryId('termsAndConditions', this.targetCategory).subscribe((result) => {
           this.contentFulService.getDescriptions('termsAndConditions', 'rich-text-desc-1', this.targetCategory, 'description');
           this.isDesc2Exist = false;
@@ -74,17 +93,15 @@ export class TermsAndConditionsComponent implements OnInit, OnDestroy {
       }
     }
   }
-  public goSecond(): void {
-    this.contentFulService.getDescriptions('termsAndConditions', 'rich-text-desc-2', this.targetCategory, 'description2');
-    this.isShowFirst = false;
-    this.isShowSecond = true;
-    window.scroll(0, 0);
+  public scrollTop(): void {
+    window.scrollTo(0, 0);
   }
-
-  public backFirst(): void {
-    this.contentFulService.getDescriptions('termsAndConditions', 'rich-text-desc-1', this.targetCategory, 'description');
-    this.isShowFirst = true;
-    this.isShowSecond = false;
-    window.scroll(0, 0);
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+     this.innerWidth = document.documentElement.clientWidth;
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.innerHeight = window.pageYOffset;
   }
 }
