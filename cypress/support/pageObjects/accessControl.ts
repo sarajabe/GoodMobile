@@ -22,14 +22,14 @@ class AccessControl {
                 return this;
         };
         logIn(email, password) {
-                cy.get('[data-cy=loginEmail]').clear();
-                cy.get('[data-cy=loginEmail]').type(email);
-                cy.get('#loginPassword').clear();
-                cy.get('#loginPassword').type(password);
+                cy.get('[data-cy="loginEmail"]').clear();
+                cy.get('[data-cy="loginEmail"]').type(email);
+                cy.get('[data-cy="loginPassword"]').clear();
+                cy.get('[data-cy="loginPassword"]').type(password);
                 return this;
         };
         logInButton(){
-                cy.get('[data-cy=sign-in-button]').click();
+                cy.get('[data-cy="sign-in-button"]').click();
                 return this;
         };
         clickOnSignUpLink(){
@@ -46,8 +46,8 @@ class AccessControl {
         };
         logoutFromAccount() {
                 cy.get('[data-cy="account-menu-header"]').click({force: true});
-                cy.get('#logout-header').click({force: true});
-                cy.title().should('eq','Good2Go Mobile | Prepaid Cell Phone Plans');
+                cy.get('[data-cy="logout-header"]').click({force: true});
+                cy.title().should('eq','FREE Unlimited Cell Phone Plans | Good Mobile');
                 return this;
         };
         logoutFromAccountAfterBeingInACPApp() {

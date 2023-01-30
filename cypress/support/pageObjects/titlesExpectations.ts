@@ -99,7 +99,7 @@ class TitleExpectations {
         return this;
     };
     goToLogInPage () {
-        cy.title().should('eq', 'Login To Your Good2Go Mobile Account | Good2Go Mobile');
+        cy.title().should('eq', 'Login To Your Good Mobile Account | Good Mobile');
         return this;
     };
     goToACPSignUpPage () {
@@ -118,10 +118,13 @@ class TitleExpectations {
         cy.title().should('eq', 'Good2Go Mobile test | Prepaid Cell Phone Plans');
         return this;
     };
-    goToPlansG2GPage(){
-        cy.title().should('eq', 'Unlimited Talk & Text 4G LTE Cell Phone Plans | Good2Go Mobile');
+    goToPlansGMPage(){
+        cy.title().should('eq', 'Unlimited Talk & Text 4G LTE Cell Phone Plans | Good Mobile');
         return this;
-
+    };
+    goToReviewCartPage () {
+        cy.title().should('eq', 'Good Mobile test');
+        return this;
     };
     goToServiceCoverageCheckPage(){
         cy.title().should('eq', 'Good2Go Mobile| Cells Phones | Check Coverage');
@@ -129,7 +132,7 @@ class TitleExpectations {
 
     };
     goToHomePage () {
-        cy.title().should('eq', 'Good2Go Mobile | Prepaid Cell Phone Plans');
+        cy.title().should('eq', 'FREE Unlimited Cell Phone Plans | Good Mobile');
         return this;
     };
     goToPlansPage () {

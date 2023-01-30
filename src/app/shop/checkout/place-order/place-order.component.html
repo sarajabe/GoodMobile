@@ -46,7 +46,7 @@
                   <div class="details summary">
                     <div class="detail">
                       <p class="smaller">Subtotal</p>
-                      <p class="smaller"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
+                      <p class="smaller" data-cy="subtotal"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
                     </div>
                     <div class="detail">
                       <p class="smaller text-orange">Discount total</p>
@@ -151,7 +151,7 @@
                       <p class="bold">{{userCart?.promoCodes[0]?.description}}</p>
                       <p class="bold">Code: <span>{{userCart?.promoCodes[0]?.code}}</span></p>
                     </div>
-                    <p class="quantity">Quantity: {{userCart?.quantity}}</p>
+                    <p class="quantity" data-cy="planQuantity">Quantity: {{userCart?.quantity}}</p>
                     <div class="actions">
                       <!-- <a class="link first" (click)="goToPlans(true)"
                         *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a> -->
@@ -311,7 +311,7 @@
               <div class="delivery-methods-section">
                 <img [src]="!!isStorePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon">
                 <div class="details">
-                  <p class="smaller title">{{!!isStorePickup? 'Store Pickup': 'Home Delivery'}}</p>
+                  <p class="smaller title" data-cy="deliveryMethod">{{!!isStorePickup? 'Store Pickup': 'Home Delivery'}}</p>
                   <div class="sub-content-show address" *ngIf="!!shippingAddress?.address1">
                     <p class="desc">{{ !!shippingAddress?.name ?  shippingAddress?.name : shippingAddress?.alias}}, {{ shippingAddress?.address1 }}</p>
                     <p class="desc" *ngIf="!!shippingAddress?.address2">{{ shippingAddress?.address2 }}</p>
@@ -386,7 +386,7 @@
                     <div class="details">
                       <div class="details-flex">
                         <div class="flex">
-                          <p class="title smaller primary-font-bold">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
+                          <p class="title smaller primary-font-bold" data-cy="cardBrand">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
                           <p class="desc smaller">Ending in {{ !!cardInfo?.last4 ? cardInfo?.last4 : (cardInfo?.cardNumber | slice:-4) }}</p>
                         </div>
                         <div class="amount">

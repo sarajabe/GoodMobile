@@ -153,7 +153,7 @@ class HomePage {
         return this;
     };
     clickOnShopMenu() {
-        cy.get('.label-section > [data-cy="shopMenu"]').click();
+        cy.get(':nth-child(2) > [data-cy="shopMenu"]').click();
         return this;
     };
     clickOnProfileSetting() {
