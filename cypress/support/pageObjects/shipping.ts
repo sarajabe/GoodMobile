@@ -62,7 +62,7 @@ class ShippingPage {
         return this;
     };
     chooseVerifiedAddress() {
-        cy.get(':nth-child(2) > [data-cy="action-button"]').click({ force: true });
+        cy.get('.transparent').click({ force: true });
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
         return this;
     };
@@ -136,6 +136,11 @@ class ShippingPage {
         cy.get('[data-cy="saveBtn"]').click({force:true});
         return this;
     };
-
+    clickOnHomeDelivery(){
+        cy.get('[data-cy="homeDelivery"]').click();
+    }
+    clickOnStorePickup(){
+        cy.get('[data-cy="storePickup"]').click();
+    }
 };
 export default new ShippingPage();

@@ -95,6 +95,14 @@ export const SHIPPING = {
         STATE: 'va',
         POSTAL: ' 22041'
     },
+    ADDRESS_HAS_SPECIAL_CHARACTERS:{
+        NAME: 'Maroon Haddad',
+        ADDRESS: '12300 Bermuda Road',
+        SUITE_NO: '24',
+        CITY: '@Henderson',
+        STATE: '@NV',
+        POSTAL: '@89044'
+    },
     ALLL_BEGIN_WITH_SPACE:{
         NAME: ' example',
         ADDRESS: ' 1001 Filbert Street',

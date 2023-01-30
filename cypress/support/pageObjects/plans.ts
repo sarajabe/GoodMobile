@@ -91,8 +91,9 @@ class Plans {
         cy.get('#select-GOOD2GO-10GB-40').click();
         return this;
     };
-    
-
-
+    clickOnCartIcon() {
+        cy.get('[data-cy="clickOnCartIcon"]').click();
+        return this;
+    };
 };
 export default new Plans();

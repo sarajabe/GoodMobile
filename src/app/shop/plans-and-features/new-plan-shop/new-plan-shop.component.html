@@ -48,7 +48,7 @@
       </div>
       <div class="actions">
         <a (click)="addPlanToCart(plan, i)">
-          <img *ngIf="innerWidth > 1024 && !plan?.ebb" src="/assets/icon/base-cart-icon.svg" alt="cart-icon"
+          <img *ngIf="innerWidth > 1024 && !plan?.ebb" src="/assets/icon/base-cart-icon.svg"  data-cy="clickOnCartIcon" alt="cart-icon"
             onmouseover="this.src='/assets/icon/cart-long-button.svg'"
             onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
           <img *ngIf="innerWidth > 1024 && !!plan?.ebb" src="/assets/icon/base-ebb-button.svg" alt="cart-icon"
