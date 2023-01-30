@@ -45,7 +45,7 @@
                                         <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
                                         </p>
                                     </div>
-                                    <p class="price">
+                                    <p class="price" data-cy="planPrice">
                                         ${{!!userCart?.basePlan?.specialPromotion && userCart?.cartType ==
                                         CART_TYPES.NEW_PLAN ? userCart?.basePlan?.specialPromotion?.promotionCycles
                                         * userCart?.basePlan?.price : (!!userCart?.basePlan?.subscriptionCycles ?
