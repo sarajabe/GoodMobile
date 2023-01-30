@@ -22,14 +22,14 @@ class AccessControl {
                 return this;
         };
         logIn(email, password) {
-                cy.get('[data-cy=loginEmail]').clear();
-                cy.get('[data-cy=loginEmail]').type(email);
-                cy.get('#loginPassword').clear();
-                cy.get('#loginPassword').type(password);
+                cy.get('[data-cy="loginEmail"]').clear();
+                cy.get('[data-cy="loginEmail"]').type(email);
+                cy.get('[data-cy="loginPassword"]').clear();
+                cy.get('[data-cy="loginPassword"]').type(password);
                 return this;
         };
         logInButton(){
-                cy.get('[data-cy=sign-in-button]').click();
+                cy.get('[data-cy="sign-in-button"]').click();
                 return this;
         };
         clickOnSignUpLink(){
