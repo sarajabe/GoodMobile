@@ -414,7 +414,7 @@
             </div>
             <label class="sub-label" *ngIf="!!showBillingAddress">Billing Address</label>
             <div class="sub-content" *ngIf="!!showBillingAddress">
-              <p class="desc">{{ cardInfo?.fullName }}, {{ cardInfo?.address1 }}</p>
+              <p class="desc" data-cy="billingAddressInfo">{{ cardInfo?.fullName }}, {{ cardInfo?.address1 }}</p>
               <p class="desc" *ngIf="!!cardInfo?.address2">{{ cardInfo?.address2 }}</p>
               <p class="desc last">{{ cardInfo?.city }}, {{ cardInfo?.state }} {{ cardInfo?.postalCode }}</p>
             </div>
