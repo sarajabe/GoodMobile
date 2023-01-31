@@ -95,7 +95,5 @@ class Plans {
         cy.get('[data-cy="clickOnCartIcon"]').click();
         return this;
     };
-
-
 };
 export default new Plans();

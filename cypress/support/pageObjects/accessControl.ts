@@ -1,16 +1,16 @@
 class AccessControl {
 
         signUp(firstName, lastName, email, password, confirmPassword) {
-                cy.get('[data-cy=firstName]').clear();
-                cy.get('[data-cy=lastName]').clear();
-                cy.get('[data-cy=email]').clear();
-                cy.get('[data-cy=password]').clear();
-                cy.get('[data-cy=confirmPassword]').clear();
-                cy.get('[data-cy=firstName]').type(firstName);
-                cy.get('[data-cy=lastName]').type(lastName);
-                cy.get('[data-cy=email]').type(email);
-                cy.get('[data-cy=password]').type(password);
-                cy.get('[data-cy=confirmPassword]').type(confirmPassword);
+                cy.get('[data-cy="firstName"]').clear();
+                cy.get('[data-cy="lastName"]').clear();
+                cy.get('[data-cy="email"]').clear();
+                cy.get('[data-cy="password"]').clear();
+                cy.get('[data-cy="confirmPassword"]').clear();
+                cy.get('[data-cy="firstName"]').type(firstName);
+                cy.get('[data-cy="lastName"]').type(lastName);
+                cy.get('[data-cy="email"]').type(email);
+                cy.get('[data-cy="password"]').type(password);
+                cy.get('[data-cy="confirmPassword"]').type(confirmPassword);
                 return this;
         };
         existingCustomerLogin(email, password) {

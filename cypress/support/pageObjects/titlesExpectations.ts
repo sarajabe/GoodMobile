@@ -126,6 +126,14 @@ class TitleExpectations {
         cy.title().should('eq', 'Good Mobile test');
         return this;
     };
+    goToPlansGMPage(){
+        cy.title().should('eq', 'Unlimited Talk & Text 4G LTE Cell Phone Plans | Good Mobile');
+        return this;
+    };
+    goToReviewCartPage () {
+        cy.title().should('eq', 'Good Mobile test');
+        return this;
+    };
     goToServiceCoverageCheckPage(){
         cy.title().should('eq', 'Good2Go Mobile| Cells Phones | Check Coverage');
         return this;
@@ -318,7 +326,7 @@ class TitleExpectations {
         return this;
     };
     goToSignUpPage () {
-        cy.title().should('eq', `Sign Up | Good2Go Mobile`);
+        cy.title().should('eq', `Sign Up | Good Mobile`);
         return this;
     };
 };

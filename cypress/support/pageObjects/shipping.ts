@@ -62,7 +62,7 @@ class ShippingPage {
         return this;
     };
     chooseVerifiedAddress() {
-        cy.get(':nth-child(2) > [data-cy="action-button"]').click({ force: true });
+        cy.get('.transparent').click({ force: true });
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
         return this;
     };
