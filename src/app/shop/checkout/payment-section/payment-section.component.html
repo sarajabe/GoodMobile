@@ -118,7 +118,7 @@
                 <img class="icon" src="assets/icon/credit.svg" />
                 <label class="validation-message" data-cy="requiredCardNoMsg"
                   *ngIf="paymentInfoForm.controls.cardNumber.touched && paymentInfoForm.controls.cardNumber.hasError('required')">Card number is required. </label>
-                <label class="validation-message"
+                <label class="validation-message" data-cy="invalidCardNoMsg"
                   *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid && paymentInfoForm.controls.cardNumber.value">Invalid
                   Credit Card Number. </label>
               </fieldset>
