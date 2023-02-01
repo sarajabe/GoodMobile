@@ -8,7 +8,7 @@
     align-items: center;
     padding: 0;
 
-    .search-part {
+    .search-section {
       position: relative;
       max-width: 474px;
       width: 100%;
@@ -30,35 +30,63 @@
         right: 0;
         top: 0;
       }
-    }
 
-    .mdn-search-section {
-      .mdn-search-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
+      .other-mdn {
+        margin-top: 32px;
+        text-align: center;
 
-        .enter-mdn {
-          label {
-            @media (max-width: $phablet-min-width-minus) {
-              font-size: rem-calc(14px);
-            }
+        @media (max-width: $phablet-min-width-minus) {
+          margin-top: 24px;
+        }
+
+        button {
+          font-size: rem-calc(18px);
+          line-height: 18px;
+          padding: 0;
+
+          @media (max-width: $phablet-min-width-minus) {
+            font-size: rem-calc(16px);
+            line-height: 16px;
+          }
+        }
+      }
+
+      .enter-mdn {
+        .smaller {
+          text-align: center;
+          margin-bottom: 16px;
+
+          @media (max-width: $phablet-min-width-minus) {
+            margin-bottom: 12px;
+          }
+        }
+
+        .position {
+          position: relative;
+          max-width: 404px;
+          margin: 0 auto;
+
+          @media (max-width: $phablet-min-width-minus) {
+            max-width: 288px;
           }
 
-          input {
-            @media (#{$larger-than-desktop}) {
-              width: 565px;
-            }
+          .icon-search {
+            cursor: pointer;
+          }
+        }
 
-            @media (min-width: $phablet-min-width) {
-              width: 400px;
-            }
+        input {
+          @media (#{$larger-than-desktop}) {
+            width: 565px;
           }
 
-          .validation-message {
-            margin-bottom: 0;
+          @media (min-width: $phablet-min-width) {
+            width: 400px;
           }
+        }
+
+        .validation-message {
+          margin-bottom: 0;
         }
       }
     }
