@@ -1,4 +1,5 @@
 import { CONSTANT } from '../../fixtures/constants/index';
+import { PageObjects } from '../../support/pageObjects';
 
 class PurchasedPlans {
 
@@ -40,8 +41,37 @@ class PurchasedPlans {
     clickOnActivatePlanButton() {
         cy.get(':nth-child(1) > .button').click();
         return this;
-};
-
+    };
+    purchasePlanWithStorePickupExistingCustomer(){
+        PageObjects.HomePage.clickOnShopMenu();
+        PageObjects.TitleExpectations.goToPlansGMPage();
+        PageObjects.Plans.clickOnCartIcon();
+        PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
+        PageObjects.Coverage.enterAddressRefBothCoverages();
+        PageObjects.Coverage.clickOnCheckCoverageBtn();
+        PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
+        cy.get('.banner-content > .title').should('have.text', ' Great News!');
+        PageObjects.Coverage.clickOnNextStepBtn();
+        PageObjects.Compatibility.clickOnSkipForNowLink();
+        PageObjects.Compatibility.clickOnYesFromThePopUp();
+        PageObjects.TitleExpectations.goToReviewCartPage();
+        cy.get('.head-title').should('have.text', 'Review your cart');
+        PageObjects.ReviewCart.clickOnCheckoutBtn();
+        PageObjects.TitleExpectations.goToShippingPage();
+        PageObjects.ShippingPage.clickOnStorePickup();
+        cy.get('#barCodeVal').click();
+        PageObjects.ShippingPage.clickOnNextBtn();
+        PageObjects.ShippingPage.clickOnNextBtn();
+        PageObjects.TitleExpectations.goToPaymentPage();
+        PageObjects.Payment.selectSecondPaymentMethod();
+        PageObjects.Payment.clickOnNextBtn();
+        PageObjects.TitleExpectations.goToPlaceYourOrderPage();
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup');
+        PageObjects.PlaceOrder.clickOnSubmitBtn();
+        PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.TitleExpectations.goToPurchasedPlansPage();
+    }
     
     
 };

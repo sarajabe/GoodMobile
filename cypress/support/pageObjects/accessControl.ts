@@ -1,5 +1,6 @@
+import { PageObjects } from '../../support/pageObjects';
+import { CONSTANT } from '../../fixtures/constants/index';
 class AccessControl {
-
         signUp(firstName, lastName, email, password, confirmPassword) {
                 cy.get('[data-cy="firstName"]').clear();
                 cy.get('[data-cy="lastName"]').clear();
@@ -60,6 +61,13 @@ class AccessControl {
                 cy.get('[data-cy="continueSignUpBtn"]').click();
                 return this;
         };
+        successfulLogin(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_USER.EMAIL, CONSTANT.ACCESS.TEST_USER.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+        }
 
 }
 export default new AccessControl();
