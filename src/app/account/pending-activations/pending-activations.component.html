@@ -33,8 +33,8 @@
                                 src="assets/icon/plan_thumbnail.svg"
                                 alt="Good Mobile plan">
                             <div class="details">
-                                <p class="smaller primary-font-bold">{{pendingPlan?.basePlan?.subtitle}}</p>
-                                <p class="smaller primary-font" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
+                                <p class="smaller primary-font-bold" data-cy="pendingPlans">{{pendingPlan?.basePlan?.subtitle}}</p>
+                                <p class="smaller primary-font" data-cy="planTitle" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
                                     {{!!pendingPlan?.basePlan?.ebb ? 'Affordable Connectivity Program Plan' :
                                     (!!pendingPlan?.basePlan?.specialPromotion &&
                                     !!pendingPlan?.basePlan?.specialPromotion?.promotionData ?
@@ -74,7 +74,7 @@
                                 src="assets/icon/sim-image.svg"
                                 alt="good Mobile SIM">
                             <div class="details">
-                                <p class="smaller primary-font-bold">SIM Card</p>
+                                <p class="smaller primary-font-bold" data-cy="simType">SIM Card</p>
                                 <p class="smaller primary-font-bold">(New SIM)</p>
                             </div>
                         </div>
@@ -84,8 +84,8 @@
                     </div>
                     <hr class="border" *ngIf="!!pendingPlan?.storePickup">
                     <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup">
-                        <p class="smaller">In-store Pickup Barcode</p>
-                        <ngx-barcode
+                        <p class="smaller" data-cy="pickupBarCode">In-store Pickup Barcode</p>
+                        <ngx-barcode data-cy="barcode"
                             [bc-value]="barCodeValues"
                             [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
                         <div class="info-banner default-background specific">
@@ -172,7 +172,7 @@
                                 <div class="details-side" [class.center]="!!pendingPlan?.storePickup">
                                     <img [src]="!!pendingPlan?.storePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon" class="delivery-img">
                                     <div class="delivery-details">
-                                        <p class="smaller title">{{!!pendingPlan?.storePickup? 'Store Pickup': 'Home Delivery'}}</p>
+                                        <p class="smaller title" data-cy="deliveryOption">{{!!pendingPlan?.storePickup? 'Store Pickup': 'Home Delivery'}}</p>
                                         <div class="details" *ngIf="!!pendingPlan?.shippingAddress">
                                             <p class="smaller desc"><b>{{!!currentShippingAddress?.name ?
                                                     currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>
