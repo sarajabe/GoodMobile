@@ -1,3 +1,5 @@
+import { PageObjects } from '../../support/pageObjects';
+import { CONSTANT } from '../../fixtures/constants/index';
 class Acp {
      clickOnAccountSummaryFromPopUp() {
           cy.get('[data-cy="action-button"]').click();
@@ -428,6 +430,27 @@ class Acp {
           cy.get('[data-cy="forthCheck"]').type('BG');
           return this;
      };
-
+     purchasePlanWithStorePickup(){
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('.button').click();
+          cy.get('.title').should('have.text','ACP Enrollment');
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.TMO_ONLY.TMO1);
+          PageObjects.Compatibility.enterAddressRef();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          cy.get('.head-note').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.ShippingPage.clickOnStorePickup();
+          cy.get('[data-cy="barCodeVal"]').click();
+          cy.get('[data-cy="nextBtn"]').click();
+          cy.get('.top-desc').should('have.text','ACP Application successful!');
+          cy.get('[data-cy="continueBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchasedPlansPage();
+          cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
+          cy.get('[data-cy="pickupBarCode"]').should('have.text','In-store Pickup Barcode');
+          cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
+     }
 };
 export default new Acp();

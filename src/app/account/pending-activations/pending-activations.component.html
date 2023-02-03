@@ -34,7 +34,7 @@
                                 alt="Good Mobile plan">
                             <div class="details">
                                 <p class="smaller primary-font-bold">{{pendingPlan?.basePlan?.subtitle}}</p>
-                                <p class="smaller primary-font" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
+                                <p class="smaller primary-font" data-cy="planTitle" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
                                     {{!!pendingPlan?.basePlan?.ebb ? 'Affordable Connectivity Program Plan' :
                                     (!!pendingPlan?.basePlan?.specialPromotion &&
                                     !!pendingPlan?.basePlan?.specialPromotion?.promotionData ?
@@ -84,7 +84,7 @@
                     </div>
                     <hr class="border" *ngIf="!!pendingPlan?.storePickup">
                     <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup">
-                        <p class="smaller">In-store Pickup Barcode</p>
+                        <p class="smaller" data-cy="pickupBarCode">In-store Pickup Barcode</p>
                         <ngx-barcode
                             [bc-value]="barCodeValues"
                             [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
@@ -172,7 +172,7 @@
                                 <div class="details-side" [class.center]="!!pendingPlan?.storePickup">
                                     <img [src]="!!pendingPlan?.storePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon" class="delivery-img">
                                     <div class="delivery-details">
-                                        <p class="smaller title">{{!!pendingPlan?.storePickup? 'Store Pickup': 'Home Delivery'}}</p>
+                                        <p class="smaller title" data-cy="deliveryOption">{{!!pendingPlan?.storePickup? 'Store Pickup': 'Home Delivery'}}</p>
                                         <div class="details" *ngIf="!!pendingPlan?.shippingAddress">
                                             <p class="smaller desc"><b>{{!!currentShippingAddress?.name ?
                                                     currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>

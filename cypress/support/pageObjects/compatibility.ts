@@ -47,7 +47,7 @@ class Compatibility {
         return this;
     };
     enterIMEInumber(imei) {
-        cy.get('[data-cy=equipmentNumber]').clear();
+        cy.get('[data-cy=equipmentNumber]').click();
         cy.get('[data-cy=equipmentNumber]').type(imei);
         return this;
     };
