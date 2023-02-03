@@ -64,7 +64,7 @@
           <li class="responsive-item" *ngIf="!isLoggedIn">
             <img class="item-icon" src="assets/icon/account.svg" alt="sign in" />
             <a [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.LOGIN]" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">Sign in
+              [routerLinkActiveOptions]="{exact: true}" (click)="showResponsiveMenu = false;toggleShowing()">Sign In
             </a>
           </li>
           <li class="responsive-item">
@@ -124,7 +124,7 @@
       <ul class="login-list desktop">
         <li class="login-option" *ngIf="!isLoggedIn">
           <a [routerLink]="[LOGIN_ROUTE_URLS.BASE+'/'+LOGIN_ROUTE_URLS.LOGIN]" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}" (click)="menuShowing = false;"> sign in </a>
+            [routerLinkActiveOptions]="{exact: true}" (click)="menuShowing = false;"> Sign In </a>
         </li>
         <li class="login-option" *ngIf="!!isLoggedIn">
           <div class="label-section">
