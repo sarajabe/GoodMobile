@@ -7,7 +7,7 @@ describe('Shop new plan with store pickup', () => {
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should go throw the a successful login', () => {
+    it('Should login successfully', () => {
         PageObjects.AccessControl.successfulLogin();
     });
     it('Should purchase plan with store pickup', () => {

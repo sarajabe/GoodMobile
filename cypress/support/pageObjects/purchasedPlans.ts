@@ -47,11 +47,21 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToPlansGMPage();
         PageObjects.Plans.clickOnCartIcon();
         PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
+        PageObjects.Coverage.clickOnCheckCoverageBtn();
+        cy.get('#required-address-msg').should('have.text','Address is a Required Field');
+        PageObjects.Coverage.addressRefNotSelectedFromList();
+        PageObjects.Coverage.clickOnCheckCoverageBtn();
+        cy.get('#required-address-msg').should('have.text','Please select address from the autocomplete list');
+        cy.get('[data-cy="addressRef"]').clear();
         PageObjects.Coverage.enterAddressRefBothCoverages();
         PageObjects.Coverage.clickOnCheckCoverageBtn();
         PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
         cy.get('.banner-content > .title').should('have.text', ' Great News!');
         PageObjects.Coverage.clickOnNextStepBtn();
+        PageObjects.Compatibility.clickOnCheckYourDevice();
+        cy.get('#required-equipment-msg').should('have.text',' This field is required ');
+        PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+        cy.get('[data-cy="invalid-equipmentNumber-msg"]').should('have.text', ' Invalid serial, it should be between 11-18 digits ');
         PageObjects.Compatibility.clickOnSkipForNowLink();
         PageObjects.Compatibility.clickOnYesFromThePopUp();
         PageObjects.TitleExpectations.goToReviewCartPage();
@@ -59,11 +69,13 @@ class PurchasedPlans {
         PageObjects.ReviewCart.clickOnCheckoutBtn();
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnStorePickup();
+        // cy.get('[data-cy="nextBtn"]').should("not.be.visible");
         cy.get('#barCodeVal').click();
         PageObjects.ShippingPage.clickOnNextBtn();
-        PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
-        PageObjects.Payment.selectSecondPaymentMethod();
+        PageObjects.ShippingPage.clickOnNextBtn();
+        cy.get('[data-cy="paymentRequired"]').should('have.text', 'Note: Please make sure you specify the payment method to complete your request.');
+        PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup');
@@ -72,7 +84,5 @@ class PurchasedPlans {
         cy.get('[data-cy="purchasedPlansBtn"]').click();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     }
-    
-    
 };
 export default new PurchasedPlans();
