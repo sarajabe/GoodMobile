@@ -69,7 +69,6 @@ class PurchasedPlans {
         PageObjects.ReviewCart.clickOnCheckoutBtn();
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnStorePickup();
-        // cy.get('[data-cy="nextBtn"]').should("not.be.visible");
         cy.get('#barCodeVal').click();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
