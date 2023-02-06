@@ -68,19 +68,12 @@
       </div>
     </div>
   </section>
-  <section class="last-section">
-    <div class="container-flex">
-      <div class="container-flex-row flex-center">
-        <div class="description">
-          <span>Affordable phone plans shouldn’t mean sacrifice.</span><br>
-          <span>For the best cell phone deals, try Good Mobile</span>
-        </div>
-        <div class="col-md-3">
-          <button class="button primary" data-cy="goToPlans"
-            [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">Go
-            to plans</button>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="plans-section">
+    <p class="label">PREMIUM WIRLESS</p>
+    <h2 class="header-color">Cheap Phone Plans Shouldn’t Mean Sacrifice.</h2>
+    <h5 class="desc">For the best cell phone deals, try Good Mobile.</h5>
+    <button class="button primary" data-cy="goToPlans"
+      [routerLink]="SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN">Go
+      to Plans</button>
+</div>
 </div>

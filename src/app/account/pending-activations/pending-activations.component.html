@@ -33,7 +33,7 @@
                                 src="assets/icon/plan_thumbnail.svg"
                                 alt="Good Mobile plan">
                             <div class="details">
-                                <p class="smaller primary-font-bold">{{pendingPlan?.basePlan?.subtitle}}</p>
+                                <p class="smaller primary-font-bold" data-cy="pendingPlans">{{pendingPlan?.basePlan?.subtitle}}</p>
                                 <p class="smaller primary-font" data-cy="planTitle" [class.promo-title]="!!pendingPlan?.basePlan?.specialPromotion">
                                     {{!!pendingPlan?.basePlan?.ebb ? 'Affordable Connectivity Program Plan' :
                                     (!!pendingPlan?.basePlan?.specialPromotion &&
@@ -74,7 +74,7 @@
                                 src="assets/icon/sim-image.svg"
                                 alt="good Mobile SIM">
                             <div class="details">
-                                <p class="smaller primary-font-bold">SIM Card</p>
+                                <p class="smaller primary-font-bold" data-cy="simType">SIM Card</p>
                                 <p class="smaller primary-font-bold">(New SIM)</p>
                             </div>
                         </div>

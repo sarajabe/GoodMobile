@@ -138,48 +138,28 @@
       }
     }
   }
-
-  .last-section {
-    width: 100%;
-    background-color: $secondary-color;
-    margin-top: 35px;
-    padding: 80px 0;
-
-    @media (max-width: $phablet-min-width) {
-      padding: 35px 0;
+  .plans-section {
+    background: #F2F7FA;
+    padding: 64px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    @media (max-width: $phablet-min-width-minus) {
+        flex-direction: column;
+        padding: 48px 16px;
     }
-
-    .description {
-      color: white;
-      font-size: rem-calc(30px);
-      line-height: rem-calc(40px);
-      font-family: $secondary-font-family-bold;
-      padding: 10px 10px;
-
-      @media (max-width: $desktop-min-width-minus) {
-        font-size: rem-calc(25px);
-      }
-
-      @media (max-width: 640px) {
-        text-align: center;
-        margin-bottom: 35px;
-        display: inline;
-      }
+    .label {
+      color: #5E5E5E;
     }
-
-    .button {
-      padding: 13px 40px;
-      float: right;
-      width: 255px;
-      font-family: $secondary-font-family;
-      font-size: rem-calc(18px);
-      line-height: rem-calc(24px);
-
-      @media (max-width: 1024px) and (min-width: 640px) {
-        font-size: rem-calc(17px);
-        line-height: rem-calc(21px);
-        width: 200px;
-      }
+    .desc {
+        margin-bottom: 24px;
+        font-family: $secondary-font-family;
+        font-weight: normal;
     }
-  }
+    .specific {
+        width: 198px;
+    }
+}
 }
