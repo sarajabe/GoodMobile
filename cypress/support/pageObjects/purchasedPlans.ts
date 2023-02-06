@@ -82,6 +82,16 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
         cy.get('[data-cy="purchasedPlansBtn"]').click();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
+    };
+    assertPurchasedPlanWithStorePickupExistingCustomer(){
+        PageObjects.AccountSummary.clickOnPurchasedPlans();
+        PageObjects.TitleExpectations.goToPurchasedPlansPage();
+        cy.get('[data-cy="pendingPlans"]').should('have.text','6GB 4G LTE Plan');
+        cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 6GB Data');
+        cy.get('[data-cy="simType"]').should('have.text','SIM Card');
+        cy.get('[data-cy="pickupBarCode"]').should('have.text','In-store Pickup Barcode');
+        cy.get('[data-cy="barcode"]').should('be.visible');
+        cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
     }
 };
 export default new PurchasedPlans();
