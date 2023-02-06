@@ -21,7 +21,7 @@ class Payment {
         cy.get('[data-cy="backBtn"]').click({force:true});
         return this;
     };
-    clickOnBackBtnAssertShipping() {
+    clickOnBackBtnAssertExpectedBehavior() {
         cy.get('[data-cy="backBtn"]').click({force:true});
         cy.title().should('eq', `Shipping`);
         cy.get('#barCodeVal').should('be.checked');

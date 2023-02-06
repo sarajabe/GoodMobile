@@ -14,7 +14,7 @@
         </div>
         <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
           <ng-container *ngIf="!!purchasedPlanId">
-            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !!isStorePickup">Your Store pickup barcode is available in your purchased plans page.</p>
+            <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !!isStorePickup" data-cy="storePickupSuccessful">Your Store pickup barcode is available in your purchased plans page.</p>
             <p class="info" *ngIf="!!purchasedPlan && !purchasedPlan.eSIM && !isStorePickup">Look out for your <b>new
                 SIM card</b> in the
               mail! Once your SIM card <b>arrives</b> in a couple of days,

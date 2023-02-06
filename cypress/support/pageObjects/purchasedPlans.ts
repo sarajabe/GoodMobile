@@ -76,11 +76,12 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.Payment.paymentRequired();
         PageObjects.Payment.selectFirstPaymentMethod();
-        PageObjects.Payment.clickOnBackBtnAssertShipping();
+        PageObjects.Payment.clickOnBackBtnAssertExpectedBehavior();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup');
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+        cy.get('[data-cy="storePickupSuccessful"]').should('have.text','Your Store pickup barcode is available in your purchased plans page.')
         cy.get('[data-cy="purchasedPlansBtn"]').click();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
