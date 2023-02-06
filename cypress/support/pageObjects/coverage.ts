@@ -41,6 +41,12 @@ class Coverage {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
+    assertAddressIsRequired(){
+        cy.get('#required-address-msg').should('have.text','Address is a Required Field');
+    }
+    assertAddressNotSelectedFromList(){
+        cy.get('#required-address-msg').should('have.text','Please select address from the autocomplete list');
+    }
     clickOnCheckCoverageBtn() {
         cy.get('[data-cy="check-coverage"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
