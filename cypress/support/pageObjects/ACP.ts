@@ -441,10 +441,6 @@ class Acp {
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
           PageObjects.Compatibility.addressRefNotSelectedFromList();
           PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
-          // cy.get('[data-cy=equipmentNumber]').click();
-          // cy.get('[data-cy=equipmentNumber]').clear();
-          // cy.get('[data-cy="addressRef"]').click();
-          // cy.get('[data-cy="addressRef"]').clear();
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.TMO_ONLY.TMO1);
           PageObjects.Compatibility.enterAddressRef();
           cy.get('[data-cy="checkBtn"]').click();
@@ -458,6 +454,7 @@ class Acp {
           cy.get('[data-cy="barCodeVal"]').click();
           cy.get('[data-cy="nextBtn"]').click();
           cy.get('.top-desc').should('have.text','ACP Application successful!');
+          cy.get('.sub-desc').should('have.text','Next Steps - In Store SIM Card Pickup.');
           cy.get('[data-cy="continueBtn"]').click();
           PageObjects.TitleExpectations.goToPurchasedPlansPage();
           cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
