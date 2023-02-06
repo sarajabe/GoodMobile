@@ -201,7 +201,7 @@ class HomePage {
         return this;
     };
     clickOnSignIn() {
-        cy.contains('a', 'sign in').click();
+        cy.get('.login-option > a').click();
         return this;
     };
     clickOnWhyG2G() {
