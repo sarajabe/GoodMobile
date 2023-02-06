@@ -433,13 +433,25 @@ class Acp {
      purchasePlanWithStorePickup(){
           cy.get('.menu-item.ng-star-inserted > .items-link').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
-          cy.get('.button').click();
-          cy.get('.title').should('have.text','ACP Enrollment');
+          cy.get('.actions > .primary').click();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          cy.get('.title').should('have.text','ACP Enrollment');
+          cy.get('[data-cy="checkBtn"]').click();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+          PageObjects.Compatibility.addressRefNotSelectedFromList();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
+          // cy.get('[data-cy=equipmentNumber]').click();
+          // cy.get('[data-cy=equipmentNumber]').clear();
+          // cy.get('[data-cy="addressRef"]').click();
+          // cy.get('[data-cy="addressRef"]').clear();
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.TMO_ONLY.TMO1);
           PageObjects.Compatibility.enterAddressRef();
           cy.get('[data-cy="checkBtn"]').click();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          cy.get('.head-note').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.Acp.clickOnBackBtn();
           cy.get('.head-note').should('have.text','Your Phone is compatible!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnStorePickup();
@@ -451,6 +463,22 @@ class Acp {
           cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
           cy.get('[data-cy="pickupBarCode"]').should('have.text','In-store Pickup Barcode');
           cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
+     }
+     cancelPurchasePlan(){
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('.actions > .primary').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          cy.get('.title').should('have.text','ACP Enrollment');
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.TMO_ONLY.TMO1);
+          PageObjects.Compatibility.enterAddressRef();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          cy.get('.head-note').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="nextBtn"]').click();
+          cy.get('.address-section-title').should('have.text','How do you want to get your package?');
+          cy.get('[data-cy="cancel"]').click();
+          PageObjects.TitleExpectations.goToACPPage();
      }
 };
 export default new Acp();

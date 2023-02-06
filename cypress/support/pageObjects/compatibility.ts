@@ -60,6 +60,14 @@ class Compatibility {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
+    assertIMEInumberAddressReferenceRequired(){
+        cy.get(':nth-child(2) > .form-field > .validation-message').should('have.text', ' Device IMEI Number Is Required ');
+        cy.get('#required-zip-code-label').should('have.text', 'Address is required');
+    }
+    assertIMEInumberAddressReferenceInvalid(){
+        cy.get(':nth-child(2) > .form-field > .validation-message').should('have.text', ' Device IMEI should be between 11-18 digits ');
+        cy.get('#required-address-msg').should('have.text', 'Please select address from the autocomplete list');
+    }
     addressRefNotSelectedFromList() {
         cy.get('[data-cy="addressRef"]').click();
         cy.get('[data-cy="addressRef"]').type('m');

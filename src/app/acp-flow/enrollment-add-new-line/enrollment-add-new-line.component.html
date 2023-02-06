@@ -338,7 +338,7 @@
 </section>
 <section class="navigation-section" >
     <div class="page-section navs" [class.end]="!!planPurchased">
-        <button class="button thirdly noPadding" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
+        <button class="button thirdly noPadding" data-cy="cancel" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
         <div class="right" *ngIf="!planPurchased">
             <button class="button secondary" data-cy="backBtn" aria-label="Back"
                 (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
