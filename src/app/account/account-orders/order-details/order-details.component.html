@@ -313,7 +313,7 @@
                                 </div>
                                 <div class="price-details">
                                     <p class="price-title">Shipping fees</p>
-                                    <p class="value">{{orderInfo?.payment?.shippingCost}}</p>
+                                    <p class="value" data-cy="shippingFees">{{orderInfo?.payment?.shippingCost}}</p>
                                 </div>
                                 <div class="price-details">
                                     <p class="price-title">Govt. taxes & fees </p>
@@ -325,7 +325,7 @@
                                 </div>
                                 <hr>
                                 <div class="total-details">
-                                    <p class="total">Total: {{ orderInfo?.payment?.totalPrice}}</p>
+                                    <p class="total" data-cy="total">Total: {{ orderInfo?.payment?.totalPrice}}</p>
                                 </div>
                             </div>
                         </div>
