@@ -48,7 +48,7 @@ class TitleExpectations {
         return this;
     };
     goToACPPage() {
-        cy.title().should('eq', 'ACP | Affordable Connectivity Program | Good2Go Mobile');
+        cy.title().should('eq', 'ACP | Affordable Connectivity Program | Good Mobile');
         return this;
     };
     goToInviteAfriendPage() {

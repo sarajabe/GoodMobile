@@ -26,9 +26,9 @@
                         <p class="serial-device-note">Dial: *#06# on your phone to get your IMEI/MEID</p>
                         <label class="outlined-label-input">
                             <input placeholder=" " required formControlName="imei" name="equipmentNumber"
-                                id="equipmentNumber" data-cy="equipmentNumber" restrictNumbers required
+                                id="equipmentNumber" restrictNumbers required
                                 maxlength="18" />
-                            <span>Enter your device’s IMEI number</span>
+                            <span data-cy="equipmentNumber">Enter your device’s IMEI number</span>
                         </label>
                         <a class="imei-link" (click)="showWhatIsIMEI()">What is an IMEI/MEID number?</a>
                         <label class="validation-message"
@@ -53,7 +53,7 @@
                             <span [class.focused]="!!setFoucs || !!newMobileServiceFrom.controls.address.touched"
                                 [class.not-focused]="!setFoucs && !newMobileServiceFrom.controls.address.value"
                                 [class.error]="!!newMobileServiceFrom.controls.address.touched && !!newMobileServiceFrom.controls.address.errors"
-                                [class.grayed]="!setFoucs && !!newMobileServiceFrom.controls.address.value">Enter your
+                                [class.grayed]="!setFoucs && !!newMobileServiceFrom.controls.address.value"  data-cy="addressRef">Enter your
                                 full
                                 address</span>
                         </label>
@@ -265,7 +265,7 @@
                 </div>
                 <div class="radioBtn">
                     <label class="form-control" for="store">
-                        <input type="radio" value="store" [(ngModel)]="option" id="store" name="store" required
+                        <input type="radio" data-cy="storePickup" value="store" [(ngModel)]="option" id="store" name="store" required
                             (change)="pickupOptionChanged()">
                         <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
                         <div class="input-details">
@@ -304,7 +304,7 @@
                                 <div class="actions">
                                     <form #barCodeCheck="ngForm" class="barCoder-form">
                                         <input type="checkbox" [(ngModel)]="barCode" name="br" required
-                                            #barCodeVal="ngModel">
+                                            #barCodeVal="ngModel" data-cy="barCodeVal">
                                         <label class="label">I understand that.</label>
                                     </form>
                                 </div>
@@ -338,22 +338,22 @@
 </section>
 <section class="navigation-section" >
     <div class="page-section navs" [class.end]="!!planPurchased">
-        <button class="button thirdly noPadding" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
+        <button class="button thirdly noPadding" data-cy="cancel" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
         <div class="right" *ngIf="!planPurchased">
             <button class="button secondary" data-cy="backBtn" aria-label="Back"
                 (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
-            <button class="button primary" aria-label="Check" (click)="checkDevice()"
+            <button class="button primary" data-cy="checkBtn" aria-label="Check" (click)="checkDevice()"
                 *ngIf="!successCehck && !errorCheck && activeStep === 1">Check</button>
-            <button class="button primary" aria-label="Next" (click)="goToStep2()"
+            <button class="button primary"  data-cy="nextBtn" aria-label="Next" (click)="goToStep2()"
                 *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
                 [disabled]="!!errorCheck">Next</button>
             <button class="button primary" *ngIf="activeStep === 2"
                 [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
                 [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
-                (click)="purchasePlan()">Next</button>
+                (click)="purchasePlan()"  data-cy="nextBtn">Next</button>
         </div>
         <div class="right end" *ngIf="!!planPurchased">
-            <button class="button primary" (click)="goToPendingActivation()">{{!!isStorePickup ? 'Continue' : 'Done'}}</button>
+            <button class="button primary" data-cy="continueBtn" (click)="goToPendingActivation()">{{!!isStorePickup ? 'Continue' : 'Done'}}</button>
         </div>
     </div>
     
