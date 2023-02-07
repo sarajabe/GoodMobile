@@ -278,10 +278,6 @@ class YouOrders {
     ordersPageStorePickupOption(){
         PageObjects.YouOrders.clickOnYourOrders6thChild();
         PageObjects.TitleExpectations.goToOrdersPage();
-        PageObjects.YouOrders.clickOnFilter();
-        PageObjects.YouOrders.clickOnPendingCheckBox();
-        PageObjects.YouOrders.clickOnApplyBtn();
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         cy.get('[data-cy="status"]').first().should('have.text', 'Pending');
         cy.get('[data-cy="simImg"]').first().should('be.visible');
         cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $35.09');
