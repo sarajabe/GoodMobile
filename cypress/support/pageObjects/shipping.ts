@@ -142,5 +142,9 @@ class ShippingPage {
     clickOnStorePickup(){
         cy.get('[data-cy="storePickup"]').click();
     }
+    barCodeValNotChecked(){
+        cy.get('#barCodeVal').should('not.be.checked');
+        cy.get('[data-cy="nextBtn"]').blur;
+    }
 };
 export default new ShippingPage();

@@ -51,6 +51,12 @@ class Compatibility {
         cy.get('[data-cy=equipmentNumber]').type(imei);
         return this;
     };
+    assertIMEInumberRequired(){
+        cy.get('#required-equipment-msg').should('have.text',' This field is required ');
+    };
+    assertIMEInumberInvalid(){
+        cy.get('[data-cy="invalid-equipmentNumber-msg"]').should('have.text', ' Invalid serial, it should be between 11-18 digits ');
+    };
     enterATTddressRef() {
         cy.get('[data-cy="addressRef"]').click();
         cy.get('[data-cy="addressRef"]').type('163 Kayenta Road, Golden Valley, AZ 86413');

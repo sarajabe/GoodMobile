@@ -1,3 +1,5 @@
+import { CONSTANT } from "../../fixtures/constants";
+
 class Payment {
 
     selectFirstPaymentMethod() {
@@ -8,6 +10,9 @@ class Payment {
         cy.get('[data-cy="paymentMethod"]').eq(1).click();
         return this;
     };
+    paymentRequired(){
+        cy.get('[data-cy="paymentRequired"]').should('have.text', 'Note: Please make sure you specify the payment method to complete your request.');
+    }
     clickOnNextBtn() {
         cy.get('[data-cy="nextBtn"]').click();
         return this;
@@ -15,6 +20,13 @@ class Payment {
     clickOnBackBtn() {
         cy.get('[data-cy="backBtn"]').click({force:true});
         return this;
+    };
+    clickOnBackBtnPaymentAssertPickupOptionShipping() {
+        cy.get('[data-cy="backBtn"]').click({force:true});
+        cy.title().should('eq', `Shipping`);
+        cy.get('#barCodeVal').should('be.checked');
+        cy.get('[data-cy="nextBtn"]').click();
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
     };
     clickOnSaveBtn() {
         cy.get('[data-cy="saveBtn"]').click();
