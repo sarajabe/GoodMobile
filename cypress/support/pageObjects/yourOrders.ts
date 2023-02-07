@@ -1,4 +1,5 @@
 import { CONSTANT } from "../../fixtures/constants";
+import { PageObjects } from '../../support/pageObjects';
 
 class YouOrders {
     searchByID() {
@@ -274,6 +275,15 @@ class YouOrders {
         cy.get('[data-cy="cancel-btn"]').click();
         return this;
     };
-
+    ordersPageStorePickupOption(){
+        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        PageObjects.TitleExpectations.goToOrdersPage();
+        cy.get('[data-cy="status"]').first().should('have.text', 'Pending');
+        cy.get('[data-cy="simImg"]').first().should('be.visible');
+        cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $35.09');
+        PageObjects.YouOrders.clickOnViewInvoice();
+        PageObjects.TitleExpectations.goToReceiptDetailsPage();
+        cy.get('.sub-note').should('have.text','Your order has been confirmed!')
+    }
 };
 export default new YouOrders();
