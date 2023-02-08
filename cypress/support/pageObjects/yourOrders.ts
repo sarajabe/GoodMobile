@@ -285,5 +285,17 @@ class YouOrders {
         PageObjects.TitleExpectations.goToReceiptDetailsPage();
         cy.get('.sub-note').should('have.text','Your order has been confirmed!')
     }
+    ordersDetailsPageStorePickupOption(){
+        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        PageObjects.TitleExpectations.goToOrdersPage();
+        cy.get('[data-cy="status"]').first().should('have.text', 'Pending');
+        cy.get('[data-cy="simImg"]').first().should('be.visible');
+        cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $35.09');
+        PageObjects.YouOrders.clickOnOrderDetails();
+        PageObjects.TitleExpectations.goToOrderDetailsPage();
+        cy.get('[data-cy="shippingFees"]').should('have.text', '$0.00');
+        cy.get('[data-cy="total"]').should('have.text', 'Total: $35.09');
+        cy.get('[data-cy="shippingAddress"]').should('not.exist');
+    }
 };
 export default new YouOrders();
