@@ -13,7 +13,7 @@
             <div class="details">
                 <div class="key-value">
                     <p class="smaller key">Merchant:</p>
-                    <p class="smaller value">Good Mobile</p>
+                    <p class="smaller value" data-cy="merchantValue">Good Mobile</p>
                 </div>
                 <div class="key-value">
                     <p class="smaller key">Order #:</p>
@@ -54,11 +54,11 @@
                     <div class="line-info-conatiner" id="div">
                         <div class="line-info-part" *ngFor="let item of cart?.items; let i =index">
                             <div class="flex-display">
-                                <p class="smaller info">{{item?.name}}</p>
-                                <p class="smaller info">{{item?.unitPrice | currency}}</p>
+                                <p class="smaller info" data-cy="itemName">{{item?.name}}</p>
+                                <p class="smaller info" data-cy="itemPrice">{{item?.unitPrice | currency}}</p>
                             </div>
                             <p class="smallest notes" *ngIf="order?.autoPayEnabled">Auto Pay</p>
-                            <p class="smallest">Quantity: {{item?.quantity}}</p>
+                            <p class="smallest" data-cy="quantity">Quantity: {{item?.quantity}}</p>
                             <hr *ngIf="i !== (cart?.items.length - 1)">
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="summary-details" id="div">
                     <div class="flex-display" *ngIf="order?.subTotal">
                         <p class="smaller">Subtotal</p>
-                        <p class="smaller price">{{order?.subTotal | currency}}</p>
+                        <p class="smaller price" data-cy="subtotal">{{order?.subTotal | currency}}</p>
                     </div>
                     <div class="flex-display discount" *ngIf="order?.discount > 0">
                         <p class="smaller">Discount total </p>
@@ -84,23 +84,23 @@
                     </div>
                     <div class="flex-display">
                         <p class="smaller">Shipping fees</p>
-                        <p class="smaller price">{{order?.shippingCost | currency}}</p>
+                        <p class="smaller price" data-cy="shippingFees">{{order?.shippingCost | currency}}</p>
                     </div>
                     <div class="flex-display">
                         <p class="smaller">Govt. taxes & fees</p>
-                        <p class="smaller price">{{order?.govtTaxesAndFees | currency}}</p>
+                        <p class="smaller price" data-cy="govTax">{{order?.govtTaxesAndFees | currency}}</p>
                     </div>
                     <div class="flex-display">
                         <p class="smaller">Surcharges & fees</p>
-                        <p class="smaller price">{{order?.surchargesAndFees | currency}}</p>
+                        <p class="smaller price" data-cy="surchargesAndFees">{{order?.surchargesAndFees | currency}}</p>
                     </div>
                     <hr class="summary">
-                    <p class="smaller price right">Total:{{order?.total | currency}}</p>
+                    <p class="smaller price right" data-cy="total">Total:{{order?.total | currency}}</p>
                 </div>
                 <div class="payment-and-transactions">
                     <h5 class="title">Payments & Transactions</h5>
                     <p class="smaller key" *ngIf="!!order?.paymentStatus">Status: <span
-                            class="status">{{order?.paymentStatus}}</span></p>
+                            class="status" data-cy="status">{{order?.paymentStatus}}</span></p>
                     <div class="key-value payment" *ngIf="!!order?.paymentTrxNumber">
                         <p class="smaller key">Confirmation #:</p>
                         <p class="smaller value">{{order?.paymentTrxNumber}}</p>
@@ -175,8 +175,8 @@
     </div>
     <p class="dashed-border" *ngIf="!!isStorePickup"></p>
     <div class="barCodes-details" *ngIf="!!isStorePickup">
-        <h3 class="primary-font-bold title">Scan your barcode</h3>
+        <h3 class="primary-font-bold title" data-cy="scanBarcode">Scan your barcode</h3>
         <p class="smaller note">Check with the store clerk to pick up your package</p>
-        <ngx-barcode [bc-value]="barCodeValues" [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
+        <ngx-barcode  data-cy="barcode" [bc-value]="barCodeValues" [bc-display-value]="true" class="barCode-radios"></ngx-barcode>
     </div>
 </div>

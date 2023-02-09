@@ -311,5 +311,27 @@ class YouOrders {
         cy.get('.options-container > :nth-child(5)').should('not.be.disabled');//clickOnSomethingIssue
         
     }
+    storePickupInvoice(){
+        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        PageObjects.TitleExpectations.goToOrdersPage();
+        PageObjects.YouOrders.clickOnViewInvoice();
+        PageObjects.TitleExpectations.goToReceiptDetailsPage();
+        cy.get('[data-cy="merchantValue"]').should('have.text','Good Mobile');
+        cy.get('[data-cy="itemName"]').should('have.text','Unlimited Talk & text with 6GB Data');
+        cy.get('[data-cy="itemPrice"]').should('have.text','$30.00');
+        cy.get('[data-cy="quantity"]').should('have.text','Quantity: 1');
+        cy.get('[data-cy="subtotal"]').should('have.text','$30.00');
+        cy.get('[data-cy="shippingFees"]').should('have.text','$0.00'); 
+        cy.get('[data-cy="govTax"]').should('have.text','$2.45'); 
+        cy.get('[data-cy="surchargesAndFees"]').should('have.text','$2.64'); 
+        cy.get('[data-cy="total"]').should('have.text','Total:$35.09');
+        cy.get('[data-cy="status"]').should('have.text','Approved');
+        cy.get('[data-cy="scanBarcode"]').should('have.text','Scan your barcode');
+        cy.get('[data-cy="barcode"]').should('be.visible');
+        cy.get('.email-option').click();
+        cy.get('.ng-star-inserted > .details > p').should('have.text','The receipt will be emailed to your primary account email, testuser@ztarmobile.com\n      ');
+        cy.get('.modal-close > .icon-close').click();
+        cy.get('.print-option').click();
+    }
 };
 export default new YouOrders();
