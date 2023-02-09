@@ -331,6 +331,10 @@ class YouOrders {
         cy.get('.email-option').click();
         cy.get('.ng-star-inserted > .details > p').should('have.text','The receipt will be emailed to your primary account email, testuser@ztarmobile.com\n      ');
         cy.get('.modal-close > .icon-close').click();
+        cy.get('.email-option').click();
+        cy.get('.modal-actions > .primary').click();
+        cy.get('.ng-star-inserted > .details > p').should('have.text','The receipt has successfully been emailed to testuser@ztarmobile.com\n      ');
+        cy.get('[data-cy="action-button"]').click();
         cy.get('.print-option').click();
     }
 };
