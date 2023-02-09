@@ -297,5 +297,19 @@ class YouOrders {
         cy.get('[data-cy="total"]').should('have.text', 'Total: $35.09');
         cy.get('[data-cy="shippingAddress"]').should('not.exist');
     }
+    reportIssueStorePickupFlow(){
+        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        PageObjects.TitleExpectations.goToOrdersPage();
+        PageObjects.YouOrders.clickOnOrderDetails();
+        PageObjects.TitleExpectations.goToOrderDetailsPage();
+        PageObjects.YouOrders.clickOnReportAnIssue();
+        PageObjects.TitleExpectations.goToReportAnIssuePage();
+        cy.get('.options-container > :nth-child(1)').should('have.class','disabled');//clickOnorderNotReceived
+        cy.get('.options-container > :nth-child(3)').should('have.class','disabled');//clickOnUpdateShippingAddress
+        cy.get('.options-container > :nth-child(2)').should('not.be.disabled');//clickOnWrongOrMissingItem
+        cy.get('.options-container > :nth-child(4)').should('not.be.disabled'); //clickOnFAQS
+        cy.get('.options-container > :nth-child(5)').should('not.be.disabled');//clickOnSomethingIssue
+        
+    }
 };
 export default new YouOrders();
