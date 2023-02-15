@@ -114,6 +114,9 @@
         padding: 8px;
         font-weight: bold;
         width: 236px;
+        &.smaller {
+          width: 183px;
+        }
       }
 
       @media(max-width: $phablet-min-width-minus) {

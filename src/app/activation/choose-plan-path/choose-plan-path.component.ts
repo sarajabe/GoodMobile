@@ -31,9 +31,6 @@ export class ChoosePlanPathComponent implements OnDestroy {
               private userPlansService: UserPlansService,
               private simpleAuthService: SimpleAuthService) {
 
-    if (sessionStorage.getItem('activation_step') !== 'step1' && sessionStorage.getItem('activation_step') !== 'step2') {
-      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_PLAN}`]);
-    }
     this.metaService.createCanonicalUrl();
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
@@ -53,7 +50,7 @@ export class ChoosePlanPathComponent implements OnDestroy {
           this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
             if (!!plans) {
               this.pendingPlans = plans.filter((plan) => !plan.mdn);
-              this.activePlans = plans.filter((plan) => !!plan.mdn);
+              this.activePlans = plans.filter((plan) => !!plan.mdn && plan.planDevice.pendingNewSim);
               this.appState.loading = false;
             }
           });
@@ -66,7 +63,6 @@ export class ChoosePlanPathComponent implements OnDestroy {
     this.alive = false;
   }
   public goToOrders(): void {
-    sessionStorage.setItem('activation_step', 'step2');
     this.mobileCustomPlansService.setSimCard('');
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
   }
@@ -91,7 +87,6 @@ export class ChoosePlanPathComponent implements OnDestroy {
     }
   }
   public purchasePlan(): void {
-    sessionStorage.setItem('activation_step', 'step2');
     this.mobileCustomPlansService.setSimCard(this.activationCode);
     const params = {};
     params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION]=true;
@@ -99,7 +94,6 @@ export class ChoosePlanPathComponent implements OnDestroy {
   }
 
   public goToPendingPlans(): void {
-    sessionStorage.setItem('activation_step', 'step2');
     this.mobileCustomPlansService.setSimCard('');
     const params = {};
     params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activationCode;
@@ -107,19 +101,12 @@ export class ChoosePlanPathComponent implements OnDestroy {
   }
 
   public goToReplaceSIM(): void {
-    sessionStorage.setItem('activation_step', 'step2');
     this.mobileCustomPlansService.setSimCard('');
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.REPLACE_SIM}`]);
   }
 
 
   public goToVerifyActivation(): void {
-    sessionStorage.setItem('activation_step', 'step2');
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_PLAN}`]);
-  }
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event): void {
-    event.preventDefault();
-    sessionStorage.setItem('activation_step', 'step1');
   }
 }

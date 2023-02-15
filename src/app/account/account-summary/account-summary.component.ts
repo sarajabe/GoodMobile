@@ -1307,11 +1307,4 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event): void {
-    if (sessionStorage.getItem('activation_step') === 'step3') {
-      event.preventDefault();
-      sessionStorage.setItem('activation_step', 'step2');
-    }
-  }
 }

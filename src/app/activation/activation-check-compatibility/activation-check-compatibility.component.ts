@@ -525,11 +525,4 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
     address = this.appState.removeEmptyValues(address);
     return Object.assign({}, address);
   }
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event): void {
-    if (sessionStorage.getItem('activation_step') === 'step4') {
-      event.preventDefault();
-      sessionStorage.setItem('activation_step', 'step3');
-    }
-  }
 }

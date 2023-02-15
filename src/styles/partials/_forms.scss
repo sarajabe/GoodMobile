@@ -295,60 +295,6 @@ select:focus {
     font-size: rem-calc(13px);
   }
 }
-.activate-sim-form {
-  fieldset {
-    @media (#{$larger-than-phablet}) {
-      margin-bottom: 15px;
-      padding-left: 0;
-      padding-right: 10px;
-    }
-    &.align {
-    @media (max-width: 1182.9px) and (min-width: 1025px) {
-      margin-top: 18px;
-      margin-left: 64px;
-    }
-  }
-  .disabled {
-    cursor: not-allowed;
-    background-color: $light-grey;
-}
-  &.align-up {
-    @media (max-width: 1182.9px) and (min-width: 1025px) {
-      margin-left: 64px;
-    }
-  }
-
-  }
-
-  .form-part {
-    display: inline-block;
-    width: 100%;
-    @media(max-width:639.9px){
-      width:300px;
-      max-width:400px;
-      padding-right:10px;
-    }
-    @media(min-width:640px) and (max-width:1024.9px){
-      width:80%;
-      max-width:500px;
-    }
-  }
-
-  .address-lookup {
-    padding-right: 0;
-    &.eight {
-      @media (#{$larger-than-mobile}) {
-        padding-right: 30px;
-      }
-    }
-
-    i.icon-search.input-search-icon {
-      position: absolute;
-      top: 37px;
-      left: 5px;
-    }
-  }
-}
 fieldset {
   padding: 0;
   border-width: 0;

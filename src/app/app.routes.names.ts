@@ -259,7 +259,10 @@ export const ACTIVATION_ROUTE_URLS = {
   VERIFY_PHONE: '',
   REPLACE_SIM: 'replace-sim',
   SIM_CHECK: 'sim-check',
-  No_SIM: 'no-sim'
+  No_SIM: 'no-sim',
+  SUCCESS_SWAP: 'successful-SIM-swap',
+  ACTIVATE_NEW: 'activate-new-number',
+  PORT_NUMBER: 'keep-your-current-number'
 };
 
 export const MIGRATION_ROUTE_URLS = {

@@ -1,27 +1,19 @@
-<section class="page-section activation">
-    <div class="container-flex-row margin-bottom-20">
-        <div class="col-xl-8 col-sm-10 col-12">
-            <h1>Activate | Port your number</h1>
-            <div class="subhead">
-                <p *ngIf="!isPortOnly">Let us know if you want to keep your old mobile number or activate with a new one
-                    so we can set you up!</p>
-                <p *ngIf="!!isPortOnly">Let us keep your old mobile number and port it with Good Mobile!</p>
-            </div>
+<section class="page-section check-sim">
+    <app-activation-header></app-activation-header>
+    <div class="page-content">
+        <h1 class="header-color">Awesome!<br>
+            How do you want to activate your plan?</h1>
+        <div class="options">
+            <label class="radio-label" for="new">
+                <input type="radio" value="new" [(ngModel)]="option" id="new" #optionRef="ngModel" [disabled]="isPortOnly" [class.disabled]="isPortOnly" (ngModelChange)="showValidation = false">Activate with a New Number
+            </label>
+            <label class="radio-label" for="port" >
+                <input type="radio" value="port" [(ngModel)]="option"  id="port" #optionRef="ngModel" (ngModelChange)="showValidation = false">Keep your Current Number
+            </label>
+            <label class="validation-message" *ngIf="!!showValidation">Please select one of the options</label>
         </div>
-    </div>
-
-    <div class="container-flex-row actions-container margin-top-40">
-        <div class="col-xl-3 col-sm-5 col-12 margin-bottom-20 centered" *ngIf="!isPortOnly">
-            <a id="activateNewNumber">
-                <button class="button secondary" (click)="activateNewNumber()" id="activate-with-new-number-button" data-cy="activate-with-new-number-button"
-                    [disabled]="disableNew">Activate with a new number</button>
-            </a>
-        </div>
-        <div class="col-xl-3 col-sm-5 col-12 centered">
-            <a id="portInCurrentNumber">
-                <button class="button primary" id="keep-current-number-button" [disabled]="isNewOnly"
-                    [class.disabled]="isNewOnly" (click)="portInCurrentNumber()">Keep your current number</button>
-            </a>
-        </div>
+       <div class="action">
+        <button class="button primary" (click)="selectOption()">Next <img class="icon" src="assets/icon/right-circle-arrow.svg"/></button>
+       </div>
     </div>
 </section>

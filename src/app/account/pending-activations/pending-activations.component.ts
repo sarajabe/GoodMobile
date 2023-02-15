@@ -337,13 +337,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   onResize(event): void {
     this.innerWidth = window.innerWidth;
   }
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event): void {
-    if (sessionStorage.getItem('activation_step') === 'step4') {
-      event.preventDefault();
-      sessionStorage.setItem('activation_step', 'step3');
-    }
-  }
+
   private calculateTotal(plan: IUserPlan): void {
     /* eslint-disable max-len */
     if (!!plan.basePlan.specialPromotion && !!plan.basePlan.specialPromotion.promotionDiscount) {

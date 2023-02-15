@@ -1084,16 +1084,24 @@
 
         p {
           margin-bottom: 5px;
+          font-size: rem-calc(18px);
+          font-family: $base-font-family;
+          line-height: 28px;
+          b {
+            font-family: $base-font-family-bold;
+          }
         }
-
+        b {
+          font-family: $base-font-family-bold;
+        }
         .subhead {
           font-size: 22px;
           line-height: 24px;
         }
 
         .question {
-          font-size: rem-calc(22px);
-          font-family: $secondary-font-family;
+          font-size: rem-calc(18px);
+          font-family: $base-font-family;
           line-height: 28px;
           margin-bottom: 0;
         }

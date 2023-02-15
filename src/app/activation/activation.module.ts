@@ -7,8 +7,8 @@ import { CompatibilityMainComponent } from './activation.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WidgetsModule } from 'src/widgets/widgets.module';
 import { ActivateSimComponent } from './activate-sim/activate-sim.component';
-import { ActivateCurrentNumberComponent } from './activate-sim/activate-current-number/activate-current-number.component';
-import { ActivateNewNumberComponent } from './activate-sim/activate-new-number/activate-new-number.component';
+import { ActivateCurrentNumberComponent } from './activate-current-number/activate-current-number.component';
+import { ActivateNewNumberComponent } from './activate-new-number/activate-new-number.component';
 import { ActivationCheckCompatibilityComponent } from './activation-check-compatibility/activation-check-compatibility.component';
 import { ActivationSummaryComponent } from './activation-summary/activation-summary.component';
 import { CheckCompatibilityResultComponent } from './check-compatibility-result/check-compatibility-result.component';
@@ -18,6 +18,7 @@ import { NoSIMComponent } from './no-sim/no-sim.component';
 import { ReplaceSimComponent } from './replace-sim/replace-sim.component';
 import { SIMCheckComponent } from './sim-check/sim-check.component';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { SuccessSwapComponent } from './success-swap/success-swap.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
     ChoosePlanPathComponent,
     NoSIMComponent,
     ReplaceSimComponent,
-    SIMCheckComponent],
+    SIMCheckComponent,
+    SuccessSwapComponent],
   imports: [
     CommonModule,
     FormsModule,

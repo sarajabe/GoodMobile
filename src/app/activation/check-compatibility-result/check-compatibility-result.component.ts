@@ -30,6 +30,7 @@ export class CheckCompatibilityResultComponent implements OnDestroy, AfterConten
   public isAnyNetworkWithNoESim = false;
 
   private alive = true;
+  activationFlow: boolean;
 
   constructor(private router: Router,
     private simpleAuthService: SimpleAuthService,
@@ -48,6 +49,7 @@ export class CheckCompatibilityResultComponent implements OnDestroy, AfterConten
       } else {
         this.hasNewPlan = false;
       }
+      this.activationFlow = !!this.cart && !!this.cart.activationCode ? true : false;
     });
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.COMPATABILE]) {
@@ -91,7 +93,7 @@ export class CheckCompatibilityResultComponent implements OnDestroy, AfterConten
         title: 'Congrats!',
         desc1: '<b>Your device is compatible for great coverage</b>',
         desc2: 'Get unlimited talk and text + data access',
-        desc3: 'Proceed to checkout to order your new plan and FREE SIM card from Good Mobile.',
+        desc3: !!this.activationFlow ? 'Proceed to checkout to order your new plan from Good Mobile' :'Proceed to checkout to order your new plan and FREE SIM card from Good Mobile.',
         buttonName: 'Proceed to checkout',
         buttonAction: 'proceedToCheckout',
         isAttFlow: true

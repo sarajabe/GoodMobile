@@ -73,6 +73,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
   private allBasePlans: Array<MobilePlanItem>;
   private newPlan: MobilePlanItem;
   private streetSearchText: string;
+  activationFlow: boolean;
 
   constructor(public router: Router,
     private mobileCustomPlansService: MobileCustomPlansService,
@@ -116,6 +117,11 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
     this.mobileCustomPlansService.currentPlan.subscribe((cart) => {
       if (!!cart && !!cart?.basePlan?.id && cart?.basePlan?.id != 'NOT-FOUND' && cart?.cartType === CART_TYPES.NEW_PLAN) {
         this.newPlan = cart.basePlan;
+      }
+      if (!!cart.activationCode) {
+        this.activationFlow = true;
+      } else {
+        this.activationFlow = false;
       }
     });
     this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => this.isLoggedIn = !!authState && !authState.isAnonymous);

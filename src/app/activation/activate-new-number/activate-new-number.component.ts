@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { takeWhile } from 'rxjs/operators';
 import { IUser } from '@ztarmobile/zwp-services-auth';
-import { ActionsAnalyticsService, IActivateUserAccount, IUserPlan, IVoucherData, PortInStatusEnum, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ActionsAnalyticsService, IActivateUserAccount, IExistingOrder, IFireBasePlanItem, IUserDevice, IUserPlan, IVoucherData, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { CAPTCHA_SITE_ID } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -13,20 +14,20 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-activate-new-number',
   templateUrl: './activate-new-number.component.html',
+  styleUrls: ['./activate-new-number.component.scss']
 })
-export class ActivateNewNumberComponent implements OnInit, OnChanges {
+export class ActivateNewNumberComponent implements OnInit {
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
   @ViewChild('activateSimForm') activateSimForm: NgForm;
-  @Input()
   public userPlan: IUserPlan;
-  @Input()
+  public planId: string
   public code: string;
   public user: IUser;
   public voucherData: IVoucherData;
   public activationCode: string;
   public iccid: string;
   public postalCode: string;
-  public pinCode: string;
+  public pinCode = '';
   public pinCodeConfirm: string;
   public carrier: string;
   public PIN_VALIDATE = {
@@ -51,26 +52,46 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
               private userAccountService: UserAccountService,
               private userPlansService: UserPlansService,
               private metaService: MetaService,
+              private route: ActivatedRoute,
               private modalHelper: ModalHelperService,
               private analyticsService: ActionsAnalyticsService) {
+    this.metaService.createCanonicalUrl();
+    this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
+      if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
+        this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
+      }
+      if (!!params && params[ROUTE_URLS.PARAMS.USER_PLAN_ID]) {
+        this.planId = params[ROUTE_URLS.PARAMS.USER_PLAN_ID];
+        if (!!this.planId) {
+          if (this.planId !== 'prefunded') {
+            this.userPlansService.getUserPlan(this.planId).then((userPlan) => {
+              this.userPlanSelected(userPlan);
+            });
+          } else {
+            const device: IUserDevice = Object.assign({}, JSON.parse(sessionStorage.getItem('device')));
+            const sim: IExistingOrder = Object.assign({}, JSON.parse(sessionStorage.getItem('activation')));
+            if (!device || !sim) {
+              this.toastHelper.showAlert('Activation data is missing, please try again!');
+              this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
+            } else {
+              const basePlan = { id: sim.prefundedPlan, price: sim.prefundedAmount, promoted: false, unlimited: true, type: 'Unlimited' } as IFireBasePlanItem;
+              this.userPlan = {
+                id: 'prefunded', activationCode: sim.activationCode, planDevice: device,
+                basePlan, autoRenewPlan: false,
+              } as IUserPlan;
+            }
+          }
+        } else {
+          this.toastHelper.showAlert('Activation data is missing, please try again!');
+          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.metaService.createCanonicalUrl();
-    console.info('code input ', this.code)
-    if (!!this.code) {
-      this.activationCode = this.code;
-    }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!!changes.userPlan) {
-      const newUserPlanValue: IUserPlan = changes.userPlan.currentValue;
-      if (!!newUserPlanValue) {
-        this.userPlanSelected(newUserPlanValue);
-      }
-    }
-  }
   public showActivationModal(): void {
     this.modalHelper.showInformationMessageModal('Where to find your Activation Code', '', 'Got it!', null, true, 'activation-info-modal',
       `<div class="text-content-holder">
@@ -87,6 +108,9 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
     this.captchaRequired = !!captchaResponse ? false : true;
   }
 
+  public goToActivationPath(): void {
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`]);
+  }
   public validatePin(): number {
     if (!!this.pinCode && this.pinCode.length !== 0) {
       const sequentialPatternA = '012345678901234567890';
@@ -201,23 +225,15 @@ export class ActivateNewNumberComponent implements OnInit, OnChanges {
   private userPlanSelected(userPlan: IUserPlan): void {
     if (!!userPlan) {
       this.userPlan = userPlan;
-      this.voucherData = userPlan.voucherData;
-      this.iccid = this.userPlan.iccid;
       this.activationCode = this.userPlan.activationCode;
-      if (this.activationCode === '11111' || this.activationCode === '0000000') { // if the activation code is one of the dummy data then empty it
-        this.activationCode = '';
-      }
       this.postalCode = !!this.userPlan.planDevice && !!this.userPlan.planDevice.postalCode ? this.userPlan.planDevice.postalCode : '';
-      this.showActivationCode = !!userPlan.planDevice && userPlan.planDevice.network !== 'sprint';
-      this.showIccid = !!userPlan.planDevice && userPlan.planDevice.network === 'sprint';
-      this.carrier = this.userPlan.planDevice.network;
     } else {
       this.modalHelper.showInformationMessageModal('Failed to load the selected user plan',
         'Something went wrong, couldn\'t load the selected plan, please try again later.',
         'Continue to Account Summary','',false,'big-button')
         .result.then((result) => {
           if (!!result) {
-            this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
+            this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
           }
         });
     }

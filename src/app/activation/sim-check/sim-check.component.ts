@@ -14,13 +14,11 @@ export class SIMCheckComponent {
   constructor(private router: Router,
               private metaService: MetaService) {
 
-    sessionStorage.setItem('activation_step', 'step0');
     this.metaService.createCanonicalUrl();
   }
   public selectOption(): void {
     this.optionRef.control.markAllAsTouched();
     if (!!this.option) {
-      sessionStorage.setItem('activation_step', 'step1');
       if (this.option === 'no') {
         this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.No_SIM}`]);
       } else {

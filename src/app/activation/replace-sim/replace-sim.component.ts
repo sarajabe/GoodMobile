@@ -32,15 +32,8 @@ export class ReplaceSimComponent implements OnDestroy {
               private formBuilder: FormBuilder,
               private userAccountService: UserAccountService,
               private metaService: MetaService) {
-
-    if (sessionStorage.getItem('activation_step') !== 'step2') {
-      this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_PLANS_PATH}`]);
-    }
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
-      this.userPlans = plans.filter((plan) => !!plan.mdn && !plan.portInRequestNumber && !plan.canceled);
-      // if (!!this.userPlans && this.userPlans.length > 0) {
-      //   this.selectedPlan = this.userPlans[0];
-      // }
+      this.userPlans = plans.filter((plan) => !!plan.mdn && !plan.portInRequestNumber && !plan.canceled && plan.planDevice.pendingNewSim);
     });
     this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
       this.userAccount = account;
@@ -65,17 +58,16 @@ export class ReplaceSimComponent implements OnDestroy {
         validatedIccid = sim.iccid;
       }
       this.selectedPlan = this.userPlans.find((p) => p.mdn === mdn);
-      this.modalHelper.showSIMModal('', 'Enter your Replacement SIM’s ICCID', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
+      this.modalHelper.showSIMModal('Enter your Replacement SIM’s ICCID', '', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
          'tmo', 'Replacement SIM ICCID', true, false, (!!validatedIccid && validatedIccid.length > 0 ? validatedIccid : null)).result.then((result) => {
           if (!!result && result !== false && result.input) {
             const customHTML = '<div class="question"><p>You are about to swap to SIM <p class="iccid"><b>[' + result.input +
-            ']</b></p> on Phone Number <b>' + this.selectedPlan.mdn +
+            ']</b></p> on Phone Number <b>' + this.selectedPlan?.mdn +
               '</b></p><p class="confirm">Is this correct?</p></div>';
-            this.modalHelper.showInformationMessageModal('', '',
+            this.modalHelper.showInformationMessageModal('Confirmation', '',
               'Yes', null, true, 'confirm-swap-modal', customHTML, true, 'No',
               'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').result.then((res) => {
                 if (!!res && res === true) {
-                  sessionStorage.setItem('activation_step', 'step2');
                   if (!this.selectedPlan.planDevice.postalCode) {
                     this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal').result.then((postal) => {
                       if (!!postal) {
@@ -93,7 +85,6 @@ export class ReplaceSimComponent implements OnDestroy {
     }
   }
   public goToActivationFlow(): void {
-    sessionStorage.setItem('activation_step', 'step2');
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_PLANS_PATH}`]);
   }
   public changeDevice(iccid, captchaResponse): void {
@@ -117,10 +108,9 @@ export class ReplaceSimComponent implements OnDestroy {
         this.selectedPlan.planDevice.simNumber = iccid;
         this.appState.loading = false;
         this.userPlansService.updateUserPlan(this.selectedPlan.userId, this.selectedPlan).then(() => {
-          const params = {};
-          params[SHOP_ROUTE_URLS.PARAMS.MDN] = this.selectedPlan.mdn;
           this.toastHelper.showSuccess('SIM swap was successful!');
-          this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`, params]);
+          this.userPlansService.selectUserPlan(this.selectedPlan.id);
+          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SUCCESS_SWAP}`]);
         }, (error) => {
           this.appState.loading = false;
           this.toastHelper.showAlert(error.message || error.error ? error.error.message : error);
@@ -133,10 +123,5 @@ export class ReplaceSimComponent implements OnDestroy {
       this.appState.loading = false;
       this.toastHelper.showAlert(error.message || error.error ? error.error.message : error);
     });
-  }
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event): void {
-    event.preventDefault();
-    sessionStorage.setItem('activation_step', 'step2');
   }
 }

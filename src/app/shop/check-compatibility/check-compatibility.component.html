@@ -100,7 +100,7 @@
       <div class="action">
         <button type="submit" class="button primary mobile-padding" id="check-phone-button"
           data-cy="checkYourDeviceButton">Check your device</button>
-        <a class="skip-action" data-cy="skipForNowLink" (click)="skipDevice()">Skip for now</a>
+        <a class="skip-action" data-cy="skipForNowLink" (click)="skipDevice()" *ngIf="!activationFlow">Skip for now</a>
       </div>
       <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
       </app-invisible-recaptcha>

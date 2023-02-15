@@ -40,9 +40,14 @@
           </ng-container>
           <ng-container *ngIf="!!isActivationFlow">
             <p class="info">Your Good Mobile plan has been successfully purchased. You can <b>activate</b> your plan right now.</p>
+            <p class="info extra" >You may now <b>proceed to activate</b> your plan and SIM in the next step!
+              Or at your convenience  from your <b>Purchased Plans</b> page at any time!</p>
             <div class="result-actions">
-              <button class="button primary" (click)="goToActivation()">
+              <button class="button primary smaller" (click)="goToActivation()">
                 Activate Now
+              </button>
+              <button class="button secondary smaller" (click)="goToPurchasedPlans()">
+                Purchased Plans
               </button>
             </div>
           </ng-container>

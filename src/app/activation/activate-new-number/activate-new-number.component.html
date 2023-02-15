@@ -1,0 +1,95 @@
+<section class="page-section activate-new">
+    <div class="back-section">
+        <a (click)="goToActivationPath()"><i class="icon-thin-left-arrow"></i> Back</a>
+    </div>
+    <h2>Activate your Plan:</h2>
+    <div class="form-holder">
+        <h5>Activate with a New Number:</h5>
+        <form #activateSimForm="ngForm" class="activate-sim-form">
+                <fieldset *ngIf="showActivationCode" class="form-field">
+                    <label class="outlined-label-input">
+                        <input type="text" name="activationCode" [class.disabled]="!!userPlan?.eSIM && !!userPlan?.activationCode" [(ngModel)]="activationCode" [readonly]="!!userPlan?.eSIM && !!userPlan?.activationCode"
+                            id="activationCode" data-cy="activationCode" #activationCodeRef="ngModel" required minlength="7" maxlength="8" [pattern]="codePattern">
+                        <span>Activation Code</span>
+                    </label>
+                    <label class="validation-message" id="activation-label">
+                        <a (click)="showActivationModal()" id="activation-link">Where to find your Activation
+                            Code?</a>
+                    </label>     
+                    <label class="validation-message"
+                        *ngIf="activationCodeRef.touched && !activationCodeRef.valid && !activationCodeRef.value"
+                        id="required-activation-code-label">Activation Code is required. </label>
+                    <label class="validation-message"
+                        *ngIf="!!activationCodeRef.value && !activationCodeRef.valid">Activation Code is invalid. </label>
+                </fieldset>
+                <fieldset class="form-field">
+                    <label class="outlined-label-input">
+                        <input type="text" name="postalCode" maxlength="10" id="postalCode"
+                        [(ngModel)]="postalCode" #postalCodeRef="ngModel" required (blur)="onPostalCodeChange()">
+                        <span>Postal Code</span>
+                    </label>
+                    <label class="validation-message"
+                        *ngIf="postalCodeRef.touched && !postalCodeRef.valid"
+                        id="required-postal-code-label">Postal Code is required. </label>
+                    <label class="validation-message" id="invalid-postal-label" *ngIf="!!postalCode && invalidPostalCode">Invalid postal code
+                    </label>
+                </fieldset>
+            <p class="smaller primary-font-bold subtext">Create your Account PIN: <span
+                class="tooltip">
+                <img src="assets/icon/info-purple-circle.svg" class="info" alt="Info icon" />
+                <span class="tooltiptext">
+                    <p class="smaller primary-font-bold">PIN Code Info</p>
+                    <p class="smaller">The PIN code should not be a sequential number: 
+                        Example: 1234 or 9876 </p>
+                    <p class="smaller primary-font-bold"> OR </p>
+                    <p class="smaller"> a sequence of the same number: Example: 1111,2222,...etc</p>
+                </span>
+                </span>
+            </p>
+            <div class="form-part">
+                <fieldset class="half">
+                    <label class="outlined-label-input">
+                        <input type="password" name="pinCode" maxlength="4" minlength="4" restrictNumbers id="pinCode" data-cy="pinCode"
+                        [(ngModel)]="pinCode" required  placeholder=" " autocomplete="off"
+                        #pinCodeRef="ngModel">
+                        <span>Account PIN</span>
+                    </label>
+                </fieldset>
+                <fieldset class="half">
+                    <label class="outlined-label-input">
+                        <input type="password" name="pinCodeConfirm" maxlength="4" minlength="4" restrictNumbers
+                        id="pinCodeConfirm" data-cy="pinCodeConfirm" [(ngModel)]="pinCodeConfirm" #pinCodeConfirmRef="ngModel"
+                        placeholder=" " required >
+                        <span>Confirm PIN</span>
+                    </label>
+                </fieldset>
+            </div>
+            <label class="validation-message"
+                 *ngIf="validatePin() == PIN_VALIDATE.EMPTY && pinCodeRef.touched && !processingRequest"
+                     id="required-pin-label">Account Pin Code required</label>
+             <label class="validation-message" id="invalid-pin-label"
+                    *ngIf="validatePin() == PIN_VALIDATE.INVALID && pinCodeRef.touched">
+                    Invalid Pin Code
+             </label>
+             <label class="validation-message" *ngIf="pinCode != pinCodeConfirm && pinCodeConfirmRef.touched"
+                 id="mismatch-label">
+                 Pin Code Mismatch
+            </label>
+            <fieldset class="re-captcha--resizing">
+                <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
+                </app-re-captcha>
+                <label class="validation-message" *ngIf="!captchaResponse && captchaRequired">Please verify that you are not a robot</label>
+            </fieldset>
+            <div class="account-actions">
+                <button class="button primary"
+                    [disabled]="!userPlan?.planDevice || !activateSimForm.valid || validatePin() != PIN_VALIDATE.VALID || invalidPostalCode || pinCode != pinCodeConfirm || !captchaValid"
+                    (click)="activateNewNumber()" [uiBlockButton]="processingRequest"
+                    [uiBlockMessage]="processingRequest? null : 'Activate'" id="activate-button" data-cy="activate-button">
+                    Activate
+                </button>
+                <span class="validation-message" *ngIf="!userPlan?.planDevice">You need to register your device before
+                    you continue</span>
+            </div>
+        </form>
+    </div>
+</section>
