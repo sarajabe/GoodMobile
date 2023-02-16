@@ -86,6 +86,7 @@
     .form-section {
         display: flex;
         flex-basis: 50%;
+        flex-direction: column;
     }
 
     .three-fields {
