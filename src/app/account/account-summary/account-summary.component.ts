@@ -1065,7 +1065,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     const params = {};
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
     params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER] = true;
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATE_SIM}`, params]);
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.PORT_NUMBER}`, params]);
   }
   public cancelPortIn(): void {
     this.modalHelper.showConfirmMessageModal('Cancel Port In', 'Are you sure you want to cancel?', 'Yes', 'No', '').result.then((result) => {

@@ -109,7 +109,12 @@ export class ActivateNewNumberComponent implements OnInit {
   }
 
   public goToActivationPath(): void {
-    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`]);
+    const params = {};
+    params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.planId;
+    if (!!this.activationCode) {
+      params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activationCode;
+    }
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
   }
   public validatePin(): number {
     if (!!this.pinCode && this.pinCode.length !== 0) {
