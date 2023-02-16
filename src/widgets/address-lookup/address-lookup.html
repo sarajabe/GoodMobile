@@ -1,40 +1,48 @@
 <form [formGroup]="addressFieldsForm">
   <div class="row form-section">
     <fieldset class="address-lookup twelve" *ngIf="showAlias">
-      <label for="addressAlias">Address Name<span
-        class="form-text error validation-message">*</span></label>
-      <input id="addressAlias"  data-cy="addressName" type="text" formControlName="alias" (change)="addressFieldChanged($event)"
-        [readonly]="readonly" maxlength="50" (blur)="validateAlias(addressFieldsForm.controls.alias.value)">
+      <label class="outlined-label-input">
+        <input id="addressAlias"  data-cy="addressName" type="text" formControlName="alias" (change)="addressFieldChanged($event)"
+        [readonly]="readonly" maxlength="50" (blur)="validateAlias(addressFieldsForm.controls.alias.value)" placeholder=" ">
+        <span>Address Name</span>
+    </label>
       <div class='form-text error'>
         <label class="validation-message" data-cy="addressNameRequiredMsg" *ngIf="addressFieldsForm.controls.alias.touched && addressFieldsForm.controls.alias.hasError('required')">Address name is a required field</label>
       </div>
     </fieldset>
     <fieldset class="address-lookup eight">
-      <label for="addressLookup" *ngIf="!billingAddressAlias">Address <span
-          class="form-text error validation-message">*</span></label>
-      <label for="addressLookup" *ngIf="billingAddressAlias">Billing Address<span
-          class="form-text error validation-message">*</span></label>
-      <input id="addressLookup" data-cy="addressLookup" #addressLookup type="search" ngui-auto-complete [max-num-list]="readonly ? 1 : 10"
-        [source]="findPlace.bind(this)" class="geolocate" list-formatter="description" display-property-name="main_text"
-        autocomplete="off"  (valueChanged)="addressDetails($event)"
-        formControlName="address1" [tab-to-select]="false" [readonly]="readonly"
-        (change)="validateAddress1(addressFieldsForm.controls.address1.value)">
-      <i class="icon-search input-search-icon"></i>
+      <label class="outlined-label-input">
+        <input formControlName="address1" matInput type="search" list-formatter="description"  
+        id="addressLookup" data-cy="addressLookup" #addressLookup type="search"
+          class="geolocate"  [matAutocomplete]="auto" required placeholder=" "
+          (input)="changedAddress()" (change)="validateAddress1(addressFieldsForm.controls.address1.value)" [readonly]="readonly"/>
+   
+          <span class="addressName">{{!billingAddressAlias ? 'Address' : 'Billing Address'}}</span>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option?.description }}
+            </mat-option>
+          </mat-autocomplete>
+    </label>
       <div class='form-text error'>
         <label id ="billingAddress-msg" data-cy="addressIsRequiredMSG" class="validation-message" data-cy="addressRequiredMsg" *ngIf="addressFieldsForm.controls.address1.touched && addressFieldsForm.controls.address1.hasError('required')">Address is a Required Field</label>
       </div>
     </fieldset>
     <fieldset class="four">
-      <label for="address2">Suite/Apt. No.</label>
-      <input id="address2" data-cy="suiteNo" type="text" formControlName="address2" [readonly]="readonly"
-        (change)="addressFieldChanged($event)" autocomplete="address-line2">
+      <label class="outlined-label-input">
+        <input id="address2" data-cy="suiteNo" type="text" formControlName="address2" [readonly]="readonly"
+        (change)="addressFieldChanged($event)" autocomplete="address-line2" placeholder=" ">
+        <span>Suite/Apt. No.</span>
+    </label>
     </fieldset>
   </div>
   <div class="row payment-form address-lookup-details" [class.active]="hasDetails" [class.hidden]="!hasDetails">
     <fieldset class="four">
-      <label for="billingCity">City <span class="form-text error validation-message">*</span></label>
-      <input id="billingCity"  data-cy="billingCity" type="text" formControlName="city" [readonly]="readonly"
+      <label class="outlined-label-input">
+        <input id="billingCity"  data-cy="billingCity" type="text" formControlName="city" [readonly]="readonly" placeholder=" "
         (change)="addressFieldChanged($event)" autocomplete="address-level2">
+        <span>City</span>
+    </label>
       <div class='form-text error'>
         <label id="city-msg" data-cy="cityIsRequired" class="validation-message" *ngIf="addressFieldsForm.controls.city.touched && addressFieldsForm.controls.city.hasError('required')">City is a Required Field</label>
       </div>
@@ -44,21 +52,22 @@
       </div>
     </fieldset>
     <fieldset class="four">
-      <label for="billingState">State <span class="form-text error validation-message">*</span></label>
-      <input id="billingState" data-cy="billingState" type="text" formControlName="state" [readonly]="readonly"
-        (change)="addressFieldChanged($event)" autocomplete="address-level1" maxlength="2" minlength="2">
-      <div class='form-text error'>
-        <label id="state-msg" data-cy="stateIsRequired" class="validation-message" *ngIf="addressFieldsForm.controls.state.touched && addressFieldsForm.controls.state.hasError('required')">State is a Required Field </label>
-      </div>
+      <label class="outlined-label-input">
+        <input id="billingState" data-cy="billingState" type="text" formControlName="state" [readonly]="readonly"
+        (change)="addressFieldChanged($event)" autocomplete="address-level1" maxlength="2" minlength="2" placeholder=" ">
+        <span>State</span>
+      </label>
       <div class='form-text error'
         *ngIf="addressFieldsForm.controls.state.dirty && !!addressFieldsForm.controls.state.value && !addressFieldsForm.controls.state.valid">
         <label id="state-invalid-msg" data-cy="invalidStateMsg" class="validation-message">Invalid State </label>
       </div>
     </fieldset>
     <fieldset class="four">
-      <label for="billingPostal">Postal Code <span class="form-text error validation-message">*</span></label>
-      <input id="billingPostal"  data-cy="billingPostal" type="text" formControlName="postalCode" [readonly]="readonly"
-        (change)="addressFieldChanged($event)" autocomplete="postal-code" maxlength="10" minlength="5">
+      <label class="outlined-label-input">
+        <input id="billingPostal"  data-cy="billingPostal" type="text" formControlName="postalCode" [readonly]="readonly"
+        (change)="addressFieldChanged($event)" autocomplete="postal-code" maxlength="10" minlength="5" placeholder=" ">
+        <span>Postal Code </span>
+      </label>
       <div class='form-text error'>
         <label id="postalCode-msg" class="validation-message" data-cy="postalIsRequired" *ngIf="addressFieldsForm.controls.postalCode.touched && addressFieldsForm.controls.postalCode.hasError('required')">Postal Code is a Required Field</label>
       </div>

@@ -46,6 +46,7 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 import { LandingEbbComponent } from './landing-ebb/landing-ebb.component';
 import { PhoneManagementService } from 'src/services/phones.service';
 import { CommonModule } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const metadata: Metadata = {
   author: 'ZtarMobile',
@@ -104,6 +105,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         AppRoutingModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
+        MatAutocompleteModule
     ],
     exports: [],
     providers: [AppState, MetaService, ContentfulService, ToastrHelperService, ModalHelperService, EbbManager, PhoneManagementService,

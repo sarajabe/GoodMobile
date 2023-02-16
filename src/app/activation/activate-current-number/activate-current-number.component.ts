@@ -1,30 +1,28 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import {
-  ActionsAnalyticsService, IAddress, IFirebaseAddress, IPortInUserAccountRequest, IUserPlan,
+  ActionsAnalyticsService, FirebaseUserProfileService, IAddress, IExistingOrder, IFirebaseAddress, IFireBasePlanItem, IPortInUserAccountRequest, IUserDevice, IUserPlan,
   IVoucherData, PortInStatusEnum, UserAccountPortInService, UserPlansService
 } from '@ztarmobile/zwp-service-backend';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
-import { CAPTCHA_SITE_ID } from 'src/environments/environment';
+import { CAPTCHA_SITE_ID, CUSTOMER_CARE_NUMBER } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { ReCaptchaComponent } from 'src/widgets/re-captcha/re-captcha.component';
+import { filter, takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-activate-current-number',
   templateUrl: './activate-current-number.component.html',
+  styleUrls: ['./activate-current-number.component.scss']
 })
-export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
+export class ActivateCurrentNumberComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
-  @Input()
   public user: IUser;
-  @Input()
   public userPlan: IUserPlan;
-  @Input()
-  public code: string;
   public codePattern = new RegExp('^[A-Z]+\\d{6}|\\d{7}$');
   public voucherData: IVoucherData;
   public portIn: IPortInUserAccountRequest = { address: {} } as IPortInUserAccountRequest;
@@ -54,40 +52,72 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
   public cancelPort = false;
   public SITE_ID = CAPTCHA_SITE_ID;
   public captchaValid = false;
+  public customerCareNumber: string = CUSTOMER_CARE_NUMBER;
   private captchaResponse: string;
   private portInRequestNumber: string;
+  private alive = true;
+  planId: any;
 
   constructor(private router: Router,
               private toastHelper: ToastrHelperService,
               private userAccountPortInService: UserAccountPortInService,
               private userPlansService: UserPlansService,
               private appState: AppState,
+              private route: ActivatedRoute,
               private metaService: MetaService,
               private modalHelper: ModalHelperService,
+              private userProfileService: FirebaseUserProfileService,
               private analyticsService: ActionsAnalyticsService) {
   }
 
   ngOnInit(): void {
     this.metaService.createCanonicalUrl();
+    this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive), filter((user) => !!user)).subscribe((user) => {
+      this.user = user;
+    });
+   
+    this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
+      if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
+        this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
+      }
+      if (!!params && params[ROUTE_URLS.PARAMS.USER_PLAN_ID]) {
+        this.planId = params[ROUTE_URLS.PARAMS.USER_PLAN_ID];
+        if (!!this.planId) {
+          if (this.planId !== 'prefunded') {
+            this.userPlansService.getUserPlan(this.planId).then((userPlan) => {
+              this.userPlanSelected(userPlan);
+            });
+          } else {
+            const device: IUserDevice = Object.assign({}, JSON.parse(sessionStorage.getItem('device')));
+            const sim: IExistingOrder = Object.assign({}, JSON.parse(sessionStorage.getItem('activation')));
+            if (!device || !sim) {
+              this.toastHelper.showAlert('Activation data is missing, please try again!');
+              this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
+            } else {
+              const basePlan = { id: sim.prefundedPlan, price: sim.prefundedAmount, promoted: false, unlimited: true, type: 'Unlimited' } as IFireBasePlanItem;
+              this.userPlan = {
+                id: 'prefunded', activationCode: sim.activationCode, planDevice: device,
+                basePlan, autoRenewPlan: false,
+              } as IUserPlan;
+            }
+          }
+        } else {
+          this.toastHelper.showAlert('Activation data is missing, please try again!');
+          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
+        }
+      }
+    });
     if (!!this.userPlan) {
       this.activationCode = this.userPlan.activationCode;
       if (this.activationCode === '11111' || this.activationCode === '0000000') { // if the activation code is one of the dummy data then empty it
         this.activationCode = '';
       }
     }
-    if (!!this.code) {
-      this.activationCode = this.code;
-    }
     this.userPortAddress = { address1: '', address2: '' } as IFirebaseAddress;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!!changes.userPlan) {
-      const newUserPlanValue: IUserPlan = changes.userPlan.currentValue;
-      if (!!newUserPlanValue) {
-        this.userPlanSelected(newUserPlanValue);
-      }
-    }
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 
   public resolvedCaptcha(captchaResponse: string): void {
@@ -107,7 +137,9 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
     this.portIn.address = Object.assign({}, address);
     this.isValidAddress = !!this.portIn.address;
   }
-
+  public goToActivationPath(): void {
+    this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`]);
+  }
   public setValidAddress(isValid: boolean): void {
     this.isValidAddress = isValid;
   }
@@ -211,7 +243,7 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
   }
 
   private callActivateCurrentNumber(): void {
-    this.processingRequest = true;
+    this.appState.loading = true;
     if (!!this.showActivationCode) {
       this.portIn.activationCode = this.activationCode;
     }
@@ -221,6 +253,7 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
     this.portIn.version = '2';
     this.userAccountPortInService.newPortInAccount(this.userPlan.id, this.portIn, this.captchaResponse)
       .then((account) => {
+        this.appState.loading = false;
         if (this.userPlan.basePlan.ebb) {
           const data = {
             event: 'ACP_activation ',
@@ -237,13 +270,13 @@ export class ActivateCurrentNumberComponent implements OnInit, OnChanges {
         const simNumber = !!this.showActivationCode ? this.activationCode : this.iccid;
         this.analyticsService.trackPortIn('PortIn', this.carrier, simNumber, this.userPlan.planDevice.model, this.portIn.address.postalCode,
           this.userPlan.id, this.userPlan.basePlan.id);
-        this.userPlansService.selectUserPlan(this.userPlan.id);
         const params = {};
         params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER] = true;
-        this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.ACTIVATION_SUMMARY}`, params]);
+        this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.PORT_SUBMITTED}`, params]);
       }, (error) => {
         this.toastHelper.showAlert(error.message || 'There was an error with this activation code');
         this.processingRequest = false;
+        this.appState.loading = false;
         this.captchaResponse = '';
         this.reCaptcha.resetReCaptcha();
       });

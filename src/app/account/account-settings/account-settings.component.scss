@@ -44,6 +44,71 @@
     }
   }
 }
+.new-address-form {
+  ::ng-deep {
+    .form-section {
+        .eight{
+            padding-left: 0;
+            padding-right: 0;
+            width: 50%;
+        }
+        .four {
+            padding-right: 0;
+            width: 50%;
+        }
+        @media(max-width: $desktop-min-width-minus) {
+            .eight {
+                padding-right: 10px;
+            }
+            .four {
+                padding-left: 10px;
+            }
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            .eight {
+                width: 100%;
+                padding-right: 0px;
+            }
+            .four {
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0px;
+            }
+        }
+    }
+    .address-lookup-details {
+        .four {
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+        @media(max-width: $desktop-min-width-minus) {
+            .four {
+                &:first-child {
+                    padding-right: 0px;
+                }
+                &:nth-child(2) {
+                    padding-left: 10px;
+                }
+                &:last-child {
+                    padding-right: 0px;
+                }
+            }
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            .four {
+                width: 100%;
+                &:nth-child(2) {
+                    padding-left: 0px;
+                }
+            }
+        }
+    }
+}
+}
 .ebb-header-section {
   display: flex;
   .enrolled-container {

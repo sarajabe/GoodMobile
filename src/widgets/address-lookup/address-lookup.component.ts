@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IAutoCompletePrediction, IFirebaseAddress, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
+import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/app.service';
 
 @Component({
   selector: 'app-address-lookup',
@@ -31,11 +33,12 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   public isValidState = true;
   public isValidPostal = true;
   public isValidAlias = true;
-
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
   private streetSearchText: string;
 
   constructor(private cdRef: ChangeDetectorRef, private placesAutoCompleteService: PlacesAutocompleteService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,private appState: AppState) {
     this.addressFieldsForm = formBuilder.group({
       alias: [''],
       address1: ['', Validators.required],
@@ -63,6 +66,9 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
       this.addressFieldsForm.controls.alias.clearValidators();
       this.addressFieldsForm.controls.alias.updateValueAndValidity();
     }
+  }
+  public changedAddress(): void {
+    this.findPlace(this.addressFieldsForm.controls.address1.value);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -95,9 +101,11 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
     this.cdRef.detach();
   }
 
-  public findPlace(keyword: any): Observable<Array<IAutoCompletePrediction>> {
+  public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
     this.hasDetails = keyword !== '';
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
 
   public addressFieldChanged(value): void {
@@ -114,21 +122,30 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
     this.addressChange.emit(this.getAddressValues(this.displayedAddressModel, value));
   }
 
-  public addressDetails(event: IAutoCompletePrediction): void {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
     if (this.readonly) {
       return;
     }
-    if (!!event && !!event.main_text) {
-      this.displayedAddressModel.address1 = this.addressFieldsForm.get('address1').value;
+    if (!!eventFire && !!this.addressFieldsForm.controls.address1?.value && this.addressFieldsForm.controls.address1?.value?.main_text) {
+      const event = this.addressFieldsForm.controls.address1?.value;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.placesAutoCompleteService.findDetailedAddressFields(event.place_id).subscribe((place) => {
           this.streetSearchText = !!place.address1 && place.address1.length > 0 ? place.address1 : null;
           this.displayedAddressModel = this.getAddressValues(place, event.main_text);
+          const address = `${this.displayedAddressModel?.address1}, ${this.displayedAddressModel?.city
+          }, ${this.displayedAddressModel?.state} ${this.displayedAddressModel?.postalCode
+            ? this.displayedAddressModel?.postalCode
+            : ''
+          }`;
           this.addressFieldsForm.controls.city.setValue(this.displayedAddressModel.city);
           this.addressFieldsForm.controls.state.setValue(this.displayedAddressModel.state);
           this.addressFieldsForm.controls.postalCode.setValue(this.displayedAddressModel.postalCode);
           this.addressChange.emit(this.displayedAddressModel);
+          this.addressFieldsForm.controls.address1.setValue(address);
+          this.appState.loading = false;
         }, (error) => {
+          this.appState.loading = false;
           console.warn(`Google can't find details for place: ${event.place_id}`, error);
           this.addressChange.emit(this.getAddressValues(this.displayedAddressModel, event.main_text));
         });

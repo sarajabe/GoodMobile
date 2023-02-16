@@ -262,7 +262,8 @@ export const ACTIVATION_ROUTE_URLS = {
   No_SIM: 'no-sim',
   SUCCESS_SWAP: 'successful-SIM-swap',
   ACTIVATE_NEW: 'activate-new-number',
-  PORT_NUMBER: 'keep-your-current-number'
+  PORT_NUMBER: 'keep-your-current-number',
+  PORT_SUBMITTED: 'port-request-submitted'
 };
 
 export const MIGRATION_ROUTE_URLS = {

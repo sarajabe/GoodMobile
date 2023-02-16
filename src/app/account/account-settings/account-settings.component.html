@@ -288,15 +288,17 @@
             </label>
           </fieldset>
         </form>
-        <form [formGroup]="billingAddressForm" class="credit-card-form3"
+        <form [formGroup]="billingAddressForm" class="new-address-form"
           [class.hidden]="sharedAddressAsShipping && (ship == null)">
           <div class="secondary-font text-bold margin-bottom-20">Billing address</div>
           <fieldset class="seven">
-            <label class="font-size-12">Name <span class="form-text error validation-message">*</span></label>
-            <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias">
+            <label class="outlined-label-input">
+              <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" ">
+              <span>Address Name</span>
+          </label>
             <label class="validation-message" data-cy="addressNameRequiredMsg"
               *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address
-              alias is required field</label>
+              name is required field</label>
           </fieldset>
           <fieldset class="address-lookup twelve">
             <app-address-lookup [displayedAddress]="userBillingAddress" (isValid)="setValidAddress($event)"
@@ -361,10 +363,12 @@
       </div>
       <div class="card-content" *ngIf="!!showShippingAddress">
         <h4 class="title toggled">New Address</h4>
-        <form [formGroup]="billingAddressForm" class="credit-card-form3">
+        <form [formGroup]="billingAddressForm" class="new-address-form">
           <fieldset class="seven">
-            <label for="alias">Name <span class="form-text error validation-message">*</span></label>
-            <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias">
+            <label class="outlined-label-input">
+              <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" ">
+              <span>Name</span>
+          </label>
             <label id="required-alias-msg" data-cy="addressNameReuiredMsg" class="validation-message"
               *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address
               name

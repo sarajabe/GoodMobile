@@ -1,0 +1,173 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+
+.current-number {
+    margin-top: 48px;
+    margin-bottom: 48px;
+    @media(max-width: $phablet-min-width-minus) {
+        margin-top: 32px;
+        margin-bottom: 32px;
+    }
+    .back-section {
+        margin-bottom: 48px;
+        display: flex;
+        gap: 12px;
+        a {
+            font-size: rem-calc(18px);
+            line-height: 18px;
+            font-family: $secondary-font-family-bold;
+            margin-bottom: 3px;
+            i {
+                font-size: rem-calc(14px); 
+            }
+        }
+        @media(max-width: $phablet-min-width-minus) {
+            margin-bottom: 32px;
+        }
+    }
+    .info-banner {
+        max-width: 1000px;
+        width: 100%;
+        margin-top: 32px;
+    }
+    .form-holder {
+        margin-top: 32px;
+        background: #FBFBFB;
+        padding: 24px;
+        width: 100%;
+        max-width: 1000px;
+        border-radius: 0px 0px 10px 10px;
+        box-shadow: 0px 4px 15px rgba(206, 211, 214, 0.6);
+        h5 {
+            margin-bottom: 18px;
+        }
+        .activate-port-form {
+            .outlined-label-input {
+                max-width: 500px;
+                width: 100%;
+            }
+            .subtext {
+                margin-bottom: 12px;
+                @media(max-width: $phablet-min-width-minus) {
+                    margin-top: 12px;
+                }
+            }
+            ::ng-deep {
+                .form-section {
+                    margin-bottom: 0!important;
+                    .eight{
+                        padding-left: 0;
+                        padding-right: 0;
+                        width: 50%;
+                    }
+                    .four {
+                        padding-right: 0;
+                        width: 50%;
+                    }
+                    @media(max-width: $desktop-min-width-minus) {
+                        .eight {
+                            padding-right: 10px;
+                        }
+                        .four {
+                            padding-left: 10px;
+                        }
+                    }
+                    @media(max-width: $phablet-min-width-minus) {
+                        .eight {
+                            width: 100%;
+                            padding-right: 18px;
+                        }
+                        .four {
+                            width: 100%;
+                            padding-left: 0;
+                            padding-right: 18px;
+                        }
+                    }
+                }
+                .address-lookup-details {
+                    .four {
+                        &:first-child {
+                            padding-left: 0;
+                        }
+                        &:last-child {
+                            padding-right: 0;
+                        }
+                    }
+                    @media(max-width: $desktop-min-width-minus) {
+                        .four {
+                            &:first-child {
+                                padding-right: 10px;
+                            }
+                            &:nth-child(2) {
+                                padding-left: 10px;
+                            }
+                            &:last-child {
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                    @media(max-width: $phablet-min-width-minus) {
+                        .four {
+                            width: 100%;
+                            &:nth-child(2) {
+                                padding-left: 0px;
+                            }
+                        }
+                    }
+                }
+            }
+            .form-row {
+                display: flex;
+                gap: 16px;
+                width: 100%;
+                &.full {
+                    .half {
+                        flex-basis: 50%;
+                    }
+                    .pin {
+                        flex-basis: 40%;
+                    }
+                }
+                @media(max-width: 999.9px) {
+                    &.desktop-break {
+                        flex-direction: column;
+                        gap: 0;
+                        .half {
+                            flex-basis: 100%;
+                        }
+                        .pin {
+                            flex-basis: 100%;
+                        }
+                    }
+                }
+                @media(max-width: $phablet-min-width-minus) {
+                    &.full {
+                        flex-direction: column;
+                        gap: 0;
+                        .half {
+                            flex-basis: 100%;
+                        }
+                    }
+                }
+                
+            }
+            .tooltip {
+                cursor: pointer;
+                .tooltiptext {
+                    top: 0;
+                    background: #5E5E5E;
+                    color: #FBFBFB;
+                    height: 200px;
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    @media(max-width: 450px) {
+                       height: 215px;
+                    }
+                }
+            }
+        }
+    }
+}

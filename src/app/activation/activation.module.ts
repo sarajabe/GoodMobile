@@ -19,6 +19,7 @@ import { ReplaceSimComponent } from './replace-sim/replace-sim.component';
 import { SIMCheckComponent } from './sim-check/sim-check.component';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { SuccessSwapComponent } from './success-swap/success-swap.component';
+import { PortSubmittedComponent } from './port-submitted/port-submitted.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SuccessSwapComponent } from './success-swap/success-swap.component';
     NoSIMComponent,
     ReplaceSimComponent,
     SIMCheckComponent,
-    SuccessSwapComponent],
+    SuccessSwapComponent,
+    PortSubmittedComponent],
   imports: [
     CommonModule,
     FormsModule,

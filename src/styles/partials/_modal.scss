@@ -2939,7 +2939,7 @@
           text-align: left;
 
           &.address-lookup {
-            input {
+            .outlined-label-input {
               width: 66.66666666666666%;
 
               @media (max-width: 640px) {
@@ -2953,9 +2953,8 @@
           text-align: left;
         }
 
-        input {
+        .outlined-label-input {
           width: 94%;
-          height: 30px;
           margin-bottom: 15px;
         }
 
@@ -2980,9 +2979,6 @@
             font-family: $base-font-family;
           }
 
-          input {
-            height: 40px;
-          }
         }
       }
     }

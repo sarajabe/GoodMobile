@@ -75,11 +75,12 @@
                             <form #shippingMethodForm="ngForm">
                                 <div class="shipping-method-form">
                                     <fieldset class="name">
-                                        <label for="name">Address Name<span
-                                                class="form-text error validation-message">*</span></label>
-                                        <input id="name" data-cy="name" type="text" name="name" required
+                                        <label class="outlined-label-input">
+                                            <input id="name" data-cy="name" type="text" name="name" required placeholder=" "
                                             [(ngModel)]="newAddressName" autocomplete="name" #addressName="ngModel"
                                             (input)="nameRequired = false; showErrorMessage=false">
+                                            <span>Address Name</span>
+                                        </label>
                                         <label class="validation-message" data-cy="addressNameIsRequiredMSG"
                                             *ngIf="addressName.touched && !addressName.valid || nameRequired">
                                             Address Name is a required field</label>
@@ -130,11 +131,12 @@
                     <form #editShippingMethodForm="ngForm">
                         <div class="shipping-method-form">
                             <fieldset class="name long">
-                                <label for="editName">Address Name<span
-                                        class="form-text error validation-message">*</span></label>
-                                <input id="editName" data-cy="name" type="text" name="editName" required
+                                <label class="outlined-label-input">
+                                    <input id="editName" data-cy="name" type="text" name="editName" required
                                     [(ngModel)]="shippingName" autocomplete="name" #editName="ngModel"
                                     (input)="nameRequired = false">
+                                    <span>Address Name</span>
+                                </label>
                                 <label class="validation-message" data-cy="addressNameRequiredMsg"
                                     *ngIf="editName.touched && !editName.valid || nameRequired">
                                     Address Name is a required field</label>

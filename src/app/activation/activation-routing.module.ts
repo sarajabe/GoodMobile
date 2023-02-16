@@ -13,6 +13,7 @@ import { CheckCompatibilityResultComponent } from './check-compatibility-result/
 import { ChooseActivationPathComponent } from './choose-activation-path/choose-activation-path.component';
 import { ChoosePlanPathComponent } from './choose-plan-path/choose-plan-path.component';
 import { NoSIMComponent } from './no-sim/no-sim.component';
+import { PortSubmittedComponent } from './port-submitted/port-submitted.component';
 import { ReplaceSimComponent } from './replace-sim/replace-sim.component';
 import { SIMCheckComponent } from './sim-check/sim-check.component';
 import { SuccessSwapComponent } from './success-swap/success-swap.component';
@@ -51,6 +52,7 @@ const routes: Routes = [
       { path: ACTIVATION_ROUTE_URLS.REPLACE_SIM, component: ReplaceSimComponent, data: { title: 'SIM Replacement', description: 'Activate your replacement SIM card and continue enjoying the service from Good Mobile' } as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACTIVATION_ROUTE_URLS.SIM_CHECK, component: SIMCheckComponent, data: { title: 'SIM check',  description: 'Let us start your activation process, but first select what how do you want to use your SIM'} as IPageMeta, canActivate: [AuthEmailGuardService] },
       { path: ACTIVATION_ROUTE_URLS.SUCCESS_SWAP, component: SuccessSwapComponent, data: { title: 'Successful SIM Swap',  description: 'You have successfully swapped your SIM'} as IPageMeta, canActivate: [AuthEmailGuardService] },
+      { path: ACTIVATION_ROUTE_URLS.PORT_SUBMITTED, component: PortSubmittedComponent, data: { title: 'Port Request Submitted',  description: 'Your port in request has been submitted successfully!'} as IPageMeta, canActivate: [AuthEmailGuardService] },
     ]
   }
 ];

@@ -1,0 +1,29 @@
+@import "../../../styles/modules/_variables.scss";
+@import "../../../styles/modules/_mixins.scss";
+
+.page-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 48px 0 80px;
+    h1 {
+        margin-bottom: 24px;
+    }
+    .action {
+        margin-top: 32px;
+    }
+    @media(max-width: $phablet-min-width-minus) {
+        margin: 32px 0 32px;
+        h1 {
+            margin-bottom: 12px;
+        }
+        .options {
+            margin-top: 24px;
+        }
+        .action {
+            margin-top: 24px;
+        }
+    }
+}

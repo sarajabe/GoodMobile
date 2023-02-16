@@ -1,100 +1,102 @@
-<div class="form-holder">
-    <div class="content-holder">
-        <div class="info-banner error-background bottom" *ngIf="userPlan?.portInFailedMessage">
-            <div class="flex">
-                <img src="assets/icon/error-icon.svg" alt="Alert Icon">
-                <div class="banner-content">
-                    <p class="title">PortIn Issue!</p>
-                    <p class="description last">{{userPlan?.portInFailedMessage}} <span
-                        *ngIf="(userPlan?.portInStatusReason == '6D') || (userPlan?.portInStatusReason == '1P') || (userPlan?.portInStatusReason == '8B')">
-                        {{customerCareNumber}}</span></p>
-                </div>
-            </div>
+<section class="page-section current-number">
+    <div class="back-section">
+        <a (click)="goToActivationPath()"><i class="icon-thin-left-arrow"></i> Back</a>
+    </div>
+    <h2>Activate your Plan:</h2>
+    <p class="smaller">In order to port your current number we need the information below.<br>
+        Please ensure the fields are complete & correct before submitting. </p>
+    <div class="info-banner warning-background" *ngIf="!userPlan?.portInFailedMessage">
+        <div class="flex">
+          <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
+          <div class="banner-content">
+            <p class="title">Note:</p>
+            <p class="description">Any incorrect information may result in your number not porting to your new Good Mobile account.</p>
+          </div>
         </div>
+    </div>
+    <div class="info-banner error-background" *ngIf="userPlan?.portInFailedMessage">
+        <div class="flex center">
+          <img src="assets/icon/error-icon.svg" alt="Error Icon"/>
+          <div class="banner-content">
+            <p class="title">PortIn Issue!</p>
+            <p class="description last">{{userPlan?.portInFailedMessage}} <span
+                *ngIf="(userPlan?.portInStatusReason == '6D') || (userPlan?.portInStatusReason == '1P') || (userPlan?.portInStatusReason == '8B')">
+                {{customerCareNumber}}</span></p>
+          </div>
+        </div>
+    </div>
+    <div class="form-holder">
+        <h5>Port your Current Number</h5>
         <form #activateSimForm="ngForm" class="activate-port-form">
-            <div class="form-row full">
-                <fieldset *ngIf="showActivationCode">
-                    <label for="activationCode">Enter activation Code<span class="form-text error validation-message">*</span>
-                    </label>
+            <fieldset *ngIf="showActivationCode">
+                <label class="outlined-label-input">
                     <input restrictNumbers type="text" name="activationCode" [(ngModel)]="activationCode"   [class.disabled]="!!userPlan?.eSIM && !!userPlan?.activationCode"
-                        id="activationCode" data-cy="activationCode" #activationCodeRef="ngModel" required minlength="7" maxlength="8" [pattern]="codePattern" 
-                        [readonly]="!!updatePortIn || (!!userPlan?.eSIM && !!userPlan?.activationCode)">
-                    <label class="validation-message" id="activation-label">
-                        <a (click)="showActivationModal()" id="activation-link">Where to find your Activation
-                            Code</a>
-                    </label>
-                    <label class="validation-message"
-                        *ngIf="activationCodeRef.touched && !activationCodeRef.valid && !activationCodeRef.value">Activation
-                        Code is required. </label>
-                    <label class="validation-message"
-                        *ngIf="activationCodeRef.dirty && !activationCodeRef.valid && !!activationCodeRef.value">Activation
-                        Code is invalid. </label>
-                </fieldset>
-            </div>
-            <div class="form-row half" *ngIf="showIccid">
-                <fieldset>
-                    <label for="iccid">Verify ICCID number<span class="form-text error validation-message">*</span>
-                    </label>
-                    <input restrictNumbers type="tel" name="iccid" [(ngModel)]="iccid" id="iccid"
-                        #iccidRef="ngModel" required restrictNumbers minlength="19" maxlength="22"
-                        [readonly]="!!updatePortIn">
-                    <label class="validation-message" id="iccid-label">
-                        <a (click)="showIccidModal()" id="iccid-link">Where to find my SIM ICCID number</a>
-                    </label>
-                    <label class="validation-message" *ngIf="iccidRef.touched && !iccidRef.valid">ICCID is required.
-                    </label>
-                </fieldset>
-            </div>
-            <div class="form-row half">
-                <fieldset >
-                    <label class="label-width" for="currentNumber">Current number we are moving<span class="form-text error validation-message">*</span>
-                    </label>
+                    id="activationCode" data-cy="activationCode" #activationCodeRef="ngModel" required minlength="7" maxlength="8" [pattern]="codePattern" placeholder=" "
+                    [readonly]="!!updatePortIn || (!!userPlan?.eSIM && !!userPlan?.activationCode)">
+                    <span>Activation Code</span>
+                </label>
+                <label class="validation-message" id="activation-label">
+                    <a (click)="showActivationModal()" id="activation-link">Where to find your Activation
+                        Code?</a>
+                </label>
+                <label class="validation-message"
+                    *ngIf="activationCodeRef.touched && !activationCodeRef.valid && !activationCodeRef.value">Activation
+                    Code is required. </label>
+                <label class="validation-message"
+                    *ngIf="activationCodeRef.dirty && !activationCodeRef.valid && !!activationCodeRef.value">Activation
+                    Code is invalid. </label>
+            </fieldset>
+            <fieldset >
+                <label class="outlined-label-input">
                     <input type="tel" name="currentNumber" id="currentNumber" data-cy="currentNumber" [(ngModel)]="portIn.mdn"
-                        #mdn="ngModel" required [readonly]="!!updatePortIn" #currentNumberRef="ngModel"
-                        restrictNumbers maxlength="10">
-                    <label class="validation-message" *ngIf="currentNumberRef.touched && !currentNumberRef.valid">
-                        Current number is required. </label>
-                </fieldset>
-
-                <fieldset >
-                    <label for="accountNumber">Old account number<span class="form-text error validation-message">*</span>
+                    #mdn="ngModel" required [readonly]="!!updatePortIn" #currentNumberRef="ngModel" placeholder=" "
+                    restrictNumbers maxlength="10">
+                    <span>Current number we are moving</span>
+                </label>
+                <label class="validation-message" *ngIf="currentNumberRef.touched && !currentNumberRef.valid">
+                    Current number is required. </label>
+            </fieldset>
+            <div class="form-row full desktop-break">
+                <fieldset class="half">
+                    <label class="outlined-label-input">
+                        <input restrictNumbers type="text" name="oldNumber" id="oldNumber"  data-cy="accountNumber" [(ngModel)]="portIn.accountNumber"
+                         #oldNumber="ngModel" required placeholder=" "
+                        [readonly]="!!updatePortIn && !editableAccountNumber" maxlength="20" autocomplete="do-not-autofill">
+                        <span>Old account number</span>
                     </label>
-                    <input restrictNumbers type="tel" name="accountNumber" id="accountNumber"  data-cy="accountNumber" [(ngModel)]="portIn.accountNumber"
-                        autocomplete="off" #accountNumber="ngModel" required
-                        [readonly]="!!updatePortIn && !editableAccountNumber" maxlength="30">
-                    <label class="validation-message" *ngIf="accountNumber.touched && !accountNumber.valid">
+                    <label class="validation-message" *ngIf="oldNumber.touched && !oldNumber.valid">
                         Old account number is required. </label>
                 </fieldset>
-            </div>
-            <div class="form-row full">
-                <fieldset>
-                    <label for="accountPassword">PIN/Password with Current Provider<span class="form-text error validation-message">*</span>
+                <fieldset class="pin">
+                    <label class="outlined-label-input">
+                        <input type="password" name="accountPassword" id="accountPassword" data-cy="accountPassword"
+                        [(ngModel)]="portIn.accountPassword" #accountPassword="ngModel" required placeholder=" "
+                        [readonly]="!!updatePortIn && !editablePin" autocomplete="new-password">
+                        <span>PIN with Current Provider</span>
                     </label>
-                    <input type="password" name="accountPassword" id="accountPassword" data-cy="accountPassword"
-                        [(ngModel)]="portIn.accountPassword" #accountPassword="ngModel" required
-                        [readonly]="!!updatePortIn && !editablePin" autocomplete="account-pin">
-                    <p class="smallest text-orange space">
+                    <p class="caption">
                         Likely different from your login password</p>
                     <label class="validation-message" *ngIf="accountPassword.touched && !accountPassword.valid">
-                        PIN/Password is required. </label>
+                        Current PIN is required. </label>
                 </fieldset>
             </div>
-            <div class="form-row half">
-                <fieldset>
-                    <label for="firstName">First Name<span class="form-text error validation-message">*</span>
+            <p class="smaller primary-font-bold subtext">Personal Information:</p>
+            <div class="form-row full">
+                <fieldset class="half">
+                    <label class="outlined-label-input">
+                        <input type="text" name="firstName" id="firstName" data-cy="firstName" [(ngModel)]="portIn.firstName" placeholder=" "
+                        #firstName="ngModel" required [readonly]="!!updatePortIn && !editableFirstName" placeholder=" ">
+                        <span>First Name</span>
                     </label>
-                    <input type="text" name="firstName" id="firstName" data-cy="firstName" [(ngModel)]="portIn.firstName"
-                        #firstName="ngModel" required [readonly]="!!updatePortIn && !editableFirstName"
-                        autocomplete="given-name">
                     <label class="validation-message" *ngIf="firstName.touched && !firstName.valid">
                         First Name is required. </label>
                 </fieldset>
-                <fieldset>
-                    <label for="lastName">Last Name<span class="form-text error validation-message">*</span>
+                <fieldset class="half">
+                    <label class="outlined-label-input">
+                        <input type="text" name="lastName" id="lastName" data-cy="lastName" [(ngModel)]="portIn.lastName" placeholder=" "
+                        #lastName="ngModel" required [readonly]="!!updatePortIn && !editableLastName" placeholder=" ">
+                        <span>Last Name</span>
                     </label>
-                    <input type="text" name="lastName" id="lastName" data-cy="lastName" [(ngModel)]="portIn.lastName"
-                        #lastName="ngModel" required [readonly]="!!updatePortIn && !editableLastName"
-                        autocomplete="family-name">
                     <label class="validation-message" *ngIf="lastName.touched && !lastName.valid">
                         Last Name is required. </label>
                 </fieldset>
@@ -105,15 +107,16 @@
                     [billingAddressAlias]="true">
                 </app-address-lookup>
             </div>
-            <div class="secondary form-part">
-                <h3>Secondary Contact Number</h3>
-                <p class="space">Please provide another number we can use to contact you if problems with
-                    this account.</p>
-                <fieldset class="contact">
-                    <label for="recoveryNumber">Recovery Contact Number
-                        <span class="form-text error validation-message">*</span></label>
-                    <input type="tel" name="recoveryNumber" id="recoveryNumber" data-cy="recoveryNumber" [(ngModel)]="portIn.contactPhone"
-                        #recoveryNumber="ngModel" required restrictNumbers maxlength="10" autocomplete="tel">
+            <p class="smaller primary-font-bold subtext">Secondary Contact Number:</p>
+            <p class="smaller subtext">Please provide another number we can use to contact you if problems with
+                this account.</p>
+            <div class="form-row full">
+                <fieldset class="half">
+                    <label class="outlined-label-input">
+                        <input type="tel" name="recoveryNumber" id="recoveryNumber" data-cy="recoveryNumber" [(ngModel)]="portIn.contactPhone"
+                        #recoveryNumber="ngModel" required restrictNumbers maxlength="10" autocomplete="tel" placeholder=" ">
+                        <span>Recovery Contact Number</span>
+                    </label>
                     <label class="validation-message" *ngIf="recoveryNumber.touched && !recoveryNumber.valid">
                         Recovery Contact Number is required. </label>
                 </fieldset>
@@ -124,7 +127,7 @@
                     </app-re-captcha>
                 </fieldset>
             </section>
-            <div class="account-actions margin-bottom-90">
+            <div class="account-actions">
                 <button class="button primary long"
                     [disabled]="!userPlan?.planDevice || !activateSimForm.valid || !isValidAddress || !captchaValid"
                     (click)="activateCurrentNumber()" [uiBlockButton]="processingRequest" id="activate-button" data-cy="activate-button">
@@ -135,4 +138,4 @@
             </div>
         </form>
     </div>
-</div>
+</section>

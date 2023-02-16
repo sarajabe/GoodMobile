@@ -35,6 +35,7 @@ import { BannerSwiperAdsComponent } from './banner-swiper-ads/banner-swiper-ads.
 import { FeaturedPlansComponent } from './featured-plans/featured-plans.component';
 import { BannersComponent } from './banners/banners.component';
 import { ActivationHeaderComponent } from './activation-header/activation-header.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ActivationHeaderComponent } from './activation-header/activation-header
     NguiAutoCompleteModule,
     NgxPaginationModule,
     RouterModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatAutocompleteModule
     ],
   exports: [
     HeaderMainNavbarComponent,
