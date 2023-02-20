@@ -104,7 +104,7 @@
             <div class="address-lookup-form">
                 <app-address-lookup [(displayedAddress)]="userPortAddress" (isValid)="setValidAddress($event)"
                     (addressChange)="addressChanged($event)" [readonly]="!!updatePortIn && !editableAddress"
-                    [billingAddressAlias]="true">
+                    [billingAddressAlias]="true" [touchForm]="touchAddressForm">
                 </app-address-lookup>
             </div>
             <p class="smaller primary-font-bold subtext">Secondary Contact Number:</p>
@@ -125,6 +125,7 @@
                 <fieldset class="re-captcha--resizing">
                     <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha>
                     </app-re-captcha>
+                    <label class="validation-message" *ngIf="!captchaResponse && captchaRequired">Please verify that you are not a robot</label>
                 </fieldset>
             </section>
             <div class="account-actions">
