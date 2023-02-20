@@ -59,11 +59,11 @@
                     .eight{
                         padding-left: 0;
                         padding-right: 0;
-                        width: 50%;
+                        width: 49%;
                     }
                     .four {
                         padding-right: 0;
-                        width: 50%;
+                        width: 51%;
                     }
                     @media(max-width: $desktop-min-width-minus) {
                         .eight {
@@ -123,7 +123,7 @@
                 width: 100%;
                 &.full {
                     .half {
-                        flex-basis: 50%;
+                        flex-basis: 53%;
                     }
                     .pin {
                         flex-basis: 40%;
