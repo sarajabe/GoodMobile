@@ -13,6 +13,7 @@ import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { ReCaptchaComponent } from 'src/widgets/re-captcha/re-captcha.component';
 import { filter, takeWhile } from 'rxjs/operators';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-activate-current-number',
@@ -21,6 +22,7 @@ import { filter, takeWhile } from 'rxjs/operators';
 })
 export class ActivateCurrentNumberComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
+  @ViewChild('activateSimForm') activateSimForm: NgForm;
   public user: IUser;
   public userPlan: IUserPlan;
   public codePattern = new RegExp('^[A-Z]+\\d{6}|\\d{7}$');
@@ -53,10 +55,12 @@ export class ActivateCurrentNumberComponent implements OnInit, OnDestroy {
   public SITE_ID = CAPTCHA_SITE_ID;
   public captchaValid = false;
   public customerCareNumber: string = CUSTOMER_CARE_NUMBER;
-  private captchaResponse: string;
+  public captchaResponse: string;
   private portInRequestNumber: string;
   private alive = true;
   planId: any;
+  captchaRequired: boolean;
+  touchAddressForm: boolean;
 
   constructor(private router: Router,
               private toastHelper: ToastrHelperService,
@@ -243,43 +247,48 @@ export class ActivateCurrentNumberComponent implements OnInit, OnDestroy {
   }
 
   private callActivateCurrentNumber(): void {
-    this.appState.loading = true;
-    if (!!this.showActivationCode) {
-      this.portIn.activationCode = this.activationCode;
-    }
-    if (!!this.showIccid) {
-      this.portIn.iccid = this.iccid;
-    }
-    this.portIn.version = '2';
-    this.userAccountPortInService.newPortInAccount(this.userPlan.id, this.portIn, this.captchaResponse)
-      .then((account) => {
-        this.appState.loading = false;
-        if (this.userPlan.basePlan.ebb) {
-          const data = {
-            event: 'ACP_activation ',
-            category: 'ACP Activation',
-            label: 'ACP plan activation',
-            action: 'portin ACP plan'
+    this.activateSimForm.form.markAllAsTouched();
+    this.captchaRequired = !!this.captchaResponse ? false: true;
+    this.touchAddressForm =  true;
+    if (!!this.activateSimForm.valid && !this.captchaRequired && !!this.isValidAddress) {
+      this.appState.loading = true;
+      if (!!this.showActivationCode) {
+        this.portIn.activationCode = this.activationCode;
+      }
+      if (!!this.showIccid) {
+        this.portIn.iccid = this.iccid;
+      }
+      this.portIn.version = '2';
+      this.userAccountPortInService.newPortInAccount(this.userPlan.id, this.portIn, this.captchaResponse)
+        .then((account) => {
+          this.appState.loading = false;
+          if (this.userPlan.basePlan.ebb) {
+            const data = {
+              event: 'ACP_activation ',
+              category: 'ACP Activation',
+              label: 'ACP plan activation',
+              action: 'portin ACP plan'
+            }
+            this.analyticsService.trackACPEvent(data);
           }
-          this.analyticsService.trackACPEvent(data);
-        }
-        this.userPlansService.selectUserPlan(this.userPlan.id);
-        this.processingRequest = false;
-        sessionStorage.removeItem('activation');
-        sessionStorage.removeItem('device');
-        const simNumber = !!this.showActivationCode ? this.activationCode : this.iccid;
-        this.analyticsService.trackPortIn('PortIn', this.carrier, simNumber, this.userPlan.planDevice.model, this.portIn.address.postalCode,
-          this.userPlan.id, this.userPlan.basePlan.id);
-        const params = {};
-        params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER] = true;
-        this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.PORT_SUBMITTED}`, params]);
-      }, (error) => {
-        this.toastHelper.showAlert(error.message || 'There was an error with this activation code');
-        this.processingRequest = false;
-        this.appState.loading = false;
-        this.captchaResponse = '';
-        this.reCaptcha.resetReCaptcha();
-      });
+          this.userPlansService.selectUserPlan(this.userPlan.id);
+          this.processingRequest = false;
+          sessionStorage.removeItem('activation');
+          sessionStorage.removeItem('device');
+          const simNumber = !!this.showActivationCode ? this.activationCode : this.iccid;
+          this.analyticsService.trackPortIn('PortIn', this.carrier, simNumber, this.userPlan.planDevice.model, this.portIn.address.postalCode,
+            this.userPlan.id, this.userPlan.basePlan.id);
+          const params = {};
+          params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER] = true;
+          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.PORT_SUBMITTED}`, params]);
+        }, (error) => {
+          this.toastHelper.showAlert(error.message || 'There was an error with this activation code');
+          this.processingRequest = false;
+          this.appState.loading = false;
+          this.captchaResponse = '';
+          this.reCaptcha.resetReCaptcha();
+        });
+    }
   }
   private updatePreviousPortIn(): void {
     this.processingRequest = true;
