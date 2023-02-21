@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
 import { ModalComponent, DialogRef, CloseGuard } from 'ngx-modialog-7';
 import { IFirebasePaymentMethod, PlacesAutocompleteService, IAutoCompletePrediction, IAddress, AccountPaymentService } from '@ztarmobile/zwp-service-backend';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { PlatformLocation } from '@angular/common';
 
@@ -24,8 +24,8 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
   public methodsList: IFirebasePaymentMethod[];
   public billingAddress: IAddress;
   public expirationYearRange: Array<number>;
-  public ccForm: FormGroup;
-  public addressForm: FormGroup;
+  public ccForm: UntypedFormGroup;
+  public addressForm: UntypedFormGroup;
   public selectedMethodId: string;
   public isValidPaymentInfo = false;
   public processingRequest = false;
@@ -34,7 +34,7 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
   private currentDate: Date;
   private streetSearchText: string;
 
-  constructor(public dialog: DialogRef<CreditCardContext>, private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef,
+  constructor(public dialog: DialogRef<CreditCardContext>, private formBuilder: UntypedFormBuilder, private cdRef: ChangeDetectorRef,
               private placesAutoCompleteService: PlacesAutocompleteService, private location: PlatformLocation) {
     this.context = dialog.context;
     location.onPopState(() => this.dialog.close());
@@ -89,7 +89,7 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       if (!!this.context.paymentMethod && !!expYear.value && !!expMonth.value) {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AccountPaymentService,
@@ -59,7 +59,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-  public simOptionsForm: FormGroup;
+  public simOptionsForm: UntypedFormGroup;
   public simOption: string;
   public deviceExpanded = true;
   public showCompatibleForm = false;
@@ -119,8 +119,8 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
         this.userPlansService.selectUserPlan(this.userCart.activePlanId);
       }
     });
-    this.simOptionsForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.simOptionsForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
   }
   ngOnInit(): void {

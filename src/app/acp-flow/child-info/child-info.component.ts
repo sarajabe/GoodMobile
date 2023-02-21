@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { takeWhile } from "rxjs/operators";
 import { EbbService, IAcpDetails, IAcpUser } from "@ztarmobile/zwp-service-backend-v2";
@@ -37,15 +37,15 @@ export class ChildInfoComponent implements OnInit, OnChanges {
     publicHousingCode?: string;
   }>();
 
-  public qualifyingForm: FormGroup;
+  public qualifyingForm: UntypedFormGroup;
   public options = [
     { id: 'indivisual', value: 'I qualify as an individual' },
     { id: 'child', value: 'I qualify through my child or dependent' }
   ];
   public housingOptions = [];
 
-  public childInfoForm: FormGroup;
-  public codesForm: FormGroup;
+  public childInfoForm: UntypedFormGroup;
+  public codesForm: UntypedFormGroup;
   public dropdownSettings: IDropdownSettings;
   public selectedItems: Array<{ code: string; description: string }> = [];
   public selectedCodes: Array<string> = [];
@@ -58,7 +58,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   private alive = true;
   leapYear: boolean;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private ebbManager: EbbManager,
     private ebbService: EbbService,
     private toastHelper: ToastrHelperService,
@@ -68,8 +68,8 @@ export class ChildInfoComponent implements OnInit, OnChanges {
     this.getYearsValues();
     const today = new Date();
     const currentYear = today.getFullYear();
-    this.qualifyingForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.qualifyingForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
     this.childInfoForm = this.formBuilder.group({
       firstName: [

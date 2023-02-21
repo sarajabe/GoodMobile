@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAcpAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { EbbManager } from 'src/services/ebb.service';
@@ -15,10 +15,10 @@ export class AddressInfoNonAppExisitngComponent implements OnInit, OnChanges {
   @Output() setAddresses: EventEmitter<IAcpAddress> = new EventEmitter<IAcpAddress>();
   @Output() goToNext: EventEmitter<number> = new EventEmitter<number>();
 
-  public addressInfoForm: FormGroup;
+  public addressInfoForm: UntypedFormGroup;
   public userAddress: IAcpAddress = {} as IAcpAddress;
   private alive = true;
-  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager) {
+  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager) {
     this.addressInfoForm = this.formBuilder.group({
       address1: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])],
       address2: ['', Validators.compose([Validators.minLength(1), Validators.maxLength(50)])],

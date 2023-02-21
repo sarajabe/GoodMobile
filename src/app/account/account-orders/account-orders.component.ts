@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IOrderItem, Order, OrderInfo, UserOrdersService } from '@ztarmobile/zwp-service-backend';
 import { PaginationInstance } from 'ngx-pagination';
@@ -25,7 +25,7 @@ export class AccountOrdersComponent implements OnInit {
   @ViewChild('endDate') endDate;
   @ViewChild('pickerend') pickerend;
   @ViewChild('picker') pickerStart;
-  public dateForm: FormGroup;
+  public dateForm: UntypedFormGroup;
   public allOrders: OrderInfo[] = [];
   public totalPages: number;
   public totalAllPages: number;
@@ -101,7 +101,7 @@ export class AccountOrdersComponent implements OnInit {
     { name: 'Refill' , value: 'refill', checked: false},
     { name: 'Replacement SIM' , value: 'replacement_sim', checked: false}
   ];
-  public statusForm: FormGroup;
+  public statusForm: UntypedFormGroup;
   public intentForm;
   public sortForm;
   public showSortMenu = false;
@@ -133,14 +133,14 @@ export class AccountOrdersComponent implements OnInit {
               private modalHelper: ModalHelperService,
               private accountOrderService: UserOrdersService,
               private appState: AppState,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private contentful: ContentfulService,
               private toastHelper: ToastrHelperService) {
 
     this.accountHeaderService.setPageTitle('Your orders');
     this.range = this.formBuilder.group({
-      start: new FormControl(),
-      end: new FormControl(),
+      start: new UntypedFormControl(),
+      end: new UntypedFormControl(),
     });
     this.statusForm = this.formBuilder.group({
       statusArray: this.formBuilder.array([])
@@ -148,8 +148,8 @@ export class AccountOrdersComponent implements OnInit {
     this.intentForm = this.formBuilder.group({
       intentArray: this.formBuilder.array([])
     });
-    this.sortForm = new FormGroup({
-      option: new FormControl('desc')
+    this.sortForm = new UntypedFormGroup({
+      option: new UntypedFormControl('desc')
     });
     this.maxDate = new Date();
     this.maxStart = new Date();
@@ -247,7 +247,7 @@ export class AccountOrdersComponent implements OnInit {
   }
 
   public onCheckboxChange(e, formName) {
-    let checkArray: FormArray;
+    let checkArray: UntypedFormArray;
     let changedItem;
     if (formName === 'statusForm') {
       changedItem = this.orderStatuses.find((x) => x.value === e.target.value);

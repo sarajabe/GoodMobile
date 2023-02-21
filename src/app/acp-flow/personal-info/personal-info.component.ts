@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService } from '@ztarmobile/zwp-service-backend';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
@@ -24,14 +24,14 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
 
   public years = [];
   public userInfo: IAcpUser;
-  public personalInfoForm: FormGroup;
+  public personalInfoForm: UntypedFormGroup;
   public namePattern = new RegExp(EBB_NAME_PATTERN);
   public showInvalidDateError = false;
   public leapYear = false;
 
   private alive = true;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private ebbService: EbbManager,
     public router: Router,
     private analyticsService: ActionsAnalyticsService) {

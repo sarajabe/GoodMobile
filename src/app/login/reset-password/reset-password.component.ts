@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PASSWORD_PATTERN } from '../../app.config';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -15,13 +15,13 @@ import { ToastrHelperService } from '../../../services/toast-helper.service';
 export class ResetPasswordComponent implements OnInit {
   public processingRequest = false;
   public disableButton = false;
-  public resetPasswordForm: FormGroup;
+  public resetPasswordForm: UntypedFormGroup;
   public password;
   public oobCode;
   public passwordResetSuccess = false;
   public codeVerified = false;
 
-  constructor(private userAuthService: AngularFireAuth, private formBuilder: FormBuilder, private toastHelper: ToastrHelperService,
+  constructor(private userAuthService: AngularFireAuth, private formBuilder: UntypedFormBuilder, private toastHelper: ToastrHelperService,
               private router: Router, private route: ActivatedRoute, private metaService: MetaService) {
     this.resetPasswordForm = formBuilder.group({
       password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12),
@@ -61,7 +61,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string): any {
-   return (group: FormGroup): { [key: string]: any } => {
+   return (group: UntypedFormGroup): { [key: string]: any } => {
      const password = group.controls[passwordKey];
      const confirmPassword = group.controls[confirmPasswordKey];
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService, CART_TYPES, FirebaseUserProfileService, IChangePlanCartItem, IUserPlan, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
@@ -17,14 +17,14 @@ import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
   styleUrls: ['./enrollment-add-existing-line.component.scss']
 })
 export class EnrollmentAddExistingLineComponent implements OnInit {
-  public currentMobileNumberForm: FormGroup;
+  public currentMobileNumberForm: UntypedFormGroup;
   public activePlans: Array<IUserPlan>;
   public ebbPlan: MobilePlanItem;
   public planPurchased = false;
 
   private planPuchasedClicked = false;
   private alive = true;
-  constructor(private router: Router, private formBuilder: FormBuilder,
+  constructor(private router: Router, private formBuilder: UntypedFormBuilder,
     private userProfileService: FirebaseUserProfileService,
     private userPlansService: UserPlansService, private appState: AppState,
     private ebbService: EbbService, private modalHelper: ModalHelperService,

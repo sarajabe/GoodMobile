@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { OrderInfo, UserOrdersService } from '@ztarmobile/zwp-service-backend';
 import { SupportService } from '../../../../services/support.service';
@@ -18,7 +18,7 @@ export class ContactFormComponent implements OnInit {
   @Input() hasBack: boolean;
   @Output() backToMain: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() backOneStep: EventEmitter<boolean> = new EventEmitter<boolean>();
-  public contactForm: FormGroup;
+  public contactForm: UntypedFormGroup;
   public shippingAddress: any;
   public processingRequest = false;
   public ticketNumber: string;
@@ -46,9 +46,9 @@ export class ContactFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactForm = new FormGroup({
-      phoneNumber: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[1-9][0-9]*$/)])),
-      description: new FormControl('', Validators.required)
+    this.contactForm = new UntypedFormGroup({
+      phoneNumber: new UntypedFormControl('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[1-9][0-9]*$/)])),
+      description: new UntypedFormControl('', Validators.required)
     });
   }
   public backToReportIssue(): void {

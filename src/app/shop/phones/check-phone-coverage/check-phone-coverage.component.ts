@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserDeviceService, IUserPlan, ICatalogItem, PlacesAutocompleteService, AccountPaymentService, IAutoCompletePrediction, IFirebaseAddress } from '@ztarmobile/zwp-service-backend';
 import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
 import { PhoneManagementService } from 'src/services/phones.service';
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
   public activeStep = 2; // this variable is to be used in the activate event of the router-outlet
-  public checkCoverageForm: FormGroup;
+  public checkCoverageForm: UntypedFormGroup;
   public selectedPlan: IUserPlan;
   public recaptchaResponse: any;
   public SITE_ID = INVISIBLE_CAPTCHA_ID;
@@ -47,7 +47,7 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   private isIphone = false;
   private streetSearchText: string;
 
-  constructor(private stepsManagement: PhoneManagementService, private formBuilder: FormBuilder, private userDeviceService: UserDeviceService,
+  constructor(private stepsManagement: PhoneManagementService, private formBuilder: UntypedFormBuilder, private userDeviceService: UserDeviceService,
     public router: Router, private placesAutoCompleteService: PlacesAutocompleteService,
     private appState: AppState,
     private accountPaymentService: AccountPaymentService,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserAuthService } from '@ztarmobile/zwp-services-auth';
 import {
   AccountPaymentService, FirebaseAccountPaymentService, FirebaseUserProfileService,
@@ -41,9 +41,9 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public userShippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public userBillingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public billingAddress: IFirebaseAddress = {} as IFirebaseAddress;
-  public billingAddressForm: FormGroup;
+  public billingAddressForm: UntypedFormGroup;
   public expirationYearRange: Array<number>;
-  public paymentInfoForm: FormGroup;
+  public paymentInfoForm: UntypedFormGroup;
   public showPaymentSection = false;
   public userEbbInfo: IEbbUser;
   public user: IUser;
@@ -66,7 +66,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public currentPassword: string;
   public password: string;
   public isEditingEmail = false;
-  public userForm: FormGroup;
+  public userForm: UntypedFormGroup;
   public isActiveAccount = false;
   public showUserPassword = false;
   public PASSWORD_PATTERN = new RegExp(PASSWORD_PATTERN);
@@ -94,12 +94,12 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public touchShippingForm = false;
   public resetAddressForm = false;
   private alive = true;
-  private cardFormCtrl: FormControl;
+  private cardFormCtrl: UntypedFormControl;
   private currentDate: Date;
 
   constructor(private userAccountService: UserAccountService,
     private fbUserProfileService: FirebaseUserProfileService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private appState: AppState,
     private angularFireService: AngularFireAuth,
     private userPlansService: UserPlansService,
@@ -131,7 +131,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < 20; i++) {
       this.expirationYearRange.push(year + i);
     }
-    this.cardFormCtrl = new FormControl('', [CreditCardValidator.validateCCNumber]);
+    this.cardFormCtrl = new UntypedFormControl('', [CreditCardValidator.validateCCNumber]);
     this.userShippingAddress = {} as IFirebaseAddress;
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((userPlanReady) => {
       this.loadingPlan = !userPlanReady;
@@ -152,7 +152,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
       fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
       cardNumber: this.cardFormCtrl,
       saveCard: [''],
-      cardCode: new FormControl('', Validators.compose([Validators.required,
+      cardCode: new UntypedFormControl('', Validators.compose([Validators.required,
       Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
       cardExpirationMonth: ['', Validators.required],
       cardExpirationYear: ['', Validators.required],
@@ -226,7 +226,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       if (!!this.paymentInfo && !!expYear.value && !!expMonth.value) {

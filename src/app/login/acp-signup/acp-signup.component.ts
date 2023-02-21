@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthHelperService, UserAuthService } from '@ztarmobile/zwp-services-auth';
 import { ActionsAnalyticsService, FirebaseMobilePlansCartService, FirebaseUserProfileService, IUser, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
@@ -25,7 +25,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
 
   public SITE_ID: string = CAPTCHA_SITE_ID;
-  public userForm: FormGroup;
+  public userForm: UntypedFormGroup;
   public user: IUser = {} as IUser;
   public password = '';
   public confirmPassword = '';
@@ -39,7 +39,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
   private referredCode: string;
 
-  constructor(private userAuthService: UserAuthService, private formBuilder: FormBuilder, public router: RouterHelperService,
+  constructor(private userAuthService: UserAuthService, private formBuilder: UntypedFormBuilder, public router: RouterHelperService,
               private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
               private toastHelper: ToastrHelperService, private metaService: MetaService, private angularFireService: AngularFireAuth,
               private firebaseMobilePlansCartService: FirebaseMobilePlansCartService, private userPlansService: UserPlansService,
@@ -148,7 +148,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const password = group.controls[passwordKey];
       const confirmPassword = group.controls[confirmPasswordKey];
 

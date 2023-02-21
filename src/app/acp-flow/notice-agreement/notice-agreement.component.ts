@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { EbbService, ISignAcpDetails } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { EBB_NAME_PATTERN } from 'src/app/app.config';
@@ -20,7 +20,7 @@ export class NoticeAgreementComponent implements OnInit, OnDestroy, OnChanges {
   @Input() disable: boolean;
   @Output() setSignature: EventEmitter<any> = new EventEmitter<any>();
   public SITE_ID = CAPTCHA_SITE_ID;
-  public signForm: FormGroup;
+  public signForm: UntypedFormGroup;
   public fullName: string;
   public firstCharFName: string;
   public firstCharLName: string;
@@ -30,7 +30,7 @@ export class NoticeAgreementComponent implements OnInit, OnDestroy, OnChanges {
   public captchaValid: boolean;
   private alive = true;
 
-  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager, private ebbService: EbbService,
+  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager, private ebbService: EbbService,
     private appState: AppState) {
   }
 
@@ -104,7 +104,7 @@ export class NoticeAgreementComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private matchingFullName(fullNameKey: string, enteredNameKey: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const enteredName = group.controls[enteredNameKey];
 
       if (fullNameKey.toUpperCase() !== enteredName.value.toUpperCase()) {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ACCOUNT_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { MetaService } from 'src/services/meta-service.service';
@@ -15,7 +15,7 @@ import { takeWhile } from 'rxjs/operators';
   styleUrls: ['./report-issue.component.scss']
 })
 export class ReportIssueComponent implements OnInit, OnDestroy {
-  public optionsForm: FormGroup;
+  public optionsForm: UntypedFormGroup;
   public orderInfo: OrderInfo;
   public selectedOption: string;
   public orderId: string;
@@ -79,8 +79,8 @@ export class ReportIssueComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.metaService.createCanonicalUrl();
-    this.optionsForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.optionsForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
     this.sub = this.route.params.subscribe(params => {
       if (!!params) {

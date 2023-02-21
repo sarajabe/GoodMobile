@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng4-validators';
 import { INVISIBLE_CAPTCHA_ID } from '../../environments/environment';
 import { InvisibleRecaptchaComponent } from '../../widgets/invisible-recaptcha/invisible-recaptcha.component';
@@ -16,11 +16,11 @@ export class NewsletterComponent implements OnInit {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
   public SITE_ID = INVISIBLE_CAPTCHA_ID;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
-  public newsletterForm: FormGroup;
+  public newsletterForm: UntypedFormGroup;
   public processingRequest = false;
   public captchaValid = false;
   public recaptchaResponse: any;
-  constructor( private formBuilder: FormBuilder, private newsletterService: NewsletterService,
+  constructor( private formBuilder: UntypedFormBuilder, private newsletterService: NewsletterService,
                private toastHelper: ToastrHelperService) { }
 
   ngOnInit(): void {

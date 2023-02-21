@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActionsAnalyticsService, FirebaseEBBService } from '@ztarmobile/zwp-service-backend';
 import { IAcpAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable } from 'rxjs';
@@ -21,8 +21,8 @@ export class AddressInfoComponent implements OnInit, OnChanges {
   @Input() disable: boolean;
   @Output() setAddresses: EventEmitter<{ primary: IAcpAddress; mail: IAcpAddress }> = new EventEmitter<{ primary: IAcpAddress; mail: IAcpAddress }>();
   @Output() goToNext: EventEmitter<number> = new EventEmitter<number>();
-  public addressInfoForm: FormGroup;
-  public mailingAddressForm: FormGroup;
+  public addressInfoForm: UntypedFormGroup;
+  public mailingAddressForm: UntypedFormGroup;
   public primaryAddress: IAcpAddress;
   public mailingAddress: IAcpAddress;
   public useSameAddress = false;
@@ -30,7 +30,7 @@ export class AddressInfoComponent implements OnInit, OnChanges {
   public displayedAddressModel: any = {};
   private alive = true;
 
-  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager, private firebaseEBBService: FirebaseEBBService,
+  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager, private firebaseEBBService: FirebaseEBBService,
     private analyticsService: ActionsAnalyticsService) {
     this.addressInfoForm = formBuilder.group({
       address1: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])],

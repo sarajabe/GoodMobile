@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from "lodash";
 import { filter, take, takeWhile } from 'rxjs/operators';
@@ -22,11 +22,11 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
   public user: IUser;
   public duplicatePayments = [];
   public editCards;
-  public paymentInfoForm: FormGroup
+  public paymentInfoForm: UntypedFormGroup
   public expirationYearRange: Array<number>;isValidAddress: boolean;
   public touchAddressForm = false;
   public billingAddress: IFirebaseAddress = {} as IFirebaseAddress;
-  public billingAddressForm: FormGroup;
+  public billingAddressForm: UntypedFormGroup;
   public recaptchaResponse: any;
   public SITE_ID = INVISIBLE_CAPTCHA_ID;
   public captchaValid = false;
@@ -36,7 +36,7 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
   private alive = true;
   showSuccessBanner: boolean;
 
-  constructor(private userProfileService: FirebaseUserProfileService, private appState: AppState, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
+  constructor(private userProfileService: FirebaseUserProfileService, private appState: AppState, private router: Router, private formBuilder: UntypedFormBuilder, private route: ActivatedRoute,
     private userPlansService: UserPlansService, private accountPaymentService: AccountPaymentService, private toastHelper: ToastrHelperService, private modalHelper: ModalHelperService) { 
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
       this.user = user;
@@ -63,8 +63,8 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
     });
     this.paymentInfoForm = formBuilder.group({
       fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
-      cardNumber: new FormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
-      cardCode: new FormControl('', Validators.compose([Validators.required,
+      cardNumber: new UntypedFormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
+      cardCode: new UntypedFormControl('', Validators.compose([Validators.required,
       Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
       cardExpirationMonth: ['', Validators.required],
       cardExpirationYear: ['', Validators.required],
@@ -96,7 +96,7 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       this.currentDate = new Date();

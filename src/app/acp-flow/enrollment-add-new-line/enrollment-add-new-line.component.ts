@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, EquipmentService, IAddress, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
@@ -23,8 +23,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   @ViewChild('pickupOptionsForm') pickupOptionsForm: NgForm;
   public steps = [1, 2];
   public activeStep: number;
-  public newMobileServiceFrom: FormGroup;
-  public simOptionsForm: FormGroup;
+  public newMobileServiceFrom: UntypedFormGroup;
+  public simOptionsForm: UntypedFormGroup;
   public ebbPlan: MobilePlanItem;
   public compatibileDevice: IDeviceCompatibilityV1 = {} as IDeviceCompatibilityV1;
   public addressesList: Array<IFirebaseAddress> = [];
@@ -73,7 +73,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   private captchaResponse: string;
   private streetSearchText: string;
   isStorePickup: boolean;
-  constructor(private formBuilder: FormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
+  constructor(private formBuilder: UntypedFormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
     private accountPaymentService: AccountPaymentService, private appState: AppState, private modalHelper: ModalHelperService,
     private router: Router, private equipmentService: EquipmentService, private mobileCustomPlansService: MobileCustomPlansService,
     private ebbService: EbbService, private mobilePlansService: MobileCustomPlansService,
@@ -223,8 +223,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         Validators.required
       ],
     });
-    this.simOptionsForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.simOptionsForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
     setInterval(() => {
       this.reCaptcha?.execute(); // reset recaptcha every 2 minutes to avoid invalid or expired recaptcha error
