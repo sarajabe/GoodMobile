@@ -75,7 +75,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
               ? this.personalInfoForm.controls.tribalId.value || null
               : null;
           this.userInfo.dob = this.personalInfoForm.controls.month.value + '/' + dayFormat + '/' + this.personalInfoForm.controls.year.value;
-          this.userInfo.contactPhoneNumber = !!this.personalInfoForm.controls.phoneNumber.value ? this.personalInfoForm.controls.phoneNumber.value : '';
+          this.userInfo.contactPhoneNumber = !!this.personalInfoForm.controls.phoneNumber.value ? this.personalInfoForm.controls.phoneNumber.value : null;
           this.userInfo.consumerEmail = this.personalInfoForm.controls.email.value;
           this.goToNext.emit(2);
           this.setUserInfo.emit(this.userInfo);
