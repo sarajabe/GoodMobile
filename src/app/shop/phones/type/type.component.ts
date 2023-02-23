@@ -1,13 +1,13 @@
-import { Observable } from 'rxjs';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { IShopCategory } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService } from '@ztarmobile/zwp-service-backend';
 import { FadeInOutAnimation } from '../../../../app/app.animations';
 import { ContentfulService } from '../../../../services/contentful.service';
 import { MetaService } from '../../../../services/meta-service.service';
 import { takeWhile } from 'rxjs/operators';
 import { PHONES_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from '../../../app.routes.names';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import Swiper, { Autoplay, EffectFade, Navigation, Pagination, SwiperOptions } from 'swiper';
+
 
 @Component({
   selector: 'app-phones',
@@ -24,12 +24,31 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
   public iconsWidth;
   public iconsHeight;
   public showPhoneSwiper;
-  public config: SwiperConfigInterface = {};
+  public config: SwiperOptions  = {
+    centeredSlides: true,
+    observer: true,
+    observeParents: true,
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+      },
+    speed: 600,
+    autoplay: {
+      delay: 10000, // 10 seconds
+      disableOnInteraction: false
+    },
+    slidesPerView: 1,
+    mousewheel: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    }
+  };
   private params = {};
 
   private alive = true;
   constructor(private router: Router, private metaService: MetaService, private route: ActivatedRoute,
-              private contentful: ContentfulService) {
+              private contentful: ContentfulService, private analyticsService: ActionsAnalyticsService) {
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (params) {
        this.params = params;
@@ -52,9 +71,22 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.createSwiper();
     this.slideChanged();
   }
-
+  createSwiper(): void {
+    const swiper = new Swiper('.swiper-container', {
+      lazy: true,
+      hashNavigation: true,
+      modules: [Navigation, EffectFade, Pagination, Autoplay],
+      autoplay: {
+        delay: 10000,
+        stopOnLastSlide: false,
+        disableOnInteraction: true,
+      },
+      ...this.config
+    });
+  }
   ngOnDestroy(): void {
     this.alive = false;
   }
@@ -63,15 +95,19 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
   }
   public slideChanged(): void {
     this.config = {
-      effect: 'fade',
       centeredSlides: true,
       observer: true,
+      observeParents: true,
       speed: 600,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+        },
       autoplay: {
         delay: 10000, // 10 seconds
         disableOnInteraction: false
       },
-      slidesPerView: 'auto',
+      slidesPerView: 1,
       mousewheel: true,
       navigation: {
         nextEl: '.swiper-button-next',
@@ -80,6 +116,14 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
     };
   }
   public viewPhoneDetails(phoneKey): void {
+    const data = {
+      event: 'select_phone',
+      category: 'PHONE',
+      label: 'Select Phone',
+      action: 'Select Phone',
+      phone_id: phoneKey
+    };
+    this.analyticsService.trackGAEvent(data);
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}/${phoneKey}`, this.params]);
   }
   private getPhoneOrder(phone): any {
@@ -97,7 +141,7 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
    * images height and width are set in the html dynamically to get better performance results
    */
   private setResponsiveData(): void {
-    if (window.innerWidth > 1250) {
+    if (document.documentElement.clientWidth > 1250) {
       this.imageHeight = 410;
       this.imageWidth = 240;
       this.iconsHeight = 64;
@@ -105,12 +149,12 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
       this.showPhoneSwiper = false;
       this.warrantyMessage = 'Keep your phone up and running for no extra cost';
       this.returnMessage = 'We give you 14 days to cancel or return and get money back';
-    } else if (window.innerWidth > 640){
+    } else if (document.documentElement.clientWidth > 640){
       this.imageHeight = 300;
       this.imageWidth = 180;
       this.iconsHeight = 64;
       this.iconsWidth = 64;
-      this.showPhoneSwiper = window.innerWidth < 850 ? true : false;
+      this.showPhoneSwiper = document.documentElement.clientWidth < 850.9 ? true : false;
       this.warrantyMessage = 'Keep your phone up and running for no extra cost';
       this.returnMessage = 'We give you 14 days to cancel or return and get money back';
     } else {
@@ -121,6 +165,9 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
       this.showPhoneSwiper = true;
       this.warrantyMessage = 'At no extra cost';
       this.returnMessage = 'Money back guarantee!';
+    }
+    if(!!this.showPhoneSwiper) {
+      this.createSwiper();
     }
   }
 }

@@ -23,10 +23,10 @@ import { AcpErrorComponent } from './acp-error/acp-error.component';
 import { AcpSuccessComponent } from './acp-success/acp-success.component';
 import { AppIdPersonalInfoComponent } from './have-app-id/app-id-personal-info/app-id-personal-info.component';
 import { AppIdValidationComponent } from './have-app-id/app-id-validation/app-id-validation.component';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { AcpAppInfoComponent } from './acp-app-info/acp-app-info.component';
 import { EnrollmentAddNewLineComponent } from './enrollment-add-new-line/enrollment-add-new-line.component';
 import { EnrollmentAddExistingLineComponent } from './enrollment-add-existing-line/enrollment-add-existing-line.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,7 @@ import { EnrollmentAddExistingLineComponent } from './enrollment-add-existing-li
     WidgetsModule,
     ModalsModule,
     QRCodeModule,
-    NguiAutoCompleteModule
+    MatAutocompleteModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

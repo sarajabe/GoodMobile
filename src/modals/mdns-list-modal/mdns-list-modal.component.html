@@ -1,7 +1,9 @@
+<div class="modal">
 <div class="container model-container {{context.customClass}}" (keypress.esc)="onKeydown($event)">
   <div class="modal-header">
     <h2 class="modal-heading">{{context.title}}</h2>
     <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+    </div>
   <div class="modal-body">
     <div class="modal-content">
       <div class="description">
@@ -16,4 +18,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

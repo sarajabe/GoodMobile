@@ -3,10 +3,9 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService } from '@ztarmobile/zwp-service-backend';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
-import { CustomValidators } from 'ng4-validators';
 import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-import { EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
+import { EBB_NAME_PATTERN, EMAIL_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
 import { EbbManager } from 'src/services/ebb.service';
 
 @Component({
@@ -48,7 +47,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
       ssn: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(4), Validators.maxLength(4)])],
       tribalId: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(20)])],
       phoneNumber: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(10), Validators.maxLength(10)])],
-      email: ['', Validators.compose([Validators.required, CustomValidators.email, Validators.maxLength(50)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN), Validators.maxLength(50)])],
       getEmails: [''],
       getPhones: ['']
     });

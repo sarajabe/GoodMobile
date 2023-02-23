@@ -2,12 +2,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SwiperModule } from 'swiper/angular';
 import { HeaderMainNavbarComponent } from './header-main-navbar/header-main-navbar.component';
 import { FooterMainNavbarComponent } from './footer-main-navbar/footer-main-navbar.component';
-import { SocialMediaSwiperComponent } from './social-media-swiper/social-media-swiper.component';
 import { ReCaptchaComponent } from './re-captcha/re-captcha.component';
 import { UiBlockButtonDirective } from './directives/ui-block-button.directive';
 import { PhonePipe } from './pipes/phone.pipe';
@@ -31,7 +29,6 @@ import { PlansListComponent } from './plans-list/plans-list.component';
 import { CustomRangeSliderComponent } from './custom-range-slider/custom-range-slider.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { CreditCardPaymentSectionComponent } from './credit-card-payment-section/credit-card-payment-section.component';
-import { BannerSwiperAdsComponent } from './banner-swiper-ads/banner-swiper-ads.component';
 import { FeaturedPlansComponent } from './featured-plans/featured-plans.component';
 import { BannersComponent } from './banners/banners.component';
 import { ActivationHeaderComponent } from './activation-header/activation-header.component';
@@ -41,7 +38,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   declarations: [
     HeaderMainNavbarComponent,
     FooterMainNavbarComponent,
-    SocialMediaSwiperComponent,
     ReCaptchaComponent,
     ActivatedPlanSelectorComponent,
     PhonePipe,
@@ -64,26 +60,23 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     CustomRangeSliderComponent,
     OrderDetailsComponent,
     CreditCardPaymentSectionComponent,
-    BannerSwiperAdsComponent,
     FeaturedPlansComponent,
     BannersComponent,
     ActivationHeaderComponent,
    ],
   imports: [
     CommonModule,
-    SwiperModule,
     ReactiveFormsModule,
     FormsModule,
-    NguiAutoCompleteModule,
     NgxPaginationModule,
     RouterModule,
     NgxPaginationModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    SwiperModule
     ],
   exports: [
     HeaderMainNavbarComponent,
     FooterMainNavbarComponent,
-    SocialMediaSwiperComponent,
     ReCaptchaComponent,
     ActivatedPlanSelectorComponent,
     CustomPaginationComponent,
@@ -106,7 +99,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     OrderDetailsComponent,
     CreditCardPaymentSectionComponent,
     CustomRangeSliderComponent,
-    BannerSwiperAdsComponent,
     FeaturedPlansComponent,
     BannersComponent,
     ActivationHeaderComponent

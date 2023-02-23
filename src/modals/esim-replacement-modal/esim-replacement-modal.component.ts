@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { CAPTCHA_SITE_ID } from 'src/environments/environment';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class eSIMReplacementModalContext extends BSModalContext {
+export class eSIMReplacementModalContext {
   public iccid: string;
   public mdn: string;
   public customClass: string;
@@ -14,17 +13,16 @@ export class eSIMReplacementModalContext extends BSModalContext {
   selector: 'app-esim-replacement-modal',
   templateUrl: './esim-replacement-modal.component.html'
 })
-export class eSimReplacementModalComponent implements CloseGuard, ModalComponent<eSIMReplacementModalContext> {
-  public context: eSIMReplacementModalContext;
+export class eSimReplacementModalComponent {
+  public context: any;
   public SITE_ID = CAPTCHA_SITE_ID;
   private captchaResponse: string;
   public captchaValid = false;
   public showValidation = false;
 
-  constructor(public dialog: DialogRef<eSIMReplacementModalContext>, private modalHelper: ModalHelperService, private location: PlatformLocation) {
-    this.context = dialog.context;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialog: MatDialogRef<eSIMReplacementModalContext>, private modalHelper: ModalHelperService, private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
   }
 
   beforeClose(): boolean {
@@ -45,11 +43,13 @@ export class eSimReplacementModalComponent implements CloseGuard, ModalComponent
   }
 
   closeDialog(): void {
+    this.beforeDismiss();
     this.dialog.close(false);
   }
 
   confirm(): void {
     if (!!this.captchaResponse) {
+      this.beforeDismiss();
       this.dialog.close(this.captchaResponse);
     } else {
       this.showValidation = true;

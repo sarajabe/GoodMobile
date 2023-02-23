@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import { take } from 'rxjs/operators';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
 import {
   AccountPaymentService,
   FirebaseAccountPaymentService,
@@ -16,8 +14,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class G2gPaymentModalContext extends BSModalContext {
+export class G2gPaymentModalContext {
   public paymentMethodId: string;
   public isManage: boolean;
   public userPlan: IUserPlan;
@@ -30,31 +29,30 @@ export class G2gPaymentModalContext extends BSModalContext {
   selector: 'app-manage-payment-specific-modal',
   templateUrl: './manage-payment-specific-modal.component.html'
 })
-export class ManagePaymentSpecificModalComponent implements OnInit, CloseGuard, ModalComponent<G2gPaymentModalContext> {
+export class ManagePaymentSpecificModalComponent implements OnInit {
   public paymentInfo: ICreditCardInfo;
   public isValidPaymentInfo: boolean;
   public processingRequest: boolean;
   public setDefaultRequest: boolean;
   public methodsList: IFirebasePaymentMethod[];
   public editMode: boolean;
-  public context: G2gPaymentModalContext;
+  public context: any;
   public selectedMethodId: string;
 
   private isValidBillingAddress: boolean;
   private isValidCardInfo: boolean;
   private paymentMethodsListSubscription: Subscription;
 
-  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private firebaseAccountPaymentService: FirebaseAccountPaymentService,
               private toastHelper: ToastrHelperService,
               private accountPaymentService: AccountPaymentService,
               private userPlanService: UserPlansService,
               private router: Router,
-              public dialog: DialogRef<G2gPaymentModalContext>,
+              public dialog: MatDialogRef<G2gPaymentModalContext>,
               private location: PlatformLocation) {
-    this.context = dialog.context;
+    this.context = data;
     this.editMode = false;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+    location.onPopState(() => { this.beforeDismiss();this.dialog.close();});
   }
 
   ngOnInit(): void {
@@ -80,9 +78,12 @@ export class ManagePaymentSpecificModalComponent implements OnInit, CloseGuard, 
     }
     return this.isValidPaymentInfo;
   }
-
+  beforeDismiss(): boolean {
+    return this.beforeClose();
+  }
   public closeDialog(methodId?: string): void {
     this.isValidPaymentInfo = false;
+    this.beforeDismiss();
     this.dialog.close(methodId);
   }
 

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { WidgetsModule } from '../../../widgets/widgets.module';
-import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SwiperModule } from 'swiper/angular';
 import { PhonesRoutingModule } from './phones-routing.module';
 import { PhonesComponent } from './phones.component';
 import { DetailsComponent } from './details/details.component';
@@ -12,8 +12,8 @@ import { TypeComponent } from './type/type.component';
 import { SelectLineComponent } from './select-line/select-line.component';
 import { CheckPhoneCoverageComponent } from './check-phone-coverage/check-phone-coverage.component';
 import { AddPhoneStepsComponent } from './add-phone-steps/add-phone-steps.component';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [PhonesComponent, DetailsComponent, ModelComponent, TypeComponent, SelectLineComponent, CheckPhoneCoverageComponent, AddPhoneStepsComponent],
@@ -24,7 +24,7 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     WidgetsModule,
     SwiperModule,
     PhonesRoutingModule,
-    NguiAutoCompleteModule,
+    MatAutocompleteModule,
     TooltipModule,
     NgCircleProgressModule.forRoot({
       showTitle: true,

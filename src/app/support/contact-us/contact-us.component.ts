@@ -4,12 +4,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import { Router } from '@angular/router';
 import { ContactEmailService, FirebaseUserProfileService } from '@ztarmobile/zwp-service-backend';
-import { CustomValidators } from 'ng4-validators';
 import { CAPTCHA_SITE_ID } from 'src/environments/environment';
 import { SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { ReCaptchaComponent } from 'src/widgets/re-captcha/re-captcha.component';
 import { MetaService } from 'src/services/meta-service.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
+import { EMAIL_PATTERN } from 'src/app/app.config';
 
 @Component({
   selector: 'app-contact-us',
@@ -42,7 +42,7 @@ export class ContactUsComponent implements OnDestroy, OnInit {
     private metaService: MetaService) {
 
     this.contactUsForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required, CustomValidators.email])],
+      email: ['', Validators.compose([Validators.required,Validators.pattern(EMAIL_PATTERN)])],
       name: ['', Validators.compose([Validators.required, Validators.pattern('^[A-Za-z]+[ \t]?[A-Za-z]+[ \t]?[A-Za-z ]*$')])],
       phone: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10)])],
       category: ['Billing'],

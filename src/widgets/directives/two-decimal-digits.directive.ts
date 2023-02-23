@@ -10,7 +10,6 @@ export class TwoDecimaDigitsDirective {
   }
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    console.log(this.el.nativeElement.value);
     // Allow Backspace, tab, end, and home keys
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;

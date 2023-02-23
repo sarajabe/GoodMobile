@@ -1,9 +1,8 @@
 import { PlatformLocation } from '@angular/common';
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class AcpModalContext extends BSModalContext {
+export class AcpModalContext {
   public title: string;
   public customHTML: string;
   public primaryButton?: string;
@@ -16,12 +15,13 @@ export class AcpModalContext extends BSModalContext {
   selector: 'app-acp-modal',
   templateUrl: './acp-modal.component.html'
 })
-export class AcpModalComponent implements CloseGuard, ModalComponent<AcpModalContext> {
-  public context: AcpModalContext;
-  constructor(public dialog: DialogRef<AcpModalContext>, private location: PlatformLocation) {
-    this.context = dialog.context;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+export class AcpModalComponent{
+  public context: any;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  public dialog: MatDialogRef<AcpModalContext>, private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
+
   }
   onKeydown(event) {
     event.stopImmediatePropagation();
@@ -38,6 +38,7 @@ export class AcpModalComponent implements CloseGuard, ModalComponent<AcpModalCon
   }
 
   public closeDialog(result?): void {
+    this.beforeDismiss();
     this.dialog.close(result);
   }
 }

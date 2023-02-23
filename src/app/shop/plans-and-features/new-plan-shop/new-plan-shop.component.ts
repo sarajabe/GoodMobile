@@ -8,7 +8,7 @@ import { PageScrollService } from 'ngx-page-scroll-core';
 import { Location } from '@angular/common';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { ModalHelperService } from 'src/services/modal-helper.service';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ContentfulService } from 'src/services/contentful.service';
 import { ClipboardService } from 'ngx-clipboard';
 
@@ -214,7 +214,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     // eslint-disable-next-line eqeqeq
     if (!!this.currentPlan && !!this.currentPlan.cartType && this.currentPlan.cartType != CART_TYPES.NEW_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.clearCart();
             setTimeout(() => {

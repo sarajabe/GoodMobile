@@ -294,7 +294,7 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
   }
   public addressLookUpChanged(address: IAddress): void {
     this.billingAddress = Object.assign(this.billingAddress, address);
-    if (typeof this.billingAddress.address1 === 'object') {
+    if (typeof this.billingAddress.address1 === 'object' && !!this.billingAddress?.address1) {
       this.billingAddress.address1 = this.billingAddress.address1['main_text'];
     }
     this.updateData();

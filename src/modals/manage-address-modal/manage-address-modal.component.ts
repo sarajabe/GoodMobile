@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import {
   FirebaseUserProfileService,
@@ -6,13 +6,12 @@ import {
   IUserPlan,
   UserPlansService
 } from '@ztarmobile/zwp-service-backend';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
 import { Router } from '@angular/router';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class G2gAddressModalContext extends BSModalContext {
+export class G2gAddressModalContext {
   public addressId: string;
   public isManage: boolean;
   public userPlan: IUserPlan;
@@ -26,8 +25,8 @@ export class G2gAddressModalContext extends BSModalContext {
   selector: 'app-manage-address-modal',
   templateUrl: './manage-address-modal.component.html'
 })
-export class ManageAddressModalComponent implements OnInit, CloseGuard, ModalComponent<G2gAddressModalContext> {
-  public context: G2gAddressModalContext;
+export class ManageAddressModalComponent implements OnInit{
+  public context: any;
   public address: IFirebaseAddress;
   public addressesList: Array<IFirebaseAddress>;
   public isValidAddress: boolean;
@@ -38,16 +37,15 @@ export class ManageAddressModalComponent implements OnInit, CloseGuard, ModalCom
 
   private editedAddress: IFirebaseAddress = {} as IFirebaseAddress;
 
-  constructor(private fbUserProfileService: FirebaseUserProfileService,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private fbUserProfileService: FirebaseUserProfileService,
               private userPlansService: UserPlansService,
               private toastHelper: ToastrHelperService,
               private router: Router,
-              public dialog: DialogRef<G2gAddressModalContext>,
+              public dialog: MatDialogRef<G2gAddressModalContext>,
               private location: PlatformLocation) {
-    this.context = dialog.context;
+    this.context = data;
     this.editMode = false;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
     this.address = {isDefault: false, name: ''} as IFirebaseAddress;
     this.addressesList = [];
   }
@@ -83,8 +81,12 @@ export class ManageAddressModalComponent implements OnInit, CloseGuard, ModalCom
     return this.isValidAddress;
   }
 
+  beforeDismiss(): boolean {
+    return this.beforeClose();
+  }
   closeDialog(): void {
     this.isValidAddress = false;
+    this.beforeDismiss();
     this.dialog.close();
   }
 

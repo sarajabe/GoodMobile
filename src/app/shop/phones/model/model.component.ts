@@ -1,13 +1,12 @@
-import { Observable } from 'rxjs';
-import { Component, OnDestroy, AfterViewInit, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ICategoryPhone, IShopCategory } from '@ztarmobile/zwp-service-backend';
 import { FadeInOutAnimation } from '../../../../app/app.animations';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ContentfulService } from '../../../../services/contentful.service';
 import { MetaService } from '../../../../services/meta-service.service';
 import { takeWhile } from 'rxjs/operators';
 import { PHONES_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from '../../../app.routes.names';
+import Swiper, { EffectFade, Navigation, SwiperOptions } from 'swiper';
 
 @Component({
   selector: 'app-model',
@@ -20,11 +19,29 @@ export class ModelComponent implements OnDestroy, AfterViewInit, OnInit {
   public categoryId: string;
   public phones: Array<ICategoryPhone>;
   public category: IShopCategory;
-  public config: SwiperConfigInterface = {};
+  public config: SwiperOptions = {
+    centeredSlides: true,
+      observer: true,
+      speed: 600,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+        },
+      autoplay: {
+        delay: 10000, // 10 seconds
+        disableOnInteraction: false
+      },
+      slidesPerView: 1,
+      mousewheel: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }
+  };
   public CATEGORIES = {
-    apple_ID: "Apple iPhones",
-    googlePixel_ID: "Google Pixels"
-  }
+    apple_ID: 'Apple iPhones',
+    googlePixel_ID: 'Google Pixels'
+  };
   private userPlanId: string;
   private referencePage: string;
   private isChangePhone = false;
@@ -67,6 +84,13 @@ export class ModelComponent implements OnDestroy, AfterViewInit, OnInit {
         index = this.getPhoneOrder(phone);
         this.phoneModel[index] = phone;
       });
+    });
+    const swiper = new Swiper('.swiper-container', {
+      // Enable lazy loading
+      lazy: true,
+      hashNavigation: true,
+      modules: [Navigation, EffectFade],
+      ...this.config,
     });
   }
   ngAfterViewInit(): void {
@@ -117,15 +141,18 @@ export class ModelComponent implements OnDestroy, AfterViewInit, OnInit {
   }
   public slideChanged(): void {
     this.config = {
-      effect: 'flip',
       centeredSlides: true,
       observer: true,
       speed: 600,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+        },
       autoplay: {
         delay: 10000, // 10 seconds
         disableOnInteraction: false
       },
-      slidesPerView: 'auto',
+      slidesPerView: 1,
       mousewheel: true,
       navigation: {
         nextEl: '.swiper-button-next',

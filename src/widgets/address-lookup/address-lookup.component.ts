@@ -99,8 +99,8 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
 
   ngOnDestroy(): void {
     this.cdRef.detach();
+    this.filteredOptionsSubscription?.unsubscribe();
   }
-
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
     this.hasDetails = keyword !== '';
     this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);

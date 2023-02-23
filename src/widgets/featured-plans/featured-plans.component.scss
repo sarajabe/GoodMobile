@@ -103,9 +103,11 @@
     }
     
     .swiper-container {
+        max-width: 100%;
         &.swiper-width{
             width: 100%;
             max-width: 240px;
+            position: relative;
            
         }
         .swiper-slide {

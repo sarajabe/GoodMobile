@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
 import { ModalSetting } from 'src/services/modal-helper.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class PhoneNotWorkingContext extends BSModalContext {
+export class PhoneNotWorkingContext {
   public message: string;
   public title: string;
   public settings: ModalSetting;
@@ -14,14 +13,13 @@ export class PhoneNotWorkingContext extends BSModalContext {
   selector: 'app-phone-not-impacted-modal',
   templateUrl: './phone-not-impacted-modal.component.html'
 })
-export class PhoneNotImpactedModalComponent implements CloseGuard, ModalComponent<PhoneNotWorkingContext> {
-  public context: PhoneNotWorkingContext;
+export class PhoneNotImpactedModalComponent {
+  public context: any;
   public settings: ModalSetting;
-  constructor(public dialog: DialogRef<PhoneNotWorkingContext>, private location: PlatformLocation) {
-    this.context = dialog.context;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialog: MatDialogRef<PhoneNotWorkingContext>, private location: PlatformLocation) {
+    this.context = data;
     this.settings = this.context.settings || {};
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+    location.onPopState(() => { this.beforeDismiss();this.dialog.close();});
   }
 
   beforeClose(): boolean {
@@ -35,11 +33,12 @@ export class PhoneNotImpactedModalComponent implements CloseGuard, ModalComponen
     return this.beforeClose();
   }
 
-  closeDialog(): void {
-    this.dialog.close();
+  closeDialog(res?): void {
+    this.beforeDismiss();
+    this.dialog.close(res);
   }
 
   public takeAction(action?: string): void {
-    this.dialog.close(action);
+    this.closeDialog(action);
   }
 }

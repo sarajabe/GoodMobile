@@ -552,7 +552,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.isEditPayment = false;
     this.billingAddress = Object.assign(this.billingAddress, address);
     this.morePaymentNeeded = false;
-    if (typeof this.billingAddress.address1 === 'object') {
+    if (typeof this.billingAddress.address1 === 'object' && !!this.billingAddress?.address1) {
       // tslint:disable-next-line:no-string-literal
       this.billingAddress.address1 = this.billingAddress.address1['main_text'];
     }

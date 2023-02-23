@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CustomFormsModule } from 'ng4-validators';
 
 import { WidgetsModule } from 'src/widgets/widgets.module';
 import { LoginRoutingModule } from './login-routing.module';
@@ -21,7 +20,6 @@ import { AcpSignupComponent } from './acp-signup/acp-signup.component';
     FormsModule,
     ReactiveFormsModule,
     WidgetsModule,
-    CustomFormsModule,
     LoginRoutingModule
   ]
 })

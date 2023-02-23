@@ -3,7 +3,7 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Valid
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, EquipmentService, IAddress, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -59,6 +59,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public stores = [];
   public barCode = false;
   public option;
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
   
   private planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
@@ -274,6 +276,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.selectedShippingAddress = {} as IFirebaseAddress;
   }
   public changedAddress(): void {
+    this.findPlace(this.newMobileServiceFrom.controls.address.value);
     this.displayedAddressModel = null;
   }
   public resolvedCaptcha(captchaResponse: string): void {
@@ -294,7 +297,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           this.modalHelper.showConfirmMessageModal(
             `Confirmation`, 'You will be recieving an eSIM for your device instead of a physical SIM, would you like to proceed? ',
             'Yes', 'No', 'auto-renew-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (result) {
                 this.purchasePlan(true);
               }
@@ -455,11 +458,15 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     this.router.navigate([`${ROUTE_URLS.ACP}`]);
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.newMobileServiceFrom.controls.address?.value && this.newMobileServiceFrom.controls.address?.value?.main_text) {
+      const event = this.newMobileServiceFrom.controls.address?.value;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -479,8 +486,10 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                   : ''
                 }`;
               this.newMobileServiceFrom.controls.address.setValue(this.address);
+              this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error
@@ -685,5 +694,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
   }
 }

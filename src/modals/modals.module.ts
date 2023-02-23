@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ManagePaymentModalComponent } from './manage-payment-modal/manage-payment-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { ManageAddressModalComponent } from './manage-address-modal/manage-address-modal.component';
 import { ManagePaymentSpecificModalComponent } from './manage-payment-specific-modal/manage-payment-specific-modal.component';
 import { ConfirmMessageModalComponent } from './confirm-message-modal/confirm-message-modal.component';
@@ -17,9 +16,6 @@ import { SelectPaymentModalComponent } from './select-payment-modal/select-payme
 import { ShippingAddressModalComponent } from './shipping-address-modal/shipping-address-modal.component';
 import { SimReplacementModalComponent } from './sim-replacement-modal/sim-replacement-modal.component';
 import { WifiCallingModalComponent } from './wifi-calling-modal/wifi-calling-modal.component';
-import { MigrationStepsComponent } from './migration-steps/migration-steps.component';
-import { SWIPER_CONFIG, SwiperConfigInterface, SwiperModule } from 'ngx-swiper-wrapper';
-import { ReferralPromotionComponent } from './referral-promotion-modal/referral-promotion.component';
 import { FiveGModalComponent } from './five-gmodal/five-gmodal.component';
 import { OutOfStockItemModalComponent } from './out-of-stock-item-modal/out-of-stock-item-modal.component';
 import { AcpModalComponent } from './acp-modal/acp-modal.component';
@@ -28,11 +24,8 @@ import { TrackingModalComponent } from './tracking-details-modal/tracking-detail
 import { MdnsListModalComponent } from './mdns-list-modal/mdns-list-modal.component';
 import { CompatibilitySkipModalComponent } from './compatibility-skip-modal/compatibility-skip-modal.component';
 import { eSimReplacementModalComponent } from './esim-replacement-modal/esim-replacement-modal.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 1
-};
 
 @NgModule({
     declarations: [ManagePaymentModalComponent, ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
@@ -45,8 +38,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         ShippingAddressModalComponent,
         SimReplacementModalComponent,
         WifiCallingModalComponent,
-        MigrationStepsComponent,
-        ReferralPromotionComponent,
         FiveGModalComponent,
         OutOfStockItemModalComponent,
         AcpModalComponent,
@@ -56,14 +47,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         eSimReplacementModalComponent,
         CompatibilitySkipModalComponent],
     imports: [
-        SwiperModule,
-        CommonModule, WidgetsModule, FormsModule, ReactiveFormsModule, NguiAutoCompleteModule
+        CommonModule, WidgetsModule, FormsModule, ReactiveFormsModule, MatAutocompleteModule
     ],
     exports: [ManagePaymentModalComponent, ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
         InformationMessageModalComponent, AddActivatedNumberModalComponent, InputModalComponent, EditCcModalComponent, SelectPaymentModalComponent, ShippingAddressModalComponent, SimReplacementModalComponent,
-        WifiCallingModalComponent, MigrationStepsComponent, TrackingModalComponent,
-        RoutingModalComponent, ReferralPromotionComponent, FiveGModalComponent, eSimReplacementModalComponent,
+        WifiCallingModalComponent, TrackingModalComponent,
+        RoutingModalComponent, FiveGModalComponent, eSimReplacementModalComponent,
         OutOfStockItemModalComponent, AcpModalComponent, PhoneNotImpactedModalComponent,MdnsListModalComponent, CompatibilitySkipModalComponent],
-    providers: [{ provide: SWIPER_CONFIG, useValue: DEFAULT_SWIPER_CONFIG }]
 })
 export class ModalsModule { }

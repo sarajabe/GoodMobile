@@ -90,7 +90,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.checkCampaigns(route);
           this.checkUtms(route);
           // this.trackMoneySavingProReferrals(route);
-          // this.showReferralPromotionPopup(route);
         });
     }
   }
@@ -227,39 +226,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
 
   }
-  private showReferralPromotionPopup(route: ActivatedRouteSnapshot): void {
-    const status = sessionStorage.getItem('hideReferral');
-    if (!!route.queryParams && !!route.queryParams[ROUTE_URLS.PARAMS.REFERRAL_ID]) {
-      sessionStorage.setItem('hideReferral', 'hide');
-    }
-    if (!status && !route.queryParams[ROUTE_URLS.PARAMS.REFERRAL_ID]) { // if not saved already in session and not coming from email invitation link then show popup
-      this.simpleAuthService.userState.pipe(take(1)).subscribe((authState) => {
-        const loggedIn = !!authState && !authState.isAnonymous;
-        if (!!loggedIn) {
-          setTimeout(() => {
-            this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((user) => {
-              if (!!user && !user.referralCode && !user.referredWithCode && !status) {
-                setTimeout(() => {
-                  const updatedStatus = sessionStorage.getItem('hideReferral');
-                  if (!updatedStatus) {
-                    this.modalHelper.showReferralPromotionModal();
-                  }
-                }, 10000);
-              }
-            });
-          }, 500);
-        } else {
-          setTimeout(() => {
-            const updatedStatus = sessionStorage.getItem('hideReferral');
-            if (!updatedStatus) {
-              this.modalHelper.showReferralPromotionModal();
-            }
-          }, 10000);
-        }
-      });
-    }
-  }
-
   private trackMoneySavingProReferrals(route: ActivatedRouteSnapshot): void {
     const queryParams = route.queryParams;
     if (!!queryParams && !!queryParams[ROUTE_URLS.PARAMS.UTM_SOURCE] &&

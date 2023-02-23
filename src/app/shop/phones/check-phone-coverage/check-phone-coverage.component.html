@@ -5,10 +5,15 @@
     <form [formGroup]="checkCoverageForm" class="form">
       <div class="input-section">
         <label>Enter your full address</label>
-        <input type="text" formControlName="address" data-cy="addressRef" type="search" class="geolocate" ngui-auto-complete
-          [source]="findPlace.bind(this)" list-formatter="description" display-property-name="main_text"
-          (valueChanged)="addressDetails($event)" [tab-to-select]="false" placeholder="Enter an address or location"
-          (focus)="setFoucs = true" (blur)="setFoucs = false" (keyup)="addressUpdated()" (input)="changedAddress()">
+          <input formControlName="address" data-cy="addressRef" matInput type="search" list-formatter="description"  
+          type="search" (focus)="setFoucs = true" (blur)="setFoucs = false"
+         class="geolocate" placeholder="Enter an address or location" [matAutocomplete]="auto" required
+         (input)="changedAddress()"/>
+         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
+           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+             {{ option?.description }}
+           </mat-option>
+         </mat-autocomplete>    
         <label class="blur-background validation-message"
           *ngIf="checkCoverageForm.controls.address.touched && checkCoverageForm.controls.address.hasError('required')"
           id="required-zip-code-label" data-cy="addressRequiredValidationMsg">Address is required</label>

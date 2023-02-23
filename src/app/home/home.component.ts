@@ -1,11 +1,9 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseAdsService } from '@ztarmobile/zwp-service-backend';
-import { takeWhile } from 'rxjs/operators';
 import { CUSTOMER_CARE_NUMBER, ENDPOINT_URL } from 'src/environments/environment';
 import { MetaService } from '../../services/meta-service.service';
 import { ACTIVATION_ROUTE_URLS, SUPPORT_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../app.routes.names';
-import { IBannerSwiperAdsConfig } from '../../widgets/banner-swiper-ads/banner-swiper-ads';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { ContentfulService } from '../../services/contentful.service';
 import { AppState } from '../app.service';
@@ -27,13 +25,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
   public ACTIVATION_ROUTE_URLS = ACTIVATION_ROUTE_URLS;
   public isBannersSlidesReady = false;
-  public bannerSwiperSettings: IBannerSwiperAdsConfig = {
-    theme: 'theme-g2g',
-    effect: 'fade',
-    gridTheme: 'eight offset-two',
-    banners: []
-  };
-  public showPromoPlan = false;
   public page: any;
   private alive = true;
 

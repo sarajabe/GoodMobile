@@ -102,10 +102,10 @@
         </div>
       </div>
     </div>
-    <div class="swiper-container" [swiper]="config" (slideChangeEnd)="slideChanged($event)" [(index)]="index" *ngIf="showPhoneSwiper">
-      <div class="swiper-wrapper phones-models">
-        <div class="swiper-slide" *ngFor="let model of phoneModels">
-          <div  class="phone-card">
+    <div class="swiper-container" (slideChange)="slideChanged($event)" *ngIf="showPhoneSwiper">
+      <div class="swiper-wrapper basic-display">
+        <div class="swiper-slide" *ngFor="let model of phoneModels;">
+          <div class="phone-card">
             <div class="phone-image">
               <img src="https://{{model?.fields?.phoneImage.fields?.file.url}}" [alt]="phone-image">
             </div>

@@ -1,6 +1,3 @@
-/**
- * Modals ($modals)
- */
 .modal-open {
   overflow: hidden;
 
@@ -8,14 +5,27 @@
     z-index: 1;
   }
 }
-
+.cdk-global-scrollblock {
+  position: unset !important;
+}
+.cdk-overlay-dark-backdrop {
+  background: rgb(0 0 0 / 42%) !important;
+}
+.cdk-overlay-pane {
+  max-width: 95% !important;
+}
+.mat-dialog-container {
+  padding: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 19px !important;
+}
 .modal {
   z-index: 10000;
-  visibility: hidden;
   width: 100%;
   height: 100%;
-  background: hsla(0, 0%, 0%, 0.4);
-  opacity: 0;
+  background-color: transparent;
+  opacity: 1;
   transition: opacity, visibility 0.3s 0.12s;
 
   .modal-dialog {
@@ -33,25 +43,23 @@
   .modal-wrapper,
   .model-container {
     z-index: 9999;
-    background: #FCFCFB;
-    box-shadow: 0px 4px 15px rgba(206, 211, 214, 0.6);
-    border-radius: 16px;
-    padding: 24px !important;
+    background-color: #fff;
+    box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
     border-radius: 19px;
     max-height: 90vh;
     overflow: hidden;
-    width: 700px;
+    width: 100%;
 
-    @media(max-width: $ipad-min-width-minus) {
+    @media (max-width: $ipad-min-width-minus) {
       width: 600px;
     }
 
-    @media(max-width: $phablet-min-width-minus) {
+    @media (max-width: $phablet-min-width-minus) {
       padding: 16px !important;
       max-width: 320px;
     }
 
-    @media(max-width: $mobile-min) {
+    @media (max-width: $mobile-min) {
       max-width: 288px;
     }
 
@@ -62,11 +70,11 @@
       line-height: 36px;
       font-weight: bold;
       color: #090909;
-      background-color: #FCFCFB;
+      background-color: #fcfcfb;
       text-align: center;
       position: relative;
 
-      @media(max-width: $phablet-min-width-minus) {
+      @media (max-width: $phablet-min-width-minus) {
         font-size: 22px;
         line-height: 32px;
       }
@@ -78,7 +86,7 @@
         margin-bottom: 0;
         font-weight: bold;
 
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           font-size: 22px;
           line-height: 32px;
         }
@@ -86,8 +94,8 @@
 
       .modal-close {
         background: none;
-        background-color: #FCFCFB;
-        top: -10px;
+        background-color: #fcfcfb;
+        top: 0px;
         right: -1px;
         position: absolute;
         border: 0;
@@ -98,7 +106,6 @@
           font-size: 30px;
           font-weight: bold;
         }
-
       }
     }
 
@@ -107,7 +114,7 @@
         padding: 8px 12px;
         text-align: center;
 
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           padding: 12px 20px;
         }
 
@@ -122,7 +129,7 @@
           padding: 0;
           text-align: center;
 
-          @media(max-width: $phablet-min-width-minus) {
+          @media (max-width: $phablet-min-width-minus) {
             margin-top: 20px;
           }
 
@@ -211,7 +218,7 @@
                 margin: 0 auto;
                 margin-bottom: 16px;
 
-                @media(max-width: $phablet-min-width-minus) {
+                @media (max-width: $phablet-min-width-minus) {
                   font-size: rem-calc(16px);
                   line-height: 24px;
                 }
@@ -247,13 +254,13 @@
                     left: -145px;
                     height: fit-content;
                     padding: 16px;
-                    background: #DAD0DC;
+                    background: #dad0dc;
                     box-shadow: 0px 4px 15px rgb(206 211 214 / 60%);
                     border-radius: 10px;
                     font-size: rem-calc(14px);
                     line-height: 24px;
 
-                    @media(max-width: $phablet-min-width-minus) {
+                    @media (max-width: $phablet-min-width-minus) {
                       width: 200px;
                       padding: 12px;
                       text-align: center;
@@ -272,7 +279,7 @@
                       top: -8px;
                       left: 233px;
 
-                      @media(max-width: $phablet-min-width-minus) {
+                      @media (max-width: $phablet-min-width-minus) {
                         left: 163.5px;
                       }
                     }
@@ -347,7 +354,7 @@
             line-height: 22px;
             margin-bottom: 10px;
 
-            @media(max-width: $phablet-min-width-minus) {
+            @media (max-width: $phablet-min-width-minus) {
               font-size: 16px;
               line-height: 18px;
             }
@@ -387,7 +394,7 @@
             gap: 12px;
             margin-bottom: 18px;
 
-            @media(max-width: 370px) {
+            @media (max-width: 370px) {
               padding-left: 36px;
             }
           }
@@ -444,7 +451,7 @@
         overflow-y: visible;
 
         .modal-content {
-          @media(max-width: $phablet-min-width-minus) {
+          @media (max-width: $phablet-min-width-minus) {
             padding: 0 !important;
           }
         }
@@ -463,7 +470,7 @@
             margin-right: 0 !important;
           }
 
-          @media(max-width: $phablet-min-width-minus) {
+          @media (max-width: $phablet-min-width-minus) {
             padding: 12px !important;
           }
         }
@@ -499,7 +506,7 @@
         }
 
         .modal-actions {
-          @media(max-width: $phablet-min-width-minus) {
+          @media (max-width: $phablet-min-width-minus) {
             flex-direction: column;
           }
 
@@ -507,7 +514,7 @@
             width: 250px !important;
 
             &.primary {
-              @media(max-width: $phablet-min-width-minus) {
+              @media (max-width: $phablet-min-width-minus) {
                 margin-bottom: 12px;
                 margin-right: 0 !important;
               }
@@ -684,7 +691,6 @@
                       padding-left: 0 !important;
                     }
                   }
-
                 }
               }
 
@@ -965,7 +971,7 @@
             font-size: 16px;
             line-height: 18px;
 
-            @media(max-width: $phablet-min-width-minus) {
+            @media (max-width: $phablet-min-width-minus) {
               font-size: 14px;
               line-height: 16px;
             }
@@ -976,7 +982,7 @@
 
     &.success-swap-modal {
       .modal-close {
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           top: -15px;
         }
       }
@@ -1140,7 +1146,7 @@
         }
       }
 
-      .modal-content>* {
+      .modal-content > * {
         padding: 0.5em 2em;
       }
     }
@@ -1197,7 +1203,7 @@
     }
 
     &.usp-pop-up-modal {
-      @media(min-width:730px) {
+      @media (min-width: 730px) {
         width: 700px !important;
       }
 
@@ -1212,7 +1218,7 @@
       .modal-actions {
         justify-content: flex-start !important;
 
-        @media(max-width: 729.9px) {
+        @media (max-width: 729.9px) {
           flex-direction: column;
           align-items: flex-start !important;
           margin-top: 0 !important;
@@ -1222,7 +1228,7 @@
           width: 250px !important;
 
           &.primary {
-            @media(max-width: 729.9px) {
+            @media (max-width: 729.9px) {
               margin-bottom: 12px;
               margin-right: 0 !important;
             }
@@ -1292,7 +1298,7 @@
       .modal-actions {
         justify-content: flex-start !important;
 
-        @media(max-width: 729.9px) {
+        @media (max-width: 729.9px) {
           flex-direction: column;
           align-items: flex-start !important;
         }
@@ -1301,7 +1307,7 @@
           width: 250px !important;
 
           &.primary {
-            @media(max-width: 729.9px) {
+            @media (max-width: 729.9px) {
               margin-bottom: 12px;
             }
           }
@@ -1349,14 +1355,13 @@
             line-height: 1;
 
             @media (max-width: 729.9px) {
-              width: 100%
+              width: 100%;
             }
           }
 
           .sub-padding {
             padding-left: 18px;
           }
-
         }
       }
     }
@@ -1469,7 +1474,7 @@
             font-size: rem-calc(14px);
           }
           .button {
-            width: 133px!important;
+            width: 133px !important;
           }
         }
       }
@@ -1496,7 +1501,7 @@
 
     &.pending-confirmation {
       .modal-actions {
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           flex-direction: column;
         }
 
@@ -1504,7 +1509,7 @@
           width: 200px !important;
 
           &.primary {
-            @media(max-width: $phablet-min-width-minus) {
+            @media (max-width: $phablet-min-width-minus) {
               margin-bottom: 12px;
               margin-right: 0 !important;
             }
@@ -1774,7 +1779,6 @@
 
             li {
               margin-bottom: 8px;
-
             }
 
             @media (max-width: $phablet-min-width-minus) {
@@ -2160,7 +2164,7 @@
       &.error {
         .modal-header {
           .modal-heading {
-            color: #D22119;
+            color: #d22119;
           }
         }
       }
@@ -2204,7 +2208,6 @@
             }
           }
         }
-
       }
     }
 
@@ -2361,7 +2364,7 @@
     &.manage-payment-modal {
       .modal-body {
         .account-address-details-container {
-          background: #F1F9FD;
+          background: #f1f9fd;
         }
 
         .note {
@@ -2445,7 +2448,7 @@
       max-width: 960px !important;
 
       .modal-content {
-        >* {
+        > * {
           display: flex;
           justify-content: flex-start;
         }
@@ -2497,7 +2500,6 @@
           .button {
             width: 213px !important;
             padding: 10px !important;
-            ;
           }
         }
 
@@ -2555,7 +2557,7 @@
           padding: 8px !important;
         }
 
-        @media(max-width:$desktop-min-width-minus) {
+        @media (max-width: $desktop-min-width-minus) {
           flex-direction: column;
 
           .primary {
@@ -2591,128 +2593,13 @@
           }
         }
 
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           margin-top: 0;
 
           .content {
             .message {
               font-size: rem-calc(18px);
               line-height: 24px;
-            }
-          }
-        }
-      }
-    }
-
-    &.migration-flows-popup {
-      .modal-header {
-        padding: 0 !important
-      }
-
-      .modal-heading {
-        text-align: left;
-
-        @media (max-width: 610.9px) {
-          text-align: center;
-          margin-left: auto;
-        }
-      }
-
-      .modal-body {
-        overflow-x: hidden;
-
-        .swiper-container {
-          width: 100%;
-          max-width: 100%;
-        }
-
-        .swiper-pagination {
-          text-align: left;
-
-          @media (max-width: 610.9px) {
-            text-align: center;
-          }
-
-          .swiper-pagination-bullet-active {
-            background: $primary-color;
-          }
-        }
-
-        .flex-display {
-          width: 100%;
-          display: flex;
-          align-items: center;
-
-          @media (max-width: 699.9px) {
-            padding: 0 0em;
-          }
-
-          @media (max-width: 610.9px) {
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            margin-top: 23px;
-            padding: 0px;
-          }
-
-          .desc {
-            max-width: 307px;
-            width: 100%;
-            text-align: left;
-            font-size: 13px;
-            line-height: 22px;
-
-            @media (max-width: 610.9px) {
-              text-align: center;
-            }
-          }
-
-          .image {
-            width: 273px;
-            height: 245px;
-
-            @media (max-width: 699.9px) {
-              width: 249px;
-              height: 223px;
-            }
-
-            @media (max-width: 610.9px) {
-              margin-bottom: 30px;
-            }
-          }
-        }
-
-        .actions {
-          display: flex;
-          margin-bottom: 60px;
-          align-items: center;
-          margin-top: 14px;
-
-          @media (max-width: 610px) {
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-          }
-
-          button {
-            width: 130px;
-            font-size: rem-calc(15px);
-            padding: 10px;
-
-            &.last {
-              width: 215px;
-            }
-          }
-
-          .not-interested {
-            color: $secondary-color;
-            font-size: rem-calc(12px);
-            margin-left: 20px;
-            line-height: 15px;
-
-            @media (max-width: 610px) {
-              margin-left: 0px;
-              margin-top: 18px;
             }
           }
         }
@@ -2978,7 +2865,6 @@
             line-height: 20px;
             font-family: $base-font-family;
           }
-
         }
       }
     }
@@ -3177,7 +3063,7 @@
                 left: 0;
                 margin-left: -20px;
 
-                &:checked~label {
+                &:checked ~ label {
                   &:before {
                     border: 1px solid $input-border;
                   }
@@ -3187,7 +3073,7 @@
                   }
                 }
 
-                &:focus+label::before {
+                &:focus + label::before {
                   outline: 0;
                 }
               }
@@ -3228,7 +3114,7 @@
               font-size: 18px;
               line-height: 28px;
 
-              @media(max-width: $phablet-min-width-minus) {
+              @media (max-width: $phablet-min-width-minus) {
                 font-size: 16px;
                 line-height: 24px;
               }
@@ -3240,7 +3126,7 @@
             justify-content: center;
             align-items: center;
 
-            @media(max-width: $phablet-min-width-minus) {
+            @media (max-width: $phablet-min-width-minus) {
               flex-direction: column;
 
               .primary {
@@ -3268,7 +3154,7 @@
         justify-content: center;
         align-items: center;
 
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           flex-direction: column;
 
           .primary {
@@ -3307,7 +3193,7 @@
         justify-content: center;
         align-items: center;
 
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           flex-direction: column;
 
           .primary {
@@ -3578,7 +3464,7 @@
         font-size: 18px;
         line-height: 28px;
 
-        @media(max-width: $phablet-min-width-minus) {
+        @media (max-width: $phablet-min-width-minus) {
           font-size: 16px;
           line-height: 24px;
         }
@@ -3590,7 +3476,7 @@
           justify-content: center;
           align-items: center;
 
-          @media(max-width: $phablet-min-width-minus) {
+          @media (max-width: $phablet-min-width-minus) {
             flex-direction: column;
 
             .primary {

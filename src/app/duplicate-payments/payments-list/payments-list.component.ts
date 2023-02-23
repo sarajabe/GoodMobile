@@ -177,7 +177,7 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
       const filteredPlansUsingSameMethodId = plans.filter((plan) => plan.paymentMethodId === this.duplicatePayments[index].id);
       if (filteredPlansUsingSameMethodId.length >= 1) {
         console.warn('Plans using same method: ', filteredPlansUsingSameMethodId);
-        this.modalHelper.showMdnsListModal('Attention!', filteredPlansUsingSameMethodId, deletedPayment.id, 'mdn-list').result.then((res) => {
+        this.modalHelper.showMdnsListModal('Attention!', filteredPlansUsingSameMethodId, deletedPayment.id, 'mdn-list').afterClosed().subscribe((res) => {
           if (!!res) {
             const params = {};
             params[DUPLICATE_PAYMENTS_ROUTE_URLS.PARAMS.ID] = this.duplicatePayments[index].id;
@@ -187,7 +187,7 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
       } else {
         this.modalHelper.showConfirmMessageModal('Are you sure you want to delete this payment card?',
         `This card will be deleted`, 'Yes', 'No', 'confirm-modal delete-duplicate')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.appState.loading = true;
             this.accountPaymentService.deletePaymentMethod(deletedPayment.id).then((data) => {

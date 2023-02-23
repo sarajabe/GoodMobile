@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class InformationMessageModalContext extends BSModalContext {
+export class InformationMessageModalContext {
   public message: string;
   public title: boolean;
   public btnText: string;
@@ -14,19 +13,19 @@ export class InformationMessageModalContext extends BSModalContext {
   public cancelBtn?: boolean;
   public cancelText?: string;
   public noteText?: string;
+  public specificCancelReturn?: string;
 }
 
 @Component({
   selector: 'app-information-message-modal',
   templateUrl: './information-message-modal.component.html'
 })
-export class InformationMessageModalComponent implements CloseGuard, ModalComponent<InformationMessageModalContext> {
-  public context: InformationMessageModalContext;
+export class InformationMessageModalComponent {
+  public context: any;
 
-  constructor(public dialog: DialogRef<InformationMessageModalContext>, private location: PlatformLocation) {
-    this.context = dialog.context;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialogRef<InformationMessageModalContext>, private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
   }
 
   beforeClose(): boolean {
@@ -40,15 +39,19 @@ export class InformationMessageModalComponent implements CloseGuard, ModalCompon
     return this.beforeClose();
   }
 
-  closeDialog(): void {
-    this.dialog.dismiss();
+  closeDialog(res?): void {
+    this.beforeDismiss();
+    this.dialog.close(res);
   }
 
   OK(): void {
-    this.dialog.close(true);
+    this.closeDialog(true);
   }
   cancel(): void{
-    this.dialog.close(false);
-    this.closeDialog();
+    if(this.context?.specificCancelReturn) {
+      this.closeDialog(this.context?.specificCancelReturn);
+    } else{
+      this.closeDialog(false);
+    }
   }
 }

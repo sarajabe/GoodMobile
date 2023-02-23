@@ -17,15 +17,7 @@ import { SitemapComponent } from './sitemap/sitemap.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { WhyGoodMobileComponent } from './why-goodmobile/why-goodmobile.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
-import { IosGsmComponent } from './data-setup/ios/gsm/gsm.component';
-import { AndroidGsmComponent } from './data-setup/android/gsm/gsm.component';
-import { IosTmoComponent } from './data-setup/ios/tmo/tmo.component';
-import { AndroidTmoComponent } from './data-setup/android/tmo/tmo.component';
 import { TMobileComponent } from './data-setup/t-mobile/t-mobile.component';
-import { FourthGenerationPageComponent } from './data-setup/android/gsm/fourth-generation-page/fourth-generation-page.component';
-import { FifthGenerationPageComponent } from './data-setup/android/gsm/fifth-generation-page/fifth-generation-page.component';
-import { IosFifthGenerationPageComponent } from './data-setup/ios/gsm/fifth-generation-page/fifth-generation-page.component';
-import { IosFourthGenerationPageComponent } from './data-setup/ios/gsm/fourth-generation-page/fourth-generation-page.component';
 
 const routes: Routes = [
   {
@@ -52,38 +44,14 @@ const routes: Routes = [
         title: 'Good Mobile | Support | Data Setup',
         description: 'Learn how to setup data services for your iPhone or Androind cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
-      // { path: SUPPORT_ROUTE_URLS.IPHONE, component: IosGsmComponent , data: {
-      //   title: 'Data Setup | IPhone',
-      //   description: 'Learn how to setup data services for your iPhone cell phones on the Good Mobile wireless network.'
-      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.TMO_IPHONE, component: TMobileComponent , data: {
         title: 'Data Setup | IPhone',
         description: 'Learn how to setup data services for your iPhone cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
-      // { path: SUPPORT_ROUTE_URLS.IPHONE4G, component: IosFourthGenerationPageComponent , data: {
-      //   title: 'Data Setup | IPhone | 4G',
-      //   description: 'Fourth Generation for 4G Iphone Good Mobile network.'
-      // } as IPageMeta},
-      // { path: SUPPORT_ROUTE_URLS.IPHONE5G, component: IosFifthGenerationPageComponent , data: {
-      //   title: 'Data Setup | IPhone | 5G',
-      //   description: 'Fifth Generation for 5G Iphone Good Mobile network.'
-      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.TMO_Android, component: TMobileComponent , data: {
         title: 'Data Setup | Android',
         description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
       } as IPageMeta},
-      // { path: SUPPORT_ROUTE_URLS.ANDROID, component: AndroidGsmComponent , data: {
-      //   title: 'Data Setup | Android',
-      //   description: 'Learn how to setup data services for your Android cell phones on the Good Mobile wireless network.'
-      // } as IPageMeta},
-      // { path: SUPPORT_ROUTE_URLS.ANDROID4G, component: FourthGenerationPageComponent , data: {
-      //   title: 'Data Setup | Android | 4G',
-      //   description: 'Fourth Generation for 4G Android Good Mobile network.'
-      // } as IPageMeta},
-      // { path: SUPPORT_ROUTE_URLS.ANDROID5G, component: FifthGenerationPageComponent , data: {
-      //   title: 'Data Setup | Android | 5G',
-      //   description: 'Fifth Generation for 5G Android Good Mobile network.'
-      // } as IPageMeta},
       { path: SUPPORT_ROUTE_URLS.IPHONE_DATA_SETUP, redirectTo: SUPPORT_ROUTE_URLS.DATA_SETUP, pathMatch: 'full' },
       {
         path: SUPPORT_ROUTE_URLS.FAQS, component: FaqsComponent, data: {

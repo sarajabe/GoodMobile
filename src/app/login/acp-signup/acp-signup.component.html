@@ -35,7 +35,7 @@
           <fieldset class="full">
             <label for="email">Email address</label>
             <input id="email" data-cy="email" data-cy="email" type="email" formControlName="email" required autocomplete="email" />
-            <label class='validation-message alert' *ngIf="userForm.controls.email.hasError('email')"
+            <label class='validation-message alert' *ngIf="userForm.controls.email.hasError('pattern')"
               id="invalid-email-msg" data-cy="invalid-email-msg">
               Email address is invalid.
             </label>

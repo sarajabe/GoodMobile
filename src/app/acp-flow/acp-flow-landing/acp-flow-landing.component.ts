@@ -215,7 +215,7 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
           '',
           false, 'acp-modal-exists'
         )
-        .result.then((res) => {
+        .afterClosed().subscribe((res) => {
           if (!!res) {
             this.router.navigate([
               `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,

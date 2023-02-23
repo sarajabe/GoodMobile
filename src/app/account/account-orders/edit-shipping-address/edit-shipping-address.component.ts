@@ -111,28 +111,30 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
         </div>`;
           this.appState.loading = false;
           this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-            'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address')
-            .result.then((result) => {
+          'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address',
+          '', 'verified'
+          ).afterClosed().subscribe((result) => {
               if (result) {
-                selectedAddress = this.newAddress;
-                selectedAddress.name = this.newAddressName;
-              } else {
-                selectedAddress = addresses[0];
-                selectedAddress.name = this.newAddressName;
-                // currentAddress.shippingName = selectedAddress.alias;
-              }
-              this.addressesList.unshift(selectedAddress);
-              this.toggleNewAddress();
-              this.selectedAddress = selectedAddress;
-              this.appState.loading = true;
-              this.userAccountService.addShippingAddress(selectedAddress).then((newAddressId) => {
-                selectedAddress.id = newAddressId;
-               
-                this.appState.loading = false;
-              }, (error) => {
-                this.appState.loading = false;
-                this.toastHelper.showAlert(error.message);
-              });
+                if(result === 'verified') {
+                  selectedAddress = addresses[0];
+                  selectedAddress.name = this.newAddressName;
+                } else {
+                  selectedAddress = this.newAddress;
+                  selectedAddress.name = this.newAddressName;
+                }
+                this.addressesList.unshift(selectedAddress);
+                this.toggleNewAddress();
+                this.selectedAddress = selectedAddress;
+                this.appState.loading = true;
+                this.userAccountService.addShippingAddress(selectedAddress).then((newAddressId) => {
+                  selectedAddress.id = newAddressId;
+                 
+                  this.appState.loading = false;
+                }, (error) => {
+                  this.appState.loading = false;
+                  this.toastHelper.showAlert(error.message);
+                });
+              } 
             }, (error) => {
               this.appState.loading = false;
             });
@@ -150,7 +152,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
           </div>
         </div>`;
         this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Try again', null,
-          false, 'usp-pop-up-modal2', customHtml2).result.then((result) => {
+          false, 'usp-pop-up-modal2', customHtml2).afterClosed().subscribe((result) => {
             this.appState.loading = false;
           });
       });
@@ -158,7 +160,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
   }
   public cancel(): void {
     this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel?', 'Shipping address has not been updated yet. Click "No" to stay on current page', 'Yes', 'No', 'clean-cart-modal')
-    .result.then((res) => {
+    .afterClosed().subscribe((res) => {
       if (!!res) {
        this.goToReportIssue()
       }
@@ -226,17 +228,19 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
             </div>`;
               this.appState.loading = false;
               this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-                'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address')
-                .result.then((result) => {
+              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address',
+              '', 'verified')
+                .afterClosed().subscribe((result) => {
                   if (result) {
-                    selectedAddress = this.editedAddress;
-                    selectedAddress.name = this.shippingName;
-                  } else {
-                    selectedAddress = addresses[0];
-                    selectedAddress.name = this.shippingName;
-                  }
-                  this.updateOrderAddrss(selectedAddress);
-            
+                    if(result === 'verified') { 
+                      selectedAddress = addresses[0];
+                      selectedAddress.name = this.shippingName;
+                    } else {
+                      selectedAddress = this.editedAddress;
+                      selectedAddress.name = this.shippingName;
+                    }
+                    this.updateOrderAddrss(selectedAddress);
+                  } 
                 }, (error) => {
                   this.appState.loading = false;
                 });
@@ -254,7 +258,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
               </div>
             </div>`;
             this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Try again', null,
-              false, 'usp-pop-up-modal2', customHtml2).result.then((result) => {
+              false, 'usp-pop-up-modal2', customHtml2).afterClosed().subscribe((result) => {
                 this.appState.loading = false;
               });
           });

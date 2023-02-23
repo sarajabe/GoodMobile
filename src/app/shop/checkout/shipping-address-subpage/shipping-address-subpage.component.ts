@@ -285,26 +285,28 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
                 </div>
                 </div>
                `;
-            this.modalHelper.showInformationMessageModal('Verify your shipping address',
-              '',
-              'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address')
-              .result.then((result) => {
+               this.modalHelper.showInformationMessageModal('Verify your shipping address',
+               '',
+               'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address','', 'verified')
+               .afterClosed().subscribe((result) => {
                 if (result) {
+                  if(result === 'verified') {  
+                    const name = this.shippingAddress.name;
+                    addresses[0].name = name;
+                    this.selectedShippingAddress = addresses[0];
+                    this.addNewAddress(addresses[0]);
+                  } else {
                   // PRIMARY
                   this.selectedShippingAddress = this.shippingAddress;
                   this.addNewAddress(this.shippingAddress);
+                  }
+                  this.showShippingForm = false;
+                  this.showAddressRequiredError = false;
+                  this.shippingAddress = {} as IFirebaseAddress;
+                  this.shippingMethodForm.form.reset();
+                  this.touchShippingForm = false;
                 }
-                else {
-                  const name = this.shippingAddress.name;
-                  addresses[0].name = name;
-                  this.selectedShippingAddress = addresses[0];
-                  this.addNewAddress(addresses[0]);
-                }
-                this.showShippingForm = false;
-                this.showAddressRequiredError = false;
-                this.shippingAddress = {} as IFirebaseAddress;
-                this.shippingMethodForm.form.reset();
-                this.touchShippingForm = false;
+             
               }, (error) => {
                 console.error('error step', error);
               });

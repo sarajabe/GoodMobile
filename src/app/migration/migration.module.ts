@@ -12,7 +12,7 @@ import { ConfirmDeviceComponent } from './confirm-device/confirm-device.componen
 import { CompatibleDeviceComponent } from './compatible-device/compatible-device.component';
 import { NotCompatibleDeviceComponent } from './not-compatible-device/not-compatible-device.component';
 import { SuccessfulOrderComponent } from './successful-order/successful-order.component';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
     WidgetsModule,
     ReactiveFormsModule,
     FormsModule,
-    NguiAutoCompleteModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({
       showTitle: true,
       showSubtitle: false,

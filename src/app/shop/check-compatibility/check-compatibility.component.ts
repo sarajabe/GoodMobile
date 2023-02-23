@@ -12,7 +12,7 @@ import { ModalHelperService } from '../../../services/modal-helper.service';
 import { take, takeWhile } from 'rxjs/operators';
 import { ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS } from '../../app.routes.names';
 import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.service';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
 import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
@@ -66,6 +66,8 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
 
   private activationCode: string;
   private alive = true;
@@ -179,6 +181,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
   }
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
   }
   public next(): void {
     this.activeStep = 2;
@@ -200,11 +203,15 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
     this.showAddressResultBanner = false;
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.address && this.address?.main_text) {
+      const event = this.address;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -223,8 +230,10 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
                   ? this.displayedAddressModel?.postalCode
                   : ''
                 }`;
+                this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error
@@ -240,6 +249,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
     }
   }
   public changedAddress(): void {
+    this.findPlace(this.address);
     this.displayedAddressModel = null;
   }
   public resolvedCaptcha(captchaResponse: string): void {
@@ -365,7 +375,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
   public skipDevice(): void {
     let device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
     this.modalHelper.showConfirmMessageModal('Skip device check', 'The service will only work on 4G/5G VoLTE compatible devices. By skipping this step, there is no way to know if your phone is compatible with our networks. Is your phone 4G or 5G and VoLTE compatible?', 'Yes', 'Check Phone', 'skip-modal')
-      .result.then((option) => {
+      .afterClosed().subscribe((option) => {
         if (option === true) {
           this.setDevice(device);
           this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);

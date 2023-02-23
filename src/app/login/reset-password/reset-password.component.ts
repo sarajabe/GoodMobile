@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PASSWORD_PATTERN } from '../../app.config';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LOGIN_ROUTE_URLS, ROUTE_URLS } from '../../app.routes.names';
 import { MetaService } from '../../../services/meta-service.service';
 import { ToastrHelperService } from '../../../services/toast-helper.service';

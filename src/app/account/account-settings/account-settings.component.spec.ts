@@ -1,18 +1,15 @@
 import { HttpHandler, HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EndpointUrl, ZMP_G2G_BFF_ENDPOINT_URL } from '@ztarmobile/zwp-service';
 import { AuthHttp } from '@ztarmobile/zwp-services-auth';
-import { CustomFormsModule } from 'ng4-validators';
-import { ModalModule } from 'ngx-modialog-7';
-import { BootstrapModalModule } from 'ngx-modialog-7/plugins/bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { ENV_FIREBASE_CONFIG } from 'src/environments/environment';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -43,9 +40,8 @@ describe('AccountSettingsComponent', () => {
         AngularFireDatabaseModule,
         FormsModule,
         ReactiveFormsModule,
-        CustomFormsModule,
         RouterTestingModule,
-        NguiAutoCompleteModule,
+        MatAutocompleteModule,
         ToastrModule.forRoot()
       ],
       providers: [

@@ -349,7 +349,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
           'and wait 30 seconds for network programming. If this is also a new phone, your new phone would need data settings programmed.' +
           ' If it is the same phone, the data settings would not be impacted, and would not need to be applied again. If you experience any trouble with the service,' +
           ' please give us a call at <a href="tel=8004163003"> (800)-416-3003</a></p></div>';
-        this.modalHelper.showInformationMessageModal('SIM swap is completed!', '', 'Done', null, true, 'success-swap-modal', customHtml).result.then((result) => {
+        this.modalHelper.showInformationMessageModal('SIM swap is completed!', '', 'Done', null, true, 'success-swap-modal', customHtml).afterClosed().subscribe((result) => {
           this.successfulSIMSwap = false;
         });
       }
@@ -371,7 +371,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         if (!!this.userCart && this.userCart.cartType && this.userCart.cartType !== CART_TYPES.NEW_PLAN) {
           this.modalHelper.showConfirmMessageModal('Clear Cart', 'Changing your selected account will clear the items in your cart. Do you want to proceed?',
             'Yes', 'No', 'clean-cart-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (result) {
                 if (!!this.userCart.voucherData) {
                   this.mobilePlansService.removeVoucherCode();
@@ -410,7 +410,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
   }
   public revertCancellation(): void {
     this.modalHelper.showConfirmMessageModal('Revert plan cancellation', 'Would you like to revert you plan cancellation?', 'Yes', 'No', 'auto-renew-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (result) {
           this.appState.loading = true;
           this.userPlansService.reverseCancelPlan(this.selectedPlan.mdn, this.selectedPlan.id).then(() => {
@@ -430,22 +430,10 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     sessionStorage.setItem('notInterested', 'true');
   }
  
-  public showMigrationDataFlow(): void {
-    this.modalHelper.showMigrationStepsModal('migration-flows-popup')
-      .result.then((result) => {
-        if (!!result) {
-          this.orderSIMMigration();
-        } else {
-          this.notInterested();
-        }
-      }, (error) => {
-        console.error('error', error);
-      });
-  }
   public activateReplacementEsim(): void {
     const mdn: string = (new PhonePipe()).transform(this.selectedPlan.mdn);
     if (!!this.selectedPlan.eSimDetails && this.selectedPlan.eSimDetails.iccid !== this.selectedPlan.planDevice.simNumber) {
-      this.modalHelper.showeSIMModal(this.selectedPlan.eSimDetails.iccid, mdn, 'esim-replacement').result.then((response) => {
+      this.modalHelper.showeSIMModal(this.selectedPlan.eSimDetails.iccid, mdn, 'esim-replacement').afterClosed().subscribe((response) => {
         if (!!response) {
           this.swapSIM(this.selectedPlan.eSimDetails.iccid, response);
         }
@@ -458,20 +446,20 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
   public replaceSIM(): void {
     const mdn: string = (new PhonePipe()).transform(this.selectedPlan.mdn);
     const customHTML = '<div class="question"><p>Is this the Phone Number you Want your SIM active with?</p></div><div class="number"><p>' + mdn + '</p></div>';
-    this.modalHelper.showInformationMessageModal('', '', 'Yes', null, true, 'SIM-replacement-modal', customHTML, true, 'No').result.then((result) => {
+    this.modalHelper.showInformationMessageModal('', '', 'Yes', null, true, 'SIM-replacement-modal', customHTML, true, 'No').afterClosed().subscribe((result) => {
       if (!!result && result === true) {
         this.modalHelper.showSIMModal('', 'Enter your Replacement SIM’s ICCID', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
-          this.selectedPlan.planDevice.network, 'Replacement SIM ICCID', true).result.then((selection) => {
+          this.selectedPlan.planDevice.network, 'Replacement SIM ICCID', true).afterClosed().subscribe((selection) => {
             if (!!selection && selection !== false && selection.input) {
               const modalHTML = '<div class="question"><p>You are about to swap to SIM <p class="iccid"><b>[' + selection.input + ']</b></p> on Phone Number <b>' + mdn +
                 '</b></p><p class="confirm">Is this correct?"</p></div>';
               this.modalHelper.showInformationMessageModal('', '',
                 'Yes', null, true, 'confirm-swap-modal', modalHTML, true, 'No',
-                'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').result.then((res) => {
+                'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').afterClosed().subscribe((res) => {
                   if (!!res && res === true) {
                     if (!this.selectedPlan.planDevice.postalCode) {
                       this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal')
-                        .result.then((data) => {
+                        .afterClosed().subscribe((data) => {
                           if (!!data) {
                             this.selectedPlan.planDevice.postalCode = data;
                             this.changeDevice(selection.input, selection.captcha);
@@ -504,7 +492,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         const customHtml = `<div class="content"><p class="info">Your Service is now active.</p>
         <p class="info">The SIM will be changed immediately.</p>
         <p class="focus"><b>You must have your phone ready to scan the QR code to load the eSIM on your phone</b></p></div>`;
-        this.modalHelper.showInformationMessageModal('Ready to set up your eSIM', '', 'Setup now', null, true, 'confirm-esim', customHtml).result.then((response) => {
+        this.modalHelper.showInformationMessageModal('Ready to set up your eSIM', '', 'Setup now', null, true, 'confirm-esim', customHtml).afterClosed().subscribe((response) => {
           if (!!response) {
             this.activateEsim()
           }
@@ -631,7 +619,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         const secondHtml = `You are about to change your plan, and your ACP benefits will be immediately discontinued.<br><br>
         <span class="approve-remove-ebb">I approve removal of ACP benefits, and wish to proceed changing to a paid plan?</span>`;
         this.modalHelper.showInformationMessageModal('Change ACP Plan', '', 'Yes', '', false, 'change-ebb-plan-modal', firstHtml, true, 'No')
-          .result.then((result) => {
+          .afterClosed().subscribe((result) => {
             if (result) {
               this.checkClearCartForChangePlan();
             } 
@@ -740,7 +728,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     if (!!this.selectedPlan && !this.selectedPlan.canceled) {
       if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.TOPUP_PLAN) {
         this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-          .result.then((result) => {
+          .afterClosed().subscribe((result) => {
             if (result) {
               this.mobilePlansService.removePhonesFromCart();
               if (!!this.userCart.voucherData) {
@@ -884,12 +872,12 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
 
   public editPaymentMethod(isToggle: boolean): void {
     this.modalHelper.showSpecificManagePaymentModal(this.user, this.selectedPlan, false, this.selectedPlan.paymentMethodId, 'manage-payment-modal', `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SETTINGS}`)
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result && result === 'success' && !isToggle) {
           this.modalHelper.showConfirmMessageModal('Plan Auto Pay',
             'Sign up for Auto Pay and renew your plan subscription automatically at the end of your billing cycle!. Of course, you can cancel autopay and make changes to your account at any time.',
             'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal')
-            .result.then((response) => {
+            .afterClosed().subscribe((response) => {
               if (!!response) {
                 this.appState.loading = true;
                 this.accountPaymentService.updateAutoRenewPlan(this.selectedPlan.id, this.paymentMethod.id, true).then(() => {
@@ -950,12 +938,12 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
   }
 
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) =>
           this.userPlansService.selectUserPlan(userPlanId), (error) => this.toastHelper.showAlert(error.error.message));
       }
-    }).catch((error) => {
+    }, (error) => {
       this.toastHelper.showAlert(error.message);
     });
   }
@@ -965,7 +953,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
       this.modalHelper.showConfirmMessageModal(
         'Disable Auto Pay?', 'Are you sure you want to cancel auto payment from this account?',
         'Yes', 'No', 'auto-renew-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             this.updatedPlan = this.selectedPlan;
             this.autoRenew = false;
@@ -998,7 +986,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     }
     if (this.autoRenew) {
       this.modalHelper.showConfirmMessageModal('Enable Auto Pay?', 'Sign up for Auto Pay and renew your plan subscription automatically at the end of your billing cycle!. Of course, you can cancel autopay and make changes to your account at any time.', 'Yes to Auto Pay & Save', 'No to Saving', 'auto-renew-modal large')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             this.updatedPlan = this.selectedPlan;
             const autoRenewOriginalValue = this.autoRenew;
@@ -1068,7 +1056,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.PORT_NUMBER}`, params]);
   }
   public cancelPortIn(): void {
-    this.modalHelper.showConfirmMessageModal('Cancel Port In', 'Are you sure you want to cancel?', 'Yes', 'No', '').result.then((result) => {
+    this.modalHelper.showConfirmMessageModal('Cancel Port In', 'Are you sure you want to cancel?', 'Yes', 'No', '').afterClosed().subscribe((result) => {
       if (!!result) {
         this.appState.loading = true;
         this.processingRequest = true;
@@ -1098,7 +1086,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
       if (!!this.fiveGEnabled) {
         const enableCustomHtml = `<p>Enabling 5G requires an APN data setup update. Please check the data setup instructions for further details.</p>`;
         this.modalHelper.showFiveGModal('New APN required', enableCustomHtml, 'Enable and download file',
-          '/assets/ereseller.mobileconfig', 'five-toggle-modal', true).result.then((res) => {
+          '/assets/ereseller.mobileconfig', 'five-toggle-modal', true).afterClosed().subscribe((res) => {
             if (!!res) {
               this.appState.loading = true;
               //the timeout needs to be set to fixte issue of downloading in firefox and safari
@@ -1128,7 +1116,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
       } else {
         const disableCustomHtml = `<p>Disabling 5G requires an APN data setup update. Please check the data setup instructions </p>`;
         this.modalHelper.showFiveGModal('New APN required', disableCustomHtml, 'Disable and download file',
-          '/assets/reseller.mobileconfig', 'five-toggle-modal', true).result.then((res) => {
+          '/assets/reseller.mobileconfig', 'five-toggle-modal', true).afterClosed().subscribe((res) => {
             if (!!res) {
               this.appState.loading = true;
               setTimeout(() => {
@@ -1162,7 +1150,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     if (this.wifiEnabled) {
       // eslint-disable-next-line max-len
       this.modalHelper.showWifiCallingModal(`Activate WiFi \n Calling on your device`, `${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS}/wifi-calling`,
-        'wifi-calling-modal').result.then((data) => {
+        'wifi-calling-modal').afterClosed().subscribe((data) => {
           if (!!data) {
             this.appState.loading = true;
             this.userAccountService.setWifiCalling(this.selectedPlan.id, data).then(() => {
@@ -1170,7 +1158,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
               this.wifiEnabled = true;
               // eslint-disable-next-line max-len
               this.modalHelper.showInformationMessageModal('Wi-Fi Calling Added Successfully!', 'To begin using this feature, please restart your phone,  and then enable Wi-Fi calling.',
-                'Done', '', true, 'wifi-result-modal').result.then(() => {
+                'Done', '', true, 'wifi-result-modal').afterClosed().subscribe(() => {
                   this.userAccount.wifiCallingEnabled = true;
                   this.userAccount.wifiCallingAddress = data;
                   this.userPlansService.selectUserPlan(this.selectedPlan.id);
@@ -1187,7 +1175,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
         });
     } else {
       this.modalHelper.showConfirmMessageModal('Are you sure You want to disable WiFi Calling on Your device?', '',
-        'Disable', 'Cancel', 'disable-wifi-modal').result.then((response) => {
+        'Disable', 'Cancel', 'disable-wifi-modal').afterClosed().subscribe((response) => {
           if (!!response) {
             this.appState.loading = true;
             this.userAccountService.disableWifiCalling(this.selectedPlan.id).then(() => {
@@ -1213,35 +1201,26 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     address.name = 'wifi address';
     delete address.alias;
     this.modalHelper.showWifiCallingModal('Update WiFi Calling Address', `${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS}/wifi-calling`,
-      'wifi-calling-modal edit-wifi-modal', address).result.then((data) => {
+      'wifi-calling-modal edit-wifi-modal', address).afterClosed().subscribe((data) => {
         if (!!data) {
           this.appState.loading = true;
           this.userAccountService.setWifiCalling(this.selectedPlan.id, data).then(() => {
             this.appState.loading = false;
             this.modalHelper.showInformationMessageModal('Wi-Fi Calling Updated Successfully!',
               'To begin using this feature, please restart your phone,  and then enable Wi-Fi calling.',
-              'Done', '', true, 'wifi-result-modal').result.then(() => {
+              'Done', '', true, 'wifi-result-modal').afterClosed().subscribe(() => {
                 this.userPlansService.selectUserPlan(this.selectedPlan.id);
               });
           }, (error) => {
             this.appState.loading = false;
             this.wifiEnabled = false;
             const customHtml = '<div class="description"><p class="message">The address must be a physical location, PO box as address is not allowed.</p></div>';
-            this.modalHelper.showInformationMessageModal('Oops! Something went wrong', '', 'Try again', '', true, 'wifi-result-modal', customHtml).result.then(() => {
+            this.modalHelper.showInformationMessageModal('Oops! Something went wrong', '', 'Try again', '', true, 'wifi-result-modal', customHtml).afterClosed().subscribe(() => {
               this.userPlansService.selectUserPlan(this.selectedPlan.id);
             });
           });
         }
       });
-  }
-  public orderSIMMigration(): void {
-    this.modalHelper.showeMigrationConfirmationModal(this.selectedPlan.planDevice.marketingName, this.selectedPlan.planDevice.id, 'migration-confirmation').result.then((response) => {
-      const params = {};
-      params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
-      params[MIGRATION_ROUTE_URLS.PARAMS.CONFIRMED] = response;
-      
-      this.router.navigate([`${MIGRATION_ROUTE_URLS.BASE}/${MIGRATION_ROUTE_URLS.CHECK_COMPATIBILITY}`, params]);
-    });
   }
   public startMigration(): void {
     const params = {};
@@ -1275,7 +1254,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
     if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.CHANGE_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?',
         'Yes', 'No', 'clean-cart-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             if (!!this.userCart.voucherData) {
               this.mobilePlansService.removeVoucherCode();

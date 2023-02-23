@@ -176,7 +176,7 @@ export class AccountUsageHistoryComponent implements OnInit, OnDestroy, AccountP
         if (!!this.userCart && this.userCart.cartType && this.userCart.cartType !== CART_TYPES.NEW_PLAN) {
           this.modalHelper.showConfirmMessageModal('Clear Cart', 'Changing your selected account will clear the items in your cart. Do you want to proceed?',
             'Yes', 'No', 'clean-cart-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (result) {
                 if (!!this.userCart.voucherData) {
                   this.mobilePlansService.removeVoucherCode();
@@ -256,24 +256,22 @@ export class AccountUsageHistoryComponent implements OnInit, OnDestroy, AccountP
   }
 
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => this.userPlansService.selectUserPlan(userPlanId),
           (error) => this.toastHelper.showAlert(error.error.message));
       }
-    }).catch((error) => {
     });
   }
 
   public addActivatedPhoneNumber(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => this.userPlansService.selectUserPlan(userPlanId),
           (error) => this.toastHelper.showAlert(error.error.message));
         this.modalHelper.showInformationMessageModal('Number successfully added!', 'Your activated number has been successfully added to your account.', 'Done',
           null, true, 'successful-activation-modal');
       }
-    }).catch((error) => {
     });
   }
 

@@ -131,7 +131,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     this.currentShippingAddress.name = currentAddress.shippingName;
     this.changeAddressClicked = true;
     this.modalHelper.showShippingAddressModal('Edit Shipping Address', this.currentShippingAddress,
-      'shipping-address-modal').result.then((address) => {
+      'shipping-address-modal').afterClosed().subscribe((address) => {
         this.changeAddressClicked = false;
         if (!!address) {
           this.appState.loading = true;
@@ -150,34 +150,37 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
             </div>`;
               this.appState.loading = false;
               this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-                'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address')
-                .result.then((result) => {
+              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address',
+              '', 'verified')
+                .afterClosed().subscribe((result) => {
                   if (result) {
+                    if(result === 'verified') { 
+                      selectedAddress = addresses[0];
+                      selectedAddress.name = address.name;
+                      currentAddress.shippingName = selectedAddress.name;
+                    } else {
                     selectedAddress = address;
                     currentAddress.shippingName = selectedAddress.name;
-                  } else {
-                    selectedAddress = addresses[0];
-                    selectedAddress.name = address.name;
-                    currentAddress.shippingName = selectedAddress.name;
-                  }
-                  this.appState.loading = true;
-                  this.accountOrderService.updateOrderShippingAddress(orderId, selectedAddress).then(() => {
-                    this.appState.loading = false;
-                    this.currentShippingAddress = selectedAddress;
-                    this.orderInfo.shippingInfo.shippingAddress.address1 = selectedAddress.address1;
-                    this.orderInfo.shippingInfo.shippingAddress.address2 = !!selectedAddress.address2 ? selectedAddress.address2 : '';
-                    this.orderInfo.shippingInfo.shippingAddress.city = selectedAddress.city;
-                    this.orderInfo.shippingInfo.shippingAddress.state = selectedAddress.state;
-                    this.orderInfo.shippingInfo.shippingAddress.postalCode = selectedAddress.postalCode;
-                    this.orderInfo.shippingInfo.shippingAddress.shippingName = selectedAddress.name;
-                    this.address = true;
-                    this.toastHelper.showSuccess('Shipping address updated successfully!');
-                  }, (error) => {
-                    this.appState.loading = false;
-                    this.currentShippingAddress = currentAddress;
-                    this.orderInfo.shippingInfo.shippingAddress = Object.assign({} as IFirebaseAddress, JSON.parse(original));
-                    this.toastHelper.showAlert(error.message);
-                  });
+                    }
+                    this.appState.loading = true;
+                    this.accountOrderService.updateOrderShippingAddress(orderId, selectedAddress).then(() => {
+                      this.appState.loading = false;
+                      this.currentShippingAddress = selectedAddress;
+                      this.orderInfo.shippingInfo.shippingAddress.address1 = selectedAddress.address1;
+                      this.orderInfo.shippingInfo.shippingAddress.address2 = !!selectedAddress.address2 ? selectedAddress.address2 : '';
+                      this.orderInfo.shippingInfo.shippingAddress.city = selectedAddress.city;
+                      this.orderInfo.shippingInfo.shippingAddress.state = selectedAddress.state;
+                      this.orderInfo.shippingInfo.shippingAddress.postalCode = selectedAddress.postalCode;
+                      this.orderInfo.shippingInfo.shippingAddress.shippingName = selectedAddress.name;
+                      this.address = true;
+                      this.toastHelper.showSuccess('Shipping address updated successfully!');
+                    }, (error) => {
+                      this.appState.loading = false;
+                      this.currentShippingAddress = currentAddress;
+                      this.orderInfo.shippingInfo.shippingAddress = Object.assign({} as IFirebaseAddress, JSON.parse(original));
+                      this.toastHelper.showAlert(error.message);
+                    });
+                  } 
                 }, (error) => {
                   this.appState.loading = false;
                 });
@@ -195,7 +198,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
             </div>
           </div>`;
             this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Try again', null,
-              false, 'usp-pop-up-modal2', customHtml2).result.then((result) => {
+              false, 'usp-pop-up-modal2', customHtml2).afterClosed().subscribe((result) => {
                 this.appState.loading = false;
               });
           });
@@ -211,7 +214,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
   public cancelOrderWithRefund(isReplacement?: boolean): void {
     this.modalHelper.showConfirmMessageModal('Cancel order', 'Are you sure you want to cancel your order ?',
       'Yes', 'No', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
             this.accountOrderService.cancelWithRefund(this.orderId).then((order) => {

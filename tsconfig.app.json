@@ -4,6 +4,7 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": ["node", "facebook-js-sdk"],
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports":true//this will solve no export error for firebase
   },
   "angularCompilerOptions": {

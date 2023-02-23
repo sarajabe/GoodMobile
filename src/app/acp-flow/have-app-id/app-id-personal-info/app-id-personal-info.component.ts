@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAcpAddress, IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
-import { CustomValidators } from 'ng4-validators';
 import { takeWhile } from 'rxjs/operators';
-import { EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
+import { EBB_NAME_PATTERN, EMAIL_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
 import { EbbManager } from 'src/services/ebb.service';
 
 @Component({
@@ -35,7 +34,7 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       month: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       year: ['', Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       state: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/), Validators.maxLength(2)])],
-      email: ['', Validators.compose([Validators.required, CustomValidators.email, Validators.maxLength(50)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN), Validators.maxLength(50)])],
     });
   }
 

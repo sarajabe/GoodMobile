@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EndpointUrl } from '@ztarmobile/zwp-service';
 import { UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
-import { CustomFormsModule } from 'ng4-validators';
 import { of } from 'rxjs';
 import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
 import { SelectLineComponent } from './select-line.component';
@@ -105,7 +104,6 @@ describe('SelectLineComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        CustomFormsModule,
         RouterTestingModule
       ],
       providers: [

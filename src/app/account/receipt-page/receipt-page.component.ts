@@ -79,7 +79,7 @@ export class ReceiptPageComponent implements OnInit {
       </p>
     </div>`;
     this.modalHelper.showInformationMessageModal('', '', 'Send', '', true,
-      'send-receipt-email-modal', customHtmlBefore, true).result.then((result) => {
+      'send-receipt-email-modal', customHtmlBefore, true).afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
           this.accountPaymentService.sendReceiptEmail(this.orderId).then(() => {

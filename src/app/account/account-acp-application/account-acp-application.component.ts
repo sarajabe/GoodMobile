@@ -415,7 +415,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public cancelApplication(): void {
     if (!!this.userProfile) {
       this.modalHelper.showConfirmMessageModal('Are you sure you want to cancel application?', 'By clicking yes you agree to cancel your ACP application.', 'Yes', 'Cancel', 'clear-cart-modal')
-        .result.then((res) => {
+        .afterClosed().subscribe((res) => {
           if (!!res) {
             this.appState.loading = true;
             this.ebbService.getInternalApplication(this.userProfile.customerId, this.userProfile.ebbId).then((res) => {
@@ -464,7 +464,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public cancelOrder(): void {
     this.modalHelper.showConfirmMessageModal('Cancel order', 'Are you sure you want to cancel your order ?',
       'Yes', 'No', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
           this.accountOrderService.cancelWithRefund(this.acpPlan?.orderId).then((order) => {

@@ -34,11 +34,15 @@
           <p class="p-label primary-font-bold">Enter your full address</p>
           <p class="p-note smallest">Street Number, Address Line, City, State, ZIP Code</p>
         </label>
-        <input [(ngModel)]="address" id="addressRef" data-cy="addressRef" #addressRef="ngModel" type="search"
-          class="geolocate" ngui-auto-complete [source]="findPlace.bind(this)" list-formatter="description"
-          display-property-name="main_text" (valueChanged)="addressDetails($event)" [tab-to-select]="false"
-          placeholder="Enter your full address" (focus)="setFoucs = true" (blur)="setFoucs = false" name="addressRef"
-          (input)="changedAddress()" required />
+          <input [(ngModel)]="address" matInput id="addressRef" type="search" list-formatter="description" data-cy="addressRef" #addressRef="ngModel" 
+          name="addressRef" type="search" (focus)="setFoucs = true" (blur)="setFoucs = false;isAutoCompleteTagVisible = false"
+          class="geolocate"  placeholder="Enter your full address" [matAutocomplete]="auto" required
+          (input)="changedAddress()"/>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option?.description }}
+            </mat-option>
+          </mat-autocomplete>   
         <label class="validation-message" *ngIf="!address && addressRef.touched" id="required-address-msg">Address is a
           Required Field</label>
         <label class="validation-message" *ngIf="!displayedAddressModel && !!address" id="required-address-msg">Please

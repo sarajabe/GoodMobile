@@ -108,7 +108,7 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
               "No",
               "clean-cart-modal"
             )
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (result) {
                 this.appState.loading = true;
                 this.mobilePlansService.clearUserCart().then(() => {

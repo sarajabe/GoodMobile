@@ -45,11 +45,15 @@
                     <div class="form-field">
                         <p class="top-label">Enter your full address </p>
                         <label class="outlined-label-input flowed">
-                            <input type="text" formControlName="address" type="search" ngui-auto-complete
-                                [source]="findPlace.bind(this)" list-formatter="description"
-                                display-property-name="main_text" (valueChanged)="addressDetails($event);"
-                                [tab-to-select]="false" placeholder="  " (input)="changedAddress()"
-                                (focus)="setFoucs = true" (blur)="setFoucs = false">
+                            <input formControlName="address" matInput type="search" list-formatter="description"  
+                                type="search" (focus)="setFoucs = true" (blur)="setFoucs = false"
+                               class="geolocate"  placeholder="  " [matAutocomplete]="auto" required
+                               (input)="changedAddress()"/>
+                               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
+                                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                   {{ option?.description }}
+                                 </mat-option>
+                               </mat-autocomplete>        
                             <span [class.focused]="!!setFoucs || !!newMobileServiceFrom.controls.address.touched"
                                 [class.not-focused]="!setFoucs && !newMobileServiceFrom.controls.address.value"
                                 [class.error]="!!newMobileServiceFrom.controls.address.touched && !!newMobileServiceFrom.controls.address.errors"

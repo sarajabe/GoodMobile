@@ -69,7 +69,7 @@
           <div class="editable-action" *ngIf="!!isEditingEmail">
             <form (ngSubmit)="updateUserEmail()" [formGroup]="userForm">
               <input class="card-input" id="email" data-cy="email" type="email" formControlName="email" required autocomplete="email" />
-              <label class='validation-message alert' *ngIf="userForm.controls.email.hasError('email')">
+              <label class='validation-message alert' *ngIf="userForm.controls.email.hasError('pattern')">
                 Email address is invalid.
               </label>
             </form>
@@ -79,7 +79,7 @@
       <div class="card-action">
         <div class="action editing" *ngIf="!!isEditingEmail">
           <button id="saveEmailButton"  data-cy="saveEmailButton" class="button primary" (click)="updateUserEmail()"
-            [disabled]="userForm.controls.email.hasError('email') || !userForm.controls.email.value">Save</button>
+            [disabled]="userForm.controls.email.hasError('pattern') || !userForm.controls.email.value">Save</button>
         </div>
         <div class="action editing" *ngIf="!!isEditingEmail">
           <button id="cancelEmailButton"  data-cy="cancelEmailButton" class="button secondary" (click)="cancelEmailClicked()">Cancel</button>

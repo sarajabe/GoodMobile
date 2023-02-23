@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/app.service';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-check-phone-coverage',
@@ -41,7 +41,9 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
+  
   private alive = true;
   private selectedPhone: ICatalogItem;
   private isIphone = false;
@@ -108,9 +110,12 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
+
   }
   public changedAddress(): void {
     this.noCoverage = false;
+    this.findPlace(this.checkCoverageForm.controls.address.value);
     this.displayedAddressModel = null;
   }
   public resolvedCaptcha(captchaResponse: string): void {
@@ -287,13 +292,16 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
     sessionStorage.removeItem('address');
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
     this.noCoverage = false;
-
-    if (!!event && !!event.main_text) {
+    if (!!eventFire && !!this.checkCoverageForm.controls.address?.value && this.checkCoverageForm.controls.address?.value?.main_text) {
+      const event = this.checkCoverageForm.controls.address?.value;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -313,8 +321,10 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
                   : ''
                 }`;
               this.checkCoverageForm.controls.address.setValue(this.address);
+              this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error

@@ -1,11 +1,10 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderInfo, UserOrdersService } from '@ztarmobile/zwp-service-backend';
-import { SupportService } from '../../../../services/support.service';
-import { ACCOUNT_ROUTE_URLS } from '../../../app.routes.names';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AppState } from 'src/app/app.service';
+import { SupportService } from '@ztarmobile/zwp-service-backend-v2';
 
 @Component({
   selector: 'app-contact-form',

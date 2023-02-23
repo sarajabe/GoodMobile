@@ -59,17 +59,17 @@ export class ReplaceSimComponent implements OnDestroy {
       }
       this.selectedPlan = this.userPlans.find((p) => p.mdn === mdn);
       this.modalHelper.showSIMModal('Enter your Replacement SIM’s ICCID', '', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
-         'tmo', 'Replacement SIM ICCID', true, false, (!!validatedIccid && validatedIccid.length > 0 ? validatedIccid : null)).result.then((result) => {
+         'tmo', 'Replacement SIM ICCID', true, false, (!!validatedIccid && validatedIccid.length > 0 ? validatedIccid : null)).afterClosed().subscribe((result) => {
           if (!!result && result !== false && result.input) {
             const customHTML = '<div class="question"><p>You are about to swap to SIM <p class="iccid"><b>[' + result.input +
             ']</b></p> on Phone Number <b>' + this.selectedPlan?.mdn +
               '</b></p><p class="confirm">Is this correct?</p></div>';
             this.modalHelper.showInformationMessageModal('Confirmation', '',
               'Yes', null, true, 'confirm-swap-modal', customHTML, true, 'No',
-              'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').result.then((res) => {
+              'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').afterClosed().subscribe((res) => {
                 if (!!res && res === true) {
                   if (!this.selectedPlan.planDevice.postalCode) {
-                    this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal').result.then((postal) => {
+                    this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal').afterClosed().subscribe((postal) => {
                       if (!!postal) {
                         this.selectedPlan.planDevice.postalCode = postal;
                         this.changeDevice(result.input, result.captcha);

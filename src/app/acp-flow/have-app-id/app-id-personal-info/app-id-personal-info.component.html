@@ -208,7 +208,7 @@
         id="required-email-msg" data-cy="required-email-msg">
         Email Address is required
       </label>
-      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('email')" id="invalid-email-msg"
+      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('pattern')" id="invalid-email-msg"
         data-cy="invalid-email-msg">
         Email Address is invalid. Hint: watch out for extra spaces
       </label>

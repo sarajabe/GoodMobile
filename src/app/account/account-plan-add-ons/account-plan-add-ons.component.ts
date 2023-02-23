@@ -166,7 +166,7 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
         if (!!this.userCart && this.userCart.cartType && this.userCart.cartType !== CART_TYPES.NEW_PLAN) {
           this.modalHelper.showConfirmMessageModal('Clear Cart', 'Changing your selected account will clear the items in your cart. Do you want to proceed?',
             'Yes', 'No', 'clean-cart-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (!!result) {
                 this.mobilePlansService.clearUserCart();
                 this.appState.clearSessionStorage();
@@ -270,7 +270,7 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
     sessionStorage.setItem('plan_id', this.selectedPlan.id);
     if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing plan addOns will remove any plan in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.appState.clearSessionStorage();
             this.mobilePlansService.removePhonesFromCart();
@@ -290,8 +290,7 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
               }
               this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
             }, 200);
-          } else {
-          }
+          } 
         }, (error) => {
           console.error('error', error);
         });
@@ -423,7 +422,7 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
     this.isAddonSelected = true;
     if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing plan addOns will remove any plan in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.appState.clearSessionStorage();
             if (!!this.userCart.voucherData) {
@@ -442,11 +441,10 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
               title: 'Your Plan Add-on has been added To your cart',
               okText: 'Proceed to checkout', cancelText: 'Continue Shopping', enableHTML: true, customClass: 'select-addon-modal'
               // eslint-disable-next-line no-shadow
-            }).result.then((result) => {
+            }).afterClosed().subscribe((result) => {
               if (!!result) {
                 this.goToCart();
-              } else {
-              }
+              } 
             });
           } else {
             this.trackAddons();
@@ -465,11 +463,10 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
       this.modalHelper.showConfirmMessage(`Now you can continue shopping or proceed to checkout`, {
         title: 'Your Plan Add-on has been added To your cart',
         okText: 'Proceed to checkout', cancelText: 'Continue Shopping', enableHTML: true, customClass: 'select-addon-modal'
-      }).result.then((result) => {
+      }).afterClosed().subscribe((result) => {
         if (!!result) {
           this.goToCart();
-        } else {
-        }
+        } 
       });
     }
   }
@@ -490,12 +487,11 @@ export class AccountPlanAddOnsComponent implements OnInit, OnDestroy, AccountPag
     }
   }
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) =>
           this.userPlansService.selectUserPlan(userPlanId), (error) => this.toastHelper.showAlert(error.error.message));
       }
-    }).catch((error) => {
     });
   }
   private checkAddonExistence(addOn, quantity, type?): void {

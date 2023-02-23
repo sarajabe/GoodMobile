@@ -25,7 +25,15 @@
               "qs",
               "firebase",
               "@firebase/auth",
-              "@firebase/database"
+              "@firebase/database",
+              "leaflet",
+              "ngx-barcode6",
+              "jsbarcode",
+              "json-stringify-safe",
+              "p-throttle",
+              "fast-copy",
+              "lodash.isplainobject",
+              "lodash.isstring"
             ],
             "outputPath": "dist/good-mobile",
             "index": "src/index.html",
@@ -54,10 +62,9 @@
             "styles": [
               "src/styles/styles.scss",
               "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/swiper/css/swiper.css"
-            ],
+              "node_modules/swiper/swiper-bundle.css"
+             ],
             "scripts": [
-              "node_modules/swiper/js/swiper.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
