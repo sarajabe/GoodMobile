@@ -5,7 +5,7 @@ import { Options } from 'ng5-slider';
 import { take } from 'rxjs/operators'
 import { Router } from '@angular/router';
 import { SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app/app.routes.names';
-import Swiper, { Autoplay, EffectFade, Keyboard, Navigation } from 'swiper';
+import Swiper, { Autoplay, EffectFade, Keyboard, Mousewheel, Navigation } from 'swiper';
 
 @Component({
   selector: 'app-featured-plans',
@@ -13,11 +13,12 @@ import Swiper, { Autoplay, EffectFade, Keyboard, Navigation } from 'swiper';
   styleUrls: ['./featured-plans.component.scss'],
   animations: [FadeInOutAnimation]
 })
-export class FeaturedPlansComponent implements OnInit, AfterViewInit {
+export class FeaturedPlansComponent implements OnInit, AfterViewInit{
   public featuredPlans: IBasePlan[];
   public innerWidth: any;
   public config: any = {
     slidesPerView: 1,
+    slidesPerColumn: 1,
     direction: 'horizontal',
     keyboard: true,
     mousewheel: true,
@@ -34,8 +35,9 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit {
     observer: true ,
     observeParents: true,
     speed: 1000,
-    roundLengths:true
-  };
+    spaceBetween: 0,
+    loop: false
+    };
   public plans: Array<MobilePlanItem>;
   public value: any;
   public options: Options;
@@ -61,14 +63,15 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.innerWidth = document.documentElement.clientWidth;
+
   }
   ngAfterViewInit(): void {
     this.createSwiper();
-  }
+  }  
   public createSwiper(): void {
     const swiper = new Swiper('.swiper-container', {
       hashNavigation: true,
-      modules: [Navigation,EffectFade, Keyboard, Autoplay],
+      modules: [Navigation, EffectFade, Keyboard, Autoplay, Mousewheel],
       autoplay:{
         delay: 8000, // 8 seconds
         disableOnInteraction: false
@@ -84,9 +87,7 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.innerWidth = document.documentElement.clientWidth;
-    // if(document.documentElement.clientWidth < 640) {
       this.createSwiper();
-    // }
   }
 }
 
