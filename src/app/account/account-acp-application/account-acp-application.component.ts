@@ -85,6 +85,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public appDetails: any = {};
   public showQrCode = false;
   public createdDate: any;
+  public providerApplicationID;
   private callBackUrl: string;
   private alive = true;
 
@@ -588,6 +589,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 if (!!details) {
                   this.appDetails = details;
                   this.createdDate = details.createdAt;
+                  this.providerApplicationID = details.providerApplicationId;
                   if (details.status === this.ACP_STATUS.COMPLETE) {
                     this.showSPCard = true;
                     this.hideSuccessBanner();

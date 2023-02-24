@@ -1,6 +1,7 @@
 <section class="acp-section col-xl-offset-1">
     <p class="summary-title">ACP Summary</p>
     <p class="created-date smaller" *ngIf="!!createdDate">Created Date: <span>{{createdDate | date}}</span></p>
+    <p class="created-date smaller space" *ngIf="!!providerApplicationID">ACP application ID: <span>{{providerApplicationID}}</span></p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
         <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>

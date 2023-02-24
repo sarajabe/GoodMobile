@@ -1569,27 +1569,12 @@
     }
 
     &.ebb-validation {
-      .modal-header {
-        .modal-heading {
-          color: #d94a47;
-        }
-
-        .modal-close {
-          .icon-close {
-            color: #d94a47;
-          }
-        }
-      }
-
       .modal-content {
         display: flex;
         flex-direction: column;
 
         .modal-actions {
           .button {
-            background-color: #d94a47;
-            border-color: #d94a47;
-            color: #fff;
             width: 120px;
             padding: 10px;
           }

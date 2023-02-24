@@ -153,7 +153,6 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
   }
 
   public setPersonalInfo(data): void {
-    data = this.appState.removeEmptyValues(data);
     data.last4ssn = data.identityVerification === 'tribal'? null : data.last4ssn;
     data.tribalId = data.identityVerification === 'tribal'? data.tribalId : null;
     this.acpData.user = data;
