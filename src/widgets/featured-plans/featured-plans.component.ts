@@ -71,6 +71,8 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit{
   public createSwiper(): void {
     const swiper = new Swiper('.swiper-container', {
       hashNavigation: true,
+      lazy: true,
+      preloadImages: true,
       modules: [Navigation, EffectFade, Keyboard, Autoplay, Mousewheel],
       autoplay:{
         delay: 8000, // 8 seconds
