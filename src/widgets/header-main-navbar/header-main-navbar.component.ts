@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, HostListener, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { CART_TYPES, CustomizableMobilePlan, IUserAccount, IUserPlan, MobileCustomPlansService, UserAccountService, UserPlansService, ActionsAnalyticsService, FirebaseUserProfileService, IUser, ICreditCardInfo } from '@ztarmobile/zwp-service-backend';
-import { combineLatest, debounceTime, take, takeWhile } from 'rxjs/operators';
+import { combineLatest,takeWhile } from 'rxjs/operators';
 import { ROUTE_URLS, LOGIN_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SUPPORT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, DUPLICATE_PAYMENTS_ROUTE_URLS, ACP_ROUTE_URLS } from '../../app/app.routes.names';
 import { AppState } from '../../app/app.service';
 import { PhonePipe } from '../pipes/phone.pipe';
@@ -282,7 +282,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.CHANGE_PLAN) {
         // eslint-disable-next-line max-len
         this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-          .result.then((result) => {
+          .afterClosed().subscribe((result) => {
             if (result) {
               this.mobilePlansService.clearUserCart();
               this.appState.clearSessionStorage();
@@ -369,7 +369,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
         if (!!this.userCart && this.userCart.cartType && this.userCart.cartType !== CART_TYPES.NEW_PLAN) {
           this.modalHelper.showConfirmMessageModal('Clear Cart', 'Changing your selected account will clear the items in your cart. Do you want to proceed?',
             'Yes', 'No', 'clean-cart-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (result) {
                 this.mobilePlansService.clearUserCart();
                 this.appState.clearSessionStorage();

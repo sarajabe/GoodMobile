@@ -54,7 +54,7 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
   public goToCart() {
     if (!!this.currentPlan && !!this.currentPlan.cartType && this.currentPlan.cartType !== CART_TYPES.NEW_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (result) {
           this.mobilePlansService.startNewMobilePlan();
           this.mobilePlansService.setBasePlan(this.selectedPlan);
@@ -74,7 +74,7 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
   public goToPhoneShop(): void {
     if (!!this.currentPlan && !!this.currentPlan.cartType && this.currentPlan.cartType !== CART_TYPES.NEW_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (result) {
           this.clearCart();
           this.mobilePlansService.setBasePlan(this.selectedPlan);
@@ -95,7 +95,7 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
   public goToCompatiblilty(): void {
     if (!!this.currentPlan && !!this.currentPlan.cartType && this.currentPlan.cartType !== CART_TYPES.NEW_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (result) {
           this.clearCart();
           this.mobilePlansService.setBasePlan(this.selectedPlan);
@@ -120,7 +120,7 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
   public needPhonePopUp(): void {
     this.modalHelper.showRoutingModal('Do you need a phone to go with this plan?', '', true ,
      'I already have a phone', 'I need to buy a phone', 'Skip for now', SHOP_ROUTE_URLS.CHECK_PHONE,
-     SHOP_ROUTE_URLS.PHONES.TYPE, SHOP_ROUTE_URLS.CART, 'need-phone-popUp').result.then((result) => {
+     SHOP_ROUTE_URLS.PHONES.TYPE, SHOP_ROUTE_URLS.CART, 'need-phone-popUp').afterClosed().subscribe((result) => {
       if (!!result) {
         if (result === 'check-phone') {
           this.goToCompatiblilty();

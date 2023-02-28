@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AbstractControl, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { ActionsAnalyticsService, FirebaseUserProfileService } from '@ztarmobile/zwp-service-backend';
@@ -14,7 +14,6 @@ import { LoginComponent } from './login.component';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { CustomFormsModule } from 'ng4-validators';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 
 
@@ -35,8 +34,7 @@ describe('Login Component - Unit Test', async () => {
                 ReactiveFormsModule,
                 AngularFireModule.initializeApp(ENV_FIREBASE_CONFIG),
                 AngularFireDatabaseModule,
-                RouterTestingModule,
-                CustomFormsModule
+                RouterTestingModule
             ],
             providers: [{ provide: AngularFireAuth },
                 SimpleAuthService,

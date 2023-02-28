@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { ActionsAnalyticsService, FirebaseUserProfileService, IMarketingDetails } from '@ztarmobile/zwp-service-backend';
 import { RouterHelperService } from '@ztarmobile/zwp-services-util';

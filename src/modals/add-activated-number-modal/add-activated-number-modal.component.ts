@@ -1,16 +1,13 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { UserAuthService } from '@ztarmobile/zwp-services-auth';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
-import firebase from 'firebase/app';
+import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import firebase from 'firebase/compat/app';
 import { UserAccountService } from '@ztarmobile/zwp-service-backend';
 import { ToastrHelperService } from '../../services/toast-helper.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
 import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class ActivatedNumberModalContext extends BSModalContext {
+export class ActivatedNumberModalContext {
   public customClass?: string;
   public label?: string;
   public title?: string;
@@ -20,9 +17,9 @@ export class ActivatedNumberModalContext extends BSModalContext {
   selector: 'app-add-activated-number-modal',
   templateUrl: './add-activated-number-modal.component.html'
 })
-export class AddActivatedNumberModalComponent implements AfterViewInit, CloseGuard, ModalComponent<ActivatedNumberModalContext> {
+export class AddActivatedNumberModalComponent implements AfterViewInit {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
-  public context: ActivatedNumberModalContext;
+  public context: any;
   public phoneNumber: string;
   public verificationCode: string;
   public recaptchaResponse: any;
@@ -33,17 +30,14 @@ export class AddActivatedNumberModalComponent implements AfterViewInit, CloseGua
   public captchaValid = false;
   private verificationId: string;
   private recaptchaVerifier: firebase.auth.RecaptchaVerifier;
-  private recaptchaWidgetId: any;
 
-  constructor(public dialog: DialogRef<ActivatedNumberModalContext>,
-              private userAuthService: UserAuthService,
-              private toastHelper: ToastrHelperService,
-              private angularAuthService: AngularFireAuth,
-              private userAccountService: UserAccountService,
-              private location: PlatformLocation) {
-    dialog.setCloseGuard(this);
-    this.context = dialog.context;
-    location.onPopState(() => this.dialog.close());
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialogRef<ActivatedNumberModalContext>,
+    private toastHelper: ToastrHelperService,
+    private userAccountService: UserAccountService,
+    private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => { this.beforeDismiss(); this.dialog.close(); });
   }
 
   public resolvedCaptcha(captchaResponse: string): void {
@@ -66,11 +60,12 @@ export class AddActivatedNumberModalComponent implements AfterViewInit, CloseGua
   }
 
   cancel(): void {
-    this.dialog.dismiss();
+    this.beforeDismiss();
+    this.dialog.close();
   }
 
   public sendCode(captchaResponse?: string): void {
-    if (!!this.phoneNumber && this.phoneNumber.length > 8 ) {
+    if (!!this.phoneNumber && this.phoneNumber.length > 8) {
       this.processingMdnRequest = true;
       this.userAccountService.isValidPhoneNumber(this.phoneNumber, this.recaptchaResponse).then(() => {
         this.sendVerificationCode();
@@ -93,8 +88,8 @@ export class AddActivatedNumberModalComponent implements AfterViewInit, CloseGua
       this.processingRequest = false;
       this.dialog.close(this.phoneNumber);
     }).catch((error) => {
-        this.processingRequest = false;
-        this.toastHelper.showAlert(error.message);
+      this.processingRequest = false;
+      this.toastHelper.showAlert(error.message);
     });
   }
 
@@ -105,8 +100,8 @@ export class AddActivatedNumberModalComponent implements AfterViewInit, CloseGua
       this.waitingConfirmCode = !!result;
       this.processingMdnRequest = false;
     }).catch((error) => {
-        this.processingMdnRequest = false;
-        this.toastHelper.showAlert(error.message);
+      this.processingMdnRequest = false;
+      this.toastHelper.showAlert(error.message);
     });
   }
 }

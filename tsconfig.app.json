@@ -4,10 +4,11 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": ["node", "facebook-js-sdk"],
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports":true//this will solve no export error for firebase
   },
   "angularCompilerOptions": {
-    "enableIvy": false // it is set to false for now until we rewrite the zwp_modules and update the entry points for it
+    "enableIvy": true // it is set to false for now until we rewrite the zwp_modules and update the entry points for it
   },
   "files": [
     "src/main.ts",

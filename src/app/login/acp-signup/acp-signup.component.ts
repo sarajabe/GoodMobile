@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthHelperService, UserAuthService } from '@ztarmobile/zwp-services-auth';
 import { ActionsAnalyticsService, FirebaseMobilePlansCartService, FirebaseUserProfileService, IUser, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { RouterHelperService } from '@ztarmobile/zwp-services-util';
-import { CustomValidators } from 'ng4-validators';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { NAME_PATTERN, PASSWORD_PATTERN } from 'src/app/app.config';
+import { EMAIL_PATTERN, NAME_PATTERN, PASSWORD_PATTERN } from 'src/app/app.config';
 import { ACP_ROUTE_URLS, ACTIVATION_ROUTE_URLS, LOGIN_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { CAPTCHA_SITE_ID } from 'src/environments/environment';
@@ -25,7 +24,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
 
   public SITE_ID: string = CAPTCHA_SITE_ID;
-  public userForm: FormGroup;
+  public userForm: UntypedFormGroup;
   public user: IUser = {} as IUser;
   public password = '';
   public confirmPassword = '';
@@ -39,7 +38,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
   private referredCode: string;
 
-  constructor(private userAuthService: UserAuthService, private formBuilder: FormBuilder, public router: RouterHelperService,
+  constructor(private userAuthService: UserAuthService, private formBuilder: UntypedFormBuilder, public router: RouterHelperService,
               private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
               private toastHelper: ToastrHelperService, private metaService: MetaService, private angularFireService: AngularFireAuth,
               private firebaseMobilePlansCartService: FirebaseMobilePlansCartService, private userPlansService: UserPlansService,
@@ -56,7 +55,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
     this.userForm = formBuilder.group({
       firstName: ['', Validators.compose([Validators.required, Validators.pattern(NAME_PATTERN)])],
       lastName: ['', Validators.compose([Validators.required, Validators.pattern(NAME_PATTERN)])],
-      email: ['', Validators.compose([Validators.required, CustomValidators.email])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6),
         Validators.maxLength(12), Validators.pattern(PASSWORD_PATTERN)])],
       confirmPassword: ['', Validators.required],
@@ -148,7 +147,7 @@ export class AcpSignupComponent implements OnInit, OnDestroy {
   }
 
   private matchingPasswords(passwordKey: string, confirmPasswordKey: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const password = group.controls[passwordKey];
       const confirmPassword = group.controls[confirmPasswordKey];
 

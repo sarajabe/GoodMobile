@@ -7,7 +7,7 @@ import {
 } from '@ztarmobile/zwp-service-backend';
 import { PaginationInstance } from 'ngx-pagination';
 import { takeWhile, take } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ContentfulService } from 'src/services/contentful.service';
 import { MetaService } from 'src/services/meta-service.service';
@@ -181,11 +181,15 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     if (!!this.currentUserPlan && !!this.currentUserPlan.planDevice && this.currentUserPlan.planDevice.id && !this.currentUserPlan.phones) {
       const customHtml = `<p class="note">You will be activating your <b>${this.currentUserPlan.title}</b> Plan on your <b>${this.currentUserPlan.planDevice.marketingName}</b> Device</p>
       <p class="note">Do you wish to proceed or would you like to change the device?</p>`;
-      this.modalHelper.showInformationMessageModal('Confirmation', '', 'Activate Plan', null, true, 'pending-confirmation', customHtml, true, 'Change Device').result.then((res) => {
+      this.modalHelper.showInformationMessageModal('Confirmation', '', 'Activate Plan', null,
+      true, 'pending-confirmation', customHtml, true, 'Change Device','', 'change'
+     ).afterClosed().subscribe((res) => {
         if (res) {
-          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
-        } else {
-          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
+          if(res === 'change') {
+            this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
+          } else {
+            this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
+          }
         }
       })
     } else {
@@ -224,7 +228,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     sessionStorage.setItem('pendingAddress', JSON.stringify(this.currentShippingAddress));
     let selectedAddress = {} as IFirebaseAddress;
     this.modalHelper.showShippingAddressModal('Edit Shipping Address', this.currentShippingAddress,
-      'shipping-address-modal').result.then((address) => {
+      'shipping-address-modal').afterClosed().subscribe((address) => {
         if (!!address) {
           this.appState.loading = true;
           this.shippingService.verifyShippingAddress(address).then((addresses) => {
@@ -242,28 +246,30 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
             </div>`;
               this.appState.loading = false;
               this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-                'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address')
-                .result.then((result) => {
+              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address','', 'verified')
+              .afterClosed().subscribe((result) => {
                   if (result) {
-                    selectedAddress = address;
-                  } else {
-                    selectedAddress = addresses[0];
-                    selectedAddress.name = address.name;
-                  }
-                  this.appState.loading = true;
-                  this.userPlansService.updatePendingPlanShippingAddress(this.currentUserPlan.id, selectedAddress, this.currentUserPlan.orderId).then(() => {
-                    this.appState.loading = false;
-                    this.currentShippingAddress = selectedAddress;
-                    sessionStorage.removeItem('pendingAddress');
-                  }, (error) => {
-                    this.appState.loading = false;
-                    const storedShippingAddress = JSON.parse(sessionStorage.getItem('pendingAddress'));
-                    if (!!storedShippingAddress) {
-                      this.currentShippingAddress = Object.assign({}, storedShippingAddress) as IFirebaseAddress;
-                      sessionStorage.removeItem('pendingAddress');
+                    if(result === 'verified') {  
+                      selectedAddress = addresses[0];
+                      selectedAddress.name = address.name;
+                    } else {
+                      selectedAddress = address;
                     }
-                    this.toastHelper.showAlert(error.message);
-                  });
+                    this.appState.loading = true;
+                    this.userPlansService.updatePendingPlanShippingAddress(this.currentUserPlan.id, selectedAddress, this.currentUserPlan.orderId).then(() => {
+                      this.appState.loading = false;
+                      this.currentShippingAddress = selectedAddress;
+                      sessionStorage.removeItem('pendingAddress');
+                    }, (error) => {
+                      this.appState.loading = false;
+                      const storedShippingAddress = JSON.parse(sessionStorage.getItem('pendingAddress'));
+                      if (!!storedShippingAddress) {
+                        this.currentShippingAddress = Object.assign({}, storedShippingAddress) as IFirebaseAddress;
+                        sessionStorage.removeItem('pendingAddress');
+                      }
+                      this.toastHelper.showAlert(error.message);
+                    });
+                  } 
                 }, (error) => {
                   this.appState.loading = false;
                 });
@@ -281,7 +287,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
               </div>
             </div>`;
             this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Try again', null,
-              false, 'usp-pop-up-modal2', customHtml2).result.then((result) => {
+              false, 'usp-pop-up-modal2', customHtml2).afterClosed().subscribe((result) => {
                 this.appState.loading = false;
               });
             const storedShippingAddress = JSON.parse(sessionStorage.getItem('pendingAddress'));
@@ -313,11 +319,6 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       return result;
     }
     return '';
-  }
-  public goToPhones(): void {
-    const params = {};
-    params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = this.currentUserPlan.id;
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
   }
   public goToCompatiblity(): void {
     const params = {};

@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IChangeDevice, IDeviceCompatibilityV1, IExistingOrder, IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export class ReplaceSimComponent implements OnDestroy {
   public selectedPlan: IUserPlan;
   public userPlans: IUserPlan[];
   public userAccount: IUserAccount;
-  public currentMobileNumberForm: FormGroup;
+  public currentMobileNumberForm: UntypedFormGroup;
   public activePlans: Array<IUserPlan>;
   private alive = true;
 
@@ -29,7 +29,7 @@ export class ReplaceSimComponent implements OnDestroy {
               private toastHelper: ToastrHelperService,
               private userDeviceService: UserDeviceService,
               private appState: AppState,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private userAccountService: UserAccountService,
               private metaService: MetaService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
@@ -59,17 +59,17 @@ export class ReplaceSimComponent implements OnDestroy {
       }
       this.selectedPlan = this.userPlans.find((p) => p.mdn === mdn);
       this.modalHelper.showSIMModal('Enter your Replacement SIM’s ICCID', '', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
-         'tmo', 'Replacement SIM ICCID', true, false, (!!validatedIccid && validatedIccid.length > 0 ? validatedIccid : null)).result.then((result) => {
+         'tmo', 'Replacement SIM ICCID', true, false, (!!validatedIccid && validatedIccid.length > 0 ? validatedIccid : null)).afterClosed().subscribe((result) => {
           if (!!result && result !== false && result.input) {
             const customHTML = '<div class="question"><p>You are about to swap to SIM <p class="iccid"><b>[' + result.input +
             ']</b></p> on Phone Number <b>' + this.selectedPlan?.mdn +
               '</b></p><p class="confirm">Is this correct?</p></div>';
             this.modalHelper.showInformationMessageModal('Confirmation', '',
               'Yes', null, true, 'confirm-swap-modal', customHTML, true, 'No',
-              'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').result.then((res) => {
+              'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').afterClosed().subscribe((res) => {
                 if (!!res && res === true) {
                   if (!this.selectedPlan.planDevice.postalCode) {
-                    this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal').result.then((postal) => {
+                    this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal').afterClosed().subscribe((postal) => {
                       if (!!postal) {
                         this.selectedPlan.planDevice.postalCode = postal;
                         this.changeDevice(result.input, result.captcha);

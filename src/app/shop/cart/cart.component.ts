@@ -178,7 +178,7 @@ export class CartComponent implements OnInit, OnDestroy {
       this.modalHelper.showConfirmMessageModal(
         `Are you sure you want to change plan?`, 'By clicking yes you agree to leave this page and change your plan',
         'Yes', 'No', 'confirm-change-checkout-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             sessionStorage.removeItem('payment_id');
             sessionStorage.removeItem('useFromReward');
@@ -221,7 +221,7 @@ export class CartComponent implements OnInit, OnDestroy {
         'By clicking yes you agree to remove plan from your cart' : 'By clicking yes you agree to remove item from your cart';
     }
     this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'No', 'confirm-change-checkout-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           switch (this.userCart.cartType) {
             case CART_TYPES.NEW_PLAN:
@@ -282,7 +282,7 @@ export class CartComponent implements OnInit, OnDestroy {
       const question = 'To delete the device, check compatibility is needed!';
       const confirmMessage = 'Device will be removed from your cart. To complete your plan purchase, let’s find out if your device is compatible with our network.';
       this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Check your Device', 'Keep Device', 'clear-phone-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.mobilePlansService.removePhonesFromCart();
             sessionStorage.removeItem('shippingMethod');
@@ -317,7 +317,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   public goToPhones(): void {
     this.modalHelper.showConfirmMessageModal('Are you sure you want to change device?', 'By clicking yes you agree to leave this page and change your device', 'Yes', 'No',
-      'confirm-change-checkout-modal').result.then((result) => {
+      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
         if (result) {
           const params = {};
           params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;
@@ -531,7 +531,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   private removePhoneModal(): void {
-    this.modalHelper.showTMOSkipModal('Device check is needed! ', false, 'skip-tmo-modal', true).result.then((option) => {
+    this.modalHelper.showTMOSkipModal('Device check is needed! ', false, 'skip-tmo-modal', true).afterClosed().subscribe((option) => {
       if (option === 'eSim') {
         const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMGWLTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
         this.setDevice(device, true);

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalHelperService } from '../../../services/modal-helper.service';
@@ -8,7 +8,7 @@ import { ToastrHelperService } from '../../../services/toast-helper.service';
 import { Router } from '@angular/router';
 import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
 import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.service';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
 
@@ -17,7 +17,7 @@ import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
   templateUrl: './landing-coverage.component.html',
   styleUrls: ['./landing-coverage.component.scss']
 })
-export class LandingCoverageComponent implements OnInit {
+export class LandingCoverageComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
 
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
@@ -37,7 +37,9 @@ export class LandingCoverageComponent implements OnInit {
   public address: any;
   public setFoucs = false;
   public displayValidation = false;
-
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
+  
   private streetSearchText: string;
 
   constructor(private modalHelper: ModalHelperService, private contentfulService: ContentfulService,
@@ -52,16 +54,23 @@ export class LandingCoverageComponent implements OnInit {
       this.reCaptcha.execute(); // reset recaptcha every 2 minutes to avoid invalid or expired recaptcha error
     }, 1.8 * 60 * 1000);
   }
+  ngOnDestroy(): void {
+    this.filteredOptionsSubscription?.unsubscribe();
+  }
   public resolvedCaptcha(captchaResponse: string): void {
     this.recaptchaResponse = captchaResponse;
     this.captchaValid = !!captchaResponse;
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.address && this.address?.main_text) {
+      const event = this.address;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.displayValidation = false;
         this.placesAutoCompleteService
@@ -81,8 +90,10 @@ export class LandingCoverageComponent implements OnInit {
                   ? this.displayedAddressModel?.postalCode
                   : ''
                 }`;
+                this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error
@@ -133,6 +144,7 @@ export class LandingCoverageComponent implements OnInit {
   }
 
   public changedAddress(): void {
+    this.findPlace(this.address);
     this.displayedAddressModel = null;
   }
 

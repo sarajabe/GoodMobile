@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="innerWidth > 639.9; else responsive ">
+    <ng-container *ngIf="innerWidth >= 640">
       <div class="cards-section">
         <div class="featured-card-container" *ngFor="let plan of featuredPlans"  (click)="viewAllPlans()">
           <div class="featured-plan-card" >
@@ -42,8 +42,8 @@
       </div>
     </ng-container>
 
-  <ng-template #responsive>
-    <div class="swiper-container featured swiper-width" [swiper]="config" (slideChangeEnd)="slideChanged($event)" [(index)]="index">
+  <ng-container *ngIf="innerWidth < 640">
+    <div class="swiper-container featured swiper-width">
       <div class="swiper-wrapper">
         <div class="swiper-slide" *ngFor="let plan of featuredPlans">
           <div class="featured-plan-card" >
@@ -72,5 +72,5 @@
         </div>
       </div>
     </div>
-  </ng-template>
+  </ng-container>
 </div>

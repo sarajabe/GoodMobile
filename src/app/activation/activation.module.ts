@@ -17,9 +17,9 @@ import { ChoosePlanPathComponent } from './choose-plan-path/choose-plan-path.com
 import { NoSIMComponent } from './no-sim/no-sim.component';
 import { ReplaceSimComponent } from './replace-sim/replace-sim.component';
 import { SIMCheckComponent } from './sim-check/sim-check.component';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { SuccessSwapComponent } from './success-swap/success-swap.component';
 import { PortSubmittedComponent } from './port-submitted/port-submitted.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { PortSubmittedComponent } from './port-submitted/port-submitted.componen
     ReactiveFormsModule,
     ActivationRoutingModule,
     WidgetsModule,
-    NguiAutoCompleteModule
+    MatAutocompleteModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

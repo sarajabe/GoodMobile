@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountPaymentService, FirebaseUserProfileService, ICreditCardInfo, IFirebaseAddress, IFirebasePaymentMethod, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { PageScrollService } from 'ngx-page-scroll-core';
@@ -36,7 +36,7 @@ export class ChangePaymentComponent implements OnInit, OnDestroy {
   public showValidation = [];
   public showAddPaymentForPending = [];
   public allowNext = false;
-  public paymentInfoForm: FormGroup;
+  public paymentInfoForm: UntypedFormGroup;
   public expirationYearRange: Array<number>;isValidAddress: boolean;
   public touchAddressForm = false;
   public billingAddress: IFirebaseAddress = {} as IFirebaseAddress;
@@ -53,7 +53,7 @@ export class ChangePaymentComponent implements OnInit, OnDestroy {
   showSuccessBanner: boolean;
 
   constructor(private route: ActivatedRoute, private userPlansService: UserPlansService, private appState: AppState, private userProfileService: FirebaseUserProfileService,
-    private formBuilder: FormBuilder, private accountPaymentService: AccountPaymentService,private toastHelper: ToastrHelperService,private modalHelper: ModalHelperService, 
+    private formBuilder: UntypedFormBuilder, private accountPaymentService: AccountPaymentService,private toastHelper: ToastrHelperService,private modalHelper: ModalHelperService, 
     private pageScrollService: PageScrollService, private router: Router) {
     this.route.params.subscribe(params => {
       if (!!params) {
@@ -68,8 +68,8 @@ export class ChangePaymentComponent implements OnInit, OnDestroy {
     });
     this.paymentInfoForm = formBuilder.group({
       fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
-      cardNumber: new FormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
-      cardCode: new FormControl('', Validators.compose([Validators.required,
+      cardNumber: new UntypedFormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
+      cardCode: new UntypedFormControl('', Validators.compose([Validators.required,
       Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
       cardExpirationMonth: ['MM', Validators.required],
       cardExpirationYear: ['YY', Validators.required],
@@ -175,7 +175,7 @@ export class ChangePaymentComponent implements OnInit, OnDestroy {
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       this.currentDate = new Date();

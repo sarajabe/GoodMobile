@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { RouterHelperService } from '@ztarmobile/zwp-services-util';
-import { DialogRef, ModalModule } from 'ngx-modialog-7';
 import { ToastrModule } from 'ngx-toastr';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 
@@ -18,16 +18,16 @@ describe('ConfirmMessageModalComponent', () => {
             declarations: [ConfirmMessageModalComponent],
             imports: [
                 RouterTestingModule,
-                NguiAutoCompleteModule,
+                MatAutocompleteModule,
                 ToastrModule.forRoot(),
-                ModalModule.forRoot()],
+                MatDialogModule],
             providers: [
-                { provide: DialogRef },
+                { provide: MatDialogRef },
                 RouterHelperService,
                 ToastrHelperService,
             ]
         });
-        TestBed.overrideProvider(DialogRef, { useValue: mockedDialog });
+        TestBed.overrideProvider(MatDialogRef, { useValue: mockedDialog });
         TestBed.compileComponents();
     }));
 

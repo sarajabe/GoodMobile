@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
-    "enableIvy": false
+    "enableIvy": true
   },
   "files": [
     "src/test.ts",

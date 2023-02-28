@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CustomValidators } from 'ng4-validators';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { INVISIBLE_CAPTCHA_ID } from '../../environments/environment';
 import { InvisibleRecaptchaComponent } from '../../widgets/invisible-recaptcha/invisible-recaptcha.component';
 import { SUPPORT_ROUTE_URLS } from '../app.routes.names';
 import { NewsletterService } from '@ztarmobile/zwp-service-backend-v2';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
+import { EMAIL_PATTERN } from '../app.config';
 
 @Component({
   selector: 'app-newsletter',
@@ -16,16 +16,16 @@ export class NewsletterComponent implements OnInit {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
   public SITE_ID = INVISIBLE_CAPTCHA_ID;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
-  public newsletterForm: FormGroup;
+  public newsletterForm: UntypedFormGroup;
   public processingRequest = false;
   public captchaValid = false;
   public recaptchaResponse: any;
-  constructor( private formBuilder: FormBuilder, private newsletterService: NewsletterService,
+  constructor( private formBuilder: UntypedFormBuilder, private newsletterService: NewsletterService,
                private toastHelper: ToastrHelperService) { }
 
   ngOnInit(): void {
     this.newsletterForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, CustomValidators.email])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN)])],
     });
   }
   public submitEmail(): void {

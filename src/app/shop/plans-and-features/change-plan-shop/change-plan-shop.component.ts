@@ -72,7 +72,7 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
       and any remaining service balances on your account may be lost.</p>
       <p >If you choose to change plans on your plan’s expiration date, your plan will change
       on your <span class="primary-font-bold">rate plan expiration date</span>. At that time, the cost of this new plan will be deducted from your main account balance.</p>`
-      this.modalHelper.showInformationMessageModal('Before we continue', '', 'Yes, make change on expiry date', null, true, 'change-plan-modal', cusomHtml, true, 'No, I want to change plan now').result.then((result) => {
+      this.modalHelper.showInformationMessageModal('Before we continue', '', 'Yes, make change on expiry date', null, true, 'change-plan-modal', cusomHtml, true, 'No, I want to change plan now').afterClosed().subscribe((result) => {
         if (result !== null) {
           console.info('result ', result)
           this.mobilePlansService.clearUserCart().then(() => {
@@ -98,7 +98,7 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
     } else {
       const cusomHtml = `<p class="first">If you choose to change plan now, Your plan change will take affect immediately.</p>
       <p class="second">The cost of this new plan will be deducted from your main account balance.</p>`;
-      this.modalHelper.showInformationMessageModal('Before we continue', '', '', null, true, 'change-plan-modal expiry', cusomHtml, true, 'Change plan now').result.then((result) => {
+      this.modalHelper.showInformationMessageModal('Before we continue', '', '', null, true, 'change-plan-modal expiry', cusomHtml, true, 'Change plan now').afterClosed().subscribe((result) => {
         if (result !== null) {
           this.mobilePlansService.clearUserCart().then(() => {
             this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.CHANGE, [this.selectedPlan]);

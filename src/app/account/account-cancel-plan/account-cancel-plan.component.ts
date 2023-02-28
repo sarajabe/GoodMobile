@@ -93,7 +93,7 @@ export class AccountCancelPlanComponent implements OnInit {
     <p class="second">If you choose to cancel plan on the expiration date, your plan will be cancelled on your
      Plan Expiration Date.</p>`, {
       okText: 'Cancel on expiry date', cancelText: 'Cancel plan now', enableHTML: true, customClass: 'change-plan-modal'
-    }).result.then((result) => {
+    }).afterClosed().subscribe((result) => {
       const params = {};
       params[ROUTE_URLS.PARAMS.SELECTED_PLAN_ID] = this.selectedPlan.id;
       if (result) {

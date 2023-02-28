@@ -8,10 +8,10 @@ import { ChangePlanSummaryComponent } from './change-plan-summary/change-plan-su
 import { CheckCompatibilityComponent } from './check-compatibility/check-compatibility.component';
 import { PlanDetailsComponent } from './plan-details/plan-details.component';
 import { CheckoutResultsComponent } from './checkout-results/checkout-results.component';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { CartComponent } from './cart/cart.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { CartComponent } from './cart/cart.component';
     WidgetsModule,
     FormsModule,
     ReactiveFormsModule,
-    NguiAutoCompleteModule,
+    MatAutocompleteModule,
     TooltipModule,
     NgCircleProgressModule.forRoot({
       showTitle: true,

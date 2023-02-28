@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class InputModalContext extends BSModalContext {
+export class InputModalContext {
   public title: string;
   public message: string;
   public okText?: string;
@@ -19,14 +18,13 @@ export class InputModalContext extends BSModalContext {
   selector: 'app-input-modal',
   templateUrl: './input-modal.component.html'
 })
-export class InputModalComponent implements CloseGuard, ModalComponent<InputModalContext> {
-  public context: InputModalContext;
+export class InputModalComponent {
+  public context: any;
   public userInputValue: string;
 
-  constructor(public dialog: DialogRef<InputModalContext>, private location: PlatformLocation) {
-    this.context = dialog.context;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialogRef<InputModalContext>, private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
   }
 
   beforeClose(): boolean {
@@ -41,10 +39,12 @@ export class InputModalComponent implements CloseGuard, ModalComponent<InputModa
   }
 
   closeDialog(): void {
+    this.beforeDismiss();
     this.dialog.close(false);
   }
 
   submitUserInput(): void {
+    this.beforeDismiss();
     this.dialog.close(this.userInputValue);
   }
 }

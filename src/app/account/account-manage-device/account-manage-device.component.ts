@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AccountPaymentService,
@@ -59,7 +59,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-  public simOptionsForm: FormGroup;
+  public simOptionsForm: UntypedFormGroup;
   public simOption: string;
   public deviceExpanded = true;
   public showCompatibleForm = false;
@@ -70,6 +70,9 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public showSuccessBanner: boolean;
   public showReplacementForm = false;
   public lteExpanded = true;
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
+
   private captchaResponse: string;
   private attSim: IDeviceCompatibilityV1;
   private tmoSim: IDeviceCompatibilityV1;
@@ -119,8 +122,8 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
         this.userPlansService.selectUserPlan(this.userCart.activePlanId);
       }
     });
-    this.simOptionsForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.simOptionsForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
   }
   ngOnInit(): void {
@@ -157,6 +160,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
     if (!!this.methodsObserver) {
       this.methodsObserver.unsubscribe();
     }
@@ -190,13 +194,16 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     this.captchaResponse = captchaResponse;
     this.captchaValid = !!captchaResponse;
   }
-
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.address && this.address?.main_text) {
+      const event = this.address;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -215,8 +222,10 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
                   ? this.displayedAddressModel?.postalCode
                   : ''
                 }`;
+                this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error
@@ -232,6 +241,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     }
   }
   public changedAddress(): void {
+    this.findPlace(this.address);
     this.displayedAddressModel = null;
     this.hideBanners();
   }
@@ -260,7 +270,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
               'and wait 30 seconds for network programming. If this is also a new phone, your new phone would need data settings programmed.' +
               ' If it is the same phone, the data settings would not be impacted, and would not need to be applied again. If you experience any trouble with the service,' +
               ' please give us a call at <a href="tel=8004163003"> (800)-416-3003</a></p></div>';
-            this.modalHelper.showInformationMessageModal('SIM swap is completed!', '', 'Done', null, true, 'success-swap-modal', customHtml).result.then((result) => {
+            this.modalHelper.showInformationMessageModal('SIM swap is completed!', '', 'Done', null, true, 'success-swap-modal', customHtml).afterClosed().subscribe((result) => {
               this.userPlansService.selectUserPlan(this.selectedPlan.id);
             });
           }, (error) => {
@@ -280,20 +290,20 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
   public replaceSIM(): void {
     const mdn: string = (new PhonePipe()).transform(this.selectedPlan.mdn);
     const customHTML = '<div class="question"><p>Is this the Phone Number you Want your SIM active with?</p></div><div class="number"><p>' + mdn + '</p></div>';
-    this.modalHelper.showInformationMessageModal('', '', 'Yes', null, true, 'SIM-replacement-modal', customHTML, true, 'No').result.then((result) => {
+    this.modalHelper.showInformationMessageModal('', '', 'Yes', null, true, 'SIM-replacement-modal', customHTML, true, 'No').afterClosed().subscribe((result) => {
       if (!!result && result === true) {
         this.modalHelper.showSIMModal('Enter your Replacement SIM’s ICCID', '', 'Activate', 'primary', 'Sim-replacement-iccid-modal',
-          this.selectedPlan.planDevice.network, 'Replacement SIM ICCID', true).result.then((selection) => {
+          this.selectedPlan.planDevice.network, 'Replacement SIM ICCID', true).afterClosed().subscribe((selection) => {
             if (!!selection && selection !== false && selection.input) {
               const modalHTML = '<div class="question"><p class="subhead">You are about to swap to SIM <p class="iccid"><b>[' + selection.input + ']</b></p> on Phone Number <b>' + mdn +
                 '</b></p><p class="confirm">Is this correct?"</p></div>';
               this.modalHelper.showInformationMessageModal('', '',
                 'Yes', null, true, 'confirm-swap-modal', modalHTML, true, 'No',
-                'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').result.then((res) => {
+                'Please make sure this is the phone number you want your new SIM associated to.  This change cannot be undone.').afterClosed().subscribe((res) => {
                   if (!!res && res === true) {
                     if (!this.selectedPlan.planDevice.postalCode) {
                       this.modalHelper.showInputModal('Postal code', `Enter postal code of your area`, 'Submit', 'primary', 'Sim-replacement-iccid-modal')
-                        .result.then((data) => {
+                        .afterClosed().subscribe((data) => {
                           if (!!data) {
                             this.selectedPlan.planDevice.postalCode = data;
                             this.changeDevice(selection.input, selection.captcha);
@@ -325,7 +335,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
         if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.NEW_PLAN) {
           this.modalHelper.showConfirmMessageModal('Clear Cart', 'Changing your selected account will clear the items in your cart. Do you want to proceed?',
             'Yes', 'No', 'clean-cart-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               if (result) {
                 if (!!this.userCart.voucherData) {
                   this.mobilePlansService.removeVoucherCode();
@@ -439,7 +449,7 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     const device = this.selectedPlan.planDevice.network === 'att' ? this.attSim : this.tmoSim;
     if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new sim will remove any plan in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             this.appState.clearSessionStorage();
             if (!!this.userCart.voucherData) {
@@ -502,12 +512,11 @@ export class AccountManageDeviceComponent implements OnInit, OnDestroy {
     }
   }
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => this.userPlansService.selectUserPlan(userPlanId),
           (error) => this.toastHelper.showAlert(error.error.message));
       }
-    }).catch((error) => {
     });
   }
   private getAddressValues(

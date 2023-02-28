@@ -3,7 +3,7 @@ import { ReCaptchaComponent } from '../../../widgets/re-captcha/re-captcha.compo
 import { CAPTCHA_SITE_ID } from '../../../environments/environment';
 import { ACCOUNT_ROUTE_URLS, ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../app.routes.names';
 import { IUserPlan, UserPlansService, UserDeviceService } from '@ztarmobile/zwp-service-backend';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ToastrHelperService } from '../../../services/toast-helper.service';
 import { MetaService } from '../../../services/meta-service.service';
@@ -19,7 +19,7 @@ export class DataSetupComponent implements OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
   public SITE_ID: string = CAPTCHA_SITE_ID;
   public ACCOUNT_ROUTE_URLS = ACCOUNT_ROUTE_URLS;
-  public compatibilityForm: FormGroup;
+  public compatibilityForm: UntypedFormGroup;
   public userPlan: IUserPlan;
   public deviceName: string;
   public os: string;
@@ -46,7 +46,7 @@ export class DataSetupComponent implements OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private metaService: MetaService,
     private toastHelper: ToastrHelperService,
     private simpleAuthService: SimpleAuthService,

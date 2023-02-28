@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAutoCompletePrediction, IFirebaseAddress, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.service';
@@ -27,7 +27,7 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   @Output() isValid: EventEmitter<boolean> = new EventEmitter();
 
   public displayedAddressModel: IFirebaseAddress = {} as IFirebaseAddress;
-  public addressFieldsForm: FormGroup;
+  public addressFieldsForm: UntypedFormGroup;
   public hasDetails = false;
   public isValidCity = true;
   public isValidState = true;
@@ -38,7 +38,7 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   private streetSearchText: string;
 
   constructor(private cdRef: ChangeDetectorRef, private placesAutoCompleteService: PlacesAutocompleteService,
-              private formBuilder: FormBuilder,private appState: AppState) {
+              private formBuilder: UntypedFormBuilder,private appState: AppState) {
     this.addressFieldsForm = formBuilder.group({
       alias: [''],
       address1: ['', Validators.required],
@@ -99,8 +99,8 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
 
   ngOnDestroy(): void {
     this.cdRef.detach();
+    this.filteredOptionsSubscription?.unsubscribe();
   }
-
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
     this.hasDetails = keyword !== '';
     this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);

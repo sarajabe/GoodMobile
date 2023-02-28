@@ -132,7 +132,7 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   public goToPlans(): void {
     this.modalHelper.showConfirmMessageModal('Are you sure you want to change plan?', 'By clicking yes you agree to leaving this page and changing your GoodMobile plan', 'Yes', 'Cancel',
-      'confirm-change-checkout-modal').result.then((result) => {
+      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
         if (result) {
           sessionStorage.removeItem('payment_id');
           sessionStorage.removeItem('useFromReward');
@@ -145,16 +145,12 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
             params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN] = true;
             this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`, params]);
           }
-        } else {
-          if (result === false) {
-          }
         }
-
       });
   }
   public goToPhones(): void {
     this.modalHelper.showConfirmMessageModal('Are you sure you want to change phone?', 'By clicking yes you agree to leaving this page and changing your phone', 'Yes', 'Cancel',
-      'confirm-change-checkout-modal').result.then((result) => {
+      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
         if (result) {
           const params = {};
           params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;
@@ -182,7 +178,7 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
       const question = 'Are you sure you want to remove phone?';
       const confirmMessage = 'Phone will be removed from your cart. To complete your plan purchase, let’s find out if your device is compatible with our network.';
       this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes, Check Device', 'Cancel', 'clear-phone-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.mobilePlansService.removePhonesFromCart();
             sessionStorage.removeItem('shippingMethod');

@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class CompatibilitySkipModalContext extends BSModalContext {
+export class CompatibilitySkipModalContext {
     public title: boolean;
     public hasCloseLink?: boolean;
     public customClass?: string;
@@ -14,13 +13,13 @@ export class CompatibilitySkipModalContext extends BSModalContext {
     selector: 'app-compatibility-skip-modal',
     templateUrl: './compatibility-skip-modal.component.html'
 })
-export class CompatibilitySkipModalComponent implements CloseGuard, ModalComponent<CompatibilitySkipModalContext> {
-    public context: CompatibilitySkipModalContext;
+export class CompatibilitySkipModalComponent  {
+    public context: any;
 
-    constructor(public dialog: DialogRef<CompatibilitySkipModalContext>, private location: PlatformLocation) {
-        this.context = dialog.context;
-        dialog.setCloseGuard(this);
-        location.onPopState(() => this.dialog.close());
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialogRef<CompatibilitySkipModalContext>, private location: PlatformLocation) {
+        this.context = data;
+        location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
     }
 
     public skipModalOption(skipResult?): void {
@@ -48,6 +47,7 @@ export class CompatibilitySkipModalComponent implements CloseGuard, ModalCompone
     }
 
     closeDialog(): void {
-        this.dialog.dismiss();
+        this.beforeDismiss();
+        this.dialog.close();
     }
 }

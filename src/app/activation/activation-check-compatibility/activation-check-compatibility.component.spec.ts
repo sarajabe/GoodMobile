@@ -5,7 +5,6 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { FirebaseUserProfileService, MobileCustomPlansService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { CustomFormsModule } from 'ng4-validators';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -39,8 +38,8 @@ describe('Activation Check Compatibility - Unit Test', async () => {
         MockRecaptchaComponent],
       imports: [FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule,
-        CustomFormsModule],
+        RouterTestingModule
+        ],
       providers: [{ provide: UserDeviceService },
       { provide: UserPlansService },
         SimpleAuthService,

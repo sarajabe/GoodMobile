@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ICreditCardInfo } from '@ztarmobile/zwp-service-backend';
 import { CreditCardValidator } from '../validators/credit-card.validator';
 
@@ -13,14 +13,14 @@ export class CreditCardPaymentComponent implements OnDestroy, OnInit, OnChanges 
   @Output() paymentInfoChange: EventEmitter<ICreditCardInfo> = new EventEmitter();
   @Output() isValid: EventEmitter<any> = new EventEmitter();
 
-  public paymentInfoForm: FormGroup;
+  public paymentInfoForm: UntypedFormGroup;
   public expirationYearRange: Array<number>;
   public isValidName = true;
 
   private currentDate: Date;
-  private cardFormCtrl: FormControl;
+  private cardFormCtrl: UntypedFormControl;
 
-  constructor(private cdRef: ChangeDetectorRef, private formBuilder: FormBuilder) {
+  constructor(private cdRef: ChangeDetectorRef, private formBuilder: UntypedFormBuilder) {
     this.expirationYearRange = [];
     this.currentDate = new Date();
 
@@ -28,13 +28,13 @@ export class CreditCardPaymentComponent implements OnDestroy, OnInit, OnChanges 
       this.expirationYearRange.push(this.currentDate.getFullYear() + i);
     }
 
-    this.cardFormCtrl = new FormControl('', [CreditCardValidator.validateCCNumber]);
+    this.cardFormCtrl = new UntypedFormControl('', [CreditCardValidator.validateCCNumber]);
 
     this.paymentInfoForm = formBuilder.group(
       {
         fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
         cardNumber: this.cardFormCtrl,
-        cardCode: new FormControl('', Validators.compose([Validators.required,
+        cardCode: new UntypedFormControl('', Validators.compose([Validators.required,
           Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
         cardExpirationMonth: ['', Validators.required],
         cardExpirationYear: ['', Validators.required],
@@ -45,10 +45,10 @@ export class CreditCardPaymentComponent implements OnDestroy, OnInit, OnChanges 
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
-      const combinedDate = new FormControl('', Validators.required);
+      const combinedDate = new UntypedFormControl('', Validators.required);
       if (!!this.paymentInfo && !!expYear.value && !!expMonth.value) {
         this.paymentInfo.expirationDate = expMonth.value.substring(0, 2) + expYear.value.substring(2, 4);
       }

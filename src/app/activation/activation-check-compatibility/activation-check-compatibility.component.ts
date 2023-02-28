@@ -15,7 +15,7 @@ import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
 import { AppState } from 'src/app/app.service';
 import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-activation-check-compatibility',
@@ -50,7 +50,9 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
+  
   private captchaResponse: string;
   private alive = true;
   private streetSearchText: string;
@@ -112,17 +114,23 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
 
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
+
   }
   public resolvedCaptcha(captchaResponse: string): void {
     this.captchaResponse = captchaResponse;
     this.captchaValid = !!captchaResponse;
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.address && this.address?.main_text) {
+      const event = this.address;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -141,8 +149,10 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   ? this.displayedAddressModel?.postalCode
                   : ''
                 }`;
+                this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error
@@ -158,6 +168,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
     }
   }
   public changedAddress(): void {
+    this.findPlace(this.address);
     this.displayedAddressModel = null;
   }
 
@@ -200,7 +211,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                         <p class="message">Your phone is ready and able to join our network!</p>
                         <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                       </div>`;
-                    this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then(() => {
+                    this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).afterClosed().subscribe(() => {
                       const params = {};
                       params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userPlanId;
                       this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
@@ -317,7 +328,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                       <p class="message">Your phone is ready and able to join our network!</p>
                       <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                     </div>`;
-                  this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then(() => {
+                  this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).afterClosed().subscribe(() => {
                     const params = {};
                     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = 'prefunded';
                     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
@@ -380,7 +391,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                 <p class="message">Your phone is ready and able to join our network!</p>
                 <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                 </div>`;
-                this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then((result) => {
+                this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).afterClosed().subscribe((result) => {
                   if (!!result) {
                     this.mobileCustomPlansService.setPlanDevice(this.compatibleDevice);
                     if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN && !!this.userCart.basePlan) {
@@ -429,7 +440,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           <p class="message">Your phone is ready and able to join our network!</p>
           <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
           </div>`;
-      this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).result.then(() => {
+      this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).afterClosed().subscribe(() => {
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS}`]);
       });
     }, (error) => {

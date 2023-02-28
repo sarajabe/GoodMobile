@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MobileCustomPlansService, UserDeviceService } from '@ztarmobile/zwp-service-backend';
-import { Modal } from 'ngx-modialog-7';
 import { ToastrService } from 'ngx-toastr';
 import { UiBlockButtonDirective } from 'src/widgets/directives/ui-block-button.directive';
 import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
@@ -37,7 +36,6 @@ describe('Coverage Component - Unit Test', async () => {
             ],
             providers: [
                 { provide: InvisibleRecaptchaComponent, useClass: MockRecaptchaComponent },
-                { provide: Modal, useValue: Modal },
                 { provide: UserDeviceService },
                 { provide: ToastrService, useValue: ToastrService },
                 { provide: MobileCustomPlansService },

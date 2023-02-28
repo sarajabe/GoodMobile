@@ -1,12 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {​​ ​​​​​​ModalModule}​ ​​from 'ngx-modialog-7';
-import {​ ​​​​​​​BootstrapModalModule} ​​​​from 'ngx-modialog-7/plugins/bootstrap';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShareButtonModule } from 'ngx-sharebuttons/button';
-import { AngularFireModule } from '@angular/fire';
-import * as firebase from 'firebase';
+import { AngularFireModule } from '@angular/fire/compat';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppState } from './app.service';
@@ -19,16 +17,16 @@ import { Metadata, ZwpConfig, CoreModule } from '@ztarmobile/zwp-service';
 import { UtilModule } from '@ztarmobile/zwp-services-util';
 import { BackendModule } from '@ztarmobile/zwp-service-backend';
 import { BackendV2Module } from '@ztarmobile/zwp-service-backend-v2';
-import { SWIPER_CONFIG, SwiperConfigInterface, SwiperModule } from 'ngx-swiper-wrapper';
+import { SwiperModule } from 'swiper/angular';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ToastrModule } from 'ngx-toastr';
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
 import 'leaflet';
 import 'leaflet.vectorgrid';
 import '../styles/styles.scss';
 import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { HomeComponent } from './home/home.component';
 import { TelecomsServicesModule } from '../providers/providers';
 import { WidgetsModule } from '../widgets/widgets.module';
@@ -37,7 +35,6 @@ import { EbbManager } from '../services/ebb.service';
 import { ContentfulService } from '../services/contentful.service';
 import { ToastrHelperService } from '../services/toast-helper.service';
 import { ModalHelperService } from '../services/modal-helper.service';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { BringPhoneComponent } from './bring-phone/bring-phone.component';
 import { HdVoiceComponent } from './hd-voice/hd-voice.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -60,11 +57,6 @@ const zwpConfig: ZwpConfig = {
   consoleErrorReporting: true,
   firebaseAppConfig: ENV_FIREBASE_CONFIG,
   metadata
-};
-
-const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 1
 };
 
 @NgModule({
@@ -98,18 +90,15 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         AuthModule,
         UtilModule,
         WidgetsModule,
-        ModalsModule,
+        MatDialogModule,
         SwiperModule,
-        NguiAutoCompleteModule,
         QRCodeModule,
         AppRoutingModule,
-        ModalModule.forRoot(),
-        BootstrapModalModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        ModalsModule
     ],
     exports: [],
     providers: [AppState, MetaService, ContentfulService, ToastrHelperService, ModalHelperService, EbbManager, PhoneManagementService,
-        { provide: SWIPER_CONFIG, useValue: DEFAULT_SWIPER_CONFIG },
         { provide: ErrorHandler, useClass: ErrorHandlerService }],
     bootstrap: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

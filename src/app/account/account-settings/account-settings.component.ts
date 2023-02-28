@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserAuthService } from '@ztarmobile/zwp-services-auth';
 import {
   AccountPaymentService, FirebaseAccountPaymentService, FirebaseUserProfileService,
@@ -9,10 +9,9 @@ import {
   ICreditCardInfo, IFirebaseAddress, IFirebasePaymentMethod, IPaymentMethod, IUser, IUserAccount,
   IUserPlan, ShippingService, UserAccountService, UserPlansService
 } from '@ztarmobile/zwp-service-backend';
-import { CustomValidators } from 'ng4-validators';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { FadeInOutAnimation } from 'src/app/app.animations';
-import { NAME_PATTERN, PASSWORD_PATTERN } from 'src/app/app.config';
+import { EMAIL_PATTERN, NAME_PATTERN, PASSWORD_PATTERN } from 'src/app/app.config';
 import { AppState } from 'src/app/app.service';
 import { INVISIBLE_CAPTCHA_ID} from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
@@ -41,9 +40,9 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public userShippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public userBillingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public billingAddress: IFirebaseAddress = {} as IFirebaseAddress;
-  public billingAddressForm: FormGroup;
+  public billingAddressForm: UntypedFormGroup;
   public expirationYearRange: Array<number>;
-  public paymentInfoForm: FormGroup;
+  public paymentInfoForm: UntypedFormGroup;
   public showPaymentSection = false;
   public userEbbInfo: IEbbUser;
   public user: IUser;
@@ -66,7 +65,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public currentPassword: string;
   public password: string;
   public isEditingEmail = false;
-  public userForm: FormGroup;
+  public userForm: UntypedFormGroup;
   public isActiveAccount = false;
   public showUserPassword = false;
   public PASSWORD_PATTERN = new RegExp(PASSWORD_PATTERN);
@@ -94,12 +93,12 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public touchShippingForm = false;
   public resetAddressForm = false;
   private alive = true;
-  private cardFormCtrl: FormControl;
+  private cardFormCtrl: UntypedFormControl;
   private currentDate: Date;
 
   constructor(private userAccountService: UserAccountService,
     private fbUserProfileService: FirebaseUserProfileService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private appState: AppState,
     private angularFireService: AngularFireAuth,
     private userPlansService: UserPlansService,
@@ -131,7 +130,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < 20; i++) {
       this.expirationYearRange.push(year + i);
     }
-    this.cardFormCtrl = new FormControl('', [CreditCardValidator.validateCCNumber]);
+    this.cardFormCtrl = new UntypedFormControl('', [CreditCardValidator.validateCCNumber]);
     this.userShippingAddress = {} as IFirebaseAddress;
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((userPlanReady) => {
       this.loadingPlan = !userPlanReady;
@@ -145,14 +144,14 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     });
 
     this.userForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required, CustomValidators.email])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN)])],
     });
 
     this.paymentInfoForm = formBuilder.group({
       fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
       cardNumber: this.cardFormCtrl,
       saveCard: [''],
-      cardCode: new FormControl('', Validators.compose([Validators.required,
+      cardCode: new UntypedFormControl('', Validators.compose([Validators.required,
       Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
       cardExpirationMonth: ['', Validators.required],
       cardExpirationYear: ['', Validators.required],
@@ -226,7 +225,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       if (!!this.paymentInfo && !!expYear.value && !!expMonth.value) {
@@ -284,7 +283,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     please contact our customer care number <a href="tel: (800) 840-8515">(800) 840-8515</a> for assistance.`;
     this.modalHelper.showInformationMessageModal('De-Enroll Federal Affordable Connectivity ', '', 'Done', null, true, null,
       deEnrollCustomHtml, false)
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (result) {
           // PRIMARY
           document.location.href = 'tel:(800) 840-8515';
@@ -416,48 +415,50 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
                   </div>`;
                 this.processingRequest = false;
                 this.modalHelper.showInformationMessageModal('Verify your shipping address', '', 'Keep current address', null, true, 'usp-pop-up-modal',
-                  this.customHtml, true, 'Use verified address')
-                  .result.then((result) => {
+                this.customHtml, true, 'Use verified address','', 'verified')
+                  .afterClosed().subscribe((result) => {
                     if (result) {
                       // PRIMARY
-                      this.userAccountService.addShippingAddress(this.userShippingAddress).then((newAddressId) => {
-                        this.toastHelper.showSuccess('New address was added successfully.');
-                        this.processingRequest = false;
-                        this.showShippingAddress = false;
-                        this.userShippingAddress.id = newAddressId;
-                        this.shippingAddressList.push(this.userShippingAddress);
-                        setTimeout(() => {
+                      if(result === 'verified') { 
+                        addresses[0].name = this.userShippingAddress.name;
+                        this.userAccountService.addShippingAddress(addresses[0]).then((newAddressId) => {
+                          this.toastHelper.showSuccess('New address was added successfully.');
+                          this.processingRequest = false;
+                          this.showShippingAddress = false;
+                          addresses[0].id = newAddressId;
+                          this.shippingAddressList.push(addresses[0]);
+                          this.userShippingAddress.name = ' ';
                           this.userShippingAddress = {} as IFirebaseAddress;
-                          this.userShippingAddress.name = '';
-                          this.billingAddressForm.controls.alias.setValue('');
-                          this.billingAddressForm.controls.alias.reset();
+                          this.billingAddressForm.controls.name.setValue('');
+                          this.billingAddressForm.controls.name.reset();
                           this.resetAddressForm = true;
-                        }, 500);
-                      }, (error) => {
-                        this.processingRequest = false;
-                        console.warn(error);
-                        this.resetAddressForm = true;
-                        this.toastHelper.showAlert('Failed to add address.');
-                      });
-                    }
-                    else {
-                      addresses[0].name = this.userShippingAddress.name;
-                      this.userAccountService.addShippingAddress(addresses[0]).then((newAddressId) => {
-                        this.toastHelper.showSuccess('New address was added successfully.');
-                        this.processingRequest = false;
-                        this.showShippingAddress = false;
-                        addresses[0].id = newAddressId;
-                        this.shippingAddressList.push(addresses[0]);
-                        this.userShippingAddress.name = ' ';
-                        this.userShippingAddress = {} as IFirebaseAddress;
-                        this.billingAddressForm.controls.name.setValue('');
-                        this.billingAddressForm.controls.name.reset();
-                        this.resetAddressForm = true;
-                      }, (error) => {
-                        this.processingRequest = false;
-                        console.warn(error);
-                        this.toastHelper.showAlert('Failed to add address.');
-                      });
+                        }, (error) => {
+                          this.processingRequest = false;
+                          console.warn(error);
+                          this.toastHelper.showAlert('Failed to add address.');
+                        });
+                      }
+                      else {
+                        this.userAccountService.addShippingAddress(this.userShippingAddress).then((newAddressId) => {
+                          this.toastHelper.showSuccess('New address was added successfully.');
+                          this.processingRequest = false;
+                          this.showShippingAddress = false;
+                          this.userShippingAddress.id = newAddressId;
+                          this.shippingAddressList.push(this.userShippingAddress);
+                          setTimeout(() => {
+                            this.userShippingAddress = {} as IFirebaseAddress;
+                            this.userShippingAddress.name = '';
+                            this.billingAddressForm.controls.alias.setValue('');
+                            this.billingAddressForm.controls.alias.reset();
+                            this.resetAddressForm = true;
+                          }, 500);
+                        }, (error) => {
+                          this.processingRequest = false;
+                          console.warn(error);
+                          this.resetAddressForm = true;
+                          this.toastHelper.showAlert('Failed to add address.');
+                        });
+                      }
                     }
                   }, (error) => {
                     console.error('error step', error);
@@ -466,7 +467,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
               }
             }, (error) => {
               this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Edit address', null,
-                false, 'usp-pop-up-modal2', this.customHtml2).result.then((result) => {
+                false, 'usp-pop-up-modal2', this.customHtml2).afterClosed().subscribe((result) => {
                   this.processingRequest = false;
                   this.resetAddressForm = true;
                 });
@@ -518,7 +519,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     const exp = method.expirationDate;
     this.modalHelper.showEditCreditCardModal(method, 'Edit payment method',
       'You can only update cvv, expiration date, and name on card. If your new card has a different 15 or 16 digit number, please exit and', 'Add a new payment card',
-      'edit-payment-modal').result.then((result) => {
+      'edit-payment-modal').afterClosed().subscribe((result) => {
         if (!!result) {
           if (result === 'new') {
             this.showPaymentSection = true;
@@ -549,7 +550,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public removePaymentMethod(method: IFirebasePaymentMethod): void {
     this.modalHelper.showConfirmMessageModal('Deleting Payment Method',
       `Are you sure you want to delete payment method with alias "${method.method} - ${!!method.alias ? method.alias : method.name}"`, 'Yes', 'No', 'confirm-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
           this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
@@ -592,7 +593,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public editShippingMethod(addressId): void {
     const originalAddressIndex = this.shippingAddressList.findIndex((address) => address.id === addressId);
     let shippingAddress = {} as IFirebaseAddress;
-    this.modalHelper.showShippingAddressModal('Edit Shipping Address', this.shippingAddressList[originalAddressIndex], 'shipping-address-modal').result.then((address) => {
+    this.modalHelper.showShippingAddressModal('Edit Shipping Address', this.shippingAddressList[originalAddressIndex], 'shipping-address-modal').afterClosed().subscribe((address) => {
       if (!!address) {
         this.appState.loading = true;
         this.shippingService.verifyShippingAddress(address).then((addresses) => {
@@ -610,26 +611,28 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
             </div>`;
             this.appState.loading = false;
             this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address')
-              .result.then((result) => {
+              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address','', 'verified')
+              .afterClosed().subscribe((result) => {
                 if (result) {
-                  shippingAddress = address;
-                } else {
-                  shippingAddress = addresses[0];
-                  shippingAddress.name = address.name;
-                }
-                this.appState.loading = true;
-                // eslint-disable-next-line no-shadow
-                this.userAccountService.udpateShippingAddress(shippingAddress, addressId).then((result) => {
-                  this.appState.loading = false;
-                  this.shippingAddressList[originalAddressIndex] = shippingAddress;
-                }, (error) => {
-                  this.appState.loading = false;
-                  this.toastHelper.showAlert(error.message);
-                  this.userPlansService.getShippingAddressById(addressId).then((response) => {
-                    this.shippingAddressList[originalAddressIndex] = response;
+                  if(result === 'verified') { 
+                    shippingAddress = addresses[0];
+                    shippingAddress.name = address.name;
+                  } else {
+                    shippingAddress = address;
+                  }
+                  this.appState.loading = true;
+                  // eslint-disable-next-line no-shadow
+                  this.userAccountService.udpateShippingAddress(shippingAddress, addressId).then((result) => {
+                    this.appState.loading = false;
+                    this.shippingAddressList[originalAddressIndex] = shippingAddress;
+                  }, (error) => {
+                    this.appState.loading = false;
+                    this.toastHelper.showAlert(error.message);
+                    this.userPlansService.getShippingAddressById(addressId).then((response) => {
+                      this.shippingAddressList[originalAddressIndex] = response;
+                    });
                   });
-                });
+                } 
               }, (error) => {
                 this.appState.loading = false;
                 this.toastHelper.showAlert(error);
@@ -648,7 +651,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
               </div>
             </div>`;
           this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Try again', null,
-            false, 'usp-pop-up-modal2', customHtml2).result.then((result) => {
+            false, 'usp-pop-up-modal2', customHtml2).afterClosed().subscribe((result) => {
               this.appState.loading = false;
               this.userPlansService.getShippingAddressById(addressId).then((response) => {
                 this.shippingAddressList[originalAddressIndex] = response;
@@ -662,7 +665,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public removeShippingAddress(address: IFirebaseAddress): void {
     this.modalHelper.showConfirmMessageModal('Deleting Address',
       `Are you sure you want to delete address with alias "${!!address.alias ? address.alias : address.name}", BEWARE this can't be undone`, 'Save', 'Cancel', 'confirm-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
           this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
@@ -684,7 +687,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public makeShippingAddressAsDefault(address: IFirebaseAddress): void {
     this.modalHelper.showConfirmMessageModal('Default Address',
       `Are you sure you want to make address with alias "${!!address.alias ? address.alias : address.name}" as your default shipping address?`, 'Save', 'Cancel', 'confirm-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
           this.userProfileService.setDefaultShippingAddress(address.id).then(() => {
@@ -698,7 +701,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public makePaymentMethodAsDefault(method: IFirebasePaymentMethod): void {
     this.modalHelper.showConfirmMessageModal('Make Payment as default ', `Are you sure you want to make your ${method.method} - ${!!method.alias ? method.alias : method.name} as your default payment method`,
       'Save', 'Cancel', 'confirm-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
           this.accountPaymentService.setDefaultPaymentMethod(method.id, true).then((payment) => {
@@ -729,7 +732,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
 
   public updatePlanCC(plan: IUserPlan): void {
     const title = !plan.paymentMethodId ? 'Select preferred method of payment:' : 'Change preferred method of payment:';
-    this.modalHelper.showSelectCreditCardModal(this.paymentMethodList, title, plan.mdn, 'Make Default Payment', 'select-cc-modal').result.then((methodId) => {
+    this.modalHelper.showSelectCreditCardModal(this.paymentMethodList, title, plan.mdn, 'Make Default Payment', 'select-cc-modal').afterClosed().subscribe((methodId) => {
       if (!!methodId) {
         this.appState.loading = true;
         this.accountPaymentService.updateAutoRenewPlan(plan.id, methodId, true).then((result) => {
@@ -801,9 +804,9 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
         } else {
           this.appState.loading = false;
           this.modalHelper.showConfirmPasswordModal('Confirm password', `You have to provide your current password to change your email`, 'confirm-password-modal')
-            .result.then((result) => {
+            .afterClosed().subscribe((result) => {
               resolve(result);
-            }).catch((error) => {
+            }, (error) => {
               this.user.email = this.currentUserInfo.email;
             });
         }

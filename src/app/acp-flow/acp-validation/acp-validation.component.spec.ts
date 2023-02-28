@@ -5,8 +5,7 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FirebaseEBBService, FirebaseUserProfileService, IFirebaseEbbDetails, IUser, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
-import { CustomFormsModule } from 'ng4-validators';
-import { DialogRef } from 'ngx-modialog-7';
+import { MatDialogRef } from '@angular/material/dialog';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import { NgxPrintModule } from 'ngx-print';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -214,7 +213,6 @@ fdescribe('AcpValidationComponent', () => {
             imports: [FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                CustomFormsModule,
                 NgxPrintModule,
                 ToastrModule.forRoot()
             ],
@@ -226,7 +224,7 @@ fdescribe('AcpValidationComponent', () => {
                 { provide: UserPlansService },
                 { provide: PageScrollService },
                 { provide: FirebaseUserProfileService },
-                { provide: DialogRef },
+                { provide: MatDialogRef },
                 { provide: InvisibleRecaptchaComponent, useClass: MockRecaptchaComponent },
                 { provide: ReCaptchaComponent, useClass: MockRecaptchaComponent },
             ],
@@ -237,7 +235,7 @@ fdescribe('AcpValidationComponent', () => {
         TestBed.overrideProvider(UserPlansService, { useValue: mockUserPlansService });
         TestBed.overrideProvider(FirebaseUserProfileService, { useValue: mockFirebaseUserProfileService });
         TestBed.overrideProvider(ModalHelperService, { useValue: mockModalHelperService });
-        TestBed.overrideProvider(DialogRef, { useValue: mockedDialog });
+        TestBed.overrideProvider(MatDialogRef, { useValue: mockedDialog });
         TestBed.compileComponents();
     });
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { FirebaseAccountPaymentService, IAddress, ICreditCardInfo, IFirebaseAddress,
   IFirebasePaymentMethod, CART_TYPES, IUserPlan, UserPlansService, CustomizableMobilePlan,
   IUser, FirebaseUserProfileService, MobileCustomPlansService } from '@ztarmobile/zwp-service-backend';
@@ -25,9 +25,9 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
   public CART_TYPES = CART_TYPES;
   public isItemsCart: boolean;
   public shippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
-  public paymentInfoForm: FormGroup;
-  public autoRenewForm: FormGroup;
-  public billingAddressForm: FormGroup;
+  public paymentInfoForm: UntypedFormGroup;
+  public autoRenewForm: UntypedFormGroup;
+  public billingAddressForm: UntypedFormGroup;
   public expirationYearRange: Array<number>;
   public autoRenew: boolean;
   public userPlan: IUserPlan;
@@ -52,9 +52,9 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
   public currentMonth;
   private alive = true;
   private currentDate: Date;
-  private cardFormCtrl: FormControl;
+  private cardFormCtrl: UntypedFormControl;
 
-  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: FormBuilder, private mobilePlansService: MobileCustomPlansService,
+  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: UntypedFormBuilder, private mobilePlansService: MobileCustomPlansService,
               private userPlanService: UserPlansService, private checkoutService: CheckoutService, private userProfileService: FirebaseUserProfileService) {
     this.expirationYearRange = [];
     this.currentDate = new Date();
@@ -64,17 +64,17 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
     for (let i = 0; i < 20; i++) {
       this.expirationYearRange.push(year + i);
     }
-    this.cardFormCtrl = new FormControl('', [CreditCardValidator.validateCCNumber]);
+    this.cardFormCtrl = new UntypedFormControl('', [CreditCardValidator.validateCCNumber]);
     this.autoRenewForm = formBuilder.group(
       {
-        autoRenew: new FormControl({value: this.autoRenew}),
+        autoRenew: new UntypedFormControl({value: this.autoRenew}),
       });
     this.paymentInfoForm = formBuilder.group(
       {
         fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
         cardNumber: this.cardFormCtrl,
         saveCard: [''],
-        cardCode: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
+        cardCode: new UntypedFormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
         cardExpirationMonth: ['', Validators.required],
         cardExpirationYear: ['', Validators.required],
       }, {validator: this.validExpirationDate('cardExpirationMonth', 'cardExpirationYear')});
@@ -200,7 +200,7 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
 }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       if (!!this.paymentInfo && !!expYear.value && !!expMonth.value) {
@@ -294,7 +294,7 @@ export class CreditCardPaymentSectionComponent  implements OnInit, OnDestroy {
   }
   public addressLookUpChanged(address: IAddress): void {
     this.billingAddress = Object.assign(this.billingAddress, address);
-    if (typeof this.billingAddress.address1 === 'object') {
+    if (typeof this.billingAddress.address1 === 'object' && !!this.billingAddress?.address1) {
       this.billingAddress.address1 = this.billingAddress.address1['main_text'];
     }
     this.updateData();

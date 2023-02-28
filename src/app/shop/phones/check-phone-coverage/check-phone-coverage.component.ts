@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserDeviceService, IUserPlan, ICatalogItem, PlacesAutocompleteService, AccountPaymentService, IAutoCompletePrediction, IFirebaseAddress } from '@ztarmobile/zwp-service-backend';
 import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
 import { PhoneManagementService } from 'src/services/phones.service';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/app.service';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-check-phone-coverage',
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
   public activeStep = 2; // this variable is to be used in the activate event of the router-outlet
-  public checkCoverageForm: FormGroup;
+  public checkCoverageForm: UntypedFormGroup;
   public selectedPlan: IUserPlan;
   public recaptchaResponse: any;
   public SITE_ID = INVISIBLE_CAPTCHA_ID;
@@ -41,13 +41,15 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   public displayedAddressModel: any;
   public address: any;
   public setFoucs = false;
-
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
+  
   private alive = true;
   private selectedPhone: ICatalogItem;
   private isIphone = false;
   private streetSearchText: string;
 
-  constructor(private stepsManagement: PhoneManagementService, private formBuilder: FormBuilder, private userDeviceService: UserDeviceService,
+  constructor(private stepsManagement: PhoneManagementService, private formBuilder: UntypedFormBuilder, private userDeviceService: UserDeviceService,
     public router: Router, private placesAutoCompleteService: PlacesAutocompleteService,
     private appState: AppState,
     private accountPaymentService: AccountPaymentService,
@@ -108,9 +110,12 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
+
   }
   public changedAddress(): void {
     this.noCoverage = false;
+    this.findPlace(this.checkCoverageForm.controls.address.value);
     this.displayedAddressModel = null;
   }
   public resolvedCaptcha(captchaResponse: string): void {
@@ -287,13 +292,16 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
     sessionStorage.removeItem('address');
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
     this.noCoverage = false;
-
-    if (!!event && !!event.main_text) {
+    if (!!eventFire && !!this.checkCoverageForm.controls.address?.value && this.checkCoverageForm.controls.address?.value?.main_text) {
+      const event = this.checkCoverageForm.controls.address?.value;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -313,8 +321,10 @@ export class CheckPhoneCoverageComponent implements OnInit, OnDestroy {
                   : ''
                 }`;
               this.checkCoverageForm.controls.address.setValue(this.address);
+              this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error

@@ -7,7 +7,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EndpointUrl } from '@ztarmobile/zwp-service';
 import { UserDeviceService } from '@ztarmobile/zwp-service-backend';
 import { AuthHttp } from '@ztarmobile/zwp-services-auth';
-import { CustomFormsModule } from 'ng4-validators';
 import { UiBlockButtonDirective } from 'src/widgets/directives/ui-block-button.directive';
 
 import { CheckPhoneCoverageComponent } from './check-phone-coverage.component';
@@ -22,7 +21,6 @@ describe('CheckPhoneCoverageComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        CustomFormsModule,
         RouterTestingModule,
       ],
       providers: [

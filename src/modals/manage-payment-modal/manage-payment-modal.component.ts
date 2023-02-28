@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import { take } from 'rxjs/operators';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
 import {
   AccountPaymentService,
   FirebaseAccountPaymentService,
@@ -16,8 +14,9 @@ import {
 import { Subscription } from 'rxjs/Subscription';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class PaymentModalContext extends BSModalContext {
+export class PaymentModalContext {
   public paymentId: string;
   public isManage: boolean;
   public userPlan: IUserPlan;
@@ -29,7 +28,7 @@ export class PaymentModalContext extends BSModalContext {
   selector: 'app-manage-payment-modal',
   templateUrl: './manage-payment-modal.component.html'
 })
-export class ManagePaymentModalComponent implements OnInit, CloseGuard, ModalComponent<PaymentModalContext> {
+export class ManagePaymentModalComponent implements OnInit{
   public paymentInfo: ICreditCardInfo;
   public isValidPaymentInfo: boolean;
   public processingRequest: boolean;
@@ -38,22 +37,21 @@ export class ManagePaymentModalComponent implements OnInit, CloseGuard, ModalCom
   public isValidCardInfo: boolean;
   public isValidBillingAddress: boolean;
   public methodsList: IFirebasePaymentMethod[];
-  public context: PaymentModalContext;
+  public context: any;
   public billingAddress: IFirebaseAddress;
 
   private paymentMethodsListSubscription: Subscription;
 
-  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private firebaseAccountPaymentService: FirebaseAccountPaymentService,
               private toastHelper: ToastrHelperService,
               private accountPaymentService: AccountPaymentService,
               private userPlanService: UserPlansService,
-              public dialog: DialogRef<PaymentModalContext>,
+              public dialog: MatDialogRef<PaymentModalContext>,
               private location: PlatformLocation) {
-    this.context = dialog.context;
+    this.context = data;
     this.editMode = false;
     this.billingAddress = {isDefault: false, alias: ''} as IFirebaseAddress;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+    location.onPopState(() => { this.beforeDismiss();this.dialog.close();});
     this.methodsList = [];
   }
 
@@ -109,9 +107,12 @@ export class ManagePaymentModalComponent implements OnInit, CloseGuard, ModalCom
     }
     return this.isValidPaymentInfo;
   }
-
+  beforeDismiss(): boolean {
+    return this.beforeClose();
+  }
   public closeDialog(methodId?: string): void {
     this.isValidPaymentInfo = false;
+    this.beforeDismiss();
     this.dialog.close(methodId);
   }
 

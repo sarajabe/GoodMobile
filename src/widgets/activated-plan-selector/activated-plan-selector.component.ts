@@ -89,7 +89,7 @@ export class ActivatedPlanSelectorComponent implements OnInit, OnDestroy, OnChan
   }
 
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => {
           this.userPlansService.selectUserPlan(userPlanId);
@@ -97,7 +97,6 @@ export class ActivatedPlanSelectorComponent implements OnInit, OnDestroy, OnChan
             null, true, 'successful-activation-modal');
         }, (error) => this.toastHelper.showAlert(error.error.message));
       }
-    }).catch((error) => {/* ignored */
     });
   }
 

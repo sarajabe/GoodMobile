@@ -12,7 +12,7 @@ import { AccountPaymentHistoryComponent } from './account-payment-history/accoun
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgPipesModule } from 'ngx-pipes';
 import { ShareButtonModule } from 'ngx-sharebuttons/button';
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
 
 import { AccountUsageHistoryComponent } from './account-usage-history/account-usage-history.component';
 import { AccountPlanAddOnsComponent } from './account-plan-add-ons/account-plan-add-ons.component';
@@ -44,13 +44,13 @@ import { OrderNotRecievedComponent } from './account-orders/order-not-recieved/o
 import { ReturnDeviceComponent } from './account-orders/return-device/return-device.component';
 import { SomethingElseComponent } from './account-orders/something-else/something-else.component';
 import { WrongItemsComponent } from './account-orders/wrong-items/wrong-items.component';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { OrderRmaComponent } from './order-rma/order-rma.component';
 import { ReturnReasonComponent } from './order-rma/return-reason/return-reason.component';
 import { ChangeOfMindComponent } from './order-rma/change-of-mind/change-of-mind.component';
 import { ReturnFormComponent } from './order-rma/return-form/return-form.component';
 import { AccountEsimSetupComponent } from './account-esim-setup/account-esim-setup.component';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
@@ -89,7 +89,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     AccountEsimSetupComponent
   ],
   imports: [
-    NguiAutoCompleteModule,
+    MatAutocompleteModule,
     CommonModule,
     AccountRoutingModule,
     WidgetsModule,
@@ -111,7 +111,7 @@ import { QRCodeModule } from 'angularx-qrcode';
       showUnits: false,
       showInnerStroke: false
     }),
-    NgxBarcodeModule
+    NgxBarcode6Module
   ],
   providers: [AccountHeaderService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

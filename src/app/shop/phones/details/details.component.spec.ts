@@ -1,14 +1,13 @@
 import { HttpHandler, HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EndpointUrl } from '@ztarmobile/zwp-service';
 import { CatalogService, ICatalog, ICatalogItem } from '@ztarmobile/zwp-service-backend';
-import { CustomFormsModule } from 'ng4-validators';
 import { ToastrModule } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { ENV_FIREBASE_CONFIG } from '../../../../environments/environment';
@@ -431,7 +430,6 @@ describe('DetailsComponent', () => {
             imports: [
                 FormsModule,
                 ReactiveFormsModule,
-                CustomFormsModule,
                 RouterTestingModule,
                 AngularFireModule.initializeApp(ENV_FIREBASE_CONFIG),
                 AngularFireAuthModule,

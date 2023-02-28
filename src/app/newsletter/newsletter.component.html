@@ -15,7 +15,7 @@
         <label class='validation-message' *ngIf="newsletterForm.controls.email.touched && newsletterForm.controls.email.hasError('required')">
             Email address is required.
         </label>
-        <label class='validation-message' *ngIf="newsletterForm.controls.email.hasError('email')">
+        <label class='validation-message' *ngIf="newsletterForm.controls.email.hasError('pattern')">
             Email address is invalid.
         </label>
     </form>

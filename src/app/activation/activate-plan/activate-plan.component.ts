@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUserPlan, SimActivationService } from '@ztarmobile/zwp-service-backend';
 import { ACTIVATION_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
@@ -17,7 +17,7 @@ import { ToastrHelperService } from 'src/services/toast-helper.service';
 export class ActivatePlanComponent {
   public pendingPlans: IUserPlan;
   public userPlans: IUserPlan[];
-  public activateForm: FormGroup;
+  public activateForm: UntypedFormGroup;
   public prefundedPlanId: string;
   public isPrefundedSIM = false;
   public customerCareNumber = CUSTOMER_CARE_NUMBER;
@@ -27,7 +27,7 @@ export class ActivatePlanComponent {
               private simActivationService: SimActivationService,
               private appState: AppState,
               private metaService: MetaService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private toastHelper: ToastrHelperService,
               private modalHelper: ModalHelperService) {
    

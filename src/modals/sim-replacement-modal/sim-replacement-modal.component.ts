@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { CAPTCHA_SITE_ID } from 'src/environments/environment';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class SIMReplacementModalContext extends BSModalContext {
+export class SIMReplacementModalContext {
   public title: string;
   public message: string;
   public okText: string;
@@ -21,8 +20,8 @@ export class SIMReplacementModalContext extends BSModalContext {
   selector: 'app-sim-replacement-modal',
   templateUrl: './sim-replacement-modal.component.html'
 })
-export class SimReplacementModalComponent implements CloseGuard, ModalComponent<SIMReplacementModalContext> {
-  public context: SIMReplacementModalContext;
+export class SimReplacementModalComponent {
+  public context: any;
   public userInputValue: string;
   public validLength;
   public showRecaptcha: boolean;
@@ -31,15 +30,14 @@ export class SimReplacementModalComponent implements CloseGuard, ModalComponent<
   private captchaResponse: string;
   public captchaValid = false;
 
-  constructor(public dialog: DialogRef<SIMReplacementModalContext>, private modalHelper: ModalHelperService, private location: PlatformLocation) {
-    this.context = dialog.context;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialog: MatDialogRef<SIMReplacementModalContext>, private modalHelper: ModalHelperService, private location: PlatformLocation) {
+    this.context = data;
     this.showRecaptcha = !!this.context.showRecaptcha ? this.context.showRecaptcha : false;
     this.captchaValid = !this.showRecaptcha ? true : false;
     this.disabledIccid = !!this.context.disabledIccid ? this.context.disabledIccid : false;
     if (!!this.context && this.context.iccid) {
       this.userInputValue = this.context.iccid;
     }
-    dialog.setCloseGuard(this);
     location.onPopState(() => this.dialog.close());
     this.validLength = 20;
   }
@@ -76,10 +74,12 @@ export class SimReplacementModalComponent implements CloseGuard, ModalComponent<
     );
   }
   closeDialog(): void {
+    this.beforeDismiss();
     this.dialog.close(false);
   }
 
   submitUserInput(): void {
+    this.beforeDismiss();
     this.dialog.close({ input: this.userInputValue, captcha: this.captchaResponse });
   }
 

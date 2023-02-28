@@ -1,14 +1,13 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserAuthService } from '@ztarmobile/zwp-services-auth';
 import { ActionsAnalyticsService, FirebaseMobilePlansCartService, FirebaseUserProfileService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { RouterHelperService } from '@ztarmobile/zwp-services-util';
-import { CustomFormsModule } from 'ng4-validators';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { ENV_FIREBASE_CONFIG } from 'src/environments/environment';
@@ -44,8 +43,7 @@ describe('Signup Component - Unit Test', async () => {
                 ReactiveFormsModule,
                 AngularFireModule.initializeApp(ENV_FIREBASE_CONFIG),
                 AngularFireDatabaseModule,
-                RouterTestingModule,
-                CustomFormsModule
+                RouterTestingModule
             ],
             providers: [UserAuthService,
                 RouterHelperService,

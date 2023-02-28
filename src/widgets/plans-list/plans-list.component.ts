@@ -98,7 +98,7 @@ export class PlansListComponent implements OnDestroy {
     }
     if (!!this.cart && !!this.cart.cartType && this.cart.cartType !== CART_TYPES.NEW_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             this.clearCart();
             this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.NEW, [this.selectedPlan]);

@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseUserProfileService, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
@@ -16,7 +16,7 @@ import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS } from '../../app.routes
   styleUrls: ['./acp-flow-landing.component.scss']
 })
 export class AcpFlowLandingComponent implements OnInit, OnDestroy {
-  public acpFlowForm: FormGroup;
+  public acpFlowForm: UntypedFormGroup;
   public acpOption: string;
   public acpData: any = {};
   public enrolled = false;
@@ -44,8 +44,8 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private userProfileService: FirebaseUserProfileService,
     private appState: AppState, private ebbService: EbbService, private modalHelper: ModalHelperService,
     private userPlansService: UserPlansService, private toastHelper: ToastrHelperService) {
-    this.acpFlowForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.acpFlowForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
   }
 
@@ -215,7 +215,7 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
           '',
           false, 'acp-modal-exists'
         )
-        .result.then((res) => {
+        .afterClosed().subscribe((res) => {
           if (!!res) {
             this.router.navigate([
               `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,

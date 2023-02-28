@@ -224,7 +224,7 @@ export class AccountPayAndRenewComponent implements OnInit, OnDestroy {
             this.isModalAction = false;
             this.modalHelper.showConfirmMessageModal('Clear Cart', 'Changing your selected account will clear the items in your cart. Do you want to proceed?',
               'Yes', 'No', 'clean-cart-modal')
-              .result.then((result) => {
+              .afterClosed().subscribe((result) => {
                 if (!!result) {
                   this.isModalAction = true;
                   this.mobilePlansService.clearUserCart();
@@ -299,12 +299,11 @@ export class AccountPayAndRenewComponent implements OnInit, OnDestroy {
     }
   }
   public addActivatedAccount(): void {
-    this.modalHelper.showAddActivatedNumberModal('add-number-modal').result.then((result) => {
+    this.modalHelper.showAddActivatedNumberModal('add-number-modal').afterClosed().subscribe((result) => {
       if (!!result) {
         this.userPlansService.bffAddUserPlanMDN(result).then((userPlanId) => this.userPlansService.selectUserPlan(userPlanId),
           (error) => this.toastHelper.showAlert(error.error.message));
       }
-    }).catch((error) => {
     });
   }
 
@@ -401,7 +400,7 @@ export class AccountPayAndRenewComponent implements OnInit, OnDestroy {
       if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.TOPUP_PLAN) {
         this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?',
           'Yes', 'No', 'clean-cart-modal')
-          .result.then((result) => {
+          .afterClosed().subscribe((result) => {
             if (result) {
               this.appState.clearSessionStorage();
               this.mobilePlansService.clearUserCart();

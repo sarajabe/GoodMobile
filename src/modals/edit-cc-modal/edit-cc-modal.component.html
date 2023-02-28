@@ -1,3 +1,4 @@
+<div class="modal">
 <div class="container model-container {{context.customClass}}">
     <div class="modal-header">
         <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
@@ -104,10 +105,16 @@
                         </div>
                         <div class="address-section">
                             <label for="addressLookup">Address line <span class="required-field">*</span></label>
-                            <input id="addressLookup" data-cy="addressLookup" name="addressLookup" #addressLookup type="search"
-                                formControlName="address1" display-property-name="main_text" ngui-auto-complete
-                                [max-num-list]="10" [source]="findPlace.bind(this)" class="geolocate"
-                                list-formatter="description" (valueChanged)="addressDetails($event)">
+                         <input formControlName="address1" id="addressLookup" data-cy="addressLookup" 
+                                matInput type="search" list-formatter="description" #addressLookup
+                               type="search" (focus)="setFoucs = true" (blur)="setFoucs = false"
+                              class="geolocate" [matAutocomplete]="auto" required
+                              (input)="changedAddress()"/>
+                              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                  {{ option?.description }}
+                                </mat-option>
+                              </mat-autocomplete>            
                             <p class="validation-message" data-cy="addressLineRequiredMsg"
                                 *ngIf="addressForm.controls.address1.touched && addressForm.controls.address1.hasError('required')">
                                 Address is required. </p>
@@ -161,4 +168,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

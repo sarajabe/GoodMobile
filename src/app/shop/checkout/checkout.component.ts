@@ -801,7 +801,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     const confirmMessage = (this.currentPlan.cartType === CART_TYPES.NEW_PLAN) || (this.currentPlan.cartType === CART_TYPES.CHANGE_PLAN) ?
       'By clicking yes you agree to remove plan from your cart' : 'By clicking yes you agree to remove item from your cart';
     this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'Cancel', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           switch (this.currentPlan.cartType) {
             case CART_TYPES.NEW_PLAN:
@@ -896,7 +896,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
   public removePlanDevice(): void {
     this.modalHelper.showConfirmMessageModal('Remove Device', 'Are you sure you want to remove your compatible device?', 'Yes', 'Cancel', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.mobilePlansService.setPlanDevice(null);
         }

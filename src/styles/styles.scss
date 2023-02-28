@@ -1,10 +1,5 @@
 @import '~ngx-toastr/toastr.css';
 @import '~leaflet/dist/leaflet.css';
-@import '~ngx-sharebuttons/themes/default/default-theme';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~@angular/material/form-field/_form-field-fill-theme.scss';
-@import '~@angular/material/datepicker/_datepicker-theme.scss';
-// @import '~ngx-swiper-wrapper/dist/lib/swiper.component.css';
-// @import '~ng5-slider/scss/ng5-slider.scss';
-//@import '~@material/textfield/mdc-text-field.scss';
+@import 'ngx-sharebuttons/themes/default/default-theme';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'style'; // hero_design styles

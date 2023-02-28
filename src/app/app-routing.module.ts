@@ -4,7 +4,7 @@ import { IPageMeta } from '@ztarmobile/zwp-service';
 import {
   ACCOUNT_ROUTE_URLS, LOGIN_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS,
   SUPPORT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, MIGRATION_ROUTE_URLS, OFFERS_ROUTE_URLS,
-  DUPLICATE_PAYMENTS_ROUTE_URLS, ACP_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS
+  DUPLICATE_PAYMENTS_ROUTE_URLS, ACP_ROUTE_URLS
 } from './app.routes.names';
 import { BringPhoneComponent } from './bring-phone/bring-phone.component';
 import { HdVoiceComponent } from './hd-voice/hd-voice.component';

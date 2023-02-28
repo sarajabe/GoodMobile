@@ -180,7 +180,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       this.modalHelper.showConfirmMessageModal(
         `Are you sure you want to change plan?`, 'By clicking yes you agree to leave this page and change your plan',
         'Yes', 'No', 'auto-renew-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (result) {
             sessionStorage.removeItem('payment_id');
             sessionStorage.removeItem('useFromReward');
@@ -209,7 +209,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       const question = 'Are you sure you want to remove phone?';
       const confirmMessage = 'Phone will be removed from your cart. To complete your plan purchase, let’s find out if your device is compatible with our network.';
       this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes, Check Device', 'Cancel', 'clear-phone-modal')
-        .result.then((result) => {
+        .afterClosed().subscribe((result) => {
           if (!!result) {
             this.mobilePlansService.removePhonesFromCart();
             sessionStorage.removeItem('shippingMethod');
@@ -233,7 +233,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
     confirmMessage = (this.userCart.cartType === CART_TYPES.NEW_PLAN) || (this.userCart.cartType === CART_TYPES.CHANGE_PLAN) ?
       'By clicking yes you agree to remove plan from your cart' : 'By clicking yes you agree to remove item from your cart';
     this.modalHelper.showConfirmMessageModal(question, confirmMessage, 'Yes', 'No', 'clean-cart-modal')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           switch (this.userCart.cartType) {
             case CART_TYPES.NEW_PLAN:
@@ -281,7 +281,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   }
   public goToPhones(): void {
     this.modalHelper.showConfirmMessageModal('Are you sure you want to change phone?', 'By clicking yes you agree to leaving this page and changing your phone', 'Yes', 'Cancel',
-      'confirm-change-checkout-modal').result.then((result) => {
+      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
         if (result) {
           const params = {};
           params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;

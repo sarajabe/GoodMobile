@@ -1,11 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {  ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EndpointUrl } from '@ztarmobile/zwp-service';
 import { ActionsAnalyticsService, IUserDevice, IUserPlan, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { CustomFormsModule } from 'ng4-validators';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -30,8 +29,7 @@ describe('ActivateNewNumberComponent', () => {
             ],
             imports: [FormsModule,
                 ReactiveFormsModule,
-                RouterTestingModule,
-                CustomFormsModule],
+                RouterTestingModule],
             providers: [
                 { provide: ToastrService, useValue: ToastrService },
                 { provide: EndpointUrl },

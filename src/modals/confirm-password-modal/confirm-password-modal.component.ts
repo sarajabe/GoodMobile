@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class ConfirmPasswordModalContext extends BSModalContext {
+export class ConfirmPasswordModalContext {
   public message: string;
   public title: boolean;
   public customClass?: string;
@@ -13,14 +12,13 @@ export class ConfirmPasswordModalContext extends BSModalContext {
   selector: 'app-confirm-password-modal',
   templateUrl: './confirm-password-modal.component.html'
 })
-export class ConfirmPasswordModalComponent implements CloseGuard, ModalComponent<ConfirmPasswordModalContext> {
-  public context: ConfirmPasswordModalContext;
+export class ConfirmPasswordModalComponent {
+  public context: any;
   public confirmCurrentPassword: string;
 
-  constructor(public dialog: DialogRef<ConfirmPasswordModalContext>, private location: PlatformLocation) {
-    this.context = dialog.context;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialog: MatDialogRef<ConfirmPasswordModalContext>, private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
   }
 
   beforeClose(): boolean {
@@ -35,10 +33,12 @@ export class ConfirmPasswordModalComponent implements CloseGuard, ModalComponent
   }
 
   closeDialog(): void {
-    this.dialog.dismiss();
+    this.beforeDismiss();
+    this.dialog.close();
   }
 
   submitPassword(): void {
+    this.beforeDismiss();
     this.dialog.close(this.confirmCurrentPassword);
   }
 }

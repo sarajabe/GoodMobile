@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { EBB_NAME_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
@@ -16,8 +16,8 @@ export class QualifyingInfoComponent implements OnInit, OnDestroy, OnChanges {
   @Input() disable: boolean;
   @Input() bbqInfo: IAcpUser;
   public childInfo: IAcpUser = {} as IAcpUser;
-  public qualifyingForm: FormGroup;
-  public childInfoForm: FormGroup;
+  public qualifyingForm: UntypedFormGroup;
+  public childInfoForm: UntypedFormGroup;
   public options = [{ id: 'indivisual', value: 'I qualify as an individual' },
   { id: 'child', value: 'I qualify through my child or dependent' }
   ];
@@ -28,10 +28,10 @@ export class QualifyingInfoComponent implements OnInit, OnDestroy, OnChanges {
   private validateChild = false;
   private alive = true;
   leapYear: boolean;
-  constructor(private ebbManager: EbbManager, private formBuilder: FormBuilder) {
+  constructor(private ebbManager: EbbManager, private formBuilder: UntypedFormBuilder) {
     this.getYearsValues();
-    this.qualifyingForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.qualifyingForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
     this.childInfoForm = this.formBuilder.group({
       firstName: [

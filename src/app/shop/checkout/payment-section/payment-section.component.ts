@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseAccountPaymentService, IAddress,
@@ -40,8 +40,8 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public selectedPaymentMethod: IFirebasePaymentMethod;
   public enteredCard: IFirebasePaymentMethod;
   public showAddCardSection = false;
-  public paymentInfoForm: FormGroup;
-  public voucherForm: FormGroup;
+  public paymentInfoForm: UntypedFormGroup;
+  public voucherForm: UntypedFormGroup;
   public paymentInfo: ICreditCardInfo = {} as ICreditCardInfo;
   public currentYear;
   public currentMonth;
@@ -111,7 +111,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   rewardApplied: boolean;
   shippingMethod: IShippingMethod;
 
-  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: FormBuilder, private analyticsService: ActionsAnalyticsService,
+  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: UntypedFormBuilder, private analyticsService: ActionsAnalyticsService,
               private checkoutService: CheckoutService, private mobilePlansService: MobileCustomPlansService, private accountPaymentService: AccountPaymentService,
               private metaService: MetaService, private router: Router, private userPlansService: UserPlansService, private userAccountService: UserAccountService,
               private modalHelper: ModalHelperService, private voucherActivationService: VoucherActivationService, private cdRef: ChangeDetectorRef,
@@ -127,13 +127,13 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       this.expirationYearRange.push(year + i);
     }
     this.voucherForm = formBuilder.group({
-      voucher: new FormControl('', Validators.compose([Validators.required, Validators.minLength(12), Validators.maxLength(12)])),
+      voucher: new UntypedFormControl('', Validators.compose([Validators.required, Validators.minLength(12), Validators.maxLength(12)])),
     })
     this.paymentInfoForm = formBuilder.group({
       fullName: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
-      cardNumber: new FormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
+      cardNumber: new UntypedFormControl('', Validators.compose([Validators.required, CreditCardValidator.validateCCNumber])),
       saveCard: [''],
-      cardCode: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
+      cardCode: new UntypedFormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(4), Validators.pattern(/^[0-9]*$/)])),
       cardExpirationMonth: ['', Validators.required],
       cardExpirationYear: ['', Validators.required],
     }, { validator: this.validExpirationDate('cardExpirationMonth', 'cardExpirationYear') });
@@ -510,7 +510,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   }
   public validExpirationDate(month: string, year: string): any {
     this.isEditPayment = false;
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       if (!!this.paymentInfo && !!expYear.value && !!expMonth.value) {
@@ -552,7 +552,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.isEditPayment = false;
     this.billingAddress = Object.assign(this.billingAddress, address);
     this.morePaymentNeeded = false;
-    if (typeof this.billingAddress.address1 === 'object') {
+    if (typeof this.billingAddress.address1 === 'object' && !!this.billingAddress?.address1) {
       // tslint:disable-next-line:no-string-literal
       this.billingAddress.address1 = this.billingAddress.address1['main_text'];
     }

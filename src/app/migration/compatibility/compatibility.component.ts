@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AccountPaymentService, CART_TYPES, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IUserPlan, MobileCustomPlansService, PlacesAutocompleteService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { POSTAL_PATTERN } from 'src/app/app.config';
 import { ACCOUNT_ROUTE_URLS, MIGRATION_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
@@ -38,7 +38,8 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
   public captchaPending = false;
   private alive = true;
   private captchaResponse: string;
-
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
   public circlePercentage = 50;
   public activeStep = 1;
   public stepsDetails: Array<{ stepNumber: number; title: string; }>;
@@ -56,7 +57,7 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
   invalidAddress: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private toastHelper: ToastrHelperService, private userPlansService: UserPlansService, private placesAutoCompleteService: PlacesAutocompleteService,
-              private userDeviceService: UserDeviceService, private mobilePlansService: MobileCustomPlansService, private formBuilder: FormBuilder,private appState: AppState,
+              private userDeviceService: UserDeviceService, private mobilePlansService: MobileCustomPlansService, private formBuilder: UntypedFormBuilder,private appState: AppState,
               private equipmentService: EquipmentService, private modalHelper: ModalHelperService) {
  
     this.stepsDetails = [
@@ -128,6 +129,8 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
+
   }
 
   public checkAddressCompatibility(): void {
@@ -204,11 +207,15 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
     }
   }
   public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.address && this.address?.main_text) {
+      const event = this.address;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.invalidAddress = false;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
@@ -227,8 +234,10 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
                   ? this.displayedAddressModel?.postalCode
                   : ''
                 }`;
+                this.appState.loading = false;
             },
             (error) => {
+              this.appState.loading = false;
               console.warn(
                 `Google can't find details for place: ${event.place_id}`,
                 error
@@ -249,6 +258,7 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
     this.captchaPending = !!captchaResponse ? false : true;
   }
   public changedAddress(): void {
+    this.findPlace(this.address);
     this.displayedAddressModel = null;
   }
   public goToConfirmDevice(): void {

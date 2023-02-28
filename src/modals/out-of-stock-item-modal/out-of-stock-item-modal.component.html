@@ -1,18 +1,20 @@
-<div class="container model-container {{context.customClass}}">
-        <div class="modal-header">
-          <h2 class="modal-heading">{{context.title}}</h2>
-          <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+<div class="modal">
+  <div class="container model-container {{context.customClass}}">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{context.title}}</h2>
+      <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle" (click)="closeDialog()"><i
+          class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <div class="row">
+          <div *ngIf="!!context.customHTML" [innerHTML]="context.customHTML"></div>
         </div>
-        <div class="modal-body">
-          <div class="modal-content">
-            <div class="row">
-              <div *ngIf="!!context.customHTML" [innerHTML]="context.customHTML"></div>
-            </div>
-            <div class="modal-actions" *ngIf="!!context.currentPlan">
-              <button class="button primary" (click)="changePhone()">Change Phone</button>
-              <a (click)="remove()">Remove</a>
-            </div>
-          </div>
+        <div class="modal-actions" *ngIf="!!context.currentPlan">
+          <button class="button primary" (click)="changePhone()">Change Phone</button>
+          <a (click)="remove()">Remove</a>
         </div>
       </div>
-      
+    </div>
+  </div>
+</div>

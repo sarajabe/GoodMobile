@@ -119,7 +119,7 @@ export class VoucherPaymentSectionComponent implements OnInit, OnDestroy{
   public removeVoucher(): void {
     if (!!this.currentCart.voucherData) {
       this.modalHelper.showConfirmMessageModal('Remove Voucher', 'Are you sure you want to remove the voucher?', 'Remove', 'Cancel', 'custom-modal-voucher-results')
-      .result.then((result) => {
+      .afterClosed().subscribe((result) => {
         if (!!result) {
           this.mobilePlansService.setVoucherData({} as IVoucherData);
           this.voucherData.emit({code: '0'} as IVoucherData);

@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class RoutingModalContext extends BSModalContext {
+export class RoutingModalContext {
   public message: string;
   public title: string;
   public hasCloseLink?: boolean;
@@ -20,13 +19,12 @@ export class RoutingModalContext extends BSModalContext {
   selector: 'app-routing-modal',
   templateUrl: './routing-modal.component.html'
 })
-export class RoutingModalComponent implements CloseGuard, ModalComponent<RoutingModalContext> {
-  public context: RoutingModalContext;
+export class RoutingModalComponent {
+  public context: any;
 
-  constructor(public dialog: DialogRef<RoutingModalContext>, private location: PlatformLocation) {
-    this.context = dialog.context;
-    dialog.setCloseGuard(this);
-    location.onPopState(() => this.dialog.close());
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialogRef<RoutingModalContext>, private location: PlatformLocation) {
+    this.context = data;
+    location.onPopState(() => { this.beforeDismiss();this.dialog.close();});
   }
 
   public goToFirstPage(): void{
@@ -53,10 +51,12 @@ export class RoutingModalComponent implements CloseGuard, ModalComponent<Routing
   }
 
   closeDialog(): void {
-    this.dialog.dismiss();
+    this.beforeDismiss();
+    this.dialog.close();
   }
 
   OK(): void {
+    this.beforeDismiss();
     this.dialog.close(true);
   }
 }

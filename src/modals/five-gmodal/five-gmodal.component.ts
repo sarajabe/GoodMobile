@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { CloseGuard, DialogRef, ModalComponent } from 'ngx-modialog-7';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
+import { Component, Inject } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class FiveGModalContext extends BSModalContext {
+export class FiveGModalContext{
   public title: string;
   public linkRoute;
   public linkText: string;
@@ -16,12 +15,11 @@ export class FiveGModalContext extends BSModalContext {
   selector: 'app-fiveg-modal',
   templateUrl: './five-gmodal.component.html'
 })
-export class FiveGModalComponent implements CloseGuard, ModalComponent<FiveGModalContext> {
-  public context: FiveGModalContext;
-  constructor(public dialog: DialogRef<FiveGModalContext>, private location: PlatformLocation) {
-      this.context = dialog.context;
-      dialog.setCloseGuard(this);
-      location.onPopState(() => this.dialog.close());
+export class FiveGModalComponent {
+  public context: any;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialogRef<FiveGModalContext>, private location: PlatformLocation) {
+      this.context = data;
+      location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
   }
   beforeClose(): boolean {
     if (document.body.classList.contains('modal-open')) {
@@ -35,10 +33,12 @@ export class FiveGModalComponent implements CloseGuard, ModalComponent<FiveGModa
   }
 
   closeDialog(result): void {
+    this.beforeDismiss();
       this.dialog.close(result);
   }
 
   download(): void {
+    this.beforeDismiss();
     this.dialog.close(true);
   }
 }

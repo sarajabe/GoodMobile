@@ -5,7 +5,6 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EndpointUrl } from '@ztarmobile/zwp-service';
 import { CustomizableMobilePlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { CustomFormsModule } from 'ng4-validators';
 import { of } from 'rxjs';
 import { PhoneManagementService } from 'src/services/phones.service';
 import { AddPhoneStepsComponent } from './add-phone-steps.component';
@@ -106,7 +105,6 @@ describe('AddPhoneStepsComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        CustomFormsModule,
         RouterTestingModule
       ],
       providers: [

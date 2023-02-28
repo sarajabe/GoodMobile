@@ -1,12 +1,13 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
-import { BSModalContext } from 'ngx-modialog-7/plugins/bootstrap';
-import { ModalComponent, DialogRef, CloseGuard } from 'ngx-modialog-7';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy, Inject } from '@angular/core';
 import { IFirebasePaymentMethod, PlacesAutocompleteService, IAutoCompletePrediction, IAddress, AccountPaymentService } from '@ztarmobile/zwp-service-backend';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { PlatformLocation } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/app.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-export class CreditCardContext extends BSModalContext {
+export class CreditCardContext {
   public paymentMethod: IFirebasePaymentMethod;
   public title: string;
   public note: string;
@@ -18,27 +19,29 @@ export class CreditCardContext extends BSModalContext {
   selector: 'app-edit-cc-modal',
   templateUrl: './edit-cc-modal.component.html'
 })
-export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCardContext>, OnInit, OnDestroy {
-  public context: CreditCardContext;
+export class EditCcModalComponent implements OnInit, OnDestroy {
+  public context: any;
   public paymentInfo: IFirebasePaymentMethod;
   public methodsList: IFirebasePaymentMethod[];
   public billingAddress: IAddress;
   public expirationYearRange: Array<number>;
-  public ccForm: FormGroup;
-  public addressForm: FormGroup;
+  public ccForm: UntypedFormGroup;
+  public addressForm: UntypedFormGroup;
   public selectedMethodId: string;
   public isValidPaymentInfo = false;
   public processingRequest = false;
   public setDefaultRequest = false;
   public isEditMode = false;
+  public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
+  public filteredOptionsSubscription: Subscription;
+  
   private currentDate: Date;
   private streetSearchText: string;
 
-  constructor(public dialog: DialogRef<CreditCardContext>, private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef,
-              private placesAutoCompleteService: PlacesAutocompleteService, private location: PlatformLocation) {
-    this.context = dialog.context;
-    location.onPopState(() => this.dialog.close());
-    dialog.setCloseGuard(this);
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialog: MatDialogRef<CreditCardContext>, private formBuilder: UntypedFormBuilder, private cdRef: ChangeDetectorRef,
+              private placesAutoCompleteService: PlacesAutocompleteService, private location: PlatformLocation, private appState: AppState) {
+    this.context = data;
+    location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
     this.addressForm = formBuilder.group({
       alias: ['', Validators.required],
       address1: ['', Validators.required],
@@ -75,6 +78,7 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
 
   ngOnDestroy(): void {
     this.cdRef.detach();
+    this.filteredOptionsSubscription?.unsubscribe();
   }
 
   beforeClose(): boolean {
@@ -83,13 +87,16 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
     }
     return false;
   }
+  beforeDismiss(): boolean {
+    return this.beforeClose();
+  }
 
   public addNewPayment(): void {
     this.closeDialog('new');
   }
 
   public validExpirationDate(month: string, year: string): any {
-    return (group: FormGroup): { [key: string]: any } => {
+    return (group: UntypedFormGroup): { [key: string]: any } => {
       const expMonth = group.controls[month];
       const expYear = group.controls[year];
       if (!!this.context.paymentMethod && !!expYear.value && !!expMonth.value) {
@@ -132,17 +139,27 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
     this.isEditMode = true;
   }
 
-  public addressDetails(event: IAutoCompletePrediction): void {
-    if (!!event && !!event.main_text) {
-      this.billingAddress.address1 = this.addressForm.get('address1').value;
+  public addressDetails(eventFire: IAutoCompletePrediction): void {
+    if (!!eventFire && !!this.addressForm.controls.address1?.value && this.addressForm.controls.address1?.value?.main_text) {
+      const event = this.addressForm.controls.address1?.value;
       if (!!event.place_id) {
+        this.appState.loading = true;
         this.placesAutoCompleteService.findDetailedAddressFields(event.place_id).subscribe((place) => {
           this.streetSearchText = !!place.address1 && place.address1.length > 0 ? place.address1 : null;
-          this.getAddressValues(place, event.main_text);
+          const displayedAddressModel = this.getAddressValues(place, event.main_text);
+          const address = `${displayedAddressModel?.address1}, ${displayedAddressModel?.city
+          }, ${displayedAddressModel?.state} ${displayedAddressModel?.postalCode
+            ? displayedAddressModel?.postalCode
+            : ''
+          }`; 
+          this.addressForm.controls.address1.setValue(address);
+          this.billingAddress.address1 = this.addressForm.get('address1').value;
           this.addressForm.controls.city.setValue(this.billingAddress.city);
           this.addressForm.controls.state.setValue(this.billingAddress.state);
           this.addressForm.controls.postalCode.setValue(this.billingAddress.postalCode);
+          this.appState.loading = false;
         }, (error) => {
+          this.appState.loading = false;
           console.warn(`Google can't find details for place: ${event.place_id}`, error);
           this.getAddressValues(this.billingAddress, event.main_text);
         });
@@ -155,11 +172,16 @@ export class EditCcModalComponent implements CloseGuard, ModalComponent<CreditCa
     }
   }
 
-  public findPlace(keyword: any): Observable<Array<IAutoCompletePrediction>> {
-    return this.placesAutoCompleteService.findAddress(keyword);
+  public findPlace(keyword: ''): Observable<Array<IAutoCompletePrediction>> {
+    this.filteredOptions = this.placesAutoCompleteService.findAddress(keyword);
+    this.filteredOptionsSubscription = this.filteredOptions.subscribe();
+    return this.filteredOptions;
   }
-
+  public changedAddress(): void {
+    this.findPlace(this.addressForm.controls.address1.value);
+  }
   public closeDialog(action?: any): void {
+    this.beforeDismiss();
     this.dialog.close(action);
   }
 

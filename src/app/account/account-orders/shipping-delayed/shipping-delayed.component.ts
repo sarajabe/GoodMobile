@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-shipping-delayed',
@@ -9,12 +9,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class ShippingDelayedComponent implements OnInit {
   @Output() showShippingDelayedSection: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public shippingDelayedForm: FormGroup;
+  public shippingDelayedForm: UntypedFormGroup;
   constructor() { }
 
   ngOnInit(): void {
-    this.shippingDelayedForm = new FormGroup({
-      option: new FormControl('', Validators.required)
+    this.shippingDelayedForm = new UntypedFormGroup({
+      option: new UntypedFormControl('', Validators.required)
     });
   }
   public backToReportIssue(): void {

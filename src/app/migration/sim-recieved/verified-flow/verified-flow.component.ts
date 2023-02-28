@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { ACCOUNT_ROUTE_URLS, MIGRATION_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -18,14 +18,14 @@ export class VerifiedFlowComponent implements OnInit {
   @Input() planMdn;
   @Input() selectedPlanId;
 
-  public activationForm: FormGroup;
+  public activationForm: UntypedFormGroup;
   public MIGRATION_ROUTE_URLS = MIGRATION_ROUTE_URLS;
 
   constructor(private userPlansService: UserPlansService, private toastHelper: ToastrHelperService, private router: Router, private appState: AppState) { }
 
   ngOnInit(): void {
-    this.activationForm = new FormGroup({
-      activationCode: new FormControl('', Validators.compose([Validators.required, Validators.maxLength(7), Validators.minLength(7), Validators.pattern('^[A-Z]+\\d{6}|\\d{7}$')]))
+    this.activationForm = new UntypedFormGroup({
+      activationCode: new UntypedFormControl('', Validators.compose([Validators.required, Validators.maxLength(7), Validators.minLength(7), Validators.pattern('^[A-Z]+\\d{6}|\\d{7}$')]))
     });
   }
 
