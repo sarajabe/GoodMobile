@@ -6,6 +6,7 @@
         display: flex;
         gap: 24px;
         padding-top: 84px;
+        min-height: 390px;
         .description-section {
             display: flex;
             flex-direction: column;
@@ -84,7 +85,7 @@
             .description-section {
                 text-align: center;
                 .header {
-                    max-width: 187px;
+                    max-width: 100%;
                 }
                 .icons-section {
                     gap: 16px;
