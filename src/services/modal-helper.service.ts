@@ -25,6 +25,7 @@ import { MdnsListModalComponent } from 'src/modals/mdns-list-modal/mdns-list-mod
 import { CompatibilitySkipModalComponent } from 'src/modals/compatibility-skip-modal/compatibility-skip-modal.component';
 import { eSimReplacementModalComponent } from 'src/modals/esim-replacement-modal/esim-replacement-modal.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { BarCodeModalComponent } from 'src/modals/bar-code-modal/bar-code-modal.component';
 
 export interface ModalSetting {
   title?: string;
@@ -62,6 +63,7 @@ export interface IModalHelper {
   showMdnsListModal(title: string, associatedPlans: Array<IUserPlan>, paymentId: string, customClass?: string): MatDialogRef<any>;
   showTMOSkipModal(title: string, hasCloseLink?: boolean, customClass?: string, notBeforeSkipping?: boolean): MatDialogRef<any>;
   showeSIMModal(iccid: string, mdn: string, customClass?: string): MatDialogRef<any>;
+  showBarcodeModal(title: string, message: string, bardcodeValue:any): MatDialogRef<any> ;
 }
 @Injectable({
   providedIn: 'root'
@@ -263,6 +265,13 @@ export class ModalHelperService {
     return this.dialog.open(CompatibilitySkipModalComponent, {
       data: {
         title, hasCloseLink, customClass, notBeforeSkipping
+      }
+    });
+  }
+  public showBarcodeModal(title: string, message: string, bardcodeValue:any): MatDialogRef<any> {
+    return this.dialog.open(BarCodeModalComponent, {
+      data: {
+        title, message, bardcodeValue
       }
     });
   }

@@ -1,0 +1,22 @@
+
+@import "../../styles/modules/variables";
+
+::ng-deep {
+    .barcode-section {
+        .barcode {
+            @media(max-width: $phablet-min-width-minus) {
+                margin-top: 32px;
+            }
+            svg {
+                max-width: 600px;
+                @media (max-width: 833.9px) {
+                    max-width: 500px;
+                }
+                @media(max-width: $phablet-min-width-minus) {
+                    max-width: 250px;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

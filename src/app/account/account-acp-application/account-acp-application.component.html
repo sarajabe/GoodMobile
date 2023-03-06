@@ -6,6 +6,9 @@
         <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
+    <div class="actions-top" *ngIf="barCodeValue">
+        <a (click)="showBarCodePopup()">View Barcode</a>
+    </div>
     <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
         [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
         <div class="flex center">

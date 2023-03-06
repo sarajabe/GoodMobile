@@ -25,6 +25,8 @@ import { MdnsListModalComponent } from './mdns-list-modal/mdns-list-modal.compon
 import { CompatibilitySkipModalComponent } from './compatibility-skip-modal/compatibility-skip-modal.component';
 import { eSimReplacementModalComponent } from './esim-replacement-modal/esim-replacement-modal.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { BarCodeModalComponent } from './bar-code-modal/bar-code-modal.component';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 
 
 @NgModule({
@@ -45,9 +47,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MdnsListModalComponent,
         TrackingModalComponent,
         eSimReplacementModalComponent,
-        CompatibilitySkipModalComponent],
+        CompatibilitySkipModalComponent,
+        BarCodeModalComponent],
     imports: [
-        CommonModule, WidgetsModule, FormsModule, ReactiveFormsModule, MatAutocompleteModule
+        CommonModule, WidgetsModule, FormsModule, ReactiveFormsModule, MatAutocompleteModule, NgxBarcode6Module
     ],
     exports: [ManagePaymentModalComponent, ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
         InformationMessageModalComponent, AddActivatedNumberModalComponent, InputModalComponent, EditCcModalComponent, SelectPaymentModalComponent, ShippingAddressModalComponent, SimReplacementModalComponent,

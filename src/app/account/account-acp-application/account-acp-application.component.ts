@@ -86,6 +86,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showQrCode = false;
   public createdDate: any;
   public providerApplicationID;
+  public barCodeValue;
   private callBackUrl: string;
   private alive = true;
 
@@ -523,9 +524,13 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.CONTACT_US}`]);
 
   }
+  public showBarCodePopup(): void {
+    this.modalHelper.showBarcodeModal('Scan the barcode', 'Check with the store clerk to proceed', this.barCodeValue);
+  }
   private getVerificationDetails(): void {
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
+      this.barCodeValue = !!this.userProfile.ebbId ? `${this.userProfile.ebbId}` : null;
       if (!!this.userProfile && !this.userProfile.ebbId) {
         this.appState.loading = true;
         this.ebbService.getActiveInternalApplication(this.userProfile.customerId).then((res) => {
@@ -544,6 +549,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         });
       } else if (!!this.userProfile && !!this.userProfile.ebbId) {
         this.appState.loading = true;
+        this.barCodeValue = this.userProfile.ebbId;
         this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
           if (!!plans) {
             this.acpPlan = plans.find((plan) => !!plan.basePlan.ebb && !plan.canceled);

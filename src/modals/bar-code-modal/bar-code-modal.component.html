@@ -1,0 +1,23 @@
+<div class="modal">
+    <div class="container model-container barcode-modal">
+      <div class="modal-header">
+        <h2 class="modal-heading">{{context?.title}}</h2>
+        <button *ngIf="context.hasCloseLink" class="modal-close modal-toggle" (click)="closeDialog()"><i
+            class="icon-close"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-content">
+            <p>{{context?.message}}</p>
+          <div class="barcode-section">
+            <ngx-barcode6
+                [bc-value]="context?.bardcodeValue"
+                [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
+          </div>
+          <div class="modal-actions">
+            <button class="button primary"  (click)="closeDialog()"
+              id="done" data-cy="done">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
