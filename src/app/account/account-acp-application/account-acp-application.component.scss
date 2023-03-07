@@ -49,13 +49,16 @@
             margin-top: 50px;
             margin-bottom: 70px;
         }
+
         .created-date {
             color: #727272;
             margin: 8px 0 16px;
+
             span {
                 color: $black;
             }
         }
+
         .summary-title {
             font-size: rem-calc(32px);
             line-height: 40px;
@@ -328,52 +331,96 @@
             }
         }
     }
+
     .qr-section {
         margin-top: 24px;
         padding-left: 43px;
+
         .qr {
             margin: 12px 0;
         }
+
         b {
             font-family: $base-font-family-bold;
         }
     }
+
     .documents-banner {
-        margin-bottom: 24px!important;
+        margin-bottom: 24px !important;
+
         .banner-content {
             width: 100%;
+
             .title {
                 display: flex;
                 justify-content: space-between;
                 color: $primary-color;
+
                 span {
                     text-decoration: underline;
                 }
+
                 cursor: pointer;
+
                 .arrow {
                     width: 24px;
+
                     &.rotate {
                         transform: rotate(-180deg);
                     }
                 }
             }
+
             .and {
                 margin: 12px 0;
             }
+
             .description {
-                margin-bottom: 12px!important;
+                &.bottom {
+                    margin-bottom: 12px !important;
+
+                    @media (max-width: $phablet-min-width-minus) {
+                        margin-bottom: 8px !important;
+                    }
+                }
+
+                a {
+                    font-family: $base-font-family-bold;
+                    white-space: nowrap;
+                }
             }
+
+            .caption {
+                font-family: $secondary-font-family-bold;
+                margin-bottom: 12px;
+            }
+
+            .docs-section {
+                margin-bottom: 24px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 20px;
+                }
+            }
+
             .more-details {
                 margin-top: 8px;
+
+                b {
+                    font-family: $base-font-family-bold;
+                }
             }
+
             .showHide {
                 cursor: pointer;
                 color: $primary-color;
             }
+
             .or {
                 font-family: $base-font-family;
                 font-size: rem-calc(14px);
             }
+
             .details-list {
                 font-size: rem-calc(14px);
                 line-height: 24px;

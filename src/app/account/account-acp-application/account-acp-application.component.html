@@ -1,7 +1,9 @@
 <section class="acp-section col-xl-offset-1">
     <p class="summary-title">ACP Summary</p>
     <p class="created-date smaller" *ngIf="!!createdDate">Created Date: <span>{{createdDate | date}}</span></p>
-    <p class="created-date smaller space" *ngIf="!!providerApplicationID">ACP application ID: <span>{{providerApplicationID}}</span></p>
+    <p class="created-date smaller space" *ngIf="!!providerApplicationID">ACP application ID:
+        <span>{{providerApplicationID}}</span>
+    </p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
         <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
@@ -33,7 +35,8 @@
                 </div>
                 <div class="status-date" *ngIf="!showAlert">
                     <p class="key bottom">Status: <span class="value status">{{appStatus}}</span></p>
-                    <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span></p>
+                    <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -133,7 +136,8 @@
                 <p class="title">Service Provider<span><img src="assets/icon/green-dot.svg" alt="dot icon"></span></p>
                 <div class="status-date">
                     <p class="key bottom">Status: <span class="value complete-status bold">Complete</span></p>
-                    <p class="key">Last modified: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
+                    <p class="key">Last modified: <span class="value">{{!!verificationDetails ?
+                            (verificationDetails?.updatedAt |
                             date) : 'N/A'}}</span></p>
                 </div>
             </div>
@@ -166,7 +170,8 @@
                             [class.complete-status]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE)"
                             [class.alert-status]="!!showNVOnHoldSection">{{STATUS_TITLE[nvStatus]}}</span>
                     </p>
-                    <p class="key">Last modified: <span class="value">{{!!verificationDetails ? (verificationDetails?.updatedAt |
+                    <p class="key">Last modified: <span class="value">{{!!verificationDetails ?
+                            (verificationDetails?.updatedAt |
                             date) : 'N/A'}}</span></p>
                 </div>
             </div>
@@ -186,38 +191,56 @@
                 <div class="flex">
                     <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
                     <div class="banner-content">
-                        <p class="title" (click)="showMoreDocuments = !showMoreDocuments"><span class="">Need more Documents!</span> <img class="arrow" src="assets/icon/arrow-blue.svg" [class.rotate]="!showMoreDocuments"></p>
+                        <p class="title" (click)="showMoreDocuments = !showMoreDocuments"><span class="">Need more
+                                Documents!</span> <img class="arrow" src="assets/icon/arrow-blue.svg"
+                                [class.rotate]="!showMoreDocuments"></p>
                         <div class="content" *ngIf="showMoreDocuments">
-                            <p class="description">FCC National Verifier needs more information or documents to confirm your eligibility</p>
+                            <p class="description bottom">FCC National Verifier needs more information or documents* to
+                                confirm your eligibility:</p>
+                            <p class="caption">*Send copies or pictures of your original, valid document. NEVER send the
+                                original document.</p>
                             <div class="docs-section">
                                 <div class="document-item">
-                                    <p class="smaller primary-font-bold">1. Valid government ID <span class="showHide" (click)="showValidDocs = !showValidDocs">Show {{showValidDocs ? 'Less' : 'More'}}</span></p>
+                                    <p class="smaller primary-font-bold">1. Valid government ID <span class="showHide"
+                                            (click)="showValidDocs = !showValidDocs">See {{showValidDocs ? 'Less' :
+                                            'More'}}</span></p>
                                     <div class="more-details" *ngIf="showValidDocs">
-                                        <p class="smaller">That includes first and last name and date of birth such as:</p>
+                                        <p class="smaller">Provide documents such as:</p>
                                         <ul class="details-list">
                                             <li>Military state or Tribal ID</li>
                                             <li>U.S. Driver’s license</li>
                                             <li>Passport</li>
-                                            <li>Permanent Resident Card <span class="or">or</span> <br>Government assistance program document</li>
+                                            <li>Permanent Resident Card <span class="or">or</span> Government
+                                                assistance program document</li>
                                         </ul>
+                                        <p class="smaller">That includes <b>first & last name, date of birth, & future
+                                                expiration date.</b></p>
                                     </div>
                                 </div>
                                 <p class="smaller primary-font-bold and">And</p>
                                 <div class="document-item">
-                                    <p class="smaller primary-font-bold">2. Provide a letter or official document as proof <span class="showHide" (click)="showProofDocs = !showProofDocs">Show {{showProofDocs ? 'Less' : 'More'}}</span></p>
+                                    <p class="smaller primary-font-bold">2. Provide a letter or official document as
+                                        proof <span class="showHide" (click)="showProofDocs = !showProofDocs">See
+                                            {{showProofDocs ? 'Less' : 'More'}}</span></p>
                                     <div class="more-details" *ngIf="showProofDocs">
-                                        <p class="smaller">If you participate in qualifying programs,:</p>
+                                        <p class="smaller">If you participate in one of the qualifying programs, you
+                                            need to provide:</p>
                                         <ul class="details-list">
-                                            <li>Your (or your dependent’s) first and last name,</li>
-                                            <li>Benefit award letter</li>
-                                            <li>Approval letter</li>
-                                            <li>Statement of benefits</li>
-                                            <li>Benefit verification letter</li>
-                                            <li>School documentation</li>
+                                            <li>Benefit award letter or Approval letter</li>
+                                            <li>Screenshot of online portal</li>
+                                            <li>Survivors Benefit Summary letter</li>
                                         </ul>
+                                        <p class="smaller">That clearly states the <b>name of the person</b> in the
+                                            house hold <b>who qualifies,</b> name of the <b>program,</b> name of the
+                                            <b>government</b> or <b>Tribal agency</b> that <b>issued the document,</b> &
+                                            issue date within the past <b>12 months</b> or <b>future expiration
+                                                date.</b>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
+                            <p class="description last">You can download guiding examples to the required documents for
+                                your next steps here: <a>Download Guide</a></p>
                         </div>
                     </div>
                 </div>
@@ -231,7 +254,7 @@
                         <p class="title" *ngIf="NV_DESCS[nvStatus]?.title">{{NV_DESCS[nvStatus]?.title}}</p>
                         <p class="description" [class.last]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE"
                             *ngIf="!!NV_DESCS[nvStatus]?.desc1" [innerHTML]="NV_DESCS[nvStatus]?.desc1"></p>
-                        <p class="description bottom-8" *ngIf="!!NV_DESCS[nvStatus]?.desc2"
+                        <p class="description" *ngIf="!!NV_DESCS[nvStatus]?.desc2"
                             [innerHTML]="NV_DESCS[nvStatus]?.desc2"></p>
                         <p class="description bottom-8" *ngIf="!!NV_DESCS[nvStatus]?.desc3"
                             [innerHTML]="NV_DESCS[nvStatus]?.desc3"></p>
@@ -254,9 +277,11 @@
                     </div>
                 </div>
                 <div class="qr-section" *ngIf="!!showQrCode">
-                    <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application and upload your documents on your <b>smartphone</b>.</p>
+                    <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application and upload your documents
+                        on your <b>smartphone</b>.</p>
                     <div class="qr">
-                      <qrcode [qrdata]="verificationDetails?.link" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+                        <qrcode [qrdata]="verificationDetails?.link" [width]="200" [errorCorrectionLevel]="'M'">
+                        </qrcode>
                     </div>
                 </div>
             </div>

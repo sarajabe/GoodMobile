@@ -250,12 +250,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       },
       'PENDING_RESOLUTION': {
         title: 'Action Required:',
-        desc1: `Please select <b>“Resume Filing”</b> to be redirected to the National Verifier. Once
-        you are done, the National Verifier will redirect you back to Good Mobile to complete the
-        process.`,
-        desc2: `<b>Please make sure to complete this step within 45 days.</b>`,
-        desc3: null,
-        desc4: null,
+        desc1: `Upload copies of your proof documentation:`,
+        desc2: `Please select <b>“Resume Filing”</b> to be redirected to the National Verifier.`,
+        desc3: `Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.`,
+        desc4: `<b>Please make sure to complete this step within 45 days.</b>`,
         buttonName: 'Resume Filing',
         buttonAction: 'goToAcp',
         linkName: null,
@@ -267,12 +265,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       },
       'PENDING_CERT': {
         title: 'Action Required:',
-        desc1: `Please select <b>“Resume Filing”</b> to be redirected to the National Verifier. Once
-        you are done, the National Verifier will redirect you back to Good Mobile to complete the
-        process.`,
-        desc2: `<b>Please make sure to complete this step within 45 days.</b>`,
-        desc3: null,
-        desc4: null,
+        desc1: `Upload copies of your proof documentation:`,
+        desc2: `Please select <b>“Resume Filing”</b> to be redirected to the National Verifier.`,
+        desc3: `Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.`,
+        desc4: `<b>Please make sure to complete this step within 45 days.</b>`,
         buttonName: 'Resume Filing',
         buttonAction: 'goToAcp',
         linkName: null,
@@ -434,15 +430,15 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                     this.toastHelper.showAlert(error.message);
                   });
                 }, (error) => {
-                    this.appState.loading = false;
-                    this.toastHelper.showAlert(error.message);
+                  this.appState.loading = false;
+                  this.toastHelper.showAlert(error.message);
                 });
               }
             }, (error) => {
               this.appState.loading = false;
               this.toastHelper.showAlert(error.message);
             });
-         
+
           }
         });
     }
