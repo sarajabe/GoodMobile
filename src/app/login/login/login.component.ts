@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   private params: any;
 
   constructor(private simpleAuthService: SimpleAuthService, private userProfileService: FirebaseUserProfileService,
-              private appState: AppState, private metaService: MetaService, public router: RouterHelperService,
-              private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
-              private toastHelper: ToastrHelperService, private angularAuthService: AngularFireAuth) {
+    private appState: AppState, private metaService: MetaService, public router: RouterHelperService,
+    private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
+    private toastHelper: ToastrHelperService, private angularAuthService: AngularFireAuth) {
 
     this.routerObserver = this.route.params.subscribe((params: Params) => {
       if (!!params) {
@@ -126,16 +126,16 @@ export class LoginComponent implements OnInit, OnDestroy {
                 if (!!utms) {
                   const marketingDetails = this.appState.setMarketingObject(utms);
                   const savedActiveCampaign = !!data.activeCampaign ? data.activeCampaign : {} as IMarketingDetails;
-                  if (marketingDetails.utm_campaign !== savedActiveCampaign.utm_campaign || marketingDetails.utm_medium !== savedActiveCampaign.utm_medium 
+                  if (marketingDetails.utm_campaign !== savedActiveCampaign.utm_campaign || marketingDetails.utm_medium !== savedActiveCampaign.utm_medium
                     || marketingDetails.utm_source !== savedActiveCampaign.utm_source) { // this is to make sure not to add the same campaign to the history each time the user logout and login within the same session
-                      data.activeCampaign = marketingDetails;
-                      if (!!data.campaignsHistory) {
-                        data.campaignsHistory.push(marketingDetails)
-                      } else {
-                        data.campaignsHistory = [];
-                        data.campaignsHistory.push(marketingDetails)
-                      }
-                      this.userProfileService.updateUserProfile(data);
+                    data.activeCampaign = marketingDetails;
+                    if (!!data.campaignsHistory) {
+                      data.campaignsHistory.push(marketingDetails)
+                    } else {
+                      data.campaignsHistory = [];
+                      data.campaignsHistory.push(marketingDetails)
+                    }
+                    this.userProfileService.updateUserProfile(data);
                   }
                 }
               }
@@ -144,7 +144,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       }).catch((error) => {
         this.processingRequest = false;
-        this.toastHelper.showAlert(error.message);
+        if (error.message.includes('wrong-password')) {
+          this.toastHelper.showAlert('The password is invalid or the user does not have a password.');
+        } else if (error.message.includes('user-not-found')) {
+          this.toastHelper.showAlert('There is no user record corresponding to this identifier. The user may have been deleted.');
+        } else if (error.message.includes('too-many-requests')) {
+          this.toastHelper.showAlert('Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.');
+        } else {
+          this.toastHelper.showAlert(error.message);
+        }
       });
     }).catch((error) => {
       this.processingRequest = false;
