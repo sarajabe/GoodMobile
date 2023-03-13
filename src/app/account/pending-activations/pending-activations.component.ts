@@ -52,6 +52,8 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public barCodeValues;
   public customerId;
   public newSimOrder: { price: number, fees: number, id?: string };
+  public orderPicked = false;
+  public iccid;
   private userId: string;
   private alive = true;
   activationCode: Params;
@@ -120,6 +122,9 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       }
       if(!!this.currentUserPlan?.storePickup) {
         this.getOrderDetails();
+      } else {
+        this.iccid = null;
+        this.orderPicked = false;
       }
       this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb  ? true : false;
       this.config.totalItems = this.pendingPlans.length;
@@ -215,6 +220,9 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       this.calculateTotal(this.currentUserPlan);
       if(!!this.currentUserPlan?.storePickup) {
         this.getOrderDetails();
+      } else {
+        this.iccid = null;
+        this.orderPicked = false;
       }
       sessionStorage.removeItem('pendingAddress');
       let el = document.getElementById('counter');
@@ -375,8 +383,10 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     this.accountOrderService.getOrderById(this.currentUserPlan?.orderId).then((order) => {
       if (!!order) {
         this.appState.loading = false;
+        this.orderPicked = order.status === 'SHIPPED' ? true : false;
         if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
           this.barCodeValues = `${order?.cards[0]?.itemId}`;
+          this.iccid = order?.cards[0]?.simNumber;
         }
       }
     }).catch((error) => {

@@ -82,8 +82,16 @@
                             <p class="primary-font-bold smaller">$0</p>
                         </div>
                     </div>
+                    <div class="purple-banner" *ngIf="!!iccid">
+                        <div class="flex">
+                            <div class="banner-content">
+                                <p class="smallest primary-font-bold">SIM iccid:</p>
+                                <p class="smallest">{{iccid}}</p>
+                            </div>
+                        </div>
+                    </div>
                     <hr class="border" *ngIf="!!pendingPlan?.storePickup">
-                    <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup">
+                    <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup && !orderPicked">
                         <p class="smaller" data-cy="pickupBarCode">In-store Pickup Barcode</p>
                         <ngx-barcode6
                             [bc-value]="barCodeValues"
@@ -96,7 +104,18 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup && !!orderPicked">
+                        <p class="smaller" data-cy="barCodeScanned">Barcode scan successful!</p>
+                        <div class="info-banner success-background">
+                            <div class="flex">
+                                <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                                <div class="banner-content">
+                                    <p class="description">You have <b>successfully collected your SIM</b> card at the store! </p>
+                                    <p class="description last">You can now <b>activate your plan</b> and enjoy your Good Mobile service!</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-content">
@@ -236,7 +255,7 @@
         </div>
     </ng-container>
     <ng-container *ngIf="!pendingPlans || (!!pendingPlans && pendingPlans?.length == 0)">
-        <div class="info-banner default-background">
+        <div class="info-banner default-background top">
             <div class="flex">
                 <img src="assets/icon/info-icon.svg" alt="Info Icon">
                 <div class="banner-content">
