@@ -52,7 +52,8 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     SVC_PURCHASED: 'Purchased',
     SHIPPED: 'Shipped',
     DELIVERED: 'Delivered',
-    VOIDED: 'Voided'
+    VOIDED: 'Voided',
+    COLLECTED: 'Collected'
   };
   public items = true;
   public summary = true;
@@ -255,7 +256,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
         this.orderInfo = order;
         if (!!this.orderInfo.devices && this.orderInfo.devices.length > 0) {
           const orderTemp:any = order;
-          this.isCollected = orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? true: false;
+          this.orderInfo.status =  orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? 'COLLECTED' : this.orderInfo.status
           this.appState.loading = true;
           this.catalogService.getAcpDeviceBySkuFromContentful(this.orderInfo.devices[0].sku).then((data) => {
             this.deviceDetails = data;

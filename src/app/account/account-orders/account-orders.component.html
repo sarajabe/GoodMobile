@@ -125,7 +125,7 @@
                             <p class="description" data-cy="orderDetails" >Order Details</p>
                             <img src="assets/icon/arrow_circle.svg" alt="arrow" class="rotate">
                         </div>
-                        <div class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(order)" *ngIf="!!order?.paymentSuccessful">
+                        <div class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(order)" *ngIf="!!order?.paymentSuccessful && !order.devices">
                             <img src="assets/icon/primary-invoice.svg" alt="invoice" class="invoice">
                             <p class="description" >View Invoice</p>
                         </div>
@@ -156,7 +156,7 @@
                                     <img class="item sim" data-cy="simImg" [class.indent]="order?.intent === ORDER_INTENT.NEW && !order.devices" [class.esim]="order?.skuNumber === 'TE'" [src]="(order?.intent === ORDER_INTENT.NEW || order?.intent === ORDER_INTENT.NEW_SIM) ?
                                          (!!order?.skuNumber && order?.skuNumber === 'TE' ? 'assets/icon/e-sim.svg' : 'assets/icon/new-sim.svg') : 'assets/icon/replacement-sim.svg'" alt="Good Mobile SIM" *ngIf="(!!order?.cards && order?.cards?.length > 0) || order?.skuNumber === 'TE'">
                                     <div class="image-container" *ngIf="!!order?.devices && order?.devices?.length > 0">
-                                        <img class="item device" [src]="phonesImages[order.id]" alt="Mobile">
+                                        <img class="item device" src="assets/icon/device-icon.png" alt="Mobile">
                                         <div class="colored-icon"  [class.canceled]="order?.status === ORDER_STATUS.CANCELED"></div>
                                     </div>
                                     <ng-container *ngIf="!!order?.planAddOns && order?.planAddOns?.length > 0; let i = index">

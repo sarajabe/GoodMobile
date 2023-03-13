@@ -11,7 +11,7 @@
             <img class="help-icon" src="assets/icon/warning-circle.svg" alt="warning"
                 *ngIf="orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED">
             <span class="status" data-cy="orderStatus"
-                [ngClass]="{ 'cancled': orderInfo?.status ===  ORDER_STATUS.CANCELED || orderInfo?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[orderInfo?.status] === STATUS_TITLE.PENDING, 'help': orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{!!isCollected ? 'Collected' : STATUS_TITLE[orderInfo?.status]}}</span>
+                [ngClass]="{ 'cancled': orderInfo?.status ===  ORDER_STATUS.CANCELED || orderInfo?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[orderInfo?.status] === STATUS_TITLE.PENDING, 'help': orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{STATUS_TITLE[orderInfo?.status]}}</span>
         </p>
         <p class="action-required"
             (click)="editShippingAddress(orderInfo?.shippingInfo?.shippingAddress, orderInfo?.id)"

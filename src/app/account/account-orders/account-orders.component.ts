@@ -68,7 +68,8 @@ export class AccountOrdersComponent implements OnInit {
     SVC_PURCHASED: 'Purchased',
     SHIPPED: 'Shipped',
     DELIVERED: 'Delivered',
-    VOIDED: 'Voided'
+    VOIDED: 'Voided',
+    COLLECTED: 'Collected'
   };
   public shipmentMethods: Array<any> = [
     { shippingMethod: 'USPS First Class Mail', shipmentMethodId: 'usps_first_class_mail/letter' },
@@ -400,18 +401,12 @@ export class AccountOrdersComponent implements OnInit {
   {
     this.viewedOrders.map((order) => {
       if (!!order.devices && order.devices.length > 0) {
-        this.phonesImages[order.id] = 'assets/img/loading-copy.gif';
-        this.contentful.getPhoneImgBySku('sku', order.devices[0].sku).pipe(take(1)).subscribe((finishID) => {
-          if (!!finishID) {
-            this.contentful.getPhoneImg('finishes', finishID).pipe(take(1)).subscribe((src) => {
-              if (!!src) {
-                this.phonesImages[order.id] = src.imageUrl;
-              }
-            });
-          }
-        });
+        const orderTemp: any = order;
+        if (orderTemp.storePickup && order.status === 'SHIPPED') {
+          order.status = 'COLLECTED';
+        }
       }
-    })
+    });
   }
 }
 
