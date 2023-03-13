@@ -13,7 +13,7 @@ WORKDIR /app
 COPY .npmrc .
 COPY package.json .
 
-RUN npm install
+RUN npm install --f
 
 FROM builder AS dependencies
 
