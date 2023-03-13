@@ -2,7 +2,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IFirebaseAddress, OrderInfo, ShippingService, UserOrdersService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { IShipmentTracking, ShipmentService } from '@ztarmobile/zwp-service-backend-v2';
+import { CatalogCoreService, IACPDevice, IShipmentTracking, ShipmentService } from '@ztarmobile/zwp-service-backend-v2';
 import { take } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -74,8 +74,9 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
   ];
   public trackingInfo: IShipmentTracking;
   public phoneImageSrc = 'assets/img/loading-copy.gif';
-
-  constructor(private accountOrderService: UserOrdersService, private accountHeaderService: AccountHeaderService, private route: ActivatedRoute,
+  public deviceDetails: IACPDevice;
+  public isCollected = false;
+  constructor(private accountOrderService: UserOrdersService, private accountHeaderService: AccountHeaderService, private route: ActivatedRoute, private catalogService: CatalogCoreService,
               private router: Router, private appState: AppState, private shippingService: ShippingService,  private modalHelper: ModalHelperService,
               private toastHelper: ToastrHelperService, private shippmentService: ShipmentService, private contentful: ContentfulService, private userPlansService: UserPlansService) {
     this.accountHeaderService.setAccountMenuVisibility(false);
@@ -242,17 +243,6 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     this.modalHelper.showTrackingModal('Delivery updates', this.trackingInfo , this.orderInfo.shipments[0].trackingNumber, 'delivery')
   }
 
-  public getPhoneImage(device): void {
-    this.contentful.getPhoneImgBySku('sku', device.sku).pipe(take(1)).subscribe((finishID) => {
-      if (!!finishID) {
-        this.contentful.getPhoneImg('finishes', finishID).pipe(take(1)).subscribe((src) => {
-          if (!!src) {
-            this.phoneImageSrc =  src.imageUrl;
-          }
-        });
-      }
-    });
-  }
   public open(): void {
    if(!this.changeAddressClicked){
      this.address = !this.address;
@@ -264,7 +254,17 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
       if (!!order) {
         this.orderInfo = order;
         if (!!this.orderInfo.devices && this.orderInfo.devices.length > 0) {
-          this.getPhoneImage(this.orderInfo.devices[0]);
+          const orderTemp:any = order;
+          this.isCollected = orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? true: false;
+          this.appState.loading = true;
+          this.catalogService.getAcpDeviceBySkuFromContentful(this.orderInfo.devices[0].sku).then((data) => {
+            this.deviceDetails = data;
+            this.phoneImageSrc = 'assets/icon/device-icon.png'
+            this.appState.loading = false;
+          },(error) => {
+            this.appState.loading = false;
+            this.toastHelper.showAlert(error?.error?.message || error?.message);
+          });
         }
         if (!!this.orderInfo.shipments && this.orderInfo.shipments.length > 0) {
           this.shippmentService.trackingShipmentAddress(this.orderInfo.shipments[0].trackingNumber, this.orderInfo.shipments[0].carrier).then((data) => {

@@ -11,7 +11,7 @@
             <img class="help-icon" src="assets/icon/warning-circle.svg" alt="warning"
                 *ngIf="orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED">
             <span class="status" data-cy="orderStatus"
-                [ngClass]="{ 'cancled': orderInfo?.status ===  ORDER_STATUS.CANCELED || orderInfo?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[orderInfo?.status] === STATUS_TITLE.PENDING, 'help': orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{STATUS_TITLE[orderInfo?.status]}}</span>
+                [ngClass]="{ 'cancled': orderInfo?.status ===  ORDER_STATUS.CANCELED || orderInfo?.status ===  ORDER_STATUS.VOIDED, 'pending': STATUS_TITLE[orderInfo?.status] === STATUS_TITLE.PENDING, 'help': orderInfo?.status ===  ORDER_STATUS.UPDATE_NEEDED}">{{!!isCollected ? 'Collected' : STATUS_TITLE[orderInfo?.status]}}</span>
         </p>
         <p class="action-required"
             (click)="editShippingAddress(orderInfo?.shippingInfo?.shippingAddress, orderInfo?.id)"
@@ -58,8 +58,27 @@
                                             <p class="price smaller"><b>${{plan?.price}}</b></p>
                                         </div>
                                     </div>
+                                    <hr *ngIf="!!orderInfo?.plans && !!orderInfo?.devices">
+                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                        <div class="details-side">
+                                            <div class="phone-image-container">
+                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="ACP device">
+                                            </div>
+                                            <div class="details">
+                                                <p class="title"><b>{{deviceDetails?.fields?.deviceMake | titlecase}} {{deviceDetails?.fields?.deviceModel | titlecase}}</b></p>
+                                                <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                                <p class="text-orange smallest">ACP Benefits</p>
+                                                <p class="action" data-cy="cancel"
+                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
+                                                    (click)="cancelOrderWithRefund()">Cancel</p>
+                                            </div>
+                                        </div>
+                                        <div class="price-side">
+                                            <p class="price"><b>${{device?.price}}</b></p>
+                                        </div>
+                                    </div>
                                     <div class="sub-item-section">
-                                        <hr>
+                                        <hr *ngIf="!!orderInfo?.cards">
                                         <ng-container *ngIf="!!orderInfo?.cards">
                                             <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
                                                 <div class="details-side">
@@ -94,27 +113,6 @@
                                                 </div>
                                             </div>
                                         </ng-container>
-                                    </div>
-                                    <hr *ngIf="!!orderInfo?.devices">
-                                    <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
-                                        <div class="details-side">
-                                            <div class="phone-image-container">
-                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
-                                            </div>
-                                            <div class="details">
-                                                <p class="title"><b>{{device?.description}}</b></p>
-                                                <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
-                                                <p class="quantity">Quantity: {{device?.quantity}}</p>
-                                                <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
-                                                <p class="action" data-cy="cancel"
-                                                    *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
-                                                    (click)="cancelOrderWithRefund()">Cancel</p>
-                                            </div>
-                                        </div>
-                                        <div class="price-side">
-                                            <p class="price"><b>${{device?.price}}</b></p>
-                                        </div>
                                     </div>
                                 </div>
                             </ng-container>
@@ -201,7 +199,7 @@
                                     <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
                                         <div class="details-side">
                                             <div class="phone-image-container">
-                                                <img class="thumbnail phone" [src]="phoneImageSrc" alt="Mobile">
+                                                <img class="thumbnail phone" src="assets/icon/device-icon.png" alt="ACP device">
                                             </div>
                                             <div class="details">
                                                 <p class="title smaller primary-font-bold">{{device?.description}}</p>
@@ -295,7 +293,7 @@
                     <div class="card-header-section">
                         <h2 class="card-header">Order Summary</h2>
                         <p class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(orderInfo)"
-                            *ngIf="!!orderInfo?.paymentSuccessful"><img class="icon"
+                            *ngIf="!!orderInfo?.paymentSuccessful && !orderInfo?.devices"><img class="icon"
                                 src="assets/icon/primary-invoice.svg"><span>View Invoice</span></p>
                     </div>
                     <div class="card-tab">
