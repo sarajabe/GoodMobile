@@ -1,11 +1,11 @@
 <div [class.acp-disabled]="!!disable">
   <form [formGroup]="codesForm" class="childInfoForm codes">
     <div class="form-row bottom">
-      <p >What program do you qualify through?<span class="red">*</span></p>
+      <p>What program do you participate in?<span class="red">*</span></p>
       <p class="smallest grey space">Choose which program you qualify through for the Afforadable Connectivity Program.</p>
       <div class="form-field width">
         <div class="drop-down-floating-label">
-          <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'options'" [data]="eligibilityCodes"
+          <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Select a Qualifying Program'" [data]="eligibilityCodes"
             formControlName="selectedItems" ngDefaultControl (onSelect)="onItemSelect($event)"
             class="floating-select dirty" (blur)="onItemDeSelect($event)" (onDeSelect)="onItemDeSelect($event)"
             [disabled]="!!disable">
