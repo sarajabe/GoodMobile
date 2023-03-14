@@ -51,7 +51,7 @@ export class AddressInfoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.trackEvent();
     this.ebbManager.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
-      if (!!step && step === 3) {
+      if (!!step && step === 2) {
         this.addressInfoForm.markAllAsTouched();
         if (!this.useSameAddress) {
           this.mailingAddressForm.markAllAsTouched();
@@ -59,7 +59,7 @@ export class AddressInfoComponent implements OnInit, OnChanges {
         if (!!this.addressInfoForm.valid && (!!this.useSameAddress || (!this.useSameAddress && this.mailingAddressForm.valid))) {
           this.prepareData();
           this.setAddresses.emit({ primary: this.primaryAddress, mail: this.mailingAddress });          
-          this.goToNext.emit(4);
+          this.goToNext.emit(3);
         }
       }
     });

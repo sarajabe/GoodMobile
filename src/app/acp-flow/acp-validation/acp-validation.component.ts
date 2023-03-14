@@ -7,13 +7,11 @@ import { Router } from "@angular/router";
 import { FirebaseUserProfileService, IFirebaseEbbDetails, IUser, IUserPlan } from "@ztarmobile/zwp-service-backend";
 import { EbbService, IAcpDetails, IAcpUser, IAppDetails, IVerificationRes } from "@ztarmobile/zwp-service-backend-v2";
 import { take } from "rxjs/operators";
-import { ACP_CALLBACK_URL, CAPTCHA_SITE_ID } from "src/environments/environment";
+import { ACP_CALLBACK_URL } from "src/environments/environment";
 import { EbbManager } from "src/services/ebb.service";
-import { ToastrHelperService } from "src/services/toast-helper.service";
 import { ModalHelperService } from "src/services/modal-helper.service";
 import { AppState } from "../../app.service";
-import { PageScrollService } from "ngx-page-scroll-core";
-import { ACP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS } from "src/app/app.routes.names";
+import { ACP_ROUTE_URLS, ROUTE_URLS } from "src/app/app.routes.names";
 
 @Component({
   selector: 'app-acp-validation',
@@ -84,13 +82,13 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
         stepExtraDesc: null
       },
       2: {
-        stepTitle: 'Qualified Programs',
-        stepDesc: 'Select the qualifying program(s) for the Affordable Connectivity Program.',
+        stepTitle: 'Address Information',
+        stepDesc: 'Please provide a physical address or the exact address that you submitted to the National Verifier.',
         stepExtraDesc: null
       },
       3: {
-        stepTitle: 'Address Information',
-        stepDesc: 'Please provide a physical address or the exact address that you submitted to the National Verifier.',
+        stepTitle: 'Qualified Programs',
+        stepDesc: 'Select the qualifying program(s) for the Affordable Connectivity Program.',
         stepExtraDesc: null
       },
       4: {

@@ -54,6 +54,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   public showInvalidDateError = false;
   public years = [];
 
+  private state: string;
   private validateChild = false;
   private alive = true;
   leapYear: boolean;
@@ -66,8 +67,6 @@ export class ChildInfoComponent implements OnInit, OnChanges {
     private analyticsService: ActionsAnalyticsService
   ) {
     this.getYearsValues();
-    const today = new Date();
-    const currentYear = today.getFullYear();
     this.qualifyingForm = new UntypedFormGroup({
       option: new UntypedFormControl('', Validators.required)
     });
@@ -154,7 +153,10 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.trackEvent();
     this.appState.loading = true;
-    this.ebbService.getCodes().then(
+    if(!!this.internalData && Object.keys(this.internalData).length > 0 && !!this.internalData?.user?.address?.primary?.state) {
+     this.state = this.internalData?.user?.address?.primary?.state;
+    }
+    this.ebbService.getCodes(this.state).then(
       (data) => {
         this.appState.loading = false;
         if (!!data) {
@@ -205,7 +207,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
     this.ebbManager.activeStep
       .pipe(takeWhile(() => this.alive))
       .subscribe((step) => {
-        if (!!step && step === 2) {
+        if (!!step && step === 3) {
           this.codesForm.markAllAsTouched();
           this.qualifyingForm.markAllAsTouched();
           this.validateChild = this.qualifyingForm.controls.option.value === 'child' ?  true : false;
@@ -222,7 +224,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
               publicHousingCode: this.codesForm.controls.housingAssistance.value,
               user: !!this.validateChild ? this.userInfo : null,
             });
-            this.goToNext.emit(3);
+            this.goToNext.emit(4);
           }
         }
       });

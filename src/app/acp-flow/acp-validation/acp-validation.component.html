@@ -1,6 +1,6 @@
 <section class="page-section no-flow" *ngIf="!acpSuccess && !acpError">
   <h2 class="header-color">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
-  <h4 class="secondary-font">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h4>
+  <h5 class="secondary-font">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h5>
   <p class="smaller" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}
   </p>
   <section class="stepper">
@@ -12,13 +12,13 @@
   <app-personal-info *ngIf="activeStep === 1" (goToNext)="next($event)" (setUserInfo)="setPersonalInfo($event)"
     [savedInfo]="acpData?.user" [disable]="!!enrolled || !!is609ErrorCode" [userId]="userProfile?.id">
   </app-personal-info>
-  <app-child-info *ngIf="activeStep === 2" (goToNext)="next($event)" (setChildInfo)="setBqpUserInfo($event)"
+  <app-address-info *ngIf="activeStep === 2" (goToNext)="next($event)" (setAddresses)="setUserAddresses($event)"
+  [primary]="primaryAddress" [userId]="userProfile?.id" [mailing]="mailAddress"
+  [disable]="!!enrolled || !!is609ErrorCode">
+</app-address-info>
+  <app-child-info *ngIf="activeStep === 3" (goToNext)="next($event)" (setChildInfo)="setBqpUserInfo($event)"
     [userInfo]="acpData?.bqpUser" [internalData]="acpData" [userId]="userProfile?.id" [schoolName]="acpData?.schoolName"
     [publicHousingCode]="acpData?.publicHousingCode" [eligableCode]="acpData?.eligibilityCode" [disable]="!!enrolled || !!is609ErrorCode"></app-child-info>
-  <app-address-info *ngIf="activeStep === 3" (goToNext)="next($event)" (setAddresses)="setUserAddresses($event)"
-    [primary]="primaryAddress" [userId]="userProfile?.id" [mailing]="mailAddress"
-    [disable]="!!enrolled || !!is609ErrorCode">
-  </app-address-info>
   <app-signature-info *ngIf="activeStep === 4" (goToNext)="next($event)" [fName]="acpData.user.firstName"
     [lName]="acpData.user.lastName" [signed]="userSignedAgreement" (setSignature)="setSignedValue($event)"
     [disable]="!!enrolled"></app-signature-info>
