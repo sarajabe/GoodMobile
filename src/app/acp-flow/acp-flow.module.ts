@@ -27,6 +27,7 @@ import { AcpAppInfoComponent } from './acp-app-info/acp-app-info.component';
 import { EnrollmentAddNewLineComponent } from './enrollment-add-new-line/enrollment-add-new-line.component';
 import { EnrollmentAddExistingLineComponent } from './enrollment-add-existing-line/enrollment-add-existing-line.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AcpDocumentsComponent } from './acp-documents/acp-documents.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     AppIdValidationComponent,
     AcpAppInfoComponent,
     EnrollmentAddNewLineComponent,
-    EnrollmentAddExistingLineComponent
+    EnrollmentAddExistingLineComponent,
+    AcpDocumentsComponent
   ],
   imports: [
     CommonModule,

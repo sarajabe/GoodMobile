@@ -31,7 +31,7 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
 
   public activeStep: number;
   public STEPS_CONTENT = {};
-  public steps = [1, 2, 3, 4];
+  public steps = [1, 2, 3, 4, 5];
   public acpSuccess = false;
   public acpError = false;
   public acpStatus: string;
@@ -92,6 +92,11 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
         stepExtraDesc: null
       },
       4: {
+        stepTitle: 'Required document(s) consent: ',
+        stepDesc: null,
+        stepExtraDesc: 'Make sure you have the below documents at hand to upload for the Affordable Connectivity Program (ACP).'
+      },
+      5: {
         stepTitle: 'Almost there!',
         stepDesc: 'Customer Notice and Agreement',
         stepExtraDesc: 'To apply for service under the Federal ACP with Good Mobile, you should agree and initial the following:'
@@ -174,7 +179,9 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
     this.primaryAddress = data.primary;
     this.mailAddress = data.mail;
   }
+  public setDocs(data): void {
 
+  }
   private callCreateInternalApp(callVerify?): void {
     if (this.acpData) {
       window.scroll(0, 0);
@@ -264,7 +271,7 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
             error.error.errors.length > 0
           ) {
             if (error.error.errors[0].code === 609) {
-              this.activeStep = 4;
+              this.activeStep = 5;
               if (!!this.firebaseDetails) {
                 this.acpData.user.firstName =
                   this.firebaseDetails?.user?.firstName;

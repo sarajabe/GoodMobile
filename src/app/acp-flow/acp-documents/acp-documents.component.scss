@@ -1,0 +1,221 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+.docs-page {
+    .subhead {
+        margin-bottom: 24px;
+        font-family: $base-font-family;
+    }
+    .red {
+        color: #d22119;
+    }
+    .info-banner {
+        margin-bottom: 32px;
+        max-width: 893px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+        }
+        .banner-content {
+            .description {
+                margin-bottom: 12px;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 8px;
+                }
+            }
+            .sub-note {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+                @media screen and (max-width: $desktop-min-width-minus) {
+                    align-items: baseline;
+                }
+                &.last {
+                    margin-bottom: 0px;
+                }
+                img {
+                    width: 16px;
+                    height: 16px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        width: 10px;
+                        height: 10px;
+                    }
+                }
+
+                .desc {
+                    font-size: 14px;
+                    line-height: 24px;
+                    margin-bottom: 0;
+                    font-family: $base-font-family;
+                    b {
+                        font-family: $base-font-family-bold;
+                    }
+                }
+            }
+        }
+    }
+    .docs-card {
+        max-width: 893px;
+        padding: 24px 20px;
+        background: #fcfcfb;
+        box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08),
+            0px 5px 16px rgba(0, 60, 117, 0.02);
+        border-radius: 8px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+            padding: 20px 16px;
+        }
+        .title {
+            color: #6a509b;
+            font-family: $base-font-family-bold;
+            margin-bottom: 0;
+        }
+        .card-contents {
+            display: flex;
+            flex-direction: column;
+            margin-top: 24px;
+            .top-section {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    align-items: baseline;
+                }
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 8px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        height: 12px;
+                    }
+                }
+            }
+            .sub-info {
+                margin-left: 14px;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    margin-left: 8px;
+                }
+                .info {
+                    display: flex;
+                    align-items: baseline;
+                    margin-bottom: 4px;
+                    p {
+                        margin-bottom: 0px;
+                        width: 100%;
+                    }
+                    .circle {
+                        border: solid 1px #74c0eb;
+                        border-radius: 50%;
+                        width: 10px;
+                        height: 10px;
+                        background: #74c0eb;
+                        margin-right: 8px;
+                    }
+                }
+            }
+            .docs-section {
+                background: #f3f3f3;
+                border-radius: 10px;
+                max-width: 805px;
+                padding: 20px;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    padding: 24px 8px;
+                }
+                .swiper-container {
+                    max-width: 100%;
+                    overflow: hidden;
+                    &.swiper-width{
+                        width: 100%;
+                        max-width: 421px;
+                        position: relative;
+                        margin: 0 auto;
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                            max-width: 239px;
+                        }
+                    }
+                    .swiper-slide {
+                        height: 100%;
+                        border-radius: 5px;
+                        display: block;
+                        text-align: center;
+                        background: inherit;
+                        img{
+                            max-width: 308px;
+                            height: 400px;
+                        }
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                            max-width: 100%;
+                            width: 100%;
+                            height: 100%;
+                            img{
+                                width: 100%;
+                                max-width: 176px;
+                                height: 230px;
+                            }
+                        }
+                    }
+                    .swiper-button-next::after,
+                    .swiper-button-prev::after {
+                      font-size: rem-calc(12px);
+                    }
+              
+                    .swiper-button-prev,
+                    .swiper-button-next {
+                        position: absolute;
+                        background-color: $primary-color;
+                        background-size: 28%;
+                        color: $white;
+                        height: 21px;
+                        width: 21px;
+                        z-index: 1;
+                        cursor: pointer;
+                        top: 192px;
+                        --swiper-navigation-size: 11px;
+                        border-radius: 50%;
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                            top: 104px;
+                        }
+                    }
+              
+                    .swiper-button-next {
+                        right: 12px;
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                           right: 0;
+                        }
+                    }     
+                    .swiper-button-prev{
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                            left: 0;
+                         }
+                    }            
+                }
+              
+            }
+            .actions{
+                margin-top: 24px;
+                .consent{
+                    margin-bottom: 21px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        margin-bottom: 14px;
+                    }
+                }
+                .consent-form{
+                    display: flex;
+                    align-items: center;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        align-items: flex-start;
+                    }
+                    .label {
+                        font-size: 14px;
+                        line-height: 24px;
+                        font-weight: normal;
+                        font-family: $base-font-family;
+                        margin-bottom: 0;
+                        margin-left: 7px;
+                    }
+                }
+
+            }
+        }
+    }
+}
