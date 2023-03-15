@@ -19,7 +19,10 @@
   <app-child-info *ngIf="activeStep === 3" (goToNext)="next($event)" (setChildInfo)="setBqpUserInfo($event)"
     [userInfo]="acpData?.bqpUser" [internalData]="acpData" [userId]="userProfile?.id" [schoolName]="acpData?.schoolName"
     [publicHousingCode]="acpData?.publicHousingCode" [eligableCode]="acpData?.eligibilityCode" [disable]="!!enrolled || !!is609ErrorCode"></app-child-info>
-  <app-signature-info *ngIf="activeStep === 4" (goToNext)="next($event)" [fName]="acpData.user.firstName"
+  <app-acp-documents *ngIf="activeStep === 4" (goToNext)="next($event)" [disable]="!!enrolled" [userId]="userProfile?.id"
+  [internalData]="acpData" (setDocs)="setDocs($event)">
+  </app-acp-documents>
+  <app-signature-info *ngIf="activeStep === 5" (goToNext)="next($event)" [fName]="acpData.user.firstName"
     [lName]="acpData.user.lastName" [signed]="userSignedAgreement" (setSignature)="setSignedValue($event)"
     [disable]="!!enrolled"></app-signature-info>
 </section>
@@ -30,7 +33,7 @@
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
     <div class="right">
       <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
+      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
         'Verify'}}</button>
     </div>
   </div>

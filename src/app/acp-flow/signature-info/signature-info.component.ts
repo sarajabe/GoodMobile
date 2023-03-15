@@ -62,7 +62,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
       this.signatureForm.controls.name.disable({ onlySelf: true });
     }
     this.ebbManager.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
-      if (!!step && ((!this.appId && step === 4) || (!!this.appId && step ===2))) {
+      if (!!step && ((!this.appId && step === 5) || (!!this.appId && step ===2))) {
         this.signatureForm.markAllAsTouched();
         this.showCaptchaError = !!this.recaptchaResponse ? false : true;
         if (!!this.signatureForm.valid && !!this.fullName && !!this.captchaValid) {
