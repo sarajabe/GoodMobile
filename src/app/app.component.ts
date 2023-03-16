@@ -13,6 +13,9 @@ import {
 import { AppState } from './app.service';
 import { ContentfulService } from 'src/services/contentful.service';
 import { Meta } from '@angular/platform-browser';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { CheckoutService } from './shop/checkout/checkout.service';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-root',
@@ -30,21 +33,26 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private isBackButton: boolean;
   private isCampaignChecked = false;
   private alive = true;
+  private idleTime = 0;
+  private idleInterval: any;
+  private userActive = false;
+  private timeLeft = 300000; // 5 Minutes
 
-  constructor( 
+  constructor(
     //FIX ME
     @Inject(DOCUMENT) private document: any,
     //END of FIX ME
     public appState: AppState, private location: Location, private appHelper: AppHelperService, private simpleAuthService: SimpleAuthService,
     private actionsAnalyticsService: ActionsAnalyticsService, private router: Router, private modalHelper: ModalHelperService,
     private userProfileService: FirebaseUserProfileService, private authHttp: AuthHttp, private meta: Meta,
-    private contentfulService: ContentfulService, private changeDetector: ChangeDetectorRef) {
-      //FIX ME
-      const domain: string = document.location.href;
-      if (domain.indexOf('gm-prod.ztarmobile.io') > -1) {
-        window.open('https://www.goodmobile.org/affordable-connectivity-program/application', '_self');
-      }
-      //END of FIX ME
+    private contentfulService: ContentfulService, private changeDetector: ChangeDetectorRef,
+    private angularAuthService: AngularFireAuth, private checkoutService: CheckoutService) {
+    //FIX ME
+    const domain: string = document.location.href;
+    if (domain.indexOf('gm-prod.ztarmobile.io') > -1) {
+      window.open('https://www.goodmobile.org/affordable-connectivity-program/application', '_self');
+    }
+    //END of FIX ME
   }
 
   ngOnInit(): void {
@@ -53,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isSamsungBrowser();
     this.authHttp.setLanguage('en');
     this.checkIfMaintenanceExist();
-
+    this.checkUserActivity();
   }
 
   ngAfterViewInit(): void {
@@ -256,5 +264,77 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     });
+  }
+  private checkUserActivity(): void {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in
+        // Set up an interval to check for user activity
+        this.idleInterval = setInterval(() => {
+          if (this.userActive) {
+            this.idleTime = 0;
+            this.userActive = false;
+          } else {
+            this.idleTime += 1;
+            if(this.idleTime === (25 * 60) && this.timeLeft > 0) {
+              // display a popup if the time remaining with inactivity is 5 min
+              this.timeLeft = this.timeLeft - 1000;
+              // display the popup if there is no action till 25min
+              if (!document.querySelector('body div.cdk-overlay-backdrop-showing')) {
+                const customHtml = `<div class="text-content">
+              <p class="desc">You have been inactive for a while. For your security, please choose whether to stay <b>signed in</b> or to <b>log out.</b></p>
+              <p class="desc last">Otherwise, you will be logged out <b>automatically.</b></p>
+            </div>`;
+                this.modalHelper.showAlertSecurityModal('Your session is about to end', 'Stay Connected', 'Log out', true, 'timer-alert-modal', customHtml).afterClosed().subscribe((res) => {
+                  if (!!res) {
+                    //if res is logout 
+                    if (res === 'logout') {
+                      this.logout();
+                    } else {
+                      // refresh the token
+                      this.refreshToken();
+                    }
+                  }
+                });
+              }
+            } else if (this.timeLeft === 0) {
+              this.logout();
+            } else if (this.idleTime >= 30 * 60) {
+              // more than 30m then logout the customer
+              this.logout();
+            }
+          }
+        }, 1000);
+        // Set up event listeners to detect user activity
+        window.addEventListener('mousemove', this.onUserActivity.bind(this));
+        window.addEventListener('keypress', this.onUserActivity.bind(this));
+        // Set up an event listener to detect when the user is leaving the page or closing the tab
+        window.addEventListener('unload', () => {
+          this.logout();
+        });
+      }
+    });
+  }
+  private logout(): void {
+    this.resetVariables();
+    this.appState.clearSessionStorage();
+    this.angularAuthService.signOut().then(() => {
+      this.appState.userLoggedIn.next(undefined);
+      this.checkoutService.setPayments({ card: { address1: '', address2: '', cardCode: '', cardNumber: '', last4: '', id: '', city: '', state: '', country: '', postalCode: '', method: '', name: '', alias: '', fullName: '', brand: '' } });
+      this.router.navigate([ROUTE_URLS.HOME]);
+    })
+  }
+  private onUserActivity(): void {
+    this.userActive = true;
+  }
+  private resetVariables(): void {
+    clearInterval(this.idleInterval);
+    this.idleTime = 0;
+    this.userActive = false;
+    this.timeLeft = 300000;
+  }
+  private refreshToken(): void {
+    this.resetVariables();
+    window.location.reload();
   }
 }

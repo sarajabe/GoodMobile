@@ -27,6 +27,7 @@ import { eSimReplacementModalComponent } from './esim-replacement-modal/esim-rep
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { BarCodeModalComponent } from './bar-code-modal/bar-code-modal.component';
 import { NgxBarcode6Module } from 'ngx-barcode6';
+import { AlertSecurityModalComponent } from './alert-security-modal/alert-security-modal.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
         TrackingModalComponent,
         eSimReplacementModalComponent,
         CompatibilitySkipModalComponent,
-        BarCodeModalComponent],
+        BarCodeModalComponent,
+        AlertSecurityModalComponent],
     imports: [
         CommonModule, WidgetsModule, FormsModule, ReactiveFormsModule, MatAutocompleteModule, NgxBarcode6Module
     ],
@@ -56,6 +58,7 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
         InformationMessageModalComponent, AddActivatedNumberModalComponent, InputModalComponent, EditCcModalComponent, SelectPaymentModalComponent, ShippingAddressModalComponent, SimReplacementModalComponent,
         WifiCallingModalComponent, TrackingModalComponent,
         RoutingModalComponent, FiveGModalComponent, eSimReplacementModalComponent,
-        OutOfStockItemModalComponent, AcpModalComponent, PhoneNotImpactedModalComponent,MdnsListModalComponent, CompatibilitySkipModalComponent],
+        OutOfStockItemModalComponent, AcpModalComponent, PhoneNotImpactedModalComponent,MdnsListModalComponent, CompatibilitySkipModalComponent,
+        AlertSecurityModalComponent],
 })
 export class ModalsModule { }

@@ -5,21 +5,26 @@
     z-index: 1;
   }
 }
+
 .cdk-global-scrollblock {
   position: unset !important;
 }
+
 .cdk-overlay-dark-backdrop {
   background: rgb(0 0 0 / 42%) !important;
 }
+
 .cdk-overlay-pane {
   max-width: 95% !important;
 }
+
 .mat-dialog-container {
   padding: 0 !important;
   box-shadow: none !important;
   background: transparent !important;
   border-radius: 19px !important;
 }
+
 .modal {
   z-index: 10000;
   width: 100%;
@@ -49,7 +54,7 @@
     max-height: 90vh;
     overflow: hidden;
     width: 700px;
-    padding: 24px!important;
+    padding: 24px !important;
 
     @media (max-width: $ipad-min-width-minus) {
       width: 600px;
@@ -981,6 +986,101 @@
       }
     }
 
+    &.timer-alert-modal {
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      @media(max-width: $phablet-min-width-minus) {
+        max-width: 100%;
+      }
+
+      b {
+        font-weight: bold;
+        font-family: $base-font-family-bold;
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
+        margin-top: 30px;
+
+        @media(max-width: $phablet-min-width-minus) {
+          width: 80px;
+          height: 80px;
+        }
+      }
+
+      .modal-header {
+        padding: 0;
+
+        .modal-heading {
+          font-size: 32px;
+          line-height: 40px;
+          margin-bottom: 24px;
+
+          @media(max-width: $phablet-min-width-minus) {
+            font-size: 24px;
+            line-height: 32px;
+            margin-bottom: 20px;
+          }
+        }
+      }
+
+      .desc {
+        font-size: 18px;
+        line-height: 28px;
+        text-align: center;
+        font-weight: normal;
+        max-width: 628px;
+
+        @media(max-width: $phablet-min-width-minus) {
+          max-width: 100%;
+        }
+
+        &.last {
+          margin-top: 8px;
+        }
+      }
+
+      .note {
+        color: #F58E25;
+        ;
+        font-size: 14px;
+        line-height: 24px;
+        font-weight: bold;
+        margin-bottom: 24px;
+      }
+
+      .modal-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px;
+
+        @media(max-width: $phablet-min-width-minus) {
+          margin-bottom: 32px;
+          flex-direction: column;
+        }
+
+        button {
+          min-width: 177px;
+        }
+
+        .left {
+          margin-right: 16px;
+
+          @media(max-width: $phablet-min-width-minus) {
+            margin-right: 0;
+            margin-bottom: 16px;
+          }
+        }
+      }
+    }
+
     &.success-swap-modal {
       .modal-close {
         @media (max-width: $phablet-min-width-minus) {
@@ -1094,13 +1194,16 @@
           font-size: rem-calc(18px);
           font-family: $base-font-family;
           line-height: 28px;
+
           b {
             font-family: $base-font-family-bold;
           }
         }
+
         b {
           font-family: $base-font-family-bold;
         }
+
         .subhead {
           font-size: 22px;
           line-height: 24px;
@@ -1147,7 +1250,7 @@
         }
       }
 
-      .modal-content > * {
+      .modal-content>* {
         padding: 0.5em 2em;
       }
     }
@@ -1474,6 +1577,7 @@
             width: 100%;
             font-size: rem-calc(14px);
           }
+
           .button {
             width: 133px !important;
           }
@@ -2434,7 +2538,7 @@
       max-width: 960px !important;
 
       .modal-content {
-        > * {
+        >* {
           display: flex;
           justify-content: flex-start;
         }
@@ -3049,7 +3153,7 @@
                 left: 0;
                 margin-left: -20px;
 
-                &:checked ~ label {
+                &:checked~label {
                   &:before {
                     border: 1px solid $input-border;
                   }
@@ -3059,7 +3163,7 @@
                   }
                 }
 
-                &:focus + label::before {
+                &:focus+label::before {
                   outline: 0;
                 }
               }
