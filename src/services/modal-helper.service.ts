@@ -26,6 +26,7 @@ import { CompatibilitySkipModalComponent } from 'src/modals/compatibility-skip-m
 import { eSimReplacementModalComponent } from 'src/modals/esim-replacement-modal/esim-replacement-modal.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BarCodeModalComponent } from 'src/modals/bar-code-modal/bar-code-modal.component';
+import { AlertSecurityModalComponent } from 'src/modals/alert-security-modal/alert-security-modal.component';
 
 export interface ModalSetting {
   title?: string;
@@ -64,6 +65,7 @@ export interface IModalHelper {
   showTMOSkipModal(title: string, hasCloseLink?: boolean, customClass?: string, notBeforeSkipping?: boolean): MatDialogRef<any>;
   showeSIMModal(iccid: string, mdn: string, customClass?: string): MatDialogRef<any>;
   showBarcodeModal(title: string, message: string, bardcodeValue:any): MatDialogRef<any> ;
+  showAlertSecurityModal(title: string, primaryBtn?:string, secondaryBtn?:string, timer?:boolean, customClass?:string, customHTML?:string): MatDialogRef<any>;
 }
 @Injectable({
   providedIn: 'root'
@@ -274,5 +276,12 @@ export class ModalHelperService {
         title, message, bardcodeValue
       }
     });
+  }
+  public showAlertSecurityModal(title: string, primaryBtn?:string, secondaryBtn?:string, timer?:boolean, customClass?:string, customHTML?:string): MatDialogRef<any>{
+    return this.dialog.open(AlertSecurityModalComponent,{
+      data: {
+        title, primaryBtn, secondaryBtn, timer, customClass, customHTML
+      }
+  });
   }
 }
