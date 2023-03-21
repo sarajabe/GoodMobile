@@ -102,7 +102,7 @@
         </div>
       </div>
     </div>
-    <div class="swiper-container" (slideChange)="slideChanged($event)" *ngIf="showPhoneSwiper">
+    <div class="swiper-container phones-cont" (slideChange)="slideChanged($event)" *ngIf="showPhoneSwiper">
       <div class="swiper-wrapper basic-display">
         <div class="swiper-slide" *ngFor="let model of phoneModels;">
           <div class="phone-card">

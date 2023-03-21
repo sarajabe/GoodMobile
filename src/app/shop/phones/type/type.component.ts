@@ -75,7 +75,7 @@ export class TypeComponent implements OnDestroy, OnInit, AfterViewInit {
     this.slideChanged();
   }
   createSwiper(): void {
-    const swiper = new Swiper('.swiper-container', {
+    const swiper = new Swiper('.phones-cont', {
       lazy: true,
       hashNavigation: true,
       modules: [Navigation, EffectFade, Pagination, Autoplay],
