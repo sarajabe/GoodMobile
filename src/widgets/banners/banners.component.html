@@ -2,6 +2,32 @@
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide">
+        <div class="banner-section phones-slide">
+          <picture class="banner-image-container">
+            <source srcset='assets/img/banners/device-banner-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+            <source srcset='assets/img/banners/device-banner-mobile.png' media="(max-width: 639.9px)" type="image/png">
+            <source srcset='assets/img/banners/device-banner-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+            <source srcset='assets/img/banners/device-banner-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+            <source srcset='assets/img/banners/device-banner-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+            <source srcset='assets/img/banners/device-banner-desktop.png' media="(min-width: 1025px)" type="image/png">
+            <img src="assets/img/banners/device-banner-desktop.png" alt="Device Banner Image" height="540" width="2000">
+          </picture>
+          <div class="banner-content-container">
+            <p class="title"><img class="gover" width="32" height="43" src="assets/img/Device-gover.svg" alt="Gover" />
+              Government Benefit Program</p>
+            <img src="/assets/icon/phone-text.svg" alt="phone-text" width="350" height="80" class="text-img">
+            <p class="desc1">Apply now & qualify for:</p>
+            <p class="desc2"><b>Free</b> high-speed <b>6GB</b> monthly data </p>
+            <p class="desc3">+ up to <b>$100</b> discount on all Devices</p>
+            <div class="actions">
+              <button class="button primary" id="get-it-tdy" data-cy="get-it-tdy"
+                [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.TYPE]" title="Get it Today!" value="Get it Today!"
+                aria-label="Get it Today!">Get it Today!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
         <div class="banner-section acp-slide">
           <picture class="banner-image-container acp">
             <source srcset='assets/img/banners/ACP-banner-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
@@ -29,32 +55,6 @@
               <button class="button primary" id="do-i-qualify" data-cy="do-i-qualify"
                 [routerLink]="['/' + ROUTE_URLS.ACP]" fragment="acpDiscount" title="Do I Qualify?" value="Do I Qualify?"
                 aria-label="Do I Qualify?">Do I Qualify?</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="banner-section phones-slide">
-          <picture class="banner-image-container">
-            <source srcset='assets/img/banners/device-banner-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
-            <source srcset='assets/img/banners/device-banner-mobile.png' media="(max-width: 639.9px)" type="image/png">
-            <source srcset='assets/img/banners/device-banner-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
-            <source srcset='assets/img/banners/device-banner-tablet.png' media="(max-width: 1024.9px)" type="image/png">
-            <source srcset='assets/img/banners/device-banner-desktop.webp' media="(min-width: 1025px)" type="image/webp">
-            <source srcset='assets/img/banners/device-banner-desktop.png' media="(min-width: 1025px)" type="image/png">
-            <img src="assets/img/banners/device-banner-desktop.png" alt="Device Banner Image" height="540" width="2000">
-          </picture>
-          <div class="banner-content-container">
-            <p class="title"><img class="gover" width="32" height="43" src="assets/img/Device-gover.svg" alt="Gover" />
-              Government Benefit Program</p>
-            <img src="/assets/icon/phone-text.svg" alt="phone-text" width="350" height="80" class="text-img">
-            <p class="desc1">Apply now & qualify for:</p>
-            <p class="desc2"><b>Free</b> high-speed <b>6GB</b> monthly data </p>
-            <p class="desc3">+ up to <b>$100</b> discount on all Devices</p>
-            <div class="actions">
-              <button class="button primary" id="get-it-tdy" data-cy="get-it-tdy"
-                [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.TYPE]" title="Get it Today!" value="Get it Today!"
-                aria-label="Get it Today!">Get it Today!</button>
             </div>
           </div>
         </div>
