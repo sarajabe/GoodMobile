@@ -187,6 +187,13 @@
             p {
               color: #090909;
               margin-bottom: 0;
+              font-family: $secondary-font-family;
+              b {
+                font-family: $secondary-font-family-bold;
+              }
+            }
+            a {
+              white-space: nowrap;
             }
           }
           .more-info {

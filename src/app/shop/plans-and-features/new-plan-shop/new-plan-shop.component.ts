@@ -40,6 +40,8 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   public questionIdParam: any;
   public collapsed: boolean;
   public plansQuestions;
+  public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
+  public PHONES_SHOP_ROUTE_URLS = PHONES_SHOP_ROUTE_URLS;
   private activationFlow = false;
   private allBasePlans: Array<MobilePlanItem>;
   private alive = true;

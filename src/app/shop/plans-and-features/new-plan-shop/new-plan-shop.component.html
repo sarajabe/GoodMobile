@@ -23,25 +23,29 @@
         <p class="intro">INCLUDES</p>
         <div class="details">
           <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">6GB high-speed data per month; speeds reduce after allowance is used</p>
+          <p class="smaller"><b>6GB</b> high-speed data per month; speeds reduce after allowance is used</p>
         </div>
         <div class="details">
           <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">Unlimited talk and text + data access on America’s
+          <p class="smaller"><b>Unlimited</b> talk and text + data access on America’s
             nationwide networks</p>
         </div>
         <div class="details" *ngIf="!!plan?.ebb">
           <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">Affordable Connectivity Program (ACP) qualification
-            and enrollment required. <a (click)="goToEbb()"><b>Learn More</b></a></p>
+          <p class="smaller">Affordable Connectivity Program <b>(ACP)</b> qualification
+            and enrollment <b>required</b>. <a (click)="goToEbb()"><b>Learn More</b></a></p>
         </div>
         <div class="details">
           <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">Works with network compatible unlocked iPhone and Android phones</p>
+          <p class="smaller">Works with network compatible <b>unlocked iPhone and Android phones</b></p>
         </div>
         <div class="details">
           <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">FREE SIM Card Activation Kit. FREE Shipping.</p>
+          <p class="smaller"><b>FREE</b> SIM Card Activation Kit. FREE Shipping.</p>
+        </div>
+        <div class="details" *ngIf="!!plan?.ebb">
+          <img src="/assets/icon/green-tick.svg" alt="green-tick">
+          <p class="smaller"><b>A one-time discount</b> of up to <b>$100</b> on your Device purchase. <a  [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.TYPE]"><b>View Devices</b></a></p>
         </div>
         <a *ngIf="!!plan?.ebb" (click)="goToEbb()" class="more-info">More information <img
             src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
