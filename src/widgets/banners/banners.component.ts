@@ -30,13 +30,11 @@ export class BannersComponent implements OnInit {
       toggle: false
     },
     setWrapperSize: false,
-    loop: true,
+    loop: false,
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
-    },
-    watchOverflow: true,
-    cloneElements: true
+    }
   };
   constructor(private router: Router) {
   }
