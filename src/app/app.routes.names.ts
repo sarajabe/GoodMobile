@@ -86,7 +86,8 @@ export const ACCOUNT_ROUTE_URLS = {
     FROM_DETAILS: 'fromDetails',
     PLAN_ID: 'planId',
     STORE_PICKUP: 'storePickup',
-    ITEM_ID: 'itemId'
+    ITEM_ID: 'itemId',
+    ORDER_STATUS: 'status'
   },
   BASE: '/account',
   NAME: 'account',

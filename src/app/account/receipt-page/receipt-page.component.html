@@ -174,9 +174,20 @@
         </div>
     </div>
     <p class="dashed-border" *ngIf="!!isStorePickup"></p>
-    <div class="barCodes-details" *ngIf="!!isStorePickup">
+    <div class="barCodes-details" *ngIf="!!isStorePickup && !orderPicked">
         <h3 class="primary-font-bold title" data-cy="scanBarcode">Scan your barcode</h3>
         <p class="smaller note">Check with the store clerk to pick up your package</p>
         <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeValues" [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
+    </div>
+    <div class="barCodes-details" *ngIf="!!isStorePickup && !!orderPicked">
+        <div class="info-banner success-background">
+            <div class="flex">
+                <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                <div class="banner-content">
+                    <p class="description"><b>Barcode Scan Successful!</b></p>
+                    <p class="description last">You have <b>successfully collected your SIM card</b> at the store! </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

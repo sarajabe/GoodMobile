@@ -31,6 +31,8 @@ export class ReceiptPageComponent implements OnInit {
   ];
   public merchant = { merchant: 'GoodMobile', merchantId: 'goodmobileus' };
   public isDetails = false;
+  orderStatus: any;
+  orderPicked: boolean;
 
   constructor(private metaService: MetaService,
               private accountHeaderService: AccountHeaderService,
@@ -48,6 +50,8 @@ export class ReceiptPageComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       if (!!params) {
         this.orderId = params.id;
+        this.orderStatus = params.status;
+        this.orderPicked = !!this.orderStatus && this.orderStatus === 'SHIPPED' ? true : false;
         if(!!params?.storePickup && !!params?.itemId) {
           this.isStorePickup = params?.storePickup;
           this.barCodeValues = params?.itemId;

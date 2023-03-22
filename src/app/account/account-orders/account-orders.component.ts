@@ -188,6 +188,7 @@ export class AccountOrdersComponent implements OnInit {
     params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = order?.id;
     if(!!order?.storePickup) {
       params[ACCOUNT_ROUTE_URLS.PARAMS.STORE_PICKUP] = order?.storePickup;
+      params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_STATUS] = order?.status;
       if(!!order?.cards && order?.cards?.length > 0) {
         params[ACCOUNT_ROUTE_URLS.PARAMS.ITEM_ID] = order?.cards[0]?.itemId;
       }
