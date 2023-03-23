@@ -171,10 +171,10 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
       this.docsCategories.map(cat => {
         if (cat.category === 'Generic Group') {
           const proofs = [
-            'Your Name, or your Dependent’s Name ',
-            'The name of the Qualifying Program ',
-            'The name of the Government or Tribal Agency that issued the document ',
-            'An issue date within the last 12 months or a future expiration date'
+            `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+            `The name of the <b>Qualifying Program</b>.`,
+            `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+            `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
           ];
           const slides = [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }];
           const text = ['Screenshot of Online Portal', 'Survivors Benefit Summary Letter'];
@@ -182,10 +182,10 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         }
         if (cat.category === 'SNAP') {
           const proofs = [
-            'Your Name, or your Dependent’s Name ',
-            'The name of the Qualifying Program ',
-            'The name of the Government or Tribal Agency that issued the document ',
-            'An issue date within the last 12 months or a future expiration date'
+            `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+            `The name of the <b>Qualifying Program</b>.`,
+            `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+            `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
           ];
           const slides = [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }];
           const text = [];
@@ -193,10 +193,10 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         }
         if (cat.category === 'Medicaid') {
           const proofs = [
-            'Your Name, or your Dependent’s Name ',
-            'The name of the Qualifying Program ',
-            'The name of the Government or Tribal Agency that issued the document ',
-            'An issue date within the last 12 months or a future expiration date'
+            `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+            `The name of the <b>Qualifying Program</b>.`,
+            `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+            `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
           ];
           const slides = [{ asset: 'medcaid.png', title: 'Approval or Benefit Letter for Medicaid:' }];
           const text = [];
@@ -204,10 +204,10 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         }
         if (cat.category === 'Through income') {
           const proofs = [
-            'Your Name, or your Dependent’s Name ',
-            'Current income information (Monthly or annual income amount)',
-            '3 consecutive months of paystubs (if provided)',
-            'An issue date within the last 12 months or prior year’s tax document.'
+            `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+            `<b>Current income</b> information (Monthly or annual income amount).`,
+            `<b>3 consecutive months</b> of paystubs (if provided).`,
+            `An issue date within the last <b>12 months</b> or <b>prior year’s tax document</b>.`
           ];
           const slides = [{
             asset: 'income.png', title: `Prior year’s state, federal, or Tribal tax return 
@@ -217,13 +217,13 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         }
         if (cat.category === 'Pell Grant') {
           const proofs = [
-            'Your Name, or your Dependent’s Name ',
-            'The name of the Qualifying Program (not required for Community Eligibility Provision) ',
-            'The name of the School or School district',
-            'A current award year (Pell Grant)',
-            `Dated for the current school year or the school year immediately preceding the application 
-            (for school lunch or breakfast qualifying programs)`,
-            `Address & Contact information for the school, school year for which the student is enrolled (require for Community Eligibility Provision)`
+            `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+            `The name of the <b>Qualifying Program</b> (not required for Community Eligibility Provision).`,
+            `The name of the <b>School</b> or <b>School district</b>.`,
+            `A <b>current</b> award year (Pell Grant).`,
+            `<b>Dated</b> for the <b>current school year</b> or the </b>school year immediately preceding the application</b>
+            (for school lunch or breakfast qualifying programs).`,
+            `<b>Address</b> & <b>Contact information</b> for the <b> school, school year</b>  for which the student is enrolled (require for Community Eligibility Provision).`
           ];
           const slides = [{
             asset: 'pell-grant1.png', title: `For Federal Pell Grants, written confirmation from a student’s school (college or university, 

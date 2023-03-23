@@ -44,7 +44,7 @@
             <div class="sub-info" *ngFor="let proof of doc.proofs">
                 <div class="info">
                     <p class="circle"></p>
-                    <p class="smallest">{{proof}}</p>
+                    <p class="smallest" [innerHTML]="proof"></p>
                 </div>
             </div>
         </div>

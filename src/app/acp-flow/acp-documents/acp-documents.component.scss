@@ -10,6 +10,10 @@
     .red {
         color: #d22119;
     }
+    b {
+        font-family: $base-font-family-bold;
+        font-weight: bold;
+    }
     .info-banner {
         margin-bottom: 32px;
         max-width: 893px;
