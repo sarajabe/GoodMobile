@@ -4,7 +4,7 @@ import { IUser } from '@ztarmobile/zwp-services-auth';
 import { CustomizableMobilePlan, FirebaseUserProfileService, IFireBasePlanItem, IUserDevice,
    IUserPlan, UserDeviceService, UserPlansService, IExistingOrder } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 
@@ -107,15 +107,6 @@ export class ActivateSimComponent implements OnInit, OnDestroy {
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userPlan.id;
     this.userDeviceService.setIsChangingDevice(true);
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
-  }
-  public goToPhonesShop(): void {
-    if (!!this.userPlan.id) {
-      const params = {};
-      params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = this.userPlan.id;
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
-    } else {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`]);
-    }
   }
   public clickedOut(event): void {
     if (event.target.className === 'activation-video-container') {

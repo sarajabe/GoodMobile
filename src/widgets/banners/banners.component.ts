@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import Swiper, { Autoplay, EffectFade, Navigation } from 'swiper';
 
 @Component({
@@ -13,7 +13,6 @@ export class BannersComponent implements OnInit {
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
   public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   public ROUTE_URLS = ROUTE_URLS;
-  public PHONES_SHOP_ROUTE_URLS = PHONES_SHOP_ROUTE_URLS;
   public index = 0;
   public bannerSwiperConfig: any = {
     centeredSlides: true,
@@ -58,8 +57,5 @@ export class BannersComponent implements OnInit {
 
   public goToplanDetails(id): void {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PLANS_SHOP_ROUTE_URLS.BASE}/${id}/${PLANS_SHOP_ROUTE_URLS.DETAILS}`]);
-  }
-  public goToPhones(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`]);
   }
 }

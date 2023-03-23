@@ -3,7 +3,7 @@ import { CustomizableMobilePlan, MobileCustomPlansService, ActionsAnalyticsServi
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/app.service';
 import { CheckoutService } from 'src/app/shop/checkout/checkout.service';
-import { ACCOUNT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { PlatformLocation } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -42,9 +42,6 @@ export class OutOfStockItemModalComponent {
     this.dialog.close();
   }
   public changePhone(): void {
-    const params = {};
-    params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
     this.closeDialog();
   }
   public remove(): void {

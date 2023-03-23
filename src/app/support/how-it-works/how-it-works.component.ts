@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CUSTOMER_CARE_NUMBER } from 'src/environments/environment';
 import { MetaService } from '../../../services/meta-service.service';
-import { ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS, ACCOUNT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { ACTIVATION_ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS, ACCOUNT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 
 @Component({
   selector: 'app-how-it-works',
@@ -13,7 +13,6 @@ export class HowItWorksComponent {
   public ACTIVATION_ROUTE_URLS = ACTIVATION_ROUTE_URLS;
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
-  public PHONES_SHOP_ROUTE_URLS = PHONES_SHOP_ROUTE_URLS;
   public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   public CUSTOMER_CARE_NUMBER = CUSTOMER_CARE_NUMBER;
   constructor(private router: Router, private metaService: MetaService) {

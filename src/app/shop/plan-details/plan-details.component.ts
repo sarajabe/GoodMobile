@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { ModalHelperService } from '../../../services/modal-helper.service';
 import { MetaService } from '../../../services/meta-service.service';
 import { AppState } from '../../../app/app.service';
-import { ROUTE_URLS, SHOP_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { ROUTE_URLS, SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { combineLatest, takeWhile } from 'rxjs/operators';
 
 @Component({
@@ -71,27 +71,6 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public goToPhoneShop(): void {
-    if (!!this.currentPlan && !!this.currentPlan.cartType && this.currentPlan.cartType !== CART_TYPES.NEW_PLAN) {
-      this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-      .afterClosed().subscribe((result) => {
-        if (result) {
-          this.clearCart();
-          this.mobilePlansService.setBasePlan(this.selectedPlan);
-          this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
-          this.mobilePlansService.setAutoRenewPlan(true);
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`]);
-        }}, (error) => {
-          console.error('error' , error);
-        });
-      } else {
-        this.mobilePlansService.setBasePlan(this.selectedPlan);
-        this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
-        this.mobilePlansService.setAutoRenewPlan(true);
-        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`]);
-    }
-  }
-
   public goToCompatiblilty(): void {
     if (!!this.currentPlan && !!this.currentPlan.cartType && this.currentPlan.cartType !== CART_TYPES.NEW_PLAN) {
       this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
@@ -125,7 +104,7 @@ export class PlanDetailsComponent implements OnInit, OnDestroy {
         if (result === 'check-phone') {
           this.goToCompatiblilty();
         } else if (result === 'shop-phone') {
-          this.goToPhoneShop();
+         //
         } else {
           this.goToCart();
         }

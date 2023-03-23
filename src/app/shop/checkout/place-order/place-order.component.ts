@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MetaService } from '../../../../services/meta-service.service';
 import { INVISIBLE_CAPTCHA_ID } from '../../../../environments/environment';
 import { debounceTime, take, takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, CHECKOUT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, CHECKOUT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -276,16 +276,6 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
           }
-        }
-      });
-  }
-  public goToPhones(): void {
-    this.modalHelper.showConfirmMessageModal('Are you sure you want to change phone?', 'By clicking yes you agree to leaving this page and changing your phone', 'Yes', 'Cancel',
-      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
-        if (result) {
-          const params = {};
-          params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
         }
       });
   }

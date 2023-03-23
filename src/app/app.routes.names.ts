@@ -139,6 +139,7 @@ export const SHOP_ROUTE_URLS = {
   CHANGE_SUMMARY: 'change-summary',
   CHECKOUT_SHORT: 'checkout',
   CART: 'cart',
+  ACP_DEVICES: 'acp-devices',
   PHONES: {
     MAIN: '',
     TYPE: 'phones',
@@ -170,19 +171,6 @@ export const PLANS_SHOP_ROUTE_URLS = {
   DETAILS_ID: 'details/:id',
   BASE: '/plans',
   CHANGE_SUMMARY: 'change-summary',
-};
-
-export const PHONES_SHOP_ROUTE_URLS = {
-  BASE: 'phones',
-  MODEL: 'model',
-  TYPE: 'apple/iPhones',
-  DETAILS: 'apple/iPhones/:phoneId',
-  SELECT_LINE: 'associate-line',
-  CHECK_COVERAGE: 'check-coverage',
-  ADD_STEPS: 'select',
-  PARAMS: {
-    CHANGE_PHONE: 'changePhone'
-  }
 };
 
 export const SUPPORT_ROUTE_URLS = {
@@ -300,4 +288,3 @@ export const ACP_ROUTE_URLS = {
   ENROLLMENT_NEW_LINE : 'enrollment/new-line',
   ENROLLMENT_EXISTING_LINE : 'enrollment/existing-line',
 };
-

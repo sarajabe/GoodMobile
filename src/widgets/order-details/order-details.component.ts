@@ -10,7 +10,7 @@ import { PhonePipe } from '../pipes/phone.pipe';
 import { CheckoutService } from '../../app/shop/checkout/checkout.service';
 import { ModalHelperService } from '../../services/modal-helper.service';
 import { takeWhile } from 'rxjs/operators';
-import { SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from '../../app/app.routes.names';
+import { SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS } from '../../app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 
 @Component({
@@ -145,16 +145,6 @@ export class OrderDetailsComponent implements OnInit, OnChanges, OnDestroy {
             params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN] = true;
             this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`, params]);
           }
-        }
-      });
-  }
-  public goToPhones(): void {
-    this.modalHelper.showConfirmMessageModal('Are you sure you want to change phone?', 'By clicking yes you agree to leaving this page and changing your phone', 'Yes', 'Cancel',
-      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
-        if (result) {
-          const params = {};
-          params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
         }
       });
   }

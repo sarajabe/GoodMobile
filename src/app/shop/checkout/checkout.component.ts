@@ -19,7 +19,7 @@ import { AppState } from '../../app.service';
 import { ToastrHelperService } from '../../../services/toast-helper.service';
 import { ModalHelperService } from '../../../services/modal-helper.service';
 import { combineLatest, take, takeWhile } from 'rxjs/operators';
-import { CHECKOUT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { CHECKOUT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { PhoneManagementService } from 'src/services/phones.service';
 
 
@@ -882,9 +882,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         return '';
       }
     }
-  }
-  public goToPhones(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`]);
   }
   public removePhone(): void {
     this.mobilePlansService.setPlanExpectedDevice(null);

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, SimpleChanges, OnChanges, HostListener } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest, take, takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from '../../../app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, IMarketingDetails, IUserAccount, MobileCustomPlansService, MobilePlanItem, PURCHASE_INTENT, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { PageScrollService } from 'ngx-page-scroll-core';
@@ -41,7 +41,6 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   public collapsed: boolean;
   public plansQuestions;
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
-  public PHONES_SHOP_ROUTE_URLS = PHONES_SHOP_ROUTE_URLS;
   private activationFlow = false;
   private allBasePlans: Array<MobilePlanItem>;
   private alive = true;

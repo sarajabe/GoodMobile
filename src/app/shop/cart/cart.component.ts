@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, GenericMobilePlanItem, IBasePlan, ICatalogItem, IDeviceCompatibilityV1, IPlanAddOn, IUser, IVoucherData, MobileCustomPlansService, MobilePlanDetails, PlansConfigurationService, PURCHASE_INTENT, ShippingConfigurationService, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
 import { POSTAL_PATTERN } from 'src/app/app.config';
-import { ACCOUNT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
@@ -314,16 +314,6 @@ export class CartComponent implements OnInit, OnDestroy {
       this.calculateTotal();
 
     }
-  }
-  public goToPhones(): void {
-    this.modalHelper.showConfirmMessageModal('Are you sure you want to change device?', 'By clicking yes you agree to leave this page and change your device', 'Yes', 'No',
-      'confirm-change-checkout-modal').afterClosed().subscribe((result) => {
-        if (result) {
-          const params = {};
-          params[PHONES_SHOP_ROUTE_URLS.PARAMS.CHANGE_PHONE] = true;
-          this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
-        }
-      });
   }
   public goToAddons(): void {
     const params = {};
