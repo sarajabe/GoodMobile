@@ -1,7 +1,10 @@
 <div class="docs-page">
-    <p class="subhead" *ngIf="selectedCodesDescs.length > 0 && !doSplit">You qualify for ({{ selectedCodesDescs.join(", ") }}):</p>
-    <p class="subhead" *ngIf="selectedCodesDescs.length > 1 && !!doSplit">You qualify for ({{ selectedCodesDescs.join(", ") }}) and ({{incomeDesc}}):</p>
-    <p class="subhead" *ngIf="selectedCodesDescs.length === 1 && !!doSplit">For ({{incomeDesc}}), please check the following:</p>
+    <p class="subhead" *ngIf="selectedCodesDescs.length > 0 && !doSplit">You qualify for ({{ selectedCodesDescs.join(",
+        ") }}):</p>
+    <p class="subhead" *ngIf="selectedCodesDescs.length > 1 && !!doSplit">You qualify for ({{ selectedCodesDescs.join(",
+        ") }}) and ({{incomeDesc}}):</p>
+    <p class="subhead" *ngIf="selectedCodesDescs.length === 1 && !!doSplit">For ({{incomeDesc}}), please check the
+        following:</p>
     <p></p>
     <div class="info-banner default-background">
         <div class="flex">
@@ -14,7 +17,8 @@
                     <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
                     <p class="desc">Please make sure all of your documents are <b>current.</b> The National Verifier
                         <b>CANNOT</b>
-                        accept <b>expired documentation.</b></p>
+                        accept <b>expired documentation.</b>
+                    </p>
                 </div>
                 <div class="sub-note last">
                     <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
@@ -27,9 +31,10 @@
     </div>
     <div class="docs-card" *ngFor="let doc of docDetails; let i =index">
         <div class="card-top-section">
-            <p class="title">Proofs required ({{doc.category}})</p>
+            <p class="title">Proofs required ({{doc.category.join(", ")}})</p>
             <img *ngIf="docDetails?.length > 1"
-            [src]="!doc.closeTab ? '/assets/icon/Path 6059.svg' : '/assets/icon/Path 6055.svg'" (click)="doc.closeTab=!doc.closeTab;">
+                [src]="!doc.closeTab ? '/assets/icon/Path 6059.svg' : '/assets/icon/Path 6055.svg'"
+                (click)="docArrowClicked(i)">
         </div>
         <div class="card-contents" *ngIf="!doc.closeTab">
             <div class="top-section">
@@ -43,39 +48,58 @@
                 </div>
             </div>
         </div>
-        <div class="card-contents"  *ngIf="!doc.closeTab">
+        <div class="card-contents" *ngIf="!doc.closeTab">
             <div class="top-section">
                 <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
                 <p class="smaller sub-title">Examples of the documents include:</p>
             </div>
             <div class="docs-section">
-                <div class="swiper-container docs swiper-width">
+                <div class="swiper-container swiper-width" *ngIf="doc.slides?.length > 1">
                     <div class="swiper-wrapper" [class.wrapper-flex]="doc.text?.length > 0">
                         <div class="swiper-slide" *ngFor="let slide of doc.slides">
                             <p class="title">{{slide.title}}</p>
                             <img [src]="'/assets/img/'+slide.asset" alt="doc">
                         </div>
+                    </div>
+                    <p class="zoom">Zoom in the image</p>
+                    <div *ngIf="doc.text?.length > 0" class="text-items">
+                        <div class="info" *ngFor="let t of doc.text; let tIndex=index"
+                            [class.last]="tIndex === (doc.text?.length -1)">
+                            <p class="circle"></p>
+                            <p class="smallest">{{t}}</p>
+                        </div>
+                    </div>
+                    <div class="swiper-container-override">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                <div class="one-slide" *ngIf="doc.slides?.length < 2">
+                    <div class="one-slide-wrapper" [class.wrapper-flex]="doc.text?.length > 0">
+                        <div class="one-slide-section" *ngFor="let slide of doc.slides">
+                            <p class="title">{{slide.title}}</p>
+                            <img [src]="'/assets/img/'+slide.asset" alt="doc">
+                        </div>
+                        <p class="zoom">Zoom in the image</p>
                         <div *ngIf="doc.text?.length > 0" class="text-items">
-                            <div class="info" *ngFor="let t of doc.text">
+                            <div class="info" *ngFor="let t of doc.text; let tIndex=index"
+                                [class.last]="tIndex === (doc.text?.length -1)">
                                 <p class="circle"></p>
                                 <p class="smallest">{{t}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-container-override" *ngIf="docDetails[i].slides?.length > 1">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                </div>
                 </div>
             </div>
-            <div class="actions">
+            <div class="actions" [id]="doc.id">
                 <p class="smaller consent">You may consent to proceed </p>
                 <form #consentCheck="ngForm" class="consent-form">
                     <input type="checkbox" [(ngModel)]="doc.consent" name="consent" required #consentVal="ngModel">
-                    <label class="label">I understand that I must provide a letter or official document as 
+                    <label class="label">I understand that I must provide a letter or official document as
                         a proof.</label>
                 </form>
-                <p class="validation-message" *ngIf="!doc.consent && !!nextClicked">Please tick this box to confirm that you have read and understood what documents you need to provide.</p>
+                <p class="validation-message" *ngIf="!doc.consent && !!nextClicked">Please tick this box to confirm that
+                    you have read and understood what documents you need to provide.</p>
             </div>
         </div>
     </div>

@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EbbService, IAcpDetails } from '@ztarmobile/zwp-service-backend-v2';
+import { PageScrollService } from 'ngx-page-scroll-core';
 import { takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/app.service';
 import { EbbManager } from 'src/services/ebb.service';
-import Swiper, { EffectFade, Keyboard, Mousewheel, Navigation } from 'swiper';
+import Swiper, { EffectFade, Keyboard, Navigation } from 'swiper';
 
 @Component({
   selector: 'app-acp-documents',
@@ -21,12 +22,12 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
   public consent = false;
   public nextClicked = false;
   public doSplit = false;
-  public incomeDesc;
+  public incomeDesc: string;
   public config: any = {
     slidesPerView: 1,
     direction: 'horizontal',
     keyboard: true,
-    mousewheel: true,
+    mousewheel: false,
     scrollbar: false,
     navigation: {
       nextEl: '.swiper-button-next',
@@ -44,13 +45,21 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
     loop: false
   };
   public eligibilityCodes: Array<{ code: string; description: string }>;
-  public selectedCodes;
-  public selectedCodesDescs = [];
-  public docsCategories = [];
-  public docDetails: Array<{ closeTab:boolean, consent: boolean, category: string; proofs: Array<any>; slides: Array<any>, text: Array<any> }> = [];
+  public selectedCodes: Array<string>;
+  public selectedCodesWithDescs: Array<{ code: string; description: string }> = [];
+  public selectedCodesDescs: Array<string> = [];
+  public docsCategories: Array<{ category: string; descs: Array<string> }> = [];
+  public docDetails: Array<{ id: string, closeTab: boolean, consent: boolean, category: Array<string>; proofs: Array<any>; slides: Array<any>, text: Array<any> }> = [];
+
   private alive = true;
+  private commonDescs = [];
+  private e1E2Descs = [];
+  private e1Descs = [];
+  private e2Descs = [];
+  private pellGrantDescs = [];
+  private incomeDescs = [];
   constructor(private ebbManager: EbbManager, private ebbService: EbbService, private appState: AppState,
-    private cd: ChangeDetectorRef) { }
+    private cd: ChangeDetectorRef, private pageScrollService: PageScrollService) { }
 
   ngOnInit(): void {
     this.cd.detectChanges();
@@ -60,7 +69,17 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         if (!this.consent) {
           this.nextClicked = true;
           const filteredArray = this.docDetails.filter(doc => doc.consent !== true);
-          filteredArray.map(item => item.closeTab = false);
+          filteredArray.map((item) => {
+            item.closeTab = false;
+            setTimeout(() => {
+              this.pageScrollService.scroll({
+                document,
+                scrollTarget: `#${item.id}`,
+                scrollOffset: 100,
+                speed: 150
+              });
+            }, 200);
+          });
         }
         if (!!this.consent) {
           this.goToNext.emit(5);
@@ -79,17 +98,19 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
             this.selectedCodes.map((code) => {
               this.eligibilityCodes.map((item) => {
                 if (item.code === code) {
-                  if((this.selectedCodesDescs.length > 1 ||  this.selectedCodesDescs.length === 1 )&& code === 'E13') {
-                      this.doSplit = true;
-                      this.incomeDesc = item?.description;
+                  if ((this.selectedCodesDescs.length > 1 || this.selectedCodesDescs.length === 1) && code === 'E13') {
+                    this.doSplit = true;
+                    this.incomeDesc = item?.description;
                   }
                   else {
                     this.selectedCodesDescs.push(item?.description);
                   }
+                  // need this array to loop over it to display each code description related to specific category
+                  this.selectedCodesWithDescs.push({ code: code, description: item?.description });
                 }
               });
             });
-            this.checkDocGroups(this.selectedCodes);
+            this.checkDocGroups(this.selectedCodesWithDescs);
             this.cd.detectChanges();
           }
 
@@ -104,7 +125,7 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
       hashNavigation: true,
       lazy: true,
       preloadImages: true,
-      modules: [Navigation, EffectFade, Keyboard, Mousewheel],
+      modules: [Navigation, EffectFade, Keyboard],
       ...this.config
     });
     this.cd.detectChanges();
@@ -112,35 +133,35 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.alive = false;
   }
-  public expandImg(docIndex, slideIndex, asset): void {
-    Object.assign(this.docDetails[docIndex].slides[slideIndex], {expand: true, expandAsset: `expand-${asset}`});
+  public docArrowClicked(index): void {
+    this.docDetails[index].closeTab = !this.docDetails[index].closeTab;
     this.cd.detectChanges();
+    if (this.docDetails[index].slides?.length > 1) {
+      this.createSwiper();
+    }
   }
   private checkDocGroups(selectedCodes): void {
-    const commonCondition = selectedCodes.includes('E54') || selectedCodes.includes('E3') || selectedCodes.includes('E4') || selectedCodes.includes('E15') || selectedCodes.includes('E8')
-      || selectedCodes.includes('E9') || selectedCodes.includes('E10');
+    this.checkDocsDescs(selectedCodes);
+    //check if some of the common codes related to generic group are selected 
+    const commonCondition = selectedCodes.some(obj => obj.code === 'E54' || obj.code === 'E3' || obj.code === 'E4' || obj.code === 'E15' || obj.code === 'E8' || obj.code === 'E9' || obj.code === 'E10');
     // check the generic group
     if (commonCondition) {
-      if (selectedCodes.includes('E1') || selectedCodes.includes('E2')) {
-        this.docsCategories.push('Generic Group');
-      } else {
-        this.docsCategories.push('Generic Group');
-      }
+      this.docsCategories.push({ category: 'Generic Group', descs: this.commonDescs });
     } //another case for generic
-    if (!commonCondition && selectedCodes.includes('E1') && selectedCodes.includes('E2')) {
-      this.docsCategories.push('Generic Group');
+    if (!commonCondition && selectedCodes.some(obj => obj.code === 'E1') && selectedCodes.some(obj => obj.code === 'E2')) {
+      this.docsCategories.push({ category: 'Generic Group', descs: this.e1E2Descs });
     } // check SNAP group
-    if (!commonCondition && selectedCodes.includes('E2') && !selectedCodes.includes('E1')) {
-      this.docsCategories.push('SNAP');
+    if (!commonCondition && selectedCodes.some(obj => obj.code === 'E2') && !selectedCodes.some(obj => obj.code === 'E1')) {
+      this.docsCategories.push({ category: 'SNAP', descs: this.e2Descs });
     } // check Medicaid group
-    if (!commonCondition && selectedCodes.includes('E1') && !selectedCodes.includes('E2')) {
-      this.docsCategories.push('Medicaid');
+    if (!commonCondition && selectedCodes.some(obj => obj.code === 'E1') && !selectedCodes.some(obj => obj.code === 'E2')) {
+      this.docsCategories.push({ category: 'Medicaid', descs: this.e1Descs });
     } // check pell grant group
-    if (selectedCodes.includes('E51') || selectedCodes.includes('E50')) {
-      this.docsCategories.push('Pell Grant');
+    if (selectedCodes.some(obj => obj.code === 'E50' || obj.code === 'E51')) {
+      this.docsCategories.push({ category: 'Pell Grant', descs: this.pellGrantDescs });
     } // check income group
-    if (selectedCodes.includes('E13')) {
-      this.docsCategories.push('Through income');
+    if (selectedCodes.some(obj => obj.code === 'E13')) {
+      this.docsCategories.push({ category: 'Through income', descs: this.incomeDescs });
     }
     this.cd.detectChanges();
     this.checkProofs();
@@ -148,7 +169,7 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
   private checkProofs(): void {
     if (this.docsCategories?.length > 0) {
       this.docsCategories.map(cat => {
-        if (cat === 'Generic Group') {
+        if (cat.category === 'Generic Group') {
           const proofs = [
             'Your Name, or your Dependent’s Name ',
             'The name of the Qualifying Program ',
@@ -157,9 +178,9 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
           ];
           const slides = [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }];
           const text = ['Screenshot of Online Portal', 'Survivors Benefit Summary Letter'];
-          this.docDetails.push({ closeTab:false, consent: false, category: cat, proofs, slides, text });
+          this.docDetails.push({ id: 'generic', closeTab: false, consent: false, category: cat.descs, proofs, slides, text });
         }
-        if (cat === 'SNAP') {
+        if (cat.category === 'SNAP') {
           const proofs = [
             'Your Name, or your Dependent’s Name ',
             'The name of the Qualifying Program ',
@@ -168,9 +189,9 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
           ];
           const slides = [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }];
           const text = [];
-          this.docDetails.push({ closeTab:false, consent: false, category: cat, proofs, slides, text });
+          this.docDetails.push({ id: 'snap', closeTab: false, consent: false, category: cat.descs, proofs, slides, text });
         }
-        if (cat === 'Medicaid') {
+        if (cat.category === 'Medicaid') {
           const proofs = [
             'Your Name, or your Dependent’s Name ',
             'The name of the Qualifying Program ',
@@ -179,9 +200,9 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
           ];
           const slides = [{ asset: 'medcaid.png', title: 'Approval or Benefit Letter for Medicaid:' }];
           const text = [];
-          this.docDetails.push({ closeTab:false, consent: false, category: cat, proofs, slides, text });
+          this.docDetails.push({ id: 'medicaid', closeTab: false, consent: false, category: cat.descs, proofs, slides, text });
         }
-        if (cat === 'Through income') {
+        if (cat.category === 'Through income') {
           const proofs = [
             'Your Name, or your Dependent’s Name ',
             'Current income information (Monthly or annual income amount)',
@@ -192,9 +213,9 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
             asset: 'income.png', title: `Prior year’s state, federal, or Tribal tax return 
             or a Social Security Benefit Statement.` }];
           const text = [];
-          this.docDetails.push({ closeTab:false, consent: false, category: cat, proofs, slides, text });
+          this.docDetails.push({ id: 'income', closeTab: false, consent: false, category: cat.descs, proofs, slides, text });
         }
-        if (cat === 'Pell Grant') {
+        if (cat.category === 'Pell Grant') {
           const proofs = [
             'Your Name, or your Dependent’s Name ',
             'The name of the Qualifying Program (not required for Community Eligibility Provision) ',
@@ -218,7 +239,7 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         (student must still be enrolled in the CEP school at the time of the application)`
           }];
           const text = [];
-          this.docDetails.push({ closeTab:false, consent: false, category: cat, proofs, slides, text });
+          this.docDetails.push({ id: 'pell-grant', closeTab: false, consent: false, category: cat.descs, proofs, slides, text });
         }
       });
       this.cd.detectChanges();
@@ -226,5 +247,27 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
         this.createSwiper();
       }
     }
+  }
+  private checkDocsDescs(selectedCodes): void {
+    selectedCodes.map(elm => {
+      if (elm.code === 'E54' || elm.code === 'E3' || elm.code === 'E4' || elm.code === 'E15' || elm.code === 'E8' || elm.code === 'E9' || elm.code === 'E10' || elm.code === 'E1' || elm.code === 'E2') {
+        this.commonDescs.push(elm?.description);
+      }
+      if (elm.code === 'E1' || elm.code === 'E2') {
+        this.e1E2Descs.push(elm?.description);
+      }
+      if (elm.code === 'E2') {
+        this.e2Descs.push(elm?.description);
+      }
+      if (elm.code === 'E1') {
+        this.e1Descs.push(elm?.description);
+      }
+      if (elm.code === 'E50' || elm.code === 'E51') {
+        this.pellGrantDescs.push(elm?.description);
+      }
+      if (elm.code === 'E13') {
+        this.incomeDescs.push(elm?.description);
+      }
+    });
   }
 } 
