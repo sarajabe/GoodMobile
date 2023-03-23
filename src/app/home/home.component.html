@@ -63,6 +63,17 @@
       <h2 class="header">Affordable Connectivity Program</h2>
       <p class="details">Good Mobile is excited to bring you the (ACP), that provides temporary relief to eligible
         households to lower the cost of wireless service.</p>
+      <div class="details-flex">
+        <div class="flex">
+          <img src="assets/icon/details-icon-1.svg" alt="Details Icon">
+          <p class="smallest">Save <b><span class="purple">up to $30</span> (up to $75 on Tribal Lands)</b> on monthly
+            service plan</p>
+        </div>
+        <div class="flex width">
+          <img src="assets/icon/details-icon-2.svg" alt="Details Icon">
+          <p class="smallest"><b>A one- time discount</b> of <b class="purple">up to $100</b> to purchase a devices</p>
+        </div>
+      </div>
       <div class="action">
         <button class="button primary" [routerLink]="['/' + ROUTE_URLS.ACP]" fragment="acpDiscount"
           title="Do I Qualify?" value="Do I Qualify?" aria-label="Do I Qualify?">Do I Qualify?</button>
@@ -75,7 +86,8 @@
     <div class="details-section">
       <p class="note label">CHECK COVERAGE </p>
       <h2 class="header">Powered by America’s best network</h2>
-      <p class="details break">We’re powered by the same network as the largest carriers covering <b>99%</b> of America</p>
+      <p class="details break">We’re powered by the same network as the largest carriers covering <b>99%</b> of America
+      </p>
       <div class="action">
         <button class="button primary" id="Check-Coverage" data-cy="Check-Coverage"
           [routerLink]="SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE" title="Check Coverage"
