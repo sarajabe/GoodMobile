@@ -1,9 +1,9 @@
 <div class="docs-page">
     <p class="subhead" *ngIf="selectedCodesDescs.length > 0 && !doSplit">You qualify for ({{ selectedCodesDescs.join(",
         ") }}):</p>
-    <p class="subhead" *ngIf="selectedCodesDescs.length > 1 && !!doSplit">You qualify for ({{ selectedCodesDescs.join(",
+    <p class="subhead" *ngIf="selectedCodesDescs.length >= 1 && !!doSplit">You qualify for ({{ selectedCodesDescs.join(",
         ") }}) and ({{incomeDesc}}):</p>
-    <p class="subhead" *ngIf="selectedCodesDescs.length === 1 && !!doSplit">For ({{incomeDesc}}), please check the
+    <p class="subhead" *ngIf="selectedCodesDescs.length < 1 && !!doSplit">For ({{incomeDesc}}), please check the
         following:</p>
     <p></p>
     <div class="info-banner default-background">
