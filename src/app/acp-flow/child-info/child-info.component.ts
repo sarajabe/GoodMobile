@@ -170,6 +170,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
             this.toastHelper.showAlert(error.message);
           })
           this.eligibilityCodes = data.eligibilityCodes;
+          this.ebbManager.codesSubject.next(this.eligibilityCodes);
           if (!!this.eligableCode && !!this.eligibilityCodes) {
             const codes = this.eligableCode.split(",");
             if (!!codes) {
