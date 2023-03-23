@@ -89,10 +89,10 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
     if (!!this.internalData && !!this.internalData.eligibilityCode) {
       const state = this.internalData.user?.address?.primary?.state;
       this.appState.loading = true;
-      this.ebbService.getCodes(state).then(res => {
+      this.ebbManager.eligibilityCodeDescs.subscribe(res => {
         this.appState.loading = false;
         if (!!res) {
-          this.eligibilityCodes = res?.eligibilityCodes;
+          this.eligibilityCodes = res;
           this.selectedCodes = this.internalData?.eligibilityCode?.split(",");
           if (!!this.selectedCodes) {
             this.selectedCodes.map((code) => {
@@ -227,7 +227,7 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
           ];
           const slides = [{
             asset: 'pell-grant1.png', title: `For Federal Pell Grants, written confirmation from a student’s school (college or university, 
-            community college ,or career school) or the Department of 
+            community college, or career school) or the Department of 
             Education that the student has received a Pell Grant for the current award year.` },
           {
             asset: 'pell-grant2.png', title: `A letter from the school or school district that confirms that 
