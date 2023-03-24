@@ -101,179 +101,178 @@
                }  
             }
         }
-    }
-    
-    .swiper-container {
-        max-width: 100%;
-        overflow: hidden;
-        &.swiper-width{
-            width: 100%;
-            max-width: 240px;
-            position: relative;
-           
+        .swiper-container {
+            max-width: 100%;
+            overflow: hidden;
+            &.swiper-width{
+                width: 100%;
+                max-width: 240px;
+                position: relative;
+               
+            }
+            .swiper-slide {
+                height: 290px;
+                box-shadow: 0px 8px 30px 0px #5E5E5E1F;
+                border-radius: 5px;
+                background: #FCFCFB;
+                display: block;
+            }
+            .swiper-button-next::after,
+            .swiper-button-prev::after {
+              font-size: rem-calc(12px);
+            }
+      
+            .swiper-button-prev,
+            .swiper-button-next {
+                position: absolute;
+                background-color: $primary-color;
+                background-size: 28%;
+                color: $white;
+                height: 21px;
+                width: 21px;
+                z-index: 1;
+                cursor: pointer;
+                top: 127px;
+                --swiper-navigation-size: 11px;
+                border-radius: 50%;
+            }
+      
+            .swiper-button-next {
+                right: 12px;
+            }
+            .slick-dots {
+                width: 100%;
+                position: relative;
+                list-style: none;
+                display: flex;
+                text-align: center;
+                height: 30px;
+                left: 0;
+                top: 15px;
+                justify-content: center;
+                li {
+                  height: 9px;
+                  width: 9px;
+                  margin: 0 8px;
+          
+                  &.swiper-pagination-bullet {
+                    bottom: 0;
+                    background-color: $grey;
+                    opacity: 1;
+                  }
+          
+                  &.swiper-pagination-bullet-active {
+                    background-color: $primary-color;
+                  }
+                 
+                }
+              }
+         
         }
-        .swiper-slide {
+      
+        .featured-plan-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 240px;
+            width: 100%;
+            position: relative;
             height: 290px;
             box-shadow: 0px 8px 30px 0px #5E5E5E1F;
             border-radius: 5px;
             background: #FCFCFB;
-            display: block;
-        }
-        .swiper-button-next::after,
-        .swiper-button-prev::after {
-          font-size: rem-calc(12px);
-        }
-  
-        .swiper-button-prev,
-        .swiper-button-next {
-            position: absolute;
-            background-color: $primary-color;
-            background-size: 28%;
-            color: $white;
-            height: 21px;
-            width: 21px;
-            z-index: 1;
-            cursor: pointer;
-            top: 127px;
-            --swiper-navigation-size: 11px;
-            border-radius: 50%;
-        }
-  
-        .swiper-button-next {
-            right: 12px;
-        }
-        .slick-dots {
-            width: 100%;
-            position: relative;
-            list-style: none;
-            display: flex;
-            text-align: center;
-            height: 30px;
-            left: 0;
-            top: 15px;
-            justify-content: center;
-            li {
-              height: 9px;
-              width: 9px;
-              margin: 0 8px;
-      
-              &.swiper-pagination-bullet {
-                bottom: 0;
-                background-color: $grey;
-                opacity: 1;
-              }
-      
-              &.swiper-pagination-bullet-active {
-                background-color: $primary-color;
-              }
-             
+            .card-header-section {
+                background: #6A509B;
+                color: $white;
+                border-radius: 8px 8px 0px 0px;
+                padding: 8px 16px 10px;
+                text-align: center;
             }
-          }
-     
-    }
-  
-    .featured-plan-card {
-        display: flex;
-        flex-direction: column;
-        min-width: 240px;
-        width: 100%;
-        position: relative;
-        height: 290px;
-        box-shadow: 0px 8px 30px 0px #5E5E5E1F;
-        border-radius: 5px;
-        background: #FCFCFB;
-        .card-header-section {
-            background: #6A509B;
-            color: $white;
-            border-radius: 8px 8px 0px 0px;
-            padding: 8px 16px 10px;
-            text-align: center;
-        }
-        .data-section {
-            padding: 8px 0 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .data {
-                font-size: rem-calc(28px);
-                margin-bottom: 0;
-                line-height: 36px;
-                font-weight: bold;
-            }
-            .lte {
-                font-size: rem-calc(10px);
-                margin-bottom: 0;
-                line-height: 16px;
-                font-family: $secondary-font-family;
-            }
-            .unlimited {
-                color: $third-color;
-            }
-        }
-        .price-section {
-            padding-top: 32px;
-            display: flex;
-            justify-content: center;
-            .price {
-                color: $section-header-color;
-                font-size: rem-calc(36px);
-                line-height: 40px;
-                font-weight: bold;
-                margin-bottom: 0;
+            .data-section {
+                padding: 8px 0 0;
                 display: flex;
-                padding-bottom: 4px;
-                border-bottom: 1px solid #765BA7;
+                flex-direction: column;
+                align-items: center;
+                .data {
+                    font-size: rem-calc(28px);
+                    margin-bottom: 0;
+                    line-height: 36px;
+                    font-weight: bold;
+                }
+                .lte {
+                    font-size: rem-calc(10px);
+                    margin-bottom: 0;
+                    line-height: 16px;
+                    font-family: $secondary-font-family;
+                }
+                .unlimited {
+                    color: $third-color;
+                }
             }
-            .month {
-                font-size: rem-calc(24px);
-                line-height: 23px;
-                margin-top: 10px;
+            .price-section {
+                padding-top: 32px;
+                display: flex;
+                justify-content: center;
+                .price {
+                    color: $section-header-color;
+                    font-size: rem-calc(36px);
+                    line-height: 40px;
+                    font-weight: bold;
+                    margin-bottom: 0;
+                    display: flex;
+                    padding-bottom: 4px;
+                    border-bottom: 1px solid #765BA7;
+                }
+                .month {
+                    font-size: rem-calc(24px);
+                    line-height: 23px;
+                    margin-top: 10px;
+                }
+                .dollar {
+                    font-size: rem-calc(18px);
+                    line-height: 28px;
+                    margin-bottom: 0;
+                }
             }
-            .dollar {
-                font-size: rem-calc(18px);
-                line-height: 28px;
-                margin-bottom: 0;
+            .action {
+                display: flex;
+                justify-content: center;
+                padding: 24px 0 32px;
+                .button {
+                    width: 121px;
+                }
+            }
+            .ribbon {
+                position: absolute;
+                z-index: 1;
+                height: 60px;
+                width: 35px;
+                color: $white;
+                text-align: center;
+                top: 18px;
+                left: 12px;
             }
         }
-        .action {
-            display: flex;
-            justify-content: center;
-            padding: 24px 0 32px;
-            .button {
-                width: 121px;
-            }
+        .swiper-button-next {
+                background-color: $primary-color;
+                z-index: 1;
+                cursor: pointer;
+                color: white;
+                background-size: 28%;
+                top: 410px;
+                right: 80px;
         }
-        .ribbon {
-            position: absolute;
-            z-index: 1;
-            height: 60px;
-            width: 35px;
-            color: $white;
-            text-align: center;
-            top: 18px;
-            left: 12px;
-        }
-    }
-    .swiper-button-next {
-            background-color: $primary-color;
+        .swiper-button-prev {
+            background-color: $secondary-color;
+            height: 34.3px;
+            width: 34.3px;
             z-index: 1;
             cursor: pointer;
             color: white;
             background-size: 28%;
-            top: 410px;
-            right: 80px;
+        }
+        .swiper-button-disabled {
+            background-color: $medium-grey!important;
+        }
     }
-    .swiper-button-prev {
-        background-color: $secondary-color;
-        height: 34.3px;
-        width: 34.3px;
-        z-index: 1;
-        cursor: pointer;
-        color: white;
-        background-size: 28%;
-    }
-    .swiper-button-disabled {
-        background-color: $medium-grey!important;
-    }
-   
+
 }

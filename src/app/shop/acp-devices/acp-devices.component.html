@@ -34,7 +34,7 @@
             </picture>
         </div>
     </div>
-    <div class="devices-section">
+    <div class="page-section devices-section">
         <div class="top-section">
             <p class="label">OUR DEVICES</p>
             <h2 class="title">ACP Devices</h2>
@@ -45,7 +45,7 @@
             <img src="/assets/img/acp-tablet.svg" width="45" height="45" alt="tablet">
             <p class="device-type">Tablet</p>
         </div>
-        <div class="devices" *ngIf="!!acpDevices && acpDevices?.length > 0">
+        <div class="devices" *ngIf="!!acpDevices && acpDevices?.length > 0 && innerWidth >= 800">
             <div class="device-card" *ngFor="let item of acpDevices">
                 <div class="device-img-section">
                     <img src="https://{{item?.fields?.deviceImg.fields?.file.url}}" width="175" height="220"
@@ -54,13 +54,42 @@
                 <div class="device-desc-section">
                     <p class="device-name">{{item?.fields?.deviceModel}}</p>
                     <div class="prices">
-                        <p class="price">{{item?.fields?.price | currency}}</p>
+                        <h4 class="price">{{item?.fields?.price | currency}}</h4>
                         <div class="market">
-                            <p class="market-price">{{item?.fields?.marketValue | currency}}</p>
+                            <p class="market-price smaller">{{item?.fields?.marketValue | currency}}</p>
                             <p class="bottom-border"></p>
                         </div>
                     </div>
                     <button class="button primary" (click)="selectDevice()" id="select-device">Select Device</button>
+                </div>
+            </div>
+        </div>
+        <div class="devices" *ngIf="!!acpDevices && acpDevices?.length > 0 && innerWidth < 800">
+            <div class="swiper-container acp-devices">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide device-card" *ngFor="let item of acpDevices">
+                        <div class="device-img-section">
+                            <img src="https://{{item?.fields?.deviceImg.fields?.file.url}}" width="175" height="220"
+                                alt="device">
+                        </div>
+                        <div class="device-desc-section">
+                            <p class="device-name">{{item?.fields?.deviceModel}}</p>
+                            <div class="prices">
+                                <p class="price">{{item?.fields?.price | currency}}</p>
+                                <div class="market">
+                                    <p class="smaller market-price">{{item?.fields?.marketValue | currency}}</p>
+                                    <p class="bottom-border"></p>
+                                </div>
+                            </div>
+                            <button class="button primary" (click)="selectDevice()" id="select-device">Select
+                                Device</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-container-override">
+                    <div class="swiper-button-next">
+                    </div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </div>
         </div>
