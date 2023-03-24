@@ -12,10 +12,11 @@ import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { CartComponent } from './cart/cart.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AcpDevicesComponent } from './acp-devices/acp-devices.component';
 
 
 @NgModule({
-  declarations: [ShopMainComponent, ChangePlanSummaryComponent, CheckCompatibilityComponent, PlanDetailsComponent, CheckoutResultsComponent, CartComponent],
+  declarations: [ShopMainComponent, ChangePlanSummaryComponent, CheckCompatibilityComponent, PlanDetailsComponent, CheckoutResultsComponent, CartComponent, AcpDevicesComponent],
   imports: [
     CommonModule,
     ShopRoutingModule,

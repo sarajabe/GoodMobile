@@ -45,7 +45,7 @@
         </div>
         <div class="details" *ngIf="!!plan?.ebb">
           <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller"><b>A one-time discount</b> of up to <b>$100</b> on your Device purchase. <a  [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.BASE+'/'+PHONES_SHOP_ROUTE_URLS.TYPE]"><b>View Devices</b></a></p>
+          <p class="smaller"><b>A one-time discount</b> of up to <b>$100</b> on your Device purchase. <a><b>View Devices</b></a></p>
         </div>
         <a *ngIf="!!plan?.ebb" (click)="goToEbb()" class="more-info">More information <img
             src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>

@@ -10,7 +10,7 @@ import { AppState } from '../../app.service';
 import { MetaService } from '../../../services/meta-service.service';
 import { ModalHelperService } from '../../../services/modal-helper.service';
 import { takeWhile, combineLatest, take } from 'rxjs/operators';
-import { SHOP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
+import { SHOP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
 import { ContentfulService } from 'src/services/contentful.service';
 
 @Component({
@@ -159,13 +159,6 @@ export class CheckoutResultsComponent implements OnDestroy {
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.purchasedPlanId;
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
   }
-
-  public goToPhones(): void {
-    const params = {};
-    params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = this.purchasedPlanId;
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.BASE}/${PHONES_SHOP_ROUTE_URLS.TYPE}`, params]);
-  }
-
   public domainFromUrl(url): string {
     let result;
     if (!!url) {

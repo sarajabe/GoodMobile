@@ -3,11 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { IPageMeta } from '@ztarmobile/zwp-service';
 import { ShopMainComponent } from './shop.component';
 import { ChangePlanSummaryComponent } from './change-plan-summary/change-plan-summary.component';
-import { SHOP_ROUTE_URLS, CHECKOUT_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS } from '../app.routes.names';
+import { SHOP_ROUTE_URLS, CHECKOUT_ROUTE_URLS } from '../app.routes.names';
 import { CheckCompatibilityComponent } from './check-compatibility/check-compatibility.component';
 import { CheckoutResultsComponent } from './checkout-results/checkout-results.component';
 import { AuthEmailGuardService } from 'src/providers/user-auth-service/auth-email-guard.service';
 import { CartComponent } from './cart/cart.component';
+import { AcpDevicesComponent } from './acp-devices/acp-devices.component';
 
 const routes: Routes = [
   { path: '', component: ShopMainComponent, children: [
@@ -22,11 +23,11 @@ const routes: Routes = [
     {path: SHOP_ROUTE_URLS.PLANS_SHOP,  loadChildren: () => import('./plans-and-features/plans-and-features.module').then(m => m.PlansAndFeaturesModule)},
     {path: SHOP_ROUTE_URLS.PLAN_DETAILS,  loadChildren: () => import('./plans-and-features/plans-and-features.module').then(m => m.PlansAndFeaturesModule)},
     {path: SHOP_ROUTE_URLS.CHANGE_PLANS_SHOP,  loadChildren: () => import('./plans-and-features/plans-and-features.module').then(m => m.PlansAndFeaturesModule)},
-    {path: PHONES_SHOP_ROUTE_URLS.BASE, loadChildren: () => import('./phones/phones.module').then(m => m.PhonesModule)},
     {path: SHOP_ROUTE_URLS.CHECKOUT_RESULTS, component: CheckoutResultsComponent, data: {title: 'Purchase Successful',
     description: 'Your purchase with Good Mobile is successful'} as IPageMeta},
     {path: SHOP_ROUTE_URLS.CHECKOUT_SHORT, redirectTo: `${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`, pathMatch: 'full'},
     {path: SHOP_ROUTE_URLS.CART,component: CartComponent},
+    {path: SHOP_ROUTE_URLS.ACP_DEVICES, component: AcpDevicesComponent}
   ]}
 ];
 

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { CART_TYPES, CustomizableMobilePlan, IUserAccount, IUserPlan, MobileCustomPlansService, UserAccountService, UserPlansService, ActionsAnalyticsService, FirebaseUserProfileService, IUser, ICreditCardInfo } from '@ztarmobile/zwp-service-backend';
 import { combineLatest,takeWhile } from 'rxjs/operators';
-import { ROUTE_URLS, LOGIN_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SUPPORT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, DUPLICATE_PAYMENTS_ROUTE_URLS, ACP_ROUTE_URLS } from '../../app/app.routes.names';
+import { ROUTE_URLS, LOGIN_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, SUPPORT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, DUPLICATE_PAYMENTS_ROUTE_URLS, ACP_ROUTE_URLS } from '../../app/app.routes.names';
 import { AppState } from '../../app/app.service';
 import { PhonePipe } from '../pipes/phone.pipe';
 import { ModalHelperService } from '../../services/modal-helper.service';
@@ -40,7 +40,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   public ACTIVATION_ROUTE_URLS = ACTIVATION_ROUTE_URLS;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
   public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
-  public PHONES_SHOP_ROUTE_URLS = PHONES_SHOP_ROUTE_URLS;
   public userHasActivePlans = false;
   public userPlans: IUserPlan[];
   public showShopMenu = false;

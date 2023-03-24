@@ -1,0 +1,76 @@
+@import "../../../styles/modules/_variables.scss";
+
+.acp-devices-page {
+    .banner-section {
+        position: relative;
+        .banner-img {
+            img {
+                height: 400px;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+        .left-banner-assets {
+            display: block;
+            position: absolute;
+            top: 210px;
+            right: 77%;
+            box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18), 0px 5px 14px rgba(9, 9, 9, 0.12);
+            img {
+                width: 209px;
+                height: 69px;
+                object-fit: cover;
+            }
+            @media screen and (max-width: $desktop-min-width-minus) {
+                right: 79%;
+                img {
+                    width: 177px;
+                    height: 58px;
+                }
+            }
+            @media screen and (max-width: 899.9px) {
+                display: none;
+            }
+            @media screen and (max-width: $phablet-min-width-minus) {
+                display: block;
+                top: 312px;
+                right: 19%;
+              
+            }
+            @media screen and (max-width: $iphone-max-width) {
+                right: 6%;
+            }
+        }
+        .right-banner-assets {
+            position: absolute;
+            display: block;
+            top: 160px;
+            left: 72%;
+            box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18), 0px 5px 14px rgba(9, 9, 9, 0.12);
+            img {
+                width: 248px;
+                height: 53px;
+                object-fit: cover;
+            }
+            @media screen and (max-width: $desktop-min-width-minus) {
+                left: 76%;
+                img {
+                    width: 210px;
+                    height: 45px;
+                }
+            }
+            @media screen and (max-width: 899.9px) {
+                display: none;
+            }
+            @media screen and (max-width: $phablet-min-width-minus) {
+                display: block;
+                top: 250px;
+                left: 26%;
+               
+            }
+            @media screen and (max-width: $iphone-max-width) {
+                left: 12%;
+            }
+        }
+    }
+}

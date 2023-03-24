@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { BUILD_VERSION, BUILD_DATE, ENV_FIREBASE_CONFIG } from '../../environments/environment';
 import { ContentfulService } from '../../services/contentful.service';
-import { SUPPORT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PHONES_SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app/app.routes.names';
+import { SUPPORT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app/app.routes.names';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { FirebaseUserProfileService, IUser } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
