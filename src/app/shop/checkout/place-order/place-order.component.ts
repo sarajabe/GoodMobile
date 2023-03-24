@@ -66,7 +66,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   public usedReward = 0;
   public details;
   public isStorePickup = false;
-
+  public deviceImage = 'assets/img/loading.gif';
   private alive = true;
 
   constructor(
@@ -262,13 +262,13 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
               this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
-            case CART_TYPES.MIGRATION:
-              this.mobilePlansService.clearUserCart();
-              this.appState.clearSessionStorage();
-              this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
-              sessionStorage.setItem('isMigrationSimRemoved', 'true');
-              this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
-              break;
+            case CART_TYPES.GENERIC_CART:
+                this.checkoutService.paymentsSubject.next(null);
+                this.checkoutService.detailsSubject.next(null);
+                this.mobilePlansService.clearUserCart();
+                this.appState.clearSessionStorage();
+                this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+                break;
             default:
               this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
               this.mobilePlansService.clearUserCart();
@@ -278,6 +278,9 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
           }
         }
       });
+  }
+  public goToDevices(): void {
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
   }
   public goToAddons(): void {
     const params = {};
@@ -329,6 +332,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
     this.autoRenew = this.userCart.autoRenewPlan;
     if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
       this.isGenericType = true;
+      this.deviceImage = this.userCart.acpDevice.imgUrl;
       if (!!this.userCart.activePlanId) {
         this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
           if (!!plan) {

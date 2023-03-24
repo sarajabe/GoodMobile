@@ -8,7 +8,7 @@
     </div>
     <h1 class="head-title">Review your cart</h1>
     <div class="credit-cards">
-        <div class="cart-card left">
+        <div class="cart-card left" [class.full]="userCart?.cartType === CART_TYPES.GENERIC_CART">
             <div class="card-header">
                 <h3>Cart Items</h3>
                 <p class="header-action" data-cy="emptyCart" (click)="deleteCart($event, true)">
@@ -240,6 +240,30 @@
                             </div>
                         </div>
                     </div>
+                    <div class="sub-content" *ngIf="userCart?.cartType === CART_TYPES.GENERIC_CART">
+                        <div class="item-details">
+                            <img class="thumbnail"
+                            [src]="deviceImage"
+                            alt="ACP device" />
+                            <div class="details">
+                                <div class="detail">
+                                    <div class="detail-info">
+                                        <p class="bold smaller">{{userCart?.acpDevice?.title}}</p>
+                                        <p class="bold smallest text-orange" >ACP Benefits</p>
+                                        <p class="smallest" >ACP Promotion</p>    
+                                    </div>
+                                    <p class="price smaller">
+                                        ${{userCart?.acpDevice?.price}}
+                                    </p>
+                                </div>
+                                <p class="quantity smallest">Quantity: {{userCart?.quantity}}</p>
+                                <div class="actions">
+                                     <a class="link first" (click)="goToDevices()">Change</a>
+                                    <a class="link" (click)="clearUserCart('device',true)">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="sub-content">
                         <hr class="long" />
                         <div class="subtotal" data-cy="subtotal">Item(s) price: {{ calculateTotal(true) | currency}}</div>
@@ -247,7 +271,7 @@
                 </div>
             </div>
         </div>
-        <div class="cart-card right" *ngIf="userCart?.cartType !== CART_TYPES.MIGRATION">
+        <div class="cart-card right" *ngIf="userCart?.cartType !== CART_TYPES.GENERIC_CART ">
             <div class="card-header">
                 <h3>Taxes and Fees</h3>
             </div>

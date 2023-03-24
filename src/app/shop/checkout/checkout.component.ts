@@ -648,24 +648,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       }
     }
     if (this.currentPlan.cartType === CART_TYPES.GENERIC_CART) {
-      if (!!this.currentPlan.phones && this.currentPlan.phones.length > 0) {
-        for (const phone of this.currentPlan.phones) {
-          total += phone.price;
-        }
+      if (!!this.currentPlan.acpDevice) {
+        total += this.currentPlan.acpDevice.price;
       }
       this.baseTotal = total;
-      if (!!this.taxes && !!this.isCalculated) {
-        total += this.taxes;
-      }
-      if (!!this.fees && !!this.isCalculated) {
-        total += this.fees;
-      }
-      if (!this.isCalculated) {
-        total = total + this.estimatedFees + this.estimatedTaxes;
-      }
-      if (this.hasShippingItems && !!this.orderShippingMethod && !!this.orderShippingMethod?.price) {
-        total += this.orderShippingMethod.price;
-      }
     }
     if (this.currentPlan.cartType === CART_TYPES.CHANGE_PLAN) {
       if (!!this.currentPlan) {
@@ -1082,22 +1068,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             }
           }
           if (this.currentPlan.cartType === CART_TYPES.GENERIC_CART) {
-            purchaseDetails = {
-              simsQuantity: this.currentPlan.simsQuantity,
-              paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
-              shippingAddress: !this.storePickup ? this.shippingAddress: null,
-              orderShipMethod: !!this.orderShippingMethod && !this.storePickup ? this.orderShippingMethod.id : null,
-              autoRenewPlan: false,
-              mdn: this.changeRequestMdn,
-              storePickup: this.storePickup
-            };
-            this.appState.loading = true;
-            this.mobilePlansService.calculateTaxesAndFees(purchaseDetails).then((result) => {
-              this.applyTaxes(result);
-            }, (error) => {
-              this.appState.loading = false;
-              this.toastHelper.showAlert('Sorry, we are having an internal issue at the moment. Please contact customer care for help.');
-            });
+            this.taxes = 0;
+            this.fees = 0;
+            this.isCalculated = true;
+            this.calculateTotal();
           }
         });
       }

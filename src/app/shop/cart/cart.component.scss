@@ -131,6 +131,9 @@
                 min-height: 200px;
                 flex-basis: 47%;
 
+                &.full {
+                    flex-basis: 100%;
+                }
                 @media (max-width: $desktop-min-width-minus) {
                     width: 100%;
                 }

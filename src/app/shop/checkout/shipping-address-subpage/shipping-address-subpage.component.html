@@ -33,9 +33,9 @@
       <p>Checkout</p>
       <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
     </div>
-    <h1 class="step-title">How do you want to get your package?</h1>
+    <h1 class="step-title">How do you want to get your {{!!cart?.acpDevice ? 'device' : 'package'}}?</h1>
     <form #pickupOptionsForm="ngForm" class="pickups-form">
-      <div class="radioBtn">
+      <div class="radioBtn" *ngIf="cart?.cartType !== CART_TYPES.GENERIC_CART">
         <label class="form-control" for="home">
           <input type="radio" value="home" [(ngModel)]="option" data-cy="homeDelivery" id="home" name="home" required
           (change)="pickupOptionChanged()">
