@@ -49,6 +49,7 @@ export class CartComponent implements OnInit, OnDestroy {
     "2X6GHolidays2022": {img: "assets/icon/2X6GHolidays2022.svg"},
     "2X3GHolidays2022": {img: "assets/icon/2X3GHolidays2022.svg"},
   }
+  public deviceImage = 'assets/img/loading.gif';
   private planInCatalogChecked = false;
   private allBasePlans: Array<IBasePlan>;
   private alive = true;
@@ -116,6 +117,7 @@ export class CartComponent implements OnInit, OnDestroy {
       this.autoRenew = this.userCart?.autoRenewPlan;
       if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
         this.isGenericType = true;
+        this.deviceImage = this.userCart.acpDevice.imgUrl;
         if (!!this.userCart.activePlanId) {
           this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
             if (!!plan) {
@@ -172,6 +174,10 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+  }
+
+  public goToDevices(): void {
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
   }
   public goToPlans(changePlan): void {
     if (!!changePlan) {
@@ -256,14 +262,12 @@ export class CartComponent implements OnInit, OnDestroy {
               this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
-            case CART_TYPES.MIGRATION:
+            case CART_TYPES.GENERIC_CART:
               this.checkoutService.paymentsSubject.next(null);
               this.checkoutService.detailsSubject.next(null);
               this.mobilePlansService.clearUserCart();
               this.appState.clearSessionStorage();
-              this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
-              sessionStorage.setItem('isMigrationSimRemoved', 'true');
-              this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
+              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
               break;
             default:
               this.checkoutService.paymentsSubject.next(null);
@@ -450,10 +454,8 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     }
     if (this.userCart.cartType === CART_TYPES.GENERIC_CART) {
-      if (!!this.userCart.phones && this.userCart.phones.length > 0) {
-        for (const phone of this.userCart.phones) {
-          total += phone.price;
-        }
+      if (!!this.userCart.acpDevice) {
+        total += this.userCart.acpDevice.price;
       }
     }
     if (this.userCart.cartType === CART_TYPES.CHANGE_PLAN) {
@@ -520,30 +522,7 @@ export class CartComponent implements OnInit, OnDestroy {
     return total >= 0 ? total : 0;
   }
 
-  private removePhoneModal(): void {
-    this.modalHelper.showTMOSkipModal('Device check is needed! ', false, 'skip-tmo-modal', true).afterClosed().subscribe((option) => {
-      if (option === 'eSim') {
-        const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'TE', skuNumber: 'ESIMGWLTMO4GLTE', verified: true } as IDeviceCompatibilityV1;
-        this.setDevice(device, true);
-      } else if (option === 'physical') {
-        const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE', verified: true} as IDeviceCompatibilityV1;
-        this.setDevice(device);
-        this.mobileCustomPlansService.seteSIM(false);
-        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
-      } else {
-        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECK_PHONE}`]);
-      }
-    });
-  }
-  private setDevice(device, eSim?): void {
-    this.mobileCustomPlansService.setPlanDevice(device);
-    if (!!eSim) {
-      this.mobileCustomPlansService.seteSIM(true);
-      this.mobileCustomPlansService.setQrScanned(false);
-    }
-    this.mobileCustomPlansService.removePhonesFromCart();
-    this.mobileCustomPlansService.setPlanExpectedDevice(null);
-  }
+
   private applyEstimatedTaxes(result): void {
     this.estimatedTaxes = result.taxes;
     this.estimatedFees = result.fees;

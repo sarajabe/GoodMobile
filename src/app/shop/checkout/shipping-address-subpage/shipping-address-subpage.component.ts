@@ -67,6 +67,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public stores = [];
   public barCode = false;
   public option;
+  public CART_TYPES = CART_TYPES;
   private alive = true;
   storedAddress: IFirebaseAddress;
 

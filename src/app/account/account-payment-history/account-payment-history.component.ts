@@ -42,6 +42,7 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
   public userHasActivePlans = false;
   public userHasPendingPlans = false;
   private alive = true;
+  isSyncing: boolean;
 
   constructor(private userAccountService: UserAccountService,
     private metaService: MetaService,
@@ -61,23 +62,24 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
     this.userAccountService.isSyncingAccount.pipe(takeWhile(() => this.alive)).subscribe((isSyncing) => {
       this.toastHelper.updateIsProcessing(isSyncing);
       this.appState.loading = isSyncing;
+      this.isSyncing = isSyncing;
     });
     this.accountHeaderService.setPageTitle('Payment History');
-    this.paymentService.paymentHistory.pipe(takeWhile(() => this.alive)).subscribe((history) => {
-      setTimeout(() => {
-        this.toastHelper.updateIsProcessing(false);
-        this.paymentHistory = history;
-        this.config.totalItems = history.totalItems;
-      });
-    });
-    this.paymentService.paymentHistoryErrors.pipe(takeWhile(() => this.alive), filter((error) => !!error)).subscribe((error) => {
-      setTimeout(() => {
-        this.paymentHistory = { payments: [], totalItems: 0 };
-        this.toastHelper.updateIsProcessing(false);
-        console.warn(`Failed to get payment history: ${error.message}`, error);
-        this.toastHelper.showAlert(`Failed to get payment history: ${error.message}`);
-      }, 1000);
-    });
+    // this.paymentService.paymentHistory.pipe(takeWhile(() => this.alive)).subscribe((history) => {
+    //   setTimeout(() => {
+    //     this.toastHelper.updateIsProcessing(false);
+    //     this.paymentHistory = history;
+    //     this.config.totalItems = history.totalItems;
+    //   });
+    // });
+    // this.paymentService.paymentHistoryErrors.pipe(takeWhile(() => this.alive), filter((error) => !!error)).subscribe((error) => {
+    //   setTimeout(() => {
+    //     this.paymentHistory = { payments: [], totalItems: 0 };
+    //     this.toastHelper.updateIsProcessing(false);
+    //     console.warn(`Failed to get payment history: ${error.message}`, error);
+    //     this.toastHelper.showAlert(`Failed to get payment history: ${error.message}`);
+    //   }, 1000);
+    // });
     this.userPlansService.selectedUserPlanObservable.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.selectedPlan = plan;
       this.selectedPlan = this.userPlansService.selectedUserPlan;
@@ -218,8 +220,26 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
   private getPaymentHistory(): void {
     this.toastHelper.updateIsProcessing(true);
     if (!!this.selectedPlan && !this.selectedPlan.portInRequestNumber) {
-      this.paymentService.reloadPaymentHistory(this.selectedPlan.mdn, this.selectedPlan.orderId, this.config.itemsPerPage,
-        this.config.currentPage, this.sortBy, this.sortDirection);
+      this.appState.loading = true;
+      this.paymentService.reloadPaymentHistory(this.selectedPlan?.mdn, this.selectedPlan?.orderId, this.config.itemsPerPage,
+        this.config.currentPage, this.sortBy, this.sortDirection).then(history => {
+          if (!!history) {
+            this.toastHelper.updateIsProcessing(false);
+            this.paymentHistory = history;
+            this.config.totalItems = history.totalItems;
+            this.appState.loading = this.isSyncing;
+            } else {
+              this.paymentHistory = { payments: [], totalItems: 0 };
+              this.toastHelper.updateIsProcessing(false);
+              this.appState.loading = this.isSyncing;
+            }
+        }, error => {
+          this.paymentHistory = { payments: [], totalItems: 0 };
+          this.toastHelper.updateIsProcessing(false);
+          console.warn(`Failed to get payment history: ${error.message}`, error);
+          this.toastHelper.showAlert(`Failed to get payment history: ${error.message}`);
+          this.appState.loading = this.isSyncing;
+        });
       this.toastHelper.updateIsProcessing(false);
     } else {
       this.paymentHistory = { payments: [], totalItems: 0 };
