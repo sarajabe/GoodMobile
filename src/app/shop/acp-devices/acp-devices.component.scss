@@ -1,183 +1,264 @@
 @import "../../../styles/modules/_variables.scss";
 
-.acp-devices-page {
-    margin-bottom: 60px;
-    .banner-section {
-        position: relative;
-        .banner-img {
-            img {
-                height: 400px;
-                width: 100%;
-                object-fit: cover;
-            }
+::ng-deep {
+    .acp-devices-page {
+        margin-bottom: 60px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+            margin-bottom: 40px;
         }
-        .left-banner-assets {
-            display: block;
-            position: absolute;
-            top: 210px;
-            right: 77%;
-            box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
-                0px 5px 14px rgba(9, 9, 9, 0.12);
-            img {
-                width: 209px;
-                height: 69px;
-                object-fit: cover;
-            }
-            @media screen and (max-width: $desktop-min-width-minus) {
-                right: 79%;
+        .banner-section {
+            position: relative;
+            .banner-img {
                 img {
-                    width: 177px;
-                    height: 58px;
+                    height: 400px;
+                    width: 100%;
+                    object-fit: cover;
                 }
             }
-            @media screen and (max-width: 899.9px) {
-                display: none;
-            }
-            @media screen and (max-width: $phablet-min-width-minus) {
+            .left-banner-assets {
                 display: block;
-                top: 312px;
-                right: 19%;
+                position: absolute;
+                top: 210px;
+                right: 77%;
+                box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
+                    0px 5px 14px rgba(9, 9, 9, 0.12);
+                img {
+                    width: 209px;
+                    height: 69px;
+                    object-fit: cover;
+                }
+                @media screen and (max-width: $desktop-min-width-minus) {
+                    right: 79%;
+                    img {
+                        width: 177px;
+                        height: 58px;
+                    }
+                }
+                @media screen and (max-width: 899.9px) {
+                    display: none;
+                }
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    display: block;
+                    top: 312px;
+                    right: 19%;
+                }
+                @media screen and (max-width: $iphone-max-width) {
+                    right: 6%;
+                }
             }
-            @media screen and (max-width: $iphone-max-width) {
-                right: 6%;
+            .right-banner-assets {
+                position: absolute;
+                display: block;
+                top: 160px;
+                left: 72%;
+                box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
+                    0px 5px 14px rgba(9, 9, 9, 0.12);
+                img {
+                    width: 248px;
+                    height: 53px;
+                    object-fit: cover;
+                }
+                @media screen and (max-width: $desktop-min-width-minus) {
+                    left: 76%;
+                    img {
+                        width: 210px;
+                        height: 45px;
+                    }
+                }
+                @media screen and (max-width: 899.9px) {
+                    display: none;
+                }
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    display: block;
+                    top: 250px;
+                    left: 26%;
+                }
+                @media screen and (max-width: $iphone-max-width) {
+                    left: 12%;
+                }
             }
         }
-        .right-banner-assets {
-            position: absolute;
-            display: block;
-            top: 160px;
-            left: 72%;
-            box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
-                0px 5px 14px rgba(9, 9, 9, 0.12);
-            img {
-                width: 248px;
-                height: 53px;
-                object-fit: cover;
+        .devices-section {
+            margin-top: 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            @media screen and (max-width: $phablet-min-width-minus) {
+                margin-top: 40px;
             }
-            @media screen and (max-width: $desktop-min-width-minus) {
-                left: 76%;
+            .top-section {
+                margin-bottom: 65px;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 45px;
+                }
+                .label {
+                    color: #5e5e5e;
+                    margin-bottom: 4px;
+                    font-family: $secondary-font-family;
+                }
+                .title {
+                    color: $header-color;
+                    margin-bottom: 12px;
+                }
+                .pre-last-note {
+                    margin-bottom: 8px;
+                    font-family: $secondary-font-family;
+                }
+                .last-note {
+                    font-weight: bold;
+                    font-family: $secondary-font-family-bold;
+                }
+            }
+            .type-section {
+                margin-bottom: 56px;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 40px;
+                }
                 img {
-                    width: 210px;
+                    width: 45px;
                     height: 45px;
                 }
+                .device-type {
+                    font-weight: bold;
+                    font-family: $base-font-family-bold;
+                    margin-bottom: 0;
+                }
             }
-            @media screen and (max-width: 899.9px) {
-                display: none;
+            .devices {
+                display: flex;
+                gap: 40px;
+                width: 100%;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                .device-card {
+                    box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1),
+                        0px 5px 14px rgba(0, 60, 117, 0.04);
+                    border-radius: 10px;
+                    background: #f2f7fa;
+                    width: 360px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        width: 380px;
+                    }
+                    .device-img-section {
+                        padding: 32px 0px;
+                        min-height: 282px;
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                            padding: 64px 0px;
+                            min-height: 248px;
+                        }
+                        img {
+                            min-width: 136px;
+                            height: 220px;
+                            object-fit: contain;
+                            @media screen and (max-width: $phablet-min-width-minus) {
+                                height: 167px;
+                                min-width: 120px;
+                            }
+                        }
+                    }
+                    .device-desc-section {
+                        background: #fbfbfb;
+                        border-radius: 0px 0px 10px 10px;
+                        box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1),
+                            0px 5px 14px rgba(0, 60, 117, 0.04);
+                        padding: 24px 32px 32px;
+                        min-height: 218px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        @media screen and (max-width: $phablet-min-width-minus) {
+                            padding: 24px 24px 32px;
+                            min-height: 180px;
+                        }
+                        .device-name {
+                            margin-bottom: 4px;
+                            font-weight: bold;
+                            font-family: $base-font-family-bold;
+                        }
+                        .prices {
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 24px;
+                            .price {
+                                color: $header-color;
+                                margin-bottom: 0;
+                                margin-right: 8px;
+                                font-weight: bold;
+                                font-family: $secondary-font-family-bold;
+                            }
+                            .market {
+                                position: relative;
+                                .market-price {
+                                    color: #9d9d9d;
+                                    margin: 0;
+                                }
+                                .bottom-border {
+                                    position: absolute;
+                                    bottom: 12px;
+                                    width: 52px;
+                                    border-bottom: 1px solid #9d9d9d;
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            @media screen and (max-width: $phablet-min-width-minus) {
-                display: block;
-                top: 250px;
-                left: 26%;
-            }
-            @media screen and (max-width: $iphone-max-width) {
-                left: 12%;
-            }
-        }
-    }
-    .devices-section {
-        margin-top: 56px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        .top-section {
-            margin-bottom: 65px;
-            .label {
-                color: #5e5e5e;
-                margin-bottom: 4px;
-                font-family: $secondary-font-family;
-            }
-            .title {
-                color: $header-color;
-                margin-bottom: 12px;
-            }
-            .pre-last-note {
-                margin-bottom: 8px;
-                font-family: $secondary-font-family;
-            }
-            .last-note {
-                font-weight: bold;
-                font-family: $secondary-font-family-bold;
-            }
-        }
-        .type-section {
-            margin-bottom: 56px;
-            img {
-                width: 45px;
-                height: 45px;
-            }
-            .device-type {
-                font-weight: bold;
-                font-family: $base-font-family-bold;
-                margin-bottom: 0;
-            }
-        }
-        .devices {
-            display: flex;
-            gap: 40px;
-            width: 100%;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            .device-card {
+            .swiper-container {
+                max-width: 400px;
                 box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1),
                     0px 5px 14px rgba(0, 60, 117, 0.04);
                 border-radius: 10px;
-                background: #f2f7fa;
-                width: 360px;
-                .device-img-section {
-                    padding: 32px 0px;
-                    min-height: 280px;
-                    img {
-                        min-width: 136px;
-                        height: 220px;
-                        object-fit: contain;
+                position: relative;
+                overflow: hidden;
+                @media screen and (max-width: $phablet-min-width-minus) {
+                    max-width: 380px;
+                }
+                .swiper-slide {
+                    width: 360px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        width: 380px;
                     }
                 }
-                .device-desc-section {
-                    background: #fbfbfb;
-                    border-radius: 0px 0px 10px 10px;
-                    box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1), 0px 5px 14px rgba(0, 60, 117, 0.04);
-                    padding: 24px 32px 32px;
-                    min-height: 218px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    .device-name {
-                        margin-bottom: 4px;
-                        font-weight: bold;
-                        font-family: $base-font-family-bold;
+                .swiper-container-override {
+                    position: absolute;
+                    left: 10px;
+                    right: 10px;
+                    top: 130px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        left: 0;
+                        right: 0;
                     }
-                    .prices{
-                        display: flex;
-                        align-items: center;
-                        margin-bottom: 24px;
-                        .price {
-                            color: $header-color;
-                            margin-bottom: 0;
-                            margin-right: 8px;
-                            font-weight: bold;
-                            font-family: $secondary-font-family-bold;
-                        }
-                        .market {
-                            position: relative;
-                            .market-price{
-                                color: #9D9D9D;
-                                margin: 0;
-                               
-                            }
-                            .bottom-border {
-                                position: absolute;
-                                bottom: 13px;
-                                width: 58px;
-                                border-bottom: 1px solid #9D9D9D;
-                            }
-                        }
+                }
+                .swiper-button-next::after,
+                .swiper-button-prev::after {
+                    font-size: 24px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        font-size: 14px;
+                    }
+                }
+                .swiper-button-prev,
+                .swiper-button-next {
+                    position: absolute;
+                    background-color: $primary-color;
+                    background-size: 28%;
+                    color: $white;
+                    height: 40px;
+                    width: 40px;
+                    z-index: 1;
+                    cursor: pointer;
+                    --swiper-navigation-size: 11px;
+                    border-radius: 50%;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        height: 32px;
+                        width: 32px;
                     }
                 }
             }
         }
     }
 }
+
