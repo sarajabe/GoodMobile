@@ -87,6 +87,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public createdDate: any;
   public providerApplicationID;
   public barCodeValue;
+  public fileUrls = [];
+  public internalData: IVerificationRes;
+
   private callBackUrl: string;
   private alive = true;
 
@@ -523,6 +526,58 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showBarCodePopup(): void {
     this.modalHelper.showBarcodeModal('Scan the barcode', 'Check with the store clerk to proceed', this.barCodeValue);
   }
+  public downloadFiles(): void {
+    if (this.fileUrls.length > 0) {
+      for (const fileUrl of this.fileUrls) {
+        const link = document.createElement('a');
+        link.setAttribute('href', fileUrl);
+        link.setAttribute('download', '');
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  }
+  private checkDocGroups(data): void {
+    const selectedCodes = data?.eligibilityCode.split(",");
+    // check if some of the common codes related to generic group are selected 
+    const commonCondition = selectedCodes.some(obj => obj === 'E54' || obj === 'E3' || obj === 'E4' || obj === 'E15' || obj === 'E8' || obj === 'E9' || obj === 'E10');
+    // check the generic group
+    if (commonCondition) {
+      this.fileUrls.push('/assets/GM-Generic.pdf');
+    }
+    // another case for generic
+    if (!commonCondition && selectedCodes.some(obj => obj === 'E1') && selectedCodes.some(obj => obj === 'E2')) {
+      this.fileUrls.push('/assets/GM-Generic.pdf');
+    }
+    // check SNAP group
+    if (!commonCondition && selectedCodes.some(obj => obj === 'E2') && !selectedCodes.some(obj => obj === 'E1')) {
+      this.fileUrls.push('/assets/GM-SNAP.pdf');
+    }
+    // check Medicaid group
+    if (!commonCondition && selectedCodes.some(obj => obj === 'E1') && !selectedCodes.some(obj => obj === 'E2')) {
+      this.fileUrls.push('/assets/GM-Medicaid.pdf');
+    }
+    // check pell grant group
+    if (selectedCodes.some(obj => obj === 'E50' || obj === 'E51')) {
+      this.fileUrls.push('/assets/GM-PellGrant.pdf');
+    }
+    // check income group
+    if (selectedCodes.some(obj => obj === 'E13')) {
+      this.fileUrls.push('/assets/GM-Through Income copy.pdf');
+    }
+  }
+  private getInternalData(): void {
+    this.ebbService.getInternalApplication(this.userProfile.customerId, this.userProfile.ebbId).then((res) => {
+      if (!!res) {
+        this.internalData = res.data;
+        this.checkDocGroups(this.internalData);
+      }
+    }, (error) => {
+      this.appState.loading = false;
+    });
+  }
   private getVerificationDetails(): void {
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
@@ -613,6 +668,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   this.nvStatus = this.verificationDetails?.status;
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION) {
                     this.showQrCode = true;
+                    this.getInternalData();
                   } else {
                     this.showQrCode = false;
                   }
