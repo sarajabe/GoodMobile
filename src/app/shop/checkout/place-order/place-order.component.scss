@@ -92,6 +92,9 @@
                     @media (max-width: $desktop-min-width-minus) {
                         width: 100%;
                         flex-direction: column-reverse;
+                        &.no-reverse {
+                            flex-direction: column;
+                        }
                     }
                 }
                 .full {

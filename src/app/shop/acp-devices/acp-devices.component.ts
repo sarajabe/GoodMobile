@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CART_TYPES, FirebaseUserProfileService, IAcpDevice, IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAcpDevice, IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { CatalogCoreService } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -43,14 +43,27 @@ export class AcpDevicesComponent implements OnInit {
 
   private pendingAcpPlan: IUserPlan;
   private alive = true;
+  changeDevice: boolean;
+  cart: CustomizableMobilePlan;
+
   constructor(private catalogServices: CatalogCoreService,
-    private appState: AppState, private toastHelper: ToastrHelperService,
+    private appState: AppState, private toastHelper: ToastrHelperService, private route: ActivatedRoute,
     private cd: ChangeDetectorRef, private userPlansService: UserPlansService, private mobilePlansService: MobileCustomPlansService, private router: Router,
     private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       this.acpPlan = plans.find((p) => p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
       this.pendingAcpPlan = plans.find((p) => !p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
       this.hasAcpPlan = !!this.acpPlan ? true : false;
+    });
+    this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
+      if (!!params && params[SHOP_ROUTE_URLS.PARAMS.CHANGE_DEVICE]) {
+        this.changeDevice = true;
+      } else {
+        this.changeDevice = false;
+      }
+    });
+    this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
+      this.cart = plan;
     });
   }
 
@@ -76,13 +89,37 @@ export class AcpDevicesComponent implements OnInit {
   }
   public selectDevice(item): void {
     if (!!this.hasAcpPlan) {
-      const selectedDevice: IAcpDevice = { id: item?.id, deviceMake: item?.fields?.deviceMake, deviceModel: item?.fields?.deviceModel, sku: item?.fields?.sku, modelId: item?.fields?.modelId, marketValue: parseFloat(item?.fields?.marketValue), price: parseFloat(item?.fields?.price), modelNumber: item?.fields?.modelNumber, typeId: item?.fields?.typeId, imgUrl: item?.fields?.deviceImg?.fields.file.url, title: item?.fields?.deviceMake + ' ' + item?.fields?.deviceModel }
-      this.mobilePlansService.setActivePlanId(this.acpPlan.id);
-      this.mobilePlansService.setAcpDevice(selectedDevice);
-      this.mobilePlansService.setCartType(CART_TYPES.GENERIC_CART);
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
+      if (this.cart && this.cart.cartType !== CART_TYPES.GENERIC_CART) {
+        this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
+        .afterClosed().subscribe((result) => {
+          if (!!result) {
+            this.clearCart();
+            setTimeout(() => {
+              this.addDeviceToCart(item);
+            }, 500);
+          }
+        });
+      } else {
+        this.addDeviceToCart(item);
+      }
     }
 
+  }
+  private clearCart(): void {
+    this.appState.clearSessionStorage();
+    this.mobilePlansService.clearUserCart();
+  }
+  private addDeviceToCart(item): void {
+    const selectedDevice: IAcpDevice = { id: item?.id, deviceMake: item?.fields?.deviceMake, deviceModel: item?.fields?.deviceModel, sku: item?.fields?.sku, modelId: item?.fields?.modelId, marketValue: parseFloat(item?.fields?.marketValue), price: parseFloat(item?.fields?.price), modelNumber: item?.fields?.modelNumber, typeId: item?.fields?.typeId, imgUrl: item?.fields?.deviceImg?.fields.file.url, title: item?.fields?.deviceMake + ' ' + item?.fields?.deviceModel }
+    this.mobilePlansService.setActivePlanId(this.acpPlan.id);
+    this.mobilePlansService.setAcpDevice(selectedDevice);
+    this.mobilePlansService.setCartType(CART_TYPES.GENERIC_CART);
+    this.mobilePlansService.setPlanDevice(null);
+    if (!!this.changeDevice) {
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`]);
+    } else {
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
+    }
   }
   private createSwiper(): void {
     const swiper = new Swiper('.acp-devices', {

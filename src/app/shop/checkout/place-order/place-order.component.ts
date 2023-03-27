@@ -280,7 +280,9 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       });
   }
   public goToDevices(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+    const params = {};
+    params[SHOP_ROUTE_URLS.PARAMS.CHANGE_DEVICE] = true;
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`, params]);
   }
   public goToAddons(): void {
     const params = {};

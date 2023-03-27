@@ -299,7 +299,7 @@
           </div>
         </div>
       </div>
-      <div class="right" *ngIf="!!showShippingCard || !isMigration">
+      <div class="right" *ngIf="!!showShippingCard || !isMigration" [class.no-reverse]="!!isGenericType">
         <div class="place-order-card" *ngIf="!!showShippingCard && !isGenericType">
           <div class="card-header">
             <h3 class="title" data-cy="deliveryDetails">Delivery Details</h3>

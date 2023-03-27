@@ -81,7 +81,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnInit(): void {
     this.mobilePlansService.currentPlan.subscribe((plan) => {
-      this.hasCartItem = (!!plan && plan.hasPlanItem) || (!!plan && plan.simsQuantity > 0) || (!!plan && !!plan.addOns) || (!!plan && !!plan.phones);
+      this.hasCartItem = (!!plan && plan.hasPlanItem) || (!!plan && plan.simsQuantity > 0) || (!!plan && !!plan.addOns) || (!!plan && !!plan.acpDevice);
       this.calculateCartItems(plan);
       this.getNotificationCount();
       if (!!plan && !!plan.basePlan && !!plan.basePlan.ebb) {
@@ -327,13 +327,16 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   public calculateCartItems(plan): void {
     this.totalItems = 0;
     if (!!plan) {
-      if (!!plan.cartType && plan.cartType !== CART_TYPES.PLAN_ITEMS) {
+      if (!!plan.cartType && plan.cartType !== CART_TYPES.PLAN_ITEMS && plan.cartType !== CART_TYPES.GENERIC_CART) {
         this.totalItems = !this.isEbbPlan ? 1 : 0;
       } else {
         if (plan.addOns) {
           this.totalItems += plan.addOns.length;
         }
         if (plan.simsQuantity) {
+          this.totalItems += 1;
+        }
+        if (!!plan.acpDevice) {
           this.totalItems += 1;
         }
       }

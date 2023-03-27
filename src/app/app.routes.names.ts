@@ -160,6 +160,7 @@ export const SHOP_ROUTE_URLS = {
     PHONE_PURCHASE: 'phonePurchase',
     REPLACE_PLAN: 'replacePlan',
     STORE_PICKUP: 'storePickup',
+    CHANGE_DEVICE: 'changeDevice'
   },
 };
 
