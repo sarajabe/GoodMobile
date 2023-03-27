@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CART_TYPES, FirebaseUserProfileService, IAcpDevice, IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { CatalogCoreService } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
@@ -127,7 +127,7 @@ export class AcpDevicesComponent implements OnInit {
       if (!!data) {
         this.router.navigate([`${ACP_ROUTE_URLS.BASE}`]);
       } else {
-        this.showNoAcpDevicePopup();
+        this.router.navigate([ROUTE_URLS.HOME]);
       }
     });
   }
@@ -139,7 +139,7 @@ export class AcpDevicesComponent implements OnInit {
       if (!!data) {
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
       } else {
-        this.showPendingAcpDevicePopup();
+        this.router.navigate([ROUTE_URLS.HOME]);
       }
     });
   }
