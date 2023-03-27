@@ -42,7 +42,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   public PLANS_SHOP_ROUTE_URLS = PLANS_SHOP_ROUTE_URLS;
   public userHasActivePlans = false;
   public userPlans: IUserPlan[];
-  public showShopMenu = false;
   public showResponsiveMenu = false;
   public showAccountMenu = false;
   public showShopResMenu = false;
@@ -63,6 +62,8 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   };
   public paymentUpdateInProgress = false;
   public preferredPaymentInProgress;
+  public showShopMenu = false;
+
   private previousUrl: any;
   private timeout: any;
   private headerHeight;
