@@ -11,7 +11,7 @@
           <button class="close" (click)="showResponsiveMenu = false;toggleShowing()"><i class="icon-close"></i></button>
         </div>
         <ul class="responsive-menu">
-          <li class="responsive-item account-list" *ngIf="!!isLoggedIn" (click)="showAccountMenu = !showAccountMenu">
+          <li class="responsive-item sub-menu-list" *ngIf="!!isLoggedIn" (click)="showAccountMenu = !showAccountMenu">
             <div class="label-section">
 
               <div class="name">
@@ -71,11 +71,26 @@
             <img class="item-icon" src="assets/icon/home-page.svg" alt="home" />
             <a id="homeMenu" [routerLink]="[ROUTE_URLS.HOME]" (click)="onLinkClick($event)">Home</a>
           </li>
-          <li class="responsive-item">
-            <img class="item-icon" src="assets/icon/cart.svg" alt="shop" />
-            <a id="shopMenu" data-cy="shopMenu"
-              [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
-              routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Shop</a>
+          <li class="responsive-item sub-menu-list" id="shopMenu" data-cy="shopMenu" (click)="showShopMenu = !showShopMenu">
+            <div class="label-section">
+              <div class="name">
+                <p><img class="item-icon" src="assets/icon/cart.svg" alt="shop" /> Shop
+                </p>
+              </div>
+              <div class="toggle-side"> <i class="arrow primary"
+                  [ngClass]="{'down': !showShopMenu, 'up': !!showShopMenu}"></i></div>
+            </div>
+            <div class="menu-wrapper" [class.menuShown]="!!showShopMenu">
+              <ul class=" sub-menu">
+                <li class="item"><a
+                    [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="onLinkClick($event)">Plans</a></li>
+                <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="onLinkClick($event)">Devices</a></li>
+              </ul>
+            </div>
           </li>
           <li class="responsive-item">
             <img class="item-icon" src="assets/icon/mobile.svg" alt="bring your phone" />
@@ -103,10 +118,21 @@
     <div class="list-section desktop">
       <ul class="menu">
         <li class="menu-item"><a id="home-header" [routerLink]="[ROUTE_URLS.HOME]"
-            (click)="onLinkClick($event)">Home</a></li>
-        <li class="menu-item"><a id="shopMenu-header" data-cy="shopMenu"
-            [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+'/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
-            routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Shop</a>
+            (click)="onLinkClick($event)">Home</a>
+        </li>
+        <li class="menu-item" id="shopMenu-header" data-cy="shopMenu">Shop <img class="shop-arrow"
+            src="assets/icon/shop-arrow.svg" alt="Shop Arrow" />
+          <div class="shop-menu">
+            <img class="shop-menu-arrow" src="assets/icon/shop-menu-arrow.svg" alt="Shop Menu Arrow" />
+            <p class="item"><a
+                [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                (click)="onLinkClick($event)">Plans</a></p>
+            <div class="menu-border"></div>
+            <p class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                (click)="onLinkClick($event)">Devices</a></p>
+          </div>
         </li>
         <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header"
             [routerLink]="[ROUTE_URLS.BRING_PHONE]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
