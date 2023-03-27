@@ -27,7 +27,7 @@ const routes: Routes = [
     description: 'Your purchase with Good Mobile is successful'} as IPageMeta},
     {path: SHOP_ROUTE_URLS.CHECKOUT_SHORT, redirectTo: `${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`, pathMatch: 'full'},
     {path: SHOP_ROUTE_URLS.CART,component: CartComponent},
-    {path: SHOP_ROUTE_URLS.ACP_DEVICES, component: AcpDevicesComponent}
+    {path: SHOP_ROUTE_URLS.ACP_DEVICES, component: AcpDevicesComponent, canActivate: [AuthEmailGuardService]}
   ]}
 ];
 
