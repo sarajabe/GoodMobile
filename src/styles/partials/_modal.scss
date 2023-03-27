@@ -3590,6 +3590,17 @@
         display: none;
       }
     }
+    &.acp-device-modal{
+      .acp-desc{
+        max-width: 430px;
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 8px;
+      }
+      .primary {
+         min-width: 166px;
+      }
+    }
   }
 
   .modal-body {

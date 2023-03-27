@@ -79,19 +79,19 @@
             }
         }
         .devices-section {
-            margin-top: 56px;
+            margin-top: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             @media screen and (max-width: $phablet-min-width-minus) {
-                margin-top: 40px;
+                margin-top: 32px;
             }
             .top-section {
-                margin-bottom: 65px;
+                margin-bottom: 40px;
                 @media screen and (max-width: $phablet-min-width-minus) {
-                    margin-bottom: 45px;
+                    margin-bottom: 32px;
                 }
                 .label {
                     color: #5e5e5e;
@@ -109,6 +109,7 @@
                 .last-note {
                     font-weight: bold;
                     font-family: $secondary-font-family-bold;
+                    margin-bottom: 0;
                 }
             }
             .type-section {
