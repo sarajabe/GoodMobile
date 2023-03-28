@@ -76,9 +76,9 @@ export class AcpDevicesComponent implements OnInit {
   ngOnInit(): void {
     this.innerWidth = document.documentElement.clientWidth;
     if (!!this.isLoggedIn) {
-      const deviceITem = JSON.parse(sessionStorage.getItem('acp-device'));
-      if (!!deviceITem) {
-        this.checkSelelctDeviceBehavior(deviceITem);
+      const deviceItem = JSON.parse(sessionStorage.getItem('acp-device'));
+      if (!!deviceItem) {
+        this.checkSelectDeviceBehavior(deviceItem);
       }
     }
     this.getAcpDevices();
@@ -88,7 +88,7 @@ export class AcpDevicesComponent implements OnInit {
   }
   public selectDevice(item): void {
     if (!!this.isLoggedIn) {
-      this.checkSelelctDeviceBehavior(item);
+      this.checkSelectDeviceBehavior(item);
     } else {
       sessionStorage.setItem('acp-device', JSON.stringify(item));
       const params = {};
@@ -170,7 +170,7 @@ export class AcpDevicesComponent implements OnInit {
       }
     });
   }
-  private checkSelelctDeviceBehavior(item): void {
+  private checkSelectDeviceBehavior(item): void {
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive), filter((user) => !!user)).subscribe((user) => {
       if (!!user) {
         if (!user.ebbId) { this.showNoAcpDevicePopup(); }
