@@ -27,19 +27,19 @@
             .banner-img {
                 img {
                     position: absolute;
-                    left: 55%;
-                    max-width: 690px;
+                    left: 58%;
+                    max-width: 535px;
                     height: 556px;
                     top: 0;
                     @media(max-width: 1300px) {
                        left: 46%;
                     }
                     @media(max-width: $desktop-min-width-minus) {
-                        max-width: 473px;
+                        max-width: 400px;
                         left: 54%;
                     }
                     @media(max-width: 880px) {
-                        max-width: 403px;
+                        max-width: 320px;
                         left: 50%;
                     }
                     @media(max-width: $phablet-min-width-minus) {
@@ -715,6 +715,108 @@
                 }
                 .responsive-image {
                     display: none;
+                }
+            }
+        }
+    }
+    .acp-docs {
+        margin: 64px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        h2 {
+            text-align: center;
+        }
+        .docs-card {
+            background: #FBFBFB;
+            box-shadow: 0px 3px 15px rgba(41, 41, 41, 0.2);
+            border-radius: 10px;
+            padding: 24px 32px;
+            width: 100%;
+            margin-top: 48px;
+            .collapsable-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 16px;
+                h4 {
+                    flex-basis: 95%;
+                    text-align: center;
+                }
+                .img {
+                    flex-basis: 5%;
+                    display: flex;
+                    justify-content: flex-end;
+                    img {
+                        width: 25px;
+                        height: 23px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .intro {
+                margin-bottom: 16px;
+            }
+            .sub-content {
+                padding-left: 8px;
+            }
+            .mt-24 {
+                margin-top: 24px;
+            }
+            .sub-note {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 12px;
+                @media screen and (max-width: $desktop-min-width-minus) {
+                    align-items: baseline;
+                }
+                &.last {
+                    margin-bottom: 0px;
+                }
+                img {
+                    width: 16px;
+                    height: 16px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        width: 10px;
+                        height: 10px;
+                    }
+                }
+            }
+            .ordered-section {
+                margin-top: 24px;
+                .smaller {
+                    margin-bottom: 12px;
+                }
+                .smallest {
+                    max-width: 925px;
+                }
+                .sub-info {
+                    padding-left: 12px;
+                    margin-bottom: 12px;
+                    @media screen and (max-width: $phablet-min-width-minus) {
+                        padding-left: 8px;
+                    }
+                    .smaller {
+                        margin-bottom: 12px;
+                    }
+                    .info {
+                        display: flex;
+                        align-items: baseline;
+                        margin-bottom: 4px;
+                        p {
+                            margin-bottom: 0px;
+                            width: 100%;
+                        }
+                        .circle {
+                            border: solid 1px #74c0eb;
+                            border-radius: 50%;
+                            width: 10px;
+                            height: 10px;
+                            background: #74c0eb;
+                            margin-right: 8px;
+                        }
+                    }
                 }
             }
         }

@@ -101,7 +101,77 @@
     <div class="img-side">
       <img src="assets/img/acp-condition.svg" alt="acp conditions"/>
     </div>
-  </section> 
+  </section>
+  <section class="page-section acp-docs">
+    <h2 class="header-color">Essential documents applicants should have at hand when applying:</h2>
+    <div class="docs-card">
+      <div class="collapsable-header">
+        <h4 class="header-color">Proofs required</h4>
+        <div class="img">
+          <img [src]="hideCardContent ? 'assets/icon/path-down-icon.svg' : 'assets/icon/path-up-icon.svg'"
+          alt="arrow icon" (click)="hideCardContent = !hideCardContent">
+        </div>
+      </div>
+      <div class="content" >
+        <p class="intro">This guide identifies the documents you can submit to show that you qualify for the Affordable Connectivity Program (ACP). <a href="assets/ACP-documents.pdf" download="" *ngIf="!!hideCardContent"><b>View Documents</b></a> </p>
+        <div class="sub-content" *ngIf="!hideCardContent">
+          <div class="sub-note">
+            <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
+            <p class="smaller">Please make sure all of your documents are <b>current</b>. The National Verifier <b>CANNOT</b> accept <b>expired documentation.</b></p>
+          </div>
+          <div class="sub-note">
+            <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
+            <p class="smaller">Send <b>copies</b> or <b>pictures of your original, valid</b> documents. <b>NEVER</b> send the <b>original document</b>.</p>
+          </div>
+          <div class="ordered-section">
+            <p class="smaller"><b>1- Valid Government ID</b></p>
+            <p class="smaller">Provide documents such as:</p>
+            <div class="sub-info">
+              <div class="info">
+                <p class="circle"></p>
+                <p class="smallest">Military state or Tribal ID</p>
+              </div>
+              <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">U.S Driver’s License</p>
+              </div>
+              <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">Passport</p>
+              </div>
+              <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">Survivors Benefit Summary letter</p>
+              </div>
+            </div>
+            <p class="smallest">That includes <b>first & last name, date of birth, & future expiration date.</b></p>
+          </div>
+          <div class="ordered-section">
+            <p class="smaller"><b>2- Provide a letter or official document as a proof</b></p>
+            <p class="smaller">If you participate in one of the qualifying programs, you need to provide:</p>
+            <div class="sub-info">
+              <div class="info">
+                <p class="circle"></p>
+                <p class="smallest">Benefit award letter or Approval letter</p>
+              </div>
+              <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">Screenshot of online portal </p>
+              </div>
+              <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">Survivors Benefit Summary letter</p>
+              </div>
+            </div>
+            <p class="smallest">That clearly states the <b>name of the person</b> in the house hold <b>who qualifies</b>, name of the <b>program</b>, name of the <b>government</b> or <b>Tribal agency</b> that <b>issued the document</b>, & issue date within the past <b>12 months</b> or <b>future expiration date</b>.</p>
+          </div>
+        </div>
+        <p class="smaller mt-24" *ngIf="!hideCardContent">You can download a document with guiding examples to the documents needed for your next step:<br>
+          <a href="assets/ACP-documents.pdf" download=""><b>Download Guide</b></a>
+        </p>
+      </div>
+    </div>
+  </section>
   <section class="steps-section">
     <h2 class="title">Just 3 steps to sign up</h2>
     <div class="cards-container">
