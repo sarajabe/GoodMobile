@@ -8,7 +8,10 @@
                 <p class="text-color-primary primary-font-bold section-title"><span>Shop</span><i class="arrow primary" [ngClass]="{'down': !showShop, 'up': !!showShop}" ></i></p>
                 <ul class="section-menu">
                     <li class="section-link">
-                        <a class="caption" [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.PLANS_AND_FEATURES+ '/'+PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Cell phone plans</a>
+                        <a class="caption" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Cell phone plans</a>
+                    </li>
+                    <li class="section-link">
+                        <a class="caption" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</a>
                     </li>
                 </ul>
             </div>
