@@ -2,8 +2,9 @@ import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/cor
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAcpDevice, IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { CatalogCoreService } from '@ztarmobile/zwp-service-backend-v2';
+import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { filter, takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, LOGIN_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
@@ -43,17 +44,21 @@ export class AcpDevicesComponent implements OnInit {
 
   private pendingAcpPlan: IUserPlan;
   private alive = true;
-  changeDevice: boolean;
-  cart: CustomizableMobilePlan;
+  private changeDevice: boolean;
+  private cart: CustomizableMobilePlan;
+  private isLoggedIn = false;
 
   constructor(private catalogServices: CatalogCoreService,
     private appState: AppState, private toastHelper: ToastrHelperService, private route: ActivatedRoute,
     private cd: ChangeDetectorRef, private userPlansService: UserPlansService, private mobilePlansService: MobileCustomPlansService, private router: Router,
-    private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService) {
+    private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService, private simpleAuthService: SimpleAuthService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       this.acpPlan = plans.find((p) => p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
       this.pendingAcpPlan = plans.find((p) => !p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
       this.hasAcpPlan = !!this.acpPlan ? true : false;
+    });
+    this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => {
+      this.isLoggedIn = !!authState && !authState.isAnonymous;
     });
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[SHOP_ROUTE_URLS.PARAMS.CHANGE_DEVICE]) {
@@ -65,45 +70,31 @@ export class AcpDevicesComponent implements OnInit {
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.cart = plan;
     });
+
   }
 
   ngOnInit(): void {
     this.innerWidth = document.documentElement.clientWidth;
-    this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive), filter((user) => !!user)).subscribe((user) => {
-      if (!!user) {
-        if (!user.ebbId) { this.showNoAcpDevicePopup(); }
-        else if (!!user.ebbId) {
-          if (!!this.pendingAcpPlan) {
-            //pending acp plan
-            this.showPendingAcpDevicePopup();
-          } else if (!this.hasAcpPlan && !this.pendingAcpPlan) {
-            this.showNoAcpDevicePopup();
-          }
-        }
+    if (!!this.isLoggedIn) {
+      const deviceItem = JSON.parse(sessionStorage.getItem('acp-device'));
+      if (!!deviceItem) {
+        this.checkSelectDeviceBehavior(deviceItem);
       }
-    });
+    }
     this.getAcpDevices();
   }
   ngOnDestroy(): void {
     this.alive = false;
   }
   public selectDevice(item): void {
-    if (!!this.hasAcpPlan) {
-      if (this.cart && this.cart.cartType !== CART_TYPES.GENERIC_CART) {
-        this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-        .afterClosed().subscribe((result) => {
-          if (!!result) {
-            this.clearCart();
-            setTimeout(() => {
-              this.addDeviceToCart(item);
-            }, 500);
-          }
-        });
-      } else {
-        this.addDeviceToCart(item);
-      }
+    if (!!this.isLoggedIn) {
+      this.checkSelectDeviceBehavior(item);
+    } else {
+      sessionStorage.setItem('acp-device', JSON.stringify(item));
+      const params = {};
+      params[LOGIN_ROUTE_URLS.PARAMS.NEXT_PAGE] = `${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`;
+      this.router.navigate([`${LOGIN_ROUTE_URLS.BASE}/${LOGIN_ROUTE_URLS.LOGIN}`, params]);
     }
-
   }
   private clearCart(): void {
     this.appState.clearSessionStorage();
@@ -120,6 +111,7 @@ export class AcpDevicesComponent implements OnInit {
     } else {
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
     }
+    this.removeAcpDevice();
   }
   private createSwiper(): void {
     const swiper = new Swiper('.acp-devices', {
@@ -163,8 +155,7 @@ export class AcpDevicesComponent implements OnInit {
     this.modalHelper.showACPModal('Looking for ACP device benefits?', customHTML, 'Get ACP Now!', null, 'acp-device-modal', true).afterClosed().subscribe((data) => {
       if (!!data) {
         this.router.navigate([`${ACP_ROUTE_URLS.BASE}`]);
-      } else {
-        this.router.navigate([ROUTE_URLS.HOME]);
+        this.removeAcpDevice();
       }
     });
   }
@@ -175,10 +166,41 @@ export class AcpDevicesComponent implements OnInit {
     this.modalHelper.showACPModal('ACP Device Discount', customHTML, 'ACP Summary', null, 'acp-device-modal', true).afterClosed().subscribe((data) => {
       if (!!data) {
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
-      } else {
-        this.router.navigate([ROUTE_URLS.HOME]);
+        this.removeAcpDevice();
       }
     });
+  }
+  private checkSelectDeviceBehavior(item): void {
+    this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive), filter((user) => !!user)).subscribe((user) => {
+      if (!!user) {
+        if (!user.ebbId) { this.showNoAcpDevicePopup(); }
+        else if (!!user.ebbId) {
+          if (!!this.pendingAcpPlan) {
+            //pending acp plan
+            this.showPendingAcpDevicePopup();
+          } else if (!this.hasAcpPlan && !this.pendingAcpPlan) {
+            this.showNoAcpDevicePopup();
+          } else if (!!this.hasAcpPlan) {
+            if (this.cart && this.cart.cartType !== CART_TYPES.GENERIC_CART) {
+              this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
+                .afterClosed().subscribe((result) => {
+                  if (!!result) {
+                    this.clearCart();
+                    setTimeout(() => {
+                      this.addDeviceToCart(item);
+                    }, 500);
+                  }
+                });
+            } else {
+              this.addDeviceToCart(item);
+            }
+          }
+        }
+      }
+    });
+  }
+  private removeAcpDevice(): void {
+    sessionStorage.removeItem('acp-device');
   }
   @HostListener('window:resize', ['$event'])
   onResize(event): void {

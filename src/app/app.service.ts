@@ -67,6 +67,7 @@ export class AppState {
     sessionStorage.removeItem('checkedDevice');
     sessionStorage.removeItem('phone');
     sessionStorage.removeItem('navigatedToPayment');
+    sessionStorage.removeItem('acp-device');
   }
 
   public setJsonLdData(data): any {
