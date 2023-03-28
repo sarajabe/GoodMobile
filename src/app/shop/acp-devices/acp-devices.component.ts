@@ -181,7 +181,7 @@ export class AcpDevicesComponent implements OnInit {
           } else if (!this.hasAcpPlan && !this.pendingAcpPlan) {
             this.showNoAcpDevicePopup();
           } else if (!!this.hasAcpPlan) {
-            if (this.cart && this.cart.cartType !== CART_TYPES.GENERIC_CART) {
+            if (!!this.cart && this.cart.cartType === CART_TYPES.NEW_PLAN) {
               this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
                 .afterClosed().subscribe((result) => {
                   if (!!result) {
