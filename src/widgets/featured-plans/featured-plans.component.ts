@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit,HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit,HostListener, ChangeDetectorRef } from '@angular/core';
 import { IBasePlan, MobilePlanItem, PlansConfigurationService } from '@ztarmobile/zwp-service-backend';
 import { FadeInOutAnimation } from '../../app/app.animations';
 import { Options } from 'ng5-slider';
 import { take } from 'rxjs/operators'
 import { Router } from '@angular/router';
 import { SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app/app.routes.names';
-import Swiper, { Autoplay, EffectFade, Keyboard, Mousewheel, Navigation } from 'swiper';
+import Swiper, { Autoplay, EffectFade, Keyboard, Navigation } from 'swiper';
 
 @Component({
   selector: 'app-featured-plans',
@@ -21,7 +21,7 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit{
     slidesPerColumn: 1,
     direction: 'horizontal',
     keyboard: true,
-    mousewheel: true,
+    mousewheel: false,
     scrollbar: false,
     navigation: {
       nextEl: '.swiper-button-next',
@@ -43,7 +43,8 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit{
   public options: Options;
   private allBasePlans: Array<IBasePlan>;
 
-  constructor(private plansConfigurationService: PlansConfigurationService, private router: Router) {
+  constructor(private plansConfigurationService: PlansConfigurationService, private router: Router,
+    private cd: ChangeDetectorRef) {
     this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
       this.allBasePlans = conf.allPlans;
       this.featuredPlans = this.allBasePlans.filter((plan) => plan.featured && !plan.archived );
@@ -66,20 +67,26 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit{
 
   }
   ngAfterViewInit(): void {
+    if (this.innerWidth < 640) {
     this.createSwiper();
+    }
   }  
   public createSwiper(): void {
-    const swiper = new Swiper('.swiper-container', {
+    const swiper = new Swiper('.featured', {
       hashNavigation: true,
       lazy: true,
       preloadImages: true,
-      modules: [Navigation, EffectFade, Keyboard, Autoplay, Mousewheel],
+      modules: [Navigation, EffectFade, Keyboard, Autoplay],
       autoplay:{
-        delay: 8000, // 8 seconds
+        delay: 10000,
         disableOnInteraction: false
       },
       ...this.config
     });
+    this.cd.detectChanges();
+    setTimeout(() => {
+      swiper.update();
+    }, 200);
   }
 
   public viewAllPlans() {
@@ -89,7 +96,10 @@ export class FeaturedPlansComponent implements OnInit, AfterViewInit{
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.innerWidth = document.documentElement.clientWidth;
+    if (this.innerWidth < 640) {
       this.createSwiper();
+      this.cd.detectChanges();
+    }
   }
 }
 

@@ -38,10 +38,11 @@ export class BannersComponent implements OnInit {
   constructor(private router: Router) {
   }
   ngOnInit(): void {
-    let swiper = new Swiper('.swiper-container', {
+    let swiper = new Swiper('.banners', {
       // Enable lazy loading
       lazy: true,
       preloadImages: true,
+      mousewheel: false,
       modules: [Navigation, EffectFade, Autoplay],
       hashNavigation: true,
       autoplay: {
