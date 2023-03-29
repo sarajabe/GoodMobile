@@ -306,6 +306,9 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         this.actionsAnalyticsService.trackItemSucceededPurchase(response.orderId, cart, taxes, fees, SIMDetails.shippingCost, SIMDetails.simPrice, SIMDetails.simId);
         params[SHOP_ROUTE_URLS.PARAMS.SUCCESSFUL_PURCHASE] = 'both';
         params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = response.orderId;
+        if(!!cart?.storePickup) {
+          params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
+        }
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
         this.appState.clearSessionStorage();
       }, (error) => reject(error));
@@ -513,6 +516,15 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION]=true;
         }
         params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = response.orderId;
+        setTimeout(() => {
+          if(!!currentPlan?.acpDevice && !!response?.userPlanId) {
+            this.userPlanService.getUserPlan(response.userPlanId).then((p) => {
+              const plan = p;
+              plan.acpDevice = currentPlan.acpDevice;
+              this.userPlanService.updateUserPlan(p.userId, plan);
+            });
+          }
+        }, 200);
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
         this.appState.clearSessionStorage();
       }, (error) => reject(error));
