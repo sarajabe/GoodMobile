@@ -75,7 +75,7 @@
           </div>
           <div *ngIf="!!purchasedPlan && !isStorePickup && !isAcpDevice">
             <p class="smaller top-note">Lookout for your <b>new SIM Card</b> in the mail!</p>
-            <p class="last-note">
+            <p class="smaller last-note">
               Once your SIM card <b>arrives</b> in a couple of days, we will help you get your SIM card <b>activated</b>
               with a brand new phone number, or transfer your active number (port in) from another provider. You can
               view your plan details and activate it through your <b>Purchased Plans</b> page.
@@ -89,7 +89,7 @@
         </ng-container>
         <ng-container *ngIf="!!isActivationFlow">
           <p class="smaller top-note">You can <b>activate</b> your plan right now.</p>
-          <p class="last-note">You may now <b>proceed to activate</b> your plan and SIM in the next step!
+          <p class="smaller last-note">You may now <b>proceed to activate</b> your plan and SIM in the next step!
             Or at your convenience from your <b>Purchased Plans</b> page at any time!</p>
           <div class="result-actions flex-actions">
             <button class="button primary smaller" (click)="goToActivation()">
@@ -102,7 +102,7 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="!!isChangePlanSummary && !isOrderSim && !isPlanAddon">
-        <p class="last-note change">Note that it may take several minutes for the new plan services to fully set on the
+        <p class="smaller last-note change">Note that it may take several minutes for the new plan services to fully set on the
           network. Please refresh your <b>Account Summary</b> page in a few minutes to see the new data balances.</p>
         <p class="smaller last-note" *ngIf="nextCycle && !!selectedUserPlan?.basePlan">Effective on
           {{selectedUserPlan.basePlan.renewDate | date}}</p>
@@ -116,7 +116,7 @@
         </div>
       </ng-container>
       <ng-container *ngIf="!isChangePlanSummary && !isOrderSim && !!isPlanAddon">
-        <p class="last-note">You can view your plan and add-on details through your
+        <p class="smaller last-note addon">You can view your plan and add-on details through your
           <b>Account Summary</b> page.
         </p>
         <div class="result-actions">
@@ -128,7 +128,7 @@
       <ng-container *ngIf="!!isOrderSim && !isPlanAddon && !isChangePlanSummary">
         <div *ngIf="!isStorePickup">
           <h5 class="top-note">Lookout for your <b>Replacement SIM Card</b> in the mail!</h5>
-          <p class="last-note">You can view your plan details and activate it through your <b>Account Summary</b> page.
+          <p class="smaller last-note">You can view your plan details and activate it through your <b>Account Summary</b> page.
           </p>
           <div class="result-actions">
             <button class="button primary" (click)="goToAccountSummary(true)" data-cy="goToSummaryBtn">
@@ -150,7 +150,7 @@
       </ng-container>
       <ng-container *ngIf="!!isSuccessfulMultiplePurchases">
         <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !!isStorePickup">
-          <p class="last-note">You can find your <b>in-store pickup barcode</b> in your <b>Order Details</b> page, to
+          <p class="smaller last-note">You can find your <b>in-store pickup barcode</b> in your <b>Order Details</b> page, to
             provide it for the store clerk for your order pickup.</p>
           <div class="result-actions">
             <button class="button primary" (click)="goToOrderDetails(orderId)">
@@ -160,7 +160,7 @@
         </div>
         <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !isStorePickup">
           <h5 class="top-note">Look out for your <b>Replacement SIM Card</b> in the mail!</h5>
-          <p class="last-note">You can view your plan add-ons and details and activate your plan through your <b>Account
+          <p class="smaller last-note">You can view your plan add-ons and details and activate your plan through your <b>Account
               Summary page.</b></p>
           <div class="result-actions">
             <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
@@ -170,7 +170,7 @@
         </div>
         <div *ngIf="isSuccessfulMultiplePurchases == 'addon' && !isStorePickup">
           <h5 class="top-note">New SIM purchase Failed!</h5>
-          <p class="last-note">Your SIM has
+          <p class="smaller last-note">Your SIM has
             <strong>NOT</strong> been successfully ordered, please try again
           </p>
           <div class="result-actions">
