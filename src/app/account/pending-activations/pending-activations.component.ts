@@ -15,6 +15,7 @@ import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AccountHeaderService, AccountPageDescription } from '../account-header.service';
 import { ClipboardService } from 'ngx-clipboard';
+import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 
 @Component({
   selector: 'app-pending-activations',
@@ -54,6 +55,8 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public newSimOrder: { price: number, fees: number, id?: string };
   public orderPicked = false;
   public iccid;
+  public stores = [];
+  public viewStores = false;
   private userId: string;
   private alive = true;
   activationCode: Params;
@@ -73,6 +76,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
               private route: ActivatedRoute,
               private shippingConfigurationService: ShippingConfigurationService,
               private accountOrderService: UserOrdersService,
+              private lookupsService: LookupsService,
               private clipboardService: ClipboardService) {
               
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
@@ -122,6 +126,14 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       }
       if(!!this.currentUserPlan?.storePickup) {
         this.getOrderDetails();
+        this.lookupsService.getAvailableStores().then(stores => {
+          if(stores?.storesLocations?.length > 0) {
+            this.stores = stores?.storesLocations;
+          }
+        }, error => {
+          this.toastHelper.showAlert(error.error.errors[0].message);
+    
+        })
       } else {
         this.iccid = null;
         this.orderPicked = false;

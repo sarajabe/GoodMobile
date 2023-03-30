@@ -100,7 +100,17 @@
                             <div class="flex">
                                 <img src="assets/icon/info-icon.svg" alt="Info Icon">
                                 <div class="banner-content">
-                                    <p class="smallest">Check with the store clerk to pick up your package</p>
+                                    <p class="smallest mt-4">Check with the store clerk to pick up your package <span (click)="viewStores = !viewStores" class="view-store">{{!!viewStores ? 'Hide' : 'View'}} Stores</span></p>
+                                    <div class="stores-list" *ngIf="!!viewStores">
+                                        <div *ngFor="let store of stores" class="store">
+                                            <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                                            <div class="store-details">
+                                             <h4 class="store-name">{{store?.name}}</h4>
+                                             <p class="smallest">{{store?.address1}}</p>
+                                             <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                                            </div>
+                                          </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
