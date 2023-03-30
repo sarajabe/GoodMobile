@@ -2,454 +2,150 @@
 @import "../../../styles/modules/_mixins.scss";
 
 .checkout-result-page-section {
-  .checkout-result {
-    text-align: center;
-    margin-bottom: 90px;
-
-    .col-12 {
-      @media (max-width: $desktop-min-width-minus) {
-        padding: 0;
-      }
-
-      @media (max-width: $phablet-min-width-minus) {
-        padding: 0 16px;
-      }
-    }
-  b {
-    font-family: $base-font-family-bold;
+  margin: 40px auto;
+  @media screen and (max-width: $phablet-min-width-minus) {
+    margin: 32px auto;
   }
-    .header {
-      text-align: center;
-      font-family: $secondary-font-family-bold;
-      font-size: rem-calc(38px);
-      line-height: 1.32;
-      margin-bottom: 10px;
-      margin-top: 30px;
-
-      @media (max-width: $phablet-min-width-minus) {
-
-        font-size: rem-calc(24px);
-        line-height: 32px;
+  .img-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 48px;
+    @media screen and (max-width: $phablet-min-width-minus) {
+      margin-bottom: 32px;
+    }
+    .banner-image-container {
+      img {
+        width: 100%;
+        object-fit: cover;
+        height: 400px;
       }
     }
-
-    .description {
-      font-size: rem-calc(20px);
-      font-family: $base-font-family;
-      line-height: 1.25;
+    .title-section {
+      text-align: center;
+      position: absolute;
+      top: 20px;
+      @media screen and (max-width: $phablet-min-width-minus) {
+        top: 18px;
+      }
+      .title {
+        margin-bottom: 12px;
+        color: $header-color;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          margin-bottom: 4px;
+        }
+      }
+      .sub-title {
+        margin-bottom: 0;
+        font-weight: normal;
+        font-family: $secondary-font-family;
+        max-width: 503px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          max-width: 300px;
+        }
+      }
     }
-
-    .note {
-      max-width: 633px;
-      margin: 25px auto 35px;
-
-      .note-description {
-        font-size: rem-calc(20px);
-        font-family: $base-font-family;
-        line-height: 1.25;
+  }
+  .result-details-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .info-banner {
+      max-width: 580px;
+      width: 100%;
+      margin-bottom: 32px;
+      @media screen and (max-width: $phablet-min-width-minus) {
+        margin-bottom: 24px;
+      }
+      .title {
+        margin-bottom: 8px;
+      }
+      .banner-note {
+        margin-bottom: 20px;
+        font-weight: normal;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          margin-bottom: 16px;
+        }
+      }
+      .banner-link {
         margin-bottom: 0;
       }
     }
-
-    .success-banner {
-      box-shadow: 0px 3px 4px 0px #EAEAEA40;
-      background: #E6F6EE;
-      padding: 24px;
+    .result-info {
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-direction: column;
-      margin: 40px auto 24px;
-      max-width: 945px;
-      border-radius: 8px;
-
-      &.centered {
-        max-width: 585px;
-      }
-
-      .title {
-        font-size: rem-calc(20px);
-        font-family: $secondary-font-family-bold;
-        line-height: 28px;
-        margin-bottom: 6px;
-        display: flex;
-        gap: 8px;
-
-        img {
-          width: 26px;
-          height: 26px;
-        }
-      }
-
-      .banner-note {
-        font-size: rem-calc(16px);
-        line-height: 24px;
-        margin-bottom: 6px;
-      }
-
-      @media(max-width: $phablet-min-width-minus) {
-        align-items: flex-start;
-        padding: 16px;
-
-        .title {
-          text-align: left;
-        }
-
-        .banner-note {
-          padding-left: 33px;
-          font-size: rem-calc(14px);
-          line-height: 24px;
-        }
-      }
-    }
-
-    .result-actions {
-      display: flex;
-      gap: 16px;
-      margin-top: 24px;
       align-items: center;
       justify-content: center;
-
-      .button {
-        padding: 8px;
-        font-weight: bold;
-        width: 236px;
-        &.smaller {
-          width: 183px;
+      text-align: center;
+      .top-note {
+        margin-bottom: 16px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          margin-bottom: 12px;
         }
       }
-
-      @media(max-width: $phablet-min-width-minus) {
-        flex-direction: column;
-        margin-bottom: 30px;
-
-        .button {
-          width: 183px;
-        }
+      .acp-top-note {
+        margin-bottom: 0;
       }
-    }
-
-    .centered {
-      max-width: 585px;
-      margin: 0 auto;
-    }
-
-    .top {
-      margin-top: 12px;
-    }
-    .info {
-      font-size: rem-calc(18px);
-      line-height: 28px;
-      margin: 0 auto 10px;
-      max-width: 945px;
-      text-align: left;
-      &.extra {
-        margin-bottom: 12px;
-      }
-      &.noSpace {
-        margin-bottom: 0px;
-      }
-      @media(max-width: $phablet-min-width-minus) {
-        font-size: rem-calc(16px);
-        line-height: 28px;
-      }
-    }
-
-    .change-note {
-      font-size: rem-calc(13px);
-      font-family: $base-font-family;
-      line-height: 18px;
-      margin-bottom: 0;
-
-      span {
-        display: block;
-
-        @media (max-width: $phablet-min-width-minus) {
-          display: inline;
-        }
-      }
-    }
-
-    .image {
-      img {
-        width: 270px;
-        height: 146px;
-      }
-    }
-
-    .actions {
-      .button {
-        width: 213px;
-        padding: 10px;
-        font-size: rem-calc(20px);
-        font-family: $secondary-font-family;
-      }
-    }
-
-    .phone-section {
-      margin-top: 70px;
-
-      .phone-icon {
-        background-color: $blue;
-        border-radius: 100px;
+      .stores-card {
+        background: #fbfbfb;
+        border-radius: 0px 0px 10px 10px;
+        max-width: 564px;
+        width: 100%;
+        padding: 32px 24px;
         margin: 0 auto;
-        width: 52.8px;
-        height: 52.8px;
-        padding: 10px;
-
-        img {
-          width: 17.6px;
-          height: 29.6px;
+        margin-bottom: 32px;
+        display: flex;
+        flex-wrap: wrap;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          margin-bottom: 24px;
+          padding: 20px 16px;
+          flex-direction: column;
         }
-      }
-
-      .phone-image {
-        margin: 0 auto 30px;
-
-        img {
-          width: 54.1px;
-          height: 105px;
-        }
-      }
-
-      .description {
-        .title {
-          font-size: rem-calc(25px);
-          line-height: 1.25;
-          font-weight: bold;
-        }
-
-        .description-text {
-          font-size: rem-calc(20px);
-          font-family: $secondary-font-family;
-          line-height: 1.25;
-          max-width: 492px;
-          margin: 30px auto 55px;
-
-          &.base {
-            line-height: 1.25;
-            font-family: $base-font-family;
+        .stores {
+          display: flex;
+          align-items: flex-start;
+          margin-right: 50px;
+          @media screen and (max-width: $phablet-min-width-minus) {
+            margin-right: 0;
+            margin-bottom: 24px;
           }
-        }
-
-        .description-device {
-          font-size: rem-calc(18px);
-          font-family: $secondary-font-family;
-          line-height: 24px;
-          max-width: 230px;
-          font-weight: 500;
-          margin: 10px auto;
-
-          &.details {
-            margin: 20px auto 0;
-
-            &:last-child {
-              margin: 0 auto 30px;
-            }
+          &.last-store {
+            margin-bottom: 0;
           }
-
-          &.image {
-            img {
-              height: 105px;
-              width: 60px;
-            }
+          .store-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
           }
-        }
-      }
-
-      .phone-actions {
-        .button {
-          width: 216px;
-          padding: 10px;
-          font-size: rem-calc(20px);
-
-          &.primary {
-            margin-left: 15px;
-          }
-
-          &.purchase {
-            display: block;
-            margin: 0 auto 30px;
-          }
-
-          &.change-button {
-            width: 213px;
-            margin: 0 auto;
-            font-size: rem-calc(20px);
-            line-height: 27px;
-          }
-        }
-
-        .change {
-          font-size: rem-calc(18px);
-          font-family: $base-font-family;
-          margin: 0 auto;
-        }
-      }
-    }
-
-    @media (max-width: 1025px) {
-      .description {
-        font-size: rem-calc(15px);
-        line-height: 25px;
-        max-width: 100%;
-        margin: 15px auto 25px;
-      }
-
-      .note {
-        max-width: 486.9px;
-        margin: 35px auto;
-
-        .note-description {
-          font-size: rem-calc(15px);
-          line-height: 25px;
-          margin-bottom: 0;
-        }
-      }
-
-      .actions {
-        .button {
-          font-size: rem-calc(16px);
-          line-height: 21px;
-        }
-      }
-
-      .phone-section {
-        .phone-image {
           img {
-            width: 44.3px;
-            height: 85.9px;
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
           }
-        }
-
-        .description {
-          .title {
-            font-size: rem-calc(20px);
-            line-height: 25px;
-          }
-
-          .description-text {
-            font-size: rem-calc(15px);
-            line-height: 25px;
-            max-width: 399px;
-          }
-
-          .description-device {
-            font-size: rem-calc(20px);
-            line-height: 27px;
-            max-width: 270px;
-          }
-        }
-
-        .phone-actions {
-          .change-button {
-            font-size: rem-calc(16px);
-          }
-
-          .purchase {
-            font-size: rem-calc(16px);
-          }
-
-          .change {
-            font-size: rem-calc(14px);
-            line-height: 19px;
+          .store-name {
+            margin-bottom: 8px;
           }
         }
       }
-    }
-
-    @media (max-width: $phablet-min-width) {
-      margin-bottom: 35px;
-      padding: 0;
-
-      .description {
-        font-size: rem-calc(17px);
-        line-height: 1.29;
-        max-width: 316px;
-        margin: 25px auto;
-      }
-
-      .note {
-        max-width: 316px;
-        margin: 25px auto 40px;
-
-        .note-description {
-          font-size: rem-calc(17px);
-          line-height: 27px;
-          margin-bottom: 0;
+      .last-note {
+        margin-bottom: 24px;
+        max-width: 700px;
+        &.addon{
+          max-width: 450px;
+        }
+        &.change {
+          margin-bottom: 12px;
         }
       }
-
-      .actions {
-        .button {
-          width: 220px;
-          font-size: rem-calc(20px);
-        }
-      }
-
-      .phone-section {
-        margin-top: 30px;
-
-        .phone-icon {
-          width: 38px;
-          height: 38px;
-          padding: 7px;
-
-          img {
-            width: 12.6px;
-            height: 21.3px;
-          }
-        }
-
-        .phone-image {
-          img {
-            width: 54.1px;
-            height: 105px;
-          }
-        }
-
-        .description {
-          .title {
-            font-size: rem-calc(20px);
-            line-height: 25px;
-            margin-bottom: 25px;
-          }
-
-          .description-text {
-            font-size: rem-calc(18px);
-            line-height: 1.33;
-            max-width: 302px;
-            margin: 0 auto;
-
-            &.base {
-              line-height: 1.39;
-              max-width: 315px;
-              margin: 0 auto 35px;
-            }
-          }
-
-          .description-device {
-            max-width: 270px;
-          }
-        }
-
-        .phone-actions {
-          .button {
-            margin: 20px auto;
-            display: block;
-
-            &.primary {
-              margin: 15px auto;
-            }
-
-            &.change-button {
-              width: 213px;
-              font-size: rem-calc(20px);
-            }
-
-            &.purchase {
-              font-size: rem-calc(20px);
-            }
+      .result-actions {
+        &.flex-actions {
+          display: flex;
+          gap: 12px;
+          @media screen and (max-width: $phablet-min-width-minus) {
+            flex-direction: column;
           }
         }
       }
