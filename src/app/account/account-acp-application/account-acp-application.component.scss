@@ -103,6 +103,40 @@
             &.none {
                 display: none;
             }
+
+            &.device {
+                margin-top: 28px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-top: 24px;
+                }
+
+                .flex {
+                    position: relative;
+
+                    img {
+                        width: 50px;
+                        height: 50px;
+
+                        @media (max-width: $phablet-min-width-minus) {
+                            width: 40px;
+                            height: 40px;
+                        }
+                    }
+
+                    .position-img {
+                        width: 41px;
+                        height: 26px;
+                        position: absolute;
+                        right: 0;
+
+                        @media (max-width: $phablet-min-width-minus) {
+                            width: 35px;
+                            height: 22px;
+                        }
+                    }
+                }
+            }
         }
 
         .acp-application-card {

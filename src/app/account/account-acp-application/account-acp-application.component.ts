@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FirebaseUserProfileService, IUser, IUserAccount, IUserPlan, UserAccountService, UserOrdersService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, IEbbDetails, IVerificationRes } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, take, takeWhile } from 'rxjs/operators';
-import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ACP_CALLBACK_URL } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
@@ -74,6 +74,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showSPCard = false;
   public showCardDesc = false;
   public showAlert = false;
+  public ACP_DEVICE_DESCS = {};
   public ACP_DESCS = {};
   public ACP_PLAN_DESCS = {};
   public NV_DESCS = {};
@@ -89,6 +90,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public barCodeValue;
   public fileUrls = [];
   public internalData: IVerificationRes;
+  public acpDeviceCase: string;
 
   private callBackUrl: string;
   private alive = true;
@@ -134,6 +136,35 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   }
 
   ngAfterContentChecked(): void {
+    this.ACP_DEVICE_DESCS = {
+      'ENROLLED_ACP_CASE': {
+        imgPath1: `assets/icon/hooray-icon.svg`,
+        imgPath2: `assets/icon/hooray2-icon.svg`,
+        title: `Hooray!`,
+        desc1: `You are eligible for a <b>$100</b> discount on a new device from our catalog!`,
+        desc2: `Hurry up and get yours today!`,
+        buttonName: 'Claim your Device',
+        buttonAction: 'goToAcpDevices'
+      },
+      'PENDING_NV_CASE': {
+        imgPath1: `assets/icon/looking-benefits-icon.svg`,
+        imgPath2: null,
+        title: `Looking for ACP device benefits?`,
+        desc1: `Look no further!<br>Please finish your <b>ACP enrollment</b> and <b>activation</b> to claim up to <b>$100</b> discount on a new device!`,
+        desc2: `Don’t miss out!`,
+        buttonName: null,
+        buttonAction: null
+      },
+      'PENDING_ACP_CASE': {
+        imgPath1: `assets/icon/hooray-icon.svg`,
+        imgPath2: `assets/icon/hooray2-icon.svg`,
+        title: `Hurry up!`,
+        desc1: `<b>Activate</b> your ACP plan now and claim up to <b>$100</b> discount on a new device from our catalog!`,
+        desc2: null,
+        buttonName: null,
+        buttonAction: null
+      }
+    }
     this.ACP_DESCS = {
       'In Progress': {
         title: 'Application in progress',
@@ -507,11 +538,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   }
   public addNewLine(): void {
     this.router.navigate([`${ACP_ROUTE_URLS.BASE}/${ACP_ROUTE_URLS.ENROLLMENT_NEW_LINE}`]);
-
   }
   public selectExistingLine(): void {
     this.router.navigate([`${ACP_ROUTE_URLS.BASE}/${ACP_ROUTE_URLS.ENROLLMENT_EXISTING_LINE}`]);
-
   }
   public goToAcp(): void {
     window.open(`${this.verificationDetails?.link}`, "_self");
@@ -521,10 +550,12 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   }
   public goToContactUs(): void {
     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.CONTACT_US}`]);
-
   }
   public showBarCodePopup(): void {
     this.modalHelper.showBarcodeModal('Scan the barcode', 'Check with the store clerk to proceed', this.barCodeValue);
+  }
+  public goToAcpDevices(): void {
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
   }
   public downloadFiles(): void {
     if (this.fileUrls.length > 0) {
@@ -637,8 +668,12 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.appDetails.updatedAt = this.acpPlan?.updatedAt;
               if (!this.isActivatedAcpPlan) {
                 this.planActivationStatus = 'PENDING_ACTIVATION';
+                this.acpDeviceCase = 'PENDING_ACP_CASE';
               } else if (!!this.isActivatedAcpPlan) {
                 this.planActivationStatus = 'ENROLLED';
+                if (!this.acpPlan?.acpDevice) {
+                  this.acpDeviceCase = 'ENROLLED_ACP_CASE';
+                }
               }
             } else {
               this.ebbService.getACPApplicationStatus(this.userProfile.ebbId, this.userProfile.customerId, this.callBackUrl).then((details) => {
@@ -660,12 +695,16 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                       } else {
                         this.planActivationStatus = 'PENDING';
                       }
+                      this.acpDeviceCase = 'PENDING_ACP_CASE';
                     }
                   }
                   this.showNVCard = true;
                   this.verificationDetails = details;
                   this.createdDate = details.createdAt;
                   this.nvStatus = this.verificationDetails?.status;
+                  if (!!this.nvStatus && this.nvStatus !== this.ACP_STATUS.COMPLETE) {
+                    this.acpDeviceCase = 'PENDING_NV_CASE';
+                  }
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION) {
                     this.showQrCode = true;
                     this.getInternalData();
