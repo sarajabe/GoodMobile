@@ -21,6 +21,28 @@
         </div>
     </div>
 
+    <div class="info-banner default-background device" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]">
+        <div class="flex">
+            <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
+                alt="Icon">
+            <div class="banner-content">
+                <p class="title" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
+                    {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
+                <p class="description" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
+                    [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"></p>
+                <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
+                    [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
+                <div class="actions" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName">
+                    <button class="button primary" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
+                        (click)="this[ACP_DEVICE_DESCS[acpDeviceCase]?.buttonAction]()">
+                        {{ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName}}</button>
+                </div>
+            </div>
+            <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" class="position-img"
+                [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" alt="Icon">
+        </div>
+    </div>
+
     <div class="acp-application-card" *ngIf="!!showAcpApplicationCard">
         <div class="card-header-part">
             <div class="header-flex no-margin">
