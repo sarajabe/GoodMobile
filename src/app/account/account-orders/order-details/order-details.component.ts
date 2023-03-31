@@ -121,8 +121,8 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     if(!!order?.storePickup) {
       params[ACCOUNT_ROUTE_URLS.PARAMS.STORE_PICKUP] = order?.storePickup;
       params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_STATUS] = order?.status;
-      if(!!order?.cards && order?.cards?.length > 0) {
-        params[ACCOUNT_ROUTE_URLS.PARAMS.ITEM_ID] = order?.cards[0]?.itemId;
+      if(!!order?.cards && order?.cards?.length > 0 || !!order?.devices && order?.devices?.length > 0) {
+        params[ACCOUNT_ROUTE_URLS.PARAMS.ITEM_ID] = !!order?.cards && order?.cards?.length > 0 ? order?.cards[0]?.itemId : order?.devices[0]?.itemId;
       }
     }
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS_RECEIPT_DETAILS}`, params]);

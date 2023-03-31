@@ -53,7 +53,7 @@ export class AcpDevicesComponent implements OnInit {
     private cd: ChangeDetectorRef, private userPlansService: UserPlansService, private mobilePlansService: MobileCustomPlansService, private router: Router,
     private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService, private simpleAuthService: SimpleAuthService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
-      this.acpPlan = plans.find((p) => p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
+      this.acpPlan = plans.find((p) => p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb && !p.canceled);
       this.pendingAcpPlan = plans.find((p) => !p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
       this.hasAcpPlan = !!this.acpPlan ? true : false;
     });
@@ -170,6 +170,15 @@ export class AcpDevicesComponent implements OnInit {
       }
     });
   }
+  private showExistingAcpDevicePopup(): void {
+    const customHTML = `
+    <p class="acp-desc">You have already claimed your ACP device benefits.<p>`;
+    this.modalHelper.showACPModal('ACP Device Claimed', customHTML, 'ACP Summary', null, 'acp-device-modal', true).afterClosed().subscribe((data) => {
+      if (!!data) {
+        this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
+      }
+    });
+  }
   private checkSelectDeviceBehavior(item): void {
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive), filter((user) => !!user)).subscribe((user) => {
       if (!!user) {
@@ -181,18 +190,22 @@ export class AcpDevicesComponent implements OnInit {
           } else if (!this.hasAcpPlan && !this.pendingAcpPlan) {
             this.showNoAcpDevicePopup();
           } else if (!!this.hasAcpPlan) {
-            if (!!this.cart && this.cart.cartType === CART_TYPES.NEW_PLAN) {
-              this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-                .afterClosed().subscribe((result) => {
-                  if (!!result) {
-                    this.clearCart();
-                    setTimeout(() => {
-                      this.addDeviceToCart(item);
-                    }, 500);
-                  }
-                });
+            if (!this.acpPlan.acpDevice) {
+              if (!!this.cart && this.cart.cartType === CART_TYPES.NEW_PLAN) {
+                this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
+                  .afterClosed().subscribe((result) => {
+                    if (!!result) {
+                      this.clearCart();
+                      setTimeout(() => {
+                        this.addDeviceToCart(item);
+                      }, 500);
+                    }
+                  });
+              } else {
+                this.addDeviceToCart(item);
+              }
             } else {
-              this.addDeviceToCart(item);
+              this.showExistingAcpDevicePopup();
             }
           }
         }

@@ -293,7 +293,7 @@
                     <div class="card-header-section">
                         <h2 class="card-header">Order Summary</h2>
                         <p class="action" data-cy="viewInvoice" (click)="goToReceiptDetails(orderInfo)"
-                            *ngIf="!!orderInfo?.paymentSuccessful && !orderInfo?.devices"><img class="icon"
+                            *ngIf="!!orderInfo?.paymentSuccessful && !orderInfo?.paymentMethod"><img class="icon"
                                 src="assets/icon/primary-invoice.svg"><span>View Invoice</span></p>
                     </div>
                     <div class="card-tab">
