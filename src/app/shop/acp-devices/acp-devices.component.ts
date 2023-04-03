@@ -1,11 +1,14 @@
+import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAcpDevice, IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { CatalogCoreService } from '@ztarmobile/zwp-service-backend-v2';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
+import { ClipboardService } from 'ngx-clipboard';
 import { filter, takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, LOGIN_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
+import { ContentfulService } from 'src/services/contentful.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import Swiper, { Autoplay, EffectFade, Navigation } from 'swiper';
@@ -41,21 +44,30 @@ export class AcpDevicesComponent implements OnInit {
   public innerWidth;
   public hasAcpPlan = false;
   public acpPlan: IUserPlan;
-
+  public collapsed: boolean;
+  public catalogPhoneQsts;
   private pendingAcpPlan: IUserPlan;
   private alive = true;
   private changeDevice: boolean;
   private cart: CustomizableMobilePlan;
   private isLoggedIn = false;
+  questionIdParam: any;
+  isCopied: boolean;
 
-  constructor(private catalogServices: CatalogCoreService,
-    private appState: AppState, private toastHelper: ToastrHelperService, private route: ActivatedRoute,
+  constructor(private catalogServices: CatalogCoreService, private contentfulService: ContentfulService, private clipboardService: ClipboardService,
+    private appState: AppState, private toastHelper: ToastrHelperService, private route: ActivatedRoute, private location: Location,
     private cd: ChangeDetectorRef, private userPlansService: UserPlansService, private mobilePlansService: MobileCustomPlansService, private router: Router,
     private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService, private simpleAuthService: SimpleAuthService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       this.acpPlan = plans.find((p) => p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb && !p.canceled);
       this.pendingAcpPlan = plans.find((p) => !p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
       this.hasAcpPlan = !!this.acpPlan ? true : false;
+    });
+    this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'device-catalog').subscribe(questions => {
+      if (!!questions) {
+        const allQuestions = questions[0].fields.questions;
+        this.catalogPhoneQsts = allQuestions;
+      }
     });
     this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => {
       this.isLoggedIn = !!authState && !authState.isAnonymous;
@@ -94,6 +106,23 @@ export class AcpDevicesComponent implements OnInit {
       const params = {};
       params[LOGIN_ROUTE_URLS.PARAMS.NEXT_PAGE] = `${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`;
       this.router.navigate([`${LOGIN_ROUTE_URLS.BASE}/${LOGIN_ROUTE_URLS.LOGIN}`, params]);
+    }
+  }
+  public toggleActive(questionId, answerId, copy?): void {
+    if (this.questionIdParam === questionId && !this.collapsed && !copy) {
+      this.questionIdParam = 'q0';
+    } else {
+      this.questionIdParam = questionId;
+      this.collapsed = false;
+      this.callRichText(answerId);
+    }
+    if (!!copy && this.questionIdParam === questionId){
+      const url = window.location.host + this.location.path();
+      this.clipboardService.copy(url);
+      this.isCopied = true;
+      setTimeout(() => {
+        this.isCopied = false;
+      }, 1500);
     }
   }
   private clearCart(): void {
@@ -214,6 +243,10 @@ export class AcpDevicesComponent implements OnInit {
   }
   private removeAcpDevice(): void {
     sessionStorage.removeItem('acp-device');
+  }
+
+  private callRichText(answerId): void {
+    this.contentfulService.getRichText('questions', answerId);
   }
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
