@@ -18,7 +18,7 @@
 
         .id {
             font-family: $secondary-font-family;
-            color: $primary-color;
+            color: #868686;
             margin-bottom: 0;
             margin-left: 10px;
             font-size: rem-calc(16px);
@@ -184,6 +184,9 @@
             .order-card-container {
                 padding-bottom: 48px;
                 background-color: $white;
+                &.no-padding {
+                    padding-bottom: 0;
+                }
                 @media(max-width: $phablet-min-width-minus) {
                     padding-bottom: 32px;
                 }
@@ -248,7 +251,72 @@
 
                 .tab-content {
                     display: none;
-
+                    &.visible {
+                        display: block;
+                    }
+                    .store-items {
+                        padding: 24px 32px;
+                        .item-details {
+                            display: flex;
+                            gap: 24px;
+                            align-items: flex-start;
+                            @media(max-width: $phablet-min-width-minus) {
+                                flex-direction: column;
+                                .image-section {
+                                    display: flex;
+                                    gap: 16px;
+                                }
+                            }
+                            .mb-12 {
+                                margin-bottom: 12px;
+                            }
+                            .id {
+                                color: #868686;
+                            }
+                            .desktop {
+                                display: block;
+                                @media(max-width: $phablet-min-width-minus) {
+                                    display: none;
+                                }
+                            }
+                            .mobile {
+                                display: block;
+                                @media(min-width: 640px) {
+                                    display: none;
+                                }
+                            }
+                            .info-banner {
+                                padding: 16px;
+                                .flex {
+                                    img {
+                                        width: 20px;
+                                        height: 20px;
+                                    }
+                                }
+                                &.success-background {
+                                    margin-top: 12px;
+                                    .flex {
+                                        img {
+                                           margin-top: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                            ::ng-deep {
+                                .barCode-radios {
+                                    .barcode {
+                                        svg {
+                                            max-width: 350px;
+                                            height: 120px;
+                                            @media(max-width: $phablet-min-width-minus) {
+                                                max-width: 252px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     .info {
                         font-size: rem-calc(16px);
                         color: $black;
@@ -416,7 +484,12 @@
                         color: $primary-color;
                         transform: rotate(90deg);
                     }
-
+                    &.no-after {
+                        cursor: default;
+                        &:after {
+                            content: "";
+                        }  
+                    }
                     &.track {
                         align-items: flex-start;
                     }

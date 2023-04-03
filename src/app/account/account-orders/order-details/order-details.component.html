@@ -20,7 +20,7 @@
             *ngIf="orderInfo?.status !== ORDER_STATUS.CANCELED">Report an issue</p>
     </div>
     <div class="order-cards-container">
-        <div class="left" [class.flex]="!orderInfo?.shippingInfo?.shippingAddress">
+        <div class="left" [class.flex]="!orderInfo?.shippingInfo?.shippingAddress && (!orderInfo?.storePickup || (orderInfo?.storePickup && !!orderInfo?.paymentMethod) || (orderInfo?.storePickup && !orderInfo?.paymentMethod && orderInfo?.status === ORDER_STATUS.CANCELED))">
             <div class="order-card" id="details-card" #details>
                 <div class="order-card-container">
                     <div class="card-header-section">
@@ -89,7 +89,7 @@
                                                         <p class="id smallest" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
                                                         <p class="quantity smaller">Quantity: 1</p>
                                                         <p class="action" (click)="scrollToDeliveryDetails()"
-                                                            *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
+                                                            *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">{{!!orderInfo?.storePickup && !orderInfo?.paymentMethod  ? 'Pick it Up'  : 'Delivery Details'}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="price-side">
@@ -206,7 +206,7 @@
                                                 <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
                                                 <p class="quantity smaller">Quantity: {{device?.quantity}}</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                                    *ngIf="screenWidth < 1025">{{orderInfo?.storePickup && !orderInfo?.paymentMethod ? 'Pick it Up'  : 'Delivery Details'}}</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
                                                     (click)="cancelOrderWithRefund()">Cancel</p>
@@ -223,7 +223,7 @@
                                                 <p class="id smallest" *ngIf="sim?.itemId">Item #{{ sim?.itemId}}</p>
                                                 <p class="quantity smaller">Quantity: 1</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">Delivery Details</p>
+                                                    *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">{{orderInfo?.storePickup && !orderInfo?.paymentMethod ? 'Pick it Up'  : 'Delivery Details'}}</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING && orderInfo?.skuNumber !== 'TE'"
                                                     (click)="cancelOrderWithRefund(true)">Cancel</p>
@@ -272,7 +272,7 @@
                                                 <p class="id smallest" *ngIf="sim?.itemId">Item # {{sim?.itemId}}</p>
                                                 <p class="quantity smaller">Quantity: 1</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">Delivery Details</p>
+                                                    *ngIf="screenWidth < 1025">{{orderInfo?.storePickup && !orderInfo?.paymentMethod ? 'Pick it Up'  : 'Delivery Details'}}</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
                                                     (click)="cancelOrderWithRefund()">Cancel</p>
@@ -331,7 +331,7 @@
                 </div>
             </div>
         </div>
-        <div class="right" [class.none]="!orderInfo?.shippingInfo?.shippingAddress">
+        <div class="right" [class.none]="!orderInfo?.shippingInfo?.shippingAddress && (!orderInfo?.storePickup || (orderInfo?.storePickup && !!orderInfo?.paymentMethod) || (orderInfo?.storePickup && !orderInfo?.paymentMethod && orderInfo?.status === ORDER_STATUS.CANCELED))">
             <div class="order-card" id="delivery-card"
                 *ngIf="orderInfo?.shippingInfo && orderInfo?.shippingInfo?.shippingAddress" #delivery>
                 <div class="order-card-container">
@@ -457,6 +457,82 @@
                                             </div>
                                         </div>
                                     </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="order-card" id="store-card" *ngIf="orderInfo?.storePickup && !orderInfo?.paymentMethod && orderInfo?.status !== ORDER_STATUS.CANCELED ">
+                <div class="order-card-container no-padding">
+                    <div class="card-header-section">
+                        <h2 class="card-header">Pick-up Details</h2>
+                    </div>
+                    <div class="card-tab">
+                        <p class="tab-label no-after" >In Store Pick-up</p>
+                        <div class="tab-content visible">
+                            <div class="store-items">
+                                <div class="item-details" *ngFor="let device of orderInfo?.devices; let i = index">
+                                    <div class="image-section">
+                                        <img class="thumbnail phone" [src]="phoneImageSrc" alt="ACP device">
+                                        <p class="title smaller primary-font-bold mb-12 mobile">{{device?.description}}</p>
+                                    </div>
+                                    <div class="details">
+                                        <p class="smaller primary-font-bold desktop">{{device?.description}}</p>
+                                        <p class="id smaller" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
+                                        <div class="barCodes-details" *ngIf="orderInfo?.status === ORDER_STATUS.PENDING">
+                                            <ngx-barcode6 data-cy="barcode" [bc-value]="device?.itemId" [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
+                                        </div>
+                                        <div class="info-banner default-background" *ngIf="orderInfo?.status === ORDER_STATUS.PENDING">
+                                            <div class="flex">
+                                                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                                                <div class="banner-content">
+                                                    <p class="smallest"><b>Show this barcode to the store clerk to pick up your item.</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="info-banner success-background" *ngIf="orderInfo?.status === ORDER_STATUS.COLLECTED">
+                                            <div class="flex">
+                                                <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                                                <div class="banner-content">
+                                                    <h5>Barcode Scan Successful!</h5>
+                                                    <p class="description smaller">You have <b>successfully collected your ACP Device</b> at the store! </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
+                                    <div class="image-section">
+                                        <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
+                                        <p class="title smaller primary-font-bold mb-12 mobile">SIM Card</p>
+                                    </div>
+                                    <div class="details">
+                                        <p class="title smaller primary-font-bold mb-12 desktop">SIM Card</p>
+                                        <p class="id smaller" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
+                                        <div class="barCodes-details" *ngIf="orderInfo?.status === ORDER_STATUS.PENDING">
+                                            <ngx-barcode6 data-cy="barcode" [bc-value]="sim?.itemId" [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
+                                        </div>
+                                        <div class="info-banner default-background" *ngIf="orderInfo?.status === ORDER_STATUS.PENDING">
+                                            <div class="flex">
+                                                <img src="assets/icon/info-icon.svg" alt="Info Icon">
+                                                <div class="banner-content">
+                                                    <p class="smallest"><b>Show this barcode to the store clerk to pick up your item.</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="info-banner success-background" *ngIf="orderInfo?.status === ORDER_STATUS.COLLECTED">
+                                            <div class="flex">
+                                                <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                                                <div class="banner-content">
+                                                    <h5>Barcode Scan Successful!</h5>
+                                                    <p class="description smaller">You have <b>successfully collected your SIM card</b> at the store! </p>
+                                                    <p class="description smaller last">You can now <b>activate your plan</b> and enjoy your Good Mobile service! </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>

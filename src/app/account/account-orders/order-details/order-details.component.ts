@@ -41,7 +41,8 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     SVC_PURCHASED: 'SVC_PURCHASED',
     SHIPPED: 'SHIPPED',
     DELIVERED: 'DELIVERED',
-    VOIDED: 'VOIDED'
+    VOIDED: 'VOIDED',
+    COLLECTED: 'COLLECTED'
   };
   public STATUS_TITLE= {
     UPDATE_NEEDED: 'Action Required',
@@ -104,7 +105,8 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
 
   public scrollToDeliveryDetails(): void {
     this.shipping = true;
-    let el = document.getElementById('delivery-card');
+    const cardId = !!this.orderInfo.storePickup ? 'store-card' : 'delivery-card'
+    let el = document.getElementById(cardId);
     el.scrollIntoView();
   }
 
@@ -255,9 +257,9 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     this.accountOrderService.getOrderById(orderId).then((order) => {
       if (!!order) {
         this.orderInfo = order;
+        const orderTemp:any = order;
+        this.orderInfo.status =  orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? 'COLLECTED' : this.orderInfo.status
         if (!!this.orderInfo.devices && this.orderInfo.devices.length > 0) {
-          const orderTemp:any = order;
-          this.orderInfo.status =  orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? 'COLLECTED' : this.orderInfo.status
           this.appState.loading = true;
           this.catalogService.getAcpDeviceBySkuFromContentful(this.orderInfo.devices[0].sku).then((data) => {
             this.deviceDetails = data;
