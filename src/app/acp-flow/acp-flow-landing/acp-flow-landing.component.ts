@@ -206,23 +206,26 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
     }
   }
   private callAcpPlanExistModal(): void {
-    if (!document.body.classList.contains('modal-open')) {
-      this.modalHelper
-        .showInformationMessageModal(
-          "ACP Plan Exists",
-          "You already have a Federal Affordable Connectivity plan!",
-          "Account Summary",
-          '',
-          false, 'acp-modal-exists'
-        )
-        .afterClosed().subscribe((res) => {
-          if (!!res) {
-            this.router.navigate([
-              `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,
-            ]);
-          }
-        });
+    if (!document.querySelector('body div.acp-modal-exists')) {
+     this.acplPlanExistsModal();
     }
+  }
+  private acplPlanExistsModal(): void {
+    this.modalHelper
+    .showInformationMessageModal(
+      "ACP Plan Exists",
+      "You already have a Federal Affordable Connectivity plan!",
+      "Account Summary",
+      '',
+      false, 'acp-modal-exists'
+    )
+    .afterClosed().subscribe((res) => {
+      if (!!res) {
+        this.router.navigate([
+          `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,
+        ]);
+      }
+    });
   }
   ngOnDestroy(): void {
     this.alive = false;
@@ -232,7 +235,7 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
     if (event.keyCode === 27) {
       event.preventDefault();
       if (!!this.isExitingPlan) {
-        this.callAcpPlanExistModal();
+        this.acplPlanExistsModal();
       }
     }
   }
