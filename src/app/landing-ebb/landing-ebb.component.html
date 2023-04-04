@@ -113,7 +113,7 @@
         </div>
       </div>
       <div class="content" >
-        <p class="intro">This guide identifies the documents you can submit to show that you qualify for the Affordable Connectivity Program (ACP). <a href="assets/ACP-documents.pdf" download="" *ngIf="!!hideCardContent"><b>View Documents</b></a> </p>
+        <p class="intro">This guide identifies the documents you can submit to show that you qualify for the Affordable Connectivity Program (ACP). <a (click)="hideCardContent = !hideCardContent" *ngIf="!!hideCardContent"><b>View Documents</b></a> </p>
         <div class="sub-content" *ngIf="!hideCardContent">
           <div class="sub-note">
             <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">

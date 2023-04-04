@@ -24,7 +24,7 @@ export class LandingEbbComponent implements OnInit, OnDestroy {
   public elem: any;
   public isLoggedIn = false;
   public showList = false;
-  public hideCardContent = false;
+  public hideCardContent = true;
   private shouldScroll;
   private allBasePlans: Array<MobilePlanItem>;
   private alive = true;
