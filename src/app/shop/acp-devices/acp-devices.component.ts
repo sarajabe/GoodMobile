@@ -201,8 +201,8 @@ export class AcpDevicesComponent implements OnInit {
   }
   private showExistingAcpDevicePopup(): void {
     const customHTML = `
-    <p class="acp-desc">You have already claimed your ACP device benefits.<p>`;
-    this.modalHelper.showACPModal('ACP Device Claimed', customHTML, 'ACP Summary', null, 'acp-device-modal', true).afterClosed().subscribe((data) => {
+    <p class="acp-desc max">Our records show that you have claimed your <b>one-time</b> device discount. </p><p class="acp-desc">If this is not correct, please contact customer care for more help.</p>`;
+    this.modalHelper.showACPModal(`You've Claimed your Discount!`, customHTML, 'Got it!', null, 'acp-device-modal', true).afterClosed().subscribe((data) => {
       if (!!data) {
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
       }
