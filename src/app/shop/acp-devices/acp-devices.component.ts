@@ -220,7 +220,7 @@ export class AcpDevicesComponent implements OnInit {
             this.showNoAcpDevicePopup();
           } else if (!!this.hasAcpPlan) {
             if (!this.acpPlan.acpDevice) {
-              if (!!this.cart && this.cart.cartType === CART_TYPES.NEW_PLAN) {
+              if (!!this.cart && this.cart.cartType !== CART_TYPES.GENERIC_CART) {
                 this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
                   .afterClosed().subscribe((result) => {
                     if (!!result) {
@@ -230,9 +230,7 @@ export class AcpDevicesComponent implements OnInit {
                       }, 500);
                     }
                   });
-              } else {
-                this.addDeviceToCart(item);
-              }
+              } 
             } else {
               this.showExistingAcpDevicePopup();
             }
