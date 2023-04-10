@@ -62,21 +62,24 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
       this.signatureForm.controls.name.disable({ onlySelf: true });
     }
     this.ebbManager.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
-      if (!!step && ((!this.appId && step === 5) || (!!this.appId && step ===2))) {
-        this.signatureForm.markAllAsTouched();
-        this.showCaptchaError = !!this.recaptchaResponse ? false : true;
-        if (!!this.signatureForm.valid && !!this.fullName && !!this.captchaValid) {
-          this.appState.loading = true;
-          const data: any = {
-            initials: this.signatureForm.controls.firstCheck.value,
-            fullName: this.fullName,
-            firstName: this.fName,
-            lastName: this.lName,
-            captcha: this.recaptchaResponse
-          };
-          this.setSignature.emit(data);
+      this.ebbManager.acpFlowSelected.pipe(takeWhile(() => this.alive)).subscribe((res) => {
+        const flow = res;
+        if (!!step && ((!this.appId && (step === 5 && flow === 'no') || (step === 4 && flow === 'yes-without-id')) || (!!this.appId && step ===2))) {
+          this.signatureForm.markAllAsTouched();
+          this.showCaptchaError = !!this.recaptchaResponse ? false : true;
+          if (!!this.signatureForm.valid && !!this.fullName && !!this.captchaValid) {
+            this.appState.loading = true;
+            const data: any = {
+              initials: this.signatureForm.controls.firstCheck.value,
+              fullName: this.fullName,
+              firstName: this.fName,
+              lastName: this.lName,
+              captcha: this.recaptchaResponse
+            };
+            this.setSignature.emit(data);
+          }
         }
-      }
+      });
     });
   }
 

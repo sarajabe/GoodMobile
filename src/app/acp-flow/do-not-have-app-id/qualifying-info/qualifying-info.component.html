@@ -3,8 +3,7 @@
         <p class="space" data-cy="qualificationHeader">How do you Qualify? <span class="red">*</span></p>
         <div class="radioBtn" *ngFor="let item of options">
             <label class="form-control" [for]="item?.id">
-                <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id"
-                    (change)="onOptionChange()">{{item?.value}}
+                <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id">{{item?.value}}
             </label>
         </div>
         <label class="validation-message"

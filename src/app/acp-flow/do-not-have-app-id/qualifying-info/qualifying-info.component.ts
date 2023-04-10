@@ -118,11 +118,11 @@ export class QualifyingInfoComponent implements OnInit, OnDestroy, OnChanges {
         }
       }
     });
-    if (!!this.bbqInfo && Object.keys(this.bbqInfo).length !== 0) {
+    if (!!this.bbqInfo && Object.keys(this.bbqInfo).length !== 0  && !!this.bbqInfo.firstName) {
       this.validateChild = true;
       this.qualifyingForm.controls.option.setValue('child');
       this.populateForm();
-    } else if (!!this.bbqInfo && Object.keys(this.bbqInfo).length === 0) {
+    } else if (!!this.bbqInfo && !this.bbqInfo.firstName) {
       this.qualifyingForm.controls.option.setValue('indivisual');
     }
   }

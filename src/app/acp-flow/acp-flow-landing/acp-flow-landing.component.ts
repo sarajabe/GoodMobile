@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FirebaseUserProfileService, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService, FirebaseUserProfileService, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/app.service';
@@ -9,6 +9,7 @@ import { ACP_CALLBACK_URL } from 'src/environments/environment';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS } from '../../app.routes.names';
+import { EbbManager } from 'src/services/ebb.service';
 
 @Component({
   selector: 'app-acp-flow-landing',
@@ -41,8 +42,8 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
   public callBackUrl: string;
   public acpLink: string;
   private alive = true;
-  constructor(private router: Router, private userProfileService: FirebaseUserProfileService,
-    private appState: AppState, private ebbService: EbbService, private modalHelper: ModalHelperService,
+  constructor(private router: Router, private userProfileService: FirebaseUserProfileService, private ebbManager: EbbManager,
+    private appState: AppState, private ebbService: EbbService, private modalHelper: ModalHelperService, private analyticsService: ActionsAnalyticsService,
     private userPlansService: UserPlansService, private toastHelper: ToastrHelperService) {
     this.acpFlowForm = new UntypedFormGroup({
       option: new UntypedFormControl('', Validators.required)
@@ -152,9 +153,16 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
     if (!!this.acpOption) {
       this.showAcpValidationMsg = false;
       this.showAcpComponents = true;
+      const data: any = {
+        category: 'ACP',
+        label: 'ACP Flow',
+      };
+      this.ebbManager.setSelectedFlow(this.acpOption);
       if (this.acpOption === 'no') {
         this.acpData.providerApplicationId = null;
         this.newApplication = true;
+        data.event = 'no_flow';
+        data.action = 'No Flow';
       } else if (this.acpOption === 'yes') {
         this.yesExistingAppId = true;
         this.acpData.identityVerification = null;
@@ -162,12 +170,17 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
         this.acpData.last4ssn = null;
         this.acpData.eligibilityCode = null;
         this.acpData.bqpUser = null;
+        data.event = 'yes_flow';
+        data.action = 'Yes Flow';
       } else if (this.acpOption === 'yes-without-id') {
         this.acpData.providerApplicationId = null;
         this.yesWithNonExistingApp = true;
         this.acpData.eligibilityCode = null;
         this.acpData.bqpUser = null;
+        data.event = 'yesNo_flow';
+        data.action = 'Yes, but I don’t have it Flow';
       }
+      this.analyticsService.trackACPEvent(data);
     }
     else {
       this.showAcpValidationMsg = true;
