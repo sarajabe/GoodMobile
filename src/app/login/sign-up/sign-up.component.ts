@@ -109,35 +109,39 @@ export class SignUpComponent implements OnInit, OnDestroy {
       this.user.password = this.userForm.get('password').value;
       this.user.referredWithCode = this.referredCode;
       this.userAuthService.signUpWithBff(this.captchaResponse, this.user, this.password).then((user) => {
-        this.angularFireService.signInWithEmailAndPassword(user.email, user.password).then((userCred) => {
-          this.processingRequest = false;
-          this.appState.userLoggedIn.next(true);
-          this.analyticsService.trackUserAuthentication('signup', userCred.user.uid, 'Create account');
-          this.analyticsService.trackUserId(userCred.user.uid);
-          this.analyticsService.sendUserIdToHotjar(userCred.user.uid);
-          const utms = JSON.parse(sessionStorage.getItem('utms'));
-          if (!!utms) {
-            setTimeout(() => {
-              this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
-                if (!!data) {
-                  const marketingDetails = this.appState.setMarketingObject(utms);
-                  data.activeCampaign = marketingDetails;
-                  data.campaignsHistory = [];
-                  data.campaignsHistory.push(marketingDetails)
-                  this.userProfileService.updateUserProfile(data);
-                }
-              });
-            }, 2000);
-          }
-          if (!!this.userCart && !!this.userCart.mdn) {
-            this.userPlansService.bffAddUserPlanMDN(this.userCart.mdn).then((userPlanId) =>
-             this.userPlansService.selectUserPlan(userPlanId));
-          } else {
-            this.handleNextPageParams();
-          }
-        }, (error) => {
-          this.toastHelper.showAlert(error.message);
-        });
+        setTimeout(() => {
+          this.angularFireService.signOut().then(() => {
+            this.angularFireService.signInWithEmailAndPassword(user.email, user.password).then((userCred) => {
+              this.processingRequest = false;
+              this.appState.userLoggedIn.next(true);
+              this.analyticsService.trackUserAuthentication('signup', userCred.user.uid, 'Create account');
+              this.analyticsService.trackUserId(userCred.user.uid);
+              this.analyticsService.sendUserIdToHotjar(userCred.user.uid);
+              const utms = JSON.parse(sessionStorage.getItem('utms'));
+              if (!!utms) {
+                setTimeout(() => {
+                  this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
+                    if (!!data) {
+                      const marketingDetails = this.appState.setMarketingObject(utms);
+                      data.activeCampaign = marketingDetails;
+                      data.campaignsHistory = [];
+                      data.campaignsHistory.push(marketingDetails)
+                      this.userProfileService.updateUserProfile(data);
+                    }
+                  });
+                }, 2000);
+              }
+              if (!!this.userCart && !!this.userCart.mdn) {
+                this.userPlansService.bffAddUserPlanMDN(this.userCart.mdn).then((userPlanId) =>
+                 this.userPlansService.selectUserPlan(userPlanId));
+              } else {
+                this.handleNextPageParams();
+              }
+            }, (error) => {
+              this.toastHelper.showAlert(error.message);
+            });
+          });
+        }, 1000);
       }, (error) => {
         this.processingRequest = false;
         const errorMessageAsJson = AuthHelperService.getErrorMessage(error);
