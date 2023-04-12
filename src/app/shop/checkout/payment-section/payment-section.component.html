@@ -231,8 +231,9 @@
       </div>
       <div class="card-content">
         <div class="balance-section" *ngIf="!!userAccount && userAccount.accountBalance > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="payment-container amounts"><span class="account-balance">Pay from Account Balance</span>
+          <label class="payment-container amounts">
             <input type="checkbox" [(ngModel)]="payWithBalance" class="title-checkbox"  (change)="togglePayWithBalance()">
+            <span>Pay from Account Balance</span>
           </label>
           <div class="available-section">
             <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
@@ -257,8 +258,9 @@
           </div>
         </div>
         <div class="balance-section" *ngIf="!!userAccount && !!userAccount.rewards && userAccount.rewards.available > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="payment-container amounts">Pay from Refer a Friend Reward
+          <label class="payment-container amounts">
             <input type="checkbox" [(ngModel)]="payWithReward" class="title-checkbox" (change)="togglePayWithReward()">
+            <span>Pay from Refer a Friend Reward</span>
           </label>
           <div class="available-section">
             <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
