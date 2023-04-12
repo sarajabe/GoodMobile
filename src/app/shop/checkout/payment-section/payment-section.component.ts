@@ -241,6 +241,11 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
                       this.rewardApplied = true;
                       this.rewardAmount = this.usedReward;
                       this.payWithReward = true;
+                      if(Number(this.usedReward) === Number(this.total)) {
+                        this.payWithCard = false;
+                        this.selectedPaymentMethod = null;
+                        sessionStorage.removeItem('payment_id');
+                      }
                     }
                   } else {
                     this.usedReward = 0;
@@ -254,6 +259,11 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
                       this.balanceApplied = true;
                       this.balanceAmount = this.usedBalance;
                       this.payWithBalance = true;
+                      if(Number(this.balanceAmount) === Number(this.total)) {
+                        this.payWithCard = false;
+                        this.selectedPaymentMethod = null;
+                        sessionStorage.removeItem('payment_id');
+                      }
                     }
                   } else {
                     this.usedBalance = 0;
@@ -323,6 +333,11 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       this.isBalanceChanged = true;
       this.balanceApplied = true;
       this.morePaymentNeeded = false;
+      if(Number(this.balanceAmount) === Number(this.total)) {
+        this.payWithCard = false;
+        this.selectedPaymentMethod = null;
+        sessionStorage.removeItem('payment_id');
+      }
     }
     if (this.usedBalance === 0) {
       this.isBalanceChanged = true;
@@ -379,6 +394,11 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       this.rewardApplied = true;
       this.rewardAmount = this.usedReward;
       this.morePaymentNeeded = false;
+      if(Number(this.usedReward) === Number(this.total)) {
+        this.payWithCard = false;
+        this.selectedPaymentMethod = null;
+        sessionStorage.removeItem('payment_id');
+      }
     }
     if (this.usedReward === 0) {
       this.payWithReward = false;
@@ -629,6 +649,11 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         }
         if(!!isValidPayWithVoucher) {
           paymentType.push('voucher');
+        }
+        if(Number(this.balanceAmount) === Number(this.total) || Number(this.usedReward) === Number(this.total)) {
+          this.payWithCard = false;
+          this.selectedPaymentMethod = null;
+          sessionStorage.removeItem('payment_id');
         }
         sessionStorage.setItem('useFromBalance', this.balanceAmount.toString());
         sessionStorage.setItem('useFromReward', this.rewardAmount.toString());
