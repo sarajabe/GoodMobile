@@ -80,7 +80,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@types/facebook-js-sdk": "^3.3.2",
     "@types/grecaptcha": "3.0.4",
-    "@ztarmobile/zwp-service": "1.0.6",
+    "@ztarmobile/zwp-service": "1.0.9",
     "@ztarmobile/zwp-service-backend-v2": "1.0.18",
     "@ztarmobile/zwp-service-backend": "1.0.25",
     "@ztarmobile/zwp-services-auth": "1.0.6",

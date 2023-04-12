@@ -145,7 +145,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.alertBannerHeight = value;
         this.changeDetector.detectChanges();
       });
-      this.meta.updateTag({ name: 'og:url', content: window.location.href });
+      this.meta.updateTag({ property: 'og:url', content: window.location.href });
+      this.meta.updateTag({ name: 'twitter:url', content: window.location.href });
       this.actionsAnalyticsService.trackPageView(event);
       this.location.subscribe((e) => {
         // this is fired when user click back or forward of browser
