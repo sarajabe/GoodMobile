@@ -231,7 +231,7 @@
       </div>
       <div class="card-content">
         <div class="balance-section" *ngIf="!!userAccount && userAccount.accountBalance > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="payment-container amounts">Pay from Account Balance
+          <label class="payment-container amounts"><span class="account-balance">Pay from Account Balance</span>
             <input type="checkbox" [(ngModel)]="payWithBalance" class="title-checkbox"  (change)="togglePayWithBalance()">
           </label>
           <div class="available-section">
