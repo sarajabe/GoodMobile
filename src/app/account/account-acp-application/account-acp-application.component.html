@@ -132,10 +132,9 @@
             </div>
         </div>
         <div class="card-content-part" *ngIf="!hideCardContentPA">
-            <div class="info-banner default-background"
-                [class.success-background]="(!!planActivationStatus && planActivationStatus === 'ENROLLED')">
+            <div class="info-banner default-background">
                 <div class="flex">
-                    <img [src]="(!!planActivationStatus && planActivationStatus === 'ENROLLED') ? 'assets/icon/success-icon.svg' : 'assets/icon/info-icon.svg'"
+                    <img src="assets/icon/info-icon.svg"
                         alt="Note Icon">
                     <div class="banner-content" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]">
                         <p class="title" *ngIf="ACP_PLAN_DESCS[planActivationStatus]?.title">
@@ -146,6 +145,8 @@
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
                         <p class="description last" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
+                        <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
+                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc4"></p>
                         <div class="actions"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.linkName">
                             <button class="button primary"
