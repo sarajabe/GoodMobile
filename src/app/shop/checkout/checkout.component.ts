@@ -287,6 +287,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.checkoutService.autoRenewSubject.pipe(takeWhile(() => this.alive)).subscribe((autoRenew) => {
       this.autoRenewPlan = autoRenew;
     });
+    this.checkoutService.taxesSubject.pipe(takeWhile(() => this.alive)).subscribe(() => {
+      this.applyResetEstimatedTaxes();
+    });
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
       this.user = user;
       setTimeout(() => {
@@ -1488,9 +1491,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       sessionStorage.removeItem('purchased');
     }
   }
-  private applyResetEstimatedTaxes(error): void {
+  private applyResetEstimatedTaxes(error?): void {
     this.appState.loading = false;
-    this.toastHelper.showAlert(error.error.message);
+    if(!!error) {
+      this.toastHelper.showAlert(error.error.message);
+    }
     this.estimatedTaxes = 0;
     this.estimatedFees = 0;
     this.taxes = this.estimatedTaxes;
