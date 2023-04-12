@@ -1,6 +1,6 @@
 import { AfterContentChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FirebaseUserProfileService, IUser, IUserAccount, IUserPlan, UserAccountService, UserOrdersService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { FirebaseUserProfileService, IUser, IUserAccount, IUserPlan, OrderInfo, UserAccountService, UserOrdersService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, IEbbDetails, IVerificationRes } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -10,6 +10,7 @@ import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AccountHeaderService } from '../account-header.service';
+import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
 
 @Component({
   selector: 'app-account-acp-application',
@@ -94,6 +95,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
 
   private callBackUrl: string;
   private alive = true;
+  acpDeviceOrder: OrderInfo;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -250,16 +252,18 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         longClass: true
       },
       'ENROLLED': {
-        title: null,
-        desc1: 'You have successfully activated your ACP plan.',
+        title: 'Note:',
+        desc1: 'Your ACP plan is active.',
         desc2: 'This plan is linked to the following phone number:',
-        desc3: `Phone Number/MDN: <b>${this.acpPlan?.mdn}</b>`,
-        primaryButtonName: 'Account Summary',
-        primaryButtonAction: 'goToAccountSummary',
+        desc3: `<b>Phone Number/MDN:</b><br> ${(new PhonePipe()).transform(this.acpPlan?.mdn)}`,
+        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
+        You may now proceed and <b>collect</b> your device at your nearest store.</span>`: null) : null,
+        primaryButtonName: null,
+        primaryButtonAction: null,
         secondaryButtonName: null,
         secondaryButtonAction: null,
-        linkName: null,
-        linkAction: null,
+        linkName: 'Manage Enrollment',
+        linkAction: 'goToAccountSummary',
         pendingWidth: false,
         onHoldWidth: false,
         topBottomClass: true,
@@ -642,6 +646,14 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 !plan.portInRequestNumber &&
                 !plan.canceled
             );
+            if (!!this.acpPlan && !!this.acpPlan.acpDevice && !!this.acpPlan.acpDevice.orderId) {
+              this.appState.loading = true;
+              this.accountOrderService.getOrderById(this.acpPlan.acpDevice.orderId).then((order) => {
+                this.acpDeviceOrder = order;
+              });
+            } else {
+              this.acpDeviceOrder = null;
+            }
             if (!!this.isActivatedAcpPlan || !!this.acpPlan) {
               this.showAcpPlanActivationCard = true;
               this.ebbService.getInternalApplication(user.customerId, user.ebbId).then((res) => {
