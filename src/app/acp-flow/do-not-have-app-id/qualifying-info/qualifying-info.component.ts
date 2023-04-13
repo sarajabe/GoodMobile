@@ -150,7 +150,7 @@ export class QualifyingInfoComponent implements OnInit, OnDestroy, OnChanges {
       this.childInfoForm.controls.tribalId.updateValueAndValidity();
       this.childInfoForm.controls.tribalId.reset();
     }
-    if (selectedValue === "tribalId") {
+    if (selectedValue === "tribal") {
       this.childInfoForm.controls.tribalId.setValidators([
         Validators.compose([
           Validators.required,
