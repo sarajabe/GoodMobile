@@ -1,7 +1,7 @@
 import { AfterContentChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseUserProfileService, IUser, IUserAccount, IUserPlan, OrderInfo, UserAccountService, UserOrdersService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { EbbService, IEbbDetails, IVerificationRes } from '@ztarmobile/zwp-service-backend-v2';
+import { EbbService, IEbbDetails, IVerificationRes, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -84,6 +84,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showSuccessBanner = true;
   public isDisplayNone = false;
   public showAcpPlanActivationCard = false;
+  public stores = [];
   public activePlans: Array<IUserPlan>;
   public appDetails: any = {};
   public showQrCode = false;
@@ -110,7 +111,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     private userPlansService: UserPlansService,
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
-    private sanitizer: DomSanitizer,
+    private lookupsService: LookupsService,
     private accountOrderService: UserOrdersService,) {
 
     this.accountHeaderService.setPageTitle('Your ACP application');
@@ -131,9 +132,6 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.getVerificationDetails();
   }
 
-  public sanitizeHtml(value) {
-    return this.sanitizer.bypassSecurityTrustHtml(value)
-  }
 
   public hideSuccessBanner(): void {
     setInterval(() => {
@@ -263,18 +261,20 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc1: 'Your ACP plan is active.',
         desc2: 'This plan is linked to the following phone number:',
         desc3: `<b>Phone Number/MDN:</b><br> ${(new PhonePipe()).transform(this.acpPlan?.mdn)}`,
-        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? this.sanitizeHtml(` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
-        You may now proceed and <b>collect</b> your device at your nearest store.<img src="assets/icon/arrow_circle.svg" [class.rotate]="${!!this.showStores}" id="stores"/></span>`): null) : null,
+        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
+        You may now proceed and <b>collect</b> your device at your nearest store.</span>`: null) : null,
+        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>`: `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : null,
         primaryButtonName: null,
         primaryButtonAction: null,
         secondaryButtonName: null,
         secondaryButtonAction: null,
-        linkName: 'Manage Enrollment',
+        linkName: 'Manage ACP Plan',
         linkAction: 'showManageEnrollmentModal',
         pendingWidth: false,
         onHoldWidth: false,
         topBottomClass: true,
-        longClass: true
+        longClass: true,
+        descAction: 'toggleStoresView'
       }
     }
     this.NV_DESCS = {
@@ -443,6 +443,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.alive = false;
   }
 
+  public toggleStoresView(): void {
+    this.showStores = !this.showStores;
+  }
   public activatePlan(): void {
     if (!this.isActivatedAcpPlan && this.acpPlan) {
       const params = {};
@@ -669,6 +672,18 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.appState.loading = true;
               this.accountOrderService.getOrderById(this.acpPlan.acpDevice.orderId).then((order) => {
                 this.acpDeviceOrder = order;
+                if (!!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING') {
+                  this.lookupsService.getAvailableStores().then(stores => {
+                    if(stores?.storesLocations?.length > 0) {
+                      this.stores = stores?.storesLocations;
+                    }
+                  }, error => {
+                    this.toastHelper.showAlert(error.error.errors[0].message);
+              
+                  })
+                }
+              }, (error) => {
+                this.acpDeviceOrder = null
               });
             } else {
               this.acpDeviceOrder = null;
