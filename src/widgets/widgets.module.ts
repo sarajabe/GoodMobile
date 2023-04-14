@@ -33,6 +33,7 @@ import { FeaturedPlansComponent } from './featured-plans/featured-plans.componen
 import { BannersComponent } from './banners/banners.component';
 import { ActivationHeaderComponent } from './activation-header/activation-header.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SafeHtmlPipe } from './pipes/safeHtml.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     InvisibleRecaptchaComponent,
     SimpleDateFormatPipe,
     SafePipe,
+    SafeHtmlPipe,
     QuestionAnswerComponent,
     RestrictNumbersDirective,
     PhoneMaskDirective,
@@ -95,6 +97,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ExpirationDateFormatPipe,
     SimpleDateFormatPipe,
     SafePipe,
+    SafeHtmlPipe,
     PlansListComponent,
     OrderDetailsComponent,
     CreditCardPaymentSectionComponent,
@@ -103,7 +106,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     BannersComponent,
     ActivationHeaderComponent
   ],
-  providers: [SimpleDateFormatPipe, SafePipe, ModalHelperService],
+  providers: [SimpleDateFormatPipe, SafePipe, SafeHtmlPipe, ModalHelperService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class WidgetsModule { }

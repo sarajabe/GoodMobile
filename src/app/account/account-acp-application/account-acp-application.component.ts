@@ -11,6 +11,7 @@ import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AccountHeaderService } from '../account-header.service';
 import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-acp-application',
@@ -96,6 +97,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   private callBackUrl: string;
   private alive = true;
   acpDeviceOrder: OrderInfo;
+  showStores: boolean;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -108,6 +110,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     private userPlansService: UserPlansService,
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
+    private sanitizer: DomSanitizer,
     private accountOrderService: UserOrdersService,) {
 
     this.accountHeaderService.setPageTitle('Your ACP application');
@@ -126,6 +129,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       this.isRefreshClicked = true;
     }
     this.getVerificationDetails();
+  }
+
+  public sanitizeHtml(value) {
+    return this.sanitizer.bypassSecurityTrustHtml(value)
   }
 
   public hideSuccessBanner(): void {
@@ -256,14 +263,14 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc1: 'Your ACP plan is active.',
         desc2: 'This plan is linked to the following phone number:',
         desc3: `<b>Phone Number/MDN:</b><br> ${(new PhonePipe()).transform(this.acpPlan?.mdn)}`,
-        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
-        You may now proceed and <b>collect</b> your device at your nearest store.</span>`: null) : null,
+        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? this.sanitizeHtml(` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
+        You may now proceed and <b>collect</b> your device at your nearest store.<img src="assets/icon/arrow_circle.svg" [class.rotate]="${!!this.showStores}" id="stores"/></span>`): null) : null,
         primaryButtonName: null,
         primaryButtonAction: null,
         secondaryButtonName: null,
         secondaryButtonAction: null,
         linkName: 'Manage Enrollment',
-        linkAction: 'goToAccountSummary',
+        linkAction: 'showManageEnrollmentModal',
         pendingWidth: false,
         onHoldWidth: false,
         topBottomClass: true,
@@ -489,6 +496,18 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.refreshInterval();
   }
 
+  public showManageEnrollmentModal(): void {
+    const customHtml = `<p>You can always manage your ACP plan from your <b>Account Summary</b> Page.<br>
+      Changing or Cancelling your ACP plan will cause immediate <b>termination</b> for your ACP benefits.</p>
+      <p>Please proceed with caution.</p>`
+    this.modalHelper.showInformationMessageModal('Heads up!', '',
+    'Account Summary', null, true, 'manage-enrollment-modal', customHtml, false, null)
+      .afterClosed().subscribe((result) => {
+        if(!!result) {
+          this.goToAccountSummary();
+        }
+      });
+  }
   public cancelPlan(): void {
     if (!!this.userAccount && !!this.acpPlan && !this.acpPlan.portInRequestNumber && !this.acpPlan.canceledOnExpiry && !this.acpPlan.canceled) {
       const params = {};
