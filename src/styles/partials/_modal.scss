@@ -3602,6 +3602,11 @@
          min-width: 166px;
       }
     }
+    &.manage-enrollment-modal {
+      .primary {
+        min-width: 200px;
+     }
+    }
   }
 
   .modal-body {

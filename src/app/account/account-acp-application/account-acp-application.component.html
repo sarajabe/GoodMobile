@@ -147,6 +147,18 @@
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
                         <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc4"></p>
+                        <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
+                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc5" (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.descAction]()"></p>
+                        <div class="stores-list" *ngIf="!!showStores">
+                                <div *ngFor="let store of stores" class="store">
+                                    <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                                    <div class="store-details">
+                                     <h4 class="store-name">{{store?.name}}</h4>
+                                     <p class="smallest">{{store?.address1}}</p>
+                                     <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                                    </div>
+                                  </div>
+                                </div>
                         <div class="actions"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.linkName">
                             <button class="button primary"

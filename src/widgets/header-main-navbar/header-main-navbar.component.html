@@ -216,7 +216,7 @@
   <img class="alert-icon" src="assets/icon/alert.svg" alt="alert">
   <div class="message" [innerHTML]="mantainenceDescription"></div>
 </div>
-<div class="acp-alert-banner" *ngIf="!showACPActionBanner" id="alert">
+<div class="acp-alert-banner" *ngIf="!!showACPActionBanner" id="alert">
   <div class="container-flex">
     <h5 class="title">
       <img class="alert-icon" src="assets/icon/red-alert.svg" alt="alert">

@@ -118,6 +118,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   // eslint-disable-next-line max-len
   public balanceInfoSubject: ReplaySubject<{ rewardsAmount?: number, balanceAmount?: number, calculateTaxes?: boolean }> = new ReplaySubject<{ rewardsAmount?: number, balanceAmount?: number, calculateTaxes?: boolean }>(1);
   public autoRenewSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  public taxesSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   public voucherDataSubject: ReplaySubject<IVoucherData> = new ReplaySubject<IVoucherData>(1);
   public detailsSubject: ReplaySubject<any> = new ReplaySubject<any>(1);
   public totalSubject: ReplaySubject<number> = new ReplaySubject<number>(1);
@@ -206,6 +207,11 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   public updateSaveCC(save: boolean): void {
     this.saveCCEmitter.emit(save);
   }
+
+  public updateTaxes(): void {
+    this.taxesSubject.next(true);
+  }
+
   public checkoutNewPlan(checkoutNewPlan: CheckoutNewPlan): Promise<void> {
     const options: CheckoutCartOptions = checkoutNewPlan.options;
     return new Promise<void>((resolve, reject) => {

@@ -299,6 +299,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
   }
   public goToPaymentSection(): void {
+    this.checkoutService.updateTaxes();
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PAYMENT_SECTION}`]);
   }
   public planCategory(category): string {

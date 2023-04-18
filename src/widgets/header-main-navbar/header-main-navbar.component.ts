@@ -145,8 +145,8 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
           const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
           this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((res) => {
             if (!!res) {
-              if (!!this.acpPlan && !this.isActivatedAcpPlan) {
-                if (res.status === this.ACP_STATUS.COMPLETE && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
+              if (!this.isActivatedAcpPlan) {
+                if (!!this.acpPlan && res.status === this.ACP_STATUS.COMPLETE && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
                   this.showActivatePlanContent = true;
                   this.showActivatePlanContentCopy = true;
                 } else if ((res.status === this.ACP_STATUS.PENDING_RESOLUTION || res.status === this.ACP_STATUS.PENDING_CERT) && !!res.link && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
@@ -161,17 +161,8 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
               }
               this.verificationDetails = res;
               this.displayAcpSection = true;
-              this.showACPActionBanner = (!this.acpPlan && (res.status === this.ACP_STATUS.PENDING_RESOLUTION || res.status === this.ACP_STATUS.PENDING_CERT)) && !!res.link && (this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0 && this.pageUrl.indexOf(ACP_ROUTE_URLS.BASE) < 0) ? true : false;
-              this.acpActionRequired = (!this.acpPlan && (res.status === this.ACP_STATUS.PENDING_RESOLUTION || res.status === this.ACP_STATUS.PENDING_CERT)) && !!res.link ? true : false;
-              if (!!this.showACPActionBanner) {
-                setTimeout(() => {
-                  const alert = document.getElementById('alert');
-                  this.alertBannerHeight = alert.clientHeight;
-                  this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
-                }, 200);
-              } else {
-                this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
-              }
+              this.acpActionRequired = false;
+              this.showACPActionBanner = false;
             } else {
               this.displayAcpSection = false;
             }
@@ -187,16 +178,29 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
           this.showResumeFilingContent = false;
           this.showResumeFilingContentCopy = false;
           this.showActivatePlanContentCopy = false;
-          this.acpActionRequired = false;
-          this.showACPActionBanner = false;
           this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
             if (!!res) {
               this.displayAcpSection = true;
+              this.acpActionRequired = true;
+              this.showACPActionBanner = (this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0 && this.pageUrl.indexOf(ACP_ROUTE_URLS.BASE) < 0) ? true : false;
+              if (!!this.showACPActionBanner) {
+                setTimeout(() => {
+                  const alert = document.getElementById('alert');
+                  this.alertBannerHeight = alert.clientHeight;
+                  this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
+                }, 200);
+              } else {
+                this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
+              }
             } else {
               this.displayAcpSection = false;
+              this.acpActionRequired = false;
+              this.showACPActionBanner = false;
             }
           }, (error) => {
             this.displayAcpSection = false;
+            this.acpActionRequired = false;
+            this.showACPActionBanner = false;
           });
         }
       }
