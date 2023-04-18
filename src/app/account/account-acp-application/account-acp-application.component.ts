@@ -1,7 +1,7 @@
 import { AfterContentChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseUserProfileService, IUser, IUserAccount, IUserPlan, OrderInfo, UserAccountService, UserOrdersService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { EbbService, IEbbDetails, IVerificationRes, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
+import { EbbService, IAcpDetails, IAppDetails, IVerificationRes, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -10,6 +10,7 @@ import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AccountHeaderService } from '../account-header.service';
+import * as _ from 'lodash';
 import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -94,6 +95,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public fileUrls = [];
   public internalData: IVerificationRes;
   public acpDeviceCase: string;
+  public oldUserData: IVerificationRes;
+  public showAttentionBanner = false;
 
   private callBackUrl: string;
   private alive = true;
@@ -263,7 +266,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc3: `<b>Phone Number/MDN:</b><br> ${(new PhonePipe()).transform(this.acpPlan?.mdn)}`,
         desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
         You may now proceed and <b>collect</b> your device at your nearest store.</span>`: null) : null,
-        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>`: `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : null,
+        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>` : `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : null,
         primaryButtonName: null,
         primaryButtonAction: null,
         secondaryButtonName: null,
@@ -504,9 +507,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       Changing or Cancelling your ACP plan will cause immediate <b>termination</b> for your ACP benefits.</p>
       <p>Please proceed with caution.</p>`
     this.modalHelper.showInformationMessageModal('Heads up!', '',
-    'Account Summary', null, true, 'manage-enrollment-modal', customHtml, false, null)
+      'Account Summary', null, true, 'manage-enrollment-modal', customHtml, false, null)
       .afterClosed().subscribe((result) => {
-        if(!!result) {
+        if (!!result) {
           this.goToAccountSummary();
         }
       });
@@ -639,7 +642,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
       this.barCodeValue = !!this.userProfile.ebbId ? `${this.userProfile.ebbId}` : null;
-      if (!!this.userProfile && !this.userProfile.ebbId) {
+      if (!!this.userProfile && !this.userProfile.ebbId && !this.acpPlan) {
         this.appState.loading = true;
         this.ebbService.getActiveInternalApplication(this.userProfile.customerId).then((res) => {
           if (!!res) {
@@ -674,12 +677,12 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 this.acpDeviceOrder = order;
                 if (!!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING') {
                   this.lookupsService.getAvailableStores().then(stores => {
-                    if(stores?.storesLocations?.length > 0) {
+                    if (stores?.storesLocations?.length > 0) {
                       this.stores = stores?.storesLocations;
                     }
                   }, error => {
                     this.toastHelper.showAlert(error.error.errors[0].message);
-              
+
                   })
                 }
               }, (error) => {
@@ -688,7 +691,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
             } else {
               this.acpDeviceOrder = null;
             }
-            if (!!this.isActivatedAcpPlan || !!this.acpPlan) {
+            if (!!this.isActivatedAcpPlan) {
               this.showAcpPlanActivationCard = true;
               this.ebbService.getInternalApplication(user.customerId, user.ebbId).then((res) => {
                 if (!!res) {
@@ -712,15 +715,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 }
               });
               this.appDetails.updatedAt = this.acpPlan?.updatedAt;
-              if (!this.isActivatedAcpPlan) {
-                this.planActivationStatus = 'PENDING_ACTIVATION';
-                this.acpDeviceCase = 'PENDING_ACP_CASE';
-              } else if (!!this.isActivatedAcpPlan) {
-                this.planActivationStatus = 'ENROLLED';
-                if (!this.acpPlan?.acpDevice) {
-                  this.acpDeviceCase = 'ENROLLED_ACP_CASE';
-                }
+              if (!this.acpPlan?.acpDevice) {
+                this.acpDeviceCase = 'ENROLLED_ACP_CASE';
               }
+              this.planActivationStatus = 'ENROLLED';
             } else {
               this.ebbService.getACPApplicationStatus(this.userProfile.ebbId, this.userProfile.customerId, this.callBackUrl).then((details) => {
                 this.appState.loading = false;
@@ -741,8 +739,12 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                       } else {
                         this.planActivationStatus = 'PENDING';
                       }
-                      this.acpDeviceCase = 'PENDING_ACP_CASE';
+                    } else {
+                      this.showAttentionBanner = false;
+                      this.planActivationStatus = 'PENDING_ACTIVATION';
+                      this.showAcpPlanActivationCard = true;
                     }
+                    this.acpDeviceCase = 'PENDING_ACP_CASE';
                   }
                   this.showNVCard = true;
                   this.verificationDetails = details;
@@ -759,6 +761,14 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   }
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_CERT || this.verificationDetails?.status === this.ACP_STATUS.IN_PROGRESS || this.verificationDetails?.status === 'PENDING_ELIGIBILITY') {
                     this.showCardDesc = true;
+                    if (!!this.acpPlan) {
+                      this.showAttentionBanner = true;
+                      this.showAcpPlanActivationCard = false;
+                    }
+                  }
+                  if (!!this.acpPlan && (this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION || this.verificationDetails?.status === this.ACP_STATUS.PENDING_REVIEW)) {
+                    this.showAttentionBanner = true;
+                    this.showAcpPlanActivationCard = false;
                   }
                   if (this.verificationDetails?.status === this.ACP_STATUS.PENDING_RESOLUTION && !this.verificationDetails?.link) {
                     this.nvStatus = this.ACP_STATUS.PENDING;
@@ -778,6 +788,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
                   this.showExpiredSection = true;
                   this.nvStatus = 'EXPIRED';
+                  if (!!this.acpPlan) {
+                    // Get old data
+                    this.getInternalAppDataForExpiredApps();
+                  }
                 } else if (error.error.errors[0].code === '1421') {
                   this.showNVErrorSection = true;
                   this.nvStatus = 'NV_ERROR';
@@ -795,6 +809,98 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       }
     });
   }
+
+  private getInternalAppDataForExpiredApps(): void {
+    this.appState.loading = true;
+    this.ebbService.getInternalApplication(this.userProfile.customerId, this.userProfile.ebbId).then((res) => {
+      if (!!res && !!res?.data) {
+        this.oldUserData = _.cloneDeep(res.data);
+        if (!!this.oldUserData) {
+          // Delete old ACP application
+          this.deleteAndCreateAcpApplication(this.oldUserData, this.oldUserData?.applicationId);
+        }
+      }
+    }, (error) => {
+      this.appState.loading = false;
+    });
+  }
+
+  private deleteAndCreateAcpApplication(oldUserData, appId): void {
+    this.appState.loading = true;
+    this.ebbService.deleteAcpApplication(this.userProfile.customerId, appId).then(() => {
+      // Create a new ACP application
+      this.createInternalApplication(oldUserData);
+    }, (error) => {
+      this.appState.loading = false;
+      this.toastHelper.showAlert(error.message);
+    });
+  }
+
+  private createInternalApplication(oldUserData): void {
+    if (!!oldUserData) {
+      this.appState.loading = true;
+      const acpDetails = {
+        brand: 'goodmobile',
+        applicationId: oldUserData?.appId,
+        customerId: this.userProfile?.customerId,
+        eligibilityCode: oldUserData?.eligibilityCode,
+        schoolName: oldUserData?.schoolName,
+        publicHousingCode: oldUserData?.publicHousingCode,
+        signature: oldUserData?.signature,
+        user: oldUserData?.user,
+        bqpUser: oldUserData?.bqpUser
+      } as IAcpDetails;
+      this.ebbService.createInternalApplication(acpDetails).then(
+        (res) => {
+          this.appState.loading = false;
+          if (res?.applicationId) {
+            const applicationId = res?.applicationId;
+            // Call the verify ACP
+            this.callVerifyAcp(applicationId);
+          }
+        },
+        (error) => {
+          this.appState.loading = false;
+        }
+      );
+    }
+  }
+
+  private callVerifyAcp(appId): void {
+    this.appState.loading = true;
+    const appData: IAppDetails = {
+      customerId: this.userProfile?.customerId,
+      applicationId: appId,
+      command: 'CreateNewACPCommand'
+    };
+    if (!!appData) {
+      this.ebbService.verifyACPWithOrWithoutAppIdInternally(appData).then((result) => {
+        this.appState.loading = false;
+        // Post API, so we will use id not appId because its returned from the post API as id
+        if (!!result && !!result?.ebbId) {
+          this.userProfileService.userProfileObservable
+            .pipe(take(1))
+            .subscribe((profile) => {
+              if (!!profile) {
+                profile.ebbId = result.ebbId;
+                // bff needs the eebid , and the user id ,so we must sent the profile data
+                this.userProfileService.bffUpdateUserProfile(profile);
+                this.showAcpPlanActivationCard = false;
+                this.showAttentionBanner = true;
+                this.showExpiredSection = false;
+                // call get acp status again 
+                this.getVerificationDetails();
+              }
+            });
+        }
+      },
+        (error) => {
+          this.appState.loading = false;
+        }
+      );
+    }
+  }
+
   private refreshInterval(): void {
     this.interval = setInterval(() => {
       this.timeLeft = this.timeLeft - 1000;

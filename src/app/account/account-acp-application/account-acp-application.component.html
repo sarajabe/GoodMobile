@@ -87,6 +87,31 @@
         </div>
     </div>
 
+    <div class="info-banner error-background" *ngIf="!!showAttentionBanner">
+        <div class="flex">
+            <img src="assets/icon/red-alert.svg" alt="Alert Icon">
+            <div class="banner-content">
+                <p class="title">Attention</p>
+                <p class="description bottom-8">Your previous application has expired.</p>
+                <p class="description"><b>Don’t Worry!</b></p>
+                <p class="description bottom-8">We've created a new application on your behalf.</p>
+                <p class="description last"><b>To start using your free service, please make sure to finish your ACP
+                        approval process within 30 days of your application date.</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="info-banner error-background"
+        *ngIf="!!showAcpPlanActivationCard && ( !!planActivationStatus && planActivationStatus !== 'ENROLLED' )">
+        <div class="flex">
+            <img src="assets/icon/red-alert.svg" alt="Alert Icon">
+            <div class="banner-content">
+                <p class="title">Attention</p>
+                <p class="description last">Please make sure to activate yor plan within <b>30 days</b>, otherwise, you
+                    will lose the service.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="acp-application-card" *ngIf="!!showAcpPlanActivationCard">
         <div class="card-header-part" [class.border-radius]="hideCardContentNV === true">
             <div class="header-flex">
