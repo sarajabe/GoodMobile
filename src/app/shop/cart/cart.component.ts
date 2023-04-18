@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, GenericMobilePlanItem, IBasePlan, ICatalogItem, IDeviceCompatibilityV1, IPlanAddOn, IUser, IVoucherData, MobileCustomPlansService, MobilePlanDetails, PlansConfigurationService, PURCHASE_INTENT, ShippingConfigurationService, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { takeWhile } from 'rxjs/operators';
+import { takeWhile, take } from 'rxjs/operators';
 import { POSTAL_PATTERN } from 'src/app/app.config';
 import { ACCOUNT_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -66,41 +66,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.mobilePlansService.setReferralCode(this.user.referredWithCode);
         }
       }, 300);
-      const emailMdnRedirect = sessionStorage.getItem('emailMdn');
-      if (!!this.user && emailMdnRedirect) {
-        this.appState.loading = true;
-        this.userPlanService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
-          if (!!plans) {
-            const userPlans = plans;
-            const MdnPlan = userPlans.find((plan) => plan.mdn === emailMdnRedirect);
-            if (!!MdnPlan) {
-              this.mobilePlansService.setCartType(CART_TYPES.TOPUP_PLAN);
-              this.mobilePlansService.setActivePlanId(MdnPlan.id);
-              sessionStorage.setItem('plan_id', MdnPlan.id);
-              this.plansConfigurationService.planConfiguration.pipe(takeWhile(() => this.alive)).subscribe((conf) => {
-                const selectedPlan = conf.allPlans.find((plan) => plan.id === MdnPlan.basePlan.id);
-                const topUpPlan = new GenericMobilePlanItem(selectedPlan.id, selectedPlan.title, selectedPlan.subtitle, selectedPlan.price,
-                  MobileCustomPlansService.ADD_ONS_TYPES.BASE_PLAN, new MobilePlanDetails(selectedPlan.minutes, selectedPlan.messages, selectedPlan.data, selectedPlan.mms),
-                  selectedPlan.parentId, selectedPlan.virtual, selectedPlan.buttonText,
-                  selectedPlan.extTitle, selectedPlan.description, selectedPlan.promoMessage, selectedPlan.promoCode, selectedPlan.promoPrice, selectedPlan.promoMonths);
-                this.analyticsService.trackAddToCartGA4(PURCHASE_INTENT.NEW, [topUpPlan]);
-                this.mobilePlansService.setBasePlan(topUpPlan);
-              });
-              setTimeout(() => {
-                this.appState.loading = false;
-              }, 2000);
-            } else {
-              this.appState.loading = false;
-              this.toastHelper.showAlert(`This Mobile number ${emailMdnRedirect} is not found in your account`);
-              this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
-            }
-          } else {
-            this.appState.loading = false;
-            this.toastHelper.showAlert(`This Mobile number ${emailMdnRedirect} is not found in your account`);
-            this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
-          }
-        });
-      }
+    
     });
     this.shippingConfigurationService.newSimOrder.pipe(takeWhile(() => this.alive)).subscribe((order) => {
       this.newSimOrder = order;
@@ -150,24 +116,15 @@ export class CartComponent implements OnInit, OnDestroy {
         });
         this.isTopupChecked = true;
       }
-      if (!!this.userCart && !!this.userCart.phones) {
-        this.selectedPhone = this.userCart.phones[0];
-        if (!!this.selectedPhone && this.selectedPhone.stock > 0) {
-          this.isItemUnavailable = false;
-        } else {
-          this.isItemUnavailable = true;
-          let customHtml = ``;
-          if (this.userCart.cartType === CART_TYPES.NEW_PLAN) {
-            customHtml = `The item ${this.userCart.phones[0].name}, is currently unavailable.
-             Please choose another phone or remove it from cart to proceed.`;
-          } else {
-            customHtml = `The item ${this.userCart.phones[0].name}, is currently unavailable.
-              Please choose another phone or remove it.`;
+      if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN) {
+        this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
+          this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
+          this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
+          if (!this.planInCatalog && !this.planInCatalogChecked) {
+            this.planInCatalogChecked = true;
+            this.showExpiredPlansPopup();
           }
-          if (!document.body.classList.contains('modal-open')) {
-            this.modalHelper.showItemOutOFStockModal('Action Required', customHtml, this.userCart, 'out-of-stock-modal', false);
-          }
-        }
+        });
       }
       this.appState.loading = false;
     });
@@ -598,5 +555,30 @@ export class CartComponent implements OnInit, OnDestroy {
     }
     this.router.navigate([ROUTE_URLS.HOME]);
   }
+  }
+
+  private showExpiredPlansPopup(): void {
+    const customHtml = `<div class="content"><p>The current plan in your cart is no longer available. </p>
+    <p>Click the button below now and check our latest best deals!</p>`;
+    this.modalHelper.showInformationMessageModal('Oops!', '', 'See Plans', null, false, 'archived-plan', customHtml).afterClosed().subscribe((response) => {
+      if (!!response) {
+        this.mobilePlansService.clearUserCart();
+        this.appState.clearSessionStorage();
+        sessionStorage.setItem('removeFromCart', 'true');
+        this.checkoutService.paymentsSubject.next(null);
+        this.checkoutService.detailsSubject.next(null);
+        this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
+      }
+    });
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeyDownHandler(event: KeyboardEvent): void {
+    if (event.key === 'Escape' || event.key === 'esc') {
+      if (!!this.planInCatalogChecked) {
+        this.showExpiredPlansPopup();
+      }
+    }
   }
 }
