@@ -39,8 +39,7 @@ export class ChangePlanSummaryComponent implements OnInit, OnDestroy {
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((cart) => {
       this.selectedMobilePlan = cart;
       this.parentPlans = this.mobilePlansService.parentBasePlans;
-      const categoryPlan = !!this.parentPlans ? this.parentPlans.find((plan) => plan.id === cart.basePlan.parentId) : undefined;
-      this.planCategory = !!categoryPlan ? categoryPlan.title : undefined;
+      this.planCategory = cart?.basePlan.category;
     });
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
       if (!!ready) {

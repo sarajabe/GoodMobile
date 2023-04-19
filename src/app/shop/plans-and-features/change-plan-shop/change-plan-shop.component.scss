@@ -17,7 +17,7 @@
         .info-banner {
             margin-top: 40px;
             width: 100%;
-            max-width: 520px;
+            max-width: 560px;
             text-align: left;
             .banner-content {
                 width: 100%;
@@ -51,17 +51,64 @@
         padding-top: 48px;
         padding-bottom: 72px;
         text-align: center;
-        
+        h2 {
+          padding: 0 16px;
+        }
+        .tabs-section {
+          background: #F2F7FA;
+          box-shadow: 0px 5px 14px 0px #003C750A ,0px 7px 28px 0px #5E5E5E1A,
+            0px 4px 8px 0px #5E5E5E08;
+          padding: 8px 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          border-radius: 30px;
+          margin-top: 40px;
+          .data {
+            .data-tab {
+              color: #669BBF;
+              cursor: pointer;
+              font-family: $base-font-family-bold;
+            }
+            &.selected {
+              background-color: $primary-color;
+              padding: 5px 16px;
+              box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.16), 0px 7px 23px rgba(94, 94, 94, 0.2), 0px 5px 14px rgba(57, 117, 181, 0.12);
+              border-radius: 18px;
+              position: relative;
+              &:after {
+                width: 0;
+                height: 0;
+                border-left: 11px solid transparent;
+                border-right: 11px solid transparent;
+                border-top: 19px solid $primary-color;
+                content: " ";
+                position: absolute;
+                top: 38px;
+                right: auto;
+                left: 26px;
+              }
+              .data-tab {
+                color: #FBFBFB;
+              }
+            }
+          }
+        }
         .cards-section {
             width: 100%;
             margin-top: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .plan-cards {
                 width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                max-width: 560px;
                 .plan-card {
-                  max-width: 520px;
+                  max-width: 560px;
                   width: 100%;
                   position: relative;
                   .card-header {
@@ -69,10 +116,10 @@
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
-                    padding: 16px 16px 8px;
+                    padding: 16px 16px 8px 24px;
                     gap: 10px;
                     min-height: 148px;
-                    background: linear-gradient(78.53deg, #412b71 -25.3%, #ab8ddd 115.4%);
+                    background: linear-gradient(78.53deg, #412B71 -25.3%, #6A9EE1 115.4%);
                     border-radius: 8px 8px 0px 0px;
                     &.rounded {
                       box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
@@ -238,11 +285,45 @@
                 }
               }
         }
+        .acp-section {
+          background: #FBFBFB;
+          border-radius: 0px 0px 10px 10px;
+          padding: 24px;
+          display: flex;
+          justify-content: flex-start;
+          gap: 12px;
+          margin-top: 64px;
+          max-width: 560px;
+          width: 100%;
+          box-shadow: 0px 5px 16px 0px #003C7505, 0px 8px 30px 0px #5E5E5E14,
+          0px 4px 12px 0px #5E5E5E08;
+          img {
+            width: 50px;
+            height: 50px;
+          }
+          .content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            h5 {
+              margin-bottom: 8px;
+            }
+            .link {
+              padding: 0;
+              margin-top: 16px;
+              font-size: 16px;
+              line-height: 16px;
+              font-family: $secondary-font-family-bold;
+            }
+          }
+        }
         @media(max-width: $phablet-min-width-minus) {
             padding-top: 32px;
             padding-bottom: 50px;
             .cards-section {
                 margin-top: 32px;
+                padding: 0 24px;
             }
         }
     }

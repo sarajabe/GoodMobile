@@ -10,8 +10,8 @@
                 <p class="title noMargin">Your Current Plan is:</p>
                 <div class="details">
                   <div class="plan">
-                    <p class="smaller">{{selectedPlanInfo?.basePlan?.category | titlecase}}</p>
-                    <p class="smaller primary-font-bold">{{userPlan?.basePlan?.price > 0 ? userPlan?.basePlan?.price : 'FREE'}}</p>
+                    <p class="smaller">{{selectedPlanInfo?.basePlan?.category | titlecase}} Plan</p>
+                    <p class="smaller primary-font-bold">{{userPlan?.basePlan?.price > 0 ? (userPlan?.basePlan?.price | currency) : 'FREE'}}</p>
                   </div>
                   <p class="smallest">{{userPlan?.basePlan?.subtitle}}</p>
                 </div>
@@ -23,42 +23,47 @@
     <p class="label">CHANGING YOUR PLAN</p>
     <h2 class="header-color">Choose your replacement plan:</h2>
     <h5 class="noMargin">Talk, Text and Surf More!</h5>
+    <div class="tabs-section">
+      <div class="data" *ngFor="let data of plansPrices" [class.selected]="selectedPrice === data">
+        <p class="data-tab" (click)="selectPlanPrice(data)">${{data}}</p>
+      </div>
+    </div>
     <div class="cards-section">
-      <div class="plan-cards" *ngIf="filteredPlans?.length > 0">
-        <div *ngFor="let plan of filteredPlans; let i = index;" class="plan-card">
-          <div class="card-header" [class.rounded]="!cardExpanded[i]">
-            <p *ngIf="!!plan?.category" class="category">{{plan?.category}}</p>
+      <div class="plan-cards">
+        <div  class="plan-card">
+          <div class="card-header">
+            <p *ngIf="!!selectedPlan?.category" class="category">{{selectedPlan?.category}}</p>
             <div class="plan-data">
-              <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
-                'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
+              <p class="price"><span *ngIf="selectedPlan?.price > 0" class="currency">$</span>{{selectedPlan?.price > 0 ? selectedPlan?.price :
+                'FREE'}}<span class="mo" *ngIf="selectedPlan?.price > 0">/mo</span></p>
               <p class="sperator"></p>
-              <p class="data">{{plan?.details?.data/1024}}GB</p>
+              <p class="data">{{selectedPlan?.details?.data/1024}}GB</p>
             </div>
-            <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
-                [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
+            <a (click)="cardExpanded=!cardExpanded" class="link">{{!!cardExpanded ? 'View less' : 'View more'}} <img
+                [src]="!!cardExpanded? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
           </div>
-          <div class="card-body" *ngIf="!!cardExpanded[i]">
+          <div class="card-body" *ngIf="!!cardExpanded">
             <p class="intro">INCLUDES</p>
             <div class="details">
-              <img src="/assets/icon/green-tick.svg" alt="green-tick">
-              <p class="smaller"><span class="secondary-font-bold">{{plan?.details?.data / 1024}}GB</span> high-speed data per month; speeds reduce after allowance is used</p>
+              <img src="/assets/icon/blue-tick.svg" alt="green-tick">
+              <p class="smaller"><span class="secondary-font-bold">{{selectedPlan?.details?.data / 1024}}GB</span> high-speed data per month; speeds reduce after allowance is used</p>
             </div>
             <div class="details">
-              <img src="/assets/icon/green-tick.svg" alt="green-tick">
+              <img src="/assets/icon/blue-tick.svg" alt="green-tick">
               <p class="smaller"><span class="secondary-font-bold">Unlimited</span> talk and text + data access on America’s
                 nationwide networks</p>
             </div>
             <div class="details">
-              <img src="/assets/icon/green-tick.svg" alt="green-tick">
-              <p class="smaller">Works with network compatible <span class="secondary-font-bold">unlocked iPhone and Android phones</span></p>
+              <img src="/assets/icon/blue-tick.svg" alt="green-tick">
+              <p class="smaller">Works with <span class="secondary-font-bold">unlocked</span> compatible phones</p>
             </div>
             <div class="details">
-              <img src="/assets/icon/green-tick.svg" alt="green-tick">
+              <img src="/assets/icon/blue-tick.svg" alt="green-tick">
               <p class="smaller"><span class="secondary-font-bold">FREE</span> SIM Card Activation Kit. <span class="secondary-font-bold">FREE</span> Shipping.</p>
             </div>
           </div>
           <div class="actions">
-            <a (click)="selectChangePlan(i, event)">
+            <a (click)="selectChangePlan()">
               <img *ngIf="innerWidth > 1024" src="/assets/icon/base-cart-icon.svg" alt="cart-icon"
             onmouseover="this.src='/assets/icon/cart-long-button.svg'"
             onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
@@ -66,6 +71,14 @@
             </a>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="acp-section" *ngIf="!userPlan?.basePlan?.ebb">
+      <img src="assets/icon/hand-with-money.svg" alt="Save money"/>
+      <div class="content">
+        <h5>Interested in FREE 10GB Premium monthly Data? </h5>
+        <p class="smaller">Check out if you qualify for the Government Benefit Program</p>
+        <a class="link"  [routerLink]="['/' + ROUTE_URLS.ACP]">Do I Qualify?</a>
       </div>
     </div>
   </div>

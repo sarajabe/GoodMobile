@@ -7,7 +7,6 @@ import { MetaService } from '../../../../services/meta-service.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalHelperService } from '../../../../services/modal-helper.service';
 import { takeWhile, combineLatest } from 'rxjs/operators';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-change-plan-shop',
@@ -22,8 +21,11 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
   public selectedPlanInfo: CustomizableMobilePlan;
   public isExpiredPlan = false;
   public userAccount: IUserAccount;
-  public cardExpanded;
   public SUPPORT_ROUTE_URLS = SUPPORT_ROUTE_URLS;
+  public cardExpanded = true;
+  public ROUTE_URLS = ROUTE_URLS;
+  public plansPrices = [];
+  public selectedPrice;
   private alive = true;
   allBasePlans: any;
   filteredPlans: any;
@@ -39,42 +41,45 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
     private analyticsService: ActionsAnalyticsService) {
-
-
-    this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((userPlanReady) => {
-      if (userPlanReady) {
-        this.userPlan = this.userPlansService.selectedUserPlan;
-        this.selectedPlanInfo = this.userPlansService.getCustomizableMobilePlanFromUserPlan(this.userPlan);
+      
+    this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
+      if (!!params && params[ROUTE_URLS.PARAMS.USER_PLAN_ID]) {
+        this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
+          if (!!plans) {
+            this.userPlan = plans.find((p) => p.id === params[ROUTE_URLS.PARAMS.USER_PLAN_ID]);
+            this.selectedPlanInfo = this.userPlansService.getCustomizableMobilePlanFromUserPlan(this.userPlan);
+            this.mobilePlansService.isConfigurationReady.pipe(takeWhile(() => this.alive)).subscribe(() => {
+                this.allBasePlans = this.mobilePlansService.allBasePlans;
+                this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && ((!!plan.specialPromotion && !!plan.specialPromotion.isSpecific) || !plan.isSpecialPromotion) && !plan.ebb && plan.id !== this.userPlan.basePlan.id);
+                this.filteredPlans.sort((a, b) => a.price - b.price);
+                this.selectedPlan = this.filteredPlans[this.filteredPlans.length - 1];
+                this.selectedPrice = this.selectedPlan.price;
+                this.filteredPlans.map((p) => this.plansPrices.push(p.price))
+            });
+          }
+        });
+        this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
+          this.userAccount = account;
+          if (!!this.userAccount && this.userAccount.plan.bundleId.endsWith('EXP'))  {
+            this.isExpiredPlan = true;
+          }
+        });
       }
     });
-    this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
-      this.userAccount = account;
-      if (!!this.userAccount && this.userAccount.plan.bundleId.endsWith('EXP'))  {
-        this.isExpiredPlan = true;
-      }
-    });
-    this.mobilePlansService.isConfigurationReady.pipe(takeWhile(() => this.alive)).subscribe(() => {
-        this.allBasePlans = this.mobilePlansService.allBasePlans;
-        this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && ((!!plan.specialPromotion && !!plan.specialPromotion.isSpecific) || !plan.isSpecialPromotion) && !plan.ebb);
-        this.cardExpanded = Array(this.filteredPlans.length).fill(false);
-    });
   }
-  public showDetails(index): void {
-    this.cardExpanded[index]= !this.cardExpanded[index];
+
+  public selectPlanPrice(data): void {
+    this.selectedPlan = this.filteredPlans.find((p) => (p.price) === data);
+    this.selectedPrice = data;
   }
-  public selectChangePlan(i, event): void {
-    if (!!event) {
-      event.preventDefault();
-    }
-    this.selectedPlan = this.filteredPlans[i];
+  public selectChangePlan(): void {
     if (!this.isExpiredPlan) {
       const cusomHtml = `<p>If you choose to change plans now, Your plan change will take affect immediately,
       and any remaining service balances on your account may be lost.</p>
       <p >If you choose to change plans on your plan’s expiration date, your plan will change
-      on your <span class="primary-font-bold">rate plan expiration date</span>. At that time, the cost of this new plan will be deducted from your main account balance.</p>`
-      this.modalHelper.showInformationMessageModal('Before we continue', '', 'Yes, make change on expiry date', null, true, 'change-plan-modal', cusomHtml, true, 'No, I want to change plan now').afterClosed().subscribe((result) => {
-        if (result !== null) {
-          console.info('result ', result)
+      on your <span class="primary-font-bold">rate plan expiration date</span>.</p><p> At that time, the cost of this new plan will be deducted from your main account balance.</p>`
+      this.modalHelper.showInformationMessageModal('Before we continue', '', 'Make change on Expiry Date', null, true, 'change-plan-modal', cusomHtml, true, 'Change plan now').afterClosed().subscribe((result) => {
+        if (result !== null && result !== undefined) {
           this.mobilePlansService.clearUserCart().then(() => {
             sessionStorage.removeItem('shippingAddress');
             sessionStorage.removeItem('shippingMethod');

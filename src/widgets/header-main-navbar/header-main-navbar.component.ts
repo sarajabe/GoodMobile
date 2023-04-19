@@ -352,40 +352,6 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       this.mobilePlansService.setSimCard('');
     }
   }
-  public changePlan(): void {
-    if (!this.isPortIn) {
-      this.showResponsiveMenu = false;
-      this.renderer.removeClass(document.body, 'modal-open');
-      this.renderer.addClass(document.body, 'modal-closed');
-      if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.CHANGE_PLAN) {
-        // eslint-disable-next-line max-len
-        this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
-          .afterClosed().subscribe((result) => {
-            if (result) {
-              this.mobilePlansService.clearUserCart();
-              this.appState.clearSessionStorage();
-              const removedItems = [];
-              if (this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
-                removedItems.push(this.userCart.basePlan);
-              } else {
-                if (this.userCart.simsQuantity > 0) {
-                  removedItems.push({ id: 'SIMG2G4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
-                }
-                if (!!this.userCart.addOns) {
-                  removedItems.push(this.userCart.addOns);
-                }
-              }
-              this.analyticService.trackRermoveFromCartGA4(removedItems);
-              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`]);
-            }
-          }, (error) => {
-            console.error('error', error);
-          });
-      } else {
-        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`]);
-      }
-    }
-  }
   public setActiveItem(x: number): void {
     this.resetTimeout();
     this.activeItem = x;

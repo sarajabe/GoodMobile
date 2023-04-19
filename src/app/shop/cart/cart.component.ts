@@ -148,7 +148,9 @@ export class CartComponent implements OnInit, OnDestroy {
             sessionStorage.removeItem('useFromBalance');
             sessionStorage.removeItem('removeFromCart');
             if (this.userCart.cartType === CART_TYPES.CHANGE_PLAN) {
-              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`]);
+              const params = {};
+              params[ROUTE_URLS.PARAMS.USER_PLAN_ID]=this.userCart.activePlanId;
+              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
             } else {
               const params = {};
               params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN] = true;
