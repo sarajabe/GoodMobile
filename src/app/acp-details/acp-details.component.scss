@@ -2,6 +2,7 @@
 @import "../../styles/modules/mixins";
 
 .acp-details-page {
+    overflow-x: hidden;
     h1 {
         font-size: 0;
         width: 1px;
@@ -25,23 +26,29 @@
                 img {
                     position: absolute;
                     right: 0;
-                    max-width: 690px;
-                    height: 472px;
+                    max-width: 806px;
+                    height: 478px;
                     top: 0;
-                    @media(max-width: 1250px) {
-                        left: 50%;
+                    left: 50%;
+                    @media(max-width: 1250.9px) {
+                        left: 54%;
+                        height: 336px;
+                        max-width: 469px;
+                        top: 70px;
                     }
                     @media(max-width: $desktop-min-width-minus) {
-                       height: 329px;
+                       height: 312px;
                        right: 0;
-                       max-width: 460px;
+                       max-width: 469px;
+                       left: 54%;
+                       top: 0;
                     }
                     @media(max-width: 880px) {
-                        left: 46%;
+                        left: 52%;
                     }
                     @media(max-width: $phablet-min-width-minus) {
                         position: static;
-                        height: 190px;
+                        height:  202px;
                         max-width: none;
                         margin-top: 30px;
                         margin-bottom: 20px;
