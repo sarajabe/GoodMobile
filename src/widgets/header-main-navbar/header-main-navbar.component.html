@@ -71,7 +71,8 @@
             <img class="item-icon" src="assets/icon/home-page.svg" alt="home" />
             <a id="homeMenu" [routerLink]="[ROUTE_URLS.HOME]" (click)="onLinkClick($event)">Home</a>
           </li>
-          <li class="responsive-item sub-menu-list" id="shopMenu" data-cy="shopMenu" (click)="showShopMenu = !showShopMenu">
+          <li class="responsive-item sub-menu-list" id="shopMenu" data-cy="shopMenu"
+            (click)="showShopMenu = !showShopMenu">
             <div class="label-section">
               <div class="name">
                 <p><img class="item-icon" src="assets/icon/cart.svg" alt="shop" /> Shop
@@ -217,12 +218,30 @@
 </div>
 <div class="acp-alert-banner" *ngIf="!!showACPActionBanner" id="alert">
   <div class="container-flex">
-    <h2 class="title">
+    <h5 class="title">
       <img class="alert-icon" src="assets/icon/red-alert.svg" alt="alert">
       <span>Action Required!</span>
-    </h2>
-    <p class="desc">An ACP application has started! Resume your application now.</p>
+    </h5>
+    <p class="desc smaller">An ACP application has started! Resume your application now.</p>
     <button class="button primary" aria-label="Continue Application" (click)="goToACPApplication()">Continue
       Application</button>
+  </div>
+</div>
+<div class="acp-alert-banner warning" *ngIf="!!showResumeFilingContent || !!showActivatePlanContent" id="alert">
+  <div class="container-flex">
+    <h5 class="title">
+      <img class="alert-icon" src="assets/icon/warning-icon.svg" alt="Warning Icon">
+      <span>Attention Required!</span>
+    </h5>
+    <ng-container *ngIf="!!showResumeFilingContent">
+      <p class="desc smaller">To start using your free service, please make sure to finish your ACP approval process within
+        <b>30 days</b> of your application date.
+      </p>
+      <button class="button primary" aria-label="Resume Filing" (click)="goToAcp()">Resume Filing</button>
+    </ng-container>
+    <ng-container *ngIf="!!showActivatePlanContent">
+      <p class="desc smaller">Please make sure to <b>activate</b> your ACP plan to <b>avoid service loss.</b></p>
+      <button class="button primary" aria-label="Activate Now" (click)="activatePlan()">Activate Now!</button>
+    </ng-container>
   </div>
 </div>

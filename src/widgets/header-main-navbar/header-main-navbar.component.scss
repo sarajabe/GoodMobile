@@ -558,76 +558,76 @@
     align-items: center;
     position: fixed;
     top: 64px;
-    height: 176px;
+    min-height: 176px;
     padding: 32px;
     max-width: 2000px;
     z-index: 8;
     width: 100%;
 
-    .title {
-      display: flex;
-      align-items: center;
-      font-size: rem-calc(18px);
-      font-weight: 700;
-      color: #D22119;
-      margin-bottom: 8px;
-      line-height: 28px;
+    @media (max-width: $desktop-min-width-minus) {
+      padding: 20px 24px 28px;
+    }
 
-      img {
-        margin-right: 10px;
+    @media (max-width: $phablet-min-width-minus) {
+      padding: 12px 24px 20px;
+      top: 60px;
+    }
+
+    &.warning {
+      background: #FEF4E9;
+
+      .title {
+        color: #090909 !important;
       }
     }
 
-    .desc {
-      color: $black;
-      line-height: 24px;
-      padding-left: 40px;
-      margin-bottom: 16px;
-    }
+    .container-flex {
 
-    .button {
-      font-weight: 700;
-      font-size: rem-calc(20px);
-      margin-left: 40px;
-      width: 252px;
-      padding: 8px;
-    }
-
-    @media (max-width: $desktop-min-width-minus) {
-      top: 80px;
-    }
-
-    @media (max-width: $tablet-min-width-minus) {
-      top: 60px;
-      flex-direction: column;
-      padding: 24px 0;
+      @media (max-width: $desktop-min-width-minus) {
+        padding: 0;
+      }
 
       .title {
-        font-size: rem-calc(14px);
-        line-height: 24px;
+        display: flex;
+        align-items: center;
+        color: #D22119;
+        margin-bottom: 8px;
 
         img {
+          width: 32px;
+          height: 32px;
           margin-right: 8px;
-          width: 24px;
+
+          @media (max-width: $phablet-min-width-minus) {
+            width: 24px;
+            height: 24px;
+          }
         }
       }
 
       .desc {
-        font-size: rem-calc(14px);
-        line-height: 24px;
+        color: $black;
         padding-left: 40px;
+        margin-bottom: 16px;
+
+        @media (max-width: $phablet-min-width-minus) {
+          padding-left: 33px;
+        }
       }
 
       .button {
-        font-size: rem-calc(16px);
-        margin-left: 30px;
-        width: 215px;
-      }
-    }
+        font-weight: 700;
+        font-size: rem-calc(20px);
+        line-height: 20px;
+        margin-left: 40px;
+        padding: 8px 24px;
 
-    @media (max-width: 520px) {
-      &.payment {
-        height: auto;
+        @media (max-width: $phablet-min-width-minus) {
+          font-size: rem-calc(16px);
+          line-height: 16px;
+          padding: 12px 24px;
+          margin-left: 33px;
+        }
       }
     }
   }

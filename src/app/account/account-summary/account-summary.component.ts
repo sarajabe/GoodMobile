@@ -1275,14 +1275,18 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
             this.checkoutService.updatePaymentMethod(null);
             this.mobilePlansService.clearUserCart();
             sessionStorage.setItem('plan_id', this.selectedPlan.id);
-            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`]);
+            const params = {};
+            params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
+            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
           }
         }, (error) => {
           console.error('error', error);
         });
     } else {
       sessionStorage.setItem('plan_id', this.selectedPlan.id);
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`]);
+      const params = {};
+      params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
     }
   }
 

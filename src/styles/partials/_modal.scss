@@ -457,6 +457,9 @@
         overflow-y: visible;
 
         .modal-content {
+          p {
+            margin-bottom: 8px;
+          }
           @media (max-width: $phablet-min-width-minus) {
             padding: 0 !important;
           }
