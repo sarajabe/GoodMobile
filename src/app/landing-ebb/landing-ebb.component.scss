@@ -28,30 +28,48 @@
                 img {
                     position: absolute;
                     left: 58%;
-                    max-width: 535px;
-                    height: 556px;
-                    top: 0;
-                    @media(max-width: 1300px) {
-                       left: 46%;
+                    width: 556px;
+                    height: 484px;
+                    top: 44px;
+                    @media(max-width: 1400px) {
+                        left: 50%;
+                    }
+                    @media(max-width: 1200px) {
+                        width: 474px;
+                        height: 412px;
+                        left: 52%;
+                        top: 82px;
                     }
                     @media(max-width: $desktop-min-width-minus) {
-                        max-width: 400px;
+                        width: 441px;
+                        height: 383px;
+                        top: 84px;
                         left: 54%;
                     }
+                    @media(max-width: 969.9px) {
+                        width: 380px;
+                        height: 360px;
+                        left: 56%;
+                        top: 80px;
+                    }
                     @media(max-width: 880px) {
-                        max-width: 320px;
-                        left: 50%;
+                        width: 330px;
+                        height: 300px;
+                        left: 48%;
+                        top: 161px;
                     }
                     @media(max-width: $phablet-min-width-minus) {
                         top: 16px;
                         left: 0;
                         right: 0;
                         margin: auto;
-                        height: 275px;
-                        max-width: none;
+                        width:384px;
+                        height: 284px;
                     }
-                    @media(max-width: 431px) {
-                        height: 202px;
+                    @media(max-width: 450.9px) {
+                        max-width: 300px;
+                        height: 222px;
+                        top: 0;
                     }
                 }
             }
@@ -79,7 +97,7 @@
                     line-height: 64px;
                     margin-top: 28px;
                     margin-bottom: 8px;
-                    color: $header-color;
+                    color: #383838;
                 }
                 .plan-note {
                     font-size: rem-calc(16px);
@@ -94,7 +112,7 @@
                     font-size: rem-calc(40px);
                     line-height: 48px;
                     margin-bottom: 16px;
-                    color: $header-color;
+                    color: #383838;
                     .month {
                         font-size: rem-calc(22px);
                         span {
@@ -114,7 +132,7 @@
                     font-size: rem-calc(20px);
                     font-family: $secondary-font-family-bold;
                 }
-                @media(max-width: 1300px) {
+                @media(max-width: 1400px) {
                     padding-left: 55px;
                     max-width: 527px;
                     .header {
@@ -251,7 +269,7 @@
                     color: $primary-color;
                 }
             }
-            @media(max-width: 1300px) {
+            @media(max-width: 1400px) {
                 padding-left: 55px;
             }
             @media(max-width: $desktop-min-width-minus) {
@@ -293,7 +311,7 @@
             flex-basis: 65%;
             .section-header {
                 font-size: rem-calc(32px);
-                color: $primary-color;
+                color: $header-color;
                 line-height: 40px;
                 margin-bottom: 16px;
             }
@@ -347,7 +365,7 @@
         @media(max-width: 1600px) {
             padding: 64px 3%;
         }
-        @media(max-width: 1300px) {
+        @media(max-width: 1400px) {
             padding: 64px 25px 64px 5px;
         }
         @media(max-width: $desktop-min-width-minus) {
@@ -399,7 +417,7 @@
             padding: 36px 5%;
             .img-side {
                 img {
-                    max-width: 403px;
+                    max-width: 320px;
                     height: 260px;
                 }
             }
@@ -457,7 +475,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        @media(max-width: 1300px) {
+        @media(max-width: 1400px) {
             padding: 32px 55px;
         }
         @media(max-width: $desktop-min-width-minus) {
@@ -492,7 +510,7 @@
             }
             .section-header {
                 font-size: rem-calc(32px);
-                color: $primary-color;
+                color: $header-color;
                 line-height: 40px;
                 margin-bottom: 12px;
             }
@@ -597,7 +615,7 @@
                 width: 100%;
             }
         }
-        @media(max-width: 1300px) {
+        @media(max-width: 1400px) {
             padding-left: 55px;
         }
         @media(max-width: $desktop-min-width-minus) {
@@ -831,7 +849,7 @@
             font-size: rem-calc(32px);
             line-height: 40px;
             font-weight: bold;
-            color: $primary-color;
+            color: $header-color;
             margin-bottom: 0;
             text-align: center;
         }
@@ -896,10 +914,10 @@
                 line-height: 24px;
                 margin-bottom: 12px;
                 color: #A5A3A3;
-                text-align: left; 
+                text-align: center; 
             }
         }
-        @media(max-width: 1300px) {
+        @media(max-width: 1400px) {
             padding: 64px 55px;
         }
         @media (max-width: $desktop-min-width-minus) {
@@ -965,7 +983,7 @@
             flex-direction: column;
             justify-content: center;
             padding: 64px 8%;
-            @media(max-width: 1300px) {
+            @media(max-width: 1400px) {
                 padding: 64px 55px;
             }
             @media (max-width: $phablet-min-width-minus) {

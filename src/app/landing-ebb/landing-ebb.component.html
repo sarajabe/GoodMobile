@@ -5,15 +5,18 @@
         <p class="title"><img src="assets/img/government-icon.svg" alt="goverment">GOVERNMENT BENEFIT PROGRAM</p>
         <h1>FREE Government Cell Phone Service</h1>
         <h2 class="header">Free Unlimited Talk, Text <span>& Data</span> </h2>
-        <h3 class="data">with 6GB<span class="month"><span> of high speed data<sup>1</sup></span></span></h3>
+        <h3 class="data">with 10GB<span class="month"><span> of high-speed data</span></span></h3>
         <p class="description">Get Free cellular service every month when you qualify for the Federal Affordable Connectivity Program</p>
         <button class="button primary" data-cy="bannerApplyNowBtn" aria-label="apply now" (click)="goToACPForm()">Apply Now</button>
       </div>
       <div class="banner-img">
         <picture>
-          <source srcset='assets/img/acp-banner-mobile.svg' media="(max-width: 639.9px)" type="image/svg">
-          <source srcset='assets/img/acp-banner-desktop.svg' media="(min-width: 1025px)" type="image/svg">
-          <img src="assets/img/acp-banner-desktop.svg" alt="6GB Free ACP plan" height="556">
+          <source srcset='assets/img/acp-banner-desktop-1200.png' media="(min-width: 1201px)" type="image/png">
+          <source srcset='assets/img/acp-banner-desktop-1025.png' media="(min-width: 1025px)" type="image/png">
+          <source srcset='assets/img/acp-banner-tablet.png' media="(min-width: 640px)" type="image/png">
+          <source srcset='assets/img/acp-banner-mobile-399.png' media="(max-width: 450.9px)" type="image/png">
+          <source srcset='assets/img/acp-banner-mobile.png' media="(max-width: 639.9px)" type="image/png">
+          <img src="assets/img/acp-banner-desktop-1025.png" alt="6GB Free ACP plan" height="484" width="556">
         </picture>
       </div>
     </div>
@@ -54,14 +57,14 @@
       <h2 class="section-header" data-cy="whoIsEligibleHeader">Who Is Eligible for the Affordable Connectivity Program?</h2>
       <p class="section-note">Household is eligible for the Affordable Connectivity Program benefit if:</p>
       <div class="condition">
-        <img class="check" src="assets/icon/circle-check.svg" alt="checkmark">
+        <img class="check" src="assets/icon/primary-check-circle.svg" alt="checkmark">
         <p class="condition-description">
           The household income is at or below 200% of the <a [routerLink]="['/' + ROUTE_URLS.ACP_DETAILS_LONG]" fragment="house-hold-income"><b>Federal Poverty Guidelines</b></a>.
           <span class="or">OR</span>
         </p>
       </div>
       <div class="condition">
-        <img class="check" src="assets/icon/circle-check.svg" alt="checkmark">
+        <img class="check" src="assets/icon/primary-check-circle.svg" alt="checkmark">
         <p class="condition-description long">If a member of the household participates in one of these programs below:</p>
       </div>
       <ul class="sub-condition">
@@ -78,7 +81,7 @@
           <div class="or"><b>OR</b></div>
       </ul>
       <div class="condition">
-        <img class="check" src="assets/icon/circle-check.svg" alt="checkmark">
+        <img class="check" src="assets/icon/primary-check-circle.svg" alt="checkmark">
         <p class="condition-description"><span>Participates in one of these assistance programs and lives on <a href="https://www.affordableconnectivity.gov/do-i-qualify/enhanced-tribal-benefit/#qualifying-lands"
           target="_blank"><b class="text-color-primary">Qualifying Tribal lands:</b></a></span></p>
       </div>
