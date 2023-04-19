@@ -6,63 +6,350 @@
     .plans-banner {
       background: linear-gradient(180deg, #d6e1ff 0%, #e3efff 100%);
       border-radius: 0px 0px 8px 8px;
-      height: 269px;
+      height: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px 24px 46px;
       max-width: 2000px;
-
       @media (max-width: $phablet-min-width-minus) {
         padding: 32px 24px;
       }
       .banner-head {
         font-weight: bold;
         font-family: $base-font-family-bold;
-        margin-bottom: 12px;
+        margin-bottom: 32px;
         color: $header-color;
+        text-align: center;
+        @media (max-width: 699.9px) {
+          max-width: 500px;
+        }
         @media (max-width: $phablet-min-width-minus) {
-          margin-bottom: 4px;
+          margin-bottom: 24px;
           text-align: center;
+          max-width: 380px;
         }
       }
       .banner-text {
-        text-align: center;
-        h5 {
-          font-weight: normal;
-          font-family: $base-font-family;
-          margin-bottom: 0px;
+        position: relative;
+        width: 100%;
+        @media (max-width: $phablet-min-width-minus) {
+          .icons-text {
+            max-width: 66px;
+          }
+        }
+        .icon-section {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .icon-container {
+          display: flex;
+          margin-right: 24px;
+          align-items: center;
+          gap: 8px;
+          &.last {
+            margin-right: 0;
+          }
+          img {
+            width: 60px;
+            height: 60px;
+          }
+          @media (max-width: 699.9px) {
+            flex-direction: column;
+            text-align: center;
+          }
+          @media (max-width: $phablet-min-width-minus) {
+            margin-right: 16px;
+            img {
+              width: 45px;
+              height: 45px;
+            }
+          }
         }
       }
     }
-    .plan-cards {
+    .desktop-plan-cards {
       display: flex;
       justify-content: space-between;
       width: 100%;
+      max-width: 1390px;
+      margin: 0 auto;
+      margin-top: -132px;
+      margin-bottom: 136px;
+      box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1),
+        0px 5px 14px rgba(0, 60, 117, 0.04);
+      border-radius: 17px;
+      background: #fbfbfb;
+      padding: 32px 3%;
+      height: 460px;
+      .ebb-card {
+        background: linear-gradient(78.53deg, #412b71 -25.3%, #6a9ee1 115.4%);
+        border-radius: 8px;
+        color: #fbfbfb !important;
+        min-height: 596px;
+        position: relative;
+        top: -100px;
+        max-width: 343px;
+        padding: 16px 16px 24px;
+        margin-right: 2%;
+        .card-header {
+          .category {
+            color: #fbfbfb !important;
+          }
+          .plan-data {
+            color: #fbfbfb !important;
+            .sperator {
+              border: 1px solid #fbfbfb !important;
+            }
+          }
+        }
+        .card-body {
+          padding: 0 22px;
+          margin-bottom: 14px!important;
+          .intro {
+            color: #fbfbfb !important;
+          }
+          .details {
+            p,
+            a {
+              color: #fbfbfb !important;
+            }
+            color: #fbfbfb !important;
+            a {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      .plan-card {
+        width: 100%;
+        .card-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 15px;
+          margin-bottom: 32px;
+          .category {
+            font-weight: bold;
+            font-family: $base-font-family-bold;
+            text-transform: uppercase;
+            color: $purple;
+            margin-bottom: 0;
+          }
+          .plan-data {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: $base-font-family-bold;
+            color: #001b3e;
+            width: 100%;
+            max-width: 209px;
+            .price {
+              font-size: 36px;
+              line-height: 44px;
+              font-weight: bold;
+              font-family: $base-font-family-bold;
+              position: relative;
+              .currency {
+                font-size: 18px;
+                line-height: 32px;
+                position: absolute;
+                left: -10px;
+              }
+              .mo {
+                font-size: 24px;
+                line-height: 32px;
+              }
+            }
+            .sperator {
+              width: 0px;
+              height: 38px;
+              border: 1px solid #001b3e;
+            }
+            .data {
+              font-size: 36px;
+              line-height: 44px;
+              font-family: $base-font-family-bold;
+              font-weight: bold;
+            }
+          }
+        }
+        .card-body {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 100%;
+          margin: 0;
+          margin-bottom: 16px;
+          max-width: 278px;
+          .intro {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            color: #090909;
+            font-weight: normal;
+            font-family: $base-font-family;
+          }
+          .details {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            @media (max-width: $phablet-min-width-minus) {
+              margin-bottom: 12px;
+            }
+            img {
+              width: 20px;
+              height: 20px;
+              margin-right: 12px;
+              @media (max-width: $phablet-min-width-minus) {
+                width: 14px;
+                height: 14px;
+                margin-right: 10px;
+              }
+            }
+            p {
+              color: #090909;
+              margin-bottom: 0;
+              font-family: $secondary-font-family;
+              b {
+                font-family: $secondary-font-family-bold;
+              }
+            }
+            a {
+              white-space: nowrap;
+            }
+          }
+        }
+        .actions {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .white {
+            background-color: #fbfbfb;
+            color: $primary-color;
+            border: 1px solid $primary-color;
+          }
+        }
+        &.right-sperator {
+          border-right: 0.75px solid #765ba7;
+          height: 396px;
+          margin-right: 24px;
+        }
+      }
+    }
+    .plan-gigs-section{
+      position: absolute;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 80px;
+      margin-top: 37px;
+      right: 0;
+      left: 0;
+      @media (max-width: 823.9px) {
+        margin-top: 40px;
+      }
+      @media (max-width: 699.9px) {
+        margin-top: 46px;
+      }
+      .italic-arrow{
+        width: 12px;
+        height: 46px;
+        margin-right: -338px;
+        margin-top: -40px;
+        @media (max-width: 699.9px) {
+          margin-right: -312px;
+          margin-top: -46px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          margin-top: -70px;
+          margin-right: -265px;
+        }
+      }
+      .plan-gigs {
+        box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1),
+          0px 5px 14px rgba(0, 60, 117, 0.04);
+        border-radius: 30px;
+        background: #f2f7fa;
+        display: flex;
+        align-items: center;
+        padding: 8px 32px;
+        gap: 20px;
+        position: absolute;
+        top: -12px;
+        @media (max-width: 699.9px) {
+          margin-right: 12px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+          gap: 12px;
+          padding: 8px 16px;
+          margin-right: 0px;
+          top: -19px;
+        }
+        .gig-item {
+          color: #669BBF;
+          font-size: 18px;
+          line-height: 28px;
+          cursor: pointer;
+          font-family: $base-font-family-bold;
+          font-weight: bold;
+          position: relative;
+          &.active-gig {
+            background-color: #005895;
+            border-radius: 18px;
+            padding: 2px 16px;
+            color: white;
+          }
+          .dollar{
+            font-size: 14px;
+            line-height: 24px;
+            position: relative;
+            top: -4px;
+          }
+        }
+        .tail-arrow{
+          position: absolute;
+          top: 32px;
+          left: 25px;
+          right: 0;
+        }
+      }
+    }
+    .responsive-plan-cards {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
       max-width: 1080px;
       margin: 0 auto;
-      margin-top: -80px;
-      margin-bottom: 65px;
-      @media (max-width: 1439.9px) {
-        flex-direction: column;
-        align-items: center;
-        gap: 44px;
-        margin-bottom: 29px;
+      position: relative;
+      margin-bottom: 64px;
+      margin-top: -126px;
+      @media (max-width: 823.9px) {
+        margin-top: -80px;
+      }
+      @media (max-width: 699.9px) {
+        margin-top: -60px;
       }
       @media (max-width: $phablet-min-width-minus) {
-        gap: 24px;
         padding: 0 39px;
+        margin-bottom: 22px;
         margin-top: -100px;
       }
-      @media(max-width: 337px) {
-        margin-top: -70px;
+      @media (max-width: 340.9px) {
+        margin-top: -60px;
       }
       .plan-card {
         max-width: 520px;
         width: 100%;
         position: relative;
         @media (max-width: $phablet-min-width-minus) {
-          max-width: 320px;
+          max-width: 350px;
         }
         .card-header {
           display: flex;
@@ -70,10 +357,15 @@
           align-items: center;
           text-align: center;
           padding: 16px 16px 8px;
-          gap: 10px;
-          min-height: 148px;
-          background: linear-gradient(78.53deg, #412b71 -25.3%, #ab8ddd 115.4%);
+          gap: 15px;
+          min-height: 152px;
+          background: linear-gradient(78.53deg, #412b71 -25.3%, #6a9ee1 115.4%);
           border-radius: 8px 8px 0px 0px;
+          min-width: 520px;
+          @media (max-width: $phablet-min-width-minus) {
+            padding: 16px 16px 20px;
+            min-width: unset;
+          }
           &.rounded {
             box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.12), 0px 7px 28px rgba(94, 94, 94, 0.18),
               0px 5px 14px rgba(9, 9, 9, 0.12);
@@ -81,11 +373,10 @@
           }
           .category {
             font-weight: bold;
-            font-size: 14px;
-            line-height: 24px;
             font-family: $base-font-family-bold;
             text-transform: uppercase;
             color: #fbfbfb;
+            margin-bottom: 0;
           }
           .plan-data {
             display: flex;
@@ -94,7 +385,10 @@
             font-family: $base-font-family-bold;
             color: #fbfbfb;
             width: 100%;
-            max-width: 350px;
+            max-width: 324px;
+            @media (max-width: $phablet-min-width-minus) {
+              max-width: 210px;
+            }
             .price {
               font-size: 36px;
               line-height: 44px;
@@ -122,7 +416,6 @@
               line-height: 44px;
               font-family: $base-font-family-bold;
               font-weight: bold;
-
             }
           }
           .link {
@@ -132,8 +425,10 @@
             font-family: $base-font-family-bold;
             margin-right: 9px;
             color: #fbfbfb;
-            @media (max-width: $phablet-min-width-minus) {
-            margin-bottom: 16px;
+            margin-bottom: 0px;
+            img {
+              width: 14px;
+              height: 14px;
             }
           }
         }
@@ -146,25 +441,18 @@
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          min-height: 434px;
-          @media (max-width: 1439.9px) {
-            min-height: unset;
-          }
+          min-height: unset;
           @media (max-width: $phablet-min-width-minus) {
             padding: 24px 16px;
           }
           .intro {
-            font-size: 14px;
-            line-height: 24px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             text-transform: uppercase;
             color: #6a509b;
             font-weight: bold;
             font-family: $base-font-family-bold;
             @media (max-width: $phablet-min-width-minus) {
-              font-size: 12px;
-              line-height: 20px;
-              margin-bottom: 12px;
+              margin-bottom: 8px;
             }
           }
           .details {
@@ -172,16 +460,16 @@
             display: flex;
             align-items: flex-start;
             @media (max-width: $phablet-min-width-minus) {
-              margin-bottom: 12px;
+              margin-bottom: 8px;
             }
             img {
               width: 20px;
               height: 20px;
-              margin-right: 14px;
+              margin-right: 12px;
               @media (max-width: $phablet-min-width-minus) {
-                width: 14px;
-                height: 14px;
-                margin-right: 10px;
+                width: 16px;
+                height: 16px;
+                margin-right: 8px;
               }
             }
             p {
@@ -196,41 +484,13 @@
               white-space: nowrap;
             }
           }
-          .more-info {
-            font-size: 18px;
-            line-height: 18px;
-            color: $link-color;
-            margin-bottom: 0;
-            font-weight: bold;
-            font-family: $base-font-family-bold;
-            margin-top: 11px;
-            @media (max-width: 1439.9px) {
-              margin-bottom: 8px;
-            }
-            @media (max-width: $phablet-min-width-minus) {
-              font-size: 16px;
-              line-height: 16px;
-              margin-top: 7px;
-            }
-            img {
-              margin-left: 8px;
-              width: 20px;
-              height: 20px;
-              @media (max-width: $phablet-min-width-minus) {
-                margin-left: 5px;
-                width: 14px;
-                height: 14px;
-              }
-            }
-          }
         }
         .actions {
           position: absolute;
-          margin-top: -24px;
+          margin-top: -28px;
           right: 30px;
-          box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.16),
-              0px 7px 24px rgba(94, 94, 94, 0.2),
-              0px 5px 16px rgba(57, 117, 181, 0.12);
+          box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.16), 0px 7px 24px rgba(94, 94, 94, 0.2),
+            0px 5px 16px rgba(57, 117, 181, 0.12);
           border-radius: 28px;
           @media (max-width: $phablet-min-width-minus) {
             right: 16px;
@@ -325,7 +585,7 @@
               min-height: 100%;
               margin-bottom: 25px;
               max-width: 480px;
-              &.spcific{
+              &.spcific {
                 max-width: 340px;
               }
             }
@@ -360,7 +620,7 @@
       text-align: center;
       margin-bottom: 80px;
       width: 100%;
-    
+
       .plans-questions {
         max-width: 100%;
         width: 100%;
