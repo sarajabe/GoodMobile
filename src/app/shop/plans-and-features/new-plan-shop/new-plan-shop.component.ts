@@ -22,6 +22,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   public currentPlan: CustomizableMobilePlan = new CustomizableMobilePlan();
   public userAccount: IUserAccount;
   public filteredPlans: Array<MobilePlanItem>;
+  public desktopFilteredPlans: Array<MobilePlanItem> = [];
   public selectedPlan: MobilePlanItem;
   public isExpiredPlan = false;
   public activePlan = false;
@@ -41,6 +42,9 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   public collapsed: boolean;
   public plansQuestions;
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
+  public planPrices = [];
+  public selectedPrice: number;
+
   private activationFlow = false;
   private allBasePlans: Array<MobilePlanItem>;
   private alive = true;
@@ -61,7 +65,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     this.alive = false;
   }
   ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
+    this.innerWidth = document.documentElement.clientWidth;
     this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
       this.userAccount = account;
       if (!!this.userAccount && this.userAccount.plan.bundleId.endsWith('EXP')) {
@@ -130,8 +134,12 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
       this.preparePlans();
     }
   }
-  public getSelectedPlan(index): void {
-    this.selectedPlan = this.filteredPlans[index];
+  public getSelectedPlan(index, forDesktop?: boolean): void {
+    if(!!forDesktop) {
+      this.selectedPlan = this.desktopFilteredPlans[index];
+    } else {
+      this.selectedPlan = this.filteredPlans[index];
+    }
   }
   public goToCoverage(): void {
     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.LANDING_COVERAGE}`]);
@@ -150,9 +158,9 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
 
   }
 
-  public addPlanToCart(plan , index): void {
+  public addPlanToCart(plan , index, forDesktop?: boolean): void {
     if(!plan?.ebb) {
-      this.getSelectedPlan(index);
+      this.getSelectedPlan(index, forDesktop);
       if (!!this.isReplacePlan) {
         this.addPlan(this.selectedPlan);
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
@@ -207,6 +215,9 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
         this.isCopied = false;
       }, 1500);
     }
+  }
+  public priceSelected(item): void {
+    this.selectedPrice = item;
   }
   private callRichText(answerId): void {
     this.contentfulService.getRichText('questions', answerId);
@@ -292,16 +303,26 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
       this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && ((!!plan.specialPromotion && (plan.specialPromotion.utm_source === this.utmSource && !!plan.specialPromotion.isSpecific)) || !plan.isSpecialPromotion) && !plan.ebb);
       const replacedPlans = this.filteredPlans.filter((val) => this.filteredPlans.includes(this.filteredPlans.find((e) => e.details.data === val.details.data && !val.isSpecialPromotion && !!e.isSpecialPromotion))); // get plans that has equal data with the special promo plans
       this.filteredPlans = this.filteredPlans.filter((plan) => !replacedPlans.includes(plan)); // remove plans that has the same data as the promo plan
-      this.filteredPlans.sort((a, b) => a.details.data - b.details.data);
-      this.filteredPlans.push(this.filteredPlans.shift());
+      this.filteredPlans.sort((a, b) => a.price - b.price);
       this.selectedPlan = this.allBasePlans.find((plan) => !!plan.parentId && !!plan.isSpecialPromotion);
     } else {
       this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && (!plan.isSpecialPromotion || !!plan.specialPromotion && !plan.specialPromotion.isSpecific));
       const replacedPlans = this.filteredPlans.filter((val) => this.filteredPlans.includes(this.filteredPlans.find((e) => e.details.data === val.details.data && !val.isSpecialPromotion && !!e.isSpecialPromotion))); // get plans that has equal data with the special promo plans
       this.filteredPlans = this.filteredPlans.filter((plan) => !replacedPlans.includes(plan)); // remove plans that has the same data as the promo plan
     }
-    this.filteredPlans.sort((a, b) => a.details.data - b.details.data);
-    this.filteredPlans.push(this.filteredPlans.shift()); // make the first element the last one in array
+    this.filteredPlans.sort((a, b) => a.price - b.price);
+    this.desktopFilteredPlans.push(...this.filteredPlans);
+    // swap the plans to make visually the ebb plan on the second item after the array is sorted
+    const lowestPrice = this.desktopFilteredPlans[1];
+    const ebbPlan = this.desktopFilteredPlans[0];
+    this.desktopFilteredPlans[0] = lowestPrice;
+    this.desktopFilteredPlans[1] = ebbPlan;
+    this.filteredPlans.map(plan => {
+      this.planPrices.push(plan.price);
+      if(!!plan.ebb) {
+        this.selectedPrice = plan.price;
+      }
+    });
     this.checkInnerWidth();
   }
   private checkUser(plan: MobilePlanItem): void {
@@ -332,11 +353,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     }
   }
   private checkInnerWidth(): void {
-    if(this.innerWidth > 1439) {
       this.cardExpanded = Array(this.filteredPlans.length).fill(true);
-    } else {
-      this.cardExpanded = Array(this.filteredPlans.length).fill(false);
-    }
   }
   private getPlansQsts() : void {
     this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'plans-questions').subscribe(questions => {
@@ -347,7 +364,6 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
-    this.innerWidth = window.innerWidth;
-    this.checkInnerWidth();
+    this.innerWidth = document.documentElement.clientWidth;
   }
 }

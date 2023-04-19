@@ -1,67 +1,141 @@
 <div class="plans-page">
   <div class="plans-banner">
-    <h1 class="banner-head">Maximize your savings!</h1>
+    <h1 class="banner-head">Get Exactly what you need from your Mobile!</h1>
     <div class="banner-text">
-      <h5>No contracts. No overages.</h5>
-      <h5>Unlimited talk & text + data. Just great wireless.</h5>
+      <div class="icon-section">
+        <div class="icon-container">
+          <img width="60" height="60" src="assets/icon/no-data.svg" alt="No Data Overage Fees" />
+          <p class="icons-text label">No Data Overage Fees</p>
+        </div>
+        <div class="icon-container">
+          <img width="60" height="60" src="assets/icon/unlimited.svg" alt="Unlimited Talk & Text" />
+          <p class="icons-text label">Unlimited Talk & Text</p>
+        </div>
+        <div class="icon-container last">
+          <img width="60" height="60" src="assets/icon/no-annual-contract.svg" alt="No Annual Contract" />
+          <p class="icons-text label">No Annual Contract</p>
+        </div>
+      </div>
+      <div class="plan-gigs-section" *ngIf="innerWidth < 1440">
+        <img src="/assets/icon/italic-arrow.svg" alt="arrow" class="italic-arrow">
+        <div class="plan-gigs">
+          <ng-container *ngFor="let item of planPrices" >
+            <a (click)="priceSelected(item)" class="gig-item" [class.active-gig]="item === selectedPrice"><span class="dollar" *ngIf="item !== 0">$</span>{{item === 0 ? 'FREE' : item}}
+              <img src="/assets/icon/dark-tail-arrow.svg" alt="tail" class="tail-arrow" *ngIf="item === selectedPrice">
+            </a>
+          </ng-container>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="plan-cards" *ngIf="filteredPlans?.length > 0">
-    <div *ngFor="let plan of filteredPlans; let i = index;" class="plan-card">
-      <div class="card-header" [class.rounded]="!cardExpanded[i]">
-        <p *ngIf="!!plan?.category" class="category">{{plan?.category}}</p>
+  <div class="desktop-plan-cards" *ngIf="innerWidth > 1439 && desktopFilteredPlans?.length > 0">
+    <div *ngFor="let plan of desktopFilteredPlans; let i = index;" class="plan-card" [class.ebb-card]="!!plan.ebb"
+      [class.right-sperator]="i === desktopFilteredPlans.length - 2">
+      <div class="card-header">
+        <h5 *ngIf="!!plan?.category" class="category">{{plan?.category}}</h5>
         <div class="plan-data">
           <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
             'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
           <p class="sperator"></p>
           <p class="data">{{plan?.details?.data/1024}}GB</p>
         </div>
-        <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
-            [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
       </div>
-      <div class="card-body" *ngIf="!!cardExpanded[i]">
+      <div class="card-body">
         <p class="intro">INCLUDES</p>
         <div class="details">
-          <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller"><b>6GB</b> high-speed data per month; speeds reduce after allowance is used</p>
+          <img [src]="!!plan?.ebb? '/assets/icon/orginal-tick.svg':'/assets/icon/blue-tick.svg'" alt="tick">
+          <p class="smaller"><b>{{plan?.details?.data/1024}}GB</b> {{!!plan?.ebb ? 'high-speed data/mo' : 'high-speed
+            data per month'}}</p>
         </div>
         <div class="details">
-          <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller"><b>Unlimited</b> talk and text + data access on America’s
-            nationwide networks</p>
+          <img [src]="!!plan?.ebb? '/assets/icon/orginal-tick.svg':'/assets/icon/blue-tick.svg'" alt="tick">
+          <p class="smaller"><b>Unlimited</b> talk & text + data</p>
         </div>
         <div class="details" *ngIf="!!plan?.ebb">
-          <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">Affordable Connectivity Program <b>(ACP)</b> qualification
-            and enrollment <b>required</b>. <a (click)="goToEbb()"><b>Learn More</b></a></p>
+          <img src="/assets/icon/orginal-tick.svg" alt="tick">
+          <p class="smaller"><b>ACP</b> qualification
+            & enrollment <b>required. </b> <a (click)="goToEbb()">Learn More</a></p>
         </div>
         <div class="details">
-          <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller">Works with network compatible <b>unlocked iPhone and Android phones</b></p>
+          <img [src]="!!plan?.ebb? '/assets/icon/orginal-tick.svg':'/assets/icon/blue-tick.svg'" alt="tick">
+          <p class="smaller">Works with <b>unlocked</b> compatible phones</p>
         </div>
         <div class="details">
-          <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller"><b>FREE</b> SIM Card Activation Kit. FREE Shipping.</p>
+          <img [src]="!!plan?.ebb? '/assets/icon/orginal-tick.svg':'/assets/icon/blue-tick.svg'" alt="tick">
+          <p class="smaller"><b>FREE</b> SIM Card. <b>FREE</b> Shipping.</p>
         </div>
         <div class="details" *ngIf="!!plan?.ebb">
-          <img src="/assets/icon/green-tick.svg" alt="green-tick">
-          <p class="smaller"><b>A one-time discount</b> of up to <b>$100</b> on your Device purchase. <a [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.ACP_DEVICES]" ><b>View Devices</b></a></p>
+          <img src="/assets/icon/orginal-tick.svg" alt="tick">
+          <p class="smaller"><b>A one-time discount</b> on your Device purchase. <a
+              [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.ACP_DEVICES]">View Devices</a></p>
         </div>
-        <a *ngIf="!!plan?.ebb" (click)="goToEbb()" class="more-info">More information <img
-            src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
       </div>
       <div class="actions">
-        <a (click)="addPlanToCart(plan, i)">
-          <img *ngIf="innerWidth > 1024 && !plan?.ebb" src="/assets/icon/base-cart-icon.svg" data-cy="clickOnCartIcon" alt="cart-icon"
-            onmouseover="this.src='/assets/icon/cart-long-button.svg'"
-            onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
-          <img *ngIf="innerWidth > 1024 && !!plan?.ebb" src="/assets/icon/base-ebb-button.svg" alt="cart-icon"
-            onmouseover="this.src='/assets/icon/ebb-long-button.svg'"
-            onmouseout="this.src='/assets/icon/base-ebb-button.svg'">   
-          <img *ngIf="innerWidth < 1025" [src]="!plan?.ebb?'/assets/icon/base-cart-icon.svg': '/assets/icon/base-ebb-button.svg'" alt="cart-icon">
-        </a>
+        <button class="button primary" [class.white]="!!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
+          {{!!plan?.ebb ? 'Do I Qualify': 'Add to cart'}}
+        </button>
       </div>
     </div>
+  </div>
+  <div class="responsive-plan-cards" *ngIf="innerWidth < 1440 && filteredPlans?.length > 0">
+    <ng-container *ngFor="let plan of filteredPlans; let i = index;">
+      <div class="plan-card" *ngIf="selectedPrice === (plan?.price)">
+        <div class="card-header" [class.rounded]="!cardExpanded[i]">
+          <h5 *ngIf="!!plan?.category" class="category">{{plan?.category}}</h5>
+          <div class="plan-data">
+            <p class="price"><span *ngIf="plan?.price > 0" class="currency">$</span>{{plan?.price > 0 ? plan?.price :
+              'FREE'}}<span class="mo" *ngIf="plan?.price > 0">/mo</span></p>
+            <p class="sperator"></p>
+            <p class="data">{{plan?.details?.data/1024}}GB</p>
+          </div>
+          <a (click)="showDetails(i)" class="link">{{!!cardExpanded[i] ? 'View less' : 'View more'}} <img
+              [src]="!!cardExpanded[i]? '/assets/icon/arrow-up.svg' : '/assets/icon/arrow-down.svg'" alt="arrow"></a>
+        </div>
+        <div class="card-body" *ngIf="!!cardExpanded[i]">
+          <p class="smaller intro">INCLUDES</p>
+          <div class="details">
+            <img src="/assets/icon/blue-tick.svg" alt="tick">
+            <p class="smaller"><b>{{plan?.details?.data/1024}}GB</b> high-speed data per month; speeds reduce after
+              allowance is used</p>
+          </div>
+          <div class="details">
+            <img src="/assets/icon/blue-tick.svg" alt="tick">
+            <p class="smaller"><b>Unlimited</b> talk & text + data access on America’s
+              nationwide networks</p>
+          </div>
+          <div class="details" *ngIf="!!plan?.ebb">
+            <img src="/assets/icon/blue-tick.svg" alt="tick">
+            <p class="smaller"><b>ACP</b> qualification
+              and enrollment <b>required</b>. <a (click)="goToEbb()"><b>Learn More</b></a></p>
+          </div>
+          <div class="details">
+            <img src="/assets/icon/blue-tick.svg" alt="tick">
+            <p class="smaller">Works with network compatible <b>unlocked iPhone and Android phones</b></p>
+          </div>
+          <div class="details">
+            <img src="/assets/icon/blue-tick.svg" alt="tick">
+            <p class="smaller"><b>FREE</b> SIM Card Activation Kit. <b>FREE</b> Shipping.</p>
+          </div>
+          <div class="details" *ngIf="!!plan?.ebb">
+            <img src="/assets/icon/blue-tick.svg" alt="tick">
+            <p class="smaller"><b>A one-time discount</b> on Device purchase. <a
+                [routerLink]="[SHOP_ROUTE_URLS.BASE+'/'+SHOP_ROUTE_URLS.ACP_DEVICES]"><b>View Devices</b></a></p>
+          </div>
+        </div>
+        <div class="actions">
+          <a (click)="addPlanToCart(plan, i)">
+            <img *ngIf="innerWidth > 1024 && !plan?.ebb" src="/assets/icon/base-cart-icon.svg" data-cy="clickOnCartIcon"
+              alt="cart-icon" onmouseover="this.src='/assets/icon/cart-long-button.svg'"
+              onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
+            <img *ngIf="innerWidth > 1024 && !!plan?.ebb" src="/assets/icon/base-ebb-button.svg" alt="cart-icon"
+              onmouseover="this.src='/assets/icon/ebb-long-button.svg'"
+              onmouseout="this.src='/assets/icon/base-ebb-button.svg'">
+            <img *ngIf="innerWidth < 1025"
+              [src]="!plan?.ebb?'/assets/icon/base-cart-icon.svg': '/assets/icon/base-ebb-button.svg'" alt="cart-icon">
+          </a>
+        </div>
+      </div>
+    </ng-container>
   </div>
   <div class="great-things-section">
     <p class="label">WHY Good Mobile</p>
@@ -72,26 +146,30 @@
         <img src="/assets/icon/coverage-icon.svg" alt="coverage-icon">
         <h5 class="title">Nationwide Coverage</h5>
         <p class="smaller desc spcific">Premium data service powered by one of the nation’s top GSM networks.</p>
-        <a class="link" (click)="goToCoverage()">Check your Coverage <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+        <a class="link" (click)="goToCoverage()">Check your Coverage <img src="/assets/icon/next-blue-arrow.svg"
+            alt="next-arrow"></a>
       </div>
       <div class="item-details">
         <img src="/assets/icon/device-check.svg" alt="device-icon">
         <h5 class="title">Keep your device</h5>
         <p class="smaller desc">Got a phone you love? Keep it. Most unlocked phones will work on our networks.</p>
-        <a class="link" (click)="goToCompatibility()">Check Compatibility <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+        <a class="link" (click)="goToCompatibility()">Check Compatibility <img src="/assets/icon/next-blue-arrow.svg"
+            alt="next-arrow"></a>
       </div>
       <div class="item-details">
         <img src="/assets/icon/phone-num.svg" alt="phone-num-icon">
         <h5 class="title">Keep your phone number</h5>
-        <p class="smaller desc">Or get a new one if you want 
+        <p class="smaller desc">Or get a new one if you want
           when you activate your SIM Card. </p>
-        <a class="link" (click)="goToPurchasedPlans()">Learn More <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+        <a class="link" (click)="goToPurchasedPlans()">Learn More <img src="/assets/icon/next-blue-arrow.svg"
+            alt="next-arrow"></a>
       </div>
       <div class="item-details">
         <img src="/assets/icon/frequently-qst.svg" alt="frequently-qst-icon">
         <h5 class="title">Frequently Asked Questions</h5>
         <p class="smaller desc">Got questions? We have answers.</p>
-        <a class="link" (click)="goToFaqs()">Go to FAQs <img src="/assets/icon/next-blue-arrow.svg" alt="next-arrow"></a>
+        <a class="link" (click)="goToFaqs()">Go to FAQs <img src="/assets/icon/next-blue-arrow.svg"
+            alt="next-arrow"></a>
       </div>
     </div>
   </div>
@@ -100,14 +178,17 @@
     <h2 class="sec-head">We are here to help you!</h2>
     <h5 class="subtext">Browse through the most frequently asked questions.</h5>
     <div class="plans-questions">
-              <div *ngFor="let qst of plansQuestions" class="questions-container">
-                <a class="copy-icon-link" (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam" class="copied">Copied!</span></a> 
-                <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
-                      [isActive]="qst?.fields?.questionId == questionIdParam"
-                      (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
-                      <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
-                  </app-question-answer>
-              </div>
-  </div>
+      <div *ngFor="let qst of plansQuestions" class="questions-container">
+        <a class="copy-icon-link" (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId, true)"><img
+            src="/assets/icon/copy-icon.svg" class="copy-icon" alt="copy icon"><span class="tool-tip-text">Copy question
+            url</span> <span *ngIf="!!isCopied && qst?.fields?.questionId == questionIdParam"
+            class="copied">Copied!</span></a>
+        <app-question-answer question="{{qst?.fields?.questionText}}" [id]="qst?.fields?.questionId"
+          [isActive]="qst?.fields?.questionId == questionIdParam"
+          (click)="toggleActive(qst?.fields?.questionId,qst?.fields?.answerId)">
+          <p (click)="collapsed=true" id="{{qst?.fields?.answerId}}"></p>
+        </app-question-answer>
+      </div>
+    </div>
   </div>
 </div>
