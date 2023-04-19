@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ChangePlanService, IPaymentInfo, IUserPlan, MobileCustomPlansService, MobilePlanItem, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { MetaService } from '../../../services/meta-service.service';
@@ -43,7 +43,7 @@ export class ChangePlanSummaryComponent implements OnInit, OnDestroy {
     });
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
       if (!!ready) {
-        this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: ParameterDecorator) => {
+        this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
           if (!!params) {
             this.nextCycle = params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE] === 'true' ? true : false;
             this.isCheckoutFlow = !this.nextCycle;
