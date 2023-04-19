@@ -4,274 +4,239 @@
 ::ng-deep {
     .featured-container {
         display: flex;
-        gap: 24px;
-        padding-top: 84px;
-        min-height: 390px;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 48px;
+        min-height: 400px;
+
+        @media (max-width: $phablet-min-width-minus) {
+            padding-top: 40px;
+        }
+
         .description-section {
             display: flex;
             flex-direction: column;
-            flex-basis: 60%;
+            align-items: center;
+
+            .label {
+                margin-bottom: 4px;
+                color: $medium-grey;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 2px;
+                }
+            }
+
             .header {
                 color: $section-header-color;
                 margin-bottom: 12px;
-                @media(max-width: 1199.9px) {
-                    max-width: 269px;
+                text-align: center;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 8px;
                 }
             }
-            .note {
-                color: $medium-grey;
-            }
-            .details {
-                font-size: rem-calc(20px);
-                line-height: 24px;
-             
-            }
-            .icons-section {
-                display: flex;
-                gap: 32px;
-                align-items: center;
-                margin-top: 32px;
-                .icons-container {
-                    display: flex;
-                    gap: 12px;
-                    align-items: center;
-                    .icons-text {
-                        font-family: $secondary-font-family-bold;
-                    }
-                    @media (max-width:1439.9px) {
-                        flex-direction: column;
-                        text-align: center;
-                        align-items: center;
-                        .icons-text {
-                            max-width: 70px;
-                        }
-                    }
+
+            .sub-header {
+                margin-bottom: 20px;
+                font-weight: 400;
+                font-family: $secondary-font-family;
+
+                @media (max-width: $desktop-min-width-minus) {
+                    margin-bottom: 32px;
                 }
             }
         }
-       .cards-section {
+
+        .plans-cards-section {
             display: flex;
-            gap: 40px;
-            max-width: 560px;
-            flex-basis: 40%;
-            justify-content: flex-end;
-       }
-        @media(max-width: 999.9px) {
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 32px;
-            padding-top: 56px;
-            .description-section {
-                flex-basis: 100%;
-                justify-content: center;
+
+            .view-plans {
+                display: flex;
                 align-items: center;
-                .header {
-                    max-width: none;
-                }
-                .icons-section {
-                    .icons-container {
-                        align-items: center;
-                        justify-content: center;
-                        .icons-text {
-                        max-width: none;
-                        }
-                    }
-                }
-            }
-        }
-        @media(max-width: $phablet-min-width-minus) {
-            padding-top: 40px;
-            .description-section {
-                text-align: center;
-                .header {
-                    max-width: 100%;
-                }
-                .icons-section {
-                    gap: 16px;
-                    .icons-container {
-                        img {
-                            width: 56px;
-                            height: 56px;
-                        }
-                        .icons-text {
-                            max-width: 70px;
-                        }
-                    }
-               }  
-            }
-        }
-        .swiper-container {
-            max-width: 100%;
-            overflow: hidden;
-            &.swiper-width{
-                width: 100%;
-                max-width: 240px;
-                position: relative;
-               
-            }
-            .swiper-slide {
-                height: 290px;
-                box-shadow: 0px 8px 30px 0px #5E5E5E1F;
-                border-radius: 5px;
-                background: #FCFCFB;
-                display: block;
-            }
-            .swiper-button-next::after,
-            .swiper-button-prev::after {
-              font-size: rem-calc(12px);
-            }
-      
-            .swiper-button-prev,
-            .swiper-button-next {
-                position: absolute;
-                background-color: $primary-color;
-                background-size: 28%;
-                color: $white;
-                height: 21px;
-                width: 21px;
-                z-index: 1;
+                gap: 8px;
+                margin-bottom: 40px;
                 cursor: pointer;
-                top: 127px;
-                --swiper-navigation-size: 11px;
-                border-radius: 50%;
-            }
-      
-            .swiper-button-next {
-                right: 12px;
-            }
-            .slick-dots {
-                width: 100%;
-                position: relative;
-                list-style: none;
-                display: flex;
-                text-align: center;
-                height: 30px;
-                left: 0;
-                top: 15px;
-                justify-content: center;
-                li {
-                  height: 9px;
-                  width: 9px;
-                  margin: 0 8px;
-          
-                  &.swiper-pagination-bullet {
-                    bottom: 0;
-                    background-color: $grey;
-                    opacity: 1;
-                  }
-          
-                  &.swiper-pagination-bullet-active {
-                    background-color: $primary-color;
-                  }
-                 
+
+                h6 {
+                    color: $primary-color;
+                    margin: 0;
                 }
-              }
-         
-        }
-      
-        .featured-plan-card {
-            display: flex;
-            flex-direction: column;
-            min-width: 240px;
-            width: 100%;
-            position: relative;
-            height: 290px;
-            box-shadow: 0px 8px 30px 0px #5E5E5E1F;
-            border-radius: 5px;
-            background: #FCFCFB;
-            .card-header-section {
-                background: #6A509B;
-                color: $white;
-                border-radius: 8px 8px 0px 0px;
-                padding: 8px 16px 10px;
-                text-align: center;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
             }
-            .data-section {
-                padding: 8px 0 0;
+
+            .plan-gigs-section {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                .data {
-                    font-size: rem-calc(28px);
-                    margin-bottom: 0;
-                    line-height: 36px;
-                    font-weight: bold;
-                }
-                .lte {
-                    font-size: rem-calc(10px);
-                    margin-bottom: 0;
-                    line-height: 16px;
-                    font-family: $secondary-font-family;
-                }
-                .unlimited {
-                    color: $third-color;
-                }
-            }
-            .price-section {
-                padding-top: 32px;
-                display: flex;
                 justify-content: center;
-                .price {
-                    color: $section-header-color;
-                    font-size: rem-calc(36px);
-                    line-height: 40px;
-                    font-weight: bold;
-                    margin-bottom: 0;
+                box-shadow: 0px 4px 8px rgba(94, 94, 94, 0.03), 0px 7px 28px rgba(94, 94, 94, 0.1), 0px 5px 14px rgba(0, 60, 117, 0.04);
+                border-radius: 30px;
+                background: #f2f7fa;
+                margin-bottom: 32px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-bottom: 28px;
+                }
+
+                .plan-gigs {
                     display: flex;
-                    padding-bottom: 4px;
-                    border-bottom: 1px solid #765BA7;
-                }
-                .month {
-                    font-size: rem-calc(24px);
-                    line-height: 23px;
-                    margin-top: 10px;
-                }
-                .dollar {
-                    font-size: rem-calc(18px);
-                    line-height: 28px;
-                    margin-bottom: 0;
+                    align-items: center;
+                    padding: 8px 32px;
+                    gap: 20px;
+
+                    @media (max-width: $phablet-min-width-minus) {
+                        gap: 12px;
+                        padding: 8px 16px;
+                    }
+
+                    .gig-item {
+                        color: #669BBF;
+                        font-size: 18px;
+                        line-height: 28px;
+                        cursor: pointer;
+                        font-family: $base-font-family-bold;
+                        font-weight: bold;
+                        position: relative;
+
+                        &.active-gig {
+                            background-color: #005895;
+                            border-radius: 18px;
+                            padding: 2px 16px;
+                            color: white;
+                        }
+
+                        .dollar {
+                            font-size: 14px;
+                            line-height: 24px;
+                            position: relative;
+                            top: -4px;
+                        }
+                    }
+
+                    .tail-arrow {
+                        position: absolute;
+                        top: 32px;
+                        left: 25px;
+                        right: 0;
+                    }
                 }
             }
-            .action {
-                display: flex;
-                justify-content: center;
-                padding: 24px 0 32px;
-                .button {
-                    width: 121px;
+
+            .cards-section {
+                @media (min-width: $desktop-min-width) {
+                    display: flex;
+                    gap: 40px;
+                }
+
+                .featured-card-container {
+                    width: 270px;
+                    box-shadow: 0px 8px 30px rgba(94, 94, 94, 0.12);
+                    border-radius: 8px;
+                    background: #FCFCFB;
+
+                    @media (max-width: $desktop-min-width-minus) {
+                        width: 240px;
+                    }
+
+                    .featured-plan-card {
+                        .card-header {
+                            background: linear-gradient(88.41deg, #412B71 -5.07%, #6A9EE1 109.14%);
+                            border-radius: 8px 8px 0px 0px;
+                            padding: 8px 16px;
+                            text-align: center;
+
+                            .smallest {
+                                line-height: 24px;
+                                color: #FBFBFB;
+                                font-family: $base-font-family-bold;
+                            }
+                        }
+
+                        .card-body {
+                            padding: 28px 0;
+                            text-align: center;
+                            position: relative;
+
+                            .ribbon {
+                                position: absolute;
+                                top: 0;
+                                left: 11px;
+                                width: 35px;
+                                height: 59px;
+                            }
+
+                            .price-section {
+                                max-width: 104px;
+                                margin: 0 auto;
+
+                                .price {
+                                    color: $section-header-color;
+                                    font-size: rem-calc(36px);
+                                    line-height: 44px;
+                                    font-family: $base-font-family-bold;
+                                    margin-bottom: 0;
+                                    padding-bottom: 4px;
+                                    border-bottom: 1px solid #765BA7;
+
+                                    .dollar {
+                                        font-size: rem-calc(18px);
+                                        line-height: 28px;
+                                        margin-bottom: 0;
+                                        position: relative;
+                                        bottom: 14px;
+                                    }
+
+                                    .month {
+                                        font-size: rem-calc(24px);
+                                        line-height: 32px;
+                                    }
+                                }
+                            }
+
+                            .data-section {
+                                margin-top: 8px;
+
+                                .data {
+                                    font-size: rem-calc(28px);
+                                    line-height: 36px;
+                                    font-family: $base-font-family-bold;
+                                    margin: 0;
+
+                                    @media (max-width: $phablet-min-width-minus) {
+                                        font-size: rem-calc(26px);
+                                        line-height: 38px;
+                                    }
+                                }
+
+                                .lte {
+                                    font-size: rem-calc(10px);
+                                    line-height: 16px;
+                                    font-family: $secondary-font-family;
+                                    margin-bottom: 2px;
+                                }
+
+                                .caption {
+                                    margin: 0;
+                                }
+                            }
+
+                            .action {
+                                margin-top: 24px;
+
+                                @media (max-width: $phablet-min-width-minus) {
+                                    margin-top: 20px;
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            .ribbon {
-                position: absolute;
-                z-index: 1;
-                height: 60px;
-                width: 35px;
-                color: $white;
-                text-align: center;
-                top: 18px;
-                left: 12px;
-            }
-        }
-        .swiper-button-next {
-                background-color: $primary-color;
-                z-index: 1;
-                cursor: pointer;
-                color: white;
-                background-size: 28%;
-                top: 410px;
-                right: 80px;
-        }
-        .swiper-button-prev {
-            background-color: $secondary-color;
-            height: 34.3px;
-            width: 34.3px;
-            z-index: 1;
-            cursor: pointer;
-            color: white;
-            background-size: 28%;
-        }
-        .swiper-button-disabled {
-            background-color: $medium-grey!important;
         }
     }
 

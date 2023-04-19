@@ -1,7 +1,12 @@
 // Typography
 //––––––––––––––––––––––––––––––––––––––––––––––––––
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $black;
   font-family: $header-font-family;
   font-weight: $regular;
@@ -9,23 +14,27 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 12px;
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: rem-calc(36px);
   line-height: 44px;
   margin-bottom: 8px;
   $font-family: $header-font-family;
   font-weight: bold;
+
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(26px);
     line-height: 38px;
   }
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: rem-calc(32px);
   font-weight: 700;
   line-height: 40px;
   margin-bottom: 12px;
+
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(24px);
     line-height: 36px;
@@ -33,43 +42,51 @@ h2, .h2 {
   }
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: rem-calc(28px);
   font-weight: 700;
   line-height: 36px;
+
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(22px);
     line-height: 32px;
   }
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: rem-calc(24px);
   font-weight: 700;
   line-height: 32px;
   font-family: $secondary-font-family-bold;
+
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(20px);
     line-height: 28px;
   }
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: rem-calc(20px);
   font-weight: 700;
   line-height: 28px;
   font-family: $secondary-font-family-bold;
+
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(18px);
     line-height: 28px;
   }
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-size: rem-calc(18px);
   font-weight: 700;
   line-height: 24px;
   font-family: $secondary-font-family;
+
   @media (max-width: $phablet-min-width-minus) {
     font-size: rem-calc(16px);
     line-height: 20px;
@@ -83,43 +100,51 @@ p {
   font-weight: 400;
   line-height: 28px;
   font-family: $base-font-family;
+
   &.smaller {
     font-size: rem-calc(16px);
     line-height: 24px;
   }
+
   &.smallest {
     font-size: rem-calc(14px);
     line-height: 22px;
   }
+
   &.caption {
     font-size: rem-calc(12px);
     line-height: 20px;
     font-family: $secondary-font-family;
   }
+
   &.label {
     font-size: rem-calc(12px);
     line-height: 12px;
     font-family: $secondary-font-family;
   }
+
   &.footer {
     font-size: rem-calc(10px);
     line-height: 16px;
     font-family: $secondary-font-family;
   }
-  
+
 }
+
 a {
   &.caption {
     font-size: rem-calc(12px);
     line-height: 20px;
     font-family: $secondary-font-family;
   }
+
   &.label {
     font-size: rem-calc(12px);
     line-height: 12px;
     font-family: $secondary-font-family;
   }
 }
+
 // Pre
 pre {
   line-height: 1.6;
@@ -136,7 +161,8 @@ pre {
   font-weight: 600;
 }
 
-.text-bold, strong {
+.text-bold,
+strong {
   font-weight: 700;
 }
 
@@ -190,21 +216,25 @@ pre {
   font-weight: 400;
 }
 
-.secondary-font-bold{
+.secondary-font-bold {
   font-family: $secondary-font-family-bold !important;
 }
 
 .text-color-primary {
   color: $primary-color;
+
   &:hover {
     color: $primary-color;
   }
 }
+
 .header-color {
   color: $header-color;
 }
+
 .text-color-secondary {
   color: $secondary-color;
+
   &:hover {
     color: $secondary-color;
   }
@@ -212,6 +242,7 @@ pre {
 
 .text-color-thridly {
   color: $third-color;
+
   &:hover {
     color: $third-color;
   }
@@ -220,6 +251,7 @@ pre {
 .label-color {
   color: #5E5E5E;
 }
+
 .text-color-alert {
   color: $alert;
 }
@@ -231,6 +263,7 @@ pre {
 .text-color-success {
   color: $success;
 }
+
 .text-orange {
   color: $hover-color;
 }
