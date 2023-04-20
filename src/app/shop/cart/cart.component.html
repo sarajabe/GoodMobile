@@ -89,19 +89,14 @@
                                         ((userCart?.basePlan?.specialPromotion?.promotionCycles *
                                         userCart?.basePlan?.price)) / 2}}</p>
                                 </div>
-                                <div class="detail"
-                                    *ngIf="!!userCart?.referralCode && userCart?.cartType == CART_TYPES.NEW_PLAN && !!user">
-                                    <p class="detail-info">Referral Code:</p>
-                                    <p class="price">{{userCart?.referralCode}}</p>
-                                </div>
                                 <div class="detail" *ngIf="!!userCart?.promoCodes && !!isActivePromo">
                                     <p class="bold smaller">{{userCart?.promoCodes[0]?.description}}</p>
                                     <p class="bold smaller">Code: <span>{{userCart?.promoCodes[0]?.code}}</span></p>
                                 </div>
                                 <p class="quantity smaller" data-cy="planQuantity">Quantity: {{userCart?.quantity}}</p>
                                 <div class="actions">
-                                    <!-- <a class="link first" (click)="goToPlans(true)"
-                                        *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a> -->
+                                    <a class="link first" (click)="goToPlans(true)"
+                                        *ngIf="userCart?.cartType !== CART_TYPES.TOPUP_PLAN" data-cy="changePlan">Change</a>
                                     <a class="link" (click)="clearUserCart('plan')" data-cy="deletPlan">Delete</a>
                                 </div>
                             </div>

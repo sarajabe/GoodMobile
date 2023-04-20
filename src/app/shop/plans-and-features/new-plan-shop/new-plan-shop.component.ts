@@ -163,6 +163,8 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
       this.getSelectedPlan(index, forDesktop);
       if (!!this.isReplacePlan) {
         this.addPlan(this.selectedPlan);
+        this.mobilePlansService.setBasePlan(this.selectedPlan);
+        this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
       } else {
         if (!!this.currentPlan && !!this.currentPlan.planDevice && this.currentPlan.planDevice.id) {
@@ -270,10 +272,6 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     sessionStorage.removeItem('useFromBalance');
     sessionStorage.removeItem('useFromReward');
     sessionStorage.removeItem('removeFromCart');
-    if (!!this.isValentinePromo) {
-      const promoCodes = [{ code: 'VDAY1MTHFREE21', description: 'Second Month Free Service', date: new Date() }];
-      this.mobilePlansService.setPromoCodes(promoCodes);
-    }
   }
   private clearCart(): void {
     const removedItems = [];
