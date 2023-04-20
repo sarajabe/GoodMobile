@@ -149,7 +149,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                 if (!!this.acpPlan && res.status === this.ACP_STATUS.COMPLETE && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
                   this.showActivatePlanContent = true;
                   this.showActivatePlanContentCopy = true;
-                } else if ((res.status === this.ACP_STATUS.PENDING_RESOLUTION || res.status === this.ACP_STATUS.PENDING_CERT) && !!res.link && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
+                } else if ((res.status === this.ACP_STATUS.PENDING_RESOLUTION || res.status === this.ACP_STATUS.PENDING_CERT) && !!res.link && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0 && this.pageUrl.indexOf(ACP_ROUTE_URLS.BASE) < 0) {
                   this.showResumeFilingContent = true;
                   this.showResumeFilingContentCopy = true;
                 }
