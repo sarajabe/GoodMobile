@@ -14,6 +14,7 @@ import { SHOP_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app/app.routes.nam
 })
 export class FeaturedPlansComponent implements OnInit {
   public featuredPlans: IBasePlan[];
+  public responsiveFeaturedPlans: IBasePlan[];
   public innerWidth: any;
   public plans: Array<MobilePlanItem>;
   public value: any;
@@ -28,19 +29,10 @@ export class FeaturedPlansComponent implements OnInit {
     this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
       this.allBasePlans = conf.allPlans;
       this.featuredPlans = this.allBasePlans.filter((plan) => plan.featured && !plan.archived);
-      this.featuredPlans.forEach(plan => {
-        if (!!plan.specialPromotion && !!plan.specialPromotion.promotionDiscount) {
-          const discountAmountValue = plan.specialPromotion.promotionDiscount.split('%')[0];
-          const discountValue = parseInt(discountAmountValue, 10);
-          const total = (plan.price - plan.promoPrice) * (discountValue / 100);
-          plan.priceAfterSpecialPromoDiscount = total;
-        }
-        else {
-          plan.priceAfterSpecialPromoDiscount = plan.price - plan.promoPrice;
-        }
-      })
-      this.featuredPlans.sort((a, b) => a.price - b.price);
-      this.featuredPlans.map(plan => {
+      this.responsiveFeaturedPlans = this.allBasePlans.filter((plan) => !!plan.parentId && !plan.archived);
+      this.checkSpecialPromotionPrices(this.featuredPlans);
+      this.checkSpecialPromotionPrices(this.responsiveFeaturedPlans);
+      this.responsiveFeaturedPlans.map(plan => {
         this.planPrices.push(plan.price);
         if (!!plan.ebb) {
           this.selectedPrice = plan.price;
@@ -57,8 +49,29 @@ export class FeaturedPlansComponent implements OnInit {
     this.selectedPrice = item;
   }
 
-  public viewAllPlans() {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
+  public viewAllPlans(planPrice?: any) {
+    if (!!planPrice) {
+      const params = {};
+      params[PLANS_SHOP_ROUTE_URLS.PARAMS.PRICE] = planPrice;
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`, params]);
+    } else {
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
+    }
+  }
+
+  private checkSpecialPromotionPrices(arr: IBasePlan[]): void {
+    arr.forEach(plan => {
+      if (!!plan.specialPromotion && !!plan.specialPromotion.promotionDiscount) {
+        const discountAmountValue = plan.specialPromotion.promotionDiscount.split('%')[0];
+        const discountValue = parseInt(discountAmountValue, 10);
+        const total = (plan.price - plan.promoPrice) * (discountValue / 100);
+        plan.priceAfterSpecialPromoDiscount = total;
+      }
+      else {
+        plan.priceAfterSpecialPromoDiscount = plan.price - plan.promoPrice;
+      }
+    })
+    arr.sort((a, b) => a.price - b.price);
   }
 
   @HostListener('window:resize', ['$event'])

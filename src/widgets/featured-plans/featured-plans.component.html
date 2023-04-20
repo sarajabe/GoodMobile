@@ -36,8 +36,6 @@
       </div>
     </div>
   </div>
-
-
   <div class="plans-cards-section" *ngIf="innerWidth < 1025">
     <div class="plan-gigs-section">
       <div class="plan-gigs">
@@ -50,7 +48,7 @@
       </div>
     </div>
     <div class="cards-section">
-      <ng-container *ngFor="let plan of featuredPlans">
+      <ng-container *ngFor="let plan of responsiveFeaturedPlans">
         <div class="featured-card-container" *ngIf="selectedPrice === (plan?.price)">
           <div class="featured-plan-card">
             <div class="card-header">
@@ -69,7 +67,7 @@
                 <p class="caption">With Unlimited Talk &Text</p>
               </div>
               <div class="action">
-                <button class="button primary small" (click)="viewAllPlans()" title="Select-plan"
+                <button class="button primary small" (click)="viewAllPlans(plan.price)" title="Select-plan"
                   id="select-{{plan?.id}}" aria-label="select plan"> Select Plan</button>
               </div>
             </div>

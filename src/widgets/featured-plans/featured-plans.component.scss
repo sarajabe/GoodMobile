@@ -155,6 +155,11 @@
                                 line-height: 24px;
                                 color: #FBFBFB;
                                 font-family: $base-font-family-bold;
+
+                                @media (max-width: $desktop-min-width-minus) {
+                                    font-size: rem-calc(12px);
+                                    line-height: 20px;
+                                }
                             }
                         }
 

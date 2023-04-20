@@ -165,6 +165,9 @@ export const SHOP_ROUTE_URLS = {
 };
 
 export const PLANS_SHOP_ROUTE_URLS = {
+  PARAMS: {
+    PRICE: 'price'
+  },
   NEW_PLAN: 'new',
   CHANGE_PLAN: 'change',
   CHANGE_PLAN_ID: 'change/:id',
@@ -286,6 +289,6 @@ export const ACP_ROUTE_URLS = {
   BASE: '/affordable-connectivity-program/application',
   NAME: 'affordable-connectivity-program/application',
   DETAILS: 'details',
-  ENROLLMENT_NEW_LINE : 'enrollment/new-line',
-  ENROLLMENT_EXISTING_LINE : 'enrollment/existing-line',
+  ENROLLMENT_NEW_LINE: 'enrollment/new-line',
+  ENROLLMENT_EXISTING_LINE: 'enrollment/existing-line',
 };
