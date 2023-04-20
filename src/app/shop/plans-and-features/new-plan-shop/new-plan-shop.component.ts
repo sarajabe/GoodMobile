@@ -49,16 +49,17 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
   private allBasePlans: Array<MobilePlanItem>;
   private alive = true;
   private utmSource: string;
+  private planPriceParam: number;
 
   constructor(private router: Router, private mobilePlansService: MobileCustomPlansService, private userAccountService: UserAccountService,
-     private userPlansService: UserPlansService, private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
-              private appState: AppState, private pageScrollService: PageScrollService, private location: Location,
-              private simpleAuthService: SimpleAuthService, private modalHelper: ModalHelperService, private angularFireService: AngularFireAuth,
-              private contentfulService: ContentfulService, private clipboardService: ClipboardService) {
-                this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => this.isLoggedIn = !!authState && !authState.isAnonymous);
-                this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
-                  this.currentPlan = plan;
-                });
+    private userPlansService: UserPlansService, private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
+    private appState: AppState, private pageScrollService: PageScrollService, private location: Location,
+    private simpleAuthService: SimpleAuthService, private modalHelper: ModalHelperService, private angularFireService: AngularFireAuth,
+    private contentfulService: ContentfulService, private clipboardService: ClipboardService) {
+    this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => this.isLoggedIn = !!authState && !authState.isAnonymous);
+    this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
+      this.currentPlan = plan;
+    });
   }
 
   ngOnDestroy(): void {
@@ -126,6 +127,10 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
         if (!!params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN]) {
           this.isReplacePlan = params[SHOP_ROUTE_URLS.PARAMS.REPLACE_PLAN];
         }
+        if (!!params[PLANS_SHOP_ROUTE_URLS.PARAMS.PRICE]) {
+          this.planPriceParam = Number(params[PLANS_SHOP_ROUTE_URLS.PARAMS.PRICE]);
+          this.selectedPrice = this.planPriceParam;
+        }
       }
     });
   }
@@ -135,7 +140,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     }
   }
   public getSelectedPlan(index, forDesktop?: boolean): void {
-    if(!!forDesktop) {
+    if (!!forDesktop) {
       this.selectedPlan = this.desktopFilteredPlans[index];
     } else {
       this.selectedPlan = this.filteredPlans[index];
@@ -158,8 +163,8 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
 
   }
 
-  public addPlanToCart(plan , index, forDesktop?: boolean): void {
-    if(!plan?.ebb) {
+  public addPlanToCart(plan, index, forDesktop?: boolean): void {
+    if (!plan?.ebb) {
       this.getSelectedPlan(index, forDesktop);
       if (!!this.isReplacePlan) {
         this.addPlan(this.selectedPlan);
@@ -183,7 +188,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
 
   }
   public showDetails(index): void {
-    this.cardExpanded[index]= !this.cardExpanded[index];
+    this.cardExpanded[index] = !this.cardExpanded[index];
   }
   public calculatePlanPrice(plan: MobilePlanItem): any {
     if (!!plan) {
@@ -209,7 +214,7 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
       this.collapsed = false;
       this.callRichText(answerId);
     }
-    if (!!copy && this.questionIdParam === questionId){
+    if (!!copy && this.questionIdParam === questionId) {
       const url = window.location.host + this.location.path();
       this.clipboardService.copy(url);
       this.isCopied = true;
@@ -298,13 +303,13 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     if (!!this.showCampaignPlan) {
       /* eslint-disable max-len */
       // tslint:disable:max-line-length
-      this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && ((!!plan.specialPromotion && (plan.specialPromotion.utm_source === this.utmSource && !!plan.specialPromotion.isSpecific)) || !plan.isSpecialPromotion) && !plan.ebb);
+      this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId && ((!!plan.specialPromotion && (plan.specialPromotion.utm_source === this.utmSource && !!plan.specialPromotion.isSpecific)) || !plan.isSpecialPromotion) && !plan.ebb);
       const replacedPlans = this.filteredPlans.filter((val) => this.filteredPlans.includes(this.filteredPlans.find((e) => e.details.data === val.details.data && !val.isSpecialPromotion && !!e.isSpecialPromotion))); // get plans that has equal data with the special promo plans
       this.filteredPlans = this.filteredPlans.filter((plan) => !replacedPlans.includes(plan)); // remove plans that has the same data as the promo plan
       this.filteredPlans.sort((a, b) => a.price - b.price);
       this.selectedPlan = this.allBasePlans.find((plan) => !!plan.parentId && !!plan.isSpecialPromotion);
     } else {
-      this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && (!plan.isSpecialPromotion || !!plan.specialPromotion && !plan.specialPromotion.isSpecific));
+      this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId && (!plan.isSpecialPromotion || !!plan.specialPromotion && !plan.specialPromotion.isSpecific));
       const replacedPlans = this.filteredPlans.filter((val) => this.filteredPlans.includes(this.filteredPlans.find((e) => e.details.data === val.details.data && !val.isSpecialPromotion && !!e.isSpecialPromotion))); // get plans that has equal data with the special promo plans
       this.filteredPlans = this.filteredPlans.filter((plan) => !replacedPlans.includes(plan)); // remove plans that has the same data as the promo plan
     }
@@ -317,8 +322,10 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     this.desktopFilteredPlans[1] = ebbPlan;
     this.filteredPlans.map(plan => {
       this.planPrices.push(plan.price);
-      if(!!plan.ebb) {
+      if (!!plan.ebb && !this.planPriceParam) {
         this.selectedPrice = plan.price;
+      } else if (!!this.planPriceParam) {
+        this.selectedPrice = this.planPriceParam;
       }
     });
     this.checkInnerWidth();
@@ -351,9 +358,9 @@ export class NewPlanShopComponent implements OnDestroy, OnInit, OnChanges {
     }
   }
   private checkInnerWidth(): void {
-      this.cardExpanded = Array(this.filteredPlans.length).fill(true);
+    this.cardExpanded = Array(this.filteredPlans.length).fill(true);
   }
-  private getPlansQsts() : void {
+  private getPlansQsts(): void {
     this.contentfulService.getQuestionsByCategoryId('good2goFaqs', 'plans-questions').subscribe(questions => {
       if (!!questions) {
         this.plansQuestions = questions[0].fields.questions;
