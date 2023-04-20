@@ -1,6 +1,6 @@
 <div class="plans-page">
   <div class="plans-banner">
-    <h1 class="banner-head">Get Exactly what you need from your Mobile!</h1>
+    <h1 class="banner-head"><b>Get</b> Exactly <b>what you need from your</b> Mobile<b>!</b></h1>
     <div class="banner-text">
       <div class="icon-section">
         <div class="icon-container">
@@ -71,8 +71,11 @@
         </div>
       </div>
       <div class="actions">
-        <button class="button primary" [class.white]="!!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
-          {{!!plan?.ebb ? 'Do I Qualify': 'Add to cart'}}
+        <button class="button primary" *ngIf="!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
+        Add to cart
+        </button>
+        <button class="button secondary white-button" *ngIf="!!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
+          Do I Qualify
         </button>
       </div>
     </div>
