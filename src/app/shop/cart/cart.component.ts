@@ -80,52 +80,59 @@ export class CartComponent implements OnInit, OnDestroy {
     this.appState.loading = true;
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.userCart = plan;
-      this.autoRenew = this.userCart?.autoRenewPlan;
-      if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
-        this.isGenericType = true;
-        this.deviceImage = this.userCart.acpDevice.imgUrl;
-        if (!!this.userCart.activePlanId) {
-          this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
-            if (!!plan) {
-              this.purchasedMdn = (new PhonePipe()).transform(plan.mdn);
+      setTimeout(() => {
+        if(!!this.userCart && !!this.userCart.cartType) {
+          this.autoRenew = this.userCart?.autoRenewPlan;
+          if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
+            this.isGenericType = true;
+            this.deviceImage = this.userCart.acpDevice.imgUrl;
+            if (!!this.userCart.activePlanId) {
+              this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
+                if (!!plan) {
+                  this.purchasedMdn = (new PhonePipe()).transform(plan.mdn);
+                }
+              });
             }
-          });
-        }
-      }
-      if (!!this.userCart && !!this.userCart?.activePlanId && this.userCart?.cartType === CART_TYPES.CHANGE_PLAN) {
-        this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
-          if (!!this.userCart && !!this.userCart.basePlan.isSpecialPromotion) {
-            this.userAccountService.checkAvailablePromotion(plan.mdn).then((result) => {
-              if (!!result) {
-                const applicableIndex = result.findIndex((promo) => promo.code === this.userCart.basePlan.specialPromotion.code);
-                this.isApplicablePromo = applicableIndex > -1 ? true : false;
+          }
+          if (!!this.userCart && !!this.userCart?.activePlanId && this.userCart?.cartType === CART_TYPES.CHANGE_PLAN) {
+            this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
+              if (!!this.userCart && !!this.userCart.basePlan.isSpecialPromotion) {
+                this.userAccountService.checkAvailablePromotion(plan.mdn).then((result) => {
+                  if (!!result) {
+                    const applicableIndex = result.findIndex((promo) => promo.code === this.userCart.basePlan.specialPromotion.code);
+                    this.isApplicablePromo = applicableIndex > -1 ? true : false;
+                  }
+                });
               }
             });
           }
-        });
-      }
-      if (!!this.userCart && this.userCart?.cartType === CART_TYPES.TOPUP_PLAN && !this.isTopupChecked || this.userCart.cartType === CART_TYPES.CHANGE_PLAN || this.userCart.cartType === CART_TYPES.PLAN_ITEMS) {
-        const activeUserPlanId = !!this.userCart.activePlanId ? this.userCart.activePlanId : sessionStorage.getItem('plan_id');
-        this.userPlanService.getUserPlan(activeUserPlanId).then((plan) => {
-          if (!!plan) {
-            if (this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
-              this.autoRenew = this.userCart.autoRenewPlan;
-            }
-            this.topupMdn = (new PhonePipe()).transform(plan.mdn);
+          if (!!this.userCart && this.userCart?.cartType === CART_TYPES.TOPUP_PLAN && !this.isTopupChecked || this.userCart.cartType === CART_TYPES.CHANGE_PLAN || this.userCart.cartType === CART_TYPES.PLAN_ITEMS) {
+            const activeUserPlanId = !!this.userCart.activePlanId ? this.userCart.activePlanId : sessionStorage.getItem('plan_id');
+            this.userPlanService.getUserPlan(activeUserPlanId).then((plan) => {
+              if (!!plan) {
+                if (this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
+                  this.autoRenew = this.userCart.autoRenewPlan;
+                }
+                this.topupMdn = (new PhonePipe()).transform(plan.mdn);
+              }
+            });
+            this.isTopupChecked = true;
           }
-        });
-        this.isTopupChecked = true;
-      }
-      if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN) {
-        this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
-          this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
-          this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
-          if (!this.planInCatalog && !this.planInCatalogChecked) {
-            this.planInCatalogChecked = true;
-            this.showExpiredPlansPopup();
+          if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN) {
+            this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
+              this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
+              this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
+              if (!this.planInCatalog && !this.planInCatalogChecked) {
+                this.planInCatalogChecked = true;
+                this.showExpiredPlansPopup();
+              }
+            });
           }
-        });
-      }
+        }
+         else {
+          this.router.navigate([ROUTE_URLS.HOME]);
+        }
+      }, 500);
       this.appState.loading = false;
     });
   }
