@@ -132,7 +132,7 @@ export class CartComponent implements OnInit, OnDestroy {
          else {
           this.router.navigate([ROUTE_URLS.HOME]);
         }
-      }, 200);
+      }, 500);
       this.appState.loading = false;
     });
   }
