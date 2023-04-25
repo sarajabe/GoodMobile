@@ -152,7 +152,7 @@ export class PersonalInfoNonExisitngAppComponent implements OnInit, OnDestroy, O
   private getYearsValues(): void {
     const today = new Date();
     const currentYear = today.getFullYear();
-    for (let i = 1892; i <= currentYear; i++) {
+    for (let i = (currentYear - 130); i <= currentYear; i++) {
       this.years.push(i);
     }
   }
