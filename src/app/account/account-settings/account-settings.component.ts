@@ -163,6 +163,12 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    setInterval(() => {
+      if (!!this.reCaptcha) {
+        this.reCaptcha.resetReCaptcha(); // reset recaptcha every 2 minutes to avoid invalid or expired recaptcha error
+        this.reCaptcha.execute();
+      }
+    }, 1.8 * 60 * 1000);
     this.metaService.createCanonicalUrl();
     this.accountHeaderService.setAccountMenuVisibility(true);
     this.accountHeaderService.setPageTitle('Account settings');
