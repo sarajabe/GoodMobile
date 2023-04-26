@@ -102,6 +102,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   private alive = true;
   acpDeviceOrder: OrderInfo;
   showStores: boolean;
+  acpCancelled: boolean;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -252,7 +253,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         primaryButtonAction: 'activatePlan',
         secondaryButtonName: null,
         secondaryButtonAction: null,
-        linkName: 'Cancel Order',
+        linkName: !this.acpCancelled ? 'Cancel Order' : null,
         linkAction: 'cancelOrder',
         pendingWidth: false,
         onHoldWidth: false,
@@ -740,6 +741,16 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                         this.planActivationStatus = 'PENDING';
                       }
                     } else {
+                      if (!!this.acpPlan.orderId) {
+                        this.appState.loading = true;
+                        this.accountOrderService.getOrderById(this.acpPlan.orderId).then((order) => {
+                          this.acpCancelled = !!order && order.status === 'CANCELED' ? true : false;
+                          this.appState.loading = false;
+                        }, (error) => {
+                          this.acpCancelled = false;
+                          this.appState.loading = false;
+                        });
+                      }
                       this.showAttentionBanner = false;
                       this.planActivationStatus = 'PENDING_ACTIVATION';
                       this.showAcpPlanActivationCard = true;
