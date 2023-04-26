@@ -108,7 +108,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   public discount = 0;
   private paymentSubscription: Subscription;
   private saveOnce = true;
-  private nextCycleRenew = true;
+  private nextCycleRenew = false;
   private alive = true;
   private total = 0;
   private baseTotal = 0;
@@ -404,7 +404,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       }
       if (params) {
         const nextCycleParam: string = params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE];
-        this.nextCycleRenew = nextCycleParam === 'true' ? true : false;
+        this.nextCycleRenew = false;
         const addOnParam: string = params[SHOP_ROUTE_URLS.PARAMS.ADD_ON_PLAN];
         this.isAddOnPlan = addOnParam === 'true' || addOnParam === 'false';
         this.isChangePlan = nextCycleParam === 'true' || nextCycleParam === 'false';
@@ -1225,7 +1225,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   private checkoutChangePlan(): void {
     const storedNextCycle = sessionStorage.getItem('changeNextCycle');
     if (!!storedNextCycle) {
-      this.nextCycleRenew = storedNextCycle === 'true' ? true : false;
+      this.nextCycleRenew = false;
     }
     if (!!this.cardInfo && this.cardInfo?.id) {
       this.cardInfo.type = 'creditCardProfile';
