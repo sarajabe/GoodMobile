@@ -198,99 +198,102 @@
       </div>
       <div class="card-content" *ngIf="!!showPaymentSection">
         <h4 class="title toggled">New Payment Method</h4>
-        <form [formGroup]="paymentInfoForm" class="credit-card-form2">
-          <fieldset class="seven">
-            <label class="font-size-12" for="cardNumber">Card Number <span
-                class="form-text error validation-message">*</span></label>
-            <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber"
-              (keyup)="updateData()" (change)="updateData()" maxlength="19" autocomplete="cc-number">
-              <label class="validation-message" data-cy="requiredCardNoMsg"
-                  *ngIf="paymentInfoForm.controls.cardNumber.touched && !paymentInfoForm.controls.cardNumber.value">Card number is required. </label>
+        <form [formGroup]="paymentInfoForm">
+          <div class="flex-form-row">
+            <fieldset>
+              <label class="outlined-label-input">
+                <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber"
+                (keyup)="updateData()" (change)="updateData()" maxlength="19" autocomplete="cc-number" placeholder=" ">
+                <span>Card Number*</span>
+              </label>
+                <label class="validation-message" data-cy="requiredCardNoMsg"
+                    *ngIf="paymentInfoForm.controls.cardNumber.touched && !paymentInfoForm.controls.cardNumber.value">Card number is required. </label>
                 <label class="validation-message"
-                  *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid && paymentInfoForm.controls.cardNumber.value">Invalid
-                  Credit Card Number. </label>
-          </fieldset>
-          <fieldset class="seven">
-            <label class="font-size-12" for="fullName">Name on card <span
-                class="form-text error validation-message">*</span></label>
-            <input id="fullName" data-cy="fullName" type="text" name="fullName" formControlName="fullName" (keyup)="updateData()"
-              (change)="updateData()" autocomplete="cc-given-name" minlength="1" maxlength="30">
-            <label class="validation-message" data-cy="nameOnCardRequiredMsg"
-              *ngIf="paymentInfoForm.controls.fullName.touched && paymentInfoForm.controls.fullName.hasError('required')">Name
-              on card
-              is required. </label>
-            <label class="validation-message" data-cy="invalidName"
-              *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
-              name. </label>
-          </fieldset>
-          <fieldset class="seven">
-            <label class="font-size-12" for="cardCode">CVV <span
-                class="form-text error validation-message">*</span></label>
-            <input id="cardCode"  data-cy="cardCode" type="password" name="cardCode" restrictNumbers formControlName="cardCode"
-              minlength="3" maxlength="4" (keyup)="updateData()" (change)="updateData()" autocomplete="cc-csc">
-            <label class="validation-message" data-cy="cvvRequiredMsg"
-              *ngIf="paymentInfoForm.controls.cardCode.touched && !paymentInfoForm.controls.cardCode.value">CVV
-              is
-              required field. </label>
-            <label class="validation-message" data-cy="cvvInvalidMsg"
-              *ngIf="paymentInfoForm.controls.cardCode.dirty && paymentInfoForm.controls.cardCode.value && !paymentInfoForm.controls.cardCode.valid">CVV
-              is invalid. </label>
-          </fieldset>
-          <fieldset class="seven">
-            <label class="font-size-12" for="cardExpirationMonth">Expiration date <span
-                class="form-text error validation-message">*</span></label>
-            <div class="flex-display">
-              <div class="select no-margin-left">
-                <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
-                  autocomplete="cc-exp-month" (change)="updateData()">
-                  <option value="" selected disabled hidden>MM</option>
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="09">09</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
-                <div class="select-bg">
-                  <div class="select-arrow"></div>
+                    *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid && paymentInfoForm.controls.cardNumber.value">Invalid
+                    Credit Card Number. </label>
+            </fieldset>
+            <fieldset>
+              <label class="outlined-label-input">
+                <input id="fullName" data-cy="fullName" type="text" name="fullName" formControlName="fullName" (keyup)="updateData()"
+                (change)="updateData()" autocomplete="cc-given-name" minlength="1" maxlength="30" placeholder=" ">
+                <span>Name on card*</span>
+            </label>          
+              <label class="validation-message" data-cy="nameOnCardRequiredMsg"
+                *ngIf="paymentInfoForm.controls.fullName.touched && paymentInfoForm.controls.fullName.hasError('required')">Name
+                on card
+                is required. </label>
+              <label class="validation-message" data-cy="invalidName"
+                *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
+                name. </label>
+            </fieldset>
+          </div>
+          <div class="flex-form-row">
+            <fieldset>
+              <label class="outlined-label-input">
+                <input id="cardCode"  data-cy="cardCode" type="password" name="cardCode" restrictNumbers formControlName="cardCode"
+                minlength="3" maxlength="4" (keyup)="updateData()" (change)="updateData()" autocomplete="cc-csc" placeholder=" ">
+                <span>CVV*</span>
+            </label>
+              <label class="validation-message" data-cy="cvvRequiredMsg"
+                *ngIf="paymentInfoForm.controls.cardCode.touched && !paymentInfoForm.controls.cardCode.value">CVV
+                is
+                required field. </label>
+              <label class="validation-message" data-cy="cvvInvalidMsg"
+                *ngIf="paymentInfoForm.controls.cardCode.dirty && paymentInfoForm.controls.cardCode.value && !paymentInfoForm.controls.cardCode.valid">CVV
+                is invalid. </label>
+            </fieldset>
+            <fieldset>
+                <div class="flex-display">
+                  <div class="form-field">
+                    <div class="floating-label">
+                    <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
+                      autocomplete="cc-exp-month" (change)="updateData()" value="" class="floating-select" #month [class.dirty]="!!month.value">
+                      <option value="01">01</option>
+                      <option value="02">02</option>
+                      <option value="03">03</option>
+                      <option value="04">04</option>
+                      <option value="05">05</option>
+                      <option value="06">06</option>
+                      <option value="07">07</option>
+                      <option value="08">08</option>
+                      <option value="09">09</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                    <label [class.dirty]="!!month.value">MM*</label>
+                  </div>
+                  </div>
+                  <div class="sperator">/</div>
+                  <div class="form-field">
+                    <div class="floating-label">
+                    <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
+                      autocomplete="cc-exp-year" (change)="updateData()" aria-placeholder="Year" value="" class="floating-select" #year [class.dirty]="!!year.value">
+                      <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}
+                      </option>
+                    </select>
+                    <label [class.dirty]="!!year.value">YY*</label>
+                  </div>
+                  </div>
                 </div>
-              </div>
-              <span class="sperator">/</span>
-              <div class="select">
-                <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
-                  autocomplete="cc-exp-year" (change)="updateData()" aria-placeholder="Year">
-                  <option value="" selected disabled hidden>YY</option>
-                  <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}
-                  </option>
-                </select>
-                <div class="select-bg">
-                  <div class="select-arrow"></div>
-                </div>
-              </div>
-            </div>
             <label class="validation-message no-wrap" data-cy="expiryMonthRequiredMsg"
-              *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
-              Expiration month is required
-            </label>
-            <label class="validation-message no-wrap" data-cy="expiryYearRequiredMsg"
-              *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
-              Expiration year is required
-            </label>
-            <label class="validation-message no-wrap"
-              *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
-              Expiration date must be valid
-            </label>
-          </fieldset>
+                *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
+                Expiration month is required
+              </label>
+              <label class="validation-message no-wrap" data-cy="expiryYearRequiredMsg"
+                *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
+                Expiration year is required
+              </label>
+              <label class="validation-message no-wrap"
+                *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
+                Expiration date must be valid
+              </label>
+            </fieldset>
+          </div>
         </form>
         <form [formGroup]="billingAddressForm" class="new-address-form"
           [class.hidden]="sharedAddressAsShipping && (ship == null)">
-          <div class="secondary-font text-bold margin-bottom-20">Billing address</div>
+          <div class="secondary-font text-bold margin-bottom-20 billing-label">Billing address</div>
           <fieldset class="seven">
             <label class="outlined-label-input">
               <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" ">

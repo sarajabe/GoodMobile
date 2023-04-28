@@ -46,7 +46,19 @@
 }
 .new-address-form {
   ::ng-deep {
-    .form-section {
+    .seven {
+      width: 50%!important;
+      @media(max-width: $phablet-min-width-minus) {
+        width: 100%!important;
+      }
+    }
+    .billing-label {
+      padding-left: 15px;
+      @media(max-width: $desktop-min-width-minus) {
+        padding-left: 0;
+      }
+    }
+    .form-section { 
         .eight{
             padding-left: 0;
             padding-right: 0;
@@ -204,6 +216,24 @@
       }
     }
   }
+  .flex-form-row{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    @media(max-width: $phablet-min-width-minus) {
+     flex-direction: column;
+    }
+    fieldset {
+      width: 48%;
+      padding-left: 15px;
+      @media(max-width: $desktop-min-width-minus) {
+        padding-left: 0;
+       }
+       @media(max-width: $phablet-min-width-minus) {
+        width: 100%;
+       }
+    }
+  }
   &.CC {
     .card-subtitle {
       font-family: $base-font-family;
@@ -212,32 +242,48 @@
       margin-bottom: 30px;
       .flex-display {
         display: flex;
-        .select {
-          width: 47%;
-          @media (min-width: 460px) and (max-width: 833.9px) {
-            width: 168px;
-          }
-          @media (max-width: 344.9px) {
-            margin-left: 0;
-          }
-          select {
-            width: 100%;
-          }
+        justify-content: space-between;
+        max-width: 415px;
+        @media(max-width: $phablet-min-width-minus) {
+          max-width: 100%;
         }
       }
+      .form-field {
+        width: 100%;
+        max-width: 190px;
+        @media(max-width: $phablet-min-width-minus) {
+          max-width: 100%;
+        }
+      }
+      .floating-label {
+        .floating-select {
+            color: #000000de;
+            height: 44px;
+            &.dirty {
+                ~ {
+                    label {
+                        top: -6px;
+                        font-size: rem-calc(12px);
+                        background-color: white;
+                        width: 30px;
+                        color: #00000099;
+                    }
+                }
+            }
+            ~ {
+              label {
+                  top: 13px;
+              }
+          }
+           &.disabled {
+                cursor: not-allowed;
+            }
+        }
+    }
       .sperator {
         color: #898383;
-        padding-left: 3px;
-        padding-top: 0px;
+        padding: 10px 7px;
         font-size: rem-calc(28px);
-        width: 6px;
-        @media (max-width: $desktop-min-width-minus) {
-          font-size: rem-calc(36px);
-          width: 24px;
-        }
-        @media (max-width: 374.9px) {
-          padding-right: 16px;
-        }
       }
       .no-wrap {
         white-space: nowrap;
@@ -678,6 +724,9 @@
   padding: 1px 10px;
   border-radius: 50%;
   margin-right: 5px;
+  @media(max-width: $desktop-min-width-minus) {
+    padding: 1px 8px;
+  }
   .arrow.down {
     border-width: 0 2px 2px 0;
     border-color: white;
