@@ -19,7 +19,7 @@
                 </div>
             </ng-container>
         </div>
-        <div *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus))"
+        <div *ngIf="!!userHasActivePlans && !!userAccount && !!userAccount?.pastDue && !selectedPlan?.canceled && (!(!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)) && !selectedPlan?.basePlan?.ebb"
             class="col-xl-11 col-xl-offset-1 col-12 col-offset-0 no-padding">
             <div class="info-banner warning-background">
                 <div class="flex">
@@ -114,8 +114,8 @@
                         other changes to your plan can be made at this time.</div>
                     <div class="validation-message" *ngIf="!!selectedPlan?.canceled">Your plan is cancelled.</div>
                     <div class="tab-nav">
-                        <button class="button primary" [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
-                        [disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges)"
+                        <button class="button primary" [class.disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges) || selectedPlan?.basePlan?.ebb"
+                        [disabled]="!!selectedPlan?.portInRequestNumber || !userAccount || !!selectedPlan?.pendingPlan || !!selectedPlan?.canceled || (!!userAccount && userAccount?.hasPendingChanges) || selectedPlan?.basePlan?.ebb"
                         (click)="makePayment()">Pay with Card</button>
                     </div>
                 </div>
