@@ -50,7 +50,7 @@
                                         CART_TYPES.NEW_PLAN ? userCart?.basePlan?.specialPromotion?.promotionCycles
                                         * userCart?.basePlan?.price : (!!userCart?.basePlan?.subscriptionCycles ?
                                         ((userCart?.basePlan?.price * userCart?.basePlan?.subscriptionCycles) |
-                                        number: '2.0-1') : userCart?.basePlan?.price)}}/m
+                                        number: '2.0-1') : userCart?.basePlan?.price)}}/mo
                                     </p>
                                 </div>
                                 <div class="detail auto-pay" *ngIf="userCart?.cartType !== CART_TYPES.MIGRATION">
