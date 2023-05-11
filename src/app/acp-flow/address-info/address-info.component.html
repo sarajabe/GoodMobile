@@ -5,26 +5,37 @@
       verifier.</p>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="address1" maxlength="50" id="addressLookup" data-cy="addressLookup"
-          #addressLookup type="text" />
-        <span>Address Line 1</span>
+        <input formControlName="address1" matInput type="search" list-formatter="description"  
+        id="addressLookup" data-cy="addressLookup" #addressLookup type="search"
+          class="geolocate"  [matAutocomplete]="auto" required placeholder=" " maxlength="50"
+          (input)="changedAddress('addressInfoForm', addressInfoForm)"/>
+          <span>Address Line 1</span>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event,'addressInfoForm', addressInfoForm)">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option?.description }}
+            </mat-option>
+          </mat-autocomplete>
       </label>
       <label class="validation-message"
         *ngIf="addressInfoForm.controls.address1.hasError('required') && addressInfoForm.controls.address1.touched"
         id="required-address-one-msg">
         Address Line 1 is required
       </label>
+      <label class="validation-message vm" *ngIf="!primaryDisplayedAddressModel && !!addressInfoForm.controls.address1.value"
+       id="required-address-msg">Please select address from the autocomplete list</label>  
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="address2" maxlength="50" id="address2" data-cy="address2" #addressLookup
+        autocomplete="address-line2"
           type="text" />
         <span>Address Line 2 (Optional)</span>
       </label>
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="city" maxlength="50" id="city" data-cy="city" type="text" />
+        <input placeholder=" " formControlName="city" maxlength="50" id="city" data-cy="city" type="text" 
+        autocomplete="address-level2"/>
         <span>City</span>
       </label>
       <label class="validation-message"
@@ -42,7 +53,7 @@
       <div class="form-section">
         <label class="outlined-label-input">
           <input placeholder=" " formControlName="state" maxlength="2" id="state" data-cy="state" type="text"
-            minlength="2" />
+            minlength="2" autocomplete="address-level1"/>
           <span>State</span>
         </label>
         <label class="validation-message"
@@ -59,7 +70,7 @@
       <div class="form-section">
         <label class="outlined-label-input">
           <input placeholder=" " formControlName="zipCode" id="zipCode" data-cy="zipCode" type="text"
-            maxlength="10" />
+            maxlength="10" autocomplete="postal-code"/>
           <span>ZIP Code</span>
         </label>
         <label class="validation-message"
@@ -89,27 +100,37 @@
     <p class="smallest grey space">Please provide a mailing address.</p>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="address1" maxlength="50" id="address1" data-cy="mailingAddress1"
-          type="text" />
-        <span>Address Line 1</span>
+        <input formControlName="address1" matInput type="search" list-formatter="description"  
+        id="addressLookup" data-cy="mailingAddress1" #addressLookup type="search"
+          class="geolocate"  [matAutocomplete]="auto" required placeholder=" " maxlength="50"
+          (input)="changedAddress('mailingAddressForm', mailingAddressForm)"/>
+          <span>Address Line 1</span>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event,'mailingAddressForm',mailingAddressForm )">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option?.description }}
+            </mat-option>
+          </mat-autocomplete>
       </label>
       <label class="validation-message"
         *ngIf="mailingAddressForm.controls.address1.hasError('required') && mailingAddressForm.controls.address1.touched"
         id="required-mailing-address-one-msg" data-cy="required-mailing-address-one-msg">
         Address Line 1 is required
       </label>
+      <label class="validation-message vm" *ngIf="!mailingDisplayedAddressModel && !!mailingAddressForm.controls.address1.value"
+      id="required-address-msg">Please select address from the autocomplete list</label>  
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="address2" maxlength="50" id="mail-address2" data-cy="mailingAddress2"
-          #addressLookup type="text" />
+        <input placeholder=" " formControlName="address2" maxlength="50" id="mail-address2"  data-cy="mailingAddress2" #addressLookup
+        autocomplete="address-line2"
+          type="text" />
         <span>Address Line 2 (Optional)</span>
       </label>
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
         <input placeholder=" " formControlName="city" maxlength="50" id="mail-city" data-cy="mail-city"
-          type="text" />
+          type="text" autocomplete="address-level2"/>
         <span>City</span>
       </label>
       <label class="validation-message"
@@ -126,7 +147,7 @@
       <div class="form-section">
         <label class="outlined-label-input">
           <input placeholder=" " formControlName="state" maxlength="2" id="mail-state" data-cy="mail-state"
-            type="text" />
+            type="text" autocomplete="address-level1"/>
           <span>State</span>
         </label>
         <label class="validation-message"
@@ -142,7 +163,7 @@
       <div class="form-section">
         <label class="outlined-label-input">
           <input placeholder=" " formControlName="zipCode" id="mail-zipCode" data-cy="mail-zipCode" type="text"
-            maxlength="10" />
+            maxlength="10" autocomplete="postal-code"/>
           <span>ZIP Code</span>
         </label>
         <label class="validation-message"
