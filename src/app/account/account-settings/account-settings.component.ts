@@ -425,6 +425,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
               }
             }, (error) => {
               this.appState.loading = false;
+              this.processingRequest = false;
               this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Edit address', null,
                 false, 'usp-pop-up-modal2', this.customHtml2);
             });
