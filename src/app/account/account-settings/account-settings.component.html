@@ -187,7 +187,7 @@
               [class.up]="!toggleCCView"></i></span>
           <p class="action-title" data-cy="allPaymentsMethod" (click)="toggleCCView = !toggleCCView;">All payment methods</p>
         </div>
-        <div class="action right" (click)="showPaymentSection = !showPaymentSection;"
+        <div class="action right" (click)="showPaymentSection = !showPaymentSection;billingAddressForm.reset();"
           *ngIf="(!!userHasPendingPlans || !!userHasActivePlans) && paymentMethodList?.length < 10">
           <i class="action-icon icon" [class.action-plus]="!showPaymentSection"
             [class.action-minus]="!!showPaymentSection"><img *ngIf="!showPaymentSection" class="plus-img"
