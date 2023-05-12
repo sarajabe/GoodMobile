@@ -95,6 +95,8 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public voucherDetuctedAmount =0;
   public voucherRemainingAmount = 0;
   public voucherAmount = 0;
+  public customHtml2;
+  public customHtml;
   private isNewPayment = false;
   private alive = true;
   private currentDate: Date;
@@ -700,39 +702,86 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           this.appState.loading = false;
           this.toastHelper.showWarning('Credit Card already exists!');
         } else {
+          this.appState.loading = true;
+          this.customHtml2 = `
+          <div class="flex-container">
+            <div class="pop-header1">
+              <p>The entered address could not be validated. Please revisit the possible issues:</p>
+            </div>
+            <div class="pop-header2">
+                <p><b> Do the city, state and ZIP code conflict?</b></p>
+                <p><b> Are there any typos or misspellings?</b></p>
+              </div>
+          </div>`;
           this.cardExists = false;
-          if (!!this.saveCCInfo && !!this.methodsList && this.methodsList.length > 0 && !!this.userHasPurchases) { // if the user already has purchases then we call save card other wise the save will be done from checkout API if needed
-            this.appState.loading = true;
-            this.accountPaymentService.addPaymentMethod(this.paymentInfo, this.recaptchaResponse).then((methodId) => {
-              this.appState.loading = false;
-              this.toastHelper.showSuccess('Credit Card saved successfully');
-              sessionStorage.setItem('payment_id', methodId);
-              setTimeout(() => {
-                this.selectedPaymentMethod = this.methodsList.find((m) => m.id === methodId);
-                let el = document.getElementById('cart-section');
-                el.scrollIntoView();
-              }, 500);
-              this.processingRequest = false;
-              this.resetPayment();
-            }, (error) => {
-                this.processingRequest = false;
-                this.appState.loading = false;
-                this.toastHelper.showAlert('Credit Card was not saved successfully.If you keep getting this error, please contact customer support!');
-                console.warn(error);
-                this.reCaptcha.resetReCaptcha();
-                this.reCaptcha.execute();
-            });
-          } else {
-            sessionStorage.setItem('payment_id', '1');
-            this.convertPaymentData(true);
-            this.isNewPayment = true;
-            this.resetPayment();
-            setTimeout(() => {
-              let el = document.getElementById('cart-section');
-              el.scrollIntoView();
-            }, 500);
-           
-          }
+          this.shippingService.verifyShippingAddress(this.billingAddress).then((addresses) => {
+            this.appState.loading = false;
+            if (!!addresses) {
+              this.customHtml =
+                `
+                <div class="flex-container">
+                  <div class="pop-header">
+                  <p><img src='/assets/img/location.svg'><b> Verified Address from USPS</b></p>
+                  <p class="sub-padding"> ` + addresses[0].address1 + ', ' + addresses[0].state + ' ' + addresses[0].postalCode + `</p>
+                  </div>
+                  <div class="pop-header">
+                  <p><img src='/assets/img/location.svg'><b> Current Customer Address:</b></p>
+                   <p class="sub-padding">` + this.billingAddress.address1 + ', ' + this.billingAddress.state + ' ' + this.billingAddress.postalCode + `</p>
+                   </div>
+                  </div>
+                 `;
+              this.modalHelper.showInformationMessageModal('Verify your billing address',
+                '',
+                'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address', '', 'verified')
+                .afterClosed().subscribe((result) => {
+                  if (result) {
+                    if (result === 'verified') {
+                      const name = this.billingAddress.name;
+                      addresses[0].name = name;
+                      this.billingAddress = addresses[0];
+                    }
+                    if (!!this.saveCCInfo && !!this.methodsList && this.methodsList.length > 0 && !!this.userHasPurchases) { // if the user already has purchases then we call save card other wise the save will be done from checkout API if needed
+                      this.appState.loading = true;
+                      this.accountPaymentService.addPaymentMethod(this.paymentInfo, this.recaptchaResponse).then((methodId) => {
+                        this.appState.loading = false;
+                        this.toastHelper.showSuccess('Credit Card saved successfully');
+                        sessionStorage.setItem('payment_id', methodId);
+                        setTimeout(() => {
+                          this.selectedPaymentMethod = this.methodsList.find((m) => m.id === methodId);
+                          let el = document.getElementById('cart-section');
+                          el.scrollIntoView();
+                        }, 500);
+                        this.processingRequest = false;
+                        this.resetPayment();
+                      }, (error) => {
+                          this.processingRequest = false;
+                          this.appState.loading = false;
+                          this.toastHelper.showAlert('Credit Card was not saved successfully.If you keep getting this error, please contact customer support!');
+                          console.warn(error);
+                          this.reCaptcha.resetReCaptcha();
+                          this.reCaptcha.execute();
+                      });
+                    } else {
+                      sessionStorage.setItem('payment_id', '1');
+                      this.convertPaymentData(true);
+                      this.isNewPayment = true;
+                      this.resetPayment();
+                      setTimeout(() => {
+                        let el = document.getElementById('cart-section');
+                        el.scrollIntoView();
+                      }, 500);
+                     
+                    }
+                  }
+                }, (error) => {
+                  console.error('error step', error);
+                });
+            }
+          }, (error) => {
+            this.appState.loading = false;
+            this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Edit address', null,
+              false, 'usp-pop-up-modal2', this.customHtml2);
+          });
         }
       });
     }

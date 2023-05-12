@@ -13,7 +13,7 @@ import { filter, take, takeWhile } from 'rxjs/operators';
 import { FadeInOutAnimation } from 'src/app/app.animations';
 import { EMAIL_PATTERN, NAME_PATTERN, PASSWORD_PATTERN } from 'src/app/app.config';
 import { AppState } from 'src/app/app.service';
-import { INVISIBLE_CAPTCHA_ID} from 'src/environments/environment';
+import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
@@ -202,7 +202,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     this.userAccountService.selectedAccount.subscribe((account) => {
       this.isActiveAccount = !!account && !!account.mdn;
     });
-   
+
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       const pendingActivationPlans = plans.filter((plan) => !plan.mdn && !plan.basePlan.ebb);
       this.activatedPlans = plans.filter((plan) => !!plan.mdn);
@@ -366,25 +366,71 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
             this.paymentInfo.address1 = AccountPaymentService.shortenAddress(this.paymentInfo.address1, 30);
             this.paymentInfo.address2 = AccountPaymentService.shortenAddress(this.paymentInfo.address2, 30);
             this.paymentInfo.city = AccountPaymentService.shortenAddress(this.paymentInfo.city, 20);
+            let billingAddress = {
+              address1: this.paymentInfo.address1, address2: !!this.paymentInfo.address2 ? this.paymentInfo.address2 : '', city: this.paymentInfo.city,
+              postalCode: this.paymentInfo.postalCode, state: this.paymentInfo.state, country: this.paymentInfo.country
+            } as IAddress;
             this.appState.loading = true;
-            this.accountPaymentService.addPaymentMethod(this.paymentInfo, this.recaptchaResponse).then((methodId) => {
+            this.shippingService.verifyShippingAddress(billingAddress).then((addresses) => {
               this.appState.loading = false;
-              this.toastHelper.showSuccess('New payment method was added successfully');
-              this.processingRequest = false;
-              this.showPaymentSection = false;
-              this.paymentInfoForm.reset();
-              this.recaptchaResponse = '';
-              this.reCaptcha.resetReCaptcha();
-              this.reCaptcha.execute();
-              this.billingAddress.name = ' ';
+              if (!!addresses) {
+                this.customHtml =
+                  `
+                  <div class="flex-container">
+                    <div class="pop-header">
+                    <p><img src='/assets/img/location.svg'><b> Verified Address from USPS</b></p>
+                    <p class="sub-padding"> ` + addresses[0].address1 + ', ' + addresses[0].state + ' ' + addresses[0].postalCode + `</p>
+                    </div>
+                    <div class="pop-header">
+                    <p><img src='/assets/img/location.svg'><b> Current Customer Address:</b></p>
+                     <p class="sub-padding">` + billingAddress.address1 + ', ' + billingAddress.state + ' ' + billingAddress.postalCode + `</p>
+                     </div>
+                    </div>
+                   `;
+                this.modalHelper.showInformationMessageModal('Verify your billing address',
+                  '',
+                  'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address', '', 'verified')
+                  .afterClosed().subscribe((result) => {
+                    if (result) {
+                      if (result === 'verified') {
+                        const name = billingAddress.name;
+                        addresses[0].name = name;
+                        billingAddress = addresses[0];
+                      }
+                      this.appState.loading = true;
+                        this.accountPaymentService.addPaymentMethod(this.paymentInfo, this.recaptchaResponse).then((methodId) => {
+                          this.appState.loading = false;
+                          this.toastHelper.showSuccess('New payment method was added successfully');
+                          this.processingRequest = false;
+                          this.showPaymentSection = false;
+                          this.paymentInfoForm.reset();
+                          this.billingAddressForm.reset();
+                          this.touchAddressForm = false;
+                          this.recaptchaResponse = '';
+                          this.reCaptcha.resetReCaptcha();
+                          this.reCaptcha.execute();
+                          this.billingAddress.name = ' ';
+                        }, (error) => {
+                          this.processingRequest = false;
+                          this.appState.loading = false;
+                          this.toastHelper.showAlert(error.message);
+                          console.warn(error);
+                          this.recaptchaResponse = '';
+                          this.reCaptcha.resetReCaptcha();
+                          this.reCaptcha.execute();
+                        });  
+                    } else {
+                      this.processingRequest = false;
+                    }
+                  }, (error) => {
+                    console.error('error step', error);
+                  });
+              }
             }, (error) => {
-              this.processingRequest = false;
               this.appState.loading = false;
-              this.toastHelper.showAlert(error.message);
-              console.warn(error);
-              this.recaptchaResponse = '';
-              this.reCaptcha.resetReCaptcha();
-              this.reCaptcha.execute();
+              this.processingRequest = false;
+              this.modalHelper.showInformationMessageModal('We couldn’t validate your address', '', 'Edit address', null,
+                false, 'usp-pop-up-modal2', this.customHtml2);
             });
           }
         });
@@ -421,11 +467,11 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
                   </div>`;
                 this.processingRequest = false;
                 this.modalHelper.showInformationMessageModal('Verify your shipping address', '', 'Keep current address', null, true, 'usp-pop-up-modal',
-                this.customHtml, true, 'Use verified address','', 'verified')
+                  this.customHtml, true, 'Use verified address', '', 'verified')
                   .afterClosed().subscribe((result) => {
                     if (result) {
                       // PRIMARY
-                      if(result === 'verified') { 
+                      if (result === 'verified') {
                         addresses[0].name = this.userShippingAddress.name;
                         this.userAccountService.addShippingAddress(addresses[0]).then((newAddressId) => {
                           this.toastHelper.showSuccess('New address was added successfully.');
@@ -617,10 +663,10 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
             </div>`;
             this.appState.loading = false;
             this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address','', 'verified')
+              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address', '', 'verified')
               .afterClosed().subscribe((result) => {
                 if (result) {
-                  if(result === 'verified') { 
+                  if (result === 'verified') {
                     shippingAddress = addresses[0];
                     shippingAddress.name = address.name;
                   } else {
@@ -638,7 +684,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
                       this.shippingAddressList[originalAddressIndex] = response;
                     });
                   });
-                } 
+                }
               }, (error) => {
                 this.appState.loading = false;
                 this.toastHelper.showAlert(error);
