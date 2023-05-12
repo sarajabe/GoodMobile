@@ -397,6 +397,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
                         addresses[0].name = name;
                         billingAddress = addresses[0];
                       }
+                      this.appState.loading = true;
                         this.accountPaymentService.addPaymentMethod(this.paymentInfo, this.recaptchaResponse).then((methodId) => {
                           this.appState.loading = false;
                           this.toastHelper.showSuccess('New payment method was added successfully');
@@ -418,6 +419,8 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
                           this.reCaptcha.resetReCaptcha();
                           this.reCaptcha.execute();
                         });  
+                    } else {
+                      this.processingRequest = false;
                     }
                   }, (error) => {
                     console.error('error step', error);
