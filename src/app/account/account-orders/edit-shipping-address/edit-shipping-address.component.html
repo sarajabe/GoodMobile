@@ -78,12 +78,13 @@
                                         <label class="outlined-label-input">
                                             <input id="name" data-cy="name" type="text" name="name" required placeholder=" "
                                             [(ngModel)]="newAddressName" autocomplete="name" #addressName="ngModel"
-                                            (input)="nameRequired = false; showErrorMessage=false">
-                                            <span>Address Name</span>
+                                            (input)="nameRequired = false; showErrorMessage=false" [pattern]="namePattern">
+                                            <span>Name</span>
                                         </label>
-                                        <label class="validation-message" data-cy="addressNameIsRequiredMSG"
-                                            *ngIf="addressName.touched && !addressName.valid || nameRequired">
-                                            Address Name is a required field</label>
+                                            <label class="validation-message" data-cy="addressNameIsRequiredMSG" *ngIf="addressName.touched && !addressName.value || nameRequired">
+                                                Name is a required field</label>
+                                            <label class="validation-message" data-cy="addressNameIsInvalidMSG" *ngIf="addressName.dirty && !addressName.valid">
+                                                Name is invalid.</label>        
                                     </fieldset>
                                     <fieldset class="address-lookup">
                                         <app-address-lookup [displayedAddress]="newAddress"

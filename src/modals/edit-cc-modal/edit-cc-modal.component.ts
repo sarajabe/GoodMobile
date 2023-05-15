@@ -6,6 +6,7 @@ import { PlatformLocation } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NAME_PATTERN } from 'src/app/app.config';
 
 export class CreditCardContext {
   public paymentMethod: IFirebasePaymentMethod;
@@ -34,7 +35,8 @@ export class EditCcModalComponent implements OnInit, OnDestroy {
   public isEditMode = false;
   public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
   public filteredOptionsSubscription: Subscription;
-  
+  public namePattern = new RegExp(NAME_PATTERN);
+
   private currentDate: Date;
   private streetSearchText: string;
 
@@ -43,7 +45,7 @@ export class EditCcModalComponent implements OnInit, OnDestroy {
     this.context = data;
     location.onPopState(() => {this.beforeDismiss();this.dialog.close();});
     this.addressForm = formBuilder.group({
-      alias: ['', Validators.required],
+      alias: ['', Validators.compose([Validators.required, Validators.pattern(this.namePattern)])],
       address1: ['', Validators.required],
       city: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],
       state: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])],

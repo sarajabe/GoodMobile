@@ -158,7 +158,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     }, { validator: this.validExpirationDate('cardExpirationMonth', 'cardExpirationYear') });
 
     this.billingAddressForm = formBuilder.group({
-      alias: ['', Validators.required]
+      alias: ['', Validators.compose([Validators.required, Validators.pattern(this.namePattern), Validators.minLength(2), Validators.maxLength(60)])]
     });
   }
 

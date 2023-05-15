@@ -102,6 +102,9 @@
                             <p class="validation-message" data-cy="addressNameRequiredMsg"
                                 *ngIf="addressForm.controls.alias.touched && addressForm.controls.alias.hasError('required')">
                                 Name is required. </p>
+                           <p class="validation-message" data-cy="addressNameInvalidMsg"
+                                *ngIf="addressForm.controls.alias.dirty && !addressForm.controls.alias.valid">
+                                Name is invalid. </p>        
                         </div>
                         <div class="address-section">
                             <label for="addressLookup">Address line <span class="required-field">*</span></label>
