@@ -71,19 +71,20 @@
                             <p class="icon">{{!showNewAddress ? '+' : '-'}}</p>
                             <p class="section-title smaller" data-cy="addAnewAddress">Add a new address</p>
                         </div>
-                        <div class="form-section" *ngIf="showNewAddress">
+                        <div class="form-section-specific" *ngIf="showNewAddress">
                             <form #shippingMethodForm="ngForm">
                                 <div class="shipping-method-form">
                                     <fieldset class="name">
                                         <label class="outlined-label-input">
                                             <input id="name" data-cy="name" type="text" name="name" required placeholder=" "
                                             [(ngModel)]="newAddressName" autocomplete="name" #addressName="ngModel"
-                                            (input)="nameRequired = false; showErrorMessage=false">
-                                            <span>Address Name</span>
+                                            (input)="nameRequired = false; showErrorMessage=false" [pattern]="namePattern">
+                                            <span>Name</span>
                                         </label>
-                                        <label class="validation-message" data-cy="addressNameIsRequiredMSG"
-                                            *ngIf="addressName.touched && !addressName.valid || nameRequired">
-                                            Address Name is a required field</label>
+                                            <label class="validation-message" data-cy="addressNameIsRequiredMSG" *ngIf="addressName.touched && !addressName.value || nameRequired">
+                                                Name is a required field</label>
+                                            <label class="validation-message" data-cy="addressNameIsInvalidMSG" *ngIf="!!addressName.value && !addressName.valid">
+                                                Name is invalid.</label>        
                                     </fieldset>
                                     <fieldset class="address-lookup">
                                         <app-address-lookup [displayedAddress]="newAddress"
@@ -127,19 +128,22 @@
         <div class="current-address">
             <p class="smaller"> {{ !!isCurrent ? 'Current shipping address:' : 'Ship to this address:'}}</p>
             <div class="edit-card">
-                <div class="form-section edit">
+                <div class="form-section-specific edit">
                     <form #editShippingMethodForm="ngForm">
                         <div class="shipping-method-form">
                             <fieldset class="name long">
                                 <label class="outlined-label-input">
                                     <input id="editName" data-cy="name" type="text" name="editName" required
                                     [(ngModel)]="shippingName" autocomplete="name" #editName="ngModel"
-                                    (input)="nameRequired = false">
-                                    <span>Address Name</span>
+                                    (input)="nameRequired = false" [pattern]="namePattern">
+                                    <span>Name</span>
                                 </label>
                                 <label class="validation-message" data-cy="addressNameRequiredMsg"
-                                    *ngIf="editName.touched && !editName.valid || nameRequired">
-                                    Address Name is a required field</label>
+                                    *ngIf="editName.touched && !editName.value || nameRequired">
+                                    Name is a required field</label>
+                                    <label class="validation-message" data-cy="addressNameRequiredMsg"
+                                    *ngIf="editName.value && !editName.valid">
+                                     Name is invalid</label>       
                             </fieldset>
                             <fieldset class="address-lookup">
                                 <app-address-lookup [displayedAddress]="editedAddress"

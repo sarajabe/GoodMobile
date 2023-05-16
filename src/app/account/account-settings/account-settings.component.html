@@ -296,12 +296,16 @@
           <div class="secondary-font text-bold margin-bottom-20 billing-label">Billing address</div>
           <fieldset class="seven">
             <label class="outlined-label-input">
-              <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" ">
-              <span>Address Name</span>
+              <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" "
+              [pattern]="namePattern">
+              <span>Name</span>
           </label>
             <label class="validation-message" data-cy="addressNameRequiredMsg"
-              *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address
-              name is required field</label>
+              *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.value">
+              Name is required field</label>
+              <label id="invalid-alias-msg" data-cy="addressNameInvalidMsg" class="validation-message"
+              *ngIf="billingAddressForm.controls.alias.value && !billingAddressForm.controls.alias.valid">
+              Name is invalid</label>   
           </fieldset>
           <fieldset class="address-lookup twelve">
             <app-address-lookup [displayedAddress]="userBillingAddress" (isValid)="setValidAddress($event)"
@@ -369,13 +373,16 @@
         <form [formGroup]="billingAddressForm" class="new-address-form">
           <fieldset class="seven">
             <label class="outlined-label-input">
-              <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" ">
+              <input type="text" formControlName="alias" autocomplete="alias" id="alias" data-cy="alias" placeholder=" "
+              [pattern]="namePattern">
               <span>Name</span>
           </label>
             <label id="required-alias-msg" data-cy="addressNameReuiredMsg" class="validation-message"
-              *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.valid">Address
-              name
-              is required field</label>
+              *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.value">Address
+              Name is required field</label>
+              <label id="invalid-alias-msg" data-cy="addressNameInvalidMsg" class="validation-message"
+               *ngIf="billingAddressForm.controls.alias.value && !billingAddressForm.controls.alias.valid">
+              Name is invalid</label>
           </fieldset>
           <fieldset class="address-lookup twelve">
             <app-address-lookup [displayedAddress]="userShippingAddress" (isValid)="setValidShippingAddress($event)"

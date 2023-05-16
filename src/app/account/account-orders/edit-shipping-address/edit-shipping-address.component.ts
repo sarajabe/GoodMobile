@@ -9,6 +9,7 @@ import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AccountHeaderService } from '../../account-header.service';
 import * as _ from "lodash";
+import { NAME_PATTERN } from 'src/app/app.config';
 
 @Component({
   selector: 'app-edit-shipping-address',
@@ -43,6 +44,7 @@ export class EditShippingAddressComponent implements OnInit, OnDestroy {
   public showErrorMessage = false;
   public resetAddressForm = false;
   public setSticky = false;
+  public namePattern = NAME_PATTERN;
   private alive = true;
 
   constructor(private modalHelper: ModalHelperService,

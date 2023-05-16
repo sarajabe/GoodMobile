@@ -4,6 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { IAutoCompletePrediction, IFirebaseAddress, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.service';
+import { NAME_PATTERN } from 'src/app/app.config';
 
 @Component({
   selector: 'app-address-lookup',
@@ -26,6 +27,8 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   @Output() addressChange: EventEmitter<IFirebaseAddress> = new EventEmitter();
   @Output() isValid: EventEmitter<boolean> = new EventEmitter();
 
+  public isValidName: boolean;
+  public namePattern= NAME_PATTERN;
   public displayedAddressModel: IFirebaseAddress = {} as IFirebaseAddress;
   public addressFieldsForm: UntypedFormGroup;
   public hasDetails = false;
@@ -40,7 +43,7 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   constructor(private cdRef: ChangeDetectorRef, private placesAutoCompleteService: PlacesAutocompleteService,
               private formBuilder: UntypedFormBuilder,private appState: AppState) {
     this.addressFieldsForm = formBuilder.group({
-      alias: [''],
+      alias:['', Validators.pattern(this.namePattern)],
       address1: ['', Validators.required],
       address2: [''],
       country: [''],
@@ -60,7 +63,7 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   ngOnInit(): void {
     this.cdRef.detectChanges();
     if (!!this.showAlias) {
-      this.addressFieldsForm.controls.alias.setValidators(Validators.required);
+      this.addressFieldsForm.controls.alias.setValidators([Validators.required, Validators.pattern(this.namePattern)]);
       this.addressFieldsForm.controls.alias.updateValueAndValidity();
     } else {
       this.addressFieldsForm.controls.alias.clearValidators();
@@ -161,11 +164,8 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
 
   public validateAlias(alias): boolean {
     if (!!this.showAlias) {
-      if (!!alias) {
-        return true;
-      } else {
-        return false;
-      }
+      this.isValidName = /^[A-Za-z]+[ \t]?[A-Za-z- ]+?[ \t]*$/.test(alias);
+      return this.isValidName;
     } else {
       return true;
     }

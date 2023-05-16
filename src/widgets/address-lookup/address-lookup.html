@@ -1,13 +1,14 @@
 <form [formGroup]="addressFieldsForm">
   <div class="row form-section">
     <fieldset class="address-lookup twelve" *ngIf="showAlias">
-      <label class="outlined-label-input">
-        <input id="addressAlias"  data-cy="addressName" type="text" formControlName="alias" (change)="addressFieldChanged($event)"
-        [readonly]="readonly" maxlength="50" (blur)="validateAlias(addressFieldsForm.controls.alias.value)" placeholder=" ">
-        <span>Address Name</span>
+      <label class="outlined-label-input" for="addressAlias">
+        <input id="addressAlias" data-cy="addressName" type="text" formControlName="alias" (change)="addressFieldChanged($event)"
+        maxlength="50" placeholder=" ">
+        <span>Name</span>
     </label>
       <div class='form-text error'>
-        <label class="validation-message" data-cy="addressNameRequiredMsg" *ngIf="addressFieldsForm.controls.alias.touched && addressFieldsForm.controls.alias.hasError('required')">Address name is a required field</label>
+        <label class="validation-message" data-cy="addressNameRequiredMsg" *ngIf="addressFieldsForm.controls.alias.touched && addressFieldsForm.controls.alias.hasError('required')">Name is a required field</label>
+        <label class="validation-message" data-cy="addressNameInvalidMsg" *ngIf="addressFieldsForm.controls.alias.value && addressFieldsForm.controls.alias.hasError('pattern')">Name is invalid</label>
       </div>
     </fieldset>
     <fieldset class="address-lookup eight">
