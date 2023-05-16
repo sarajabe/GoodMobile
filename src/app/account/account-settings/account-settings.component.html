@@ -304,7 +304,7 @@
               *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.value">
               Name is required field</label>
               <label id="invalid-alias-msg" data-cy="addressNameInvalidMsg" class="validation-message"
-              *ngIf="billingAddressForm.controls.alias.dirty && !billingAddressForm.controls.alias.valid">
+              *ngIf="billingAddressForm.controls.alias.value && !billingAddressForm.controls.alias.valid">
               Name is invalid</label>   
           </fieldset>
           <fieldset class="address-lookup twelve">
@@ -381,7 +381,7 @@
               *ngIf="billingAddressForm.controls.alias.touched && !billingAddressForm.controls.alias.value">Address
               Name is required field</label>
               <label id="invalid-alias-msg" data-cy="addressNameInvalidMsg" class="validation-message"
-               *ngIf="billingAddressForm.controls.alias.dirty && !billingAddressForm.controls.alias.valid">
+               *ngIf="billingAddressForm.controls.alias.value && !billingAddressForm.controls.alias.valid">
               Name is invalid</label>
           </fieldset>
           <fieldset class="address-lookup twelve">
