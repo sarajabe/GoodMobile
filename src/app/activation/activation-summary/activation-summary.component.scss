@@ -1,6 +1,22 @@
 @import "../../../styles/modules/_variables.scss";
 @import "../../../styles/modules/_mixins.scss";
 
+::ng-deep {
+    .barcode-container {
+        .barcode {
+            svg {
+                max-width: 336px !important;
+                height: 100%;
+                border: 1px solid #DADADA;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    max-width: 240px !important;
+                }
+            }
+        }
+    }
+}
+
 .activate-plan-summary {
     max-width: 1261px;
     margin: 0 auto;
@@ -18,6 +34,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        max-width: 700px;
+        margin: 0 auto;
 
         .header {
             font-size: rem-calc(32px);
@@ -128,6 +146,7 @@
         }
 
         .content-actions-part {
+            width: 100%;
             margin-top: 24px;
 
             @media (max-width: $phablet-min-width-minus) {
@@ -153,6 +172,39 @@
                 }
             }
 
+            .hooray-box {
+                border: 1.5px solid #005895;
+                border-radius: 8px;
+                padding: 20px 20px 38px;
+
+                .box-title {
+                    margin-bottom: 12px;
+
+                    .title-img {
+                        width: 24px;
+                        height: 24px;
+                        margin-left: 8px;
+                    }
+                }
+
+                .smaller {
+                    margin-bottom: 8px;
+
+                    &.last {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .barcode-part {
+                    margin-top: 20px;
+                    text-align: center;
+
+                    .smaller {
+                        margin-bottom: 12px;
+                    }
+                }
+            }
+
             .actions {
                 margin-top: 32px;
                 display: flex;
@@ -166,6 +218,31 @@
 
                 @media (max-width: 449.9px) {
                     flex-direction: column;
+                }
+
+                &.wrap {
+                    flex-wrap: wrap;
+                    max-width: 500px;
+                    margin: 0 auto;
+                    margin-top: 32px;
+                    gap: 16px;
+
+                    button {
+                        padding: 12px 24px;
+                        width: 200px;
+
+                        @media (max-width: $phablet-min-width-minus) {
+                            width: 170px;
+                        }
+                    }
+
+                    a {
+                        line-height: 42px;
+
+                        @media (max-width: $phablet-min-width-minus) {
+                            line-height: 32px;
+                        }
+                    }
                 }
 
                 button {

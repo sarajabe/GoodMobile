@@ -5,7 +5,7 @@
         <div class="banner">
             <h2 class="title"><img src="assets/icon/green-check.svg">Successfully activated!</h2>
             <p class="banner-note">Your <b>{{userPlan?.basePlan?.subtitle}}</b> Unlimited Talk, Text & Data is now
-                activated!</p>
+                activated<span *ngIf="!!userPlan?.basePlan?.ebb"> with your ACP Benefits</span>!</p>
         </div>
         <div class="key-value-part">
             <p class="key">Your Number:</p>
@@ -30,7 +30,8 @@
             </div>
         </div>
         <div class="content-actions-part" *ngIf="!isTmoNetwork">
-            <p class="desc bottom">Make sure to insert your Good Mobile <b>SIM</b> into your device and turn it on. If your
+            <p class="desc bottom">Make sure to insert your Good Mobile <b>SIM</b> into your device and turn it on. If
+                your
                 device was already on, please turn it off and back on to recieve important network programming. Your
                 data
                 will be setup automatically. If not, you can setup your device data manually through the <b>Setup
@@ -43,19 +44,36 @@
             </div>
         </div>
         <div class="content-actions-part" *ngIf="!!isTmoNetwork && !iseSIM">
-            <p class="desc">Make sure to insert your Good Mobile SIM into your device and turn it on. If your device was
-                already
-                on, please turn it off and back on to recieve important network programming.</p>
-            <p class="desc bottom">As for your <b>data</b>, It may take anywhere from a few minutes, up to 2 hours for
-                network to complete provisioning of your data services. You may receive a message indicating your phone
-                does
-                not have the correct settings for Internet or MMS. Don’t worry! We will <b>automatically</b> send the
-                settings to your phone. If not, you can <b>setup your device data</b> manually through the Setup Page.
-            </p>
-            <p class="desc">To know more about your plan details visit your <b>Account Summary</b> at anytime!</p>
-            <div class="actions">
+            <ng-container *ngIf="!userPlan?.basePlan?.ebb">
+                <p class="desc">Make sure to insert your Good Mobile SIM into your device and turn it on. If your device
+                    was already on, please turn it off and back on to recieve important network programming.</p>
+                <p class="desc bottom">As for your <b>data</b>, It may take anywhere from a few minutes, up to 2 hours
+                    for network to complete provisioning of your data services. You may receive a message indicating
+                    your phone does not have the correct settings for Internet or MMS. Don’t worry! We will
+                    <b>automatically</b> send the settings to your phone. If not, you can <b>setup your device data</b>
+                    manually through the Setup Page.
+                </p>
+                <p class="desc">To know more about your plan details visit your <b>Account Summary</b> at anytime!</p>
+            </ng-container>
+            <ng-container *ngIf="!!userPlan?.basePlan?.ebb">
+                <div class="hooray-box">
+                    <h5 class="box-title">Hooray!<img src="assets/icon/hooray-icon.svg" class="title-img"
+                            alt="Hooray Icon"></h5>
+                    <p class="smaller">You may be eligible for a <b>$100 discount</b> on a new device.</p>
+                    <p class="smaller last">You can head to your nearest Goodwill store to check if you are eligible for
+                        ACP device discount, or you can complete the process on our website!</p>
+                    <div class="barcode-part">
+                        <p class="smaller"><b>Your ACP Device Eligibility Barcode:</b></p>
+                        <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true"
+                            class="barcode-container"></ngx-barcode6>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="actions" [class.wrap]="!!userPlan?.basePlan?.ebb">
                 <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
-                <a (click)="setUpPhoneData()">Setup your Device Data</a>
+                <button class="button secondary" *ngIf="!!userPlan?.basePlan?.ebb"
+                    [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">Device Catalog</button>
+                <a (click)="setUpPhoneData()"><b>Setup your Device Data</b></a>
             </div>
         </div>
     </div>
