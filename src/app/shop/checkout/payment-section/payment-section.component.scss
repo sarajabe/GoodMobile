@@ -626,4 +626,50 @@
             }
         }
     }
+    .store-payment-section {
+        border: 1px solid #99BCD5;
+        background-color: #F2F7FA;
+        padding: 20px 24px;
+        border-radius: 6px;
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            h5 {
+                margin-bottom: 0;
+            }
+            .payment-types {
+                display: flex;
+                gap: 9px;
+                img {
+                    width: 45px;
+                    height: 50px;
+                }
+               
+            }
+        }
+        .no-payment-section {
+            background: $white;
+            box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08), 0px 5px 16px rgba(0, 60, 117, 0.02);
+            padding: 24px 0 32px;
+            border-radius: 10px;
+            .border {
+                border-color: #e2e2e2;
+                margin: 16px 0;
+            }
+            .title-section {
+                padding-left: 28px;
+                padding-right: 24px;
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+            .info-section {
+                padding-left: 36px;
+                padding-right: 36px; 
+                padding-bottom: 10px;
+            }
+        }
+    }
 }

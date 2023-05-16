@@ -33,8 +33,8 @@
     <p>Checkout</p>
     <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
   </div>
-  <h1 class="step-title" id="title">How do you want to pay?</h1>
-  <ng-container *ngIf="!isMigration || (!!isMigration &&  (!!shippingMethod && shippingMethod.price > 0))">
+  <h1 class="step-title" id="title">{{!!deviceFlow ? 'No payment for now!': 'How do you want to pay?'}}</h1>
+  <ng-container *ngIf="!deviceFlow">
     <div class="info-banner error-background" *ngIf="!!morePaymentNeeded">
       <div class="flex center">
         <img src="assets/icon/error-icon.svg" alt="Error Icon"/>
@@ -334,12 +334,35 @@
       </div>
     </div>
   </ng-container>
+  <ng-container *ngIf="!!deviceFlow">
+    <div class="store-payment-section">
+      <div class="header-section">
+        <h5>Pay In-Store</h5>
+        <div class="payment-types">
+          <img alt="cash" src="assets/img/cash.svg" width="44" height="29"/>
+          <img alt="Visa Card" src="assets/img/visa.svg" width="44" height="29"/>
+          <img alt="Master Card" src="assets/img/master.svg" width="44" height="29"/>
+        </div>
+      </div>
+      <div class="no-payment-section">
+        <div class="title-section">
+          <img src="assets/img/credit-or-cash.svg" alt="Credit or cash"/>
+          <p class="primary-font-bold">Pay with Credit Card or Cash</p>
+        </div>
+        <hr class="border">
+        <div class="info-section">
+          <p class="smaller">Make sure to show your barcode to the store’s clerk to complete your payment and device collection.</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>
 </section>
 <section class="navigation-section" [class.blur]="showAddCardSection || (!payWithCard && !payWithVoucher && !payWithTotalBalance) || (!!payWithVoucher && ((!!voucherForm.invalid || !!showVoucherError) || (!applyVoucherCalled)))">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goBack()">Back</button>
-    <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn">Next</button>
+    <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn" *ngIf="!deviceFlow">Next</button>
+    <button class="button primary" (click)="continue()" data-cy="nextBtn" *ngIf="!!deviceFlow">Next</button>
 </div>
 </section>
 <app-invisible-recaptcha  (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha ></app-invisible-recaptcha>

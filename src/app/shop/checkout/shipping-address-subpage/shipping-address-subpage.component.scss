@@ -32,6 +32,30 @@
                     line-height: 32px;
                 }
             }
+            .info-banner {
+                &.barcode {
+                    margin-top: 32px;
+                }
+            }
+            .blue-card {
+                background: #F2F7FA;
+                border: 1px solid #99BCD5;
+                padding: 16px 24px;
+                border-radius: 6px;
+                .device-store {
+                    display: flex;
+                    gap: 8px;
+                    margin-bottom: 24px;
+                    align-items: center;
+                    img {
+                        width: 45px;
+                        height: 45px;
+                    }
+                    h5 {
+                        margin-bottom: 0;
+                    }
+                }
+            }
             .pickups-form {
                 .radioBtn {
                     background: #f8fcfe;
@@ -187,9 +211,10 @@
                 margin-bottom: 32px;
                 .store-section {
                     background: $white;
-                    box-shadow: 0px 8px 30px 0px #5e5e5e1f;
+                    box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08), 0px 5px 16px rgba(0, 60, 117, 0.02);
                     border-radius: 0px 0px 10px 10px;
                     margin-bottom: 32px;
+                    border-radius: 10px;
                     .inner-paddings {
                         padding: 24px 32px 0px;
                         &.end {
@@ -218,17 +243,12 @@
                         margin: 16px 0;
                     }
                     .stores-section {
-                        background: #f3f3f3;
-                        padding: 24px 32px 24px 24px;
-                        box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08),
-                            0px 5px 16px rgba(0, 60, 117, 0.02);
+                        padding: 0;
                         border-radius: 10px;
                         display: flex;
-                        flex-wrap: wrap;
-                        @media (max-width: $ipad-min-width-minus) {
-                            flex-direction: column;
-                            padding: 16px;
-                        }
+                        flex-direction: column;
+                        gap: 24px;
+                       
                         .stores {
                             display: flex;
                             align-items: flex-start;
@@ -238,7 +258,7 @@
                                 margin-right: 0;
                             }
                             img {
-                                width: 32px;
+                                width: 24px;
                                 height: 32px;
                                 margin-right: 12px;
                             }

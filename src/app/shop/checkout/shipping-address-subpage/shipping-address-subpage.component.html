@@ -33,7 +33,7 @@
       <p>Checkout</p>
       <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
     </div>
-    <h1 class="step-title">How do you want to get your {{!!cart?.acpDevice ? 'device' : 'package'}}?</h1>
+    <h1 class="step-title"> {{!!cart?.acpDevice ? 'Device collection details:' : 'How do you want to get your package?'}}</h1>
     <form #pickupOptionsForm="ngForm" class="pickups-form">
       <div class="radioBtn" *ngIf="cart?.cartType !== CART_TYPES.GENERIC_CART">
         <label class="form-control" for="home">
@@ -171,8 +171,8 @@
           </div>
         </div>
       </div>
-      <div class="radioBtn">
-        <label class="form-control" for="store">
+      <div class="radioBtn" *ngIf="cart?.cartType !== CART_TYPES.GENERIC_CART">
+        <label class="form-control" for="store" >
           <input type="radio" value="store" [(ngModel)]="option" data-cy="storePickup" id="store" name="store" required
           (change)="pickupOptionChanged()">
           <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
@@ -182,27 +182,34 @@
         </div>
         </label>
       </div>
-      <div *ngIf="!!option && option === 'store'" class="stores-option-section">
-        <div class="store-section">
-        <div class="inner-paddings">
-          <h4 class="sub-head">You can pick up your package from these two stores.</h4>
-          <h5 class="sub-title">More stores are coming soon</h5>
-        </div>
-        <hr class="border">
-        <div class="inner-paddings end">
-           <div class="stores-section">
-               <div *ngFor="let store of stores" class="stores">
-                 <img src="/assets/icon/store-alt.svg" alt="store-icon">
-                 <div class="store-details">
-                  <h4 class="store-name">{{store?.name}}</h4>
-                  <p class="smaller">{{store?.address1}}</p>
-                  <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+      <div *ngIf="!!option && option === 'store'" class="stores-option-section" >
+        <div [class.blue-card]="cart?.cartType === CART_TYPES.GENERIC_CART">
+          <div class="device-store" *ngIf="cart?.cartType === CART_TYPES.GENERIC_CART">
+            <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
+            <h5 class="value">Store Pickup</h5>
+          </div>
+          
+          <div class="store-section">
+          <div class="inner-paddings">
+            <p class="header-color primary-font-bold">You can pick up your {{!!cart?.acpDevice ? 'device' : 'package'}} from these two stores.</p>
+            <p class="smallest">More stores are coming soon</p>
+          </div>
+          <hr class="border">
+          <div class="inner-paddings end">
+             <div class="stores-section">
+                 <div *ngFor="let store of stores" class="stores">
+                   <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                   <div class="store-details">
+                    <p class="smaller primary-font-bold">{{store?.name}}</p>
+                    <p class="smallest">{{store?.address1}}</p>
+                    <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                   </div>
                  </div>
-               </div>
-           </div>
+             </div>
+          </div>
         </div>
-      </div>
-      <div class="info-banner default-background">
+        </div>
+      <div class="info-banner default-background barcode">
         <div class="flex">
             <img src="assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">

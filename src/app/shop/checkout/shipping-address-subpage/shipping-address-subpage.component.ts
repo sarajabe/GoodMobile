@@ -161,6 +161,9 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
           this.simPrice = this.newSimOrder.price;
           this.simId = this.newSimOrder.id;
         }
+        if (this.cart.cartType === CART_TYPES.GENERIC_CART) {
+          this.option = 'store';
+        }
         this.shippingConfigurationService.shippingMethods.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
           this.shippingMethods = methods;
           if (!!this.cart.phones) {

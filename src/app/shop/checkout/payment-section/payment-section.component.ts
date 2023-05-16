@@ -112,6 +112,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   rewardAmount: number = 0;
   rewardApplied: boolean;
   shippingMethod: IShippingMethod;
+  deviceFlow: boolean;
 
   constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: UntypedFormBuilder, private analyticsService: ActionsAnalyticsService,
               private checkoutService: CheckoutService, private mobilePlansService: MobileCustomPlansService, private accountPaymentService: AccountPaymentService,
@@ -215,8 +216,8 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         }
         this.autoRenew = this.cart.autoRenewPlan;
         this.isNewPlan = cart.cartType !== CART_TYPES.NEW_PLAN ? false : true;
-        if (cart.cartType === CART_TYPES.MIGRATION) {
-          this.isMigration = true;
+        if (cart.cartType === CART_TYPES.GENERIC_CART) {
+          this.deviceFlow = true;
           this.paymentInfoCollected = true;
         }
         if (cart.cartType === CART_TYPES.PLAN_ITEMS && cart.simsQuantity > 0 && !cart.addOns) {
@@ -621,7 +622,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  public continueMigration(): void {
+  public continue(): void {
     sessionStorage.setItem('validPayment', 'true');
     const nextStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT);
     this.checkoutService.updateCheckoutStep(nextStep);

@@ -359,7 +359,7 @@
         <div class="place-order-card" *ngIf="!isMigration || (!!isMigration && orderShippingMethod?.price > 0)">
           <div class="card-header">
             <h3 class="title">Payment Method</h3>
-            <a data-cy="chanePaymentMethod" (click)="goToPaymentSection()">Change</a>
+            <a data-cy="chanePaymentMethod" (click)="goToPaymentSection()" *ngIf="!isGenericType">Change</a>
           </div>
           <div class="card-tab payment">
             <div class="tab-content">
@@ -395,12 +395,12 @@
                     </div>
                   </div>
                   <div class="item-details mt-24" *ngIf="!!isGenericType">
-                    <img src="assets/img/acp-circle.svg" alt="ACP" />
+                    <img src="assets/img/credit-or-cash.svg" alt="In store payment" />
                     <div class="details">
                       <div class="details-flex">
                         <div class="flex">
-                          <p class="title smaller primary-font-bold">Affordable Connectivity Program</p>
-                          <p class="desc smaller">ACP Benefits</p>
+                          <p class="title smaller primary-font-bold">In-Store payment</p>
+                          <p class="desc smaller">Your payment will be collected at the store.</p>
                         </div>
                       </div>
                     </div>
