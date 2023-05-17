@@ -5,7 +5,7 @@ import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, Customizabl
 import { EbbService, EquipmentService, IAddress, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable, Subscription } from 'rxjs';
 import { filter, take, takeWhile } from 'rxjs/operators';
-import { ACP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
+import { ACP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ACP_CALLBACK_URL, INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
 import { ModalHelperService } from 'src/services/modal-helper.service';
@@ -389,6 +389,11 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
             this.planPuchasedClicked = true;
             this.appState.clearSessionStorage();
             this.planPurchased = true;
+            const params = {};
+            params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = result?.orderId;
+            params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = result?.userPlanId;
+            params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = result?.userPlanId;
+            this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
             window.scroll(0, 0);
           },
           (error) => {

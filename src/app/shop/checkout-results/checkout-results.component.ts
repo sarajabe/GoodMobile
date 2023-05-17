@@ -4,6 +4,7 @@ import { FadeInOutAnimation } from '../../../app/app.animations';
 import {
   IUserPlan, UserPlansService,
   FirebaseUserProfileService,
+  UserOrdersService,
 } from '@ztarmobile/zwp-service-backend';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import { AppState } from '../../app.service';
@@ -35,14 +36,19 @@ export class CheckoutResultsComponent implements OnDestroy {
   public user: IUser;
   public stores = [];
   public orderId: string;
+  public barCodeVal;
+  public showStores = false;
 
   private alive = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private userPlansService: UserPlansService, private appState: AppState,
     private metaService: MetaService, private userProfileService: FirebaseUserProfileService,
-    private lookupsService: LookupsService, private toastHelper: ToastrHelperService) {
+    private lookupsService: LookupsService, private toastHelper: ToastrHelperService,
+    private accountOrderService: UserOrdersService,) {
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => this.user = user);
     this.userPlansService.isSelectedPlanReady.pipe(combineLatest(this.route.params, (ready, params: Params) => {
+      const acpDevice = params[SHOP_ROUTE_URLS.PARAMS.PHONE_PURCHASE];
+      this.isAcpDevice = !!acpDevice ? true : false;
       const nextCycleParam = params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE];
       this.isChangePlanSummary = nextCycleParam === 'false' || nextCycleParam === 'true';
       this.nextCycle = nextCycleParam === 'true';
@@ -53,8 +59,6 @@ export class CheckoutResultsComponent implements OnDestroy {
       this.purchasedPlanId = params[ROUTE_URLS.PARAMS.SELECTED_PLAN];
       const orderSimParam = params[SHOP_ROUTE_URLS.PARAMS.ORDER_SIM];
       const storePickup = params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP];
-      const acpDevice = params[SHOP_ROUTE_URLS.PARAMS.PHONE_PURCHASE];
-      this.isAcpDevice = !!acpDevice ? true : false;
       this.isStorePickup = !!storePickup ? true : false;
       this.isOrderSim = orderSimParam === 'true' || orderSimParam === 'false';
       const successfulPurchases = params[SHOP_ROUTE_URLS.PARAMS.SUCCESSFUL_PURCHASE];
@@ -66,6 +70,7 @@ export class CheckoutResultsComponent implements OnDestroy {
       if (this.isChangePlanSummary && !this.selectedUserPlan.mdn) {
         this.goToAccountSummary();
       }
+      this.getOrderDetails(this.orderId);
       const planID = !!this.userPlanId ? this.userPlanId : this.purchasedPlanId;
       if (!!planID) {
         setTimeout(() => {
@@ -125,6 +130,24 @@ export class CheckoutResultsComponent implements OnDestroy {
     const params = {};
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.purchasedPlanId;
     this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
+  }
+  private getOrderDetails(orderId): void {
+    this.appState.loading = true;
+    this.accountOrderService.getOrderById(orderId).then((order) => {
+      if (!!order) {
+        this.appState.loading = false;
+        this.isStorePickup = order?.storePickup;
+        if(!!this.isAcpDevice && !!order?.devices && order?.devices?.length > 0) {
+          this.barCodeVal = order?.devices[0]?.itemId;
+        }
+        else if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
+          this.barCodeVal = `${order?.cards[0]?.itemId}`;
+        }
+      }
+    }).catch((error) => {
+      console.error(error);
+      this.appState.loading = false;
+    });
   }
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {

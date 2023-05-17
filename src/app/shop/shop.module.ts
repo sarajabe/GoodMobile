@@ -13,6 +13,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { CartComponent } from './cart/cart.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AcpDevicesComponent } from './acp-devices/acp-devices.component';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { DeviceCheckoutComponent } from './device-checkout/device-checkout.component';
 
 
@@ -31,7 +32,8 @@ import { DeviceCheckoutComponent } from './device-checkout/device-checkout.compo
       showSubtitle: false,
       showUnits: false,
       showInnerStroke: false
-    })
+    }),
+    NgxBarcode6Module
   ]
 })
 export class ShopModule { }

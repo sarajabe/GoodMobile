@@ -1,6 +1,7 @@
 @import "../../../styles/modules/_variables.scss";
 @import "../../../styles/modules/_mixins.scss";
 
+::ng-deep {
 .checkout-result-page-section {
   margin: 40px auto;
   @media screen and (max-width: $phablet-min-width-minus) {
@@ -47,6 +48,26 @@
         }
       }
     }
+    &.acp-device {
+      margin-bottom: 0;
+      .banner-image-container {
+        img {
+          height: 300px;
+          position: relative;
+          z-index: -1;
+          top: -80px;
+          @media screen and (max-width: $desktop-min-width-minus) {
+            max-width: 576px;
+            height: 162px;
+            top: 0;
+         }
+         @media screen and (max-width: $phablet-min-width-minus) {
+           height: 274px;
+           top: -60px;
+         }
+        }
+      }
+    }
   }
   .result-details-section {
     display: flex;
@@ -72,6 +93,9 @@
       }
       .banner-link {
         margin-bottom: 0;
+      }
+      .device-price{
+        margin-top: 12px;
       }
     }
     .result-info {
@@ -107,7 +131,7 @@
         .stores {
           display: flex;
           align-items: flex-start;
-          margin-right: 50px;
+          margin-right: 32px;
           @media screen and (max-width: $phablet-min-width-minus) {
             margin-right: 0;
             margin-bottom: 24px;
@@ -139,6 +163,34 @@
         &.change {
           margin-bottom: 12px;
         }
+        &.change-last {
+          margin-bottom: 32px;
+          @media screen and (max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+          }
+        }
+      }
+      .order-note{
+        margin-bottom: 36px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          margin-bottom: 24px;
+        }
+      }
+      .view-stores-link{
+        margin-bottom: 44px;
+        font-weight: bold;
+        font-family: $secondary-font-family-bold;
+        font-size: 18px;
+        line-height: 18px;
+        @media screen and (max-width: $phablet-min-width-minus) {
+          margin-bottom: 36px;
+        }
+        &.hide {
+          margin-bottom: 24px;
+          @media screen and (max-width: $phablet-min-width-minus) {
+            margin-bottom: 16px;
+          }
+        }
       }
       .result-actions {
         &.flex-actions {
@@ -151,4 +203,34 @@
       }
     }
   }
+  .barcode-container{
+    .barcode {
+      text-align: center;
+        svg {
+            max-width: 320px!important;
+            height: 100%;
+            @media(max-width: $phablet-min-width-minus) {
+              max-width: 210px!important;
+            }
+        }
+    }
+  }
+  .acp-device-title{
+    color: $header-color;
+    margin-bottom: 12px;
+    @media screen and (max-width: $phablet-min-width-minus) {
+      margin-bottom: 4px;
+    }
+  }
+  .acp-device-subtitle {
+    margin-bottom: 32px;
+    color: #090909;
+    font-weight: normal;
+    font-family: $secondary-font-family;
+    text-align: center;
+    @media screen and (max-width: $phablet-min-width-minus) {
+      margin-bottom: 24px;
+    }
+  }
+}
 }
