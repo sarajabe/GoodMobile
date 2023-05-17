@@ -23,6 +23,7 @@ export class ActivationSummaryComponent implements OnDestroy {
   public isTmoNetwork = false;
   public iseSIM = false;
   public barCodeVal: string;
+  public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
 
   private alive = true;
 

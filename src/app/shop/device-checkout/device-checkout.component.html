@@ -1,0 +1,49 @@
+<section class="page-section device-checkout">
+    <div class="cart-total" id="cart-section">
+        <h4>Checkout</h4>
+        <h4 data-cy="total"><span class="smallest">Est. Total:</span>{{total | currency:'USD':'symbol':0}}</h4>
+    </div>
+    <h3 class="head-title">Order Pickup</h3>
+    <div class="blue-card">
+        <div class="device-store" >
+          <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
+          <h5 class="value">Store Pickup</h5>
+        </div>
+        <div class="store-section">
+            <div class="soon-section">
+                <img src="assets/img/stores-soon.svg" alt="more stores coming soon">
+            </div>
+            <div class="inner-paddings">
+            <p class="header-color primary-font-bold">Pick up & Pay for your device at:</p>
+            </div>
+            <hr class="border">
+            <div class="inner-paddings end">
+            <div class="stores-section">
+                <div *ngFor="let store of stores" class="stores">
+                    <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                    <div class="store-details">
+                    <p class="smaller primary-font-bold">{{store?.name}}</p>
+                    <p class="smallest">{{store?.address1}}</p>
+                    <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div class="payment-card">
+        <div class="content">
+            <img src="assets/img/credit-or-cash.svg" alt="Credit or cash"/>
+            <div class="info">
+                <h5>Your payment will be collected at the store.</h5>
+                <p class="smaller">Pay <b>{{total | currency:'USD':'symbol':0}}</b> at the store.</p>
+            </div>
+        </div>
+      </div>
+</section>
+<section class="navigation-section">
+    <div class="page-section navs">
+        <p class="no-border"(click)="goToCart()">Back</p>
+      <button class="button primary" id="place-order" data-cy="placeOrder" (click)="placeOrder()">Place Order</button>
+    </div>
+  </section>

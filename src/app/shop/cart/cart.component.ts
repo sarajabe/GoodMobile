@@ -266,7 +266,11 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
   public checkout(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`]);
+    if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.DEVICE_CHECKOUT}`]);
+    } else {
+      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`]);
+    }
   }
   public cancel(): void {
     this.router.navigate([ROUTE_URLS.HOME]);

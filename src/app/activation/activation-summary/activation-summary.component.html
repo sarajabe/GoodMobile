@@ -60,19 +60,24 @@
                     <h5 class="box-title">Hooray!<img src="assets/icon/hooray-icon.svg" class="title-img"
                             alt="Hooray Icon"></h5>
                     <p class="smaller">You may be eligible for a <b>$100 discount</b> on a new device.</p>
-                    <p class="smaller last">You can head to your nearest Goodwill store to check if you are eligible for
-                        ACP device discount, or you can complete the process on our website!</p>
                     <div class="barcode-part">
-                        <p class="smaller"><b>Your ACP Device Eligibility Barcode:</b></p>
+                        <p class="smaller"><b>Your ACP Device Eligibility Barcode:*</b></p>
                         <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true"
                             class="barcode-container"></ngx-barcode6>
                     </div>
+                    <div class="action">
+                        <button class="button primary"
+                            [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">Select your
+                            Device</button>
+                    </div>
                 </div>
+                <p class="caption">*You can head to your nearest Goodwill store to check if you are eligible for ACP
+                    device discount, or you can complete the process on
+                    our website!</p>
             </ng-container>
-            <div class="actions" [class.wrap]="!!userPlan?.basePlan?.ebb">
-                <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
-                <button class="button secondary" *ngIf="!!userPlan?.basePlan?.ebb"
-                    [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">Device Catalog</button>
+            <div class="actions">
+                <button class="button primary" [class.secondary]="!!userPlan?.basePlan?.ebb"
+                    (click)="goToAccountSummary()">Account Summary</button>
                 <a (click)="setUpPhoneData()"><b>Setup your Device Data</b></a>
             </div>
         </div>
