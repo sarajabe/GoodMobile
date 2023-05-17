@@ -1,0 +1,240 @@
+@import "../../../styles/modules/variables";
+@import "../../../styles/modules/mixins";
+
+.page-section {
+    margin-bottom: 40px;
+    margin-top: 16px;
+    @media (max-width: $desktop-1399-break-point) {
+        padding: 0 55px;
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        padding: 0 88px;
+    }
+    @media (max-width: $tablet-min-width-minus) {
+        padding: 0 58px;
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        padding: 0 32px;
+    }
+    @media (max-width: $mobile-min) {
+        padding: 0 16px;
+    }
+}
+
+.cart-total {
+    padding: 16px 0 8px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #a5a3a333;
+    display: flex;
+    justify-content: space-between;
+    h4 {
+        color: #F58E25;
+        span {
+            font-size: rem-calc(16px);
+            line-height: 24px;
+            font-weight: 400;
+            padding-right: 5px;
+            font-family: $secondary-font-family;
+        }
+    }
+    @media(max-width: $phablet-min-width-minus) {
+        margin-bottom: 24px;
+    }
+}
+
+.blue-card {
+    background: #F2F7FA;
+    border: 1px solid #99BCD5;
+    padding: 16px 24px;
+    border-radius: 6px;
+    margin-top: 40px;
+    @media(max-width: $phablet-min-width-minus) {
+        margin-top: 24px;
+    }
+    .device-store {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+        align-items: center;
+        img {
+            width: 45px;
+            height: 45px;
+        }
+        h5 {
+            margin-bottom: 0;
+        }
+    }
+    .store-section {
+        background: $white;
+        box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08), 0px 5px 16px rgba(0, 60, 117, 0.02);
+        border-radius: 0px 0px 10px 10px;
+        margin-bottom: 32px;
+        border-radius: 10px;
+        position: relative;
+        .soon-section {
+            position: absolute;
+            right: -38px;
+            top: 9px;
+            img {
+                width: 174px;
+            }
+            @media(max-width: $phablet-min-width-minus) {
+                right: -31px;
+                top: 22px;
+                img {
+                    width: 143px;
+                }
+            }
+            @media(max-width: 386px) {
+                top: 40px;
+            }
+        }
+        .inner-paddings {
+            padding: 24px 32px 0px;
+            &.end {
+                padding: 10px 32px 32px;
+            }
+            @media (max-width: $phablet-min-width-minus) {
+                padding: 16px 16px 0px;
+                &.end {
+                    padding: 10px 16px 24px;
+                }
+            }
+        }
+        .sub-head {
+            color: #6a509b;
+            margin-bottom: 2px;
+            font-family: $secondary-font-family-bold;
+        }
+        .sub-title {
+            margin-bottom: 4px;
+            font-family: $secondary-font-family;
+            font-weight: normal;
+        }
+        .border {
+            border-color: #e2e2e2;
+            margin: 16px 0;
+            max-width: none;
+        }
+        .stores-section {
+            padding: 0;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+           
+            .stores {
+                display: flex;
+                align-items: flex-start;
+                margin-right: 50px;
+                @media (max-width: $ipad-min-width-minus) {
+                    margin-bottom: 24px;
+                    margin-right: 0;
+                }
+                img {
+                    width: 24px;
+                    height: 32px;
+                    margin-right: 12px;
+                }
+                .store-name {
+                    margin-bottom: 8px;
+                }
+            }
+        }
+    }
+}
+.payment-card {
+    margin-top: 32px;
+    background: #F1F9FD;
+    border-radius: 0px 0px 10px 10px;
+    padding: 24px;
+    .content {
+        display: flex;
+        gap: 12px;
+        img {
+            width: 45px;
+            height: 45px;
+        }
+    }
+    @media(max-width: $phablet-min-width-minus) {
+        margin-top: 24px;
+    }
+}
+.navigation-section {
+    border-top: 1px solid #e3e3ea;
+    padding: 16px 0px;
+    background-color: #ffffff;
+    position: sticky;
+    z-index: 2;
+    bottom: 0;
+    width: 100%;
+    &.last {
+        justify-content: flex-end;
+    }
+    &.blur {
+        filter: blur(4px);
+        pointer-events: none;
+    }
+    .navs {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+        margin-top: 0;
+        @media (max-width: $desktop-1399-break-point) {
+            padding: 0px 55px;
+        }
+        @media (max-width: $desktop-min-width-minus) {
+            padding: 0px 88px;
+        }
+        @media (max-width: $tablet-min-width-minus) {
+            padding: 0px 58px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            padding: 0px 32px;
+        }
+        @media (max-width: $mobile-min) {
+            padding: 0 16px;
+        }
+    }
+    .left {
+        .no-border {
+            color: $primary-color;
+            font-size: 20px;
+            line-height: 20px;
+            font-family: $secondary-font-family-bold;
+            font-weight: 700;
+            margin-bottom: 0;
+            cursor: pointer;
+            @media (max-width: $phablet-min-width-minus) {
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+    }
+    .right {
+        padding: 0;
+        cursor: pointer;
+        font-family: $secondary-font-family-bold;
+    }
+    .button {
+        font-size: 20px;
+        line-height: 20px;
+        padding: 8px 35px;
+        font-family: $secondary-font-family-bold;
+        font-weight: 700;
+        cursor: pointer;
+        &.secondary {
+            margin-right: 16px;
+        }
+        @media (max-width: $phablet-min-width-minus) {
+            font-size: 16px;
+            line-height: 16px;
+        }
+    }
+    @media (max-width: $desktop-min-width-minus) {
+        .right {
+            padding: 0;
+        }
+    }
+}
