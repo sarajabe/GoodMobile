@@ -188,11 +188,7 @@
                 }
 
                 .smaller {
-                    margin-bottom: 8px;
-
-                    &.last {
-                        margin-bottom: 0;
-                    }
+                    margin-bottom: 0;
                 }
 
                 .barcode-part {
@@ -202,6 +198,23 @@
                     .smaller {
                         margin-bottom: 12px;
                     }
+                }
+
+                .action {
+                    margin-top: 20px;
+                    text-align: center;
+
+                    button {
+                        padding: 12px 24px;
+                    }
+                }
+            }
+
+            .caption {
+                margin-top: 24px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    margin-top: 20px;
                 }
             }
 
@@ -220,36 +233,11 @@
                     flex-direction: column;
                 }
 
-                &.wrap {
-                    flex-wrap: wrap;
-                    max-width: 500px;
-                    margin: 0 auto;
-                    margin-top: 32px;
-                    gap: 16px;
-
-                    button {
-                        padding: 12px 24px;
-                        width: 200px;
-
-                        @media (max-width: $phablet-min-width-minus) {
-                            width: 170px;
-                        }
-                    }
-
-                    a {
-                        line-height: 42px;
-
-                        @media (max-width: $phablet-min-width-minus) {
-                            line-height: 32px;
-                        }
-                    }
-                }
-
                 button {
                     font-size: rem-calc(20px);
                     line-height: 20px;
                     font-weight: 700;
-                    padding: 8px 32px;
+                    padding: 12px 24px;
 
                     @media (max-width: $phablet-min-width-minus) {
                         font-size: rem-calc(16px);
@@ -258,8 +246,8 @@
                 }
 
                 a {
-                    font-size: 20px;
-                    line-height: 20px;
+                    font-size: 18px;
+                    line-height: 18px;
                     font-weight: 700;
 
                     @media (max-width: $phablet-min-width-minus) {
