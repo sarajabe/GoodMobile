@@ -7,7 +7,7 @@
     <div class="flex">
       <img src="assets/icon/green-check.svg" alt="Success Icon">
       <div class="banner-content">
-        <h5 class="title">Barcode is required for in-store device pickup!</h5>
+        <h5 class="title">Barcode is required for In-Store Device Pickup!</h5>
         <p class="smaller banner-note" *ngIf="!!barCodeVal">Your ACP Device Pickup Barcode: </p>
         <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true" class="barcode-container"></ngx-barcode6>
         <p class="smaller device-price" *ngIf="!!purchasedPlan">You will pay <b>{{purchasedPlan?.acpDevice?.price | currency}}</b> at the store.</p>
@@ -16,7 +16,7 @@
   </div>
   <div class="result-info">
       <p class="smaller last-note">
-        You can always find your <b>in-store pickup barcode</b> in your <b>Order Details</b> page, 
+        You can always find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, 
         to provide it for the store clerk for your Device pickup.
       </p>
       <h5 class="order-note">Your order ID is: <a (click)="goToOrderDetails(orderId)">{{orderId}}</a></h5>
@@ -112,7 +112,7 @@
         <ng-container *ngIf="!!purchasedPlanId">
           <div *ngIf="!!purchasedPlan && !!isStorePickup" data-cy="storePickupSuccessful">
             <p class="smaller last-note">
-              You can always find your <b>SIM Card in-store pickup barcode</b> in your <b>Purchased Plans</b> page, 
+              You can always find your <b>SIM Card In-Store Pickup barcode</b> in your <b>Purchased Plans</b> page, 
               to provide it for the store clerk for your order pickup.
             </p>
           </div>
@@ -178,7 +178,7 @@
         </div>
         <div *ngIf="!!isStorePickup">
           <p class="smaller last-note">
-            You can find your <b>in-store pickup barcode</b> in your <b>Order Details</b> page, to provide it for
+            You can find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, to provide it for
             the store clerk for your order pickup.
           </p>
           <div class="result-actions">
@@ -190,7 +190,7 @@
       </ng-container>
       <ng-container *ngIf="!!isSuccessfulMultiplePurchases">
         <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !!isStorePickup">
-          <p class="smaller last-note">You can find your <b>in-store pickup barcode</b> in your <b>Order Details</b> page, to
+          <p class="smaller last-note">You can find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, to
             provide it for the store clerk for your order pickup.</p>
           <div class="result-actions">
             <button class="button primary" (click)="goToOrderDetails(orderId)">
