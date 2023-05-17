@@ -27,10 +27,17 @@
     <div class="info-banner success-background">
       <div class="flex">
         <img src="assets/icon/green-check.svg" alt="Success Icon">
-        <div class="banner-content">
+        <div class="banner-content" *ngIf="!isStorePickup">
           <h5 class="title">Your Order has been placed!</h5>
           <p class="smaller banner-note">Order ID is:</p>
           <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a>
+        </div>
+        <div class="banner-content" *ngIf="!!isStorePickup">
+          <h5 class="title">Your order ID is:  <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a></h5>
+          <p class="smaller banner-note" *ngIf="!isOrderSim && (!isSuccessfulMultiplePurchases || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases !== 'both')) && !!barCodeVal">Your SIM Card Pickup Barcode:</p>
+          <p class="smaller banner-note" *ngIf="(!!isOrderSim || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases === 'both')) && !!barCodeVal">Your Replacement SIM Card Pickup Barcode: </p>
+          <p class="smaller banner-note" *ngIf="!!isAcpDevice && !!barCodeVal">Your ACP Device Pickup Barcode: </p>
+          <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true" class="barcode-container"></ngx-barcode6>
         </div>
       </div>
     </div>
@@ -69,8 +76,8 @@
           </div>
           <div *ngIf="!!purchasedPlan && !!isStorePickup && !isAcpDevice" data-cy="storePickupSuccessful">
             <p class="smaller last-note">
-              You can find your <b>in-store pickup barcode</b> in your <b>Purchased Plans</b> page, to provide it for
-              the store clerk for your order pickup.
+              You can always find your <b>SIM Card in-store pickup barcode</b> in your <b>Purchased Plans</b> page, 
+              to provide it for the store clerk for your order pickup.
             </p>
           </div>
           <div *ngIf="!!purchasedPlan && !isStorePickup && !isAcpDevice">

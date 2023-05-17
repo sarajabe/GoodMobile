@@ -1,6 +1,7 @@
 @import "../../../styles/modules/_variables.scss";
 @import "../../../styles/modules/_mixins.scss";
 
+::ng-deep {
 .checkout-result-page-section {
   margin: 40px auto;
   @media screen and (max-width: $phablet-min-width-minus) {
@@ -107,7 +108,7 @@
         .stores {
           display: flex;
           align-items: flex-start;
-          margin-right: 50px;
+          margin-right: 32px;
           @media screen and (max-width: $phablet-min-width-minus) {
             margin-right: 0;
             margin-bottom: 24px;
@@ -151,4 +152,16 @@
       }
     }
   }
+  .barcode-container{
+    .barcode {
+        svg {
+            max-width: 320px!important;
+            height: 100%;
+            @media(max-width: $phablet-min-width-minus) {
+              max-width: 210px!important;
+            }
+        }
+    }
+  }
+}
 }
