@@ -147,14 +147,11 @@
       <ng-container *ngIf="!!isChangePlanSummary && !isOrderSim && !isPlanAddon">
         <p class="smaller last-note change">Note that it may take several minutes for the new plan services to fully set on the
           network. Please refresh your <b>Account Summary</b> page in a few minutes to see the new data balances.</p>
-        <p class="smaller last-note" *ngIf="nextCycle && !!selectedUserPlan?.basePlan">Effective on
+        <p class="smaller last-note change-last" *ngIf="nextCycle && !!selectedUserPlan?.basePlan">Effective on
           {{selectedUserPlan.basePlan.renewDate | date}}</p>
         <div class="result-actions flex-actions">
           <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
             Account Summary
-          </button>
-          <button class="button secondary" (click)="goToPlans()">
-            Continue Shopping
           </button>
         </div>
       </ng-container>

@@ -163,6 +163,12 @@
         &.change {
           margin-bottom: 12px;
         }
+        &.change-last {
+          margin-bottom: 32px;
+          @media screen and (max-width: $phablet-min-width-minus) {
+            margin-bottom: 24px;
+          }
+        }
       }
       .order-note{
         margin-bottom: 36px;
@@ -199,6 +205,7 @@
   }
   .barcode-container{
     .barcode {
+      text-align: center;
         svg {
             max-width: 320px!important;
             height: 100%;
