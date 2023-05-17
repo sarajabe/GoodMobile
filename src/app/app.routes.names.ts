@@ -140,6 +140,7 @@ export const SHOP_ROUTE_URLS = {
   CHECKOUT_SHORT: 'checkout',
   CART: 'cart',
   ACP_DEVICES: 'acp-devices',
+  DEVICE_CHECKOUT: 'device-checkout',
   PHONES: {
     MAIN: '',
     TYPE: 'phones',

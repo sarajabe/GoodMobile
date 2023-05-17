@@ -13,10 +13,11 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { CartComponent } from './cart/cart.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AcpDevicesComponent } from './acp-devices/acp-devices.component';
+import { DeviceCheckoutComponent } from './device-checkout/device-checkout.component';
 
 
 @NgModule({
-  declarations: [ShopMainComponent, ChangePlanSummaryComponent, CheckCompatibilityComponent, PlanDetailsComponent, CheckoutResultsComponent, CartComponent, AcpDevicesComponent],
+  declarations: [ShopMainComponent, ChangePlanSummaryComponent, CheckCompatibilityComponent, PlanDetailsComponent, CheckoutResultsComponent, CartComponent, AcpDevicesComponent, DeviceCheckoutComponent],
   imports: [
     CommonModule,
     ShopRoutingModule,
