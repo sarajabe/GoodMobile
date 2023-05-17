@@ -37,6 +37,7 @@ export class CheckoutResultsComponent implements OnDestroy {
   public stores = [];
   public orderId: string;
   public barCodeVal;
+  public showStores = false;
 
   private alive = true;
 
@@ -46,6 +47,8 @@ export class CheckoutResultsComponent implements OnDestroy {
     private accountOrderService: UserOrdersService,) {
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => this.user = user);
     this.userPlansService.isSelectedPlanReady.pipe(combineLatest(this.route.params, (ready, params: Params) => {
+      const acpDevice = params[SHOP_ROUTE_URLS.PARAMS.PHONE_PURCHASE];
+      this.isAcpDevice = !!acpDevice ? true : false;
       const nextCycleParam = params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE];
       this.isChangePlanSummary = nextCycleParam === 'false' || nextCycleParam === 'true';
       this.nextCycle = nextCycleParam === 'true';
@@ -56,8 +59,6 @@ export class CheckoutResultsComponent implements OnDestroy {
       this.purchasedPlanId = params[ROUTE_URLS.PARAMS.SELECTED_PLAN];
       const orderSimParam = params[SHOP_ROUTE_URLS.PARAMS.ORDER_SIM];
       const storePickup = params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP];
-      const acpDevice = params[SHOP_ROUTE_URLS.PARAMS.PHONE_PURCHASE];
-      this.isAcpDevice = !!acpDevice ? true : false;
       this.isStorePickup = !!storePickup ? true : false;
       this.isOrderSim = orderSimParam === 'true' || orderSimParam === 'false';
       const successfulPurchases = params[SHOP_ROUTE_URLS.PARAMS.SUCCESSFUL_PURCHASE];

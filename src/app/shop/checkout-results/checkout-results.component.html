@@ -1,4 +1,59 @@
 <section class="page-section checkout-result-page-section">
+  <ng-container *ngIf="!!isAcpDevice" >
+  <div class="result-details-section">
+   <h1 class="acp-device-title">Order Pickup!</h1>
+   <h5 class="acp-device-subtitle">Your order has been successfully placed!</h5>
+   <div class="info-banner success-background">
+    <div class="flex">
+      <img src="assets/icon/green-check.svg" alt="Success Icon">
+      <div class="banner-content">
+        <h5 class="title">Barcode is required for in-store device pickup!</h5>
+        <p class="smaller banner-note" *ngIf="!!barCodeVal">Your ACP Device Pickup Barcode: </p>
+        <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true" class="barcode-container"></ngx-barcode6>
+        <p class="smaller device-price" *ngIf="!!purchasedPlan">You will pay <b>{{purchasedPlan?.acpDevice?.price | currency}}</b> at the store.</p>
+      </div>
+    </div>
+  </div>
+  <div class="result-info">
+      <p class="smaller last-note">
+        You can always find your <b>in-store pickup barcode</b> in your <b>Order Details</b> page, 
+        to provide it for the store clerk for your Device pickup.
+      </p>
+      <h5 class="order-note">Your order ID is: <a (click)="goToOrderDetails(orderId)">{{orderId}}</a></h5>
+      <a class="view-stores-link" (click)="showStores=true;" *ngIf="!showStores">View Stores</a>
+      <a class="view-stores-link hide" (click)="showStores=false;" *ngIf="!!showStores">Hide Stores</a>
+      <div *ngIf="!!showStores">
+        <div class="stores-card">
+          <div *ngFor="let store of stores; let i =index" class="stores" [class.last-store]="i === (stores.length -1)">
+            <img src="/assets/icon/store-alt.svg" alt="store-icon">
+            <div class="store-details">
+              <h4 class="store-name">{{store?.name}}</h4>
+              <p class="smaller">{{store?.address1}}</p>
+              <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="result-actions">
+    <button class="button primary" (click)="goToOrderDetails(orderId)">
+      Order Details
+    </button>
+  </div>
+  <div class="img-section acp-device">
+    <picture class="banner-image-container">
+      <source srcset='assets/img/checkout-result-no-blue-img-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+      <source srcset='assets/img/checkout-result-no-blue-img-mobile.png' media="(max-width: 639.9px)" type="image/png">
+      <source srcset='assets/img/checkout-result-no-blue-img-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+      <source srcset='assets/img/checkout-result-no-blue-img-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+      <source srcset='assets/img/checkout-result-no-blue-img-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+      <source srcset='assets/img/checkout-result-no-blue-img-desktop.png' media="(min-width: 1025px)" type="image/png">
+      <img src="assets/img/checkout-result-no-blue-img-desktop.png" alt="purchase successful Image" height="400" width="2000">
+    </picture>
+  </div>
+</div>
+  </ng-container>
+  <ng-container *ngIf="!isAcpDevice">
   <div class="img-section">
     <picture class="banner-image-container">
       <source srcset='assets/img/checkout-result-img-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
@@ -18,8 +73,7 @@
         !isChangePlanSummary && !!isOrderSim && !isPlanAddon? 'Your Replacement SIM has been purchased!' :
         (
         !!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'both' ? 'Your Replacement SIM + Plan add-on have been purchased!' :
-        (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'addon' ? 'Your Plan Add-on has been purchased!' : (!!isAcpDevice? 'Your Device has been successfully purchased!' : 'Your Good Mobile Plan has been
-        purchased!'))
+        (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'addon' ? 'Your Plan Add-on has been purchased!' :'Your Good Mobile Plan has been purchased!')
         )))}}</h4>
     </div>
   </div>
@@ -36,20 +90,13 @@
           <h5 class="title">Your order ID is:  <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a></h5>
           <p class="smaller banner-note" *ngIf="!isOrderSim && (!isSuccessfulMultiplePurchases || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases !== 'both')) && !!barCodeVal">Your SIM Card Pickup Barcode:</p>
           <p class="smaller banner-note" *ngIf="(!!isOrderSim || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases === 'both')) && !!barCodeVal">Your Replacement SIM Card Pickup Barcode: </p>
-          <p class="smaller banner-note" *ngIf="!!isAcpDevice && !!barCodeVal">Your ACP Device Pickup Barcode: </p>
           <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true" class="barcode-container"></ngx-barcode6>
         </div>
       </div>
     </div>
     <div class="result-info">
       <div *ngIf="!!isStorePickup">
-        <h5 *ngIf="!isAcpDevice" class="top-note">Your order will be available at any of the following stores:</h5>
-        <div *ngIf="!!isAcpDevice">
-          <h5 class="acp-top-note">
-            You may now proceed to collect your device.
-          </h5>
-          <h5 class="top-note">you can pick up your package from one of these two stores:</h5>
-        </div>
+        <h5 class="top-note">Your order will be available at any of the following stores:</h5>
         <div class="stores-card">
           <div *ngFor="let store of stores; let i =index" class="stores" [class.last-store]="i === (stores.length -1)">
             <img src="/assets/icon/store-alt.svg" alt="store-icon">
@@ -63,24 +110,13 @@
       </div>
       <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
         <ng-container *ngIf="!!purchasedPlanId">
-          <div *ngIf="!!isAcpDevice">
-            <p class="smaller last-note">
-              You can find your <b>pickup store’s barcode</b> in your <b>Order Details</b> page, to provide it for the
-              store clerk for your order pickup.
-            </p>
-            <div class="result-actions">
-              <button class="button primary" (click)="goToOrderDetails(orderId)">
-                Order Details
-              </button>
-            </div>
-          </div>
-          <div *ngIf="!!purchasedPlan && !!isStorePickup && !isAcpDevice" data-cy="storePickupSuccessful">
+          <div *ngIf="!!purchasedPlan && !!isStorePickup" data-cy="storePickupSuccessful">
             <p class="smaller last-note">
               You can always find your <b>SIM Card in-store pickup barcode</b> in your <b>Purchased Plans</b> page, 
               to provide it for the store clerk for your order pickup.
             </p>
           </div>
-          <div *ngIf="!!purchasedPlan && !isStorePickup && !isAcpDevice">
+          <div *ngIf="!!purchasedPlan && !isStorePickup">
             <p class="smaller top-note">Lookout for your <b>new SIM Card</b> in the mail!</p>
             <p class="smaller last-note">
               Once your SIM card <b>arrives</b> in a couple of days, we will help you get your SIM card <b>activated</b>
@@ -88,7 +124,7 @@
               view your plan details and activate it through your <b>Purchased Plans</b> page.
             </p>
           </div>
-          <div class="result-actions" *ngIf="!isAcpDevice">
+          <div class="result-actions">
             <button class="button primary" data-cy="purchasedPlansBtn" (click)="goToPurchasedPlans()">
               Purchased Plans
             </button>
@@ -189,4 +225,5 @@
       </ng-container>
     </div>
   </div>
+</ng-container>
 </section>

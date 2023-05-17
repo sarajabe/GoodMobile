@@ -163,6 +163,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
         }
         if (this.cart.cartType === CART_TYPES.GENERIC_CART) {
           this.option = 'store';
+          this.showShippingForm = false;
         }
         this.shippingConfigurationService.shippingMethods.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
           this.shippingMethods = methods;

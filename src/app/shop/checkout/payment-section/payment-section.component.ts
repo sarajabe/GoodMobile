@@ -219,6 +219,10 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         if (cart.cartType === CART_TYPES.GENERIC_CART) {
           this.deviceFlow = true;
           this.paymentInfoCollected = true;
+          this.showAddCardSection = false;
+          this.payWithCard = false;
+          this.payWithBalance = false;
+          this.payWithVoucher = false;
         }
         if (cart.cartType === CART_TYPES.PLAN_ITEMS && cart.simsQuantity > 0 && !cart.addOns) {
           this.paymentInfoCollected = true;
