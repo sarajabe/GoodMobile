@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { FirebaseUserProfileService, IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { CUSTOMER_CARE_NUMBER } from 'src/environments/environment';
@@ -22,6 +22,7 @@ export class ActivationSummaryComponent implements OnDestroy {
   public isNewNumber = true;
   public isTmoNetwork = false;
   public iseSIM = false;
+  public barCodeVal: string;
 
   private alive = true;
 
@@ -30,7 +31,8 @@ export class ActivationSummaryComponent implements OnDestroy {
     private userPlansService: UserPlansService,
     private route: ActivatedRoute,
     private metaService: MetaService,
-    private userDeviceService: UserDeviceService) {
+    private userDeviceService: UserDeviceService,
+    private userProfileService: FirebaseUserProfileService) {
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params) {
         if (params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER]) {
@@ -38,10 +40,13 @@ export class ActivationSummaryComponent implements OnDestroy {
         }
       }
     });
+    this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
+      this.barCodeVal = !!user?.ebbId ? `${user?.ebbId}` : null;
+    })
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
       if (ready) {
         this.userPlan = this.userPlansService.selectedUserPlan;
-        if(!!this.userPlan.eSIM) {
+        if (!!this.userPlan.eSIM) {
           this.iseSIM = true;
         }
         if (!!this.userPlan && !!this.userPlan.planDevice) {
@@ -77,7 +82,7 @@ export class ActivationSummaryComponent implements OnDestroy {
     this.alive = false;
   }
   public setupEsim(): void {
-    if(!!this.userPlan) {
+    if (!!this.userPlan) {
       const params = {};
       params[ACCOUNT_ROUTE_URLS.PARAMS.PLAN_ID] = this.userPlan.id;
       this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ESIM_SETUP}`, params]);

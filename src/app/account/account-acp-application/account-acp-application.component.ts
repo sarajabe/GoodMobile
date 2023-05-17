@@ -152,7 +152,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/hooray-icon.svg`,
         imgPath2: `assets/icon/hooray2-icon.svg`,
         title: `Hooray!`,
-        desc1: `You are eligible for a <b>$100</b> discount on a new device from our catalog!`,
+        desc1: `You may be eligible for a <b>$100</b> discount on a new device from our catalog!`,
         desc2: `Hurry up and get yours today!`,
         buttonName: 'Claim your Device',
         buttonAction: 'goToAcpDevices'
@@ -161,7 +161,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/looking-benefits-icon.svg`,
         imgPath2: null,
         title: `Looking for ACP device benefits?`,
-        desc1: `Look no further!<br>Please finish your <b>ACP enrollment</b> and <b>activation</b> to claim up to <b>$100</b> discount on a new device!`,
+        desc1: `Look no further!<br>Please finish your <b>ACP enrollment</b> and <b>activation</b> for a chance to claim up to <b>$100</b> discount on a new device!`,
         desc2: `Don’t miss out!`,
         buttonName: null,
         buttonAction: null
@@ -170,7 +170,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/hooray-icon.svg`,
         imgPath2: `assets/icon/hooray2-icon.svg`,
         title: `Hurry up!`,
-        desc1: `<b>Activate</b> your ACP plan now and claim up to <b>$100</b> discount on a new device from our catalog!`,
+        desc1: `<b>Activate</b> your ACP plan now and check if you are eligible for up to <b>$100</b> discount on a new device from our catalog!`,
         desc2: null,
         buttonName: null,
         buttonAction: null
