@@ -92,7 +92,7 @@
                     </div>
                     <hr class="border" *ngIf="!!pendingPlan?.storePickup">
                     <div class="barCodes-details" *ngIf="!!pendingPlan?.storePickup && !orderPicked">
-                        <p class="smaller" data-cy="pickupBarCode">In-store Pickup Barcode</p>
+                        <p class="smaller" data-cy="pickupBarCode">In-Store Pickup Barcode</p>
                         <ngx-barcode6
                             [bc-value]="barCodeValues"
                             [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>

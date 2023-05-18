@@ -1,8 +1,8 @@
 <section class="page-section cart" id="cart">
     <div class="top-section">
         <div class="top-info">
-            <p class="top-head">Cart</p>
-            <p class="estimated">Est. Total: <span> {{ calculateTotal() | currency}}</span></p>
+            <p class="top-head text-orange">Cart</p>
+            <p class="estimated text-orange"><span *ngIf="userCart?.cartType !== CART_TYPES.GENERIC_CART">Est.</span> Total: <span class="value"> {{ calculateTotal() | currency}}</span></p>
         </div>
         <hr class="long top" />
     </div>
@@ -244,11 +244,17 @@
                                 <div class="detail">
                                     <div class="detail-info">
                                         <p class="bold smaller">{{userCart?.acpDevice?.title}}</p>
-                                        <p class="bold smallest text-orange" >ACP Benefits</p>
-                                        <p class="smallest" >ACP Promotion</p>    
                                     </div>
-                                    <p class="price smaller">
-                                        ${{userCart?.acpDevice?.price}}
+                                    <p class="price smallest">
+                                        {{userCart?.acpDevice?.marketValue | currency:'USD':'symbol':0}}
+                                    </p>
+                                </div>
+                                <div class="detail">
+                                    <div class="detail-info">
+                                        <p class="bold smallest text-orange" >ACP Discount</p>
+                                    </div>
+                                    <p class="price smallest text-orange">
+                                       -{{userCart?.acpDevice?.marketValue - userCart?.acpDevice?.price | currency:'USD':'symbol':0}}
                                     </p>
                                 </div>
                                 <p class="quantity smallest">Quantity: {{userCart?.quantity}}</p>

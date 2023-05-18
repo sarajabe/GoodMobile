@@ -32,18 +32,16 @@
                     font-size: 24px;
                     line-height: 36px;
                     font-family: $secondary-font-family-bold;
-                    color: $purple;
                     margin-bottom: 0;
                 }
 
                 .estimated {
-                    color: $purple;
                     font-size: 16px;
                     line-height: 24px;
                     font-family: $secondary-font-family;
                     margin-bottom: 0;
 
-                    span {
+                    .value {
                         font-size: 24px;
                         line-height: 32px;
                         margin-bottom: 0;
