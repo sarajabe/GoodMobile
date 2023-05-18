@@ -20,8 +20,6 @@ import { SIMCheckComponent } from './sim-check/sim-check.component';
 import { SuccessSwapComponent } from './success-swap/success-swap.component';
 import { PortSubmittedComponent } from './port-submitted/port-submitted.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { NgxBarcode6Module } from 'ngx-barcode6';
-
 
 @NgModule({
   declarations: [ActivatePlanComponent,
@@ -46,7 +44,6 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
     ActivationRoutingModule,
     WidgetsModule,
     MatAutocompleteModule,
-    NgxBarcode6Module
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

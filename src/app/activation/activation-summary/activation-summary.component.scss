@@ -1,22 +1,6 @@
 @import "../../../styles/modules/_variables.scss";
 @import "../../../styles/modules/_mixins.scss";
 
-::ng-deep {
-    .barcode-container {
-        .barcode {
-            svg {
-                max-width: 336px !important;
-                height: 100%;
-                border: 1px solid #DADADA;
-
-                @media (max-width: $phablet-min-width-minus) {
-                    max-width: 240px !important;
-                }
-            }
-        }
-    }
-}
-
 .activate-plan-summary {
     max-width: 1261px;
     margin: 0 auto;
@@ -188,15 +172,10 @@
                 }
 
                 .smaller {
-                    margin-bottom: 0;
-                }
+                    margin-bottom: 4px;
 
-                .barcode-part {
-                    margin-top: 20px;
-                    text-align: center;
-
-                    .smaller {
-                        margin-bottom: 12px;
+                    &.last {
+                        margin-bottom: 0;
                     }
                 }
 
@@ -207,14 +186,6 @@
                     button {
                         padding: 12px 24px;
                     }
-                }
-            }
-
-            .caption {
-                margin-top: 24px;
-
-                @media (max-width: $phablet-min-width-minus) {
-                    margin-top: 20px;
                 }
             }
 
