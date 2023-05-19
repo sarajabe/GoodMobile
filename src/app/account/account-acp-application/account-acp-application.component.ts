@@ -97,6 +97,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public acpDeviceCase: string;
   public oldUserData: IVerificationRes;
   public showAttentionBanner = false;
+  public hideCardContentUI = false;
 
   private callBackUrl: string;
   private alive = true;

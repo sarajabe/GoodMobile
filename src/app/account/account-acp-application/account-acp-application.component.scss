@@ -365,7 +365,15 @@
                 @media (max-width: $phablet-min-width-minus) {
                     padding: 32px 16px 32px;
                 }
-
+                .grey {
+                    color: #727272;
+                }
+                .banners-section {
+                    margin-top: 32px;
+                    .info-banner {
+                        margin-bottom: 24px;
+                    }
+                }
                 .desc {
                     font-size: rem-calc(18px);
                     line-height: 28px;
@@ -526,4 +534,22 @@
             }
         }
     }
+    ::ng-deep {
+    .barcode-section {
+        margin-bottom: 12px;
+        .barcode {
+            svg {
+                max-width: 426px;
+                height: 85px;
+                @media (max-width: 833.9px) {
+                    max-width: 500px;
+                }
+                @media(max-width: $phablet-min-width-minus) {
+                    max-width: 255px;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
 }

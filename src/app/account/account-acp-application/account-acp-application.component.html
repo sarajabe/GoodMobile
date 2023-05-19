@@ -8,110 +8,129 @@
         <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
-    <div class="actions-top" *ngIf="barCodeValue">
-        <a (click)="showBarCodePopup()">View Barcode</a>
-    </div>
-    <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
-        [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
-        <div class="flex center">
-            <img src="assets/icon/success-icon.svg" alt="Success Icon">
-            <div class="banner-content">
-                <p class="description last">Your application with Good Mobile was successfully approved.</p>
+    <div class="acp-application-card" *ngIf="!!barCodeValue">
+        <div class="card-header-part" [class.border-radius]="hideCardContentUI === true">
+            <div class="header-flex">
+                <p class="title">User Information</p>
+            </div>
+            <div class="collapse-icon">
+                <img [src]="hideCardContentUI ? 'assets/icon/path-down-icon.svg' : 'assets/icon/path-up-icon.svg'"
+                    alt="arrow icon" (click)="hideCardContentUI = !hideCardContentUI">
             </div>
         </div>
-    </div>
-
-    <div class="info-banner default-background device" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]">
-        <div class="flex">
-            <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
-                alt="Icon">
-            <div class="banner-content">
-                <p class="title" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
-                    {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
-                <p class="description" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
-                    [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"></p>
-                <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
-                    [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
-                <div class="actions" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName">
-                    <button class="button primary" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
-                        (click)="this[ACP_DEVICE_DESCS[acpDeviceCase]?.buttonAction]()">
-                        {{ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName}}</button>
-                </div>
+        <div class="card-content-part" *ngIf="!hideCardContentUI">
+            <h5>Your ACP Account Number:</h5>
+            <div class="barcode-section">
+                <ngx-barcode6
+                    [bc-value]="barCodeValue"
+                    [bc-display-value]="true" class="barCode-radios">
+                </ngx-barcode6>
             </div>
-            <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" class="position-img"
-                [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" alt="Icon">
-        </div>
-    </div>
-
-    <div class="acp-application-card" *ngIf="!!showAcpApplicationCard">
-        <div class="card-header-part">
-            <div class="header-flex no-margin">
-                <div class="title-app-id">
-                    <p class="title">ACP Application<span><img *ngIf="!showAlert" src="assets/icon/pending-dot.svg"
-                                alt="dot icon"></span>
-                    </p>
-                    <div class="app-id" *ngIf="!showAlert">
-                        <p>Good Mobile APP ID:</p>
-                        <p>{{acpAppDetails?.data?.applicationId}}</p>
+            <p class="smaller grey">{{barCodeValue}}</p>
+            <div class="banners-section">
+                <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
+                [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
+                    <div class="flex center">
+                        <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                        <div class="banner-content">
+                            <p class="description last">Your application with Good Mobile was successfully approved.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="status-date" *ngIf="!showAlert">
-                    <p class="key bottom">Status: <span class="value status">{{appStatus}}</span></p>
-                    <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span>
-                    </p>
+                <div class="info-banner default-background device" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]">
+                    <div class="flex">
+                        <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
+                            alt="Icon">
+                        <div class="banner-content">
+                            <p class="title" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
+                                {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
+                            <p class="description" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
+                                [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"></p>
+                            <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
+                                [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
+                            <div class="actions" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName">
+                                <button class="button primary" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
+                                    (click)="this[ACP_DEVICE_DESCS[acpDeviceCase]?.buttonAction]()">
+                                    {{ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName}}</button>
+                            </div>
+                        </div>
+                        <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" class="position-img"
+                            [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" alt="Icon">
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="card-content-part">
-            <div class="info-banner default-background" [class.error-background]="!!showAlert">
-                <div class="flex">
-                    <img [src]="!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg'"
-                        alt="Note Icon">
-                    <div class="banner-content" *ngIf="!!ACP_DESCS[appStatus]">
-                        <p class="title" *ngIf="ACP_DESCS[appStatus]?.title">{{ACP_DESCS[appStatus]?.title}}</p>
-                        <p class="description" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
-                            [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
-                        <p class="description last" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
-                            [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
-                        <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
-                            <button class="button primary" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
-                                *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
-                                (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
-                                [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
-                                [class.disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]">{{ACP_DESCS[appStatus]?.buttonName}}
-                            </button>
+            
+                <div class="acp-application-card" *ngIf="!!showAcpApplicationCard">
+                    <div class="card-header-part">
+                        <div class="header-flex no-margin">
+                            <div class="title-app-id">
+                                <p class="title">ACP Application<span><img *ngIf="!showAlert" src="assets/icon/pending-dot.svg"
+                                            alt="dot icon"></span>
+                                </p>
+                                <div class="app-id" *ngIf="!showAlert">
+                                    <p>Good Mobile APP ID:</p>
+                                    <p>{{acpAppDetails?.data?.applicationId}}</p>
+                                </div>
+                            </div>
+                            <div class="status-date" *ngIf="!showAlert">
+                                <p class="key bottom">Status: <span class="value status">{{appStatus}}</span></p>
+                                <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content-part">
+                        <div class="info-banner default-background" [class.error-background]="!!showAlert">
+                            <div class="flex">
+                                <img [src]="!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg'"
+                                    alt="Note Icon">
+                                <div class="banner-content" *ngIf="!!ACP_DESCS[appStatus]">
+                                    <p class="title" *ngIf="ACP_DESCS[appStatus]?.title">{{ACP_DESCS[appStatus]?.title}}</p>
+                                    <p class="description" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
+                                        [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
+                                    <p class="description last" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
+                                        [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
+                                    <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
+                                        <button class="button primary" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
+                                            *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
+                                            (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
+                                            [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
+                                            [class.disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]">{{ACP_DESCS[appStatus]?.buttonName}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="info-banner error-background" *ngIf="!!showAttentionBanner">
+                    <div class="flex">
+                        <img src="assets/icon/red-alert.svg" alt="Alert Icon">
+                        <div class="banner-content">
+                            <p class="title">Attention</p>
+                            <p class="description bottom-8">Your previous application has expired.</p>
+                            <p class="description"><b>Don’t Worry!</b></p>
+                            <p class="description bottom-8">We've created a new application on your behalf.</p>
+                            <p class="description last"><b>To start using your free service, please make sure to finish your ACP
+                                    approval process within 30 days of your application date.</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-banner error-background"
+                    *ngIf="!!showAcpPlanActivationCard && ( !!planActivationStatus && planActivationStatus !== 'ENROLLED' )">
+                    <div class="flex">
+                        <img src="assets/icon/red-alert.svg" alt="Alert Icon">
+                        <div class="banner-content">
+                            <p class="title">Attention</p>
+                            <p class="description last">Please make sure to activate yor plan within <b>30 days</b>, otherwise, you
+                                will lose the service.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="info-banner error-background" *ngIf="!!showAttentionBanner">
-        <div class="flex">
-            <img src="assets/icon/red-alert.svg" alt="Alert Icon">
-            <div class="banner-content">
-                <p class="title">Attention</p>
-                <p class="description bottom-8">Your previous application has expired.</p>
-                <p class="description"><b>Don’t Worry!</b></p>
-                <p class="description bottom-8">We've created a new application on your behalf.</p>
-                <p class="description last"><b>To start using your free service, please make sure to finish your ACP
-                        approval process within 30 days of your application date.</b></p>
-            </div>
-        </div>
-    </div>
-    <div class="info-banner error-background"
-        *ngIf="!!showAcpPlanActivationCard && ( !!planActivationStatus && planActivationStatus !== 'ENROLLED' )">
-        <div class="flex">
-            <img src="assets/icon/red-alert.svg" alt="Alert Icon">
-            <div class="banner-content">
-                <p class="title">Attention</p>
-                <p class="description last">Please make sure to activate yor plan within <b>30 days</b>, otherwise, you
-                    will lose the service.</p>
-            </div>
-        </div>
-    </div>
-
+   
     <div class="acp-application-card" *ngIf="!!showAcpPlanActivationCard">
         <div class="card-header-part" [class.border-radius]="hideCardContentNV === true">
             <div class="header-flex">
