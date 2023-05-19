@@ -18,7 +18,7 @@
                 </li>
                 <li *ngIf="!!displayAcpSection" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMenu()"><a><img class="icon"
-                        src="/assets/icon/acp-icon.svg" /> ACP application</a>
+                        src="/assets/icon/acp-icon.svg" /> ACP summary</a>
                 </li>
                 <li (click)="goToPayAndRefill()" [class.disabled]="!!isPortIn">
                     <a [class.disabled]="!!isPortIn"> <img class="icon" src="/assets/img/pay-icon.svg" alt="payment icon" /> Pay & refill

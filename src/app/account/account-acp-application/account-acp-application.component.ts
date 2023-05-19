@@ -103,6 +103,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   acpDeviceOrder: OrderInfo;
   showStores: boolean;
   acpCancelled: boolean;
+  deviceIMEI: any;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -265,9 +266,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc1: 'Your ACP plan is active.',
         desc2: 'This plan is linked to the following phone number:',
         desc3: `<b>Phone Number/MDN:</b><br> ${(new PhonePipe()).transform(this.acpPlan?.mdn)}`,
-        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br>  <span>Device successfully collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
+        desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br> <span>Device <b>successfully</b> collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
         You may now proceed and <b>collect</b> your device at your nearest store.</span>`: null) : null,
-        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>` : `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : null,
+        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>` : `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : (!!this.acpDeviceOrder && (this.acpDeviceOrder?.status === 'SHIPPED') )? `<span class="break"><b>Device IMEI</b><br><span>${this.deviceIMEI}</span></span>` :null,
+        showSeparator: true,
         primaryButtonName: null,
         primaryButtonAction: null,
         secondaryButtonName: null,
@@ -686,6 +688,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
 
                   })
                 }
+                const deviceOrder: any = this.acpDeviceOrder;
+                this.deviceIMEI = this.acpDeviceOrder.status === 'SHIPPED' && !!this.acpDeviceOrder.devices && this.acpDeviceOrder.devices.length > 0 ? deviceOrder.devices[0].imei : null;
               }, (error) => {
                 this.acpDeviceOrder = null
               });

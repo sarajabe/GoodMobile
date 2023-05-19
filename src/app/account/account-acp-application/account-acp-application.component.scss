@@ -178,6 +178,27 @@
                     }
                 }
             }
+            .flex {
+                .banner-content {
+                    .separator {
+                        border-top:  1px solid #CCDEEA;
+                        padding-top: 12px;
+                    }
+                }
+                @media(max-width: $phablet-min-width-minus) {
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+                @media(max-width: 350px) {
+                    .banner-content {
+                        .break {
+                            word-break: break-all;
+                        }
+                    }
+                }
+            }
         }
 
         .acp-application-card {

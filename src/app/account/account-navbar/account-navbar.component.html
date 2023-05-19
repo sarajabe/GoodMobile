@@ -18,7 +18,7 @@
                 <li *ngIf="!!displayAcpSection" class="menu-item" (click)="resetAll();isAcp = true;"><a class="items-link link-border-bottom"
                                 [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.ACP_APPLICATION'"
                                 [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
-                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">ACP application</a>
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">ACP summary</a>
                 </li>
                 <li class="menu-item" (click)="resetAll(); isPayRefill = true;" [class.disabled]="!!isPortIn"><a
                                 class="items-link link-border-bottom"

@@ -145,7 +145,7 @@
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
                         <p class="description last" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
-                        <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
+                        <p class="description mt-10" [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc4"></p>
                         <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc5" (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.descAction]()"></p>
