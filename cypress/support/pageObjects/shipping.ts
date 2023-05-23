@@ -43,10 +43,26 @@ class ShippingPage {
         return this;
     };
     addShippingInfo1(name, shippingAddress, suiteNumber) {
-        cy.get('[data-cy=name]').clear();
-        cy.get('[data-cy=name]').type(name);
-        cy.get('[data-cy=addressLookup]').clear();
-        cy.get('[data-cy=addressLookup]').type(shippingAddress);
+        cy.get('[data-cy="addressName"]').click({ force: true });
+        cy.get('[data-cy="addressName"]').clear();
+        cy.get('[data-cy="addressName"]').type(name);
+        cy.get('[data-cy="addressLookup"]').click({ force: true });
+        cy.get('[data-cy="addressLookup"]').clear();
+        cy.get('[data-cy="addressLookup"]').type(shippingAddress);
+        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="suiteNo"]').click({ force: true });
+        cy.get('[data-cy="suiteNo"]').clear();
+        cy.get('[data-cy="suiteNo"]').type(suiteNumber);
+        return this;
+    };
+    addInvalidShippingInfo1(name, shippingAddress, suiteNumber) {
+        cy.get('[data-cy="addressName"]').click({ force: true });
+        cy.get('[data-cy="addressName"]').clear();
+        cy.get('[data-cy="addressName"]').type(name);
+        cy.get('[data-cy="addressLookup"]').click({ force: true });
+        cy.get('[data-cy="addressLookup"]').clear();
+        cy.get('[data-cy="addressLookup"]').type(shippingAddress);
+        cy.get('[data-cy="suiteNo"]').click({ force: true });
         cy.get('[data-cy="suiteNo"]').clear();
         cy.get('[data-cy="suiteNo"]').type(suiteNumber);
         return this;
@@ -58,7 +74,7 @@ class ShippingPage {
         cy.get('[data-cy="billingState"]').type(state);
         cy.get('[data-cy="billingPostal"]').clear();
         cy.get('[data-cy="billingPostal"]').type(postal);
-        cy.get('[data-cy="addressLookup"]').click();
+        cy.get('[data-cy="billingCity"]').click();
         return this;
     };
     chooseVerifiedAddress() {
@@ -146,5 +162,11 @@ class ShippingPage {
         cy.get('#barCodeVal').should('not.be.checked');
         cy.get('[data-cy="nextBtn"]').blur;
     }
+    assertInvalidShippingAddress(){
+        cy.get('[data-cy="addressNameInvalidMsg"]').should('have.text','Name is invalid');
+        cy.get('[data-cy="invalidCityMsg"]').should('have.text','Invalid City ');
+        cy.get('[data-cy="invalidStateMsg"]').should('have.text','Invalid State ');
+        cy.get('[data-cy="invalidPostalCodeMsg"]').should('have.text','Invalid Postal Code ');
+    };
 };
 export default new ShippingPage();

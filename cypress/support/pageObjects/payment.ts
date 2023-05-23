@@ -45,6 +45,22 @@ class Payment {
         cy.get('[data-cy="cardCode"]').type(CVV);
         return this;
     };
+    addInvalidMonthAndYear(){
+        cy.get('select').eq(0).find('option:not([disabled])').first().then($firstOption => {
+            cy.get('select').eq(0).select($firstOption.val());
+        });
+        cy.get('select').eq(1).find('option:not([disabled])').first().then($firstOption => {
+            cy.get('select').eq(1).select($firstOption.val());
+        });
+    };
+    addValidMonthAndYear(){
+        cy.get('select').eq(0).find('option:not([disabled])').last().then($lastOption => {
+            cy.get('select').eq(0).select($lastOption.val());
+        });
+        cy.get('select').eq(1).find('option:not([disabled])').last().then($lastOption => {
+            cy.get('select').eq(1).select($lastOption.val());
+        });
+    };
     clickOnSameAsShippingAddress() {
         cy.get('.billing-section > .container > .checkmark').click({force:true});
         return this;
@@ -73,6 +89,11 @@ class Payment {
         cy.get('[data-cy="invalidStateMsg"]').should('have.text', 'Invalid State ');
         cy.get('[data-cy="invalidPostalCodeMsg"]').should('have.text', 'Invalid Postal Code ');
     };
-    
+    assertInvalidPament(){
+        cy.get('[data-cy="invalidNameOnCardMsg"]').should('have.text','Invalid Name. ');
+        cy.get('[data-cy="invalidCardNoMsg"]').should('have.text','Invalid Credit Card Number. ');
+        cy.get('[data-cy="cvvInvalidMsg"]').should('have.text','CVV is invalid. ');
+        cy.get('[data-cy="invalidExpiryDateMsg"]').should('have.text',' Expiration date must be valid ');
+    };
 };
 export default new Payment();

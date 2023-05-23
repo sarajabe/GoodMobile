@@ -67,7 +67,20 @@ class AccessControl {
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_USER.EMAIL, CONSTANT.ACCESS.TEST_USER.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
-        }
-
+        };
+        newUser(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.clickOnSignUpLink();
+                PageObjects.TitleExpectations.goToSignUpPage();
+                PageObjects.AccessControl.signUp(CONSTANT.ACCESS.NEW_SIGNUP_DATA.FIRST_NAME,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA.LAST_NAME,
+                        PageObjects.Dynamics.makeNewEmail(),
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA.PASSWORD,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA.CONFIRMED_PASS);
+                PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+                PageObjects.AccessControl.clickOnSubmitBtn();
+        };
 }
 export default new AccessControl();

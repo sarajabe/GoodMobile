@@ -61,7 +61,7 @@ class Compatibility {
         cy.get('[data-cy="addressRef"]').click();
         cy.get('[data-cy="addressRef"]').type('163 Kayenta Road, Golden Valley, AZ 86413');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
-        cy.get('.ngui-auto-complete').first().click();
+        cy.get('.mat-option-text').first().click();
         cy.get('[data-cy="equipmentNumber"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
@@ -78,7 +78,7 @@ class Compatibility {
         cy.get('[data-cy="addressRef"]').click();
         cy.get('[data-cy="addressRef"]').type('m');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
-        cy.get('.ngui-auto-complete').first().click();
+        cy.get('.mat-option-text').first().click();
         cy.get('[data-cy="equipmentNumber"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
@@ -87,7 +87,7 @@ class Compatibility {
     cy.get('[data-cy="addressRef"]').click();
     cy.get('[data-cy="addressRef"]').type('2');
     cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
-    cy.get('.ngui-auto-complete').first().click();
+    cy.get('.mat-option-text').first().click();
     cy.get('[data-cy="equipmentNumber"]').click();
     cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
