@@ -147,9 +147,9 @@
                             <div class="details">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold smaller" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
+                                        <p class="bold smaller" data-cy="addOnsPlan" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
                                         <p class="smaller" *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
-                                        <p class="bold smaller">(Data Add-On)</p>
+                                        <p class="bold smaller" data-cy="dataAddOns">(Data Add-On)</p>
 
                                     </div>
                                     <p class="price smaller">
@@ -196,9 +196,9 @@
                             <div class="details" *ngFor="let item of talkAndTextAddons">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold smaller" *ngIf="!!item?.title">{{item?.title}}</p>
+                                        <p class="bold smaller" data-cy="internationalPayGoPlan" *ngIf="!!item?.title">{{item?.title}}</p>
                                         <p class="smaller" *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
-                                        <p class="bold smaller">(Talk & text add-on)</p>
+                                        <p class="bold smaller" data-cy="talkTextAddOns">(Talk & text add-on)</p>
 
                                     </div>
                                     <p class="price smaller">

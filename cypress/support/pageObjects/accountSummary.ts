@@ -247,5 +247,9 @@ class AccountSummary {
           cy.contains('a', 'Change plan').click({force: true});
           return this;
      };
+     clickOnPlanAddOns(){
+          cy.contains('a', 'Plan add-ons').click({force: true});
+          return this;
+     };
 };
 export default new AccountSummary();

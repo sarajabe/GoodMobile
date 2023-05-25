@@ -24,7 +24,7 @@
                             <ul class="add-on-tabs">
                                 <li><span [class.active]="isDataActive"
                                         (click)="isDataActive = true; fromIntlCalling = false">Data add-ons</span></li>
-                                <li><span [class.active]="!isDataActive"
+                                <li><span data-cy="internationalCalling" [class.active]="!isDataActive"
                                         (click)="isDataActive = false; fromIntlCalling = false">International calls
                                         add-ons</span></li>
                             </ul>
@@ -66,14 +66,14 @@
                                                         <button
                                                             [disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0"
                                                             [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0"
-                                                            class="button quantityBtn"
+                                                            class="button quantityBtn" data-cy="minusIcon"
                                                             (click)="decrementDataAddOn('gig')"><img
                                                                 [src]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || quantity == 0 ? 'assets/icon/disabled-minus.svg' : 'assets/icon/enabled-minus.svg'"
                                                                 alt="Minus Icon"></button>
                                                         <input type="number" step="1" min="0" max="5" value="1"
                                                             [disabled]="!isCompaitableWithGigAddon" class="quantityNum"
                                                             [(ngModel)]="quantity" readonly />
-                                                        <button class="button quantityBtn"
+                                                        <button data-cy="plusIcon" class="button quantityBtn"
                                                             (click)="incrementDataAddOn('gig')"
                                                             [disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs"
                                                             [class.disabled]="!isCompaitableWithGigAddon || selectedPlan?.canceled || userAccount?.pastDue || maxNumberOfGigs < 1 || quantity == maxNumberOfGigs"><img
