@@ -95,29 +95,30 @@ class PurchasedPlans {
         cy.get('[data-cy="barcode"]').should('be.visible');
         cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
     };
+    assertPurchasePageSimHomeDelivery(){
+        cy.get('[data-cy="simType"]').should('have.text','SIM Card');
+        cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+    };
     assertPurchased6GBPlanWithHomeDelivery(){
         PageObjects.AccountSummary.clickOnPurchasedPlans();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
         cy.get('[data-cy="pendingPlans"]').should('have.text','6GB 4G LTE Plan');
         cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 6GB Data');
-        cy.get('[data-cy="simType"]').should('have.text','SIM Card');
-        cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+        PageObjects.PurchasedPlans.assertPurchasePageSimHomeDelivery();
     };
     assertPurchased2GBPlanWithHomeDelivery(){
         PageObjects.AccountSummary.clickOnPurchasedPlans();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
         cy.get('[data-cy="pendingPlans"]').should('have.text','2GB 4G LTE Plan');
         cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 2GB Data');
-        cy.get('[data-cy="simType"]').should('have.text','SIM Card');
-        cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+        PageObjects.PurchasedPlans.assertPurchasePageSimHomeDelivery();
     };
     assertPurchased15GBPlanWithHomeDelivery(){
         PageObjects.AccountSummary.clickOnPurchasedPlans();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
         cy.get('[data-cy="pendingPlans"]').should('have.text','15GB 4G LTE Plan');
         cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 15GB Data');
-        cy.get('[data-cy="simType"]').should('have.text','SIM Card');
-        cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+        PageObjects.PurchasedPlans.assertPurchasePageSimHomeDelivery();
     };
     purchase2GBPlanWithHomeDeliveryExistingCustomerPlansPage(){
         PageObjects.HomePage.clickOnShopMenu();
@@ -150,8 +151,7 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnHomeDelivery();
         PageObjects.ShippingPage.selectShippingInfo();
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.clickOnNextBtn();
@@ -160,13 +160,12 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('.subtotal').should('have.text', ' Total: $13.02 '); 
-        cy.get('[data-cy="basePlan"]').should('have.text', '2GB 4G LTE Plan');
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        PageObjects.PlaceOrder.assert2GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
-        cy.get('[data-cy="activateNewSIM"]').should('have.text',' Once your SIM card arrives in a couple of days, we will help you get your SIM card activated with a brand new phone number, or transfer your active number (port in) from another provider. You can view your plan details and activate it through your Purchased Plans page. ');
-        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+        PageObjects.PurchaseSuccessful.assertPurchasedPlenSuccesful();
+        PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
     purchase6GBPlanWithHomeDeliveryExistingCustomerPlansPage(){
@@ -200,8 +199,7 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnHomeDelivery();
         PageObjects.ShippingPage.selectShippingInfo();
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.clickOnNextBtn();
@@ -210,13 +208,11 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
-        cy.get('[data-cy="basePlan"]').should('have.text', '6GB 4G LTE Plan');
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        PageObjects.PlaceOrder.assert6GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
-        cy.get('[data-cy="activateNewSIM"]').should('have.text',' Once your SIM card arrives in a couple of days, we will help you get your SIM card activated with a brand new phone number, or transfer your active number (port in) from another provider. You can view your plan details and activate it through your Purchased Plans page. ');
-        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.PurchaseSuccessful.assertPurchasedPlenSuccesful();
+        PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
     purchase15GBPlanWithHomeDeliveryExistingCustomerPlansPage(){
@@ -250,8 +246,7 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnHomeDelivery();
         PageObjects.ShippingPage.selectShippingInfo();
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.clickOnNextBtn();
@@ -260,13 +255,11 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('.subtotal').should('have.text', ' Total: $35.09 ');
-        cy.get('[data-cy="basePlan"]').should('have.text', '15GB 4G LTE Plan');
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        PageObjects.PlaceOrder.assert15GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
-        cy.get('[data-cy="activateNewSIM"]').should('have.text',' Once your SIM card arrives in a couple of days, we will help you get your SIM card activated with a brand new phone number, or transfer your active number (port in) from another provider. You can view your plan details and activate it through your Purchased Plans page. ');
-        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.PurchaseSuccessful.assertPurchasedPlenSuccesful();
+        PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
     purchase2GBPlanWithHomeDeliveryNewUser(){
@@ -314,15 +307,14 @@ class PurchasedPlans {
             CONSTANT.SHIPPING.SHIPPING_DATA.POSTAL);
         PageObjects.ShippingPage.clickOnSaveBtn();
         PageObjects.ShippingPage.chooseVerifiedAddress();
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.fillInPaymentInfo(CONSTANT.PAYMENT.CREDIT_CARD.INVALID_CARD.NAME_ON_CARD,
             CONSTANT.PAYMENT.CREDIT_CARD.INVALID_CARD_NUMBER.CARD_NUMBER,
             CONSTANT.PAYMENT.CREDIT_CARD.INVALID_CVV.CVV);
         PageObjects.Payment.addInvalidMonthAndYear();
-        PageObjects.Payment.assertInvalidPament();
+        PageObjects.Payment.assertInvalidPayment();
         PageObjects.Payment.fillInPaymentInfo(CONSTANT.PAYMENT.CREDIT_CARD.VALID.NAME_ON_CARD,
             CONSTANT.PAYMENT.CREDIT_CARD.VALID.PAN,
             CONSTANT.PAYMENT.CREDIT_CARD.VALID.CVV);
@@ -331,13 +323,12 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('.subtotal').should('have.text', ' Total: $13.06 '); 
-        cy.get('[data-cy="basePlan"]').should('have.text', '2GB 4G LTE Plan');
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        PageObjects.PlaceOrder.assert2GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
-        cy.get('[data-cy="activateNewSIM"]').should('have.text',' Once your SIM card arrives in a couple of days, we will help you get your SIM card activated with a brand new phone number, or transfer your active number (port in) from another provider. You can view your plan details and activate it through your Purchased Plans page. ');
-        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+        PageObjects.PurchaseSuccessful.assertPurchasedPlenSuccesful();
+        PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
     purchase2GBPlanWithHomeDeliveryExistingCustomerHomePage(){
@@ -372,8 +363,7 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnHomeDelivery();
         PageObjects.ShippingPage.selectShippingInfo();
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.clickOnNextBtn();
@@ -382,13 +372,12 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('.subtotal').should('have.text', ' Total: $13.02 '); 
-        cy.get('[data-cy="basePlan"]').should('have.text', '2GB 4G LTE Plan');
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        PageObjects.PlaceOrder.assert2GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
-        cy.get('[data-cy="activateNewSIM"]').should('have.text',' Once your SIM card arrives in a couple of days, we will help you get your SIM card activated with a brand new phone number, or transfer your active number (port in) from another provider. You can view your plan details and activate it through your Purchased Plans page. ');
-        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+        PageObjects.PurchaseSuccessful.assertPurchasedPlenSuccesful();
+        PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
     purchase6GBPlanWithHomeDeliveryExistingCustomerHomePage(){
@@ -423,8 +412,7 @@ class PurchasedPlans {
         PageObjects.TitleExpectations.goToShippingPage();
         PageObjects.ShippingPage.clickOnHomeDelivery();
         PageObjects.ShippingPage.selectShippingInfo();
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.clickOnNextBtn();
@@ -433,13 +421,12 @@ class PurchasedPlans {
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
         cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
-        cy.get('[data-cy="basePlan"]').should('have.text', '6GB 4G LTE Plan');
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        PageObjects.PlaceOrder.assert6GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
-        cy.get('[data-cy="activateNewSIM"]').should('have.text',' Once your SIM card arrives in a couple of days, we will help you get your SIM card activated with a brand new phone number, or transfer your active number (port in) from another provider. You can view your plan details and activate it through your Purchased Plans page. ');
-        cy.get('[data-cy="purchasedPlansBtn"]').click();
+        PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+        PageObjects.PurchaseSuccessful.assertPurchasedPlenSuccesful();
+        PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
 };

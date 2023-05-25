@@ -1,6 +1,6 @@
 import { PageObjects } from '../../support/pageObjects'
 
-describe('Shop new plan from plans page with home delivery', () => {
+describe('Shop new plan from home page with home delivery', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });

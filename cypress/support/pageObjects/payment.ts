@@ -89,7 +89,7 @@ class Payment {
         cy.get('[data-cy="invalidStateMsg"]').should('have.text', 'Invalid State ');
         cy.get('[data-cy="invalidPostalCodeMsg"]').should('have.text', 'Invalid Postal Code ');
     };
-    assertInvalidPament(){
+    assertInvalidPayment(){
         cy.get('[data-cy="invalidNameOnCardMsg"]').should('have.text','Invalid Name. ');
         cy.get('[data-cy="invalidCardNoMsg"]').should('have.text','Invalid Credit Card Number. ');
         cy.get('[data-cy="cvvInvalidMsg"]').should('have.text','CVV is invalid. ');
