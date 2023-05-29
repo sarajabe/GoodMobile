@@ -13,13 +13,13 @@ describe('Shop new plan from home page with home delivery', () => {
     it('Should 2GB purchase plan from home page with home delivery', () => {
         PageObjects.PurchasedPlans.purchase2GBPlanWithHomeDeliveryExistingCustomerHomePage();
     });
-    it('Should assert purchased plan with home delivery', () => {
+    it('Should assert purchased 2GB plan with home delivery', () => {
         PageObjects.PurchasedPlans.assertPurchased2GBPlanWithHomeDelivery();
     });
     it('Should 6GB purchase plan from home page with home delivery', () => {
         PageObjects.PurchasedPlans.purchase6GBPlanWithHomeDeliveryExistingCustomerHomePage();
     });
-    it('Should assert purchased plan with home delivery', () => {
+    it('Should assert purchased 6GB plan with home delivery', () => {
         PageObjects.PurchasedPlans.assertPurchased6GBPlanWithHomeDelivery();
     });
 })

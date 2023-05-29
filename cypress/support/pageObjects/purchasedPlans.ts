@@ -100,25 +100,22 @@ class PurchasedPlans {
         cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
     };
     assertPurchased6GBPlanWithHomeDelivery(){
-        PageObjects.AccountSummary.clickOnPurchasedPlans();
-        PageObjects.TitleExpectations.goToPurchasedPlansPage();
+        PageObjects.AccountSummary.clickOnAndGoPurchasedPlans();
         cy.get('[data-cy="pendingPlans"]').should('have.text','6GB 4G LTE Plan');
         cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 6GB Data');
-        PageObjects.PurchasedPlans.assertPurchasePageSimHomeDelivery();
+        this.assertPurchasePageSimHomeDelivery();
     };
     assertPurchased2GBPlanWithHomeDelivery(){
-        PageObjects.AccountSummary.clickOnPurchasedPlans();
-        PageObjects.TitleExpectations.goToPurchasedPlansPage();
+        PageObjects.AccountSummary.clickOnAndGoPurchasedPlans();
         cy.get('[data-cy="pendingPlans"]').should('have.text','2GB 4G LTE Plan');
         cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 2GB Data');
-        PageObjects.PurchasedPlans.assertPurchasePageSimHomeDelivery();
+        this.assertPurchasePageSimHomeDelivery();
     };
     assertPurchased15GBPlanWithHomeDelivery(){
-        PageObjects.AccountSummary.clickOnPurchasedPlans();
-        PageObjects.TitleExpectations.goToPurchasedPlansPage();
+        PageObjects.AccountSummary.clickOnAndGoPurchasedPlans();
         cy.get('[data-cy="pendingPlans"]').should('have.text','15GB 4G LTE Plan');
         cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 15GB Data');
-        PageObjects.PurchasedPlans.assertPurchasePageSimHomeDelivery();
+        this.assertPurchasePageSimHomeDelivery();
     };
     purchase2GBPlanWithHomeDeliveryExistingCustomerPlansPage(){
         PageObjects.HomePage.clickOnShopMenu();
