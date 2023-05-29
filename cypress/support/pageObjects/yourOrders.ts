@@ -336,6 +336,17 @@ class YouOrders {
         cy.get('.ng-star-inserted > .details > p').should('have.text','The receipt has successfully been emailed to testuser@ztarmobile.com\n      ');
         cy.get('[data-cy="action-button"]').click();
         cy.get('.print-option').click();
-    }
+    };
+    ordersDetailsPagePlanAddOns(){
+        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        PageObjects.TitleExpectations.goToOrdersPage();
+        cy.get('[data-cy="status"]').first().should('have.text', 'Purchased');
+        cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $11.52');
+        PageObjects.YouOrders.clickOnOrderDetails();
+        PageObjects.TitleExpectations.goToOrderDetailsPage();
+        cy.get('[data-cy="addOns"]').should('have.text', '(Addon)');
+        cy.get('[data-cy="total"]').should('have.text', 'Total: $11.52');
+        cy.get('[data-cy="shippingAddress"]').should('not.exist');
+    };
 };
 export default new YouOrders();

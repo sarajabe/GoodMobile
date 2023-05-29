@@ -248,7 +248,7 @@ class AccountSummary {
           return this;
      };
      clickOnPlanAddOns(){
-          cy.contains('a', 'Plan add-ons').click({force: true});
+          cy.get('[data-cy="plansAddOns"]').click({force: true});
           return this;
      };
 };

@@ -514,7 +514,7 @@
                         <div class="title-info"> <b>{{gigPlanAddon?.subtitle}}</b></div>
                         <div class="addons-links"
                           [class.disabled]="!userAccount || !!selectedPlan?.canceled || !!userAccount?.pastDue">
-                          <a (click)="orderAddon()">
+                          <a data-cy="addOns" (click)="orderAddon()">
                             <span class="action-icon icon plus-icon"><img
                                 src="assets/icon/white-plus.svg"></span>Purchase
                             now?</a>
@@ -536,7 +536,7 @@
                         <div class="title-info"><b>International calling add-on</b></div>
                         <div class="addons-links"
                           [class.disabled]="!userAccount || !!selectedPlan?.canceled || !!userAccount?.pastDue">
-                          <a (click)="orderAddon('International')">
+                          <a data-cy="internationalAddOns" (click)="orderAddon('International')">
                             <span class="action-icon icon plus-icon"><img
                                 src="assets/icon/white-plus.svg"></span>Purchase
                             now?</a>
@@ -553,7 +553,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="action-links action-responsive" (click)="orderAddon()"
+                <div class="action-links action-responsive" data-cy="orderAddOns" (click)="orderAddon()"
                   [class.disabled]="!!selectedPlan?.canceled || !userAccount || !!userAccount?.pastDue">
                   <a class="edit-action">
                     <span class="action-icon icon plus-icon"><img class="plus-img"

@@ -1,5 +1,5 @@
 import { PageObjects } from '../../support/pageObjects'
-describe('Order data Add-ons then delete from place order', () => {
+describe('Order data Add-ons and international calling then delete', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
@@ -9,7 +9,7 @@ describe('Order data Add-ons then delete from place order', () => {
     it('Should login successfully with user do not have add-ons order', () => {
         PageObjects.AccessControl.noAddOnsOrderAccount();
     });
-    it('Should Order data Add-ons and Delete it', () => {
-        PageObjects.PlanAddOns.orderDataAddOnsDeleteIt();
+    it('Should purchase data Add-ons and international calling then delete', () => {
+        PageObjects.PlanAddOns.purchaseDataAddOnsInternationalCallingDeleteIt();
     });
 })

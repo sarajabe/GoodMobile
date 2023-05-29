@@ -87,6 +87,10 @@ export const ACCESS = {
         EMAIL: 'rana.haddad@ztarmobile.com',
         PASSWORD: 'Abc123'
     },
+    RANA_PAVO_ACCOUNT: {
+        EMAIL: 'rana.haddad@pavocom.com',
+        PASSWORD: 'Abc123'
+    },
     // ATT mdns
     LARA_ACCOUNT: {
         EMAIL: 'lara.khoury1992@gmail.com',
