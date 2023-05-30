@@ -149,11 +149,11 @@ class HomePage {
         return this;
     };
     clickOnPlans() {
-        cy.contains('a', 'plans').click({ force: true });
+        cy.get('[data-cy="plansLink"]').click({ force: true });
         return this;
     };
     clickOnShopMenu() {
-        cy.get(':nth-child(2) > [data-cy="shopMenu"]').click();
+        cy.get('.menu > [data-cy="shopMenu"]').click();
         return this;
     };
     clickOnProfileSetting() {

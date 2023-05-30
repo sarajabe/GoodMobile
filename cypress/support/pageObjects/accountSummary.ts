@@ -247,5 +247,9 @@ class AccountSummary {
           cy.contains('a', 'Change plan').click({force: true});
           return this;
      };
+     clickOnAndGoPurchasedPlans() {
+          cy.get('.item-pending-activations > .items-link').click();
+          cy.title().should('eq', `Purchased Plans`);
+     };
 };
 export default new AccountSummary();

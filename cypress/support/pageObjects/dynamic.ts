@@ -1,19 +1,17 @@
 const Dynamics = function(): void {
     let strEmail = '';
     this.makeNewEmail = () => {
-        strEmail = '';
-        const strValues = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        strEmail = 'e2e-';
+        const strValues = 'a0123456789';
         let strTmp;
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 4; i++) {
             strTmp = strValues.charAt(Math.round(strValues.length * Math.random()));
             strEmail = strEmail + strTmp;
         }
         strTmp = '';
         strEmail = strEmail + '@';
-        for (let j = 0; j < 8; j++) {
-            strTmp = strValues.charAt(Math.round(strValues.length * Math.random()));
-            strEmail = strEmail + strTmp;
-        }
+        strTmp = 'pavocom';
+        strEmail = strEmail + strTmp;
         strEmail = strEmail + '.com';
         return strEmail;
     };

@@ -32,5 +32,17 @@ class PlaceOrder {
         cy.get('[data-cy="deletPlan"]').click();
         return this;
     };
+    assert2GBHomeDelivery(){
+        cy.get('[data-cy="basePlan"]').should('have.text', '2GB 4G LTE Plan');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+    };
+    assert6GBHomeDelivery(){
+        cy.get('[data-cy="basePlan"]').should('have.text', '6GB 4G LTE Plan');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+    };
+    assert15GBHomeDelivery(){
+        cy.get('[data-cy="basePlan"]').should('have.text', '15GB 4G LTE Plan');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+    };
 };
 export default new PlaceOrder();

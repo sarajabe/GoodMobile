@@ -8,7 +8,7 @@ export const SHIPPING = {
         POSTAL: '10461'
     },
     INVALID_SHIPPING_DATA: {
-        NAME: 'Mirna Haddad',
+        NAME: 'Mirna Haddad12',
         SHIPPING_ADDRESS: '1250 Waters Pl',
         SUITE_NO: '111',
         CITY: '1234',

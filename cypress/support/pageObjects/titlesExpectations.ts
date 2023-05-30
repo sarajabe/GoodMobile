@@ -123,7 +123,7 @@ class TitleExpectations {
         return this;
     };
     goToReviewCartPage () {
-        cy.title().should('eq', 'Good Mobile test');
+        cy.title().should('eq', 'Your Cart');
         return this;
     };
     goToServiceCoverageCheckPage(){

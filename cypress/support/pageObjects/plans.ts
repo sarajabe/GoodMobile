@@ -80,11 +80,23 @@ class Plans {
         return this;
     };
     clickOnPlan_2_GB_Plans_Page() {
-        cy.get('#select-GOOD2GO-2GB-25').click();
+        cy.get(':nth-child(1) > .actions > .button').click();
+        return this;
+    };
+    clickOnPlan_2_GB_Home_Page() {
+        cy.get('#select-GOOMOBILE-2GB-10').click();
         return this;
     };
     clickOn6GB_From_Plans_Page() {
-        cy.get('#select-GOOD2GO-MDG-6GB-30').click();
+        cy.get('.right-sperator > .actions > .button').click();
+        return this;
+    };
+    clickOn6GB_From_Home_Page() {
+        cy.get('#select-GOOMOBILE-6GB-20').click();
+        return this;
+    };
+    clickOn15GB_From_Plans_Page() {
+        cy.get(':nth-child(4) > .actions > .button').click();
         return this;
     };
     clickOn10GB_From_Plans_Page() {
