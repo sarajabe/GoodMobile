@@ -96,5 +96,19 @@ class AccessControl {
                 cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
                 PageObjects.AccessControl.clickOnSubmitBtn();
         };
+        accountAlreadyHasAddOnsOneOrder(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.EMAIL, CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+        };
+        accountAlreadyHasAddOnsMultipleOrder(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.GM_LARA_ACCOUNT.EMAIL, CONSTANT.ACCESS.GM_LARA_ACCOUNT.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+        };
 }
 export default new AccessControl();

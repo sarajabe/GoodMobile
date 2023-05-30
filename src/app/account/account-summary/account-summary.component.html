@@ -503,10 +503,10 @@
                   <div class="flex-container responsive-flex-container">
                     <div class="dataAddOns-section">
                       <div *ngIf="!!dataAddons && dataAddons?.length > 0 && !!userAccount && userAccount?.activeAddOns">
-                        <div class="title-info"> <b>{{dataAddons?.length}} *
+                        <div class="title-info" data-cy="addOnsInfo"> <b>{{dataAddons?.length}} *
                             {{dataAddons[0]?.subTitle}}</b> </div>
                         <div class="dataAddOns-info">
-                          <span>{{gigPlanAddon?.price| currency}}</span>
+                          <span data-cy="addOnsPrice">{{gigPlanAddon?.price| currency}}</span>
                         </div>
                       </div>
                       <div

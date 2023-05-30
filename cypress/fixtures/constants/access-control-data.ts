@@ -91,6 +91,14 @@ export const ACCESS = {
         EMAIL: 'rana.haddad@pavocom.com',
         PASSWORD: 'Abc123'
     },
+    LARA_PAVO_ACCOUNT: {
+        EMAIL: 'lara.khoury@pavocom.com',
+        PASSWORD: 'Abc123'
+    },
+    GM_LARA_ACCOUNT: {
+        EMAIL: 'gm-larakh@ztarmobile.com',
+        PASSWORD: 'Abc123'
+    },
     // ATT mdns
     LARA_ACCOUNT: {
         EMAIL: 'lara.khoury1992@gmail.com',

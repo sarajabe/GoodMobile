@@ -10,6 +10,6 @@ describe('User already has data addon and international calling', () => {
         PageObjects.AccessControl.accountAlreadyHasAddOnsOrder();
     });
     it('Should assert add-ons international calling to be disable', () => {
-        PageObjects.PlanAddOns.assertAddOnsInternationalCallingDisable();
+        PageObjects.PlanAddOns.assertUserHasDataAddOnsInternationalCalling();
     });
 })
