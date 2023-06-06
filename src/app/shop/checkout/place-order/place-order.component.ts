@@ -246,7 +246,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
               this.router.navigate([ROUTE_URLS.HOME]);
               break;
             case CART_TYPES.PLAN_ITEMS:
-              this.removeItemFromCart('sim');
+              this.removeItemFromCart(event);
               break;
             case CART_TYPES.CHANGE_PLAN:
               this.mobilePlansService.clearUserCart();
