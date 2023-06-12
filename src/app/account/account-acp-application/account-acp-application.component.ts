@@ -645,22 +645,22 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   private getVerificationDetails(): void {
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
-      this.barCodeValue = !!this.userProfile.ebbId ? `${this.userProfile.ebbId}` : null;
+      this.barCodeValue = !!this.userProfile?.ebbId ? `${this.userProfile?.ebbId}` : null;
       if (!!this.userProfile && !this.userProfile.ebbId && !this.acpPlan) {
         this.appState.loading = true;
-        this.ebbService.getActiveInternalApplication(this.userProfile.customerId).then((res) => {
+        this.appState.acpActiveAppResObs.subscribe(res => {
           if (!!res) {
             this.acpAppDetails = res;
             this.createdDate = res.createdAt;
             this.appState.loading = false;
             this.appStatus = 'In Progress';
             this.showAcpApplicationCard = true;
+          } else {
+            this.appStatus = 'On Hold';
+            this.showAlert = true;
+            this.showAcpApplicationCard = true;
+            this.appState.loading = false;
           }
-        }, (error) => {
-          this.appStatus = 'On Hold';
-          this.showAlert = true;
-          this.showAcpApplicationCard = true;
-          this.appState.loading = false;
         });
       } else if (!!this.userProfile && !!this.userProfile.ebbId) {
         this.appState.loading = true;
@@ -726,7 +726,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               }
               this.planActivationStatus = 'ENROLLED';
             } else {
-              this.ebbService.getACPApplicationStatus(this.userProfile.ebbId, this.userProfile.customerId, this.callBackUrl).then((details) => {
+              this.appState.acpAppRes.subscribe(details => {
                 this.appState.loading = false;
                 if (!!details) {
                   this.appDetails = details;
@@ -797,25 +797,27 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   } else {
                     this.showNVOnHoldSection = false;
                   }
-                }
-              }, (error) => {
-                this.showNVCard = true;
-                this.showAlert = true;
-                if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
-                  this.showExpiredSection = true;
-                  this.nvStatus = 'EXPIRED';
-                  if (!!this.acpPlan) {
-                    // Get old data
-                    this.getInternalAppDataForExpiredApps();
-                  }
-                } else if (error.error.errors[0].code === '1421') {
-                  this.showNVErrorSection = true;
-                  this.nvStatus = 'NV_ERROR';
                 } else {
-                  this.showGenericError = true;
-                  this.nvStatus = 'GENERIC';
+                  this.showNVCard = true;
+                  this.showAlert = true;
+                  this.appState.acpAppErrorObs.subscribe(error => {
+                    if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
+                      this.showExpiredSection = true;
+                      this.nvStatus = 'EXPIRED';
+                      if (!!this.acpPlan) {
+                        // Get old data
+                        this.getInternalAppDataForExpiredApps();
+                      }
+                    } else if (error.error.errors[0].code === '1421') {
+                      this.showNVErrorSection = true;
+                      this.nvStatus = 'NV_ERROR';
+                    } else {
+                      this.showGenericError = true;
+                      this.nvStatus = 'GENERIC';
+                    }
+                    this.appState.loading = false;
+                  });
                 }
-                this.appState.loading = false;
               });
             }
           }

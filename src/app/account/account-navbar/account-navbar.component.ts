@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FirebaseUserProfileService, IUser, IUserPlan, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
-import { take, takeWhile } from 'rxjs/operators';
-import { ACP_CALLBACK_URL } from 'src/environments/environment';
-import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS } from '../../../app/app.routes.names';
+import { take } from 'rxjs/operators';
+import { ACCOUNT_ROUTE_URLS } from '../../../app/app.routes.names';
+import { AppState } from 'src/app/app.service';
 
 @Component({
   selector: 'app-account-navbar',
@@ -34,8 +34,7 @@ export class AccountNavbarComponent implements OnInit {
     private router: Router,
     private userAccountService: UserAccountService,
     private userPlansService: UserPlansService,
-    private userProfileService: FirebaseUserProfileService,
-    private ebbService: EbbService) {
+    private appService: AppState) {
 
     this.router.events.subscribe((route) => {
       if (route instanceof NavigationEnd) {
@@ -100,33 +99,9 @@ export class AccountNavbarComponent implements OnInit {
         const acpPlan = plans.find((plan) => !!plan.basePlan.ebb && !plan.canceled);
         this.displayAcpSection = !!acpPlan ? true : false;
         if (!acpPlan) {
-          this.userProfileService.userProfileObservable.subscribe((user) => {
-            if (!!user && !!user.ebbId) {
-              const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
-              this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((res) => {
-                if (!!res) {
-                  this.displayAcpSection = true;
-                } else {
-                  this.displayAcpSection = false;
-                }
-              }, (error) => {
-                if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
-                  this.displayAcpSection = true;
-                } else {
-                  this.displayAcpSection = false;
-                }
-              });
-            } else if (!!user && !user.ebbId) {
-              this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
-                if (!!res) {
-                  this.displayAcpSection = true;
-                } else {
-                  this.displayAcpSection = false;
-                }
-              }, (error) => {
-                this.displayAcpSection = false;
-              });
-            }
+          this.appService.displayAcpSectionObs.subscribe(res => {
+            this.displayAcpSection = res;
+            this.appService.loading = false;
           });
         }
       }
