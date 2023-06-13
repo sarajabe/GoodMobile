@@ -213,6 +213,8 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
       if (!!event.place_id) {
         this.appState.loading = true;
         this.invalidAddress = false;
+         //this is a default value until address have the value from api
+         this.address = event?.main_text;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
           .subscribe(
