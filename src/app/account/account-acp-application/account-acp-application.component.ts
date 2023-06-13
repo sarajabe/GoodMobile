@@ -98,6 +98,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public oldUserData: IVerificationRes;
   public showAttentionBanner = false;
   public hideCardContentUI = false;
+  public showDeviceOptions = false;
 
   private callBackUrl: string;
   private alive = true;
@@ -105,6 +106,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   showStores: boolean;
   acpCancelled: boolean;
   deviceIMEI: any;
+  option: any;
+  showDeviceOptionError: boolean;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -156,7 +159,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         title: `Hooray!`,
         desc1: `You may be eligible for a <b>$100</b> discount on a new device from our catalog!`,
         desc2: `Hurry up and get yours today!`,
-        buttonName: 'Claim your Device',
+        buttonName: 'Let’s get started!',
         buttonAction: 'goToAcpDevices'
       },
       'PENDING_NV_CASE': {
@@ -585,10 +588,17 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.CONTACT_US}`]);
   }
   public showBarCodePopup(): void {
-    this.modalHelper.showBarcodeModal('Scan the barcode', 'Check with the store clerk to proceed', this.barCodeValue);
+    this.modalHelper.showBarcodeModal('Scan the barcode', 'Take this barcode to your Goodwill store clerk to collect your Device.', this.barCodeValue, 'Your ACP ID:', this.barCodeValue);
   }
   public goToAcpDevices(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+    this.showDeviceOptionError = !!this.option ? false : true;
+    if (!!this.option) {
+      if (this.option === 'online') {
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+      } else {
+        this.showBarCodePopup();
+      }
+    }
   }
   public downloadFiles(): void {
     if (this.fileUrls.length > 0) {
@@ -602,6 +612,10 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         document.body.removeChild(link);
       }
     }
+  }
+  public selectDeviceOption(value): void {
+    this.option = value;
+    this.showDeviceOptionError = false;
   }
   private checkDocGroups(data): void {
     const selectedCodes = data?.eligibilityCode.split(",");
@@ -723,6 +737,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.appDetails.updatedAt = this.acpPlan?.updatedAt;
               if (!this.acpPlan?.acpDevice) {
                 this.acpDeviceCase = 'ENROLLED_ACP_CASE';
+                this.showDeviceOptions = true;
               }
               this.planActivationStatus = 'ENROLLED';
             } else {

@@ -9,10 +9,12 @@
         <div class="modal-content">
             <p>{{context?.message}}</p>
           <div class="barcode-section">
+            <h5 class="message">{{context?.barCodeMessage}}</h5>
             <ngx-barcode6
                 [bc-value]="context?.bardcodeValue"
                 [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
           </div>
+          <p class="smaller">{{context?.barCodeString}}</p>
           <div class="modal-actions">
             <button class="button primary"  (click)="closeDialog()"
               id="done" data-cy="done">Done</button>

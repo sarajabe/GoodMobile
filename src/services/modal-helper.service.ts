@@ -270,10 +270,10 @@ export class ModalHelperService {
       }
     });
   }
-  public showBarcodeModal(title: string, message: string, bardcodeValue:any): MatDialogRef<any> {
+  public showBarcodeModal(title: string, message: string, bardcodeValue:any, barCodeMessage?: string, barCodeString?: string): MatDialogRef<any> {
     return this.dialog.open(BarCodeModalComponent, {
       data: {
-        title, message, bardcodeValue
+        title, message, bardcodeValue, barCodeMessage, barCodeString
       }
     });
   }

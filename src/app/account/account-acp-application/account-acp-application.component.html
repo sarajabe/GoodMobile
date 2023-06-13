@@ -19,12 +19,14 @@
             </div>
         </div>
         <div class="card-content-part" *ngIf="!hideCardContentUI">
-            <h5>Your ACP Account Number:</h5>
-            <div class="barcode-section">
-                <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
-                </ngx-barcode6>
-            </div>
-            <p class="smaller grey">{{barCodeValue}}</p>
+            <ng-container *ngIf="!ACP_DEVICE_DESCS[acpDeviceCase]">
+                <h5>Your ACP Account Number:</h5>
+                <div class="barcode-section">
+                    <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
+                    </ngx-barcode6>
+                </div>
+                <p class="smaller grey">{{barCodeValue}}</p>
+            </ng-container>
             <div class="banners-section">
                 <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
                     [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
@@ -46,6 +48,36 @@
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"></p>
                             <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
+                            <div class="device-checkout-options" *ngIf="showDeviceOptions">
+                                <p class="question">How do you want to claim your device?</p>
+                                <div class="options-container">
+                                    <div class="radioBtn">
+                                        <label class="form-control" for="online" (click)="selectDeviceOption('online')">
+                                          <input type="radio" value="online" [(ngModel)]="option" data-cy="online" id="online" name="online" required>
+                                          <div class="content">
+                                              <img src="/assets/icon/online.svg" alt="online" class="home-icon">
+                                              <div class="input-details">
+                                              <p class="value">Choose Device Online</p>
+                                              <p class="caption">It will take you to device catalog</p>
+                                          </div>
+                                        </div>
+                                        </label>
+                                    </div>
+                                    <div class="radioBtn">
+                                        <label class="form-control" for="store" (click)="selectDeviceOption('store')">
+                                          <input type="radio" value="store" [(ngModel)]="option" data-cy="store" id="store" name="store" required>
+                                          <div class="content">
+                                              <img src="/assets/icon/store.svg" alt="store pickup" class="home-icon">
+                                              <div class="input-details">
+                                              <p class="value">Pick Device In-Store</p>
+                                              <p class="caption">Choose it if you're at the store</p>
+                                          </div>
+                                        </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <p class="validation-message" *ngIf="showDeviceOptionError">Please Select an option to proceed</p>
+                            </div>
                             <div class="actions" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName">
                                 <button class="button primary" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
                                     (click)="this[ACP_DEVICE_DESCS[acpDeviceCase]?.buttonAction]()">

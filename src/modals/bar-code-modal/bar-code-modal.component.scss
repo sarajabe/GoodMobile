@@ -3,6 +3,10 @@
 
 ::ng-deep {
     .barcode-section {
+        .message {
+            margin-bottom: 12px;
+            margin-top: 16px;
+        }
         .barcode {
             @media(max-width: $phablet-min-width-minus) {
                 margin-top: 32px;

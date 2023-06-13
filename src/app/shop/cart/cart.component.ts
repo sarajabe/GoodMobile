@@ -81,7 +81,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.userCart = plan;
       setTimeout(() => {
-        if(!!this.userCart && !!this.userCart.cartType) {
           this.autoRenew = this.userCart?.autoRenewPlan;
           if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
             this.isGenericType = true;
@@ -128,10 +127,6 @@ export class CartComponent implements OnInit, OnDestroy {
               }
             });
           }
-        }
-         else {
-          this.router.navigate([ROUTE_URLS.HOME]);
-        }
       }, 500);
       this.appState.loading = false;
     });
