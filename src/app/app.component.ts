@@ -62,6 +62,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.authHttp.setLanguage('en');
     this.checkIfMaintenanceExist();
     this.checkUserActivity();
+    this.appState.checkInternalEbbApp();
   }
 
   ngAfterViewInit(): void {

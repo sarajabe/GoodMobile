@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IMarketingDetails } from '@ztarmobile/zwp-service-backend';
+import { FirebaseUserProfileService, IMarketingDetails } from '@ztarmobile/zwp-service-backend';
 import { ActivatedRoute } from '@angular/router';
+import { ACP_CALLBACK_URL } from 'src/environments/environment';
+import { ACP_ROUTE_URLS } from './app.routes.names';
+import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
 
 export interface InternalStateType {
   [key: string]: any;
@@ -27,16 +30,29 @@ export class AppState {
   public globalAlertHeightReplySubject: ReplaySubject<number> = new ReplaySubject(1);
   public globalAlertHeight: Observable<number>;
   public jsonLDString: any;
+  public displayAcpSection: ReplaySubject<boolean> = new ReplaySubject(1);
+  public displayAcpSectionObs:  Observable<boolean>;
+  public acpAppRes: ReplaySubject<any> = new ReplaySubject(1);
+  public acpAppResObs:  Observable<any>;
+  public acpAppError: ReplaySubject<any> = new ReplaySubject(1);
+  public acpAppErrorObs:  Observable<any>;
+  public acpActiveAppRes: ReplaySubject<any> = new ReplaySubject(1);
+  public acpActiveAppResObs:  Observable<any>;
 
   private jsonLd: any = {};
 
-  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute) {
+  constructor(private sanitizer: DomSanitizer, private route: ActivatedRoute,
+    private ebbService: EbbService, private userProfileService: FirebaseUserProfileService) {
     this.isMarketingCampaign = this.isMarktingCampaignReplySubject.asObservable();
     this.campaignQueryParams = this.campaignQueryParamsReplySubject.asObservable();
     this.isMoneySavingProCampaign = this.isMoneySavingProReplySubject.asObservable();
     this.globalAlertHeight = this.globalAlertHeightReplySubject.asObservable();
     this.utmsCampaign = this.utmsCampaignReplySubject.asObservable();
     this.utmsCampaignParams = this.utmsCampaignParamsReplySubject.asObservable();
+    this.displayAcpSectionObs = this.displayAcpSection.asObservable();
+    this.acpAppResObs = this.acpAppRes.asObservable();
+    this.acpActiveAppResObs = this.acpActiveAppRes.asObservable();
+    this.acpAppErrorObs = this.acpAppError.asObservable();
   }
 
   public clearSessionStorage(): void {
@@ -101,5 +117,45 @@ export class AppState {
     marketingObject.attributes.push({ name: 'vendorID', value: !!utms && !!utms.vendorID ? utms.vendorID : 'g2g' });
     return marketingObject;
   }
-
+  public checkInternalEbbApp(): void {
+    this.userProfileService.userProfileObservable.subscribe((user) => {
+      if (!!user && !!user.ebbId) {
+        const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
+        this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((res) => {
+          if (!!res) {
+           this.displayAcpSection.next(true);
+           this.acpAppRes.next(res);
+           this.acpAppError.next(null);
+          } else {
+            this.displayAcpSection.next(false);
+            this.acpAppRes.next(null);
+            this.acpAppError.next(null);
+          }
+        }, (error) => {
+          if (!!error?.error && !!error?.error?.errors[0] && error?.error?.errors[0]?.code === 'APP_CLOSED_OR_EXPIRED') {
+            this.displayAcpSection.next(true);
+            this.acpAppRes.next(null);
+            this.acpAppError.next(error);
+          } else {
+            this.displayAcpSection.next(false);
+            this.acpAppRes.next(null);
+            this.acpAppError.next(error);
+          }
+        });
+      } else if (!!user && !user.ebbId) {
+        this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
+          if (!!res) {
+            this.displayAcpSection.next(true);
+            this.acpActiveAppRes.next(res);
+          } else {
+            this.displayAcpSection.next(false);
+            this.acpActiveAppRes.next(null);
+          }
+        }, (error) => {
+          this.displayAcpSection.next(false);
+          this.acpActiveAppRes.next(null);
+        });
+      }
+    });
+  }
 }

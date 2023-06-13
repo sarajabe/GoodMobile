@@ -129,7 +129,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                 .subscribe((user) => {
                   if (!!user && !!user?.ebbId) {
                     this.appState.loading = true;
-                    this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((details) => {
+                    this.appState.acpAppResObs.subscribe(details => {
                       if (!!details && details?.status === 'COMPLETE') {
                         this.addressesList = !!user?.shippingAddresses ? user.shippingAddresses : [];
                         this.selectedShippingAddress = {} as IFirebaseAddress;
@@ -194,10 +194,9 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                           }
                         );
                       } else {
+                        this.appState.loading = false;
                         this.goToAcpLanding();
                       }
-                    }, error => {
-                      this.goToAcpLanding();
                     });
                   } else {
                     this.goToAcpLanding();

@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { BUILD_VERSION, BUILD_DATE, ENV_FIREBASE_CONFIG } from '../../environments/environment';
+import { BUILD_VERSION, ENV_FIREBASE_CONFIG } from '../../environments/environment';
 import { ContentfulService } from '../../services/contentful.service';
 import { SUPPORT_ROUTE_URLS, SHOP_ROUTE_URLS, ACCOUNT_ROUTE_URLS, ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app/app.routes.names';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
-import { FirebaseUserProfileService, IUser } from '@ztarmobile/zwp-service-backend';
-import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
+import { IUser } from '@ztarmobile/zwp-service-backend';
+import { AppState } from 'src/app/app.service';
 
 @Component({
   selector: 'app-footer-main-navbar',
@@ -35,8 +35,7 @@ export class FooterMainNavbarComponent implements OnInit {
   constructor(
     private contentful: ContentfulService,
     private simpleAuthService: SimpleAuthService,
-    private userProfileService: FirebaseUserProfileService,
-    private ebbService: EbbService) {
+    private appState: AppState) {
     // temp fix until i get the styles to flip the auto expanded flag based on resolution.
     if (window.screen.width <= this.MOBILE_SCREEN_WIDTH) {
       this.autoExpandSubmenus = false;
@@ -46,28 +45,8 @@ export class FooterMainNavbarComponent implements OnInit {
     this.simpleAuthService.userState.subscribe((authState) => {
       this.isLoggedIn = !!authState && !authState.isAnonymous;
     });
-    this.userProfileService.userProfileObservable.subscribe((user) => {
-      if (!!user && !!user.ebbId) {
-        this.ebbService.getInternalApplication(user.customerId, user.ebbId).then((res) => {
-          if (!!res) {
-            this.displayAcpSection = true;
-          } else {
-            this.displayAcpSection = false;
-          }
-        }, (error) => {
-          this.displayAcpSection = false;
-        });
-      } else if (!!user && !user.ebbId) {
-        this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
-          if (!!res) {
-            this.displayAcpSection = true;
-          } else {
-            this.displayAcpSection = false;
-          }
-        }, (error) => {
-          this.displayAcpSection = false;
-        });
-      }
+    this.appState.displayAcpSectionObs.subscribe(res => {
+      this.displayAcpSection = res;
     });
     this.innerWidth = window.innerWidth;
     this.sharedContent = this.contentful.getContent('sharedContent');

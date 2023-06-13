@@ -21,15 +21,13 @@
         <div class="card-content-part" *ngIf="!hideCardContentUI">
             <h5>Your ACP Account Number:</h5>
             <div class="barcode-section">
-                <ngx-barcode6
-                    [bc-value]="barCodeValue"
-                    [bc-display-value]="true" class="barCode-radios">
+                <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
                 </ngx-barcode6>
             </div>
             <p class="smaller grey">{{barCodeValue}}</p>
             <div class="banners-section">
                 <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
-                [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
+                    [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
                     <div class="flex center">
                         <img src="assets/icon/success-icon.svg" alt="Success Icon">
                         <div class="banner-content">
@@ -39,8 +37,8 @@
                 </div>
                 <div class="info-banner default-background device" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]">
                     <div class="flex">
-                        <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
-                            alt="Icon">
+                        <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
+                            [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" alt="Icon">
                         <div class="banner-content">
                             <p class="title" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
                                 {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
@@ -58,51 +56,6 @@
                             [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath2" alt="Icon">
                     </div>
                 </div>
-            
-                <div class="acp-application-card" *ngIf="!!showAcpApplicationCard">
-                    <div class="card-header-part">
-                        <div class="header-flex no-margin">
-                            <div class="title-app-id">
-                                <p class="title">ACP Application<span><img *ngIf="!showAlert" src="assets/icon/pending-dot.svg"
-                                            alt="dot icon"></span>
-                                </p>
-                                <div class="app-id" *ngIf="!showAlert">
-                                    <p>Good Mobile APP ID:</p>
-                                    <p>{{acpAppDetails?.data?.applicationId}}</p>
-                                </div>
-                            </div>
-                            <div class="status-date" *ngIf="!showAlert">
-                                <p class="key bottom">Status: <span class="value status">{{appStatus}}</span></p>
-                                <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content-part">
-                        <div class="info-banner default-background" [class.error-background]="!!showAlert">
-                            <div class="flex">
-                                <img [src]="!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg'"
-                                    alt="Note Icon">
-                                <div class="banner-content" *ngIf="!!ACP_DESCS[appStatus]">
-                                    <p class="title" *ngIf="ACP_DESCS[appStatus]?.title">{{ACP_DESCS[appStatus]?.title}}</p>
-                                    <p class="description" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
-                                        [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
-                                    <p class="description last" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
-                                        [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
-                                    <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
-                                        <button class="button primary" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
-                                            *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
-                                            (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
-                                            [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
-                                            [class.disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]">{{ACP_DESCS[appStatus]?.buttonName}}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
                 <div class="info-banner error-background" *ngIf="!!showAttentionBanner">
                     <div class="flex">
                         <img src="assets/icon/red-alert.svg" alt="Alert Icon">
@@ -111,7 +64,8 @@
                             <p class="description bottom-8">Your previous application has expired.</p>
                             <p class="description"><b>Don’t Worry!</b></p>
                             <p class="description bottom-8">We've created a new application on your behalf.</p>
-                            <p class="description last"><b>To start using your free service, please make sure to finish your ACP
+                            <p class="description last"><b>To start using your free service, please make sure to finish
+                                    your ACP
                                     approval process within 30 days of your application date.</b></p>
                         </div>
                     </div>
@@ -122,7 +76,8 @@
                         <img src="assets/icon/red-alert.svg" alt="Alert Icon">
                         <div class="banner-content">
                             <p class="title">Attention</p>
-                            <p class="description last">Please make sure to activate yor plan within <b>30 days</b>, otherwise, you
+                            <p class="description last">Please make sure to activate yor plan within <b>30 days</b>,
+                                otherwise, you
                                 will lose the service.</p>
                         </div>
                     </div>
@@ -130,7 +85,51 @@
             </div>
         </div>
     </div>
-   
+
+    <div class="acp-application-card" *ngIf="!!showAcpApplicationCard">
+        <div class="card-header-part">
+            <div class="header-flex no-margin">
+                <div class="title-app-id">
+                    <p class="title">ACP Application<span><img *ngIf="!showAlert" src="assets/icon/pending-dot.svg"
+                                alt="dot icon"></span>
+                    </p>
+                    <div class="app-id" *ngIf="!showAlert">
+                        <p>Good Mobile APP ID:</p>
+                        <p>{{acpAppDetails?.data?.applicationId}}</p>
+                    </div>
+                </div>
+                <div class="status-date" *ngIf="!showAlert">
+                    <p class="key bottom">Status: <span class="value status">{{appStatus}}</span></p>
+                    <p class="key">Last modified: <span class="value">{{acpAppDetails?.data?.updatedAt | date}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-content-part">
+            <div class="info-banner default-background" [class.error-background]="!!showAlert">
+                <div class="flex">
+                    <img [src]="!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg'"
+                        alt="Note Icon">
+                    <div class="banner-content" *ngIf="!!ACP_DESCS[appStatus]">
+                        <p class="title" *ngIf="ACP_DESCS[appStatus]?.title">{{ACP_DESCS[appStatus]?.title}}</p>
+                        <p class="description" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
+                            [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
+                        <p class="description last" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
+                            [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
+                        <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
+                            <button class="button primary" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
+                                *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
+                                (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
+                                [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
+                                [class.disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]">{{ACP_DESCS[appStatus]?.buttonName}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="acp-application-card" *ngIf="!!showAcpPlanActivationCard">
         <div class="card-header-part" [class.border-radius]="hideCardContentNV === true">
             <div class="header-flex">
@@ -153,8 +152,7 @@
         <div class="card-content-part" *ngIf="!hideCardContentPA">
             <div class="info-banner default-background">
                 <div class="flex">
-                    <img src="assets/icon/info-icon.svg"
-                        alt="Note Icon">
+                    <img src="assets/icon/info-icon.svg" alt="Note Icon">
                     <div class="banner-content" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]">
                         <p class="title" *ngIf="ACP_PLAN_DESCS[planActivationStatus]?.title">
                             {{ACP_PLAN_DESCS[planActivationStatus]?.title}}</p>
@@ -164,20 +162,23 @@
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
                         <p class="description last" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
-                        <p class="description mt-10" [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
+                        <p class="description mt-10"
+                            [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator"
+                            *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc4"></p>
                         <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
-                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc5" (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.descAction]()"></p>
+                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc5"
+                            (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.descAction]()"></p>
                         <div class="stores-list" *ngIf="!!showStores">
-                                <div *ngFor="let store of stores" class="store">
-                                    <img src="/assets/icon/store-alt.svg" alt="store-icon">
-                                    <div class="store-details">
-                                     <h4 class="store-name">{{store?.name}}</h4>
-                                     <p class="smallest">{{store?.address1}}</p>
-                                     <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
-                                    </div>
-                                  </div>
+                            <div *ngFor="let store of stores" class="store">
+                                <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                                <div class="store-details">
+                                    <h4 class="store-name">{{store?.name}}</h4>
+                                    <p class="smallest">{{store?.address1}}</p>
+                                    <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
                                 </div>
+                            </div>
+                        </div>
                         <div class="actions"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.linkName">
                             <button class="button primary"

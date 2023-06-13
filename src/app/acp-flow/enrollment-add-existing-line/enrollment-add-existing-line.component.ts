@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ActionsAnalyticsService, CART_TYPES, FirebaseUserProfileService, IChangePlanCartItem, IUserPlan, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
-import { filter, take, takeWhile } from 'rxjs/operators';
+import { ActionsAnalyticsService, CART_TYPES, IChangePlanCartItem, IUserPlan, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { filter, takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ACP_CALLBACK_URL } from 'src/environments/environment';
@@ -25,9 +24,8 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
   private planPuchasedClicked = false;
   private alive = true;
   constructor(private router: Router, private formBuilder: UntypedFormBuilder,
-    private userProfileService: FirebaseUserProfileService,
     private userPlansService: UserPlansService, private appState: AppState,
-    private ebbService: EbbService, private modalHelper: ModalHelperService,
+    private modalHelper: ModalHelperService,
     private mobilePlansService: MobileCustomPlansService, private orderCheckoutService: OrderCheckoutService,
     private toastHelper: ToastrHelperService, private analyticsService: ActionsAnalyticsService) { 
       this.mobilePlansService.isConfigurationReady
@@ -43,7 +41,6 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
     this.currentMobileNumberForm = this.formBuilder.group({
       mdn: ["", Validators.required],
     });
-    const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
     this.userPlansService.userPlans
       .pipe(takeWhile(() => this.alive))
       .pipe(filter((plans) => !!plans))
@@ -58,27 +55,16 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                 !plan.canceled
             );
             if (!userEbbPlan) {
-              this.userProfileService.userProfileObservable
-                .pipe(
-                  take(1),
-                  filter((user) => !!user)
-                )
-                .subscribe((user) => {
-                  if (!!user && !!user?.ebbId) {
-                    this.appState.loading = true;
-                    this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((details) => {
-                      this.appState.loading = false;
-                      if (!!details && details?.status !== 'COMPLETE') {
-                        this.goToAcpLanding();
-                      }
-                    }, error => {
-                      this.appState.loading = false;
-                      this.goToAcpLanding();
-                    });
-                  } else {
-                    this.goToAcpLanding();
-                  }
-                });
+              this.appState.loading = true;
+              this.appState.acpAppResObs.subscribe(details => {
+                if (!!details && details?.status !== 'COMPLETE') {
+                  this.goToAcpLanding();
+                  this.appState.loading = false;
+                } else {
+                  this.appState.loading = false;
+                  this.goToAcpLanding();
+                }
+              });
             } else if(!!userEbbPlan && !this.planPuchasedClicked){
               this.goToAcpLanding();
             }
