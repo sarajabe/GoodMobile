@@ -194,6 +194,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                           }
                         );
                       } else {
+                        this.appState.loading = false;
                         this.goToAcpLanding();
                       }
                     });

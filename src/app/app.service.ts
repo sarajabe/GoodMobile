@@ -120,19 +120,16 @@ export class AppState {
   public checkInternalEbbApp(): void {
     this.userProfileService.userProfileObservable.subscribe((user) => {
       if (!!user && !!user.ebbId) {
-        this.loading = true;
         const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
         this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((res) => {
           if (!!res) {
            this.displayAcpSection.next(true);
            this.acpAppRes.next(res);
-           this.loading = false;
            this.acpAppError.next(null);
           } else {
             this.displayAcpSection.next(false);
             this.acpAppRes.next(null);
             this.acpAppError.next(null);
-            this.loading = false;
           }
         }, (error) => {
           if (!!error?.error && !!error?.error?.errors[0] && error?.error?.errors[0]?.code === 'APP_CLOSED_OR_EXPIRED') {
@@ -144,22 +141,17 @@ export class AppState {
             this.acpAppRes.next(null);
             this.acpAppError.next(error);
           }
-          this.loading = false;
         });
       } else if (!!user && !user.ebbId) {
-        this.loading = true;
         this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
           if (!!res) {
-            this.loading = false;
             this.displayAcpSection.next(true);
             this.acpActiveAppRes.next(res);
           } else {
-            this.loading = false;
             this.displayAcpSection.next(false);
             this.acpActiveAppRes.next(null);
           }
         }, (error) => {
-          this.loading = false;
           this.displayAcpSection.next(false);
           this.acpActiveAppRes.next(null);
         });

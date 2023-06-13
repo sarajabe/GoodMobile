@@ -55,10 +55,13 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                 !plan.canceled
             );
             if (!userEbbPlan) {
+              this.appState.loading = true;
               this.appState.acpAppResObs.subscribe(details => {
                 if (!!details && details?.status !== 'COMPLETE') {
                   this.goToAcpLanding();
+                  this.appState.loading = false;
                 } else {
+                  this.appState.loading = false;
                   this.goToAcpLanding();
                 }
               });
