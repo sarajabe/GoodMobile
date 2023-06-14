@@ -99,6 +99,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showAttentionBanner = false;
   public hideCardContentUI = false;
   public showDeviceOptions = false;
+  public showDeviceCode = true;
+  public showACPCodeSection = false;
 
   private callBackUrl: string;
   private alive = true;
@@ -108,6 +110,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   deviceIMEI: any;
   option: any;
   showDeviceOptionError: boolean;
+  pendingACPDevice: boolean;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -157,8 +160,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/hooray-icon.svg`,
         imgPath2: `assets/icon/hooray2-icon.svg`,
         title: `Hooray!`,
-        desc1: `You may be eligible for a <b>$100</b> discount on a new device from our catalog!`,
-        desc2: `Hurry up and get yours today!`,
+        desc1: `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
+        desc2: null,
         buttonName: 'Let’s get started!',
         buttonAction: 'goToAcpDevices'
       },
@@ -693,6 +696,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.appState.loading = true;
               this.accountOrderService.getOrderById(this.acpPlan.acpDevice.orderId).then((order) => {
                 this.acpDeviceOrder = order;
+                this.pendingACPDevice = !!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING' ? true : false;
                 if (!!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING') {
                   this.lookupsService.getAvailableStores().then(stores => {
                     if (stores?.storesLocations?.length > 0) {

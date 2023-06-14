@@ -57,12 +57,29 @@
             font-size: rem-calc(18px);
             line-height: 18px;
             padding-left: 6px;
+            padding-right: 6px;
+            cursor: pointer;
             @media (max-width: $phablet-min-width-minus) {
                 font-size: rem-calc(16px);
                 line-height: 16px;
             }
         }
-
+        .acp-code-section {
+            margin-top: 24px;
+            margin-bottom: 24px;
+            .arrow-icon {
+                width: 20px;
+                &.rotate {
+                    transform: rotate(-180deg);
+                }
+            }
+            .code-section {
+                border: 1px solid $primary-color;
+                border-radius: 10px;
+                padding: 8px 16px 12px;
+                margin-top: 16px;
+            }
+        }
         .pointer {
             cursor: pointer;
         }
@@ -194,7 +211,7 @@
                     }
                     .radioBtn {
                         background: #f8fcfe;
-                        border: 1px solid #005895;
+                        border: 1px solid #9B9B9B;
                         box-shadow: 0px 4px 12px 0px #A5A3A340;
                         border-radius: 10px;
                         padding: 16px;
@@ -202,13 +219,17 @@
                         min-height: 60px;
                         max-width: 385px;
                         cursor: pointer;
+                        &.selected {
+                            border: 1px solid #004064;
+                        }
                         .content {
                             display: flex;
-                            @media (max-width: $phablet-min-width-minus) {
+                            gap: 8px;
+                            @media (max-width: 428.9px) {
                                 flex-direction: column;
-                                // justify-content: center;
-                                // align-items: center;
-                                // text-align: center;
+                                justify-content: center;
+                                align-items: center;
+                                text-align: center;
                             }
                         }
                         .form-control {
@@ -226,6 +247,20 @@
                             .value {
                                 font-family: $base-font-family-bold;
                             }
+                        }
+                        @media (max-width: $phablet-min-width-minus) {
+                            &.selected {
+                                background: #C7E6F7;
+
+                            }
+                            .form-control {
+                                input {
+                                    display: none;
+                                }
+                            }
+                        }
+                        @media (max-width: 429px) {
+                            max-width: 176px;
                         }
                     }
                 }
@@ -589,10 +624,13 @@
     ::ng-deep {
     .barcode-section {
         margin-bottom: 12px;
+        margin-top: 12px;
         .barcode {
             svg {
                 max-width: 426px;
                 height: 85px;
+                border: 1.17px solid #DADADA;
+                background: #FBFBFB;
                 @media (max-width: 833.9px) {
                     max-width: 500px;
                 }

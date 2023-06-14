@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="card-content-part" *ngIf="!hideCardContentUI">
-            <ng-container *ngIf="!ACP_DEVICE_DESCS[acpDeviceCase]">
+            <ng-container *ngIf="!ACP_DEVICE_DESCS[acpDeviceCase] && !pendingACPDevice">
                 <h5>Your ACP Account Number:</h5>
                 <div class="barcode-section">
                     <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
@@ -27,8 +27,40 @@
                 </div>
                 <p class="smaller grey">{{barCodeValue}}</p>
             </ng-container>
+            <ng-container *ngIf="!!pendingACPDevice">
+                <h5>Your Device order ID: <span class="tertiary text-color-primary" (click)="showDeviceCode = !showDeviceCode">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
+                <div class="device-code-section" *ngIf="showDeviceCode">
+                    <p class="smallest">Take this barcode to your Goodwill store clerk to collect your Device.</p>
+                    <div class="barcode-section">
+                        <ngx-barcode6 [bc-value]="acpDeviceOrder?.devices[0]?.itemId" [bc-display-value]="true" class="barCode-radios">
+                        </ngx-barcode6>
+                    </div>
+                    <p class="smaller text-color-grey">Item # {{acpDeviceOrder?.devices[0]?.itemId}}</p>
+                </div>
+                <div class="acp-code-section">
+                    <p class="tertiary text-color-primary" (click)="showACPCodeSection=!showACPCodeSection"><b>{{!!showACPCodeSection ? 'Hide ACP ID Barcode ' : 'Show ACP ID Barcode '}}</b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow" [class.rotate]="!showACPCodeSection"></p>
+                    <div class="code-section" *ngIf="showACPCodeSection">
+                        <div class="barcode-section" >
+                            <h5>Your ACP ID:</h5>
+                            <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
+                            </ngx-barcode6>
+                        </div>
+                        <p class="smaller text-color-grey">{{barCodeValue}}</p>
+                    </div>
+                </div>
+                <div class="info-banner default-background device">
+                    <div class="flex">
+                        <img src="assets/icon/hooray-icon.svg" alt="hooray">
+                        <div class="banner-content">
+                            <p class="title">Good News!</p>
+                            <p class="description">Your device order has been successfully placed!</p>
+                        </div>
+                        <img class="position-img" src="assets/icon/hooray2-icon.svg" alt="success">
+                    </div>
+                </div>
+            </ng-container>
             <div class="banners-section">
-                <div class="info-banner success-background" *ngIf="!!showSPCard" [class.none]="!!isDisplayNone"
+                <div class="info-banner success-background" *ngIf="!!showSPCard && !acpPlan" [class.none]="!!isDisplayNone"
                     [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
                     <div class="flex center">
                         <img src="assets/icon/success-icon.svg" alt="Success Icon">
@@ -51,25 +83,25 @@
                             <div class="device-checkout-options" *ngIf="showDeviceOptions">
                                 <p class="question">How do you want to claim your device?</p>
                                 <div class="options-container">
-                                    <div class="radioBtn">
+                                    <div class="radioBtn" [class.selected]="option === 'online'">
                                         <label class="form-control" for="online" (click)="selectDeviceOption('online')">
                                           <input type="radio" value="online" [(ngModel)]="option" data-cy="online" id="online" name="online" required>
                                           <div class="content">
                                               <img src="/assets/icon/online.svg" alt="online" class="home-icon">
                                               <div class="input-details">
-                                              <p class="value">Choose Device Online</p>
+                                              <p class="smallest primary-font-bold">Choose Device Online</p>
                                               <p class="caption">It will take you to device catalog</p>
                                           </div>
                                         </div>
                                         </label>
                                     </div>
-                                    <div class="radioBtn">
+                                    <div class="radioBtn" [class.selected]="option === 'store'">
                                         <label class="form-control" for="store" (click)="selectDeviceOption('store')">
                                           <input type="radio" value="store" [(ngModel)]="option" data-cy="store" id="store" name="store" required>
                                           <div class="content">
                                               <img src="/assets/icon/store.svg" alt="store pickup" class="home-icon">
                                               <div class="input-details">
-                                              <p class="value">Pick Device In-Store</p>
+                                              <p class="smallest primary-font-bold">Pick Device In-Store</p>
                                               <p class="caption">Choose it if you're at the store</p>
                                           </div>
                                         </div>
@@ -295,9 +327,7 @@
         <div class="card-content-part" *ngIf="!hideCardContentNV">
             <p class="desc" *ngIf="!!showCardDesc">
                 Applicants must complete the ACP application via Good Mobile. Upon completion,
-                applicants will be redirected to the National Verifier to <b>{{verificationDetails?.status ===
-                    ACP_STATUS.PENDING_CERT ? 'complete the ACP Qualification.' : 'upload necessary documents to certify
-                    their eligibility.'}}</b>
+                applicants will be redirected to the National Verifier to <b>{{verificationDetails?.status === ACP_STATUS.PENDING_CERT ? 'complete the ACP Qualification.' : 'upload necessary documents to certify their eligibility.'}}</b>
             </p>
             <div class="info-banner warning-background documents-banner" *ngIf="!!showQrCode">
                 <div class="flex">
