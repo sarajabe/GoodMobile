@@ -20,7 +20,7 @@
         </div>
         <div class="card-content-part" *ngIf="!hideCardContentUI">
             <ng-container *ngIf="!ACP_DEVICE_DESCS[acpDeviceCase] && !pendingACPDevice">
-                <h5>Your ACP Account Number:</h5>
+                <h5>Your ACP ID:</h5>
                 <div class="barcode-section">
                     <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
                     </ngx-barcode6>
