@@ -28,7 +28,7 @@
                 <p class="smaller grey">{{barCodeValue}}</p>
             </ng-container>
             <ng-container *ngIf="!!pendingACPDevice">
-                <h5>Your Device order ID: <span class="tertiary text-color-primary" (click)="showDeviceCode = !showDeviceCode">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
+                <h5>Your Device order Barcode: <span class="tertiary text-color-primary" (click)="toggleDeviceCode()">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
                 <div class="device-code-section" *ngIf="showDeviceCode">
                     <p class="smallest">Take this barcode to your Goodwill store clerk to collect your Device.</p>
                     <div class="barcode-section">
@@ -38,7 +38,7 @@
                     <p class="smaller text-color-grey">Item # {{acpDeviceOrder?.devices[0]?.itemId}}</p>
                 </div>
                 <div class="acp-code-section">
-                    <p class="tertiary text-color-primary" (click)="showACPCodeSection=!showACPCodeSection"><b>{{!!showACPCodeSection ? 'Hide ACP ID Barcode ' : 'Show ACP ID Barcode '}}</b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow" [class.rotate]="!showACPCodeSection"></p>
+                    <p class="tertiary text-color-primary" (click)="toggleACPCode()"><b>{{!!showACPCodeSection ? 'Hide ACP ID Barcode ' : 'Show ACP ID Barcode '}}</b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow" [class.rotate]="!showACPCodeSection"></p>
                     <div class="code-section" *ngIf="showACPCodeSection">
                         <div class="barcode-section" >
                             <h5>Your ACP ID:</h5>

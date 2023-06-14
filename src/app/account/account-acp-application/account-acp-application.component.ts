@@ -620,6 +620,15 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.option = value;
     this.showDeviceOptionError = false;
   }
+
+  public toggleDeviceCode(): void {
+    this.showDeviceCode = !this.showDeviceCode;
+    this.showACPCodeSection = !this.showDeviceCode ? true : false;
+  }
+  public toggleACPCode(): void {
+    this.showACPCodeSection = !this.showACPCodeSection;
+    this.showDeviceCode = !this.showACPCodeSection ? true : false;
+  }
   private checkDocGroups(data): void {
     const selectedCodes = data?.eligibilityCode.split(",");
     // check if some of the common codes related to generic group are selected 

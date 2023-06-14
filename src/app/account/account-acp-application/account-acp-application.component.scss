@@ -627,15 +627,15 @@
         margin-top: 12px;
         .barcode {
             svg {
-                max-width: 426px;
+                max-width: 426px!important;
                 height: 85px;
                 border: 1.17px solid #DADADA;
                 background: #FBFBFB;
                 @media (max-width: 833.9px) {
-                    max-width: 500px;
+                    max-width: 500px!important;
                 }
                 @media(max-width: $phablet-min-width-minus) {
-                    max-width: 255px;
+                    max-width: 234px!important;
                     height: 100%;
                 }
             }
