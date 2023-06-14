@@ -82,8 +82,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         if (!!this.nextPage) {
           this.handleNextPageParams();
+          console.info('5555555555555555')
         } else {
-          this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`], true);
+          setTimeout(() => {
+            this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
+              console.info('*****************', data)
+              if (!!data && data?.ebbId) {
+                this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`], true);
+              } else {
+                console.info('------------------------')
+                this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`], true);
+              }
+            });
+          }, 200);
         }
       }
     });

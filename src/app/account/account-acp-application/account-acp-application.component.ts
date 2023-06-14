@@ -820,14 +820,14 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   this.showNVCard = true;
                   this.showAlert = true;
                   this.appState.acpAppErrorObs.subscribe(error => {
-                    if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
+                    if (!!error && error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
                       this.showExpiredSection = true;
                       this.nvStatus = 'EXPIRED';
                       if (!!this.acpPlan) {
                         // Get old data
                         this.getInternalAppDataForExpiredApps();
                       }
-                    } else if (error.error.errors[0].code === '1421') {
+                    } else if (!!error && error.error.errors[0].code === '1421') {
                       this.showNVErrorSection = true;
                       this.nvStatus = 'NV_ERROR';
                     } else {

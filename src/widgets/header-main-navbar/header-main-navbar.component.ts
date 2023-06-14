@@ -151,7 +151,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                 }
                 setTimeout(() => {
                   const alert = document.getElementById('alert');
-                  this.alertBannerHeight = alert.clientHeight;
+                  this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
                   this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
                 }, 200);
               }
@@ -172,7 +172,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
               if (!!this.showACPActionBanner) {
                 setTimeout(() => {
                   const alert = document.getElementById('alert');
-                  this.alertBannerHeight = alert.clientHeight;
+                  this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
                   this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
                 }, 200);
               } else {
@@ -224,14 +224,14 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
         if (!!this.showResumeFilingContent || !!this.showActivatePlanContent) {
           setTimeout(() => {
             const alert = document.getElementById('alert');
-            this.alertBannerHeight = alert.clientHeight;
+            this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
             this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
           }, 200);
         }
         else if (!!this.showACPActionBanner) {
           setTimeout(() => {
             const alert = document.getElementById('alert');
-            this.alertBannerHeight = alert.clientHeight;
+            this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
             this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
           }, 200);
         } else {
@@ -479,7 +479,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     this.headerHeight = !!header && !!this.showACPActionBanner ? header.clientHeight : (window.innerWidth < 640 ? 58 : 64);
     if (!!this.showACPActionBanner || !!this.showResumeFilingContent || !!this.showActivatePlanContent) {
       const alert = document.getElementById('alert');
-      this.alertBannerHeight = alert.clientHeight;
+      this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
     } else {
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
