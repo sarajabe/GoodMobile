@@ -49,10 +49,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.params = params;
         if (params[LOGIN_ROUTE_URLS.PARAMS.NEXT_PAGE]) {
           this.nextPage = params[LOGIN_ROUTE_URLS.PARAMS.NEXT_PAGE];
+        } else {
+          this.nextPage = null;
         }
       }
     });
-    this.route.queryParams.subscribe((queryParams: Params) => {
+    this.route.queryParams.pipe(take(1)).subscribe((queryParams: Params) => {
       if (queryParams && queryParams[LOGIN_ROUTE_URLS.PARAMS.OOB_CODE]) {
         this.params = queryParams;
         this.oobCode = queryParams[LOGIN_ROUTE_URLS.PARAMS.OOB_CODE];
@@ -79,23 +81,20 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (!!this.authObserver) {
           this.authObserver.unsubscribe();
         }
-
-        if (!!this.nextPage) {
-          this.handleNextPageParams();
-          console.info('5555555555555555')
-        } else {
-          setTimeout(() => {
-            this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
-              console.info('*****************', data)
+        setTimeout(() => {
+          this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
+            if (!!this.nextPage) {
+              this.handleNextPageParams();
+            } else {
               if (!!data && data?.ebbId) {
                 this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`], true);
               } else {
-                console.info('------------------------')
                 this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`], true);
               }
-            });
-          }, 200);
-        }
+            }
+          })
+         
+        }, 300);
       }
     });
   }
