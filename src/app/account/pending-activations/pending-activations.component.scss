@@ -443,46 +443,92 @@
                 }
             }
         }
-        .specific {
-            max-width: 512px;
-            padding: 18px;
+        .instructions {
             margin-top: 24px;
             margin-bottom: 32px;
-           
-            .view-store {
-                color: $primary-color;
-                cursor: pointer;
-                font-size: rem-calc(18px);
-                line-height: 18px;
-                font-family: $secondary-font-family-bold;
-                @media(max-width: $phablet-min-width-minus) {
-                    font-size: rem-calc(16px);
-                    line-height: 16px;
-                    display: block;
-                    margin-top: 16px;
-                }
+            max-width: 1013px;
+            .info {
+                margin-bottom: 20px;
+                font-weight: bold;
             }
-            .mt-4 {
-                margin-top: 4px;
-            }
-            .stores-list {
-                background: #FBFBFB;
-                padding: 20px 24px 20px 20px;
-                margin-top: 16px;
-                display: flex;
-                flex-direction: column;
-                gap: 24px;
-                @media(max-width: 420px) {
-                    padding: 16px 20px 16px 16px;
+            .inner-content {
+                margin-left: 10px;
+                .clark {
+                    margin-bottom: 20px;
+                    color: #4B4B4B;
                 }
-                .store {
+                .instruction-flex {
                     display: flex;
-                    gap: 8px;
-                    .store-details {
-                        display: flex;
+                    align-items: center;
+                    gap: 24px;
+                    margin-bottom: 24px;
+                    flex-wrap: wrap;
+                    @media(max-width: $phablet-min-width-minus) {
                         flex-direction: column;
-                        .smallest {
+                        align-items: flex-start;
+                        gap: 16px;
+                        flex-wrap: nowrap;
+                    }
+                    .instruction-details {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        @media(max-width: $phablet-min-width-minus) {
+                            gap: 8px;
+                        }
+                        .instruction-img {
+                            width: 60px;
+                            height: 64px;
+                            @media(max-width: $phablet-min-width-minus) {
+                                width: 50px;
+                                height: 50px;
+                            }
+                        }
+                        .img-claric {
+                            max-width: 140px;
+                            color: #4B4B4B;
+                            margin-bottom: 0;
+                            font-weight: normal;
                             font-family: $base-font-family;
+                            @media(max-width: $phablet-min-width-minus) {
+                                max-width: 100%;
+                            }
+                        }
+                    }
+                }
+                .view-store {
+                    color: $primary-color;
+                    cursor: pointer;
+                    font-size: rem-calc(18px);
+                    line-height: 18px;
+                    font-family: $secondary-font-family-bold;
+                    @media(max-width: $phablet-min-width-minus) {
+                        font-size: rem-calc(16px);
+                        line-height: 16px;
+                        display: block;
+                        margin-top: 16px;
+                    }
+                }
+                .stores-list {
+                    background: #FBFBFB;
+                    padding: 20px 24px 20px 20px;
+                    margin-top: 16px;
+                    display: flex;
+                    gap: 40px;
+                    max-width: 472px;
+                    @media(max-width: $phablet-min-width-minus) {
+                        flex-direction: column;
+                        gap: 21px;
+                    }
+                    @media(max-width: 420px) {
+                        padding: 16px 20px 16px 16px;
+                    }
+                    .store {
+                        display: flex;
+                        gap: 8px;
+                        .store-details {
+                            display: flex;
+                            flex-direction: column;
                         }
                     }
                 }

@@ -96,20 +96,40 @@
                         <ngx-barcode6
                             [bc-value]="barCodeValues"
                             [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
-                        <div class="info-banner default-background specific">
+                        <div class="info-banner default-background instructions">
                             <div class="flex">
                                 <img src="assets/icon/info-icon.svg" alt="Info Icon">
                                 <div class="banner-content">
-                                    <p class="smallest mt-4">Check with the store clerk to pick up your package <span (click)="viewStores = !viewStores" class="view-store">{{!!viewStores ? 'Hide' : 'View'}} Stores</span></p>
-                                    <div class="stores-list" *ngIf="!!viewStores">
-                                        <div *ngFor="let store of stores" class="store">
-                                            <img src="/assets/icon/store-alt.svg" alt="store-icon">
-                                            <div class="store-details">
-                                             <h4 class="store-name">{{store?.name}}</h4>
-                                             <p class="smallest">{{store?.address1}}</p>
-                                             <p class="smallest">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                                    <p class="smallest info">Take this barcode with instructions below to your Goodwill store clerk to collect your SIM card.</p>
+                                    <div class="inner-content">
+                                        <p class="smallest clark">STORE’S CLERK INSTRUCTIONS</p>
+                                        <div class="instruction-flex">
+                                            <div class="instruction-details">
+                                                <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60" height="64">
+                                                <p class="smallest img-claric">Select <b>‘Online SIM Card Pickup’</b> button</p>
                                             </div>
-                                          </div>
+                                            <div class="instruction-details">
+                                                <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60" height="64">
+                                                <p class="smallest img-claric">Scan <b>Barcode</b></p>
+                                            </div>
+                                            <div class="instruction-details">
+                                                <img class="instruction-img" src="/assets/icon/sim-scan.svg" alt="sim-scan-icon" width="60" height="64">
+                                                <p class="smallest img-claric">Scan <b>SIM card</b></p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a (click)="viewStores = !viewStores" class="view-store">{{!!viewStores ? 'Hide' : 'View'}} Stores</a>
+                                            <div class="stores-list" *ngIf="!!viewStores">
+                                                <div *ngFor="let store of stores" class="store">
+                                                    <img src="/assets/icon/store-alt.svg" alt="store-icon">
+                                                    <div class="store-details">
+                                                     <p class="smallest store-name">{{store?.name}}</p>
+                                                     <p class="caption">{{store?.address1}}</p>
+                                                     <p class="caption">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

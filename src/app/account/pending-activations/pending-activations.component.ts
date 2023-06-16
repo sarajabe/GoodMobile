@@ -126,13 +126,15 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       }
       if(!!this.currentUserPlan?.storePickup) {
         this.getOrderDetails();
+        this.appState.loading = true;
         this.lookupsService.getAvailableStores().then(stores => {
           if(stores?.storesLocations?.length > 0) {
             this.stores = stores?.storesLocations;
           }
+          this.appState.loading = false;
         }, error => {
           this.toastHelper.showAlert(error.error.errors[0].message);
-    
+          this.appState.loading = false;
         })
       } else {
         this.iccid = null;

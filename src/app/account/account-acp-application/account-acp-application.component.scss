@@ -64,6 +64,81 @@
                 line-height: 16px;
             }
         }
+        .intro {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            img {
+                width: 50px;
+                height: 50px;
+            }
+            .intro-desc {
+                margin-bottom: 0;
+                font-weight: normal;
+            }
+        }
+        .device-code-section {
+            margin-bottom: 37px!important;
+            @media(max-width: $phablet-min-width-minus) {
+                margin-bottom: 40px!important;
+            }
+            .title {
+                margin-bottom: 10px;
+            }
+            .clark {
+                margin-bottom: 20px;
+                color: #4B4B4B;
+                margin-top: 20px;
+                font-weight: bold;
+                font-family: $base-font-family-bold;
+                @media(max-width: $phablet-min-width-minus) {
+                    margin-top: 16px;
+                }
+            }
+            .instruction-flex {
+                display: flex;
+                align-items: flex-start;
+                gap: 38px;
+                flex-wrap: wrap;
+                text-align: center;
+                @media(max-width: $phablet-min-width-minus) {
+                    flex-direction: column;
+                    gap: 24px;
+                    flex-wrap: nowrap;
+                    text-align: left;
+                    align-items: flex-start;
+                }
+                .instruction-details {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    gap: 12px;
+                    @media(max-width: $phablet-min-width-minus) {
+                        gap: 8px;
+                        flex-direction: row;
+                    }
+                    .instruction-img {
+                        width: 60px;
+                        height: 64px;
+                        @media(max-width: $phablet-min-width-minus) {
+                            width: 50px;
+                            height: 50px;
+                        }
+                    }
+                    .img-claric {
+                        max-width: 140px;
+                        color: #4B4B4B;
+                        margin-bottom: 0;
+                        font-weight: normal;
+                        font-family: $base-font-family;
+                        @media(max-width: $phablet-min-width-minus) {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
         .acp-code-section {
             margin-top: 24px;
             margin-bottom: 24px;

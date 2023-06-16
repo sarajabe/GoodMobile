@@ -28,14 +28,33 @@
                 <p class="smaller grey">{{barCodeValue}}</p>
             </ng-container>
             <ng-container *ngIf="!!pendingACPDevice">
-                <h5>Your Device order Barcode: <span class="tertiary text-color-primary" (click)="toggleDeviceCode()">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
-                <div class="device-code-section" *ngIf="showDeviceCode">
-                    <p class="smallest">Take this barcode to your Goodwill store clerk to collect your Device.</p>
+                <div class="intro">
+                    <img src="assets/icon/hooray-icon.svg" alt="hooray" width="50" height="50">
+                    <p class="smaller intro-desc">Your device order has been successfully placed!</p>
+                </div>
+                <div class="info-banner default-background device-code-section" *ngIf="showDeviceCode">
+                    <h5 class="title">Your Device order Barcode: <span class="tertiary text-color-primary" (click)="toggleDeviceCode()">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
+                    <p class="smallest">Take this barcode with instructions below to your Goodwill store clerk to collect your Device.</p>
                     <div class="barcode-section">
                         <ngx-barcode6 [bc-value]="acpDeviceOrder?.devices[0]?.itemId" [bc-display-value]="true" class="barCode-radios">
                         </ngx-barcode6>
                     </div>
                     <p class="smaller text-color-grey">Item # {{acpDeviceOrder?.devices[0]?.itemId}}</p>
+                    <p class="smallest clark">STORE’S CLERK INSTRUCTIONS</p>
+                    <div class="instruction-flex">
+                        <div class="instruction-details">
+                            <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60" height="64">
+                            <p class="smallest img-claric">Select <b>‘Online Tablet Order’</b> button</p>
+                        </div>
+                        <div class="instruction-details">
+                            <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60" height="64">
+                            <p class="smallest img-claric">Scan <b>ACP ID Barcode</b></p>
+                        </div>
+                        <div class="instruction-details">
+                            <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon" width="60" height="64">
+                            <p class="smallest img-claric">Scan <b>Device IMEI</b></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="acp-code-section">
                     <p class="tertiary text-color-primary" (click)="toggleACPCode()"><b>{{!!showACPCodeSection ? 'Hide ACP ID Barcode ' : 'Show ACP ID Barcode '}}</b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow" [class.rotate]="!showACPCodeSection"></p>
@@ -46,16 +65,6 @@
                             </ngx-barcode6>
                         </div>
                         <p class="smaller text-color-grey">{{barCodeValue}}</p>
-                    </div>
-                </div>
-                <div class="info-banner default-background device">
-                    <div class="flex">
-                        <img src="assets/icon/hooray-icon.svg" alt="hooray">
-                        <div class="banner-content">
-                            <p class="title">Good News!</p>
-                            <p class="description">Your device order has been successfully placed!</p>
-                        </div>
-                        <img class="position-img" src="assets/icon/hooray2-icon.svg" alt="success">
                     </div>
                 </div>
             </ng-container>
