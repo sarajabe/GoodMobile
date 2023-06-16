@@ -591,7 +591,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.CONTACT_US}`]);
   }
   public showBarCodePopup(): void {
-    this.modalHelper.showBarcodeModal('Scan the barcode', 'Take this barcode to your Goodwill store clerk to collect your Device.', this.barCodeValue, 'Your ACP ID:', this.barCodeValue);
+    this.modalHelper.showBarcodeModal('Scan the barcode', 'Take this barcode with instructions below to your Goodwill store clerk to collect your Device.', this.barCodeValue, 'Your ACP ID:', this.barCodeValue);
   }
   public goToAcpDevices(): void {
     this.showDeviceOptionError = !!this.option ? false : true;
