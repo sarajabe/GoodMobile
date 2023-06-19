@@ -32,6 +32,7 @@
                     <img src="assets/icon/hooray-icon.svg" alt="hooray" width="50" height="50">
                     <p class="smaller intro-desc">Your device order has been successfully placed!</p>
                 </div>
+                <p class="tertiary text-color-primary" (click)="showDeviceCode=true;" *ngIf="!showDeviceCode"><b>Show Device order Barcode </b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow"></p>
                 <div class="info-banner default-background device-code-section" *ngIf="showDeviceCode">
                     <h5 class="title">Your Device order Barcode: <span class="tertiary text-color-primary" (click)="toggleDeviceCode()">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
                     <p class="smallest">Take this barcode with instructions below to your Goodwill store clerk to collect your Device.</p>
@@ -48,7 +49,7 @@
                         </div>
                         <div class="instruction-details">
                             <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60" height="64">
-                            <p class="smallest img-claric">Scan <b>ACP ID Barcode</b></p>
+                            <p class="smallest img-claric">Scan <b>Barcode</b></p>
                         </div>
                         <div class="instruction-details">
                             <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon" width="60" height="64">
