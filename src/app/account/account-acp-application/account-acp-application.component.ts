@@ -627,6 +627,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   }
   public toggleACPCode(): void {
     this.showACPCodeSection = !this.showACPCodeSection;
+    this.showDeviceCode = false;
   }
   private checkDocGroups(data): void {
     const selectedCodes = data?.eligibilityCode.split(",");
