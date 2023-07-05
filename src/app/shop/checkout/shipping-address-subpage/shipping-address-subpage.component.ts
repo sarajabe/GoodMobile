@@ -19,7 +19,6 @@ import { ToastrHelperService } from '../../../../services/toast-helper.service';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PageScrollService } from 'ngx-page-scroll-core';
-import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 
 @Component({
   selector: 'app-shipping-address-subpage',
@@ -64,7 +63,6 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public hasPhone = false;
   public showAddressRequiredError = false;
   public homeDeliveryOption = false;
-  public stores = [];
   public barCode = false;
   public option;
   public CART_TYPES = CART_TYPES;
@@ -79,8 +77,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     private analyticsService: ActionsAnalyticsService,
     private metaService: MetaService,
     public appState: AppState,
-    private pageScrollService: PageScrollService,
-    private lookupsService: LookupsService) {
+    private pageScrollService: PageScrollService) {
     this.metaService.createCanonicalUrl();
     this.checkoutService.totalSubject.subscribe((t) => {
       this.total = t;
@@ -95,14 +92,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   ngOnInit(): void {
     this.analyticsService.trackCheckoutSteps(2, 'Shipping');
     this.flowSettings = this.checkoutService.initFlowControlSettings(this.checkoutService.needsShipping, this.isLoggedIn);
-    this.lookupsService.getAvailableStores().then(stores => {
-      if(stores?.storesLocations?.length > 0) {
-        this.stores = stores?.storesLocations;
-      }
-    }, error => {
-      this.toastHelper.showAlert(error.error.errors[0].message);
-
-    })
+   
     const storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
     const storePickup = JSON.parse(sessionStorage.getItem('storePickup'));
     if (!!storedShippingAddress) {
@@ -194,6 +184,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       this.addressesList = changes.user.currentValue.shippingAddresses;
     }
   }
+
   public resolvedCaptcha(captchaResponse: string): void {
     this.recaptchaResponse = captchaResponse;
     this.captchaValid = !!captchaResponse;

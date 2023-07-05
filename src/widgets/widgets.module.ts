@@ -34,6 +34,7 @@ import { BannersComponent } from './banners/banners.component';
 import { ActivationHeaderComponent } from './activation-header/activation-header.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SafeHtmlPipe } from './pipes/safeHtml.pipe';
+import { StoresListComponent } from './stores-list/stores-list.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipe';
     FeaturedPlansComponent,
     BannersComponent,
     ActivationHeaderComponent,
+    StoresListComponent,
    ],
   imports: [
     CommonModule,
@@ -104,7 +106,8 @@ import { SafeHtmlPipe } from './pipes/safeHtml.pipe';
     CustomRangeSliderComponent,
     FeaturedPlansComponent,
     BannersComponent,
-    ActivationHeaderComponent
+    ActivationHeaderComponent,
+    StoresListComponent
   ],
   providers: [SimpleDateFormatPipe, SafePipe, SafeHtmlPipe, ModalHelperService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

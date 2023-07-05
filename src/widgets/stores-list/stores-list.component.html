@@ -1,0 +1,33 @@
+<form #storesForm="ngForm" class="options-form">
+    <div class="form-row">
+      <div class="form-field half">
+        <div class="floating-label">
+          <select class="floating-select cities" [(ngModel)]="selectedCity" id="cities" placeholder=" "
+          #cities="ngModel" name="cities" [class.dirty]="!!selectedCity"
+          (ngModelChange)="selectCity()" required>
+          <option *ngFor="let city of citiesList" [ngValue]="city">{{city}}</option>
+        </select>
+        <label class="primary-font-bold city-label">Select City/Country</label>
+        </div>
+      </div>
+    </div>
+  </form>
+  <p class="caption caption-grey"><b>{{stores?.length}} {{stores?.length > 1 ? 'stores' : 'store'}}</b> available in {{selectedCity}}</p>
+   <div class="stores-section" [class.scroll] = "stores?.length > 2">
+       <div *ngFor="let store of stores" class="stores">
+         <p class="smaller primary-font-bold">{{store?.name}}</p>
+         <div class="store-details">
+           <img src="/assets/icon/location-pin-blue.svg" alt="location">
+           <div class="info">
+             <p class="smallest">{{store?.address1}},{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+             <p class="smallest">{{store?.workingHours}}</p>
+           </div>
+         </div>
+         <div class="store-details">
+          <img src="/assets/icon/call.svg" alt="call">
+          <div class="info">
+            <p class="smallest">{{store?.phone}}</p>
+          </div>
+        </div>
+       </div>
+   </div>

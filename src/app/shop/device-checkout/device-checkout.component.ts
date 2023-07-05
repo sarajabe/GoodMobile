@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomizableMobilePlan, MobileCustomPlansService } from '@ztarmobile/zwp-service-backend';
-import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
@@ -16,10 +15,9 @@ import { CheckoutService } from '../checkout/checkout.service';
 export class DeviceCheckoutComponent implements OnInit, OnDestroy {
   public userCart: CustomizableMobilePlan;
   public total = 0;
-  public stores = [];
   private alive = true;
 
-  constructor(private mobilePlansService: MobileCustomPlansService, private lookupsService: LookupsService, private toastHelper: ToastrHelperService,
+  constructor(private mobilePlansService: MobileCustomPlansService, private toastHelper: ToastrHelperService,
     private router: Router, private appState: AppState, private checkoutService: CheckoutService) { 
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((cart) => {
       this.userCart = cart;
@@ -27,14 +25,6 @@ export class DeviceCheckoutComponent implements OnInit, OnDestroy {
         this.total = this.userCart.acpDevice.price;
       }
     });
-    this.lookupsService.getAvailableStores().then(stores => {
-      if(stores?.storesLocations?.length > 0) {
-        this.stores = stores?.storesLocations;
-      }
-    }, error => {
-      this.toastHelper.showAlert(error.error.errors[0].message);
-
-    })
   }
 
   ngOnInit(): void {
