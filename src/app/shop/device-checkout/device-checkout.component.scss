@@ -74,19 +74,20 @@
         .soon-section {
             position: absolute;
             right: -38px;
-            top: 9px;
+            top: 27px;
             img {
                 width: 174px;
             }
             @media(max-width: $phablet-min-width-minus) {
                 right: -31px;
-                top: 22px;
+                top: 
+                54px;
                 img {
                     width: 143px;
                 }
             }
-            @media(max-width: 386px) {
-                top: 40px;
+            @media(max-width: 356px) {
+                top: 78px;
             }
         }
         .inner-paddings {

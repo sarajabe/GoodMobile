@@ -119,15 +119,8 @@
                                         </div>
                                         <div>
                                             <a (click)="viewStores = !viewStores" class="view-store">{{!!viewStores ? 'Hide' : 'View'}} Stores</a>
-                                            <div class="stores-list" *ngIf="!!viewStores">
-                                                <div *ngFor="let store of stores" class="store">
-                                                    <img src="/assets/icon/store-alt.svg" alt="store-icon">
-                                                    <div class="store-details">
-                                                     <p class="smallest store-name">{{store?.name}}</p>
-                                                     <p class="caption">{{store?.address1}}</p>
-                                                     <p class="caption">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
-                                                    </div>
-                                                  </div>
+                                            <div class="stores-list-container" *ngIf="!!viewStores">
+                                                <app-stores-list ></app-stores-list>
                                             </div>
                                         </div>
                                     </div>

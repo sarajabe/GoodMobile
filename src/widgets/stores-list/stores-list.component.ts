@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
+import { AppState } from 'src/app/app.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 
 @Component({
@@ -15,8 +16,10 @@ export class StoresListComponent implements OnInit {
   stores = [];
   
 
-  constructor(private lookupsService: LookupsService, private toastHelper: ToastrHelperService) { 
+  constructor(private lookupsService: LookupsService, private toastHelper: ToastrHelperService, private appState: AppState) { 
+    this.appState.loading = true;
     this.lookupsService.getAvailableStores().then(stores => {
+      this.appState.loading = false;
       if(stores?.storesLocations?.length > 0) {
         this.today = new Date();
         this.allStores = stores?.storesLocations;
@@ -25,6 +28,7 @@ export class StoresListComponent implements OnInit {
         this.stores = stores?.storesLocations.filter((store) => store.city === this.selectedCity && new Date(store.launchDate) <= this.today);
       }
     }, error => {
+      this.appState.loading = false;
       this.toastHelper.showAlert(error.error.errors[0].message);
 
     })
