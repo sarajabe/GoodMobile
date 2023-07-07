@@ -56,6 +56,20 @@
     border-radius: 10px;
     background-color: #F5F5F5;
 }
+img {
+    width: 20px!important;
+    height: 20px!important;
+    &.calendar {
+        visibility: hidden;
+    }
+    @media (max-width: $phablet-min-width-minus) {
+        width: 16px!important;
+        height: 16px!important;
+        &.calendar {
+            visibility: visible;
+        }
+    }
+}
 .options-form {
     max-width: 480px;
     width: 100%;
@@ -65,6 +79,7 @@
         margin-bottom: 0px;
         top: 13px;
     }
+   
     .form-row {
         margin-bottom: 11px;
         @media (max-width: $phablet-min-width-minus) {

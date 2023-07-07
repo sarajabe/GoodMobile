@@ -123,7 +123,6 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     private userPlansService: UserPlansService,
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
-    private lookupsService: LookupsService,
     private accountOrderService: UserOrdersService,) {
 
     this.accountHeaderService.setPageTitle('Your ACP application');
@@ -706,16 +705,6 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.accountOrderService.getOrderById(this.acpPlan.acpDevice.orderId).then((order) => {
                 this.acpDeviceOrder = order;
                 this.pendingACPDevice = !!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING' ? true : false;
-                if (!!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING') {
-                  this.lookupsService.getAvailableStores().then(stores => {
-                    if (stores?.storesLocations?.length > 0) {
-                      this.stores = stores?.storesLocations;
-                    }
-                  }, error => {
-                    this.toastHelper.showAlert(error.error.errors[0].message);
-
-                  })
-                }
                 const deviceOrder: any = this.acpDeviceOrder;
                 this.deviceIMEI = this.acpDeviceOrder.status === 'SHIPPED' && !!this.acpDeviceOrder.devices && this.acpDeviceOrder.devices.length > 0 ? deviceOrder.devices[0].imei : null;
               }, (error) => {

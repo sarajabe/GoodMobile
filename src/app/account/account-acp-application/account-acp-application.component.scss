@@ -159,28 +159,24 @@
             cursor: pointer;
         }
         .stores-list {
-            background: #FBFBFB;
-            padding: 20px 24px 20px 20px;
-            margin-top: 16px;
-            display: flex;
-            margin-left: 6px;
-            gap: 24px;
-            @media(max-width: $phablet-min-width-minus) {
+            margin-top: 24px;
+            background-color: $white;
+            padding: 20px;
+            max-width: 520px;
+            border-radius: 0px 0px 10px 10px;
+            box-shadow: 0px 4px 15px rgba(206, 211, 214, 0.6);
+            margin-bottom: 24px;
+            width: 100%;
+            .stores-section {
                 flex-direction: column;
-            }
-            @media(max-width: 420px) {
-                padding: 16px 20px 16px 16px;
-            }
-            .store {
-                display: flex;
-                gap: 8px;
-                .store-details {
-                    display: flex;
-                    flex-direction: column;
-                    .smallest {
-                        font-family: $base-font-family;
-                    }
+                flex-wrap: nowrap;
+                .stores {
+                    flex-basis: 100%;
                 }
+            }
+            @media(max-width: 427px) {
+                margin-left: -25px;
+                min-width: 224px;
             }
         }
         .created-date {
