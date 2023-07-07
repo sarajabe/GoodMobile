@@ -73,6 +73,8 @@ export class LandingCoverageComponent implements OnInit, OnDestroy {
         this.appState.loading = true;
         this.invalidAddress = false;
         this.displayValidation = false;
+         //this is a default value until address have the value from api
+         this.address = event?.main_text;
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
           .subscribe(

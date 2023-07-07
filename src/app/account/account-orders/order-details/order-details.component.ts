@@ -233,6 +233,16 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
                   }
                 });
               }
+              if (this.orderInfo.devices && this.orderInfo.devices.length > 0 ) {
+                this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
+                  const associatedPlan = plans.find((p) => p.mdn === this.orderInfo.mdn);
+                  if (!!associatedPlan) {
+                    associatedPlan.acpDevice = null;
+                    delete associatedPlan.acpDevice;
+                    this.userPlansService.updateUserPlan(associatedPlan.userId, associatedPlan);
+                  }
+                });
+              }
               this.toastHelper.showSuccess('Your order has been canceled successfully!');
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
             }).catch((error) => {
@@ -267,7 +277,6 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
             this.appState.loading = false;
           },(error) => {
             this.appState.loading = false;
-            this.toastHelper.showAlert(error?.error?.message || error?.message);
           });
         }
         if (!!this.orderInfo.shipments && this.orderInfo.shipments.length > 0) {

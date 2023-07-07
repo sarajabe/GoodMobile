@@ -143,6 +143,30 @@
                         line-height: 24px;
                         margin-bottom: 0px;
                         height: 40px;
+                        caret-color: $primary-color;
+                        &:focus {
+                            border-color: $primary-color;
+                        }
+                        &.cities {
+                            max-width: 310px;
+                        }
+                        &.dirty {
+                            border-color: #868686;
+                            &:valid {
+                              ~ {
+                                label {
+                                  top: -12px;
+                                  font-size: rem-calc(12px);
+                                  background-color: white;
+                                  width: 120px;
+                                  color: #5e5e5e;
+                                  &.long {
+                                    width: 168px;
+                                  }
+                                }
+                              }
+                            }
+                          }
                     }
                     .medium {
                         width: 93px !important;
@@ -217,36 +241,7 @@
                         border-color: #e2e2e2;
                         margin: 16px 0;
                     }
-                    .stores-section {
-                        background: #f3f3f3;
-                        padding: 24px 32px 24px 24px;
-                        box-shadow: 0px 4px 12px rgba(94, 94, 94, 0.03), 0px 8px 30px rgba(94, 94, 94, 0.08),
-                            0px 5px 16px rgba(0, 60, 117, 0.02);
-                        border-radius: 10px;
-                        display: flex;
-                        flex-wrap: wrap;
-                        @media (max-width: $ipad-min-width-minus) {
-                            flex-direction: column;
-                            padding: 16px;
-                        }
-                        .stores {
-                            display: flex;
-                            align-items: flex-start;
-                            margin-right: 50px;
-                            @media (max-width: $ipad-min-width-minus) {
-                                margin-bottom: 24px;
-                                margin-right: 0;
-                            }
-                            img {
-                                width: 32px;
-                                height: 32px;
-                                margin-right: 12px;
-                            }
-                            .store-name {
-                                margin-bottom: 8px;
-                            }
-                        }
-                    }
+                  
                 }
                 .barCoder-form {
                     display: flex;

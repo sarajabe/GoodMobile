@@ -129,7 +129,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                 .subscribe((user) => {
                   if (!!user && !!user?.ebbId) {
                     this.appState.loading = true;
-                    this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((details) => {
+                    this.appState.acpAppResObs.subscribe(details => {
                       if (!!details && details?.status === 'COMPLETE') {
                         this.addressesList = !!user?.shippingAddresses ? user.shippingAddresses : [];
                         this.selectedShippingAddress = {} as IFirebaseAddress;
@@ -194,10 +194,9 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                           }
                         );
                       } else {
+                        this.appState.loading = false;
                         this.goToAcpLanding();
                       }
-                    }, error => {
-                      this.goToAcpLanding();
                     });
                   } else {
                     this.goToAcpLanding();
@@ -473,6 +472,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       if (!!event.place_id) {
         this.appState.loading = true;
         this.invalidAddress = false;
+        //this is a default value until address have the value from api
+        this.newMobileServiceFrom.controls.address.setValue(event?.main_text);
         this.placesAutoCompleteService
           .findDetailedAddressFields(event.place_id)
           .subscribe(

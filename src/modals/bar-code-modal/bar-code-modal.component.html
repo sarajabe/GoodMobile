@@ -1,23 +1,40 @@
 <div class="modal">
-    <div class="container model-container barcode-modal">
-      <div class="modal-header">
-        <h2 class="modal-heading">{{context?.title}}</h2>
-        <button class="modal-close modal-toggle" (click)="closeDialog()"><i
-            class="icon-close"></i></button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-content">
-            <p>{{context?.message}}</p>
-          <div class="barcode-section">
-            <ngx-barcode6
-                [bc-value]="context?.bardcodeValue"
-                [bc-display-value]="true" class="barCode-radios"></ngx-barcode6>
+  <div class="container model-container barcode-modal">
+    <div class="modal-header">
+      <h2 class="modal-heading">{{context?.title}}</h2>
+      <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content">
+        <p>{{context?.message}}</p>
+        <div class="barcode-section">
+          <h5 class="message">{{context?.barCodeMessage}}</h5>
+          <ngx-barcode6 [bc-value]="context?.bardcodeValue" [bc-display-value]="true"
+            class="barCode-radios"></ngx-barcode6>
+        </div>
+        <p class="smaller barcode-val">{{context?.barCodeString}}</p>
+        <div class="clerk-instruction">
+          <p class="smallest clark">STORE’S CLERK INSTRUCTIONS</p>
+          <div class="instruction-flex">
+            <div class="instruction-details">
+              <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="64" height="64">
+              <p class="smallest img-claric">Select <b>‘In-Store Tablet Purchase’</b> button</p>
+            </div>
+            <div class="instruction-details">
+              <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="64"
+                height="64">
+              <p class="smallest img-claric">Scan <b>ACP ID Barcode</b></p>
+            </div>
+            <div class="instruction-details">
+              <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon" width="64" height="64">
+              <p class="smallest img-claric">Scan <b>Device IMEI</b></p>
+            </div>
           </div>
-          <div class="modal-actions">
-            <button class="button primary"  (click)="closeDialog()"
-              id="done" data-cy="done">Done</button>
-          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="button primary" (click)="closeDialog()" id="done" data-cy="done">Done</button>
         </div>
       </div>
     </div>
-    </div>
+  </div>
+</div>

@@ -20,7 +20,7 @@
             *ngIf="orderInfo?.status !== ORDER_STATUS.CANCELED">Report an issue</p>
     </div>
     <div class="order-cards-container">
-        <div class="left" [class.flex]="!orderInfo?.shippingInfo?.shippingAddress && (!orderInfo?.storePickup || (orderInfo?.storePickup && !!orderInfo?.paymentMethod) || (orderInfo?.storePickup && !orderInfo?.paymentMethod && orderInfo?.status === ORDER_STATUS.CANCELED))">
+        <div class="left" [class.flex]="(!orderInfo?.shippingInfo?.shippingAddress && (!orderInfo?.storePickup)) || orderInfo?.status === ORDER_STATUS.CANCELED">
             <div class="order-card" id="details-card" #details>
                 <div class="order-card-container">
                     <div class="card-header-section">
@@ -331,7 +331,7 @@
                 </div>
             </div>
         </div>
-        <div class="right" [class.none]="!orderInfo?.shippingInfo?.shippingAddress && (!orderInfo?.storePickup || (orderInfo?.storePickup && !!orderInfo?.paymentMethod) || (orderInfo?.storePickup && !orderInfo?.paymentMethod && orderInfo?.status === ORDER_STATUS.CANCELED))">
+        <div class="right" [class.none]="(!orderInfo?.shippingInfo?.shippingAddress && (!orderInfo?.storePickup)) || orderInfo?.status === ORDER_STATUS.CANCELED">
             <div class="order-card" id="delivery-card"
                 *ngIf="orderInfo?.shippingInfo && orderInfo?.shippingInfo?.shippingAddress" #delivery>
                 <div class="order-card-container">
@@ -463,7 +463,7 @@
                     </div>
                 </div>
             </div>
-            <div class="order-card" id="store-card" *ngIf="orderInfo?.storePickup && !orderInfo?.paymentMethod && orderInfo?.status !== ORDER_STATUS.CANCELED ">
+            <div class="order-card" id="store-card" *ngIf="orderInfo?.storePickup && orderInfo?.status !== ORDER_STATUS.CANCELED ">
                 <div class="order-card-container no-padding">
                     <div class="card-header-section">
                         <h2 class="card-header">Pick-up Details</h2>

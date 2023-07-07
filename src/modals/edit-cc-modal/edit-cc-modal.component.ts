@@ -146,6 +146,8 @@ export class EditCcModalComponent implements OnInit, OnDestroy {
       const event = this.addressForm.controls.address1?.value;
       if (!!event.place_id) {
         this.appState.loading = true;
+         //this is a default value until address have the value from api
+         this.addressForm.controls.address1.setValue(event?.main_text);
         this.placesAutoCompleteService.findDetailedAddressFields(event.place_id).subscribe((place) => {
           this.streetSearchText = !!place.address1 && place.address1.length > 0 ? place.address1 : null;
           const displayedAddressModel = this.getAddressValues(place, event.main_text);

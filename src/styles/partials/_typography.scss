@@ -248,6 +248,10 @@ strong {
   }
 }
 
+.text-color-grey {
+  color: $medium-grey;
+}
+
 .label-color {
   color: #5E5E5E;
 }
@@ -266,4 +270,8 @@ strong {
 
 .text-orange {
   color: $hover-color;
+}
+
+.caption-grey {
+  color: $caption-grey;
 }

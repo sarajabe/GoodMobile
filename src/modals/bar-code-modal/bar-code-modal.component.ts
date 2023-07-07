@@ -5,6 +5,8 @@ export class BarCodeModalContext {
   public barcodeValue: string;
   public title: string;
   public message: string;
+  public barCodeMessage?: string;
+  public barCodeString?: string;
 }
 
 @Component({

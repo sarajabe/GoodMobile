@@ -98,6 +98,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public oldUserData: IVerificationRes;
   public showAttentionBanner = false;
   public hideCardContentUI = false;
+  public showDeviceOptions = false;
+  public showDeviceCode = true;
+  public showACPCodeSection = false;
 
   private callBackUrl: string;
   private alive = true;
@@ -105,6 +108,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   showStores: boolean;
   acpCancelled: boolean;
   deviceIMEI: any;
+  option: any;
+  showDeviceOptionError: boolean;
+  pendingACPDevice: boolean;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -154,9 +160,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/hooray-icon.svg`,
         imgPath2: `assets/icon/hooray2-icon.svg`,
         title: `Hooray!`,
-        desc1: `You may be eligible for a <b>$100</b> discount on a new device from our catalog!`,
-        desc2: `Hurry up and get yours today!`,
-        buttonName: 'Claim your Device',
+        desc1: `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
+        desc2: null,
+        buttonName: 'Let’s get started!',
         buttonAction: 'goToAcpDevices'
       },
       'PENDING_NV_CASE': {
@@ -585,10 +591,17 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.router.navigate([`${SUPPORT_ROUTE_URLS.BASE}/${SUPPORT_ROUTE_URLS.CONTACT_US}`]);
   }
   public showBarCodePopup(): void {
-    this.modalHelper.showBarcodeModal('Scan the barcode', 'Check with the store clerk to proceed', this.barCodeValue);
+    this.modalHelper.showBarcodeModal('Scan the barcode', 'Take this barcode with instructions below to your Goodwill store clerk to collect your Device.', this.barCodeValue, 'Your ACP ID:', this.barCodeValue);
   }
   public goToAcpDevices(): void {
-    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+    this.showDeviceOptionError = !!this.option ? false : true;
+    if (!!this.option) {
+      if (this.option === 'online') {
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+      } else {
+        this.showBarCodePopup();
+      }
+    }
   }
   public downloadFiles(): void {
     if (this.fileUrls.length > 0) {
@@ -602,6 +615,19 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         document.body.removeChild(link);
       }
     }
+  }
+  public selectDeviceOption(value): void {
+    this.option = value;
+    this.showDeviceOptionError = false;
+  }
+
+  public toggleDeviceCode(): void {
+    this.showDeviceCode = !this.showDeviceCode;
+    this.showACPCodeSection = !this.showDeviceCode ? true : false;
+  }
+  public toggleACPCode(): void {
+    this.showACPCodeSection = !this.showACPCodeSection;
+    this.showDeviceCode = false;
   }
   private checkDocGroups(data): void {
     const selectedCodes = data?.eligibilityCode.split(",");
@@ -645,22 +671,22 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   private getVerificationDetails(): void {
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
-      this.barCodeValue = !!this.userProfile.ebbId ? `${this.userProfile.ebbId}` : null;
+      this.barCodeValue = !!this.userProfile?.ebbId ? `${this.userProfile?.ebbId}` : null;
       if (!!this.userProfile && !this.userProfile.ebbId && !this.acpPlan) {
         this.appState.loading = true;
-        this.ebbService.getActiveInternalApplication(this.userProfile.customerId).then((res) => {
+        this.appState.acpActiveAppResObs.subscribe(res => {
           if (!!res) {
             this.acpAppDetails = res;
             this.createdDate = res.createdAt;
             this.appState.loading = false;
             this.appStatus = 'In Progress';
             this.showAcpApplicationCard = true;
+          } else {
+            this.appStatus = 'On Hold';
+            this.showAlert = true;
+            this.showAcpApplicationCard = true;
+            this.appState.loading = false;
           }
-        }, (error) => {
-          this.appStatus = 'On Hold';
-          this.showAlert = true;
-          this.showAcpApplicationCard = true;
-          this.appState.loading = false;
         });
       } else if (!!this.userProfile && !!this.userProfile.ebbId) {
         this.appState.loading = true;
@@ -679,6 +705,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.appState.loading = true;
               this.accountOrderService.getOrderById(this.acpPlan.acpDevice.orderId).then((order) => {
                 this.acpDeviceOrder = order;
+                this.pendingACPDevice = !!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING' ? true : false;
                 if (!!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING') {
                   this.lookupsService.getAvailableStores().then(stores => {
                     if (stores?.storesLocations?.length > 0) {
@@ -723,10 +750,11 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               this.appDetails.updatedAt = this.acpPlan?.updatedAt;
               if (!this.acpPlan?.acpDevice) {
                 this.acpDeviceCase = 'ENROLLED_ACP_CASE';
+                this.showDeviceOptions = true;
               }
               this.planActivationStatus = 'ENROLLED';
             } else {
-              this.ebbService.getACPApplicationStatus(this.userProfile.ebbId, this.userProfile.customerId, this.callBackUrl).then((details) => {
+              this.appState.acpAppRes.subscribe(details => {
                 this.appState.loading = false;
                 if (!!details) {
                   this.appDetails = details;
@@ -797,25 +825,27 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   } else {
                     this.showNVOnHoldSection = false;
                   }
-                }
-              }, (error) => {
-                this.showNVCard = true;
-                this.showAlert = true;
-                if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
-                  this.showExpiredSection = true;
-                  this.nvStatus = 'EXPIRED';
-                  if (!!this.acpPlan) {
-                    // Get old data
-                    this.getInternalAppDataForExpiredApps();
-                  }
-                } else if (error.error.errors[0].code === '1421') {
-                  this.showNVErrorSection = true;
-                  this.nvStatus = 'NV_ERROR';
                 } else {
-                  this.showGenericError = true;
-                  this.nvStatus = 'GENERIC';
+                  this.showNVCard = true;
+                  this.showAlert = true;
+                  this.appState.acpAppErrorObs.subscribe(error => {
+                    if (!!error && error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
+                      this.showExpiredSection = true;
+                      this.nvStatus = 'EXPIRED';
+                      if (!!this.acpPlan) {
+                        // Get old data
+                        this.getInternalAppDataForExpiredApps();
+                      }
+                    } else if (!!error && error.error.errors[0].code === '1421') {
+                      this.showNVErrorSection = true;
+                      this.nvStatus = 'NV_ERROR';
+                    } else {
+                      this.showGenericError = true;
+                      this.nvStatus = 'GENERIC';
+                    }
+                    this.appState.loading = false;
+                  });
                 }
-                this.appState.loading = false;
               });
             }
           }

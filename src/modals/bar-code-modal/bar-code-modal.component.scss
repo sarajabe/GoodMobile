@@ -2,7 +2,14 @@
 @import "../../styles/modules/variables";
 
 ::ng-deep {
+    .barcode-val{
+        color: #727272;
+    }
     .barcode-section {
+        .message {
+            margin-bottom: 12px;
+            margin-top: 16px;
+        }
         .barcode {
             @media(max-width: $phablet-min-width-minus) {
                 margin-top: 32px;
@@ -15,6 +22,50 @@
                 @media(max-width: $phablet-min-width-minus) {
                     max-width: 225px;
                     height: 100%;
+                }
+            }
+        }
+    }
+    .clerk-instruction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        margin-top: 20px;
+        margin-bottom: 24px;
+        .clark{
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: $base-font-family-bold;
+        }
+        .instruction-flex{
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 30px;
+            @media(max-width: $phablet-min-width-minus) {
+                flex-direction: column;
+                align-items: center;
+            }
+            .instruction-details{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                .instruction-img{
+                    width: 64px;
+                    height: 64px;
+                }
+                .img-claric{
+                    margin-bottom: 0;
+                    color: #4B4B4B;
+                    font-weight: normal;
+                    font-family: $base-font-family;
+                    max-width: 180px;
+                    @media(max-width: $phablet-min-width-minus) {
+                        max-width: 100%;
+                    }
                 }
             }
         }

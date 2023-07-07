@@ -73,16 +73,12 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
                     this.enrolled = true;
                     this.acpFlowForm.disable();
                     this.ebbId = user.ebbId;
-                    this.ebbService
-                      .getACPApplicationStatus(this.ebbId, user.customerId, this.callBackUrl)
-                      .then(
-                        (details) => {
-                          this.appState.loading = false;
-                          if (!!details) {
-                            this.checkVerifyStatus(details);
-                          }
-                        },
-                        (error) => {
+                    this.appState.acpAppRes.subscribe(details => {
+                      this.appState.loading = false;
+                      if (!!details) {
+                        this.checkVerifyStatus(details);
+                      } else {
+                        this.appState.acpAppErrorObs.subscribe(error => {
                           this.appState.loading = false;
                           this.acpSuccess = false;
                           if (!!error && !!error.error && !!error.error.errors && error.error.errors.length > 0) {
@@ -93,38 +89,36 @@ export class AcpFlowLandingComponent implements OnInit, OnDestroy {
                               this.toastHelper.showAlert(error.error.errors[0].message);
                             }
                           }
-                        }
-                      );
+                        });
+                      }
+                    });
                   } else {
                     this.appState.loading = true;
                     this.customerId = user?.customerId;
                     this.userId = user?.id;
                     // call get app state to know which option shall we select 
-                    this.ebbService.getActiveInternalApplication(this.customerId).then(
-                      (res) => {
-                        if (!!res?.data) {
-                          this.acpData = res.data;
-                          if (!!this.acpData) {
-                            this.applicationId = this.acpData?.applicationId;
-                            if (!!this.acpData?.providerApplicationId) {
-                              this.showAcpValidationMsg = false;
-                              this.acpFlowForm?.controls.option.setValue('yes');
-                            } else if (!!this.acpData?.eligibilityCode) {
-                              this.showAcpValidationMsg = false;
-                              this.acpFlowForm?.controls.option.setValue('no');
-                            } else {
-                              this.showAcpValidationMsg = false;
-                              this.acpFlowForm?.controls.option.setValue('yes-without-id');
-                            }
-                            this.acpOption = this.acpFlowForm?.get('option')?.value;
+                    this.appState.acpActiveAppResObs.subscribe(res => {
+                      if (!!res?.data) {
+                        this.acpData = res.data;
+                        if (!!this.acpData) {
+                          this.applicationId = this.acpData?.applicationId;
+                          if (!!this.acpData?.providerApplicationId) {
+                            this.showAcpValidationMsg = false;
+                            this.acpFlowForm?.controls.option.setValue('yes');
+                          } else if (!!this.acpData?.eligibilityCode) {
+                            this.showAcpValidationMsg = false;
+                            this.acpFlowForm?.controls.option.setValue('no');
+                          } else {
+                            this.showAcpValidationMsg = false;
+                            this.acpFlowForm?.controls.option.setValue('yes-without-id');
                           }
-                          this.appState.loading = false;
+                          this.acpOption = this.acpFlowForm?.get('option')?.value;
                         }
-                      },
-                      (error) => {
+                        this.appState.loading = false;
+                      } else {
                         this.appState.loading = false;
                       }
-                    );
+                    });
                   }
                 });
             }, 100);

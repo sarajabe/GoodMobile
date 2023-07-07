@@ -38,7 +38,8 @@ export class CheckoutResultsComponent implements OnDestroy {
   public orderId: string;
   public barCodeVal;
   public showStores = false;
-
+  public showClerkInstruction = true;
+  
   private alive = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private userPlansService: UserPlansService, private appState: AppState,

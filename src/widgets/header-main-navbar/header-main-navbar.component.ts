@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, HostListener, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { CART_TYPES, CustomizableMobilePlan, IUserAccount, IUserPlan, MobileCustomPlansService, UserAccountService, UserPlansService, ActionsAnalyticsService, FirebaseUserProfileService, IUser, ICreditCardInfo } from '@ztarmobile/zwp-service-backend';
 import { combineLatest, takeWhile } from 'rxjs/operators';
@@ -9,8 +9,7 @@ import { AppState } from '../../app/app.service';
 import { PhonePipe } from '../pipes/phone.pipe';
 import { ModalHelperService } from '../../services/modal-helper.service';
 import { ContentfulService } from 'src/services/contentful.service';
-import { EbbService, IVerificationRes } from '@ztarmobile/zwp-service-backend-v2';
-import { ACP_CALLBACK_URL } from 'src/environments/environment';
+import { IVerificationRes } from '@ztarmobile/zwp-service-backend-v2';
 import { CheckoutService } from 'src/app/shop/checkout/checkout.service';
 
 @Component({
@@ -75,12 +74,10 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
   private timeout: any;
   private headerHeight;
   private alertBannerHeight;
-  private paymentAlertBannerHeight;
-  private paymentProgressBannerHeight;
   private alive = false;
 
   constructor(private renderer: Renderer2, private simpleAuthService: SimpleAuthService, public router: Router,
-    private userPlansService: UserPlansService, private ebbService: EbbService, private route: ActivatedRoute, private checkoutService: CheckoutService,
+    private userPlansService: UserPlansService, private checkoutService: CheckoutService,
     private appState: AppState, private angularAuthService: AngularFireAuth, private mobilePlansService: MobileCustomPlansService,
     private userAccountService: UserAccountService, private modalHelper: ModalHelperService, private analyticService: ActionsAnalyticsService,
     private contentfulService: ContentfulService, private userProfileService: FirebaseUserProfileService) {
@@ -142,9 +139,8 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
           }
         });
         if (!!user.ebbId) {
-          const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
-          this.ebbService.getACPApplicationStatus(user.ebbId, user.customerId, callBackUrl).then((res) => {
-            if (!!res) {
+          this.appState.acpAppResObs.subscribe(res => {
+            if(!!res) {
               if (!this.isActivatedAcpPlan) {
                 if (!!this.acpPlan && res.status === this.ACP_STATUS.COMPLETE && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
                   this.showActivatePlanContent = true;
@@ -155,54 +151,42 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                 }
                 setTimeout(() => {
                   const alert = document.getElementById('alert');
-                  this.alertBannerHeight = alert.clientHeight;
+                  this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
                   this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
                 }, 200);
               }
               this.verificationDetails = res;
-              this.displayAcpSection = true;
               this.acpActionRequired = false;
               this.showACPActionBanner = false;
-            } else {
-              this.displayAcpSection = false;
-            }
-          }, (error) => {
-            if (error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
-              this.displayAcpSection = true;
-            } else {
-              this.displayAcpSection = false;
-            }
+            } 
           });
         } else {
           this.showActivatePlanContent = false;
           this.showResumeFilingContent = false;
           this.showResumeFilingContentCopy = false;
           this.showActivatePlanContentCopy = false;
-          this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
-            if (!!res) {
-              this.displayAcpSection = true;
+          this.appState.acpActiveAppRes.subscribe(res => {
+            if(!!res) {
               this.acpActionRequired = true;
               this.showACPActionBanner = (this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0 && this.pageUrl.indexOf(ACP_ROUTE_URLS.BASE) < 0) ? true : false;
               if (!!this.showACPActionBanner) {
                 setTimeout(() => {
                   const alert = document.getElementById('alert');
-                  this.alertBannerHeight = alert.clientHeight;
+                  this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
                   this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
                 }, 200);
               } else {
                 this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
               }
             } else {
-              this.displayAcpSection = false;
               this.acpActionRequired = false;
               this.showACPActionBanner = false;
             }
-          }, (error) => {
-            this.displayAcpSection = false;
-            this.acpActionRequired = false;
-            this.showACPActionBanner = false;
           });
         }
+        this.appState.displayAcpSectionObs.subscribe(res => {
+          this.displayAcpSection = res;
+        });
       }
     });
 
@@ -240,14 +224,14 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
         if (!!this.showResumeFilingContent || !!this.showActivatePlanContent) {
           setTimeout(() => {
             const alert = document.getElementById('alert');
-            this.alertBannerHeight = alert.clientHeight;
+            this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
             this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
           }, 200);
         }
         else if (!!this.showACPActionBanner) {
           setTimeout(() => {
             const alert = document.getElementById('alert');
-            this.alertBannerHeight = alert.clientHeight;
+            this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
             this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
           }, 200);
         } else {
@@ -495,7 +479,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     this.headerHeight = !!header && !!this.showACPActionBanner ? header.clientHeight : (window.innerWidth < 640 ? 58 : 64);
     if (!!this.showACPActionBanner || !!this.showResumeFilingContent || !!this.showActivatePlanContent) {
       const alert = document.getElementById('alert');
-      this.alertBannerHeight = alert.clientHeight;
+      this.alertBannerHeight = !!alert ? alert.clientHeight : 0;
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight + this.alertBannerHeight);
     } else {
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight);

@@ -185,21 +185,11 @@
       <div *ngIf="!!option && option === 'store'" class="stores-option-section">
         <div class="store-section">
         <div class="inner-paddings">
-          <h4 class="sub-head">You can pick up your package from these two stores.</h4>
-          <h5 class="sub-title">More stores are coming soon</h5>
+          <h4 class="sub-head">You can pick up your SIM Card at any of the following stores:</h4>
         </div>
         <hr class="border">
         <div class="inner-paddings end">
-           <div class="stores-section">
-               <div *ngFor="let store of stores" class="stores">
-                 <img src="/assets/icon/store-alt.svg" alt="store-icon">
-                 <div class="store-details">
-                  <h4 class="store-name">{{store?.name}}</h4>
-                  <p class="smaller">{{store?.address1}}</p>
-                  <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
-                 </div>
-               </div>
-           </div>
+          <app-stores-list></app-stores-list>
         </div>
       </div>
       <div class="info-banner default-background">

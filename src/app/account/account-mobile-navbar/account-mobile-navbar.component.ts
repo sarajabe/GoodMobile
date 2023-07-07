@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FirebaseUserProfileService, IUser, IUserPlan, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { IUser, IUserPlan, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { SlideInOutAnimationMobMenu } from '../../app.animations';
 import { PhonePipe } from 'src/widgets/pipes/phone.pipe';
 import { Router } from '@angular/router';
-import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
+import { AppState } from 'src/app/app.service';
 
 @Component({
   selector: 'app-account-mobile-navbar',
@@ -30,8 +30,7 @@ export class AccountMobileNavbarComponent implements OnInit {
   constructor(private router: Router,
     private userAccountService: UserAccountService,
     private userPlansService: UserPlansService,
-    private userProfileService: FirebaseUserProfileService,
-    private ebbService: EbbService) {
+    private appState: AppState) {
   }
 
   ngOnInit(): void {
@@ -45,28 +44,8 @@ export class AccountMobileNavbarComponent implements OnInit {
         this.isPortIn = !!plan.portInRequestNumber ? !!plan.portInRequestNumber : false;
       }
     });
-    this.userProfileService.userProfileObservable.subscribe((user) => {
-      if (!!user && !!user.ebbId) {
-        this.ebbService.getInternalApplication(user.customerId, user.ebbId).then((res) => {
-          if (!!res) {
-            this.displayAcpSection = true;
-          } else {
-            this.displayAcpSection = false;
-          }
-        }, (error) => {
-          this.displayAcpSection = false;
-        });
-      } else if (!!user && !user.ebbId) {
-        this.ebbService.getActiveInternalApplication(user.customerId).then((res) => {
-          if (!!res) {
-            this.displayAcpSection = true;
-          } else {
-            this.displayAcpSection = false;
-          }
-        }, (error) => {
-          this.displayAcpSection = false;
-        });
-      }
+    this.appState.displayAcpSectionObs.subscribe(res => {
+      this.displayAcpSection = res;
     });
   }
 
