@@ -35,6 +35,9 @@ export class ActivatePlanComponent {
       code: ['', Validators.compose([Validators.required, Validators.pattern('^[A-Z]+\\d{6}|\\d{7}$')])]
     });
     this.metaService.createCanonicalUrl();
+    sessionStorage.removeItem('activation');
+    sessionStorage.removeItem('device');
+
   }
 
   public goToSimCheck(): void {
@@ -63,7 +66,11 @@ export class ActivatePlanComponent {
           const params = {};
           params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE] = this.activateForm.get('code').value;
           params[ROUTE_URLS.PARAMS.NETWORK] = sim.network;
-          this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_PLANS_PATH}`, params]);
+          if (sim.prefunded) {
+            this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
+          } else {
+            this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_PLANS_PATH}`, params]);
+          }
         }).catch((error) => {
           // Failed to detect the sim by activation code
           this.appState.loading = false;
