@@ -144,7 +144,6 @@ describe('EBB Personal Information Component - Unit Testing', async () => {
             idTypeInputField.markAsTouched();
             idTypeInputField.markAsDirty();
             fixture.detectChanges();
-            component.updateIdentitiyType();
 
             ssnInputField.setValue('');
             ssnInputField.markAsTouched();
@@ -161,7 +160,6 @@ describe('EBB Personal Information Component - Unit Testing', async () => {
             idTypeInputField.markAsTouched();
             idTypeInputField.markAsDirty();
             fixture.detectChanges();
-            component.updateIdentitiyType();
 
             tribalInputField.setValue('');
             tribalInputField.markAsTouched();

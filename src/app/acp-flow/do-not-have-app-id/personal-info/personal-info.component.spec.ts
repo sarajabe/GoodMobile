@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonalInfoComponent } from './personal-info.component';
+import { PersonalInfoNonExisitngAppComponent } from './personal-info.component';
 
-describe('PersonalInfoComponent', () => {
-  let component: PersonalInfoComponent;
-  let fixture: ComponentFixture<PersonalInfoComponent>;
+describe('PersonalInfoNonExisitngAppComponent', () => {
+  let component: PersonalInfoNonExisitngAppComponent;
+  let fixture: ComponentFixture<PersonalInfoNonExisitngAppComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PersonalInfoComponent ]
+      declarations: [ PersonalInfoNonExisitngAppComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PersonalInfoComponent);
+    fixture = TestBed.createComponent(PersonalInfoNonExisitngAppComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

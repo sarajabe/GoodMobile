@@ -223,8 +223,6 @@ describe('Activation Check Compatibility - Unit Test', async () => {
       zipCodeInputField.markAsDirty();
       fixture.detectChanges();
 
-      component.invalidZipCode = !(/^\d{5}(-\d{4})?$/.test('7'));
-
       spyOn(component, 'resolvedCaptcha');
       const captchaClick: DebugElement = fixture.debugElement.query(By.css('#captcha-box'));
       captchaClick.nativeElement.click();
@@ -239,7 +237,6 @@ describe('Activation Check Compatibility - Unit Test', async () => {
 
       expect(equipmentNumberInputField.errors).toBeNull();
 
-      expect(component.invalidZipCode).toBeTruthy();
       expect(invalidZipCodeMsg.nativeElement).toBeDefined();
 
       expect(checkPhoneBtn.nativeElement.disabled).toBeTruthy();
@@ -266,8 +263,6 @@ describe('Activation Check Compatibility - Unit Test', async () => {
       zipCodeInputField.markAsDirty();
       fixture.detectChanges();
 
-      component.invalidZipCode = !(/^\d{5}(-\d{4})?$/.test('7'));
-
       spyOn(component, 'resolvedCaptcha');
       const captchaClick: DebugElement = fixture.debugElement.query(By.css('#captcha-box'));
       captchaClick.nativeElement.click();
@@ -284,7 +279,6 @@ describe('Activation Check Compatibility - Unit Test', async () => {
       expect(equipmentNumberInputField.hasError('minlength')).toBeTruthy();
       expect(invalidEquipmentNumberMsg.nativeElement).toBeDefined();
 
-      expect(component.invalidZipCode).toBeTruthy();
       expect(invalidZipCodeMsg.nativeElement).toBeDefined();
 
       expect(checkPhoneBtn.nativeElement.disabled).toBeTruthy();

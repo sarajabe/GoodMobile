@@ -176,7 +176,6 @@ describe('EBB child info Component - Unit Testing', async () => {
             qualifyProgramInputField.markAsTouched();
             qualifyProgramInputField.markAsDirty();
             fixture.detectChanges();
-            component.checkSelected();
 
             schoolNameInputField.markAsTouched();
             fixture.detectChanges();
@@ -193,7 +192,6 @@ describe('EBB child info Component - Unit Testing', async () => {
             const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
             iQualifyChildCheckbox.click();
 
-            component.confirmChild = true;
             fixture.detectChanges();
 
             const ssnId = fixture.debugElement.query(By.css('#idType')).nativeElement.options[0].value;
@@ -247,7 +245,6 @@ describe('EBB child info Component - Unit Testing', async () => {
             const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
             iQualifyChildCheckbox.click();
 
-            component.confirmChild = true;
             fixture.detectChanges();
 
             fNameInputField.setValue('12');
@@ -330,7 +327,6 @@ describe('EBB child info Component - Unit Testing', async () => {
             const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
             iQualifyChildCheckbox.click();
 
-            component.confirmChild = true;
             fixture.detectChanges();
 
             fNameInputField.setValue('william');
