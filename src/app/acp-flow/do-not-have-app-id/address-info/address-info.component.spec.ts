@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddressInfoComponent } from './address-info.component';
+import { AddressInfoNonAppExisitngComponent } from './address-info.component';
 
-describe('AddressInfoComponent', () => {
-  let component: AddressInfoComponent;
-  let fixture: ComponentFixture<AddressInfoComponent>;
+describe('AddressInfoNonAppExisitngComponent', () => {
+  let component: AddressInfoNonAppExisitngComponent;
+  let fixture: ComponentFixture<AddressInfoNonAppExisitngComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddressInfoComponent ]
+      declarations: [ AddressInfoNonAppExisitngComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddressInfoComponent);
+    fixture = TestBed.createComponent(AddressInfoNonAppExisitngComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
