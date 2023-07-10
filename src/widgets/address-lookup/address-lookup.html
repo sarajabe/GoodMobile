@@ -59,6 +59,10 @@
         <span>State</span>
       </label>
       <div class='form-text error'
+        *ngIf="addressFieldsForm.controls.state.touched && addressFieldsForm.controls.state.hasError('required')">
+        <label id="state-required-msg" data-cy="requiredStateMsg" class="validation-message">State is a required field </label>
+      </div>
+      <div class='form-text error'
         *ngIf="addressFieldsForm.controls.state.dirty && !!addressFieldsForm.controls.state.value && !addressFieldsForm.controls.state.valid">
         <label id="state-invalid-msg" data-cy="invalidStateMsg" class="validation-message">Invalid State </label>
       </div>
