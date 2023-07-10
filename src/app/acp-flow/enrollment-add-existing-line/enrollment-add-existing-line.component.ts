@@ -62,7 +62,6 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                   this.appState.loading = false;
                 } else {
                   this.appState.loading = false;
-                  this.goToAcpLanding();
                 }
               });
             } else if(!!userEbbPlan && !this.planPuchasedClicked){
