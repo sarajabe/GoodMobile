@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { EbbService, EquipmentService, IAddress, LookupsService } from '@ztarmobile/zwp-service-backend-v2';
+import { EbbService, EquipmentService, IAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable, Subscription } from 'rxjs';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -56,7 +56,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public simOption: string;
   public simOptions = [{ id: 'esim', value: 'Yes, let’s go!' }, { id: 'physical', value: 'No, send me a physical SIM' }];
   public utms;
-  public stores = [];
   public barCode = false;
   public option;
   public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
@@ -82,7 +81,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     private userProfileService: FirebaseUserProfileService, private userPlansService: UserPlansService,
     private toastHelper: ToastrHelperService, private shippingService: ShippingService,
     private orderCheckoutService: OrderCheckoutService, private analyticsService: ActionsAnalyticsService,
-    private lookupsService: LookupsService
   ) {
     this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
@@ -106,13 +104,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     this.showShippingForm = false;
     this.prepareMarketingDetails();
     const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
-    this.lookupsService.getAvailableStores().then(stores => {
-      if(stores?.storesLocations?.length > 0) {
-        this.stores = stores?.storesLocations;
-      }
-    }, error => {
-      this.toastHelper.showAlert(error.error.errors[0].message);
-    });
     this.userPlansService.userPlans
       .pipe(takeWhile(() => this.alive))
       .pipe(filter((plans) => !!plans))
