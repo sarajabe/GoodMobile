@@ -80,15 +80,13 @@
         }
     }
     .form-control {
-        font-size: 18px;
-        line-height: 28px;
+        font-size: 16px;
+        line-height: 24px;
         display: flex;
         align-items: center;
-        margin-bottom: 9.8px;
+        margin-bottom: 16px;
         @media (max-width: $phablet-min-width-minus) {
-            font-size: 16px;
-            line-height: 24px;
-            margin-bottom: 4.8px;
+            margin-bottom: 12px;
         }
     }
     label {

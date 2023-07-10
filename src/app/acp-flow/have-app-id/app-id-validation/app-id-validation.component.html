@@ -31,7 +31,11 @@
   <app-app-id-personal-info *ngIf="activeStep === 1" (goToNext)="next($event)" (setUserInfo)="setPersonalInfo($event)"
     [savedInfo]="{user:acpData?.user, appId: acpData?.providerApplicationId}" [disable]="!!enrolled">
   </app-app-id-personal-info>
-  <app-signature-info *ngIf="activeStep === 2" (goToNext)="next($event)" [fName]="acpData?.user?.firstName"
+  <app-app-id-address-info *ngIf="activeStep === 2" (goToNext)="next($event)" (setAddresses)="setUserAddresses($event)"
+  [primary]="primaryAddress" [userId]="userProfile?.id"
+  [disable]="!!enrolled || !!is609ErrorCode">
+</app-app-id-address-info>
+  <app-signature-info *ngIf="activeStep === 3" (goToNext)="next($event)" [fName]="acpData?.user?.firstName"
     [lName]="acpData?.user?.lastName" [signed]="userSignedAgreement" (setSignature)="setSignedValue($event)"
     [disable]="!!enrolled" [appId]="acpData?.providerApplicationId"></app-signature-info>
 </section>
@@ -42,7 +46,7 @@
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
     <div class="right">
       <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 2 ? 'Next' :
+      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 3 ? 'Next' :
         'Submit'}}</button>
     </div>
   </div>
