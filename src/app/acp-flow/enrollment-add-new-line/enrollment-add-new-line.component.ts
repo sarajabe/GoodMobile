@@ -52,6 +52,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public touchShippingForm = false;
   public planPurchased = false;
   public verifiedAddress: IFirebaseAddress;
+  public applicationAddress: IFirebaseAddress;
   public addressCard = false;
   public simOption: string;
   public simOptions = [{ id: 'esim', value: 'Yes, let’s go!' }, { id: 'physical', value: 'No, send me a physical SIM' }];
@@ -128,9 +129,9 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                         if (!this.dataCollected) { // we added this because when we add new shipping address the profile observable gets updated and it repeats all the API calls again so this check is to make sure not to call the APIs again
                           this.selectedShippingAddress = {} as IFirebaseAddress;
                           this.verifiedAddress = {} as IFirebaseAddress;
+                          this.dataCollected = true;
                           this.ebbService.getInternalApplication(user?.customerId, user?.ebbId).then((res) => {
                             if (!!res?.data) {
-                              this.dataCollected = true;
                               const acpData = res?.data;
                               if (!!acpData?.providerApplicationId || !acpData?.eligibilityCode) {
                                 this.addressWithIdSection = true;
@@ -162,12 +163,14 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                                       (result) => {
                                         this.appState.loading = false;
                                         if (!!result) {
-                                          this.verifiedAddress = result[0];
-                                          this.verifiedAddress.name = shipping?.name;
-                                          this.verifiedAddress.alias = shipping?.name;
+                                          this.applicationAddress = result[0];
+                                          this.applicationAddress.name = shipping?.name;
+                                          this.applicationAddress.alias = shipping?.name;
+                                          this.verifiedAddress = this.applicationAddress;
                                           this.isAddressVerified = true;
                                           this.addressNoOptionSection = true;
                                           this.addressNoOptionNotVerfiedSection = false;
+                                          this.addressOption = 'mail'
                                         }
                                       },
                                       (error) => {
