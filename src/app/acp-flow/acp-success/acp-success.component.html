@@ -15,7 +15,7 @@
           <button class="button primary" (click)="goToNationalVerifier()">Resume Filing</button>
         </div>
         <div class="actions" *ngIf="acpStatus !== 'pendingAction'">
-          <button class="button primary" (click)="addNewLine()">Add New Line</button>
+          <button class="button primary" data-cy="addNewLine" (click)="addNewLine()">Add New Line</button>
           <button class="button secondary" (click)="selectExistingLine()"
             *ngIf="!!activePlans && activePlans.length > 0">Select Existing Line</button>
         </div>

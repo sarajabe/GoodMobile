@@ -82,5 +82,20 @@ class AccessControl {
                 cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
                 PageObjects.AccessControl.clickOnSubmitBtn();
         };
+        newUserAcp(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.clickOnSignUpLink();
+                PageObjects.TitleExpectations.goToSignUpPage();
+                PageObjects.AccessControl.signUp(CONSTANT.ACCESS.NEW_SIGNUP_DATA2.FIRST_NAME,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.LAST_NAME,
+                        PageObjects.Dynamics.makeNewAcpEmail(),
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.PASSWORD,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.CONFIRMED_PASS);
+                PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+                PageObjects.AccessControl.clickOnSubmitBtn();
+                PageObjects.TitleExpectations.goToWelcomeOnBoardPage();
+        };
 }
 export default new AccessControl();

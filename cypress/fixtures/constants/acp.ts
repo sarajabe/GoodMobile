@@ -27,6 +27,21 @@ export const ACP_DATA = {
         Email: 'testuser10@ztarmobile.com',
         FIRST_QUALIFYING_PROGRAM: 'Medicaid'
     },
+    PERSONAL_INFO2: {
+        FIRST_NAME: 'MRana',
+        LAST_NAME: 'Yhaddad',
+        FULL_NAME:'MRana Yhaddad',
+        MONTH: '01',
+        Day: '19',
+        YEAR: '1991',
+        MIN_YEAR_INVALID: '1891',
+        MAX_YEAR_INVALID: '2023',
+        ID_TYPE: 'SSN',
+        SSN_NO: '6462',
+        PHONE_NUMBER: '5122034783',
+        Email: 'testuser10@ztarmobile.com',
+        FIRST_QUALIFYING_PROGRAM: 'Medicaid'
+    },
     INVALID_PERSONAL_INFO: {
         FIRST_NAME: '444',
         LAST_NAME: '4444',
@@ -55,6 +70,18 @@ export const ACP_DATA = {
     },
     INVALID_ADDRESS: {
         ADDRESS_LINE1: '123 Berry Lane',
+        CITY: '34',
+        STATE: '44',
+        ZIP: 'mk5',
+    },
+    VERIFIED_ADDRESS2: {
+        ADDRESS_LINE1: '777 Stevens Ave, Portland, ME 04103',
+        CITY: 'Portland',
+        STATE: 'ME',
+        ZIP: '04103',
+    },
+    INVALID_ADDRESS2: {
+        ADDRESS_LINE1: '777 Stevens Ave, Portland, ME 04103',
         CITY: '34',
         STATE: '44',
         ZIP: 'mk5',

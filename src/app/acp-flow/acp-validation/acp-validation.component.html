@@ -33,7 +33,7 @@
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
     <div class="right">
       <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
+      <button class="button primary" data-cy="verifyBtn" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
         'Verify'}}</button>
     </div>
   </div>

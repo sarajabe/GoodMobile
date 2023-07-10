@@ -65,7 +65,7 @@ class TitleExpectations {
         return this;
     };
     goToACPEnrollemntPage () {
-        cy.title().should('eq', 'Free UNLIMITED cell phone service with Government program | Good2Go Mobile');
+        cy.title().should('eq', 'Free UNLIMITED cell phone service with Government program | Good Mobile');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };

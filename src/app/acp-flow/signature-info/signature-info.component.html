@@ -32,7 +32,7 @@
         Broadband Benefit to Good Mobile.
       </p>
     </div>
-    <label class="validation-message" *ngIf="
+    <label class="validation-message" data-cy="requiredSignature" *ngIf="
         (signatureForm.controls.firstCheck.touched &&
           signatureForm.controls.firstCheck.hasError('required')) ||
         (signatureForm.controls.secondCheck.touched &&
@@ -63,7 +63,7 @@
         <span >Enter first & last name</span>
       </label>
       <p class="hint caption">{{fullName | uppercase}}</p>
-      <label class="validation-message" *ngIf="
+      <label class="validation-message" data-cy="requiredName" *ngIf="
           signatureForm.controls.name.hasError('required') &&
           signatureForm.controls.name.touched
         ">
@@ -78,7 +78,7 @@
     </div>
     <div class="captcha">
       <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
-      <label class="validation-message" *ngIf="showCaptchaError">Please verify that you are not a robot</label>
+      <label class="validation-message" data-cy="captchaRequired" *ngIf="showCaptchaError">Please verify that you are not a robot</label>
     </div>
   </form>
 </div>
