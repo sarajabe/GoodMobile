@@ -49,7 +49,7 @@ export class AppIdAddressInfoComponent implements OnInit, OnChanges, OnDestroy {
     this.ebbManager.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
       if (!!step && step === 2) {
         this.addressInfoForm.markAllAsTouched();
-        if (!!this.addressInfoForm.valid) {
+        if (!!this.addressInfoForm.valid && !!this.primaryDisplayedAddressModel) {
           this.prepareData();
           this.setAddresses.emit({ primary: this.primaryAddress, mail: {} as IAcpAddress });          
           this.goToNext.emit(3);
@@ -106,7 +106,7 @@ export class AppIdAddressInfoComponent implements OnInit, OnChanges, OnDestroy {
               form.controls.city.setValue(this.displayedAddressModel.city);
               form.controls.state.setValue(this.displayedAddressModel.state);
               form.controls.zipCode.setValue(this.displayedAddressModel.zipCode);
-              form.controls.address1.setValue(address);
+              form.controls.address1.setValue(this.displayedAddressModel?.address1);
               if(formName === 'addressInfoForm'){
                 this.primaryDisplayedAddressModel = this.displayedAddressModel;
               } else {
