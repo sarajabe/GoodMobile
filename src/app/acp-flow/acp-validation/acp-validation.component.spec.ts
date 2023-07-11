@@ -24,7 +24,7 @@ import { ChildInfoComponent } from '../child-info/child-info.component';
 import { AcpDocumentsComponent } from '../acp-documents/acp-documents.component';
 import { SignatureInfoComponent } from '../signature-info/signature-info.component';
 
-fdescribe('Acp Validation Component - Unit Testing', () => {
+describe('Acp Validation Component - Unit Testing', () => {
     let component: AcpValidationComponent;
     let fixture: ComponentFixture<AcpValidationComponent>;
     let personalInfoComponent: PersonalInfoComponent;

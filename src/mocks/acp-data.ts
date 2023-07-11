@@ -1,5 +1,13 @@
 import { IAcpDetails, IAcpUser } from "@ztarmobile/zwp-service-backend-v2";
 
+export const SAVED_INFO: IAcpUser = {
+    firstName: 'Mirna',
+    lastName: 'Haddad',
+    dob: '13/3/1997',
+    last4ssn: '1243',
+    consumerEmail: 'mirna-haddad@pavocom.com'
+};
+
 export const FULL_USER_INFO: IAcpUser = {
     firstName: 'Mirna',
     lastName: 'Haddad',
