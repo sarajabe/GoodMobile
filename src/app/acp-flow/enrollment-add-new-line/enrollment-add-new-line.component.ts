@@ -3,6 +3,7 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Valid
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, EquipmentService, IAddress } from '@ztarmobile/zwp-service-backend-v2';
+import { PageScrollService } from 'ngx-page-scroll-core';
 import { Observable, Subscription } from 'rxjs';
 import { filter, take, takeWhile } from 'rxjs/operators';
 import { ACP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
@@ -52,6 +53,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public touchShippingForm = false;
   public planPurchased = false;
   public verifiedAddress: IFirebaseAddress;
+  public applicationAddress: IFirebaseAddress;
   public addressCard = false;
   public simOption: string;
   public simOptions = [{ id: 'esim', value: 'Yes, let’s go!' }, { id: 'physical', value: 'No, send me a physical SIM' }];
@@ -74,6 +76,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   private captchaResponse: string;
   private streetSearchText: string;
   isStorePickup: boolean;
+  private dataCollected = false;
+
   constructor(private formBuilder: UntypedFormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
     private accountPaymentService: AccountPaymentService, private appState: AppState, private modalHelper: ModalHelperService,
     private router: Router, private equipmentService: EquipmentService, private mobileCustomPlansService: MobileCustomPlansService,
@@ -81,6 +85,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     private userProfileService: FirebaseUserProfileService, private userPlansService: UserPlansService,
     private toastHelper: ToastrHelperService, private shippingService: ShippingService,
     private orderCheckoutService: OrderCheckoutService, private analyticsService: ActionsAnalyticsService,
+    private pageScrollService: PageScrollService
   ) {
     this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
@@ -120,70 +125,77 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                 .subscribe((user) => {
                   if (!!user && !!user?.ebbId) {
                     this.appState.loading = true;
-                    this.appState.acpAppResObs.subscribe(details => {
+                    this.appState.acpAppResObs.pipe(takeWhile(() => this.alive)).subscribe(details => {
                       if (!!details && details?.status === 'COMPLETE') {
-                        this.addressesList = !!user?.shippingAddresses ? user.shippingAddresses : [];
-                        this.selectedShippingAddress = {} as IFirebaseAddress;
-                        this.verifiedAddress = {} as IFirebaseAddress;
-                        this.ebbService.getInternalApplication(user?.customerId, user?.ebbId).then((res) => {
-                          if (!!res?.data) {
-                            const acpData = res?.data;
-                            if (!!acpData?.providerApplicationId || !acpData?.eligibilityCode) {
-                              this.addressWithIdSection = true;
-                              this.addressCard = true;
-                            } else {
-                              if (!!acpData?.eligibilityCode) {
-                                const codes = acpData.eligibilityCode.split(',');
-                                codes.map((code) => {
-                                  if (!!this.TRIBAL_PROGRAMS[code]) {
-                                    this.tribals.push(this.TRIBAL_PROGRAMS[code]);
-                                  }
-                                });
-                              }
-                              this.addressCard = false;
-                              if (!!acpData?.user?.address?.mail) {
-                                const mailing = acpData?.user?.address?.mail;
-                                this.appState.loading = true;
-                                const shipping = {
-                                  address1: mailing?.address1,
-                                  address2: mailing?.address2,
-                                  postalCode: mailing?.zipCode,
-                                  city: mailing?.city,
-                                  state: mailing?.state,
-                                  name: mailing?.name || acpData?.user?.firstName,
-                                  country: "United States",
-                                };
-                                this.shippingService.verifyShippingAddress(shipping).then(
-                                  (result) => {
-                                    this.appState.loading = false;
-                                    if (!!result) {
-                                      this.verifiedAddress = result[0];
-                                      this.verifiedAddress.name = shipping?.name;
-                                      this.verifiedAddress.alias = shipping?.name;
-                                      this.isAddressVerified = true;
-                                      this.addressNoOptionSection = true;
-                                      this.addressNoOptionNotVerfiedSection = false;
-                                    }
-                                  },
-                                  (error) => {
-                                    this.appState.loading = false;
-                                    this.isAddressVerified = false;
-                                    this.addressNoOptionSection = false;
-                                    this.addressNoOptionNotVerfiedSection = true;
-                                    this.addressCard = true;
-                                  }
-                                );
-                              } else {
+                        if (!this.dataCollected) { // we added this because when we add new shipping address the profile observable gets updated and it repeats all the API calls again so this check is to make sure not to call the APIs again
+                          this.addressesList = !!user?.shippingAddresses ? user.shippingAddresses : [];
+                          this.selectedShippingAddress = {} as IFirebaseAddress;
+                          this.verifiedAddress = {} as IFirebaseAddress;
+                          this.dataCollected = true;
+                          this.ebbService.getInternalApplication(user?.customerId, user?.ebbId).then((res) => {
+                            if (!!res?.data) {
+                              const acpData = res?.data;
+                              if (!!acpData?.providerApplicationId || !acpData?.eligibilityCode) {
                                 this.addressWithIdSection = true;
+                                this.addressCard = true;
+                              } else {
+                                if (!!acpData?.eligibilityCode) {
+                                  const codes = acpData.eligibilityCode.split(',');
+                                  codes.map((code) => {
+                                    if (!!this.TRIBAL_PROGRAMS[code]) {
+                                      this.tribals.push(this.TRIBAL_PROGRAMS[code]);
+                                    }
+                                  });
+                                }
+                                this.addressCard = false;
+                                if (!!acpData?.user?.address?.mail) {
+                                  const mailing = acpData?.user?.address?.mail;
+                                  this.appState.loading = true;
+                                  const shipping = {
+                                    address1: mailing?.address1,
+                                    address2: mailing?.address2,
+                                    postalCode: mailing?.zipCode,
+                                    city: mailing?.city,
+                                    state: mailing?.state,
+                                    name: mailing?.name || acpData?.user?.firstName,
+                                    country: "United States",
+                                  };
+                                  if (!this.verifiedAddress.address1) {
+                                    this.shippingService.verifyShippingAddress(shipping).then(
+                                      (result) => {
+                                        this.appState.loading = false;
+                                        if (!!result) {
+                                          this.applicationAddress = result[0];
+                                          this.applicationAddress.name = shipping?.name;
+                                          this.applicationAddress.alias = shipping?.name;
+                                          this.verifiedAddress = this.applicationAddress;
+                                          this.isAddressVerified = true;
+                                          this.addressNoOptionSection = true;
+                                          this.addressNoOptionNotVerfiedSection = false;
+                                          this.addressOption = 'mail';
+                                        }
+                                      },
+                                      (error) => {
+                                        this.appState.loading = false;
+                                        this.isAddressVerified = false;
+                                        this.addressNoOptionSection = false;
+                                        this.addressNoOptionNotVerfiedSection = true;
+                                        this.addressCard = true;
+                                      }
+                                    );
+                                  }
+                                } else {
+                                  this.addressWithIdSection = true;
+                                }
                               }
+                              this.appState.loading = false;
                             }
-                            this.appState.loading = false;
-                          }
-                        },
-                          (error) => {
-                            this.appState.loading = false;
-                          }
-                        );
+                          },
+                            (error) => {
+                              this.appState.loading = false;
+                            }
+                          );
+                        }
                       } else {
                         this.appState.loading = false;
                         this.goToAcpLanding();
@@ -524,6 +536,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
               const name = this.shippingAddress?.name;
               this.shippingAddress = addresses[0];
               this.shippingAddress.name = name;
+              this.shippingAddress.alias = name;
               this.isAddressVerified = true;
               this.userProfileService
                 .addShippingAddress(this.shippingAddress)
@@ -531,10 +544,17 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                   newAddress.name = this.shippingAddress.name;
                   this.addressesList.unshift(newAddress);
                   this.selectedShippingAddress = newAddress;
-                  this.verifiedAddress = newAddress;
+                  this.addressCard = true;
+                  this.verifiedAddress = this.selectedShippingAddress;
                   this.showShippingForm = false;
                   this.shippingAddress = {} as IFirebaseAddress;
                   this.isAdressAddedSuccessfully = true;
+                  this.pageScrollService.scroll({
+                    document,
+                    scrollTarget: `#addressDetails`,
+                    scrollOffset: 100,
+                    speed: 150
+                  });
                 });
             }
           },

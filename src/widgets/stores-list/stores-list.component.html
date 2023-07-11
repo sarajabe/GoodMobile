@@ -14,7 +14,7 @@
   </form>
   <p class="caption caption-grey"><b>{{stores?.length}} {{stores?.length > 1 ? 'stores' : 'store'}}</b> available in {{selectedCity}}</p>
    <div class="stores-section" [class.scroll] = "stores?.length > 2">
-       <div *ngFor="let store of stores" class="stores">
+       <div *ngFor="let store of stores" class="stores" [class.border]="!!stores && stores?.length > 1">
          <p class="smaller primary-font-bold">{{store?.name}}</p>
          <div class="store-details">
            <img src="/assets/icon/location-pin-blue.svg" alt="location">

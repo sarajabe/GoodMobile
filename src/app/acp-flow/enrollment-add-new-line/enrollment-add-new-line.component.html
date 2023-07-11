@@ -152,18 +152,18 @@
                                     you want to use the same address for shipping as the one entered in the ACP
                                     Application?</p>
                                 <div class="address-selection-options">
-                                    <div class="current-address" *ngIf="!!verifiedAddress">
+                                    <div class="current-address" *ngIf="!!applicationAddress">
                                         <input type="radio" [(ngModel)]="addressOption" name="mailaddress" value="mail"
                                             (change)="optionChanged()" id="mailaddress" />
                                         <div class="address-details">
-                                            <p class="alias">{{!!verifiedAddress?.name? verifiedAddress?.name :
-                                                verifiedAddress?.alias}}
+                                            <p class="alias">{{!!applicationAddress?.name? applicationAddress?.name :
+                                                applicationAddress?.alias}}
                                             </p>
-                                            <p class="info">{{verifiedAddress?.address1}}</p>
-                                            <p class="info" *ngIf="!!verifiedAddress?.address2">
-                                                {{verifiedAddress?.address2}}</p>
-                                            <p class="info">{{verifiedAddress?.city}}, {{verifiedAddress?.state}},
-                                                {{verifiedAddress?.postalCode}}</p>
+                                            <p class="info">{{applicationAddress?.address1}}</p>
+                                            <p class="info" *ngIf="!!applicationAddress?.address2">
+                                                {{applicationAddress?.address2}}</p>
+                                            <p class="info">{{applicationAddress?.city}}, {{applicationAddress?.state}},
+                                                {{applicationAddress?.postalCode}}</p>
                                         </div>
                                     </div>
                                     <a class="link" (click)="changeAddressOption()">Use another address <img
@@ -257,7 +257,7 @@
                                                 Cancel
                                             </a>
                                             <button class="button primary" aria-label="Add address"
-                                                (click)="addAddress()">
+                                            (click)="addAddress()">
                                                 Save
                                             </button>
                                         </div>
@@ -345,7 +345,7 @@
             <button class="button primary" *ngIf="activeStep === 2"
                 [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
                 [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
-                (click)="purchasePlan()"  data-cy="nextBtn">Next</button>
+                (click)="purchasePlan()"  data-cy="nextBtn">Submit</button>
         </div>
         <div class="right end" *ngIf="!!planPurchased">
             <button class="button primary" data-cy="continueBtn" (click)="goToPendingActivation()">{{!!isStorePickup ? 'Continue' : 'Done'}}</button>
