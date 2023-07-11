@@ -2,9 +2,13 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FirebaseEBBService, IFirebaseEbbDetails } from '@ztarmobile/zwp-service-backend';
-import { of } from 'rxjs';
+import { ActionsAnalyticsService, FirebaseUserProfileService, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { AddressInfoComponent } from './address-info.component';
+import { InjectionToken } from '@angular/core';
+import { IGoogleTagManagerEventsConfig } from '@ztarmobile/zwp-service';
+import { AppState } from 'src/app/app.service';
+import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 let component: AddressInfoComponent;
 let fixture: ComponentFixture<AddressInfoComponent>;
@@ -20,25 +24,44 @@ let mailingAddressTwoInputField;
 let mailingCityInputField;
 let mailingStateInputField;
 let mailingZipCodeInputField;
-let mockFirebaseEBBService;
 
-describe('EBB address info Component - Unit Testing', async () => {
+let mockAnalyticService;
+let mockPlacesAutocompleteService;
+let mockEbbService;
+let mockFirebaseUserProfileService;
+
+fdescribe('No flow - EBB Address Info Component - Unit Testing', async () => {
     beforeEach(async () => {
-        mockFirebaseEBBService = jasmine.createSpyObj(['FirebaseEBBService', 'clearEBBDetails', 'saveEbbDetails', 'ebbDetails']);
+        mockEbbService = jasmine.createSpy('EBBService');
+        mockFirebaseUserProfileService = jasmine.createSpy('FirebaseUserProfileService');
+        mockAnalyticService = jasmine.createSpyObj(['ActionsAnalyticsService', 'trackACPEvent']);
+        mockPlacesAutocompleteService = jasmine.createSpyObj(['PlacesAutocompleteService', 'findAddress', 'findDetailedAddressFields']);
+
         await TestBed.configureTestingModule({
-            declarations: [AddressInfoComponent],
-            imports: [FormsModule,
+            declarations: [
+                AddressInfoComponent
+            ],
+            imports: [
+                FormsModule,
                 ReactiveFormsModule,
-                RouterTestingModule
+                RouterTestingModule,
+                MatAutocompleteModule
             ],
             providers: [
-                FirebaseEBBService
+                { provide: AppState },
+                { provide: EbbService },
+                { provide: FirebaseUserProfileService },
+                { provide: ActionsAnalyticsService, useValue: new InjectionToken<IGoogleTagManagerEventsConfig>('GoogleTagManagerEvents') },
+                { provide: PlacesAutocompleteService }
             ]
         });
-        TestBed.overrideProvider(FirebaseEBBService, { useValue: mockFirebaseEBBService });
+
+        TestBed.overrideProvider(EbbService, { useValue: mockEbbService });
+        TestBed.overrideProvider(FirebaseUserProfileService, { useValue: mockFirebaseUserProfileService });
+        TestBed.overrideProvider(ActionsAnalyticsService, { useValue: mockAnalyticService });
+        TestBed.overrideProvider(PlacesAutocompleteService, { useValue: mockPlacesAutocompleteService });
         TestBed.compileComponents();
-    });
-    beforeEach(async () => {
+
         fixture = TestBed.createComponent(AddressInfoComponent);
         component = fixture.componentInstance;
 
@@ -53,23 +76,22 @@ describe('EBB address info Component - Unit Testing', async () => {
         mailingCityInputField = component.mailingAddressForm.controls.city;
         mailingStateInputField = component.mailingAddressForm.controls.state;
         mailingZipCodeInputField = component.mailingAddressForm.controls.zipCode;
-        mockFirebaseEBBService.ebbDetails.and.returnValue({} as IFirebaseEbbDetails);
-        mockFirebaseEBBService.ebbDetails = of({});
         fixture.detectChanges();
     });
 
-    it('should create', waitForAsync(() => {
+    it('Should create a component successfully', waitForAsync(() => {
         expect(component).toBeTruthy();
     }));
 
-    it('Test a form group element count', waitForAsync(() => {
+    it('Should test a form group element count', waitForAsync(() => {
         const addressInfoFormElement = fixture.nativeElement.querySelector('#addressInfoForm');
         const addressInfoInputElements = addressInfoFormElement.querySelectorAll('input');
 
         const mailingAddressFormElement = fixture.nativeElement.querySelector('#mailingAddressForm');
         const mailingAddressInputElements = mailingAddressFormElement.querySelectorAll('input');
 
-        expect(addressInfoInputElements.length + mailingAddressInputElements.length).toEqual(10);
+        expect(addressInfoInputElements.length).toEqual(5);
+        expect(mailingAddressInputElements.length).toEqual(5);
     }));
 
     it('Should covers the initial state (both forms appear and the mailing checkbox is unchecked)', waitForAsync(() => {
@@ -146,7 +168,6 @@ describe('EBB address info Component - Unit Testing', async () => {
 
     it('Should check that the mailing form is hidden when the chcekbox is checked', waitForAsync(() => {
         fixture.whenStable().then(() => {
-
             const useMailingAddressCheckbox = fixture.debugElement.query(By.css('#useSameAddress')).nativeElement;
             useMailingAddressCheckbox.click();
 
@@ -162,6 +183,15 @@ describe('EBB address info Component - Unit Testing', async () => {
 
     it('Should show validation messages when the values are invalid for both forms', waitForAsync(() => {
         fixture.whenStable().then(() => {
+            addressOneInputField.setValue('60284029840297492479274072047892047207429472984792847928749879274927492749274');
+            addressOneInputField.markAsTouched();
+            addressOneInputField.markAsDirty();
+            fixture.detectChanges();
+
+            addressTwoInputField.setValue('60284029840297492479274072047892047207429472984792847928749879274927492749274');
+            addressTwoInputField.markAsTouched();
+            addressTwoInputField.markAsDirty();
+            fixture.detectChanges();
 
             cityInputField.setValue('6');
             cityInputField.markAsTouched();
@@ -176,6 +206,16 @@ describe('EBB address info Component - Unit Testing', async () => {
             zipCodeInputField.setValue('6');
             zipCodeInputField.markAsTouched();
             zipCodeInputField.markAsDirty();
+            fixture.detectChanges();
+
+            mailingAddressOneInputField.setValue('60284029840297492479274072047892047207429472984792847928749879274927492749274');
+            mailingAddressOneInputField.markAsTouched();
+            mailingAddressOneInputField.markAsDirty();
+            fixture.detectChanges();
+
+            mailingAddressTwoInputField.setValue('60284029840297492479274072047892047207429472984792847928749879274927492749274');
+            mailingAddressTwoInputField.markAsTouched();
+            mailingAddressTwoInputField.markAsDirty();
             fixture.detectChanges();
 
             mailingCityInputField.setValue('6');
@@ -203,6 +243,9 @@ describe('EBB address info Component - Unit Testing', async () => {
             const invalidMailingStateMsg = fixture.debugElement.query(By.css('#invalid-mailing-state-msg'));
             const invalidMailingZipCodeMsg = fixture.debugElement.query(By.css('#invalid-mailing-zipcode-msg'));
 
+            expect(addressOneInputField.hasError('maxlength')).toBeTruthy();
+            expect(addressTwoInputField.hasError('maxlength')).toBeTruthy();
+
             expect(cityInputField.hasError('pattern')).toBeTruthy();
             expect(invalidCityMsg.nativeElement).toBeDefined();
 
@@ -213,6 +256,9 @@ describe('EBB address info Component - Unit Testing', async () => {
             expect(invalidZipCodeMsg.nativeElement).toBeDefined();
 
             expect(useMailingAddressCheckbox.checked).toBeFalsy();
+
+            expect(mailingAddressOneInputField.hasError('maxlength')).toBeTruthy();
+            expect(mailingAddressTwoInputField.hasError('maxlength')).toBeTruthy();
 
             expect(mailingCityInputField.hasError('pattern')).toBeTruthy();
             expect(invalidMailingCityMsg.nativeElement).toBeDefined();
@@ -230,6 +276,15 @@ describe('EBB address info Component - Unit Testing', async () => {
 
     it('Should not show validation messages when the values are valid for both forms', waitForAsync(() => {
         fixture.whenStable().then(() => {
+            addressOneInputField.setValue('123 dallas texas');
+            addressOneInputField.markAsTouched();
+            addressOneInputField.markAsDirty();
+            fixture.detectChanges();
+
+            addressTwoInputField.setValue('123');
+            addressTwoInputField.markAsTouched();
+            addressTwoInputField.markAsDirty();
+            fixture.detectChanges();
 
             cityInputField.setValue('NY');
             cityInputField.markAsTouched();
@@ -246,6 +301,17 @@ describe('EBB address info Component - Unit Testing', async () => {
             zipCodeInputField.markAsDirty();
             fixture.detectChanges();
 
+            mailingAddressOneInputField.setValue('123 dallas texas');
+            mailingAddressOneInputField.markAsTouched();
+            mailingAddressOneInputField.markAsDirty();
+            fixture.detectChanges();
+
+            mailingAddressTwoInputField.setValue('602');
+            mailingAddressTwoInputField.markAsTouched();
+            mailingAddressTwoInputField.markAsDirty();
+            fixture.detectChanges();
+
+
             mailingCityInputField.setValue('NY');
             mailingCityInputField.markAsTouched();
             mailingCityInputField.markAsDirty();
@@ -261,24 +327,20 @@ describe('EBB address info Component - Unit Testing', async () => {
             mailingZipCodeInputField.markAsDirty();
             fixture.detectChanges();
 
+            expect(addressOneInputField.hasError('maxlength')).toBeFalsy();
+            expect(addressTwoInputField.hasError('maxlength')).toBeFalsy();
             expect(cityInputField.hasError('pattern')).toBeFalsy();
             expect(stateInputField.hasError('pattern')).toBeFalsy();
             expect(zipCodeInputField.hasError('pattern')).toBeFalsy();
 
+            expect(mailingAddressOneInputField.hasError('maxlength')).toBeFalsy();
+            expect(mailingAddressTwoInputField.hasError('maxlength')).toBeFalsy();
             expect(mailingCityInputField.hasError('pattern')).toBeFalsy();
             expect(mailingStateInputField.hasError('pattern')).toBeFalsy();
             expect(mailingZipCodeInputField.hasError('pattern')).toBeFalsy();
 
             expect(component.addressInfoForm.errors).toBeNull();
             expect(component.mailingAddressForm.errors).toBeNull();
-        });
-    }));
-    it('Should check if address info form is disabled after the user had already enrolled (step 3)', waitForAsync(() => {
-        fixture.whenStable().then(() => {
-            component.disable = true;
-            fixture.detectChanges();
-            expect(component.addressInfoForm.disable).toBeTruthy();
-            expect(component.mailingAddressForm.disable).toBeTruthy();
         });
     }));
 });
