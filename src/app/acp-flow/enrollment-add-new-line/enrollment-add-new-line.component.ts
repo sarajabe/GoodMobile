@@ -84,6 +84,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     private userProfileService: FirebaseUserProfileService, private userPlansService: UserPlansService,
     private toastHelper: ToastrHelperService, private shippingService: ShippingService,
     private orderCheckoutService: OrderCheckoutService, private analyticsService: ActionsAnalyticsService,
+    private pageScrollService: PageScrollService
   ) {
     this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
@@ -170,7 +171,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                                           this.isAddressVerified = true;
                                           this.addressNoOptionSection = true;
                                           this.addressNoOptionNotVerfiedSection = false;
-                                          this.addressOption = 'mail'
+                                          this.addressOption = 'mail';
                                         }
                                       },
                                       (error) => {
@@ -547,6 +548,12 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                   this.showShippingForm = false;
                   this.shippingAddress = {} as IFirebaseAddress;
                   this.isAdressAddedSuccessfully = true;
+                  this.pageScrollService.scroll({
+                    document,
+                    scrollTarget: `#addressDetails`,
+                    scrollOffset: 100,
+                    speed: 150
+                  });
                 });
             }
           },
