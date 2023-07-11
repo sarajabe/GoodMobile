@@ -26,9 +26,9 @@
                         <p class="serial-device-note">Dial: *#06# on your phone to get your IMEI/MEID</p>
                         <label class="outlined-label-input">
                             <input placeholder=" " required formControlName="imei" name="equipmentNumber"
-                                id="equipmentNumber" restrictNumbers required
+                                id="equipmentNumber" data-cy="equipmentNumber" restrictNumbers required
                                 maxlength="18" />
-                            <span data-cy="equipmentNumber">Enter your device’s IMEI number</span>
+                            <span>Enter your device’s IMEI number</span>
                         </label>
                         <a class="imei-link" (click)="showWhatIsIMEI()">What is an IMEI/MEID number?</a>
                         <label class="validation-message"
@@ -45,7 +45,7 @@
                     <div class="form-field">
                         <p class="top-label">Enter your full address </p>
                         <label class="outlined-label-input flowed">
-                            <input formControlName="address" matInput type="search" list-formatter="description"  
+                            <input formControlName="address" matInput type="search" list-formatter="description" data-cy="addressRef"  
                                 type="search" (focus)="setFoucs = true" (blur)="setFoucs = false"
                                class="geolocate"  placeholder="  " [matAutocomplete]="auto" required
                                (input)="changedAddress()"/>

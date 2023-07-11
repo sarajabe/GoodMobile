@@ -134,8 +134,8 @@
       </div>
       <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
         <ng-container *ngIf="!!purchasedPlanId">
-          <div *ngIf="!!purchasedPlan && !!isStorePickup" data-cy="storePickupSuccessful">
-            <p class="smaller last-note">
+          <div *ngIf="!!purchasedPlan && !!isStorePickup">
+            <p class="smaller last-note" data-cy="storePickupSuccessful">
               You can always find your <b>SIM Card In-Store Pickup barcode</b> in your <b>Purchased Plans</b> page, 
               to provide it for the store clerk for your order pickup.
             </p>

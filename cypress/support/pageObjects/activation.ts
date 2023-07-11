@@ -39,8 +39,10 @@ class Activation {
     enteractivationInfoForNewNumber(activationCODE, pin, confirmPin) {
         cy.get('[data-cy="activationCode"]').clear();
         cy.get('[data-cy="activationCode"]').type(activationCODE);
+        cy.get('[data-cy="pinCode"]').click({force:true});
         cy.get('[data-cy="pinCode"]').clear();
         cy.get('[data-cy="pinCode"]').type(pin);
+        cy.get('[data-cy="pinCodeConfirm"]').click({force:true});
         cy.get('[data-cy="pinCodeConfirm"]').clear();
         cy.get('[data-cy="pinCodeConfirm"]').type(confirmPin);
     

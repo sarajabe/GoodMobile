@@ -403,7 +403,7 @@ class Acp {
      fillInFullName(fullName) {
           cy.get('[data-cy="name"]').click({force:true})
           cy.get('[data-cy="name"]').clear();
-          cy.get('[data-cy="name"]').type(fullName)
+          cy.get('[data-cy="name"]').type(fullName)            
           return this;
      };
      notCapitalisedInitials() {
@@ -541,8 +541,6 @@ class Acp {
           this.requiredMessagesAcpFirstPage();
           PageObjects.Acp.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
                CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
-          cy.get('[data-cy="middleName"]').click({force: true});
-          cy.get('[data-cy="middleName"]').type('MY');
           cy.get('select').eq(0).select('01', { force: true }).should('have.value', '01');
           cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
           PageObjects.Acp.clickOnSSNRadio();
@@ -557,7 +555,7 @@ class Acp {
           PageObjects.Acp.clickOnSSNRadio();
           PageObjects.Acp.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO2.SSN_NO);
           PageObjects.Acp.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO2.PHONE_NUMBER);
-          PageObjects.Acp.fillInEmail(CONSTANT.ACP_DATA.PERSONAL_INFO2.Email);
+          PageObjects.Acp.fillInEmail(PageObjects.Dynamics.makeNewEmail());
           PageObjects.Acp.clickOnNextBtn();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
           cy.get('.header-color').should('have.text','Address Information');
@@ -601,7 +599,7 @@ class Acp {
           PageObjects.Acp.secondCheckSignUp();
           PageObjects.Acp.thirdCheckSignUp();
           PageObjects.Acp.forthCheckSignUp();
-          PageObjects.Acp.fillInFullName( CONSTANT.ACP_DATA.PERSONAL_INFO2.FULL_NAME);
+          PageObjects.Acp.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO2.FULL_NAME);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
           PageObjects.Acp.clickOnVerifyBtn();
@@ -621,31 +619,42 @@ class Acp {
           PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
           PageObjects.Coverage.enterAddressRefBothCoverages();
+          cy.get('[data-cy="checkBtn"]').click();
           cy.get('.head-note').should('have.text','Your Phone is compatible!');
           cy.get('.sub-note').should('have.text','You can use the device you have with our network!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnStorePickup();
           cy.get('[data-cy="barCodeVal"]').click();
+          cy.get('[data-cy="nextBtn"]').click();
           PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-          cy.get('.top-desc').should('have.text','ACP Application successful!');
-          cy.get('.sub-desc').should('have.text','Next Steps - In Store SIM Card Pickup.');
+          cy.get('.top-note').should('have.text','Your order will be available at any of the following stores:');
+          cy.get('[data-cy="storePickupSuccessful"]').should('have.text',' You can always find your SIM Card In-Store Pickup barcode in your Purchased Plans page, to provide it for the store clerk for your order pickup. ');
           cy.get('[data-cy="purchasedPlansBtn"]').click();
           PageObjects.TitleExpectations.goToPurchasedPlansPage();
           cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
-          cy.get('[data-cy="pickupBarCode"]').should('have.text','In-store Pickup Barcode');
+          cy.get('[data-cy="pickupBarCode"]').should('have.text','In-Store Pickup Barcode');
           cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
           cy.get('.menu-item.ng-star-inserted > .items-link').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
-          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending Activation');
-          cy.get('[data-cy="activate-button"]').click();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
+          cy.get('.actions > .primary').click();
           PageObjects.TitleExpectations.goToActivatePortYouSimPage();
           cy.get('#new').click();
+          cy.get('.button').click()
           PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
           cy.get('[data-cy="activate-button"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('.title').should('have.text','Successfully activated!');
+          cy.get('.action > .button').should('have.text','Select your Device');
+          cy.get('.actions > .button').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending');
      };
 };
 export default new Acp();
