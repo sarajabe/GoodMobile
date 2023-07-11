@@ -127,8 +127,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                     this.appState.loading = true;
                     this.appState.acpAppResObs.pipe(takeWhile(() => this.alive)).subscribe(details => {
                       if (!!details && details?.status === 'COMPLETE') {
-                        this.addressesList = !!user?.shippingAddresses ? user.shippingAddresses : [];
                         if (!this.dataCollected) { // we added this because when we add new shipping address the profile observable gets updated and it repeats all the API calls again so this check is to make sure not to call the APIs again
+                          this.addressesList = !!user?.shippingAddresses ? user.shippingAddresses : [];
                           this.selectedShippingAddress = {} as IFirebaseAddress;
                           this.verifiedAddress = {} as IFirebaseAddress;
                           this.dataCollected = true;
