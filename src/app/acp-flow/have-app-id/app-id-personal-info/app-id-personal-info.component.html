@@ -214,4 +214,61 @@
       </label>
     </div>
   </div>
+  <div class="form-row bottom">
+    <p class="">What’s your Government ID Type? <span class="red">*</span></p>
+    <p class="smallest grey space">Please select the ID you used during your National Verifier process</p>
+    <div class="radio-part">
+      <div class="ssn-part">
+        <div class="radioBtn">
+          <label class="form-control primary-font-bold" for="ssn">
+            <input type="radio" value="ssn" formControlName="option" id="ssn" data-cy="ssnRadio"
+              (change)="checkIdentityType()">Social Security Number (SSN)
+          </label>
+        </div>
+        <div class="form-field quarter"
+          *ngIf="!!personalInfoForm.controls.option.value && personalInfoForm.controls.option.value == 'ssn'">
+          <label class="outlined-label-input">
+            <input placeholder=" " formControlName="ssn" restrictNumbers minlength="4" maxlength="4" type="text"
+              id="ssn" data-cy="ssn" />
+            <span>Last 4 SSN</span>
+          </label>
+          <label class="validation-message"
+            *ngIf=" personalInfoForm.controls.ssn.touched && !personalInfoForm.controls.ssn.value"
+            id="required-ssn-msg">
+            Last 4 SSN is required
+          </label>
+          <label class="validation-message"
+            *ngIf="personalInfoForm.controls.ssn.hasError('minlength') && !!personalInfoForm.controls.ssn.value"
+            id="invalid-ssn-msg" data-cy="invalid-ssn-msg">
+            Last 4 SSN should be 4 digits</label>
+        </div>
+      </div>
+      <div class="tribal-part">
+        <div class="radioBtn" data-cy="tribalBtn">
+          <label class="form-control primary-font-bold" for="tribal">
+            <input type="radio" value="tribal" formControlName="option" id="tribal" data-cy="tribalID"
+              (change)="checkIdentityType()">Tribal ID
+          </label>
+        </div>
+        <div class="form-field quarter"
+          *ngIf="!!personalInfoForm.controls.option.value && personalInfoForm.controls.option.value == 'tribal'">
+          <label class="outlined-label-input">
+            <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal"
+              data-cy="tribalID" />
+            <span>Tribal ID</span>
+          </label>
+          <label class="validation-message"
+            *ngIf="personalInfoForm.controls.tribalId.touched && !personalInfoForm.controls.tribalId.value"
+            id="required-tribal-msg">
+            Tribal ID is required
+          </label>
+        </div>
+      </div>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.option.hasError('required') && personalInfoForm.controls.option.touched"
+        id="required-idType-msg" data-cy="required-idType-msg">
+        Government ID Type is required
+      </label>
+    </div>
+  </div>
 </form>

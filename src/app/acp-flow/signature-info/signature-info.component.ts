@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ISignAcpDetails } from '@ztarmobile/zwp-service-backend-v2';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { takeWhile } from 'rxjs/operators';
 import { EBB_NAME_PATTERN } from 'src/app/app.config';
 import { AppState } from 'src/app/app.service';
@@ -20,7 +19,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
   @Input() signed: boolean;
   @Input() disable: boolean;
   @Output() setSignature: EventEmitter<any> = new EventEmitter<any>();
-  public signatureForm: UntypedFormGroup;
+  public signatureForm: FormGroup;
   public fullName: string;
   public firstCharFName: string;
   public firstCharLName: string;
@@ -31,7 +30,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
   public showCaptchaError = false;
   private alive = true;
 
-  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager,
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager,
     private appState: AppState) {
     }
 
@@ -64,7 +63,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.ebbManager.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
       this.ebbManager.acpFlowSelected.pipe(takeWhile(() => this.alive)).subscribe((res) => {
         const flow = res;
-        if (!!step && ((!this.appId && (step === 5 && flow === 'no') || (step === 4 && flow === 'yes-without-id')) || (!!this.appId && step ===2))) {
+        if (!!step && ((!this.appId && (step === 5 && flow === 'no') || (step === 4 && flow === 'yes-without-id')) || (!!this.appId && step ===3))) {
           this.signatureForm.markAllAsTouched();
           this.showCaptchaError = !!this.recaptchaResponse ? false : true;
           if (!!this.signatureForm.valid && !!this.fullName && !!this.captchaValid) {
@@ -90,7 +89,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
   }
   
   private matchingFullName(fullNameKey: string, enteredNameKey: string): any {
-    return (group: UntypedFormGroup): { [key: string]: any } => {
+    return (group: FormGroup): { [key: string]: any } => {
       const enteredName = group.controls[enteredNameKey];
       if (fullNameKey.toUpperCase() !== enteredName.value.toUpperCase()) {
         return {
