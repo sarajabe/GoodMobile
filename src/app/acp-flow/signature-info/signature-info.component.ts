@@ -89,7 +89,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.showCaptchaError = false;
   }
   
-  private matchingFullName(fullNameKey: string, enteredNameKey: string): any {
+  public matchingFullName(fullNameKey: string, enteredNameKey: string): any {
     return (group: UntypedFormGroup): { [key: string]: any } => {
       const enteredName = group.controls[enteredNameKey];
       if (fullNameKey.toUpperCase() !== enteredName.value.toUpperCase()) {
