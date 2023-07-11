@@ -321,5 +321,10 @@ class TitleExpectations {
         cy.title().should('eq', `Sign Up | Good Mobile`);
         return this;
     };
+    goToAcpApplicationDetailsPage () {
+        cy.title().should('eq', 'ACP Application | Affordable Connectivity Program | Good Mobile');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+        return this;
+    };
 };
 export default new TitleExpectations();
