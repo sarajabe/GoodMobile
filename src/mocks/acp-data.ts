@@ -1,5 +1,9 @@
 import { IAcpDetails, IAcpUser } from "@ztarmobile/zwp-service-backend-v2";
 
+export const APPLICATION_ID = {
+    ebbId: 'B12345-67890'
+};
+
 export const FULL_USER_INFO: IAcpUser = {
     firstName: 'Mirna',
     lastName: 'Haddad',

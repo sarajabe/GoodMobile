@@ -144,20 +144,25 @@ describe('Acp Validation Component - Unit Testing', () => {
         expect(component).toBeTruthy();
     });
 
-    it('Should check if Verify button is on step 5', () => {
-        component.acpData = acpData;
-        component.activeStep = 5;
-        fixture.detectChanges();
+    it('Should check if the activeStep is 1, so the app-personal-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 1;
+            fixture.detectChanges();
 
-        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
-        fixture.detectChanges();
+            appPersonalInfo = fixture.debugElement.query(By.css('app-personal-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc'));
 
-        expect(nextVerifyButton).toBeDefined();
-        expect(nextVerifyButton.innerHTML).toEqual('Verify');
-    });
+            expect(appPersonalInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[1].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[1].stepDesc);
+            expect(stepExtraDesc).toBeNull();
+        });
+    }));
 
-    it('Should check if step 4 will have a regular next button', () => {
-        component.activeStep = 4;
+    it('Should check if step 1 will have a regular next button', () => {
+        component.activeStep = 1;
         fixture.detectChanges();
 
         const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
@@ -166,6 +171,75 @@ describe('Acp Validation Component - Unit Testing', () => {
         expect(nextVerifyButton).toBeDefined();
         expect(nextVerifyButton.innerHTML).toEqual('Next');
     });
+
+    it('Should click on next from the step 1 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 1;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(1, true);
+    });
+
+    it('Should check if the activeStep is 2, so the app-address-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 2;
+            fixture.detectChanges();
+
+            appAddressInfo = fixture.debugElement.query(By.css('app-address-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc'));
+
+            expect(appAddressInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[2].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[2].stepDesc);
+            expect(stepExtraDesc).toBeNull();
+        });
+    }));
+
+    it('Should check if step 2 will have a regular next button', () => {
+        component.activeStep = 2;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Next');
+    });
+
+    it('Should click on next from the step 2 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 2;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(2, true);
+    });
+
+    it('Should check if the activeStep is 3, so the app-child-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 3;
+            fixture.detectChanges();
+
+            appChildInfo = fixture.debugElement.query(By.css('app-child-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc'));
+
+            expect(appChildInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[3].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[3].stepDesc);
+            expect(stepExtraDesc).toBeNull();
+        });
+    }));
 
     it('Should check if step 3 will have a regular next button', () => {
         component.activeStep = 3;
@@ -178,38 +252,17 @@ describe('Acp Validation Component - Unit Testing', () => {
         expect(nextVerifyButton.innerHTML).toEqual('Next');
     });
 
-    it('Should check if the activeStep is 1, so the app-personal-info should be rendered in the DOM', waitForAsync(() => {
-        fixture.whenStable().then(() => {
-            component.activeStep = 1;
-            fixture.detectChanges();
+    it('Should click on next from the step 3 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 3;
+        fixture.detectChanges();
 
-            appPersonalInfo = fixture.debugElement.query(By.css('app-personal-info'));
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
 
-            expect(appPersonalInfo).toBeTruthy();
-        });
-    }));
+        nextVerifyButton.click();
 
-    it('Should check if the activeStep is 2, so the app-address-info should be rendered in the DOM', waitForAsync(() => {
-        fixture.whenStable().then(() => {
-            component.activeStep = 2;
-            fixture.detectChanges();
-
-            appAddressInfo = fixture.debugElement.query(By.css('app-address-info'));
-
-            expect(appAddressInfo).toBeTruthy();
-        });
-    }));
-
-    it('Should check if the activeStep is 3, so the app-child-info should be rendered in the DOM', waitForAsync(() => {
-        fixture.whenStable().then(() => {
-            component.activeStep = 3;
-            fixture.detectChanges();
-
-            appChildInfo = fixture.debugElement.query(By.css('app-child-info'));
-
-            expect(appChildInfo).toBeTruthy();
-        });
-    }));
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(3, true);
+    });
 
     it('Should check if the activeStep is 4, so the app-acp-documents should be rendered in the DOM', waitForAsync(() => {
         fixture.whenStable().then(() => {
@@ -218,10 +271,39 @@ describe('Acp Validation Component - Unit Testing', () => {
             fixture.detectChanges();
 
             const appDocsInfo = fixture.debugElement.query(By.css('app-acp-documents'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc')).nativeElement;
 
             expect(appDocsInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[4].stepTitle);
+            expect(stepDesc.innerHTML).toEqual('');
+            expect(stepExtraDesc.innerHTML).toEqual(component.STEPS_CONTENT[4].stepExtraDesc);
         });
     }));
+
+    it('Should check if step 4 will have a regular next button', () => {
+        component.activeStep = 4;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Next');
+    });
+
+    it('Should click on next from the step 4 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 4;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(4, true);
+    });
 
     it('Should check if the activeStep is 5, so the app-signature-info should be rendered in the DOM', waitForAsync(() => {
         fixture.whenStable().then(() => {
@@ -230,17 +312,35 @@ describe('Acp Validation Component - Unit Testing', () => {
             fixture.detectChanges();
 
             const appSignatureInfo = fixture.debugElement.query(By.css('app-signature-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc')).nativeElement;
 
             expect(appSignatureInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[5].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[5].stepDesc);
+            expect(stepExtraDesc.innerHTML).toEqual(component.STEPS_CONTENT[5].stepExtraDesc);
         });
     }));
+
+    it('Should check if Verify button is on step 5', () => {
+        component.acpData = acpData;
+        component.activeStep = 5;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Verify');
+    });
 
     it('Should check if user already enrolled then call callGetVerifyAcp', () => {
         spyOn(component, 'callGetVerifyAcp');
         fixture.detectChanges();
 
         component.enrolled = true;
-        component.ebbId = 'A2374-2222-222';
+        component.ebbId = ACP_MOCKS.APPLICATION_ID.ebbId;
         fixture.detectChanges();
 
         component.ngOnInit();
@@ -456,4 +556,3 @@ describe('Acp Validation Component - Unit Testing', () => {
         });
     }));
 });
-

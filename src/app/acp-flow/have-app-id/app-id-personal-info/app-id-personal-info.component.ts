@@ -35,6 +35,9 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       year: ['', Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       state: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/), Validators.maxLength(2)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN), Validators.maxLength(50)])],
+      option: ['', Validators.required],
+      ssn: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(4), Validators.maxLength(4)])],
+      tribalId: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(20)])],
     });
   }
 
@@ -51,6 +54,15 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
           this.userInfo.address.primary.state = this.personalInfoForm?.controls.state.value;
           this.userInfo.consumerEmail = this.personalInfoForm?.controls.email.value;
           this.userInfo.dob = this.personalInfoForm?.controls.month.value + '/' + dayFormat + '/' + this.personalInfoForm.controls.year.value;
+          this.userInfo.identityVerification = this.personalInfoForm?.controls?.option?.value;
+          this.userInfo.last4ssn =
+          this.personalInfoForm?.controls?.option?.value === 'ssn'
+            ? this.personalInfoForm?.controls?.ssn?.value || null
+            : null;
+        this.userInfo.tribalId =
+          this.personalInfoForm?.controls?.option?.value === 'tribal'
+            ? this.personalInfoForm?.controls?.tribalId?.value || null
+            : null;
           this.goToNext.emit(2);
           this.setUserInfo.emit({ user: this.userInfo, appId: this.personalInfoForm?.controls.applicationId.value });
         }
@@ -114,6 +126,32 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       }
     }
   }
+  public checkIdentityType() {
+    if (this.personalInfoForm.controls.option.value === 'ssn') {
+      this.personalInfoForm.get('ssn').setValidators([
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(NUMBERS_ONLY_PATTERN),
+          Validators.minLength(4),
+          Validators.maxLength(4),
+        ]),
+      ]);
+      this.personalInfoForm.get('ssn').updateValueAndValidity();
+      this.personalInfoForm.get('tribalId').setValidators(null);
+      this.personalInfoForm.get('tribalId').reset();
+    } else if (this.personalInfoForm.controls.option.value === 'tribal') {
+      this.personalInfoForm.get('ssn').setValidators(null);
+      this.personalInfoForm.get('tribalId').setValidators([
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
+      ]);
+      this.personalInfoForm.get('tribalId').updateValueAndValidity();
+      this.personalInfoForm.get('ssn').reset();
+    }
+  }
   private getYearsValues(): void {
     const today = new Date();
     const currentYear = today.getFullYear();
@@ -128,6 +166,9 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
     this.personalInfoForm?.controls.state.setValue(this.savedInfo?.user?.address?.primary?.state);
     this.personalInfoForm?.controls.email.setValue(this.savedInfo?.user?.consumerEmail);
     this.personalInfoForm?.controls.applicationId.setValue(this.savedInfo?.appId);
+    this.personalInfoForm.controls.option.setValue(this.savedInfo?.user?.identityVerification);
+    this.personalInfoForm.controls.ssn.setValue(this.savedInfo?.user?.last4ssn);
+    this.personalInfoForm.controls.tribalId.setValue(this.savedInfo?.user?.tribalId);
     if (!!this.savedInfo?.user?.dob) {
       this.personalInfoForm?.controls.day.setValue(this.savedInfo?.user?.dob.split('/')[1]);
       this.personalInfoForm?.controls.month.setValue(this.savedInfo?.user?.dob.split('/')[0]);
