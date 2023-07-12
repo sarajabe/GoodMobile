@@ -120,12 +120,13 @@ export class LandingCoverageComponent implements OnInit, OnDestroy {
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2).then(res => {
           if (!!res) {
             const params = {};
-            if (!!res?.tmo?.covered && !res?.details?.eSimOnly) {
+            if (!res?.details?.eSimOnly && (!!res?.tmo?.covered || !!res?.att?.covered)) {
               this.processingRequest = false;
-              this.networkType = 'tmo';
+              this.networkType = !!res?.tmo?.covered ? 'tmo' : 'att';
               params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE] = this.networkType;
               params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE] = this.displayedAddressModel?.postalCode;
-            } else {
+            }
+            else {
               params[SUPPORT_ROUTE_URLS.PARAMS.NO_COVERAGE] = true;
             }
             this.reCaptcha.resetReCaptcha();
