@@ -209,7 +209,7 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private populateForms(): void {
+  public populateForms(): void {
     if (!!this.primary) {
       this.addressInfoForm.controls.address1.setValue(this.primary.address1);
       this.addressInfoForm.controls.address2.setValue(this.primary.address2);
