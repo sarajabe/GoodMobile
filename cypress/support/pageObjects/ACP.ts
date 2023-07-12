@@ -528,6 +528,7 @@ class Acp {
           cy.get('[data-cy="activate-button"]').click();
           cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
           cy.get('.title').should('have.text','Successfully activated!');
+          cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
           cy.get('.action > .button').should('have.text','Select your Device');
           cy.get('.actions > .button').click();
           PageObjects.TitleExpectations.goToAccountSummaryPage();
@@ -537,6 +538,7 @@ class Acp {
           cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
           cy.get('[data-cy="acpStatusValueComplete"]').should('have.text','Complete');
           cy.get('[data-cy="acpStatusValue"]').should('have.text','Complete');
+          cy.get('[data-cy="mdnValue"]').should('have.text','Phone Number/MDN: (646) 662-1975');
           cy.get('[data-cy="viewApplicationForm"]').click();
           PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
           cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');

@@ -235,7 +235,7 @@
                         <p class="description bottom-8" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc2"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
                         <p class="description last" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
-                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
+                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3" data-cy="mdnValue"></p>
                         <p class="description mt-10"
                             [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
