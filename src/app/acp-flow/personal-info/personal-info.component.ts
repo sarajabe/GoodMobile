@@ -31,7 +31,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
   private alive = true;
 
   constructor(private formBuilder: UntypedFormBuilder,
-    private ebbService: EbbManager,
+    public ebbService: EbbManager,
     public router: Router,
     private analyticsService: ActionsAnalyticsService) {
 
@@ -56,6 +56,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.ebbService.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
       if (!!step && step === 1) {
+        this.validateEmailAndPhone();
         this.personalInfoForm.markAllAsTouched();
         if (!!this.personalInfoForm.valid && !this.showInvalidDateError) {
           this.trackEvent();
@@ -186,8 +187,33 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
         this.showInvalidDateError = false;
       }
     }
-
   }
+
+  public validateEmailAndPhone(): void {
+    const phone = this.personalInfoForm.controls.phoneNumber.value;
+    const mail = this.personalInfoForm.controls.email.value;
+    if (!!phone) {
+      this.personalInfoForm.controls.getPhones.setValidators([Validators.required]);
+      this.personalInfoForm.controls.getPhones.updateValueAndValidity();
+      if (!this.personalInfoForm.controls.getPhones.value) {
+        this.personalInfoForm.controls.getPhones.setValue(null);
+      }
+    } else {
+      this.personalInfoForm.controls.getPhones.clearValidators();
+      this.personalInfoForm.controls.getPhones.updateValueAndValidity();
+    }
+    if (!!mail) {
+      this.personalInfoForm.controls.getEmails.setValidators([Validators.required]);
+      this.personalInfoForm.controls.getEmails.updateValueAndValidity();
+      if (!this.personalInfoForm.controls.getEmails.value) {
+        this.personalInfoForm.controls.getEmails.setValue(null);
+      }
+    } else {
+      this.personalInfoForm.controls.getEmails.clearValidators();
+      this.personalInfoForm.controls.getEmails.updateValueAndValidity();
+    }
+  }
+
   private trackEvent(): void {
     const data = {
       event: 'personal_info',

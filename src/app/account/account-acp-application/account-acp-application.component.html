@@ -90,7 +90,7 @@
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1" data-cy="youAreEligibleDescription"></p>
                             <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
-                            <div class="device-checkout-options" *ngIf="showDeviceOptions">
+                            <div class="device-checkout-options" *ngIf="canPurchaseADevice">
                                 <p class="question">How do you want to claim your device?</p>
                                 <div class="options-container">
                                     <div class="radioBtn" [class.selected]="option === 'online'">
