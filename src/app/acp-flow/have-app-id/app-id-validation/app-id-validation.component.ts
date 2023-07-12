@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseUserProfileService, IUserPlan } from '@ztarmobile/zwp-service-backend';
 import { EbbService, IAcpDetails, IAcpUser, IAppDetails } from '@ztarmobile/zwp-service-backend-v2';
 import { take } from 'rxjs/operators';
 import { ACP_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
-import { ACP_CALLBACK_URL, INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
+import { ACP_CALLBACK_URL } from 'src/environments/environment';
 import { EbbManager } from 'src/services/ebb.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 
@@ -23,7 +23,7 @@ export class AppIdValidationComponent implements OnInit {
   @Input() userProfileId: string;
 
   public activeStep: number;
-  public steps = [1, 2];
+  public steps = [1, 2, 3];
   public callBackUrl: string;
   public userPlans: Array<IUserPlan>;
   public acpFinishAppUrl: any;
@@ -33,6 +33,7 @@ export class AppIdValidationComponent implements OnInit {
   public acpSuccess = false;
   public acpError = false;
   public acpStatus: string;
+  public primaryAddress: any;
   acpLink: any;
   constructor(private router: Router, private ebbManager: EbbManager, private appState: AppState,
     private ebbService: EbbService, private modalHelper: ModalHelperService,
@@ -46,7 +47,9 @@ export class AppIdValidationComponent implements OnInit {
     this.callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
     if (!!this.customerId) {
       if (!this.acpData) {
-        this.acpData = { user: {} as IAcpUser } as IAcpDetails;
+        this.acpData = { user: { address: {} } as IAcpUser  } as IAcpDetails;
+      } else {
+        this.primaryAddress = this.acpData?.user?.address?.primary;
       }
     }
   }
@@ -55,6 +58,11 @@ export class AppIdValidationComponent implements OnInit {
   public setPersonalInfo(data): void {
     this.acpData.user = data?.user;
     this.acpData.providerApplicationId = data?.appId;
+  }
+  public setUserAddresses(data): void {
+    this.acpData.user.address = { primary: data.primary, mail: data.mail };
+    this.acpData.user.customerId = this.customerId;
+    this.primaryAddress = data.primary;
   }
   public setSignedValue(data): void {
     this.recaptchaResponse = data.captcha;
@@ -91,6 +99,7 @@ export class AppIdValidationComponent implements OnInit {
           if (!!res?.data) {
             this.acpData = res.data;
             this.appState.loading = false;
+            this.primaryAddress = res.data?.user?.address?.primary;
           }
         },
         (error) => {
@@ -99,7 +108,6 @@ export class AppIdValidationComponent implements OnInit {
       );
     }
   }
-
   private callCreateInternalApp(callVerify?): void {
     if (this.acpData) {
       window.scroll(0, 0);

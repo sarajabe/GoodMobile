@@ -1,8 +1,7 @@
 <section class="page-section no-flow" *ngIf="!acpSuccess && !acpError">
-  <h2 class="header-color">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
-  <h5 class="secondary-font">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h5>
-  <p class="smaller" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}
-  </p>
+  <h2 class="header-color" id="stepTitle">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
+  <h5 class="secondary-font" id="stepDesc">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h5>
+  <p class="smaller" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc" id="stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}</p>
   <section class="stepper">
     <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step" [class.done]="activeStep > step">
       <div class="circle">{{step}}</div>

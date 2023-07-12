@@ -8,6 +8,10 @@ export const SAVED_INFO: IAcpUser = {
     consumerEmail: 'mirna-haddad@pavocom.com'
 };
 
+export const APPLICATION_ID = {
+    ebbId: 'B12345-67890'
+};
+
 export const FULL_USER_INFO: IAcpUser = {
     firstName: 'Mirna',
     lastName: 'Haddad',
