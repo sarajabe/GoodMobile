@@ -179,24 +179,6 @@
     </div>
   </div>
   <div class="form-row bottom">
-    <p class="space text-color-thridly">Please enter your state as writter in your application:<span class="red">*</span></p>
-    <div class="form-field half">
-      <label class="outlined-label-input">
-        <input placeholder=" " formControlName="state" type="text" maxlength="2" id="state" data-cy="state" minlength="2"/>
-        <span>State</span>
-      </label>
-      <label class="validation-message"
-        *ngIf="personalInfoForm.controls.state.hasError('required') && personalInfoForm.controls.state.touched"
-        id="required-state-msg" data-cy="required-state-msg">
-        State is required
-      </label>
-      <label class="validation-message" *ngIf="personalInfoForm.controls.state.invalid && personalInfoForm.controls.state.dirty &&  !personalInfoForm.controls.state.hasError('required')"
-      id="invalid-state-msg" data-cy="invalid-state-msg">
-      State is invalid
-    </label>
-    </div>
-  </div>
-  <div class="form-row bottom">
     <p class="space text-color-thridly">Email address used in your application:<span class="red">*</span></p>
     <div class="form-field half">
       <label class="outlined-label-input">
