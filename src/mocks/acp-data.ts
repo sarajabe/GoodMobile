@@ -73,3 +73,19 @@ export const PUBLIC_HOUSING_CODES_OBJECT = {
         }
     ]
 };
+
+export const INVALID_ADDRESS_INFO = {
+    address1: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
+    address2: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
+    city: '6',
+    state: '6',
+    zipCode: '7'
+};
+
+export const VALID_ADDRESS_INFO = {
+    address1: '123 dallas texas',
+    address2: '',
+    city: 'New York',
+    state: 'NY',
+    zipCode: '70012'
+};
