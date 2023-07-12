@@ -77,7 +77,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
 
     it('Should show a validation messages for the required elements when the values are empty', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            // setting empty values
+            // Setting empty values
             fNameInputField.setValue('');
             mNameInputField.setValue('');
             lNameInputField.setValue('');
@@ -86,7 +86,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             yearSelectField.setValue('');
             emailInputField.setValue('');
 
-            // mark the form as touched
+            // Mark the form as touched
             component.personalInfoForm.markAllAsTouched();
             fixture.detectChanges();
 
@@ -117,9 +117,219 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
         });
     }));
 
-    it('Should show validation messages for the other required elements - [ ssn - tripalId - checkboxes for email and phones ]', waitForAsync(() => {
+    it('Should show a validation messages for the required elements when the values are empty, then enter an invalid values to check that invalid messages appears, after that entering a valid values and check that all errors are null', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            // set gov option as ssn
+            // First check is required 
+
+            // Setting empty values
+            fNameInputField.setValue('');
+            mNameInputField.setValue('');
+            lNameInputField.setValue('');
+            daySelectField.setValue('');
+            monthSelectField.setValue('');
+            yearSelectField.setValue('');
+            emailInputField.setValue('');
+
+            // Mark the form as touched
+            component.personalInfoForm.markAllAsTouched();
+            fixture.detectChanges();
+
+            const requiredFNameMsg = fixture.debugElement.query(By.css('#required-fname-msg'));
+            const requiredLNameMsg = fixture.debugElement.query(By.css('#required-lname-msg'));
+            const requiredDateMsg = fixture.debugElement.query(By.css('#required-date-msg'));
+            const requiredIdTypeMsg = fixture.debugElement.query(By.css('#required-idType-msg'));
+            const requiredEmailMsg = fixture.debugElement.query(By.css('#required-email-msg'));
+
+            expect(fNameInputField.errors.required).toBeTruthy();
+            expect(fNameInputField.hasError('pattern')).toBeFalsy();
+            expect(requiredFNameMsg.nativeElement).toBeDefined();
+
+            expect(lNameInputField.errors.required).toBeTruthy();
+            expect(lNameInputField.hasError('pattern')).toBeFalsy();
+            expect(requiredLNameMsg.nativeElement).toBeDefined();
+
+            expect(daySelectField.errors.required).toBeTruthy();
+            expect(monthSelectField.errors.required).toBeTruthy();
+            expect(yearSelectField.errors.required).toBeTruthy();
+            expect(daySelectField.hasError('pattern')).toBeFalsy();
+            expect(monthSelectField.hasError('pattern')).toBeFalsy();
+            expect(yearSelectField.hasError('pattern')).toBeFalsy();
+            expect(requiredDateMsg.nativeElement).toBeDefined();
+
+            expect(govOption.errors.required).toBeTruthy();
+            expect(requiredIdTypeMsg.nativeElement).toBeDefined();
+
+            expect(emailInputField.errors.required).toBeTruthy();
+            expect(emailInputField.hasError('pattern')).toBeFalsy();
+            expect(requiredEmailMsg.nativeElement).toBeDefined();
+
+            expect(component.personalInfoForm.valid).toBeFalsy();
+
+            // Second check is invalid cases to see the invalid messages
+            fNameInputField.setValue('33');
+            fNameInputField.markAsTouched();
+            fNameInputField.markAsDirty();
+            fixture.detectChanges();
+
+            mNameInputField.setValue('33');
+            mNameInputField.markAsTouched();
+            mNameInputField.markAsDirty();
+            fixture.detectChanges();
+
+            lNameInputField.setValue('33');
+            lNameInputField.markAsTouched();
+            lNameInputField.markAsDirty();
+            fixture.detectChanges();
+
+            daySelectField.setValue('12');
+            daySelectField.markAsTouched();
+            daySelectField.markAsDirty();
+            fixture.detectChanges();
+
+            monthSelectField.setValue('13');
+            monthSelectField.markAsTouched();
+            monthSelectField.markAsDirty();
+            fixture.detectChanges();
+
+            yearSelectField.setValue('2024');
+            yearSelectField.markAsTouched();
+            yearSelectField.markAsDirty();
+            fixture.detectChanges();
+            component.checkMonth();
+            fixture.detectChanges();
+
+            govOption.setValue('ssn');
+            govOption.markAsTouched();
+            govOption.markAsDirty();
+            fixture.detectChanges();
+            component.checkIdentityType();
+            fixture.detectChanges();
+
+            ssnInputField.setValue('44');
+            ssnInputField.markAsTouched();
+            ssnInputField.markAsDirty();
+            fixture.detectChanges();
+
+            phoneNumInputField.setValue('123');
+            phoneNumInputField.markAsTouched();
+            phoneNumInputField.markAsDirty();
+            fixture.detectChanges();
+
+            emailInputField.setValue('abc');
+            emailInputField.markAsTouched();
+            emailInputField.markAsDirty();
+            fixture.detectChanges();
+
+            const invalidFNameMsg = fixture.debugElement.query(By.css('#invalid-fname-msg'));
+            const invalidMNameMsg = fixture.debugElement.query(By.css('#invalid-mname-msg'));
+            const invalidLNameMsg = fixture.debugElement.query(By.css('#invalid-lname-msg'));
+            const invalidDateMsg = fixture.debugElement.query(By.css('#invalid-date-msg'));
+
+            const invalidSsnMsg = fixture.debugElement.query(By.css('#invalid-ssn-msg'));
+
+            const invalidPhoneMsg = fixture.debugElement.query(By.css('#invalid-phone-msg'));
+            const invalidEmailMsg = fixture.debugElement.query(By.css('#invalid-email-msg'));
+
+            expect(fNameInputField.hasError('pattern')).toBeTruthy();
+            expect(fNameInputField.errors.required).toBeFalsy();
+            expect(invalidFNameMsg.nativeElement).toBeDefined();
+
+            expect(mNameInputField.hasError('pattern')).toBeTruthy();
+            expect(mNameInputField.errors.required).toBeFalsy();
+            expect(invalidMNameMsg.nativeElement).toBeDefined();
+
+            expect(lNameInputField.hasError('pattern')).toBeTruthy();
+            expect(lNameInputField.errors.required).toBeFalsy();
+            expect(invalidLNameMsg.nativeElement).toBeDefined();
+
+            expect(invalidDateMsg.nativeElement).toBeDefined();
+
+            expect(ssnInputField.hasError('minlength')).toBeTruthy();
+            expect(ssnInputField.errors.required).toBeFalsy();
+            expect(invalidSsnMsg.nativeElement).toBeDefined();
+
+            expect(phoneNumInputField.hasError('minlength')).toBeTruthy();
+            expect(phoneNumInputField.errors.required).toBeFalsy();
+            expect(invalidPhoneMsg.nativeElement).toBeDefined();
+
+            expect(emailInputField.hasError('pattern')).toBeTruthy();
+            expect(emailInputField.errors.required).toBeFalsy();
+            expect(invalidEmailMsg.nativeElement).toBeDefined();
+
+            expect(component.personalInfoForm.valid).toBeFalsy();
+
+            // Set a valid values and make sure that no error messages are appear
+            fNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.firstName);
+            fNameInputField.markAsTouched();
+            fNameInputField.markAsDirty();
+            fixture.detectChanges();
+
+            mNameInputField.setValue('Ghaleb');
+            mNameInputField.markAsTouched();
+            mNameInputField.markAsDirty();
+            fixture.detectChanges();
+
+            lNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.lastName);
+            lNameInputField.markAsTouched();
+            lNameInputField.markAsDirty();
+            fixture.detectChanges();
+
+            daySelectField.setValue('13');
+            daySelectField.markAsTouched();
+            daySelectField.markAsDirty();
+            fixture.detectChanges();
+
+            monthSelectField.setValue('03');
+            monthSelectField.markAsTouched();
+            monthSelectField.markAsDirty();
+            fixture.detectChanges();
+
+            yearSelectField.setValue('1997');
+            yearSelectField.markAsTouched();
+            yearSelectField.markAsDirty();
+            fixture.detectChanges();
+            component.checkMonth();
+            fixture.detectChanges();
+
+            govOption.setValue('ssn');
+            govOption.markAsTouched();
+            govOption.markAsDirty();
+            fixture.detectChanges();
+            component.checkIdentityType();
+            fixture.detectChanges();
+
+            ssnInputField.setValue(ACP_MOCKS.FULL_USER_INFO.last4ssn);
+            ssnInputField.markAsTouched();
+            ssnInputField.markAsDirty();
+            fixture.detectChanges();
+
+            phoneNumInputField.setValue(ACP_MOCKS.ACP_PHONE_NUMBER);
+            phoneNumInputField.markAsTouched();
+            phoneNumInputField.markAsDirty();
+            fixture.detectChanges();
+
+            emailInputField.setValue(ACP_MOCKS.FULL_USER_INFO.consumerEmail);
+            emailInputField.markAsTouched();
+            emailInputField.markAsDirty();
+            fixture.detectChanges();
+
+            expect(fNameInputField.errors).toBeFalsy();
+            expect(mNameInputField.errors).toBeFalsy();
+            expect(lNameInputField.errors).toBeFalsy();
+
+            expect(ssnInputField.errors).toBeFalsy();
+
+            expect(phoneNumInputField.errors).toBeFalsy();
+
+            expect(emailInputField.errors).toBeFalsy();
+
+            expect(component.personalInfoForm.valid).toBeTruthy();
+        });
+    }));
+
+    it('Should show validation messages for the other required elements - [ ssn - tribalId - checkboxes for email and phones ]', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            // Set gov option as ssn
             govOption.setValue('ssn');
             govOption.markAsTouched();
             govOption.markAsDirty();
@@ -136,12 +346,12 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             expect(ssnInputField.errors.required).toBeTruthy();
             expect(requiredSsnMsg.nativeElement).toBeDefined();
 
-            // set gov option as tribal
+            // Set gov option as tribal
             govOption.setValue('tribal');
             govOption.markAsTouched();
             govOption.markAsDirty();
             fixture.detectChanges();
-            
+
             component.checkIdentityType();
 
             tribalInputField.setValue('');
@@ -154,13 +364,13 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             expect(tribalInputField.errors.required).toBeTruthy();
             expect(requiredTribalMsg.nativeElement).toBeDefined();
 
-            // set phone number value
-            phoneNumInputField.setValue('0123456789');
+            // Set phone number value
+            phoneNumInputField.setValue(ACP_MOCKS.ACP_PHONE_NUMBER);
             phoneNumInputField.markAsTouched();
             phoneNumInputField.markAsDirty();
             fixture.detectChanges();
 
-            // set email value
+            // Set email value
             emailInputField.setValue('william.bawwab@pavocom.com');
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
@@ -177,13 +387,13 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
 
     it('Should check that email and phone number is required when the checkbox for them is selected', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            // set phone number value
+            // Set phone number value
             phoneNumInputField.setValue('');
             phoneNumInputField.markAsTouched();
             phoneNumInputField.markAsDirty();
             fixture.detectChanges();
 
-            // set email value
+            // Set email value
             emailInputField.setValue('');
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
@@ -205,7 +415,27 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
         });
     }));
 
-    it('Should show validation messages when the values are invalid and gov option is ssn ', waitForAsync(() => {
+    it('Should check that phone number is not required when uncheck the checkbox for them is selected', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            // Set phone number value
+            phoneNumInputField.setValue('');
+            phoneNumInputField.markAsTouched();
+            phoneNumInputField.markAsDirty();
+            fixture.detectChanges();
+
+            // Check the checkbox 
+            const receivePhoneNumCheckbox = fixture.debugElement.query(By.css('#getPhones'));
+            receivePhoneNumCheckbox.nativeElement.click();
+
+            // Reclick on it to uncheck it again
+            receivePhoneNumCheckbox.nativeElement.click();
+
+            expect(phoneNumInputField.errors).toBeFalsy();
+            expect(phoneNumInputField.errors).toEqual(null);
+        });
+    }));
+
+    it('Should show validation messages when the values are invalid and gov option is ssn', waitForAsync(() => {
         fixture.whenStable().then(() => {
             fNameInputField.setValue('33');
             fNameInputField.markAsTouched();
@@ -385,7 +615,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
         });
     }));
 
-    it('Should show a validation messages for the invalid date , if we select the day as 30 or 31 and pick a 2 as a month ', waitForAsync(() => {
+    it('Should show a validation messages for the invalid date, if we select the day as 30 or 31 and pick a 2 as a month', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.savedInfo = ACP_MOCKS.SAVED_INFO;
             fixture.detectChanges();
@@ -419,9 +649,8 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
         });
     }));
 
-    it('Should show a validation messages for the invalid date , if we select none leap year (1997) and the day is 29 and pick a 2 as a month', waitForAsync(() => {
+    it('Should show a validation messages for the invalid date, if we select none leap year (1997) and the day is 29 and pick a 2 as a month', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            // added this to make all values are correct , and if we changed dob the form will be not valid
             component.savedInfo = savedInfo;
             fixture.detectChanges();
 
@@ -454,7 +683,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
         });
     }));
 
-    it('Should not show a validation messages , if we select a leap year (2000) and the day is 29 and pick a 2 as a month', waitForAsync(() => {
+    it('Should not show a validation messages, if we select a leap year (2000) and the day is 29 and pick a 2 as a month', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.savedInfo = savedInfo;
             fixture.detectChanges();
@@ -536,7 +765,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             ssnInputField.markAsDirty();
             fixture.detectChanges();
 
-            phoneNumInputField.setValue('0123456789');
+            phoneNumInputField.setValue(ACP_MOCKS.ACP_PHONE_NUMBER);
             phoneNumInputField.markAsTouched();
             phoneNumInputField.markAsDirty();
             fixture.detectChanges();
@@ -574,9 +803,8 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
         });
     }));
 
-    it('Should make sure that 29,30,31 are disabled if the month is "02" with non leap year ', waitForAsync(() => {
+    it('Should make sure that 29, 30, 31 are disabled if the month is "02" with non leap year', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            // added this to make all values are correct , and if we changed dob the form will be not valid
             component.savedInfo = savedInfo;
             fixture.detectChanges();
 
@@ -601,6 +829,21 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             expect(selectDay_29).toBeTruthy();
             expect(selectDay_30).toBeTruthy();
             expect(selectDay_31).toBeTruthy();
+        });
+    }));
+
+    it('Should check that the year min value is current year -130 and the max year value is current year', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.savedInfo = savedInfo;
+            fixture.detectChanges();
+
+            const selectMinYear = fixture.debugElement.query(By.css('#year')).nativeElement.options[0].value;
+            const selectMaxYear = fixture.debugElement.query(By.css('#year')).nativeElement.options[component.years.length - 1].value;
+            fixture.detectChanges();
+            const minYear = new Date().getFullYear() - 130;
+            const maxYear = new Date().getFullYear();
+            expect(selectMinYear).toEqual(minYear.toString());
+            expect(selectMaxYear).toEqual(maxYear.toString());
         });
     }));
 

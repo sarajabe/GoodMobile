@@ -12,6 +12,8 @@ export const APPLICATION_ID = {
     ebbId: 'B12345-67890'
 };
 
+export const ACP_PHONE_NUMBER = '0123456789';
+
 export const FULL_USER_INFO: IAcpUser = {
     firstName: 'Mirna',
     lastName: 'Haddad',
