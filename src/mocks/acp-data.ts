@@ -73,3 +73,9 @@ export const PUBLIC_HOUSING_CODES_OBJECT = {
         }
     ]
 };
+
+export const INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E3',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+}

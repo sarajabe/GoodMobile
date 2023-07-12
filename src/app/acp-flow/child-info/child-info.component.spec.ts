@@ -1,149 +1,271 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, InjectionToken } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FirebaseEBBService, IFirebaseEbbDetails } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService, FirebaseEBBService, FirebaseUserProfileService, IFirebaseEbbDetails } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { ChildInfoComponent } from './child-info.component';
+import { ACP_MOCKS } from 'src/mocks';
+import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
+import { AppState } from 'src/app/app.service';
+import { IGoogleTagManagerEventsConfig } from '@ztarmobile/zwp-service';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 let component: ChildInfoComponent;
 let fixture: ComponentFixture<ChildInfoComponent>;
 
-let qualifyProgramInputField;
+let eligibilityCodeInputField;
 let schoolNameInputField;
+let publicHousingInputField;
+let qualifyingOptionInputField;
 let fNameInputField;
 let mNameInputField;
 let lNameInputField;
 let monthSelectField;
-let dayInputField;
-let yearInputField;
-let idTypeInputField;
+let daySelectField;
+let yearSelectField;
+let identityTypeInputField;
 let ssnInputField;
 let tribalInputField;
-let mockEbbService;
-let mockFirebaseEBBService;
 
-describe('EBB child info Component - Unit Testing', async () => {
-    const DATA_OBJECT = {
-        data: {
-            eligibilityCodes: [
-                { code: 'Medicaid ' }, { code: 'Supplemental Nutrition Assistance Program (SNAP) ' },
-                { code: 'School Lunch/Breakfast Program ' }
-            ]
-        }
-    };
+let mockEbbService;
+let mockAnalyticService;
+
+let userInfo = ACP_MOCKS.USER_INFO;
+let internalData = ACP_MOCKS.INTERNAL_DATA;
+
+
+fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
+    const ELIGIBILiTY_CODES_OBJECT = ACP_MOCKS.ELIGIBILiTY_CODES_OBJECT;
+    const PUBLIC_HOUSING_CODES_OBJECT = ACP_MOCKS.PUBLIC_HOUSING_CODES_OBJECT;
+
     beforeEach(async () => {
-        mockEbbService = jasmine.createSpyObj(['EBBService', 'getCodes']);
-        mockFirebaseEBBService = jasmine.createSpyObj(['FirebaseEBBService', 'clearEBBDetails', 'saveEbbDetails', 'ebbDetails']);
+        mockEbbService = jasmine.createSpyObj(['EBBService', 'getCodes', 'getPublicHousingPrograms']);
+        mockAnalyticService = jasmine.createSpyObj(['ActionsAnalyticsService', 'trackACPEvent']);
         await TestBed.configureTestingModule({
-            declarations: [ChildInfoComponent],
-            imports: [FormsModule,
+            declarations: [
+                ChildInfoComponent],
+            imports: [
+                FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule
             ],
             providers: [
+                SimpleAuthService,
+                { provide: AppState },
                 { provide: EbbService },
                 { provide: ToastrService, useValue: ToastrService },
-                { provide: FirebaseEBBService }
+                { provide: ActionsAnalyticsService, useValue: new InjectionToken<IGoogleTagManagerEventsConfig>('GoogleTagManagerEvents') },
+                { provide: FirebaseUserProfileService, useValue: AngularFireDatabase },
+                { provide: AngularFireAuth }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         TestBed.overrideProvider(EbbService, { useValue: mockEbbService });
-        TestBed.overrideProvider(FirebaseEBBService, { useValue: mockFirebaseEBBService });
+        TestBed.overrideProvider(ActionsAnalyticsService, { useValue: mockAnalyticService });
         TestBed.compileComponents();
-    });
-    beforeEach(async () => {
+
         fixture = TestBed.createComponent(ChildInfoComponent);
         component = fixture.componentInstance;
 
-        mockEbbService.getCodes.and.resolveTo(DATA_OBJECT);
+        mockEbbService.getCodes.and.resolveTo(ELIGIBILiTY_CODES_OBJECT);
+        mockEbbService.getPublicHousingPrograms.and.resolveTo(PUBLIC_HOUSING_CODES_OBJECT);
+
         component.eligibilityCodes = [
             { code: 'School Lunch/Breakfast Program ', description: 'School Lunch/Breakfast Program ' }];
-        mockFirebaseEBBService.ebbDetails.and.returnValue({} as IFirebaseEbbDetails);
-        mockFirebaseEBBService.ebbDetails = of({});
         fixture.detectChanges();
 
-        qualifyProgramInputField = component.codesForm.controls.eligibilityCode;
+        // Codes form
+        eligibilityCodeInputField = component.codesForm.controls.eligibilityCode;
         schoolNameInputField = component.codesForm.controls.schoolName;
+        publicHousingInputField = component.codesForm.controls.housingAssistance;
 
+        // QualifyingOptionInputField
+        qualifyingOptionInputField = component.qualifyingForm.controls.option;
+
+        // Child form         
         fNameInputField = component.childInfoForm.controls.firstName;
         mNameInputField = component.childInfoForm.controls.middleName;
         lNameInputField = component.childInfoForm.controls.lastName;
         monthSelectField = component.childInfoForm.controls.month;
-        dayInputField = component.childInfoForm.controls.day;
-        yearInputField = component.childInfoForm.controls.year;
-        idTypeInputField = component.childInfoForm.controls.identityType;
+        daySelectField = component.childInfoForm.controls.day;
+        yearSelectField = component.childInfoForm.controls.year;
+        identityTypeInputField = component.childInfoForm.controls.identityType;
         ssnInputField = component.childInfoForm.controls.ssn;
         tribalInputField = component.childInfoForm.controls.tribalId;
         fixture.detectChanges();
     });
 
-    it('should create', waitForAsync(() => {
+    it('Should create component successfully', waitForAsync(() => {
         expect(component).toBeTruthy();
     }));
 
-    it('Test a form group element count', waitForAsync(() => {
-        const formElement = fixture.nativeElement.querySelector('form');
-        const inputElements = formElement.querySelectorAll('input');
-        const selectElements = formElement.querySelectorAll('select');
-        expect(inputElements.length).toEqual(0);
-        expect(selectElements.length).toEqual(0);
+    it('Should test a form group element count', waitForAsync(() => {
+        const forms = fixture.nativeElement.querySelectorAll('form');
+
+        // Main form
+        const mainFormElement = forms[0];
+        const mainInputElements = mainFormElement.querySelectorAll('input');
+        const mainSelectElements = mainFormElement.querySelectorAll('select');
+
+        // Qualifying form
+        const qualifyingFormElement = forms[1];
+        const qualifyingInputElements = qualifyingFormElement.querySelectorAll('input');
+        const qualifyingSelectElements = qualifyingFormElement.querySelectorAll('select');
+
+        expect(forms.length).toEqual(2);
+        expect(mainInputElements.length).toEqual(0);
+        expect(mainSelectElements.length).toEqual(0);
+
+        expect(qualifyingInputElements.length).toEqual(2);
+        expect(qualifyingSelectElements.length).toEqual(0);
     }));
 
-    it('Should cover the initial state (drop down is empty, checkbox is unchecked and qualified form is hidden)', waitForAsync(() => {
+    it('Should cover the initial state ( drop down is empty, qualyfying form options are not selected )', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
-            const childInfoForm = fixture.nativeElement.querySelector('#childInfoForm');
-            expect(qualifyProgramInputField.pristine).toBeTruthy();
-            expect(iQualifyChildCheckbox.checked).toBeFalsy();
-            expect(childInfoForm).toBeNull();
+            expect(eligibilityCodeInputField.pristine).toBeTruthy();
+            expect(qualifyingOptionInputField.pristine).toBeTruthy();
         });
     }));
 
-    it('Should checks if the qualified form appears when checkbox is checked', waitForAsync(() => {
+    it('Should checks if the school name input appears if the eligbility code is 50 or 51 with other codes', waitForAsync(() => {
         fixture.whenStable().then(() => {
+            eligibilityCodeInputField.setValue('E50, E51, E2');
+            fixture.detectChanges();
 
-            const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
-            iQualifyChildCheckbox.click();
-            const childInfoForm = fixture.nativeElement.querySelector('#childInfoForm');
+            expect(schoolNameInputField).toBeDefined();
+        });
+    }));
 
-            expect(iQualifyChildCheckbox.checked).toBeTruthy();
+    it('Should checks if the publicHousingCode input appears if the eligbility code is E4 with other codes', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            eligibilityCodeInputField.setValue('E4,E2');
+            fixture.detectChanges();
+
+            expect(publicHousingInputField).toBeDefined();
+        });
+    }));
+
+    it('Should show validation messages for the required elements when the values are empty of the codesForm', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            eligibilityCodeInputField.setValue('');
+
+            // Mark the form as touched
+            component.codesForm.markAllAsTouched();
+            fixture.detectChanges();
+
+            const requiredEligibilityCodeMsg = fixture.debugElement.query(By.css('#required-qualifying-program-msg'));
+
+            expect(eligibilityCodeInputField.errors.required).toBeTruthy();
+            expect(requiredEligibilityCodeMsg.nativeElement).toBeDefined();
+            expect(component.codesForm.valid).toBeFalsy();
+        });
+    }));
+
+    it('Should show validation messages for the required elements when the values are empty of the qualifying form', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            qualifyingOptionInputField.setValue('');
+
+            // Mark the form as touched
+            component.qualifyingForm.markAllAsTouched();
+            fixture.detectChanges();
+
+            const requiredQualifyingOptionMsg = fixture.debugElement.query(By.css('#qualifying-validation-message'));
+
+            expect(qualifyingOptionInputField.errors.required).toBeTruthy();
+            expect(requiredQualifyingOptionMsg.nativeElement).toBeDefined();
+            expect(component.qualifyingForm.valid).toBeFalsy();
+        });
+    }));
+
+    it('Should show required messages for the school name and publicHousingCode', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            eligibilityCodeInputField.setValue('E50,E2,E4');
+            fixture.detectChanges();
+
+            component.onItemSelect({ code: 'E50' });
+            fixture.detectChanges();
+            component.onItemSelect({ code: 'E2' });
+            fixture.detectChanges();
+            component.onItemSelect({ code: 'E4' });
+            fixture.detectChanges();
+
+            schoolNameInputField.setValue('');
+            publicHousingInputField.setValue('');
+
+            component.codesForm.markAllAsTouched();
+            fixture.detectChanges();
+
+            const requiredSchoolNameMsg = fixture.debugElement.query(By.css('#required-school-name'));
+            const requiredPublicHousingMsg = fixture.debugElement.query(By.css('#required-public-housing'));
+
+            expect(schoolNameInputField.errors.required).toBeTruthy();
+            expect(requiredSchoolNameMsg.nativeElement).toBeDefined();
+            expect(publicHousingInputField.errors.required).toBeTruthy();
+            expect(requiredPublicHousingMsg.nativeElement).toBeDefined();
+            expect(component.codesForm.valid).toBeFalsy();
+        });
+    }));
+
+    it('Should show validation messages for the invalid school name', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            eligibilityCodeInputField.setValue('E50, E51, E2');
+            fixture.detectChanges();
+            schoolNameInputField.setValue('1');
+
+            schoolNameInputField.markAsDirty();
+            component.codesForm.markAllAsTouched();
+            fixture.detectChanges();
+
+            const invalidSchoolNameMsg = fixture.debugElement.query(By.css('#invalid-school-name'));
+
+            expect(schoolNameInputField.errors.minlength).toBeTruthy();
+            expect(invalidSchoolNameMsg.nativeElement).toBeDefined();
+            expect(component.codesForm.valid).toBeFalsy();
+        });
+    }));
+
+    it('Should check if Eligibility code field accepts multiple values', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            spyOn(component, 'onItemSelect');
+
+            eligibilityCodeInputField.setValue(['E1', 'E40']);
+            eligibilityCodeInputField.markAsTouched();
+            eligibilityCodeInputField.markAsDirty();
+            fixture.detectChanges();
+
+            expect(eligibilityCodeInputField).toBeDefined();
+            expect(eligibilityCodeInputField.value.length).toEqual(2);
+        });
+    }));
+
+    it('Should checks if the child form appears when qualifying option is selected', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            qualifyingOptionInputField.setValue('child');
+            fixture.detectChanges();
+
+            const childInfoForm = fixture.nativeElement.querySelector('#childForm');
+
             expect(childInfoForm).toBeDefined();
         });
     }));
 
     it('Should show validation messages for the required elements when the values are empty of the child form', waitForAsync(() => {
         fixture.whenStable().then(() => {
-
-            qualifyProgramInputField.markAsTouched();
-
-            const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
-            iQualifyChildCheckbox.click();
-
-            fNameInputField.markAsTouched();
-            lNameInputField.markAsTouched();
-            monthSelectField.markAsTouched();
-            dayInputField.markAsTouched();
-            yearInputField.markAsTouched();
-            idTypeInputField.markAsTouched();
-
+            qualifyingOptionInputField.setValue('child');
             fixture.detectChanges();
 
-            const requiredQualifyingProgramMsg = fixture.debugElement.query(By.css('#required-qualifying-program-msg'));
+            component.childInfoForm.markAllAsTouched();
+            fixture.detectChanges();
 
             const requiredFNameMsg = fixture.debugElement.query(By.css('#required-fname-msg'));
             const requiredLNameMsg = fixture.debugElement.query(By.css('#required-lname-msg'));
-
-            const requiredMonthMsg = fixture.debugElement.query(By.css('#required-month-msg'));
-            const requiredDayMsg = fixture.debugElement.query(By.css('#required-day-msg'));
-            const requiredYearMsg = fixture.debugElement.query(By.css('#required-year-msg'));
-
+            const requiredDateMsg = fixture.debugElement.query(By.css('#required-date-msg'));
             const requiredIdTypeMsg = fixture.debugElement.query(By.css('#required-idType-msg'));
-
-            expect(qualifyProgramInputField.pristine).toBeTruthy();
-            expect(requiredQualifyingProgramMsg.nativeElement).toBeDefined();
 
             expect(fNameInputField.errors.required).toBeTruthy();
             expect(requiredFNameMsg.nativeElement).toBeDefined();
@@ -151,55 +273,30 @@ describe('EBB child info Component - Unit Testing', async () => {
             expect(lNameInputField.errors.required).toBeTruthy();
             expect(requiredLNameMsg.nativeElement).toBeDefined();
 
-            expect(monthSelectField.pristine).toBeTruthy();
-            expect(requiredMonthMsg.nativeElement).toBeDefined();
+            expect(daySelectField.errors.required).toBeTruthy();
+            expect(monthSelectField.errors.required).toBeTruthy();
+            expect(yearSelectField.errors.required).toBeTruthy();
 
-            expect(dayInputField.errors.required).toBeTruthy();
-            expect(requiredDayMsg.nativeElement).toBeDefined();
+            expect(requiredDateMsg.nativeElement).toBeDefined();
 
-            expect(yearInputField.errors.required).toBeTruthy();
-            expect(requiredYearMsg.nativeElement).toBeDefined();
-
-            expect(idTypeInputField.pristine).toBeTruthy();
+            expect(identityTypeInputField.pristine).toBeTruthy();
             expect(requiredIdTypeMsg.nativeElement).toBeDefined();
 
             expect(component.childInfoForm.valid).toBeFalsy();
         });
     }));
 
-    it('Should show validation messages for the required school input when the value is empty', waitForAsync(() => {
+    it('Should show validation messages for the other required elements of the child form - [ ssn - tribal ]', waitForAsync(() => {
         fixture.whenStable().then(() => {
-
-            const schoolSelect = 'E50';
-
-            qualifyProgramInputField.setValue(schoolSelect);
-            qualifyProgramInputField.markAsTouched();
-            qualifyProgramInputField.markAsDirty();
+            qualifyingOptionInputField.setValue('child');
             fixture.detectChanges();
 
-            schoolNameInputField.markAsTouched();
+            // Set ssn as identity type
+            identityTypeInputField.setValue('ssn');
+            identityTypeInputField.markAsTouched();
+            identityTypeInputField.markAsDirty();
             fixture.detectChanges();
 
-            expect(schoolNameInputField.errors.required).toBeTruthy();
-
-            expect(component.codesForm.valid).toBeFalsy();
-        });
-    }));
-
-    it('Should show validation messages for the other required elements of the child form - [ ssn - tripal ]', waitForAsync(() => {
-        fixture.whenStable().then(() => {
-
-            const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
-            iQualifyChildCheckbox.click();
-
-            fixture.detectChanges();
-
-            const ssnId = fixture.debugElement.query(By.css('#idType')).nativeElement.options[0].value;
-
-            idTypeInputField.setValue(ssnId);
-            idTypeInputField.markAsTouched();
-            idTypeInputField.markAsDirty();
-            fixture.detectChanges();
             component.updateIdentitiyType();
             ssnInputField.markAsTouched();
 
@@ -210,11 +307,10 @@ describe('EBB child info Component - Unit Testing', async () => {
             expect(ssnInputField.errors.required).toBeTruthy();
             expect(requiredSsnMsg.nativeElement).toBeDefined();
 
-            const tribalId = fixture.debugElement.query(By.css('#idType')).nativeElement.options[1].value;
-
-            idTypeInputField.setValue(tribalId);
-            idTypeInputField.markAsTouched();
-            idTypeInputField.markAsDirty();
+            // Set tribal as identity type
+            identityTypeInputField.setValue('tribal');
+            identityTypeInputField.markAsTouched();
+            identityTypeInputField.markAsDirty();
             fixture.detectChanges();
             component.updateIdentitiyType();
             tribalInputField.markAsTouched();
@@ -230,21 +326,9 @@ describe('EBB child info Component - Unit Testing', async () => {
         });
     }));
 
-    it('Should show validation messages when the values are invalid for the school input and the child form', waitForAsync(() => {
+    it('Should show validation messages when the values are invalid for the child form', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            const schoolSelect = 'E50';
-            fixture.detectChanges();
-            qualifyProgramInputField.setValue(schoolSelect);
-            qualifyProgramInputField.markAsTouched();
-            qualifyProgramInputField.markAsDirty();
-            fixture.detectChanges();
-            schoolNameInputField.setValue('....');
-            schoolNameInputField.markAsTouched();
-            schoolNameInputField.markAsDirty();
-            fixture.detectChanges();
-            const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
-            iQualifyChildCheckbox.click();
-
+            qualifyingOptionInputField.setValue('child');
             fixture.detectChanges();
 
             fNameInputField.setValue('12');
@@ -262,21 +346,26 @@ describe('EBB child info Component - Unit Testing', async () => {
             lNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            dayInputField.setValue('99');
-            dayInputField.markAsTouched();
-            dayInputField.markAsDirty();
+            daySelectField.setValue('12');
+            daySelectField.markAsTouched();
+            daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearInputField.setValue('5000');
-            yearInputField.markAsTouched();
-            yearInputField.markAsDirty();
+            monthSelectField.setValue('14');
+            monthSelectField.markAsTouched();
+            monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            const ssnId = fixture.debugElement.query(By.css('#idType')).nativeElement.options[0].value;
+            yearSelectField.setValue('2024');
+            yearSelectField.markAsTouched();
+            yearSelectField.markAsDirty();
+            fixture.detectChanges();
+            component.checkMonth();
+            fixture.detectChanges();
 
-            idTypeInputField.setValue(ssnId);
-            idTypeInputField.markAsTouched();
-            idTypeInputField.markAsDirty();
+            identityTypeInputField.setValue('ssn');
+            identityTypeInputField.markAsTouched();
+            identityTypeInputField.markAsDirty();
             fixture.detectChanges();
 
             ssnInputField.setValue('12');
@@ -287,48 +376,141 @@ describe('EBB child info Component - Unit Testing', async () => {
             const invalidFNameMsg = fixture.debugElement.query(By.css('#invalid-fname-msg'));
             const invalidMNameMsg = fixture.debugElement.query(By.css('#invalid-mname-msg'));
             const invalidLNameMsg = fixture.debugElement.query(By.css('#invalid-lname-msg'));
-            const invalidYearMsg = fixture.debugElement.query(By.css('#invalid-year-msg'));
-
+            const invalidDateMsg = fixture.debugElement.query(By.css('#invalid-date-msg'));
             const invalidSsnMsg = fixture.debugElement.query(By.css('#invalid-ssn-msg'));
-            expect(schoolNameInputField.hasError('pattern')).toBeTruthy();
+
             expect(fNameInputField.hasError('pattern')).toBeTruthy();
             expect(invalidFNameMsg.nativeElement).toBeDefined();
             expect(mNameInputField.hasError('pattern')).toBeTruthy();
             expect(invalidMNameMsg.nativeElement).toBeDefined();
             expect(lNameInputField.hasError('pattern')).toBeTruthy();
             expect(invalidLNameMsg.nativeElement).toBeDefined();
-            expect(dayInputField.hasError('max')).toBeTruthy();
-            expect(yearInputField.hasError('max')).toBeTruthy();
-            expect(invalidYearMsg.nativeElement).toBeDefined();
+            expect(invalidDateMsg.nativeElement).toBeDefined();
             expect(ssnInputField.hasError('minlength')).toBeTruthy();
             expect(invalidSsnMsg.nativeElement).toBeDefined();
-            dayInputField.setValue('0');
-            dayInputField.markAsTouched();
-            dayInputField.markAsDirty();
+
+            daySelectField.setValue('0');
+            daySelectField.markAsTouched();
+            daySelectField.markAsDirty();
             fixture.detectChanges();
-            expect(dayInputField.hasError('min')).toBeTruthy();
+
+            expect(daySelectField.hasError('min')).toBeTruthy();
+            expect(component.childInfoForm.valid).toBeFalsy();
+
+            // Check tribal if its invalid 
+            identityTypeInputField.setValue('tribal');
+            identityTypeInputField.markAsTouched();
+            identityTypeInputField.markAsDirty();
+            fixture.detectChanges();
+
+            tribalInputField.setValue('1');
+            tribalInputField.markAsTouched();
+            tribalInputField.markAsDirty();
+            fixture.detectChanges();
+
+            expect(tribalInputField.hasError('minlength')).toBeTruthy();
             expect(component.childInfoForm.valid).toBeFalsy();
         });
     }));
 
-    it('Should not show validation messages when the values are valid for the school input and the child form', waitForAsync(() => {
+    it('Should not show a validation messages, if we select a leap year (2000) and the day is 29 and pick a 2 as a month', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            const schoolSelect = 'E50';
+            component.userInfo = userInfo;
+            component.internalData = internalData;
+
+            qualifyingOptionInputField.setValue('child');
             fixture.detectChanges();
-            qualifyProgramInputField.setValue(schoolSelect);
-            qualifyProgramInputField.markAsTouched();
-            qualifyProgramInputField.markAsDirty();
+
+            component.populateForm();
             fixture.detectChanges();
+
+            const selectDay = fixture.debugElement.query(By.css('#day')).nativeElement.options[28].value;
+            daySelectField.setValue(selectDay);
+            daySelectField.markAsTouched();
+            daySelectField.markAsDirty();
+            fixture.detectChanges();
+
+            const selectMonth = fixture.debugElement.query(By.css('#month')).nativeElement.options[1].value;
+
+            monthSelectField.setValue(selectMonth);
+            monthSelectField.markAsTouched();
+            monthSelectField.markAsDirty();
+            fixture.detectChanges();
+
+            yearSelectField.setValue('2000');
+            yearSelectField.markAsTouched();
+            yearSelectField.markAsDirty();
+            fixture.detectChanges();
+
+            component.checkMonth();
+            fixture.detectChanges();
+
+            component.childInfoForm.markAllAsTouched();
+            fixture.detectChanges();
+            expect(component.showInvalidDateError).toBeFalsy();
+            expect(component.childInfoForm.valid).toBeFalsy();
+        });
+    }));
+
+    it('Should make sure that 29, 30, 31 are disabled if the month is "02" with non leap year', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            // Added this to make all values are correct, and if we changed dob the form will be not valid
+            component.userInfo = userInfo;
+            component.internalData = internalData;
+
+            qualifyingOptionInputField.setValue('child');
+            fixture.detectChanges();
+
+            component.populateForm();
+            fixture.detectChanges();
+
+            const selectMonth = fixture.debugElement.query(By.css('#month')).nativeElement.options[1].value;
+
+            monthSelectField.setValue(selectMonth);
+            monthSelectField.markAsTouched();
+            monthSelectField.markAsDirty();
+            fixture.detectChanges();
+
+            yearSelectField.setValue('1997');
+            yearSelectField.markAsTouched();
+            yearSelectField.markAsDirty();
+            fixture.detectChanges();
+
+            const selectDay_29 = fixture.debugElement.query(By.css('#day')).nativeElement.options[28].disabled;
+            const selectDay_30 = fixture.debugElement.query(By.css('#day')).nativeElement.options[29].disabled;
+            const selectDay_31 = fixture.debugElement.query(By.css('#day')).nativeElement.options[30].disabled;
+
+            fixture.detectChanges();
+
+            expect(selectDay_29).toBeTruthy();
+            expect(selectDay_30).toBeTruthy();
+            expect(selectDay_31).toBeTruthy();
+        });
+    }));
+
+    it('Should not show validation messages when the values are valid for the whole forms', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            // Codes form
+            eligibilityCodeInputField.setValue('E51, E4');
+            eligibilityCodeInputField.markAsTouched();
+            eligibilityCodeInputField.markAsDirty();
+            fixture.detectChanges();
+
             schoolNameInputField.setValue('Abc1234');
             schoolNameInputField.markAsTouched();
             schoolNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            const iQualifyChildCheckbox = fixture.debugElement.query(By.css('#confirmChild')).nativeElement;
-            iQualifyChildCheckbox.click();
-
+            publicHousingInputField.setValue('Public Housing');
+            publicHousingInputField.markAsTouched();
+            publicHousingInputField.markAsDirty();
             fixture.detectChanges();
 
+            // Qualifying form
+            qualifyingOptionInputField.setValue('child');
+            fixture.detectChanges();
+
+            // Child form
             fNameInputField.setValue('william');
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
@@ -351,21 +533,22 @@ describe('EBB child info Component - Unit Testing', async () => {
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            dayInputField.setValue('13');
-            dayInputField.markAsTouched();
-            dayInputField.markAsDirty();
+            const selectDay = fixture.debugElement.query(By.css('#day')).nativeElement.options[3].value;
+
+            daySelectField.setValue(selectDay);
+            daySelectField.markAsTouched();
+            daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearInputField.setValue('1997');
-            yearInputField.markAsTouched();
-            yearInputField.markAsDirty();
+            yearSelectField.setValue('1997');
+            yearSelectField.markAsTouched();
+            yearSelectField.markAsDirty();
             fixture.detectChanges();
 
-            const ssnId = fixture.debugElement.query(By.css('#idType')).nativeElement.options[0].value;
 
-            idTypeInputField.setValue(ssnId);
-            idTypeInputField.markAsTouched();
-            idTypeInputField.markAsDirty();
+            identityTypeInputField.setValue('ssn');
+            identityTypeInputField.markAsTouched();
+            identityTypeInputField.markAsDirty();
             fixture.detectChanges();
 
             ssnInputField.setValue('1234');
@@ -376,32 +559,38 @@ describe('EBB child info Component - Unit Testing', async () => {
             expect(fNameInputField.hasError('pattern')).toBeFalsy();
             expect(mNameInputField.hasError('pattern')).toBeFalsy();
             expect(lNameInputField.hasError('pattern')).toBeFalsy();
-            expect(dayInputField.hasError('max')).toBeFalsy();
-            expect(yearInputField.hasError('max')).toBeFalsy();
+            expect(daySelectField.hasError('max')).toBeFalsy();
+            expect(yearSelectField.hasError('max')).toBeFalsy();
             expect(ssnInputField.hasError('minlength')).toBeFalsy();
 
             expect(component.codesForm.errors).toBeNull();
+            expect(component.qualifyingForm.errors).toBeNull();
             expect(component.childInfoForm.errors).toBeNull();
         });
     }));
-    it('Should check if Eligibility code field accepts multiple values', waitForAsync(() => {
-        fixture.whenStable().then(() => {
-            spyOn(component, 'onItemSelect');
-            qualifyProgramInputField.setValue(['Medicaid', 'Supplemental Security']);
-            qualifyProgramInputField.markAsTouched();
-            qualifyProgramInputField.markAsDirty();
-            fixture.detectChanges();
-            expect(qualifyProgramInputField).toBeDefined();
-            expect(qualifyProgramInputField.value.length).toEqual(2);
 
-        });
-    }));
-    it('Should checks if all fields are disabled when the user is already enrolled (step 2)', waitForAsync(() => {
+    it('Should populate the form when there is saved info already', waitForAsync(() => {
         fixture.whenStable().then(() => {
+            component.userInfo = userInfo;
+            component.internalData = internalData;
+            component.populateForm();
             fixture.detectChanges();
-            component.disable = true;
+
+            component.childInfoForm.markAllAsTouched();
             fixture.detectChanges();
-            expect(component.childInfoForm.disable).toBeTruthy();
+
+            spyOn(component.goToNext, 'emit').and.callThrough();
+            component.goToNext.emit();
+
+            expect(component.childInfoForm.errors).toBeNull();
+            expect(fNameInputField.value).toEqual(userInfo.firstName);
+            expect(mNameInputField.value).toEqual(undefined);
+            expect(lNameInputField.value).toEqual(userInfo.lastName);
+            expect(daySelectField.value).toEqual(userInfo?.dob?.split('/')[1]);
+            expect(monthSelectField.value).toEqual(userInfo?.dob?.split('/')[0]);
+            expect(yearSelectField.value).toEqual(userInfo?.dob?.split('/')[2]);
+            expect(ssnInputField.value).toEqual(userInfo?.last4ssn);
+            expect(component.goToNext.emit).toHaveBeenCalled();
         });
     }));
 });
