@@ -166,32 +166,32 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             expect(component.personalInfoForm.valid).toBeFalsy();
 
             // Second check is invalid cases to see the invalid messages
-            fNameInputField.setValue('33');
+            fNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.firstName);
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('33');
+            mNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            lNameInputField.setValue('33');
+            lNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.lastName);
             lNameInputField.markAsTouched();
             lNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            daySelectField.setValue('12');
+            daySelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.day);
             daySelectField.markAsTouched();
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            monthSelectField.setValue('13');
+            monthSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.month);
             monthSelectField.markAsTouched();
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2024');
+            yearSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -202,20 +202,21 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             govOption.markAsTouched();
             govOption.markAsDirty();
             fixture.detectChanges();
+
             component.checkIdentityType();
             fixture.detectChanges();
 
-            ssnInputField.setValue('44');
+            ssnInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.ssn);
             ssnInputField.markAsTouched();
             ssnInputField.markAsDirty();
             fixture.detectChanges();
 
-            phoneNumInputField.setValue('123');
+            phoneNumInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.phoneNumber);
             phoneNumInputField.markAsTouched();
             phoneNumInputField.markAsDirty();
             fixture.detectChanges();
 
-            emailInputField.setValue('abc');
+            emailInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.consumerEmail);
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
             fixture.detectChanges();
@@ -264,7 +265,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('Ghaleb');
+            mNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
@@ -274,17 +275,17 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             lNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            daySelectField.setValue('13');
+            daySelectField.setValue(ACP_MOCKS.VALID_DATA.day);
             daySelectField.markAsTouched();
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            monthSelectField.setValue('03');
+            monthSelectField.setValue(ACP_MOCKS.VALID_DATA.month);
             monthSelectField.markAsTouched();
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('1997');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -371,7 +372,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             fixture.detectChanges();
 
             // Set email value
-            emailInputField.setValue('william.bawwab@pavocom.com');
+            emailInputField.setValue(ACP_MOCKS.FULL_USER_INFO.consumerEmail);
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
             fixture.detectChanges();
@@ -437,32 +438,32 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
 
     it('Should show validation messages when the values are invalid and gov option is ssn', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            fNameInputField.setValue('33');
+            fNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.firstName);
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('33');
+            mNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            lNameInputField.setValue('33');
+            lNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.lastName);
             lNameInputField.markAsTouched();
             lNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            daySelectField.setValue('12');
+            daySelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.day);
             daySelectField.markAsTouched();
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            monthSelectField.setValue('13');
+            monthSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.month);
             monthSelectField.markAsTouched();
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2024');
+            yearSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -476,17 +477,17 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             component.checkIdentityType();
             fixture.detectChanges();
 
-            ssnInputField.setValue('44');
+            ssnInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.ssn);
             ssnInputField.markAsTouched();
             ssnInputField.markAsDirty();
             fixture.detectChanges();
 
-            phoneNumInputField.setValue('123');
+            phoneNumInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.phoneNumber);
             phoneNumInputField.markAsTouched();
             phoneNumInputField.markAsDirty();
             fixture.detectChanges();
 
-            emailInputField.setValue('abc');
+            emailInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.consumerEmail);
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
             fixture.detectChanges();
@@ -527,32 +528,32 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
 
     it('Should show validation messages when the values are invalid and gov option is tribal', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            fNameInputField.setValue('33');
+            fNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.firstName);
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('33');
+            mNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            lNameInputField.setValue('33');
+            lNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.lastName);
             lNameInputField.markAsTouched();
             lNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            daySelectField.setValue('12');
+            daySelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.day);
             daySelectField.markAsTouched();
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            monthSelectField.setValue('13');
+            monthSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.month);
             monthSelectField.markAsTouched();
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2024');
+            yearSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -566,17 +567,17 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             component.checkIdentityType();
             fixture.detectChanges();
 
-            tribalInputField.setValue('4493837973986911123jkbsjssss');
+            tribalInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.tribal);
             tribalInputField.markAsTouched();
             tribalInputField.markAsDirty();
             fixture.detectChanges();
 
-            phoneNumInputField.setValue('123');
+            phoneNumInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.phoneNumber);
             phoneNumInputField.markAsTouched();
             phoneNumInputField.markAsDirty();
             fixture.detectChanges();
 
-            emailInputField.setValue('abc');
+            emailInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.consumerEmail);
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
             fixture.detectChanges();
@@ -633,7 +634,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2021');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -667,7 +668,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('1997');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -701,7 +702,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2000');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.leapYear);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -719,17 +720,17 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
 
     it('Should not show validation messages when values are valid', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            fNameInputField.setValue('william');
+            fNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.firstName);
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('ghaleb');
+            mNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            lNameInputField.setValue('bawwab');
+            lNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.lastName);
             lNameInputField.markAsTouched();
             lNameInputField.markAsDirty();
             fixture.detectChanges();
@@ -747,7 +748,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('1997');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -760,7 +761,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             govOption.markAsDirty();
             fixture.detectChanges();
 
-            ssnInputField.setValue('1234');
+            ssnInputField.setValue(ACP_MOCKS.VALID_DATA.ssn);
             ssnInputField.markAsTouched();
             ssnInputField.markAsDirty();
             fixture.detectChanges();
@@ -774,7 +775,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
 
             const receivePhoneNumCheckbox = fixture.debugElement.query(By.css('#getPhones')).nativeElement;
 
-            emailInputField.setValue('william.bawwab@pavocom.com');
+            emailInputField.setValue(ACP_MOCKS.FULL_USER_INFO.consumerEmail);
             emailInputField.markAsTouched();
             emailInputField.markAsDirty();
             fixture.detectChanges();
@@ -815,7 +816,7 @@ fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async (
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('1997');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
