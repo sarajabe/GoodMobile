@@ -178,6 +178,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
     this.compatibilityForm.form.markAllAsTouched();
     if (!!this.compatibilityForm.valid && !!this.displayedAddressModel) {
       this.processingRequest = true;
+      this.appState.loading = true;
       if (this.equipment.indexOf(' ') >= 0) {
         this.equipment = this.equipment.replace(/\s+/g, '');
       }
@@ -189,6 +190,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
               this.processingRequest = false;
               if (!!res[this.deviceNetwork].covered) {
@@ -234,6 +236,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
             }
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -255,9 +258,12 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
+              console.info('device network ', this.deviceNetwork)
               this.processingRequest = false;
               if (!!res[this.deviceNetwork].covered) {
+                console.info('****************************');
                 // eslint-disable-next-line prefer-const
                 this.compatibleDevice = res.details as IDeviceCompatibilityV1;
                 this.compatibleDevice.manufacturer = res?.details?.make;
@@ -275,8 +281,13 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   this.setUserPlanDevice(this.compatibleDevice);
                 } else {
                   this.processingRequest = false;
+                  this.appState.loading = false;
                   this.toastHelper.showWarning('Changing a device might impact your service, please contact CUSTOMER CARE to ensure that your changes are handled correct.');
                 }
+              } else {
+                this.toastHelper.showWarning('Changing a device might impact your service, please contact CUSTOMER CARE to ensure that your changes are handled correct.');
+                this.processingRequest = false;
+                this.appState.loading = false;
               }
               this.reCaptcha.resetReCaptcha();
               this.reCaptcha.execute();
@@ -284,6 +295,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
   
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -305,6 +317,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
               this.processingRequest = false;
               if (!!res?.tmo?.covered || !!res?.att?.covered) {
@@ -356,6 +369,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
             }
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -375,6 +389,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
               this.processingRequest = false;
               if (!!res?.tmo?.covered || !!res?.att?.covered) {
@@ -438,6 +453,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
             }
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -457,6 +473,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
   }
   public setUserPlanDevice(device: IDeviceCompatibilityV1): void {
     this.processingRequest = false;
+    console.info('3333333333333333333')
     this.userPlanService.setPlanDeviceFromBFF(this.userPlanId, { planDevice: device }).then(() => {
       const customHTML = `<div class="success-message">
           <p class="message">Your phone is ready and able to join our network!</p>
