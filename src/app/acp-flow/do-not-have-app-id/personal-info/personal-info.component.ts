@@ -156,7 +156,7 @@ export class PersonalInfoNonExisitngAppComponent implements OnInit, OnDestroy, O
       this.years.push(i);
     }
   }
-  private populateForm(): void {
+  public populateForm(): void {
     this.personalInfoForm?.controls.firstName.setValue(this.savedInfo?.firstName);
     this.personalInfoForm?.controls.middleName.setValue(this.savedInfo?.middleName);
     this.personalInfoForm?.controls.lastName.setValue(this.savedInfo?.lastName);
