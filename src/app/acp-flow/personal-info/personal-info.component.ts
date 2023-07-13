@@ -232,7 +232,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private populateForm(): void {
+  public populateForm(): void {
     this.personalInfoForm.controls.firstName.setValue(this.savedInfo?.firstName);
     this.personalInfoForm.controls.middleName.setValue(this.savedInfo?.middleName);
     this.personalInfoForm.controls.lastName.setValue(this.savedInfo?.lastName);
