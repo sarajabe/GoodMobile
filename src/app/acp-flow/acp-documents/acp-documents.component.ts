@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { EbbService, IAcpDetails } from '@ztarmobile/zwp-service-backend-v2';
+import { IAcpDetails } from '@ztarmobile/zwp-service-backend-v2';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import { takeWhile } from 'rxjs/operators';
 import { AppState } from 'src/app/app.service';
@@ -58,7 +58,7 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
   private e2Descs = [];
   private pellGrantDescs = [];
   private incomeDescs = [];
-  constructor(private ebbManager: EbbManager, private ebbService: EbbService, private appState: AppState,
+  constructor(private ebbManager: EbbManager, private appState: AppState,
     private cd: ChangeDetectorRef, private pageScrollService: PageScrollService) { }
 
   ngOnInit(): void {
@@ -91,10 +91,16 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
       this.appState.loading = true;
       this.ebbManager.eligibilityCodeDescs.subscribe(res => {
         this.appState.loading = false;
+        console.log('RRRRRRRRRRRRREEEEEEEEEESSSSSSSSSSSSSSSS', res);
+        
         if (!!res) {
           this.eligibilityCodes = res;
           this.selectedCodes = this.internalData?.eligibilityCode?.split(",");
           if (!!this.selectedCodes) {
+            console.log('SSSSEEEELLEECCTTTEEDD CODES', this.selectedCodes);
+
+            console.log('EEELLLEEEEE CODES', this.eligibilityCodes);
+            
             this.selectedCodes.map((code) => {
               this.eligibilityCodes.map((item) => {
                 if (item.code === code) {
@@ -110,6 +116,8 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
                 }
               });
             });
+            console.log('SSSSEEEELLEECCTTTEEDD CODES DESCS', this.selectedCodesDescs);
+            
             this.checkDocGroups(this.selectedCodesWithDescs);
             this.cd.detectChanges();
           }
@@ -140,7 +148,7 @@ export class AcpDocumentsComponent implements OnInit, OnDestroy {
       this.createSwiper();
     }
   }
-  private checkDocGroups(selectedCodes): void {
+  public checkDocGroups(selectedCodes): void {
     this.checkDocsDescs(selectedCodes);
     //check if some of the common codes related to generic group are selected 
     const commonCondition = selectedCodes.some(obj => obj.code === 'E54' || obj.code === 'E3' || obj.code === 'E4' || obj.code === 'E15' || obj.code === 'E8' || obj.code === 'E9' || obj.code === 'E10');

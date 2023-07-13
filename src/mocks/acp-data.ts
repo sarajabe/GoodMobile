@@ -97,6 +97,10 @@ export const ELIGIBILiTY_CODES_DESCS = {
     code: 'E1', description: 'Medecaid'
 };
 
+export const GENERIC_ELIGIBILiTY_CODES_DESCS = {
+    code: 'E3', description: 'Supplemental Security'
+};
+
 export const PUBLIC_HOUSING_CODES_OBJECT = {
     housingPrograms: [
         {
@@ -115,6 +119,7 @@ export const INTERNAL_DATA: IAcpDetails = {
     user: USER_INFO,
     bqpUser: USER_INFO
 }
+
 export const INVALID_ADDRESS_INFO = {
     address1: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
     address2: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
@@ -138,3 +143,14 @@ export const SIGNATURE_INFO = {
     invalidConsent: 'MM',
     wrongName: 'wrong na'
 };
+
+export const ACP_DOCUMENTS_MOCK = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b>.`,
+        `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+        `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
+    ],
+    slides: [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }],
+    text: ['Screenshot of Online Portal', 'Survivors Benefit Summary Letter']
+}
