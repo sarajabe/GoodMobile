@@ -122,3 +122,11 @@ export const VALID_ADDRESS_INFO = {
     state: 'NY',
     zipCode: '70012'
 };
+
+export const SIGNATURE_INFO = {
+    fName: 'William',
+    lName: 'Bawwab',
+    consent: 'WB',
+    invalidConsent: 'MM',
+    wrongName: 'wrong na'
+}
