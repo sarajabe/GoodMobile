@@ -48,7 +48,8 @@ export const INVALID_FULL_USER_INFO = {
     ssn: '44',
     tribal: '4493837973986911123jkbsjssss',
     phoneNumber: '123',
-    appId: 'abcs'
+    appId: 'abcs',
+    schoolName: '1'
 };
 
 export const VALID_DATA = {
@@ -56,7 +57,9 @@ export const VALID_DATA = {
     month: '03',
     year: '1997',
     ssn: '1234',
-    leapYear: '2000'
+    leapYear: '2000',
+    schoolName: 'Abc1234',
+    publicHousing: 'Public Housing'
 };
 
 export const USER_INFO: IAcpUser = {
@@ -107,6 +110,11 @@ export const PUBLIC_HOUSING_CODES_OBJECT = {
     ]
 };
 
+export const INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E3',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+}
 export const INVALID_ADDRESS_INFO = {
     address1: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
     address2: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
@@ -129,4 +137,4 @@ export const SIGNATURE_INFO = {
     consent: 'WB',
     invalidConsent: 'MM',
     wrongName: 'wrong na'
-}
+};

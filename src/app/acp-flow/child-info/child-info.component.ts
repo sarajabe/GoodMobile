@@ -144,6 +144,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
         "",
         Validators.compose([
           Validators.maxLength(50),
+          Validators.minLength(2),
           Validators.pattern(ALPHANUMERIC_PATTERN),
         ]),
       ],
@@ -401,7 +402,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
       this.childInfoForm.controls.year.value;
   }
 
-  private populateForm(): void {
+  public populateForm(): void {
     this.childInfoForm.controls.firstName.setValue(this.userInfo.firstName);
     this.childInfoForm.controls.middleName.setValue(this.userInfo.middleName);
     this.childInfoForm.controls.lastName.setValue(this.userInfo.lastName);
