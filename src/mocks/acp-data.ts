@@ -47,7 +47,8 @@ export const INVALID_FULL_USER_INFO = {
     year: '2024',
     ssn: '44',
     tribal: '4493837973986911123jkbsjssss',
-    phoneNumber: '123'
+    phoneNumber: '123',
+    appId: 'abcs'
 };
 
 export const VALID_DATA = {
