@@ -97,7 +97,13 @@
     height: 570px;
     z-index: 1;
 }
-  
+  iframe {
+    width: 100%;
+    height: 600px;
+  }
+  .hidden {
+    display: none;
+  }
   .on-map {
     position: absolute;
     z-index: 1000;
