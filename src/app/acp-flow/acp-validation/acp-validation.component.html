@@ -1,5 +1,5 @@
 <section class="page-section no-flow" *ngIf="!acpSuccess && !acpError">
-  <h2 class="header-color" id="stepTitle">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
+  <h2 class="header-color" id="stepTitle" data-cy="stepTitle">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
   <h5 class="secondary-font" id="stepDesc">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h5>
   <p class="smaller" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc" id="stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}</p>
   <section class="stepper">

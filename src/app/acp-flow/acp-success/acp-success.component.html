@@ -3,8 +3,8 @@
     <div class="flex">
       <img src="/assets/icon/success-icon.svg" alt="Success Icon">
       <div class="banner-content">
-        <p class="title">{{title}}</p>
-        <p class="description last" *ngIf="acpStatus !== 'pendingAction'">Your ACP benefits can now be applied to your
+        <p class="title" data-cy="congratulationTitle">{{title}}</p>
+        <p class="description last" data-cy="acpBenefitsDescription" *ngIf="acpStatus !== 'pendingAction'">Your ACP benefits can now be applied to your
           Good Mobile 10GB ACP plan!</p>
         <p class="description" *ngIf="acpStatus === 'pendingAction'">Please select <b>“Resume Filing”</b> to be
           redirected to the National Verifier. Once you are done, the National Verifier will redirect you back to

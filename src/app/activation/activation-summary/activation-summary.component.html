@@ -3,7 +3,7 @@
         <h1 class="header">Plan successfully activated!</h1>
         <img class="image" src="assets/img/friends group-01.svg" />
         <div class="banner">
-            <h2 class="title"><img src="assets/icon/green-check.svg">Successfully activated!</h2>
+            <h2 class="title" data-cy="successfullyActivatedTitle"><img src="assets/icon/green-check.svg">Successfully activated!</h2>
             <p class="banner-note">Your <b>{{userPlan?.basePlan?.subtitle}}</b> Unlimited Talk, Text & Data is now
                 activated<span *ngIf="!!userPlan?.basePlan?.ebb"> with your ACP Benefits</span>!</p>
         </div>
@@ -39,7 +39,7 @@
             </p>
             <p class="desc">To know more about your plan details visit your <b>Account Summary</b> at anytime!</p>
             <div class="actions">
-                <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
+                <button class="button primary" data-cy="accountSummaryBtn" (click)="goToAccountSummary()">Account Summary</button>
                 <a (click)="setUpPhoneData()">Setup your Device Data</a>
             </div>
         </div>
@@ -64,14 +64,14 @@
                     <p class="smaller last">You can head to your nearest Goodwill store to check if you are eligible for ACP device discount,
                         or you can complete the process on our website!</p>
                     <div class="action">
-                        <button class="button primary"
+                        <button class="button primary" data-cy="selectDeviceBtn"
                             [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">Select your
                             Device</button>
                     </div>
                 </div>
             </ng-container>
             <div class="actions">
-                <button class="button primary" [class.secondary]="!!userPlan?.basePlan?.ebb"
+                <button class="button primary" data-cy="accountSummaryBtn" [class.secondary]="!!userPlan?.basePlan?.ebb"
                     (click)="goToAccountSummary()">Account Summary</button>
                 <a (click)="setUpPhoneData()"><b>Setup your Device Data</b></a>
             </div>
@@ -91,7 +91,7 @@
             <p class="desc">You visit the <b>Account Summary</b> for further details. If you need help, please call our
                 customer care line.</p>
             <div class="actions width">
-                <button class="button primary" (click)="goToAccountSummary()">Account Summary</button>
+                <button class="button primary" data-cy="accountSummaryBtn" (click)="goToAccountSummary()">Account Summary</button>
                 <button class="button secondary" (click)="goToContactUs()">Contact Us</button>
             </div>
         </div>
