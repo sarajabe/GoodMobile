@@ -422,7 +422,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2, equipment).then(res => {
           if (!!res) {
             this.appState.loading = false;
-            if (!!res?.tmo?.covered) {
+            if (!!res?.tmo?.covered || !!res?.att?.covered) {
               this.compatibileDevice.manufacturer = res?.details?.make;
               this.compatibileDevice.marketingName = res?.details?.name;
               this.compatibileDevice.address1 = this.displayedAddressModel?.address1;
@@ -435,9 +435,15 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                 this.successCehck = false;
                 this.errorCheck = true;
               } else {
-                this.compatibileDevice.network = 'tmo';
-                this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
-                this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                if (!!res?.tmo?.covered) {
+                  this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
+                  this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                  this.compatibileDevice.network = 'tmo';
+                } else if (!!res?.att?.covered) {
+                  this.compatibileDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
+                  this.compatibileDevice.skuNumber = res?.att?.details?.skuNumber;
+                  this.compatibileDevice.network = 'att';
+                }
                 this.successCehck = true;
                 this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
                 this.mobileCustomPlansService.setPlanExpectedDevice(null);

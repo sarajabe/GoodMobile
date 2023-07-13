@@ -50,12 +50,17 @@ export class CoveragesComponent implements OnInit {
         (location) => map.panTo([location.latitude, location.longitude]),
         (err) => console.error(err)
       );
-    map.addLayer(tLayer);
     this.route.params.subscribe((params: Params) => {
       if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE]) {
         this.zipCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ZIP_CODE];
         this.coverageChecked = true;
         this.noCoverage = false;
+      }
+      if (!!params && params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE]) {
+        this.networkType = params[SUPPORT_ROUTE_URLS.PARAMS.NETWORKTYPE];
+        if (this.networkType !== 'att') {
+          map.addLayer(tLayer);
+        }
       }
       if (!!params && params[SUPPORT_ROUTE_URLS.PARAMS.NO_COVERAGE]) {
         this.noCoverage = true;

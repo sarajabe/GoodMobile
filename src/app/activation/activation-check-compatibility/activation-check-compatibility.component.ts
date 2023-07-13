@@ -178,6 +178,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
     this.compatibilityForm.form.markAllAsTouched();
     if (!!this.compatibilityForm.valid && !!this.displayedAddressModel) {
       this.processingRequest = true;
+      this.appState.loading = true;
       if (this.equipment.indexOf(' ') >= 0) {
         this.equipment = this.equipment.replace(/\s+/g, '');
       }
@@ -185,11 +186,11 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
       // eslint-disable-next-line
       // user wants to check compatibility for purchased plan without device(we need to read the network saved in the planDevice as it might be changed from fulfillment)
       if (!!this.userPlanId && !!this.user && !this.withDevice) {
-        this.userPlanCarrier = !!this.isEBBPlan ? 'tmo' : this.userPlanCarrier;
         this.equipmentService.checkDeviceCompatibilityV2(this.captchaResponse, this.displayedAddressModel?.postalCode,
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
               this.processingRequest = false;
               if (!!res[this.deviceNetwork].covered) {
@@ -235,6 +236,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
             }
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -252,14 +254,16 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
         // eslint-disable-next-line
         // user wants to edit device for pending plan so it has to be the same network
       } else if (!!this.userPlanId && !!this.user && !!this.withDevice) { // user wants to check compatibility for purchased plan with device
-        this.userPlanCarrier = !!this.isEBBPlan ? 'tmo' : this.userPlanCarrier;
         this.equipmentService.checkDeviceCompatibilityV2(this.captchaResponse, this.displayedAddressModel?.postalCode,
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
+              console.info('device network ', this.deviceNetwork)
               this.processingRequest = false;
               if (!!res[this.deviceNetwork].covered) {
+                console.info('****************************');
                 // eslint-disable-next-line prefer-const
                 this.compatibleDevice = res.details as IDeviceCompatibilityV1;
                 this.compatibleDevice.manufacturer = res?.details?.make;
@@ -277,8 +281,13 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   this.setUserPlanDevice(this.compatibleDevice);
                 } else {
                   this.processingRequest = false;
+                  this.appState.loading = false;
                   this.toastHelper.showWarning('Changing a device might impact your service, please contact CUSTOMER CARE to ensure that your changes are handled correct.');
                 }
+              } else {
+                this.toastHelper.showWarning('Changing a device might impact your service, please contact CUSTOMER CARE to ensure that your changes are handled correct.');
+                this.processingRequest = false;
+                this.appState.loading = false;
               }
               this.reCaptcha.resetReCaptcha();
               this.reCaptcha.execute();
@@ -286,6 +295,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
   
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -307,9 +317,10 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
               this.processingRequest = false;
-              if (!!res?.tmo?.covered) {
+              if (!!res?.tmo?.covered || !!res?.att?.covered) {
                 // eslint-disable-next-line prefer-const
                 this.compatibleDevice = res.details as IDeviceCompatibilityV1;
                 this.compatibleDevice.manufacturer = res?.details?.make;
@@ -320,10 +331,16 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                 this.compatibleDevice.state = this.displayedAddressModel?.state;
                 this.compatibleDevice.postalCode = this.displayedAddressModel?.postalCode;
                 this.compatibleDevice.id = res?.details?.serialNumber;
-                this.compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
-                this.compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
-                this.compatibleDevice.network = 'tmo'; 
                 if (!res?.details?.eSimOnly) {
+                  if (!!res?.tmo?.covered) {
+                    this.compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
+                    this.compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                    this.compatibleDevice.network = 'tmo';
+                  } else if (!!res?.att?.covered) {
+                    this.compatibleDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
+                    this.compatibleDevice.skuNumber = res?.att?.details?.skuNumber;
+                    this.compatibleDevice.network = 'att';
+                  }
                 sessionStorage.setItem('device', JSON.stringify(this.compatibleDevice));
                 if (this.simValidity.prefunded) {
                   const customHTML = `<div class="success-message">
@@ -352,6 +369,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
             }
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -371,9 +389,10 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
           this.displayedAddressModel?.address1, this.displayedAddressModel?.city,
           this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then((res) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             if (!!res) {
               this.processingRequest = false;
-              if (!!res?.tmo?.covered) {
+              if (!!res?.tmo?.covered || !!res?.att?.covered) {
                 // eslint-disable-next-line prefer-const
                 this.compatibleDevice = res.details as IDeviceCompatibilityV1;
                 this.compatibleDevice.manufacturer = res?.details?.make;
@@ -384,15 +403,31 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                 this.compatibleDevice.state = this.displayedAddressModel?.state;
                 this.compatibleDevice.postalCode = this.displayedAddressModel?.postalCode;
                 this.compatibleDevice.id = res?.details?.serialNumber;
-                this.compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
-                this.compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
-                this.compatibleDevice.network = 'tmo';
                 if (!res?.details?.eSimOnly) {
+                  if (!!res?.tmo?.covered) {
+                    this.compatibleDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
+                    this.compatibleDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                    this.compatibleDevice.network = 'tmo';
+                  } else if (!!res?.att?.covered) {
+                    this.compatibleDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
+                    this.compatibleDevice.skuNumber = res?.att?.details?.skuNumber;
+                    this.compatibleDevice.network = 'att';
+                  }
                   let customHTML;
-                  customHTML = `<div class="success-message">
-                <p class="message">Your phone is ready and able to join our network!</p>
-                <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
-                </div>`;
+                  if (this.compatibleDevice.network === 'att' && this.compatibleDevice.manufacturer === 'Apple') {
+                    customHTML = `<div class="success-message">
+                    <p class="message">Your phone is ready and able to join our network!</p>
+                    <p class="note">It must also be unlocked to work on the GoodMobile Network.</p>
+                    <p class="note">It looks like this device is compatible with the network, but some features such as MMS, and Face Time over cellular data may
+                    not be available on the network.</p>
+                    </div>`;
+                  }
+                  else {
+                    customHTML = `<div class="success-message">
+                  <p class="message">Your phone is ready and able to join our network!</p>
+                  <p class="note">It must also be unlocked to work on the Good2Go Network.</p>
+                  </div>`;
+                  }
                 this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).afterClosed().subscribe((result) => {
                   if (!!result) {
                     this.mobileCustomPlansService.setPlanDevice(this.compatibleDevice);
@@ -418,6 +453,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
             }
           }, (error) => {
             this.processingRequest = false;
+            this.appState.loading = false;
             this.reCaptcha.resetReCaptcha();
             this.reCaptcha.execute();
             let errorMessage = '';
@@ -437,6 +473,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
   }
   public setUserPlanDevice(device: IDeviceCompatibilityV1): void {
     this.processingRequest = false;
+    console.info('3333333333333333333')
     this.userPlanService.setPlanDeviceFromBFF(this.userPlanId, { planDevice: device }).then(() => {
       const customHTML = `<div class="success-message">
           <p class="message">Your phone is ready and able to join our network!</p>

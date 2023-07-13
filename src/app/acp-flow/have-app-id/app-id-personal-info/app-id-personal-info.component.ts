@@ -33,7 +33,6 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       day: ['', Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.maxLength(2), Validators.min(1), Validators.max(31)])],
       month: ['', Validators.compose([Validators.required, Validators.maxLength(2), Validators.pattern(NUMBERS_ONLY_PATTERN)])],
       year: ['', Validators.compose([Validators.required, Validators.pattern(NUMBERS_ONLY_PATTERN)])],
-      state: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/), Validators.maxLength(2)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_PATTERN), Validators.maxLength(50)])],
       option: ['', Validators.required],
       ssn: ['', Validators.compose([Validators.pattern(NUMBERS_ONLY_PATTERN), Validators.minLength(4), Validators.maxLength(4)])],
@@ -51,7 +50,6 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
           this.userInfo.firstName = this.personalInfoForm?.controls.firstName.value.replace(/\s/g, "");;
           this.userInfo.middleName = !!this.personalInfoForm.controls.middleName.value ? this.personalInfoForm.controls.middleName.value : '';
           this.userInfo.lastName = this.personalInfoForm?.controls.lastName.value.replace(/\s/g, "");;
-          this.userInfo.address.primary.state = this.personalInfoForm?.controls.state.value;
           this.userInfo.consumerEmail = this.personalInfoForm?.controls.email.value;
           this.userInfo.dob = this.personalInfoForm?.controls.month.value + '/' + dayFormat + '/' + this.personalInfoForm.controls.year.value;
           this.userInfo.identityVerification = this.personalInfoForm?.controls?.option?.value;
@@ -159,11 +157,10 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       this.years.push(i);
     }
   }
-  private populateForm(): void {
+  public populateForm(): void {
     this.personalInfoForm?.controls.firstName.setValue(this.savedInfo?.user?.firstName);
     this.personalInfoForm?.controls.middleName.setValue(this.savedInfo?.user?.middleName);
     this.personalInfoForm?.controls.lastName.setValue(this.savedInfo?.user?.lastName);
-    this.personalInfoForm?.controls.state.setValue(this.savedInfo?.user?.address?.primary?.state);
     this.personalInfoForm?.controls.email.setValue(this.savedInfo?.user?.consumerEmail);
     this.personalInfoForm?.controls.applicationId.setValue(this.savedInfo?.appId);
     this.personalInfoForm.controls.option.setValue(this.savedInfo?.user?.identityVerification);

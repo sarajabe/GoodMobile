@@ -231,7 +231,11 @@
         }
     }
 }
-
+iframe {
+    height: 600px;
+    width: 100%;
+    margin-bottom: 60px;
+}
 ::ng-deep {
     .digital-map {
         margin-bottom: 80px;
