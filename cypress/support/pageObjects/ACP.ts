@@ -513,11 +513,13 @@ class Acp {
           PageObjects.TitleExpectations.goToPurchasedPlansPage();
           cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
           cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+          cy.get('[data-cy="addressCity"]').should('have.text','1250 WATERS PL  111, BRONX,');
+          cy.get('[data-cy="statePostalCode"]').should('have.text','NY, 10461-2720');
           cy.get('.menu-item.ng-star-inserted > .items-link').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
           cy.get('.actions > .primary').click();
-          PageObjects.TitleExpectations.goToActivatePortYouSimPage();
+          PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('#new').click();
           cy.get('.button').click()
           PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,

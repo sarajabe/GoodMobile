@@ -313,7 +313,7 @@ class TitleExpectations {
         cy.title().should('eq', `Good2Go Mobile| Cells Phones | Select Line`);
         return this;
     };
-    goToActivatePortYouSimPage () {
+    goToActivatePortYourSimPage () {
         cy.title().should('eq', `Activate | Port your SIM`);
         return this;
     };
