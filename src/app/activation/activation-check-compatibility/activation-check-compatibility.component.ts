@@ -402,7 +402,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   if (this.compatibleDevice.network === 'att' && this.compatibleDevice.manufacturer === 'Apple') {
                     customHTML = `<div class="success-message">
                     <p class="message">Your phone is ready and able to join our network!</p>
-                    <p class="note">It must also be unlocked to work on the GoodMobile Network.</p>
+                    <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                     <p class="note">It looks like this device is compatible with the network, but some features such as MMS, and Face Time over cellular data may
                     not be available on the network.</p>
                     </div>`;
@@ -410,7 +410,7 @@ export class ActivationCheckCompatibilityComponent implements OnDestroy, OnInit 
                   else {
                     customHTML = `<div class="success-message">
                   <p class="message">Your phone is ready and able to join our network!</p>
-                  <p class="note">It must also be unlocked to work on the Good2Go Network.</p>
+                  <p class="note">It must also be unlocked to work on the Good Mobile Network.</p>
                   </div>`;
                   }
                 this.modalHelper.showInformationMessageModal('Congratulations!', '', 'Continue', null, true, 'successPhoneModal', customHTML).afterClosed().subscribe((result) => {
