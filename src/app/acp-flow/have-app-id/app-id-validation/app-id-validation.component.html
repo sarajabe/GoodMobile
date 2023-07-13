@@ -1,5 +1,5 @@
 <section class="page-section app-info" *ngIf="!acpSuccess && !acpError">
-  <div *ngIf="activeStep !== 2">
+  <div *ngIf="activeStep !== 3">
     <h2 class="header-color">Great!</h2>
     <h4 class="secondary-font" data-cy="personalInfoHeader">Please provide the following information to verify your
       application!</h4>
@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="activeStep === 2 ">
+  <div *ngIf="activeStep === 3 ">
     <h2 class="header-color">Almost there!</h2>
     <h4 class="step-2" data-cy="noticeAgreementHeader">Customer Notice and Agreement</h4>
     <p class="smaller">To apply for service under the Federal ACP with Good Mobile, you should agree and initial the following:</p>
