@@ -1,7 +1,7 @@
 import { PageObjects } from '../../support/pageObjects';
 import { CONSTANT } from '../../fixtures/constants'
 
-describe('Sign in then enroll in ACP plan - new user - complete - home delivery', () => {
+describe('Signup then enroll in ACP plan - new user - complete - home delivery', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
@@ -11,10 +11,10 @@ describe('Sign in then enroll in ACP plan - new user - complete - home delivery'
     it('Should signup a new acp user', () => {
         PageObjects.AccessControl.newUserAcp();
     });
-    it('Should enroll a new user acp complete', () => {
+    it('Should verify a new user with complete ACP status application', () => {
         PageObjects.Acp.enrollmentNewUserAcpComplete();
     });
-    it('Should add new line with store pickup then activate', () =>{
-        PageObjects.Acp.addNewLineHomeDeliveryActivate()  
+    it('Should purchase ACP plan with home delivery then activate', () =>{
+        PageObjects.Acp.addNewLineHomeDeliveryActivate(); 
     });
 });
