@@ -100,7 +100,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
         fixture.detectChanges();
     });
 
-    it('Should create component successfully', waitForAsync(() => {
+    it('Should create a component successfully', waitForAsync(() => {
         expect(component).toBeTruthy();
     }));
 
@@ -143,7 +143,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
 
     it('Should checks if the publicHousingCode input appears if the eligbility code is E4 with other codes', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            eligibilityCodeInputField.setValue('E4,E2');
+            eligibilityCodeInputField.setValue('E4, E2');
             fixture.detectChanges();
 
             expect(publicHousingInputField).toBeDefined();
@@ -184,7 +184,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
 
     it('Should show required messages for the school name and publicHousingCode', waitForAsync(() => {
         fixture.whenStable().then(() => {
-            eligibilityCodeInputField.setValue('E50,E2,E4');
+            eligibilityCodeInputField.setValue('E50, E2, E4');
             fixture.detectChanges();
 
             component.onItemSelect({ code: 'E50' });
@@ -215,7 +215,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
         fixture.whenStable().then(() => {
             eligibilityCodeInputField.setValue('E50, E51, E2');
             fixture.detectChanges();
-            schoolNameInputField.setValue('1');
+            schoolNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.schoolName);
 
             schoolNameInputField.markAsDirty();
             component.codesForm.markAllAsTouched();
@@ -331,32 +331,32 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             qualifyingOptionInputField.setValue('child');
             fixture.detectChanges();
 
-            fNameInputField.setValue('12');
+            fNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.firstName);
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('12');
+            mNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            lNameInputField.setValue('12');
+            lNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.lastName);
             lNameInputField.markAsTouched();
             lNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            daySelectField.setValue('12');
+            daySelectField.setValue(ACP_MOCKS.VALID_DATA.day);
             daySelectField.markAsTouched();
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            monthSelectField.setValue('14');
+            monthSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.month);
             monthSelectField.markAsTouched();
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2024');
+            yearSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -368,7 +368,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             identityTypeInputField.markAsDirty();
             fixture.detectChanges();
 
-            ssnInputField.setValue('12');
+            ssnInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO.ssn);
             ssnInputField.markAsTouched();
             ssnInputField.markAsDirty();
             fixture.detectChanges();
@@ -437,7 +437,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('2000');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.leapYear);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -471,7 +471,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             monthSelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('1997');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -496,12 +496,12 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             eligibilityCodeInputField.markAsDirty();
             fixture.detectChanges();
 
-            schoolNameInputField.setValue('Abc1234');
+            schoolNameInputField.setValue(ACP_MOCKS.VALID_DATA.schoolName);
             schoolNameInputField.markAsTouched();
             schoolNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            publicHousingInputField.setValue('Public Housing');
+            publicHousingInputField.setValue(ACP_MOCKS.VALID_DATA.publicHousing);
             publicHousingInputField.markAsTouched();
             publicHousingInputField.markAsDirty();
             fixture.detectChanges();
@@ -511,17 +511,17 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             fixture.detectChanges();
 
             // Child form
-            fNameInputField.setValue('william');
+            fNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.firstName);
             fNameInputField.markAsTouched();
             fNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            mNameInputField.setValue('ghaleb');
+            mNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.middleName);
             mNameInputField.markAsTouched();
             mNameInputField.markAsDirty();
             fixture.detectChanges();
 
-            lNameInputField.setValue('bawwab');
+            lNameInputField.setValue(ACP_MOCKS.FULL_USER_INFO.lastName);
             lNameInputField.markAsTouched();
             lNameInputField.markAsDirty();
             fixture.detectChanges();
@@ -540,7 +540,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             daySelectField.markAsDirty();
             fixture.detectChanges();
 
-            yearSelectField.setValue('1997');
+            yearSelectField.setValue(ACP_MOCKS.VALID_DATA.year);
             yearSelectField.markAsTouched();
             yearSelectField.markAsDirty();
             fixture.detectChanges();
@@ -551,7 +551,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             identityTypeInputField.markAsDirty();
             fixture.detectChanges();
 
-            ssnInputField.setValue('1234');
+            ssnInputField.setValue(ACP_MOCKS.VALID_DATA.ssn);
             ssnInputField.markAsTouched();
             fixture.detectChanges();
 

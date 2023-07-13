@@ -48,7 +48,8 @@ export const INVALID_FULL_USER_INFO = {
     ssn: '44',
     tribal: '4493837973986911123jkbsjssss',
     phoneNumber: '123',
-    appId: 'abcs'
+    appId: 'abcs',
+    schoolName: '1'
 };
 
 export const VALID_DATA = {
@@ -56,7 +57,9 @@ export const VALID_DATA = {
     month: '03',
     year: '1997',
     ssn: '1234',
-    leapYear: '2000'
+    leapYear: '2000',
+    schoolName: 'Abc1234',
+    publicHousing: 'Public Housing'
 };
 
 export const USER_INFO: IAcpUser = {
