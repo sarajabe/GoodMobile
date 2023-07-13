@@ -5,7 +5,7 @@
         <span>{{providerApplicationID}}</span>
     </p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
-        <a [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
+        <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
     <div class="acp-application-card" *ngIf="!!barCodeValue">
@@ -87,7 +87,7 @@
                             <p class="title" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
                                 {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
                             <p class="description" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
-                                [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"></p>
+                                [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1" data-cy="youAreEligibleDescription"></p>
                             <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
                             <div class="device-checkout-options" *ngIf="canPurchaseADevice">
@@ -235,7 +235,7 @@
                         <p class="description bottom-8" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc2"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
                         <p class="description last" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
-                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3"></p>
+                            [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3" data-cy="mdnValue"></p>
                         <p class="description mt-10"
                             [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
@@ -282,7 +282,7 @@
             <div class="header-flex">
                 <p class="title">Service Provider<span><img src="assets/icon/green-dot.svg" alt="dot icon"></span></p>
                 <div class="status-date">
-                    <p class="key bottom">Status: <span class="value complete-status bold">Complete</span></p>
+                    <p class="key bottom">Status: <span class="value complete-status bold" data-cy="acpStatusValueComplete">Complete</span></p>
                     <p class="key">Last modified: <span class="value">{{!!verificationDetails ?
                             (verificationDetails?.updatedAt |
                             date) : 'N/A'}}</span></p>
@@ -313,7 +313,7 @@
                             [src]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE) ? 'assets/icon/green-dot.svg': (!!showNVOnHoldSection? 'assets/icon/red-dot.svg' : 'assets/icon/pending-dot.svg')"
                             alt="dot icon"></span></p>
                 <div class="status-date" *ngIf="!showNVErrorSection && !showExpiredSection && !showGenericError">
-                    <p class="key bottom">Status: <span class="value status bold"
+                    <p class="key bottom">Status: <span class="value status bold"  data-cy="acpStatusValue"
                             [class.complete-status]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE)"
                             [class.alert-status]="!!showNVOnHoldSection">{{STATUS_TITLE[nvStatus]}}</span>
                     </p>

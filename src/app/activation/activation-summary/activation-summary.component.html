@@ -9,7 +9,7 @@
         </div>
         <div class="key-value-part">
             <p class="key">Your Number:</p>
-            <p class="value">{{mdn | phone}}</p>
+            <p class="value" data-cy="mdnValue">{{mdn | phone}}</p>
         </div>
         <div class="key-value-part" *ngIf="!!userAccount?.mslCode">
             <p class="key">Your MSL code:</p>

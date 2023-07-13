@@ -313,12 +313,17 @@ class TitleExpectations {
         cy.title().should('eq', `Good2Go Mobile| Cells Phones | Select Line`);
         return this;
     };
-    goToActivatePortYouSimPage () {
+    goToActivatePortYourSimPage () {
         cy.title().should('eq', `Activate | Port your SIM`);
         return this;
     };
     goToSignUpPage () {
         cy.title().should('eq', `Sign Up | Good Mobile`);
+        return this;
+    };
+    goToAcpApplicationDetailsPage () {
+        cy.title().should('eq', 'ACP Application | Affordable Connectivity Program | Good Mobile');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
 };

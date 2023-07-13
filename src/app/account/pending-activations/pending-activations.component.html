@@ -218,9 +218,9 @@
                                         <div class="details" *ngIf="!!pendingPlan?.shippingAddress">
                                             <p class="smaller desc"><b>{{!!currentShippingAddress?.name ?
                                                     currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>
-                                            <p class="smaller desc">{{currentShippingAddress?.address1}},
+                                            <p class="smaller desc" data-cy="addressCity">{{currentShippingAddress?.address1}},
                                                 {{currentShippingAddress?.city}},</p>
-                                            <p class="smaller desc last">{{currentShippingAddress?.state}},
+                                            <p class="smaller desc last" data-cy="statePostalCode">{{currentShippingAddress?.state}},
                                                 {{currentShippingAddress?.postalCode}}</p>
                                         </div>
                                     </div>

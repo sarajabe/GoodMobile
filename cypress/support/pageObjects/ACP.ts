@@ -477,5 +477,75 @@ class Acp {
           cy.get('[data-cy="cancel"]').click();
           PageObjects.TitleExpectations.goToACPPage();
      }
+     addNewLineHomeDeliveryActivate(){
+          cy.get('[data-cy="addNewLine"]').click();
+          cy.get('.main-title').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="checkBtn"]').click();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+          PageObjects.Compatibility.addressRefNotSelectedFromList();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
+          PageObjects.Coverage.enterAddressRefBothCoverages();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.get('.head-note').should('have.text','Your Phone is compatible!');
+          cy.get('.sub-note').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.ShippingPage.clickOnHomeDelivery();
+          PageObjects.ShippingPage.clickOnAddNewAddress();
+          PageObjects.ShippingPage.clickOnSaveBtn();
+          cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Name is a required field');
+          cy.get('[data-cy="addressRequiredMsg"]').should('have.text', 'Address is a Required Field');
+          cy.get('[data-cy="cityIsRequired"]').should('have.text', 'City is a Required Field');
+          cy.get('[data-cy="requiredStateMsg"]').should('have.text', 'State is a required field ');
+          cy.get('[data-cy="postalIsRequired"]').should('have.text', 'Postal Code is a Required Field');
+          PageObjects.ShippingPage.editShippingAddress(CONSTANT.SHIPPING.SHIPPING_DATA.NAME,
+               CONSTANT.SHIPPING.SHIPPING_DATA.SHIPPING_ADDRESS,
+               CONSTANT.SHIPPING.SHIPPING_DATA.SUITE_NO,
+               CONSTANT.SHIPPING.SHIPPING_DATA.CITY,
+               CONSTANT.SHIPPING.SHIPPING_DATA.STATE,
+               CONSTANT.SHIPPING.SHIPPING_DATA.POSTAL);
+          PageObjects.ShippingPage.clickOnSaveBtn();
+          PageObjects.ShippingPage.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
+          cy.get('[data-cy="purchasedPlansBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchasedPlansPage();
+          cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
+          cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+          cy.get('[data-cy="addressCity"]').should('have.text','1250 WATERS PL  111, BRONX,');
+          cy.get('[data-cy="statePostalCode"]').should('have.text','NY, 10461-2720');
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
+          cy.get('.actions > .primary').click();
+          PageObjects.TitleExpectations.goToActivatePortYourSimPage();
+          cy.get('#new').click();
+          cy.get('.button').click()
+          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+          cy.get('[data-cy="activate-button"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('.title').should('have.text','Successfully activated!');
+          cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
+          cy.get('.action > .button').should('have.text','Select your Device');
+          cy.get('.actions > .button').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
+          cy.get('[data-cy="acpStatusValueComplete"]').should('have.text','Complete');
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Complete');
+          cy.get('[data-cy="mdnValue"]').should('have.text','Phone Number/MDN: (646) 662-1975');
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','6462');
+     };
 };
 export default new Acp();
