@@ -157,7 +157,7 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
       this.years.push(i);
     }
   }
-  private populateForm(): void {
+  public populateForm(): void {
     this.personalInfoForm?.controls.firstName.setValue(this.savedInfo?.user?.firstName);
     this.personalInfoForm?.controls.middleName.setValue(this.savedInfo?.user?.middleName);
     this.personalInfoForm?.controls.lastName.setValue(this.savedInfo?.user?.lastName);

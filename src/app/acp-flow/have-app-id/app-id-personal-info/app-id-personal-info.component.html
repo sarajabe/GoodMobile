@@ -59,7 +59,8 @@
         id="required-lname-msg" data-cy="required-lname-msg">
         Last name is required
       </label>
-      <label class="validation-message" *ngIf="personalInfoForm.controls.lastName.dirty && !!personalInfoForm.controls.lastName.value && !personalInfoForm.controls.lastName.valid"
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.lastName.dirty && !!personalInfoForm.controls.lastName.value && !personalInfoForm.controls.lastName.valid"
         id="invalid-lname-msg" data-cy="invalid-lname-msg">
         Last name is invalid
       </label>
@@ -122,7 +123,17 @@
               <option value="26">26</option>
               <option value="27">27</option>
               <option value="28">28</option>
-              <option value="29">29</option>
+              <option value="29" [class.disabled]="
+              !!personalInfoForm.controls.month &&
+              personalInfoForm.controls.month.value &&
+              personalInfoForm.controls.month.value === '02' && 
+              !leapYear
+            " [disabled]="
+              !!personalInfoForm.controls.month &&
+              personalInfoForm.controls.month.value &&
+              personalInfoForm.controls.month.value === '02' && 
+              !leapYear
+            ">29</option>
               <option value="30" [class.disabled]="
                     !!personalInfoForm.controls.month &&
                     personalInfoForm.controls.month.value &&
@@ -170,7 +181,7 @@
       <label class="validation-message" *ngIf="(personalInfoForm.controls.month.hasError('required') && personalInfoForm.controls.month.touched) ||
              (personalInfoForm.controls.day.hasError('required') && personalInfoForm.controls.day.touched)
              || (personalInfoForm.controls.year.hasError('required') && personalInfoForm.controls.year.touched)"
-        id="required-month-msg" data-cy="required-month-msg">
+        id="required-date-msg" data-cy="required-month-msg">
         Date of Birth is required
       </label>
       <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg">
@@ -190,8 +201,8 @@
         id="required-email-msg" data-cy="required-email-msg">
         Email Address is required
       </label>
-      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('pattern')" id="invalid-email-msg"
-        data-cy="invalid-email-msg">
+      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('pattern')"
+        id="invalid-email-msg" data-cy="invalid-email-msg">
         Email Address is invalid. Hint: watch out for extra spaces
       </label>
     </div>
@@ -243,6 +254,11 @@
             *ngIf="personalInfoForm.controls.tribalId.touched && !personalInfoForm.controls.tribalId.value"
             id="required-tribal-msg">
             Tribal ID is required
+          </label>
+          <label class="validation-message"
+            *ngIf="personalInfoForm.controls.tribalId.dirty && !personalInfoForm.controls.tribalId.valid && !!personalInfoForm.controls.tribalId.value"
+            id="invalid-tribal-msg">
+            Tribal ID is invalid
           </label>
         </div>
       </div>
