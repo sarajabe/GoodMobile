@@ -1,11 +1,22 @@
 import { IAcpDetails, IAcpUser } from "@ztarmobile/zwp-service-backend-v2";
 
+export const SAVED_INFO: IAcpUser = {
+    firstName: 'Mirna',
+    lastName: 'Haddad',
+    dob: '13/3/1997',
+    last4ssn: '1243',
+    consumerEmail: 'mirna-haddad@pavocom.com'
+};
+
 export const APPLICATION_ID = {
     ebbId: 'B12345-67890'
 };
 
+export const ACP_PHONE_NUMBER = '0123456789';
+
 export const FULL_USER_INFO: IAcpUser = {
     firstName: 'Mirna',
+    middleName: 'Ghaleb',
     lastName: 'Haddad',
     dob: '13/3/1997',
     last4ssn: '1243',
@@ -24,6 +35,27 @@ export const FULL_USER_INFO: IAcpUser = {
             zipCode: '73301'
         }
     }
+};
+
+export const INVALID_FULL_USER_INFO = {
+    firstName: '33',
+    middleName: '33',
+    lastName: '33',
+    consumerEmail: 'mirna-haddad',
+    day: '32',
+    month: '13',
+    year: '2024',
+    ssn: '44',
+    tribal: '4493837973986911123jkbsjssss',
+    phoneNumber: '123'
+};
+
+export const VALID_DATA = {
+    day: '13',
+    month: '03',
+    year: '1997',
+    ssn: '1234',
+    leapYear: '2000'
 };
 
 export const USER_INFO: IAcpUser = {
