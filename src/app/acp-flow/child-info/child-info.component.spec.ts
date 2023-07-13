@@ -254,7 +254,7 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
         });
     }));
 
-    it('Should show validation messages for the required elements when the values are empty of the child form', waitForAsync(() => {
+    it('Should show validation messages for the required elements when the values are empty of the child form without showing any another error messages', waitForAsync(() => {
         fixture.whenStable().then(() => {
             qualifyingOptionInputField.setValue('child');
             fixture.detectChanges();
@@ -269,13 +269,20 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
 
             expect(fNameInputField.errors.required).toBeTruthy();
             expect(requiredFNameMsg.nativeElement).toBeDefined();
+            expect(fNameInputField.hasError('pattern')).toBeFalsy();
 
             expect(lNameInputField.errors.required).toBeTruthy();
             expect(requiredLNameMsg.nativeElement).toBeDefined();
+            expect(lNameInputField.hasError('pattern')).toBeFalsy();
 
             expect(daySelectField.errors.required).toBeTruthy();
+            expect(daySelectField.hasError('pattern')).toBeFalsy();
+
             expect(monthSelectField.errors.required).toBeTruthy();
+            expect(monthSelectField.hasError('pattern')).toBeFalsy();
+
             expect(yearSelectField.errors.required).toBeTruthy();
+            expect(yearSelectField.hasError('pattern')).toBeFalsy();
 
             expect(requiredDateMsg.nativeElement).toBeDefined();
 
@@ -381,10 +388,15 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
 
             expect(fNameInputField.hasError('pattern')).toBeTruthy();
             expect(invalidFNameMsg.nativeElement).toBeDefined();
+            expect(fNameInputField.errors.required).toBeFalsy();
+
             expect(mNameInputField.hasError('pattern')).toBeTruthy();
             expect(invalidMNameMsg.nativeElement).toBeDefined();
+
             expect(lNameInputField.hasError('pattern')).toBeTruthy();
             expect(invalidLNameMsg.nativeElement).toBeDefined();
+            expect(fNameInputField.errors.required).toBeFalsy();
+
             expect(invalidDateMsg.nativeElement).toBeDefined();
             expect(ssnInputField.hasError('minlength')).toBeTruthy();
             expect(invalidSsnMsg.nativeElement).toBeDefined();
@@ -395,6 +407,8 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             fixture.detectChanges();
 
             expect(daySelectField.hasError('min')).toBeTruthy();
+            expect(daySelectField.errors.required).toBeFalsy();
+
             expect(component.childInfoForm.valid).toBeFalsy();
 
             // Check tribal if its invalid 
