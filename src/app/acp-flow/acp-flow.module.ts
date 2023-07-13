@@ -28,6 +28,7 @@ import { EnrollmentAddNewLineComponent } from './enrollment-add-new-line/enrollm
 import { EnrollmentAddExistingLineComponent } from './enrollment-add-existing-line/enrollment-add-existing-line.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AcpDocumentsComponent } from './acp-documents/acp-documents.component';
+import { AppIdAddressInfoComponent } from './have-app-id/app-id-address-info/app-id-address-info.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AcpDocumentsComponent } from './acp-documents/acp-documents.component';
     AcpAppInfoComponent,
     EnrollmentAddNewLineComponent,
     EnrollmentAddExistingLineComponent,
-    AcpDocumentsComponent
+    AcpDocumentsComponent,
+    AppIdAddressInfoComponent
   ],
   imports: [
     CommonModule,

@@ -104,7 +104,11 @@ export class CheckCompatibilityResultComponent implements OnDestroy, AfterConten
     this.alive = false;
   }
   public SendTmoPhysicalSim(): void {
-    const device = { network: 'tmo', networkType: 'GSM', skuIdentifier: 'T', skuNumber: 'SIMGWLTMO4GLTE' } as IDeviceCompatibilityV1;
+    let device = this.cart.planDevice;
+    device.skuIdentifier = 'T';
+    device.skuNumber = 'SIMGWLTMO4GLTE';
+    device.networkType = 'GSM';
+    device.network = 'tmo';
     this.mobilePlansService.setPlanDevice(device);
     this.mobilePlansService.seteSIM(false);
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);

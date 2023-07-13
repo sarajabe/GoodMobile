@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {
-  AfterContentChecked, ChangeDetectorRef, Component,
+  AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component,
   EventEmitter, HostListener, Input, OnInit, Output
 } from "@angular/core";
 import { Router } from "@angular/router";
@@ -18,7 +18,7 @@ import { ACP_ROUTE_URLS, ROUTE_URLS } from "src/app/app.routes.names";
   templateUrl: './acp-validation.component.html',
   styleUrls: ['./acp-validation.component.scss']
 })
-export class AcpValidationComponent implements OnInit, AfterContentChecked {
+export class AcpValidationComponent implements OnInit, AfterContentChecked, AfterViewInit {
   @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() applicationId: string;
@@ -72,6 +72,10 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
     if (!!this.enrolled) {
       this.callGetVerifyAcp(this.ebbId);
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.activeStep = 1;
   }
 
   ngAfterContentChecked(): void {
@@ -182,7 +186,7 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
   public setDocs(data): void {
 
   }
-  private callCreateInternalApp(callVerify?): void {
+  public callCreateInternalApp(callVerify?): void {
     if (this.acpData) {
       window.scroll(0, 0);
       this.appState.loading = true;
@@ -209,7 +213,7 @@ export class AcpValidationComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  private callGetVerifyAcp(userProfileEbbId): void {
+  public callGetVerifyAcp(userProfileEbbId): void {
     this.appState.loading = true;
     this.ebbService
       .getACPApplicationStatus(userProfileEbbId, this.customerId, this.callBackUrl)

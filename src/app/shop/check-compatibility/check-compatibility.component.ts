@@ -268,7 +268,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
           if (!!res) {
             this.appState.loading = false;
             this.showAddressResultBanner = true;
-            if (!!res?.tmo?.covered) {
+            if (!!res?.att?.covered || !!res?.tmo?.covered) {
               this.addressCompatibilityResponse = res;
               this.compatibilityStatus = 'COVERED';
             } else {
@@ -295,7 +295,7 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
         this.displayedAddressModel?.state, this.displayedAddressModel?.address2, this.equipment).then(res => {
           if (!!res) {
             this.appState.loading = false;
-            if (!!res?.tmo?.covered) {
+            if (!!res?.tmo?.covered || !!res?.att?.covered) {
               this.compatibileDevice = res?.details as IDeviceCompatibilityV1;
               this.compatibileDevice.manufacturer = res?.details?.make;
               this.compatibileDevice.marketingName = res?.details?.name;
@@ -312,9 +312,15 @@ export class CheckCompatibilityComponent implements OnDestroy, OnInit, AfterCont
                 this.compatibilityStatus = 'NOT_COVERED';
                 this.showDeviceResultBanner = true;
               } else {
-                this.compatibileDevice.network = 'tmo';
-                this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
-                this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                if (!!res?.tmo?.covered) {
+                  this.compatibileDevice.skuIdentifier = res?.tmo?.details?.skuIdentifier;
+                  this.compatibileDevice.skuNumber = res?.tmo?.details?.skuNumber;
+                  this.compatibileDevice.network = 'tmo';
+                } else if (!!res?.att?.covered) {
+                    this.compatibileDevice.skuIdentifier = res?.att?.details?.skuIdentifier;
+                    this.compatibileDevice.skuNumber = res?.att?.details?.skuNumber;
+                    this.compatibileDevice.network = 'att';
+                  }
                 this.setDevice(this.compatibileDevice);
                 this.checkPhoneResult();
               }
