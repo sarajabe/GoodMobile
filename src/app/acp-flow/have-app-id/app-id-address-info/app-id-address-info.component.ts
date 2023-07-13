@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActionsAnalyticsService, FirebaseEBBService, IAutoCompletePrediction, IFirebaseAddress, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService, IAutoCompletePrediction, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { IAcpAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class AppIdAddressInfoComponent implements OnInit, OnChanges, OnDestroy {
   private alive = true;
   private streetSearchText: string;
 
-  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager, private firebaseEBBService: FirebaseEBBService,
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager,
     private analyticsService: ActionsAnalyticsService,   private placesAutoCompleteService: PlacesAutocompleteService,
     private appState: AppState) {
     this.addressInfoForm = formBuilder.group({
@@ -167,7 +167,7 @@ export class AppIdAddressInfoComponent implements OnInit, OnChanges, OnDestroy {
     this.primaryAddress.zipCode = this.addressInfoForm.controls.zipCode.value;
   }
 
-  private populateForms(): void {
+  public populateForms(): void {
     if (!!this.primary) {
       this.addressInfoForm.controls.address1.setValue(this.primary.address1);
       this.addressInfoForm.controls.address2.setValue(this.primary.address2);
