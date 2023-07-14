@@ -58,7 +58,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for common codes - generic group
-  it('Should check that the selected codes With its descriptions have correct values, and make sure that the checkDocGroups function is called for E3 generic group ( common codes )', () => {
+  it('Should check if the user selects E3 then the document required is the generic group and the description should be ( Supplemental Security )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
       mockEbbManager.eligibilityCodeDescs = of([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
@@ -122,7 +122,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E1 and E2 - generic group
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E2 and E1 generic group', () => {
+  it('Should check if the user selects E1 and E2 then the document required is the Medicaid and SNAP and the description should be ( New York Medicaid - Supplemental Nutrition Assistance Program (SNAP) )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
@@ -187,7 +187,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E2 only - snap group
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E2 SNAP group', () => {
+  it('Should check if the user selects E2 only then the document required is the SNAP and the description should be ( Supplemental Nutrition Assistance Program (SNAP) )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
@@ -252,7 +252,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E1 only - Medicaid group
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E1 Medicaid group', () => {
+  it('Should check if the user selects E1 only then the document required is the Medicaid and the description should be ( New York Medicaid )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
@@ -317,7 +317,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E13 only - Through income 
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E13 Through income group', () => {
+  it('Should check if the user selects E13 only then the document required is the Through income and the description should be ( Eligibility Based on Income )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -381,7 +381,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E50 or E51 only - Pell grant 
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E50 or E51 Pell grant group', () => {
+  it('Should check if the user selects E50 or E51 only then the document required is the Pell grant and the description should be ( School Lunch/Breakfast Program - Federal Pell Grant )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
@@ -445,7 +445,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases Through income and generic group
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E13 Through income group and E3 generic group', () => {
+  it('Should check if the user selects E13 and E3 only then the document required is the Through income and generic group and the description should be ( Eligibility Based on Income - Supplemental Security )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -509,7 +509,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for all groups all toghether 
-  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for all groups', () => {
+  it('Should check if the user selects all groups all toghether', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
