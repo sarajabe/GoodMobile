@@ -214,7 +214,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         });
     }));
 
-    it('Should check if Verify button is on step 3', () => {
+    it('Should check if Submit button is on step 3', () => {
         component.acpData = acpData;
         component.activeStep = 3;
         fixture.detectChanges();
@@ -225,7 +225,19 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(nextVerifyButton).toBeDefined();
         expect(nextVerifyButton.innerHTML).toEqual('Submit');
     });
+    it('Should check if Submit button is on step 3 then click on it and go next function will be called', () => {
+        component.acpData = acpData;
+        component.activeStep = 3;
+        spyOn(component, 'goNext');
+        fixture.detectChanges();
 
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        nextVerifyButton.click();
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(component.goNext).toHaveBeenCalled();
+    });
     it('Should listens for setUserInfo changes in activeStep = 1 and make sure that the form is mark as touched in the personal component', () => {
         spyOn(appIdPersonalInfoComponent.setUserInfo, 'emit');
         spyOn(component, 'callCreateInternalApp');
