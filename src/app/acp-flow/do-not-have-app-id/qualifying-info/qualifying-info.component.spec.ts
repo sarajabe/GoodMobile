@@ -106,6 +106,16 @@ fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testi
       expect(component.qualifyingForm.valid).toBeFalsy();
     });
   }));
+  it('Should checks if the child form is not appear when indivisual option is selected', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      qualifyingOptionInputField.setValue('indivisual');
+      fixture.detectChanges();
+
+      const childInfoForm = fixture.nativeElement.querySelector('#childForm');
+
+      expect(childInfoForm).toBeNull();
+    });
+  }));
   it('Should checks if the child form appears when qualifying option is selected', waitForAsync(() => {
     fixture.whenStable().then(() => {
       qualifyingOptionInputField.setValue('child');
@@ -116,7 +126,22 @@ fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testi
       expect(childInfoForm).toBeDefined();
     });
   }));
+  it('Should checks if the child form appears when qualifying option is selected and disappear if we reclick on indivisual', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      qualifyingOptionInputField.setValue('child');
+      fixture.detectChanges();
 
+      const childInfoForm = fixture.nativeElement.querySelector('#childForm');
+
+      expect(childInfoForm).toBeDefined();
+
+      qualifyingOptionInputField.setValue('indivisual');
+      fixture.detectChanges();
+
+      const childInfoFormAfterClicked = fixture.nativeElement.querySelector('#childForm');
+      expect(childInfoFormAfterClicked).toBeNull();
+    });
+  }));
   it('Should show validation messages for the required elements when the values are empty of the child form without showing any another error messages', waitForAsync(() => {
     fixture.whenStable().then(() => {
       qualifyingOptionInputField.setValue('child');
@@ -196,7 +221,7 @@ fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testi
     });
   }));
 
-  it('Should show validation messages when the values are invalid for the child form', waitForAsync(() => {
+  it('Should show validation messages when the values are invalid with pattern for the child form', waitForAsync(() => {
     fixture.whenStable().then(() => {
       qualifyingOptionInputField.setValue('child');
       fixture.detectChanges();
@@ -290,6 +315,81 @@ fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testi
     });
   }));
 
+  it('Should show validation messages when the values are invalid with max-min length for the child form', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      qualifyingOptionInputField.setValue('child');
+      fixture.detectChanges();
+
+      fNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.firstName);
+      fNameInputField.markAsTouched();
+      fNameInputField.markAsDirty();
+      fixture.detectChanges();
+
+      mNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.middleName);
+      mNameInputField.markAsTouched();
+      mNameInputField.markAsDirty();
+      fixture.detectChanges();
+
+      lNameInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.lastName);
+      lNameInputField.markAsTouched();
+      lNameInputField.markAsDirty();
+      fixture.detectChanges();
+
+      daySelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.day);
+      daySelectField.markAsTouched();
+      daySelectField.markAsDirty();
+      fixture.detectChanges();
+
+      monthSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.month);
+      monthSelectField.markAsTouched();
+      monthSelectField.markAsDirty();
+      fixture.detectChanges();
+
+      yearSelectField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.year);
+      yearSelectField.markAsTouched();
+      yearSelectField.markAsDirty();
+      fixture.detectChanges();
+      component.checkMonth();
+      fixture.detectChanges();
+
+      identityTypeInputField.setValue('ssn');
+      identityTypeInputField.markAsTouched();
+      identityTypeInputField.markAsDirty();
+      fixture.detectChanges();
+
+      ssnInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.ssn);
+      ssnInputField.markAsTouched();
+      ssnInputField.markAsDirty();
+      fixture.detectChanges();
+
+      expect(fNameInputField.hasError('maxlength')).toBeTruthy();
+      expect(fNameInputField.errors.required).toBeFalsy();
+
+      expect(mNameInputField.hasError('maxlength')).toBeTruthy();
+
+      expect(lNameInputField.hasError('maxlength')).toBeTruthy();
+      expect(fNameInputField.errors.required).toBeFalsy();
+
+      expect(ssnInputField.hasError('maxlength')).toBeTruthy();
+
+      expect(component.childInfoForm.valid).toBeFalsy();
+
+      // Check tribal if its invalid 
+      identityTypeInputField.setValue('tribal');
+      identityTypeInputField.markAsTouched();
+      identityTypeInputField.markAsDirty();
+      fixture.detectChanges();
+
+      tribalInputField.setValue(ACP_MOCKS.INVALID_FULL_USER_INFO_WITH_LENGTHS.tribal);
+      tribalInputField.markAsTouched();
+      tribalInputField.markAsDirty();
+      fixture.detectChanges();
+
+      expect(tribalInputField.hasError('maxlength')).toBeTruthy();
+      expect(component.childInfoForm.valid).toBeFalsy();
+    });
+  }));
+
   it('Should not show a validation messages, if we select a leap year (2000) and the day is 29 and pick a 2 as a month', waitForAsync(() => {
     fixture.whenStable().then(() => {
       component.bbqInfo = userInfo;
@@ -362,7 +462,21 @@ fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testi
       expect(selectDay_31).toBeTruthy();
     });
   }));
+  it('Should check that the year min value is current year -130 and the max year value is current year', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      component.bbqInfo = userInfo;
+      qualifyingOptionInputField.setValue('child');
+      fixture.detectChanges();
 
+      const selectMinYear = fixture.debugElement.query(By.css('#year')).nativeElement.options[0].value;
+      const selectMaxYear = fixture.debugElement.query(By.css('#year')).nativeElement.options[component.years.length - 1].value;
+      fixture.detectChanges();
+      const minYear = new Date().getFullYear() - 130;
+      const maxYear = new Date().getFullYear();
+      expect(selectMinYear).toEqual(minYear.toString());
+      expect(selectMaxYear).toEqual(maxYear.toString());
+    });
+  }));
   it('Should not show validation messages when the values are valid for the whole forms', waitForAsync(() => {
     fixture.whenStable().then(() => {
       // Qualifying form
@@ -423,6 +537,30 @@ fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testi
 
       expect(component.qualifyingForm.errors).toBeNull();
       expect(component.childInfoForm.errors).toBeNull();
+    });
+  }));
+  it('Should populate the form when there is saved info already', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      component.bbqInfo = userInfo;
+      component.populateForm();
+      fixture.detectChanges();
+
+      spyOn(component.goToNext, 'emit').and.callThrough();
+      component.goToNext.emit();
+
+      const childInfoForm = fixture.nativeElement.querySelector('#childForm');
+
+      expect(childInfoForm).toBeDefined();
+      expect(component.childInfoForm.errors).toBeNull();
+      expect(fNameInputField.value).toEqual(userInfo.firstName);
+      expect(mNameInputField.value).toEqual(undefined);
+      expect(lNameInputField.value).toEqual(userInfo.lastName);
+      expect(daySelectField.value).toEqual(userInfo?.dob?.split('/')[1]);
+      expect(monthSelectField.value).toEqual(userInfo?.dob?.split('/')[0]);
+      expect(yearSelectField.value).toEqual(userInfo?.dob?.split('/')[2]);
+      expect(ssnInputField.value).toEqual(userInfo?.last4ssn);
+      expect(component.goToNext.emit).toHaveBeenCalled();
+
     });
   }));
 });
