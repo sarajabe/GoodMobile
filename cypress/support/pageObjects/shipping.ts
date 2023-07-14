@@ -2,16 +2,24 @@ import { CONSTANT } from "../../fixtures/constants";
 
 class ShippingPage {
     editShippingAddress(addressName, shippingAddressField, suiteNumber, city, state, postal) {
+        cy.get('[data-cy="addressName"]').click({ force: true });
         cy.get('[data-cy="addressName"]').clear();
         cy.get('[data-cy="addressName"]').type(addressName);
+        cy.get('[data-cy="addressLookup"]').click({ force: true });
         cy.get('[data-cy="addressLookup"]').clear();
-        cy.get('[data-cy="addressLookup"]').type(shippingAddressField);
+        cy.get('[data-cy="addressLookup"]').type(shippingAddressField).then(() => {
+            cy.get('.mat-option-text').first().click();
+        });
+        cy.get('[data-cy="suiteNo"]').click({ force: true });
         cy.get('[data-cy="suiteNo"]').clear();
         cy.get('[data-cy="suiteNo"]').type(suiteNumber);
+        cy.get('[data-cy="billingCity"]').click({ force: true });
         cy.get('[data-cy="billingCity"]').clear();
         cy.get('[data-cy="billingCity"]').type(city);
+        cy.get('[data-cy="billingState"]').click({ force: true });
         cy.get('[data-cy="billingState"]').clear();
         cy.get('[data-cy="billingState"]').type(state);
+        cy.get('[data-cy="billingPostal"]').click({ force: true });
         cy.get('[data-cy="billingPostal"]').clear();
         cy.get('[data-cy="billingPostal"]').type(postal);
         return this;

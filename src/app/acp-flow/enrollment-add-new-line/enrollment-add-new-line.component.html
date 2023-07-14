@@ -57,7 +57,7 @@
                             <span [class.focused]="!!setFoucs || !!newMobileServiceFrom.controls.address.touched"
                                 [class.not-focused]="!setFoucs && !newMobileServiceFrom.controls.address.value"
                                 [class.error]="!!newMobileServiceFrom.controls.address.touched && !!newMobileServiceFrom.controls.address.errors"
-                                [class.grayed]="!setFoucs && !!newMobileServiceFrom.controls.address.value"  data-cy="addressRef">Enter your
+                                [class.grayed]="!setFoucs && !!newMobileServiceFrom.controls.address.value">Enter your
                                 full
                                 address</span>
                         </label>
@@ -123,7 +123,7 @@
             <form #pickupOptionsForm="ngForm" class="pickups-form">
                 <div class="radioBtn">
                     <label class="form-control" for="home">
-                        <input type="radio" value="home" [(ngModel)]="option" id="home" name="home" required
+                        <input type="radio" value="home" [(ngModel)]="option" data-cy="homeDelivery" id="home" name="home" required
                             (change)="pickupOptionChanged()">
                         <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
                         <div class="input-details">
@@ -231,7 +231,7 @@
                                     </a>
                                 </div>
                                 <div class="new-address">
-                                    <div class="toggle-title" (click)="
+                                    <div class="toggle-title" data-cy="addNewAddress"  (click)="
                                 showShippingForm = !showShippingForm;
                                 selectedShippingAddress = null;
                                 isAddressVerified = false;
@@ -256,8 +256,8 @@
                                                 (click)="showShippingForm = false;">
                                                 Cancel
                                             </a>
-                                            <button class="button primary" aria-label="Add address"
-                                            (click)="addAddress()">
+                                            <button class="button primary" data-cy="saveBtn" aria-label="Add address"
+                                                (click)="addAddress()">
                                                 Save
                                             </button>
                                         </div>

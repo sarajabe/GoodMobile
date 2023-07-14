@@ -12,7 +12,9 @@
       <input type="text" formControlName="secondCheck" data-cy="secondCheck" placeholder="AA" maxlength="2"
         oninput="this.value = this.value.toUpperCase()" />
       <p class="smaller">
-        The ACP Program is temporary in nature and is limited to one supported service plan per household. Your household will be subject to the provider’s undiscounted rates and general terms and conditions at the end of the ACP Program if you continue to receive service.
+        The ACP Program is temporary in nature and is limited to one supported service plan per household. Your
+        household will be subject to the provider’s undiscounted rates and general terms and conditions at the end of
+        the ACP Program if you continue to receive service.
       </p>
     </div>
     <div class="form-row">
@@ -41,7 +43,7 @@
           signatureForm.controls.thirdCheck.hasError('required')) ||
         (signatureForm.controls.forthCheck.touched &&
           signatureForm.controls.forthCheck.hasError('required'))
-      ">
+      " id="consent-required-msg">
       Initials are required , please make sure you filled all of them
     </label>
     <label class="validation-message" *ngIf="
@@ -49,7 +51,7 @@
         signatureForm.controls.secondCheck.hasError('pattern') ||
         signatureForm.controls.thirdCheck.hasError('pattern') ||
         signatureForm.controls.forthCheck.hasError('pattern')
-      ">
+      " id="consent-invalid-msg">
       Mismatching initials with your first charecter of your first name and first
       charecter of your last name
     </label>
@@ -59,20 +61,21 @@
     <p class="sub-note smallest">This is your full name exactly as entered in step one</p>
     <div class="signed-name">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="name" type="text" id="name" data-cy="name" oninput="this.value = this.value.toUpperCase()"/>
-        <span >Enter first & last name</span>
+        <input placeholder=" " formControlName="name" type="text" id="name" data-cy="name"
+          oninput="this.value = this.value.toUpperCase()" />
+        <span>Enter first & last name</span>
       </label>
       <p class="hint caption">{{fullName | uppercase}}</p>
       <label class="validation-message" data-cy="requiredName" *ngIf="
           signatureForm.controls.name.hasError('required') &&
           signatureForm.controls.name.touched
-        ">
+        " id="fullname-required-msg">
         Full name is required
       </label>
       <label class="validation-message" *ngIf="
           !!signatureForm.controls.name.value &&
           signatureForm.hasError('mismatchedFullName')
-        ">
+        " id="fullname-invalid-msg">
         Your full name does not match the previous registered one
       </label>
     </div>

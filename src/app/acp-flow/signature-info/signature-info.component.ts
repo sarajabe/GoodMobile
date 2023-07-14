@@ -32,10 +32,10 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager,
     private appState: AppState) {
-    }
+  }
 
   ngOnInit(): void {
-    if(!!this.fName && !!this.lName) {
+    if (!!this.fName && !!this.lName) {
       this.fullName = `${this.fName} ${this.lName}`;
       this.firstCharFName = this.fName.substr(0, 1).toUpperCase();
       this.firstCharLName = this.lName.substr(0, 1).toUpperCase();
@@ -48,7 +48,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
       forthCheck: ['', Validators.compose([Validators.required, Validators.pattern(this.firstChars), Validators.maxLength(2)])],
       name: ['', Validators.compose([Validators.required, Validators.pattern(EBB_NAME_PATTERN)])],
     }, { validator: this.matchingFullName(this.fullName, 'name') });
-    
+
     if (!!this.signed) {
       this.signatureForm.controls.firstCheck.setValue(this.firstChars);
       this.signatureForm.controls.secondCheck.setValue(this.firstChars);
@@ -63,7 +63,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.ebbManager.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
       this.ebbManager.acpFlowSelected.pipe(takeWhile(() => this.alive)).subscribe((res) => {
         const flow = res;
-        if (!!step && ((!this.appId && (step === 5 && flow === 'no') || (step === 4 && flow === 'yes-without-id')) || (!!this.appId && step ===3))) {
+        if (!!step && ((!this.appId && (step === 5 && flow === 'no') || (step === 4 && flow === 'yes-without-id')) || (!!this.appId && step === 3))) {
           this.signatureForm.markAllAsTouched();
           this.showCaptchaError = !!this.recaptchaResponse ? false : true;
           if (!!this.signatureForm.valid && !!this.fullName && !!this.captchaValid) {
@@ -87,7 +87,7 @@ export class SignatureInfoComponent implements OnInit, OnDestroy, OnChanges {
     this.captchaValid = !!captchaResponse;
     this.showCaptchaError = false;
   }
-  
+
   public matchingFullName(fullNameKey: string, enteredNameKey: string): any {
     return (group: FormGroup): { [key: string]: any } => {
       const enteredName = group.controls[enteredNameKey];

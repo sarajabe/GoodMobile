@@ -16,11 +16,11 @@
                         </li>
                         <li>
                             <p class="name">Full Name:</p>
-                            <p class="value">{{acpData?.user?.firstName}} {{acpData?.user?.lastName}}</p>
+                            <p class="value" data-cy="fullNameValue">{{acpData?.user?.firstName}} {{acpData?.user?.lastName}}</p>
                         </li>
                         <li>
                             <p class="name">Date of birth:</p>
-                            <p class="value">{{acpData?.user?.dob}}</p>
+                            <p class="value" data-cy="dateOfBirthValue">{{acpData?.user?.dob}}</p>
                         </li>
                         <li *ngIf="!!yesFlow">
                             <p class="name">State:</p>
@@ -46,9 +46,8 @@
                                 {{acpData?.user?.address?.mail?.state}} {{acpData?.user?.address?.mail?.zipCode}}</p>
                         </li>
                         <li *ngIf="!!acpData?.user?.identityVerification">
-                            <p class="name">{{acpData?.user?.identityVerification === 'ssn' ? 'Last 4 SSN:' : 'Tribal
-                                ID:'}}</p>
-                            <p class="value">{{acpData?.user?.identityVerification === 'ssn' ? acpData?.user?.last4ssn :
+                            <p class="name">{{acpData?.user?.identityVerification === 'ssn' ? 'Last 4 SSN:' : 'Tribal ID:'}}</p>
+                            <p class="value" data-cy="identityVerificationValue">{{acpData?.user?.identityVerification === 'ssn' ? acpData?.user?.last4ssn :
                                 acpData?.user?.tribalId}}</p>
                         </li>
                         <li>
