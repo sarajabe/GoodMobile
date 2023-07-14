@@ -39,7 +39,7 @@ let userInfo = ACP_MOCKS.USER_INFO;
 let internalData = ACP_MOCKS.INTERNAL_DATA;
 
 
-fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
+describe('No Flow - EBB Child Info Component - Unit Testing', async () => {
     const ELIGIBILiTY_CODES_OBJECT = ACP_MOCKS.ELIGIBILiTY_CODES_OBJECT;
     const PUBLIC_HOUSING_CODES_OBJECT = ACP_MOCKS.PUBLIC_HOUSING_CODES_OBJECT;
 
