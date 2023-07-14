@@ -295,4 +295,20 @@ fdescribe('Yes flow - without app id- EBB Address Info Component - Unit Testing'
       expect(component.addressInfoForm.disabled).toBe(true);
     });
   }));
+  it('Should populate the form when there is saved address already', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      component.address = ACP_MOCKS.FULL_USER_INFO.address.primary;
+      fixture.detectChanges();
+
+      component.addressInfoForm.markAllAsTouched();
+      component.ngOnInit();
+      fixture.detectChanges();
+
+      expect(component.addressInfoForm.errors).toBeNull();
+      expect(addressOneInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.address1);
+      expect(cityInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.city);
+      expect(stateInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.state);
+      expect(zipCodeInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.zipCode);
+    });
+  }));
 });
