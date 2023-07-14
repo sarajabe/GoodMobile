@@ -126,7 +126,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(component).toBeTruthy();
     });
 
-    it('Should check if the activeStep is 1, so the app-personal-info should be rendered in the DOM', waitForAsync(() => {
+    it('Should check if the activeStep is 1, so the personal information component should be rendered in the DOM', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.activeStep = 1;
             fixture.detectChanges();
@@ -162,7 +162,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(1, true);
     });
 
-    it('Should check if the activeStep is 2, so the app-app-id-address-info should be rendered in the DOM', waitForAsync(() => {
+    it('Should check if the activeStep is 2, so the address information component should be rendered in the DOM', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.activeStep = 2;
             fixture.detectChanges();
@@ -198,7 +198,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(2, true);
     });
 
-    it('Should check if the activeStep is 3, so the app-signature-info should be rendered in the DOM', waitForAsync(() => {
+    it('Should check if the activeStep is 3, so the signature information component should be rendered in the DOM', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.activeStep = 3;
             component.acpData = acpData;
@@ -264,8 +264,9 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(addressComponent.addressInfoForm.touched).toBeTruthy();
     });
     it('Should listens for setSignature changes in activeStep = 3 and make sure that the signatureForm is markasTouched in the signature component', () => {
-        mockEbbManager.activeStep = of(5);
+        mockEbbManager.activeStep = of(3);
         mockEbbManager.acpFlowSelected = of('no');
+        signatureComponent.appId = ACP_MOCKS.APPLICATION_ID.ebbId;
 
         spyOn(component, 'callCreateInternalApp');
         spyOn(component, 'setSignedValue');
@@ -303,7 +304,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(component.back.emit).toHaveBeenCalledWith(true);
     });
 
-    it('Should click on back when active step is 2 to make sure that the active step will be equals -1 and the rendered compoenent will be the personal info', () => {
+    it('Should click on back when active step is 2 to make sure that the active step will be equals 1 and the rendered compoenent will be the personal info', () => {
         fixture.detectChanges();
         spyOn(component, 'goBack').and.callThrough();
         fixture.detectChanges();
@@ -323,7 +324,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(backButton).toBeTruthy();
     });
 
-    it('Should click on back when active step is 3 to make sure that the active step will be equals -1 and the rendered compoenent will be the address', () => {
+    it('Should click on back when active step is 3 to make sure that the active step will be equals 2 and the rendered compoenent will be the address', () => {
         fixture.detectChanges();
         spyOn(component, 'goBack').and.callThrough();
         fixture.detectChanges();
