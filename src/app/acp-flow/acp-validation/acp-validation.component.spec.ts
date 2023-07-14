@@ -33,6 +33,8 @@ describe('Acp Validation Component - Unit Testing', () => {
     let addressFixture: ComponentFixture<AddressInfoComponent>;
     let childInfoComponent: ChildInfoComponent;
     let childFixture: ComponentFixture<ChildInfoComponent>;
+    let acpDocumentsComponent: AcpDocumentsComponent;
+    let documentsFixture: ComponentFixture<AcpDocumentsComponent>;
     let signatureComponent: SignatureInfoComponent;
     let signatureFixture: ComponentFixture<SignatureInfoComponent>;
 
@@ -116,6 +118,9 @@ describe('Acp Validation Component - Unit Testing', () => {
 
         childFixture = TestBed.createComponent(ChildInfoComponent);
         childInfoComponent = childFixture.componentInstance;
+
+        documentsFixture = TestBed.createComponent(AcpDocumentsComponent);
+        acpDocumentsComponent = documentsFixture.componentInstance;
 
         signatureFixture = TestBed.createComponent(SignatureInfoComponent);
         signatureComponent = signatureFixture.componentInstance;
@@ -301,8 +306,16 @@ describe('Acp Validation Component - Unit Testing', () => {
         fixture.detectChanges();
 
         nextVerifyButton.click();
+        fixture.detectChanges();
+
+        acpDocumentsComponent.docDetails.push({ id: 'generic', closeTab: false, consent: false, category: [], proofs: ACP_MOCKS.ACP_DOCUMENTS_MOCK.proofs, slides: ACP_MOCKS.ACP_DOCUMENTS_MOCK.slides, text: ACP_MOCKS.ACP_DOCUMENTS_MOCK.text });
+        acpDocumentsComponent.nextClicked = true;
+        documentsFixture.detectChanges();
+
+        const requiredDocumentsMsg = documentsFixture.debugElement.query(By.css('#required-checkbox-msg'));
 
         expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(4, true);
+        expect(requiredDocumentsMsg.nativeElement).toBeDefined();
     });
 
     it('Should check if the activeStep is 5, so the app-signature-info should be rendered in the DOM', waitForAsync(() => {
