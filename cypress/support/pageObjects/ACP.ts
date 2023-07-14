@@ -453,7 +453,7 @@ class Acp {
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
           cy.get('.head-note').should('have.text','Your Phone is compatible!');
           cy.get('[data-cy="nextBtn"]').click();
-          PageObjects.Acp.clickOnBackBtn();
+          this.clickOnBackBtn();
           cy.get('.head-note').should('have.text','Your Phone is compatible!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnStorePickup();
@@ -585,7 +585,7 @@ class Acp {
           cy.get('[data-cy="stepTitle"]').should('have.text','Qualified Programs');
           this.clickOnNextBtn();
           this.requiredMessagesAcpThirdPage();
-          cy.get('li').eq(26  ).click({ force: true }); //data-cy
+          cy.get('li').eq(26).click({ force: true });
           this.clickOnIQualifyIndividually();
           this.clickOnNextBtn();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
@@ -623,27 +623,28 @@ class Acp {
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
           PageObjects.Coverage.enterAddressRefBothCoverages();
           cy.get('[data-cy="checkBtn"]').click();
-          cy.get('.head-note').should('have.text','Your Phone is compatible!');
-          cy.get('.sub-note').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
           cy.get('[data-cy="nextBtn"]').click();
+          cy.get('[data-cy="addressSectionTitle"]').should('have.text','How do you want to get your package?')
           PageObjects.ShippingPage.clickOnStorePickup();
           cy.get('[data-cy="barCodeVal"]').click();
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-          cy.get('.top-note').should('have.text','Your order will be available at any of the following stores:');
+          cy.get('[data-cy="orderWillBeAvailable"]').should('have.text','Your order will be available at any of the following stores:');
           cy.get('[data-cy="storePickupSuccessful"]').should('have.text',' You can always find your SIM Card In-Store Pickup barcode in your Purchased Plans page, to provide it for the store clerk for your order pickup. ');
           cy.get('[data-cy="purchasedPlansBtn"]').click();
           PageObjects.TitleExpectations.goToPurchasedPlansPage();
           cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
           cy.get('[data-cy="pickupBarCode"]').should('have.text','In-Store Pickup Barcode');
           cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
-          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          cy.get('[data-cy="acpSummary"]').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
-          cy.get('.actions > .primary').click();
+          cy.get('[data-cy="activateYourPlanBtn"]').click();
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
-          cy.get('#new').click();
-          cy.get('.button').click()
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click()
           PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
