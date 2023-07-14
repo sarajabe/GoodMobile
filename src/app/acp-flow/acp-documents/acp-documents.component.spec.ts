@@ -58,7 +58,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for common codes - generic group
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E3 generic group (common codes)', () => {
+  it('Should check that the selected codes With its descriptions have correct values, and make sure that the checkDocGroups function is called for E3 generic group ( common codes )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
       mockEbbManager.eligibilityCodeDescs = of([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
@@ -78,7 +78,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E3 - generic group with length = 1 since its one eligibilty code', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on the internal data that is related to E3 ( Supplemental Security )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
       mockEbbManager.eligibilityCodeDescs = of([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
@@ -101,7 +101,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to Generic-group', () => {
+  it('Should check that the document details array are published related to Generic-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
       mockEbbManager.eligibilityCodeDescs = of([ACP_MOCKS.E3_GENERIC_ELIGIBILiTY_CODES_DESCS]);
@@ -122,7 +122,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E1 and E2 - generic group
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E2 and E1 generic group', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E2 and E1 generic group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
@@ -142,7 +142,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E1-E2 - generic group with length = 2 since its two eligibilty codes', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to E1 - E2 ( New York Medicaid - Supplemental Nutrition Assistance Program (SNAP) )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
@@ -166,7 +166,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to Generic-group', () => {
+  it('Should check that docDetails array are published related to Generic-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS);
@@ -187,7 +187,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E2 only - snap group
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E2 SNAP group', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E2 SNAP group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
@@ -207,7 +207,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E2 - snap group with length = 1 since its one eligibilty code', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to E2 ( Supplemental Nutrition Assistance Program (SNAP) )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
@@ -231,7 +231,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to SNAP-group', () => {
+  it('Should check that docDetails array are published related to SNAP-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E2_SNAP_ELIGIBILiTY_CODES_DESCS);
@@ -252,7 +252,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E1 only - Medicaid group
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E1 Medicaid group', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E1 Medicaid group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
@@ -272,7 +272,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E1 - medecaid group with length = 1 since its one eligibilty code', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to E1 ( New York Medicaid )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
@@ -296,7 +296,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to Medicaid-group', () => {
+  it('Should check that the document details array are published related to Medicaid-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E1_MEDICAID_ELIGIBILiTY_CODES_DESCS);
@@ -317,7 +317,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E13 only - Through income 
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E13 Through income group', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E13 Through income group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -337,7 +337,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E13 - Through income group with length = 1 since its one eligibilty code', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to E13 ( Eligibility Based on Income )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -360,7 +360,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to Through income-group', () => {
+  it('Should check that the document details array are published related to Through income-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -381,7 +381,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for E50 or E51 only - Pell grant 
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E50 or E51 Pell grant group', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E50 or E51 Pell grant group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
@@ -401,7 +401,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E50-E51 - Pell granr group with length = 2 since its two eligibilty codes', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to E50 - E51 ( School Lunch/Breakfast Program - Federal Pell Grant )', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
@@ -424,7 +424,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to Through Pell grant-group', () => {
+  it('Should check that the document details array are published related to Through Pell grant-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E50_E51_Pell_ELIGIBILiTY_CODES_DESCS);
@@ -445,7 +445,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases Through income and generic group
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for E13 Through income group and E3 generic group', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for E13 Through income group and E3 generic group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -465,7 +465,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to E13 - Through income and E3-Generic group group with length = 2 since its two eligibilty codes', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to E13 - Through income and E3-Generic group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -488,7 +488,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to Through income-group and Generic-group', () => {
+  it('Should check that the document details array are published related to Through income-group and Generic-group', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS);
@@ -509,7 +509,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
   });
 
   // Test cases for all groups all toghether 
-  it('Should check that selectedCodes and selectedCodesWithDescs have correct values and make sure that the checkDocGroups is called for all groups', () => {
+  it('Should check that the selected codes With its descriptions have correct values and make sure that the checkDocGroups is called for all groups', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
@@ -529,7 +529,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that commonDescs array and docsCategories array are set correctly depends on internal data wich is related to all groups', () => {
+  it('Should check that the common descriptions and documents categories arrays are set correctly depends on internal data that is related to all groups', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
@@ -553,7 +553,7 @@ describe('No Flow - ACP Documents Component - Unit Testing', () => {
     });
   });
 
-  it('Should check that docDetails array are published with generic ,proof, slides related to all groups', () => {
+  it('Should check that the document details array are published related to all groups', () => {
     fixture.whenStable().then(() => {
       mockEbbManager.eligibilityCodeDescs.and.returnValue(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
       mockEbbManager.eligibilityCodeDescs = of(ACP_MOCKS.ALL_GROUPS_ELIGIBILiTY_CODES_DESCS);
