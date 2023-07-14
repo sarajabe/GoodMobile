@@ -365,7 +365,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         expect(component.router.navigate).toHaveBeenCalled();
     }));
 
-    it('Should check if there is acp errors so app-acp-error should be rendered in the dom', waitForAsync(() => {
+    it('Should check if there is acp errors so acp error component should be rendered in the dom', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.acpError = true;
             fixture.detectChanges();
@@ -375,7 +375,7 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
         });
     }));
 
-    it('Should check if the user is complete with the acp flow  so app-acp-success should be rendered in the dom', waitForAsync(() => {
+    it('Should check if the user is complete with the acp flow  so successful compoenent should be rendered in the dom', waitForAsync(() => {
         fixture.whenStable().then(() => {
             component.acpSuccess = true;
             fixture.detectChanges();
