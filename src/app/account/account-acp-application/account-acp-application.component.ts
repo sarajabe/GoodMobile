@@ -702,31 +702,33 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 !plan.portInRequestNumber &&
                 !plan.canceled
             );
-            if (!!this.acpPlan && !!this.acpPlan.acpDevice && !!this.acpPlan.acpDevice.orderId) {
-              this.appState.loading = true;
-              this.getACPDeviceOrder(this.acpPlan.acpDevice.orderId);
-              this.canPurchaseADevice = false;
-            } else {
-              this.appState.loading = true;
-              if (!this.dataCollected) {
-                this.ebbService.getDeviceEligibility(this.userProfile.ebbId).then((data) => {
-                    this.dataCollected = true;
-                    this.canPurchaseADevice = data?.canPurchaseADevice;
-                    if (!!data?.canPurchaseADevice) {
-                      this.acpDeviceCase = 'ENROLLED_ACP_CASE';
-                      this.acpDeviceOrder = null;
-                      this.appState.loading = false;
-                    } else {
-                      this.ebbService.getACPDeviceDetails(this.userProfile.ebbId, this.userProfile.customerId).then((devices) => {
-                        this.getACPDeviceOrder(devices[0].orderId);
+            if (!!this.acpPlan && this.acpPlan.mdn) {
+              if (!!this.acpPlan.acpDevice && !!this.acpPlan.acpDevice.orderId) {
+                this.appState.loading = true;
+                this.getACPDeviceOrder(this.acpPlan.acpDevice.orderId);
+                this.canPurchaseADevice = false;
+              } else {
+                this.appState.loading = true;
+                if (!this.dataCollected) {
+                  this.ebbService.getDeviceEligibility(this.userProfile.ebbId).then((data) => {
+                      this.dataCollected = true;
+                      this.canPurchaseADevice = data?.canPurchaseADevice;
+                      if (!!data?.canPurchaseADevice) {
+                        this.acpDeviceCase = 'ENROLLED_ACP_CASE';
+                        this.acpDeviceOrder = null;
                         this.appState.loading = false;
-                        this.acpPlan.acpDevice = devices[0];
-                        this.userPlansService.updateUserPlan(this.userProfile.id, this.acpPlan);
-                      }, (error) => {
-                        this.toastHelper.showAlert(error.error.errors[0].message);
-                      })
-                    }
-                })
+                      } else {
+                        this.ebbService.getACPDeviceDetails(this.userProfile.ebbId, this.userProfile.customerId).then((devices) => {
+                          this.getACPDeviceOrder(devices[0].orderId);
+                          this.appState.loading = false;
+                          this.acpPlan.acpDevice = devices[0];
+                          this.userPlansService.updateUserPlan(this.userProfile.id, this.acpPlan);
+                        }, (error) => {
+                          this.toastHelper.showAlert(error.error.errors[0].message);
+                        })
+                      }
+                  })
+                }
               }
             }
             if (!!this.isActivatedAcpPlan) {
