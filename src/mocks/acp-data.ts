@@ -97,9 +97,70 @@ export const ELIGIBILiTY_CODES_DESCS = {
     code: 'E1', description: 'Medecaid'
 };
 
-export const GENERIC_ELIGIBILiTY_CODES_DESCS = {
+export const E3_GENERIC_ELIGIBILiTY_CODES_DESCS = {
     code: 'E3', description: 'Supplemental Security'
 };
+
+export const E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS = [
+    {
+        code: 'E1', description: 'Medecaid'
+    },
+    {
+        code: 'E2', description: 'Food Supplement Program'
+    }
+];
+
+export const E2_SNAP_ELIGIBILiTY_CODES_DESCS = [
+    {
+        code: 'E2', description: 'Food Supplement Program'
+    }
+];
+
+export const E1_MEDICAID_ELIGIBILiTY_CODES_DESCS = [
+    {
+        code: 'E1', description: 'Medecaid'
+    }
+];
+
+export const E13_INCOME_ELIGIBILiTY_CODES_DESCS = [
+    {
+        code: 'E13', description: 'Eligibility Based on Income'
+    }
+];
+
+export const E13_E3_INCOME_ELIGIBILiTY_CODES_DESCS = [
+    { code: 'E3', description: 'Supplemental Security' },
+    {
+        code: 'E13', description: 'Eligibility Based on Income'
+    }
+];
+
+export const E50_E51_Pell_ELIGIBILiTY_CODES_DESCS = [
+    {
+        code: 'E50', description: 'School Lunch/Breakfast Program'
+    },
+    {
+        code: 'E51', description: 'Federal Pell Grant'
+    }
+];
+
+export const ALL_GROUPS_ELIGIBILiTY_CODES_DESCS = [
+    {
+        code: 'E1', description: 'Medecaid'
+    },
+    {
+        code: 'E2', description: 'Food Supplement Program'
+    },
+    { code: 'E4', description: 'Supplemental Security' },
+    {
+        code: 'E13', description: 'Eligibility Based on Income'
+    },
+    {
+        code: 'E50', description: 'School Lunch/Breakfast Program'
+    }
+];
+
+export const E1_E2_DESCS = ['Medecaid', 'Food Supplement Program'];
 
 export const PUBLIC_HOUSING_CODES_OBJECT = {
     housingPrograms: [
@@ -118,7 +179,49 @@ export const INTERNAL_DATA: IAcpDetails = {
     eligibilityCode: 'E3',
     user: USER_INFO,
     bqpUser: USER_INFO
-}
+};
+
+export const E1_E2_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E1,E2',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
+
+export const E2_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E2',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
+
+export const E1_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E1',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
+
+export const E13_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E13',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
+
+export const E13_E3_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E3,E13',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
+
+export const E50_E51_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E50,E51',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
+
+export const ALL_GROUPS_INTERNAL_DATA: IAcpDetails = {
+    eligibilityCode: 'E1,E2,E4,E13,E50',
+    user: USER_INFO,
+    bqpUser: USER_INFO
+};
 
 export const INVALID_ADDRESS_INFO = {
     address1: '60284029840297492479274072047892047207429472984792847928749879274927492749274',
@@ -153,4 +256,118 @@ export const ACP_DOCUMENTS_MOCK = {
     ],
     slides: [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }],
     text: ['Screenshot of Online Portal', 'Survivors Benefit Summary Letter']
-}
+};
+
+export const ACP_DOCUMENTS_MOCK_GENERIC_GROUP_E3 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b>.`,
+        `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+        `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
+    ],
+    slides: [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }],
+    text: ['Screenshot of Online Portal', 'Survivors Benefit Summary Letter'],
+    category: ['Supplemental Security']
+};
+
+export const ACP_DOCUMENTS_MOCK_GENERIC_GROUP_E2_E1 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b>.`,
+        `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+        `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
+    ],
+    slides: [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }],
+    text: ['Screenshot of Online Portal', 'Survivors Benefit Summary Letter'],
+    category: E1_E2_DESCS
+};
+
+export const ACP_DOCUMENTS_MOCK_SNAP_GROUP_E2 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b>.`,
+        `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+        `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
+    ],
+    slides: [{ asset: 'snap-geniric.png', title: 'Approval or Benefit Letter:' }],
+    text: [],
+    category: [E2_SNAP_ELIGIBILiTY_CODES_DESCS[0].description]
+};
+
+export const ACP_DOCUMENTS_MOCK_MEDICAID_GROUP_E1 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b>.`,
+        `The name of the <b>Government</b> or <b>Tribal Agency</b> that issued the document.`,
+        `An issue date within the last <b>12 months</b> or a <b>future expiration date</b>.`
+    ],
+    slides: [{ asset: 'medcaid.png', title: 'Approval or Benefit Letter for Medicaid:' }],
+    text: [],
+    category: [E1_E2_GENERIC_ELIGIBILiTY_CODES_DESCS[0].description]
+};
+
+export const ACP_DOCUMENTS_MOCK_INCOME_GROUP_E13 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `<b>Current income</b> information (Monthly or annual income amount).`,
+        `<b>3 consecutive months</b> of paystubs (if provided).`,
+        `An issue date within the last <b>12 months</b> or <b>prior year’s tax document</b>.`
+    ],
+    slides: [{
+        asset: 'income.png', title: `Prior year’s state, federal, or Tribal tax return or a Social Security Benefit Statement.`
+    }],
+    text: [],
+    category: [E13_INCOME_ELIGIBILiTY_CODES_DESCS[0].description]
+};
+
+export const ACP_DOCUMENTS_MOCK_INCOME_GROUP_E50_E51 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b> (not required for Community Eligibility Provision).`,
+        `The name of the <b>School</b> or <b>School district</b>.`,
+        `A <b>current</b> award year (Pell Grant).`,
+        `<b>Dated</b> for the <b>current school year</b> or the </b>school year immediately preceding the application</b> (for school lunch or breakfast qualifying programs).`,
+        `<b>Address</b> & <b>Contact information</b> for the <b> school, school year</b>  for which the student is enrolled (require for Community Eligibility Provision).`
+    ],
+    slides: [{
+        asset: 'pell-grant1.png', title: `For Federal Pell Grants, written confirmation from a student’s school (college or university, 
+            community college, or career school) or the Department of 
+            Education that the student has received a Pell Grant for the current award year.` },
+    {
+        asset: 'pell-grant2.png', title: `A letter from the school or school district that confirms that 
+            a member of household receives free & reduced-price school
+            lunch or school year immediately preceding the application`},
+    {
+        asset: 'pell-grant3.png', title: `For enrollment in a CEP school – School documentation on demonstrating 
+            the student is enrolled in a CEP School for the relevant school year 
+            (student must still be enrolled in the CEP school at the time of the application)`
+    }],
+    text: [],
+    category: [E50_E51_Pell_ELIGIBILiTY_CODES_DESCS[0].description, E50_E51_Pell_ELIGIBILiTY_CODES_DESCS[1].description]
+};
+
+export const ACP_DOCUMENTS_MOCK_INCOME_GROUP_E50 = {
+    proofs: [
+        `Your <b>Name</b>, or your <b>Dependent’s Name</b>.`,
+        `The name of the <b>Qualifying Program</b> (not required for Community Eligibility Provision).`,
+        `The name of the <b>School</b> or <b>School district</b>.`,
+        `A <b>current</b> award year (Pell Grant).`,
+        `<b>Dated</b> for the <b>current school year</b> or the </b>school year immediately preceding the application</b> (for school lunch or breakfast qualifying programs).`,
+        `<b>Address</b> & <b>Contact information</b> for the <b> school, school year</b>  for which the student is enrolled (require for Community Eligibility Provision).`
+    ],
+    slides: [{
+        asset: 'pell-grant1.png', title: `For Federal Pell Grants, written confirmation from a student’s school (college or university, 
+            community college, or career school) or the Department of 
+            Education that the student has received a Pell Grant for the current award year.` },
+    {
+        asset: 'pell-grant2.png', title: `A letter from the school or school district that confirms that 
+            a member of household receives free & reduced-price school
+            lunch or school year immediately preceding the application`},
+    {
+        asset: 'pell-grant3.png', title: `For enrollment in a CEP school – School documentation on demonstrating 
+            the student is enrolled in a CEP School for the relevant school year 
+            (student must still be enrolled in the CEP school at the time of the application)`
+    }],
+    text: [],
+    category: [E50_E51_Pell_ELIGIBILiTY_CODES_DESCS[0].description]
+};
