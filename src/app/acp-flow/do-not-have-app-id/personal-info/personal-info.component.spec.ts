@@ -24,7 +24,7 @@ let govOption;
 
 let savedUserInfo = ACP_MOCKS.SAVED_INFO;
 
-fdescribe('Yes Flow - EBB Personal Information Component - Unit Testing', async () => {
+describe('Yes Flow - EBB Personal Information Component - Unit Testing', async () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
