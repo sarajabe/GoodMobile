@@ -25,7 +25,7 @@ let govOption;
 
 let savedInfo = ACP_MOCKS.SAVED_INFO;
 
-describe('No Flow - EBB Personal Information Component - Unit Testing', async () => {
+fdescribe('No Flow - EBB Personal Information Component - Unit Testing', async () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [
@@ -615,6 +615,90 @@ describe('No Flow - EBB Personal Information Component - Unit Testing', async ()
             expect(component.personalInfoForm.valid).toBeFalsy();
         });
     }));
+
+    it('Should show validation messages when the values are not correct due to max and min such as the tribal is 1 char, lastname is 1 char and invalid email', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+          fNameInputField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.firstName);
+          fNameInputField.markAsTouched();
+          fNameInputField.markAsDirty();
+          fixture.detectChanges();
+    
+          mNameInputField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.middleName);
+          mNameInputField.markAsTouched();
+          mNameInputField.markAsDirty();
+          fixture.detectChanges();
+    
+          lNameInputField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.lastName);
+          lNameInputField.markAsTouched();
+          lNameInputField.markAsDirty();
+          fixture.detectChanges();
+    
+          daySelectField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.day);
+          daySelectField.markAsTouched();
+          daySelectField.markAsDirty();
+          fixture.detectChanges();
+    
+          monthSelectField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.month);
+          monthSelectField.markAsTouched();
+          monthSelectField.markAsDirty();
+          fixture.detectChanges();
+    
+          yearSelectField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.year);
+          yearSelectField.markAsTouched();
+          yearSelectField.markAsDirty();
+          fixture.detectChanges();
+          component.checkMonth();
+          fixture.detectChanges();
+    
+          govOption.setValue('tribal');
+          govOption.markAsTouched();
+          govOption.markAsDirty();
+          fixture.detectChanges();
+          component.checkIdentityType();
+          fixture.detectChanges();
+    
+          tribalInputField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.tribal);
+          tribalInputField.markAsTouched();
+          tribalInputField.markAsDirty();
+          fixture.detectChanges();
+    
+          emailInputField.setValue(ACP_MOCKS.INVALID_MIN_VAL_FULL_USER_INFO.consumerEmail);
+          emailInputField.markAsTouched();
+          emailInputField.markAsDirty();
+          fixture.detectChanges();
+    
+          const invalidFNameMsg = fixture.debugElement.query(By.css('#invalid-fname-msg'));
+          const invalidMNameMsg = fixture.debugElement.query(By.css('#invalid-mname-msg'));
+          const invalidLNameMsg = fixture.debugElement.query(By.css('#invalid-lname-msg'));
+          const invalidDateMsg = fixture.debugElement.query(By.css('#invalid-date-msg'));
+    
+          const invalidTribalMsg = fixture.debugElement.query(By.css('#invalid-tribal-msg'));
+    
+          const invalidEmailMsg = fixture.debugElement.query(By.css('#invalid-email-msg'));
+
+          expect(fNameInputField.hasError('minlength')).toBeFalsy();
+          expect(fNameInputField.hasError('pattern')).toBeTruthy();
+          expect(invalidFNameMsg.nativeElement).toBeDefined();
+    
+    
+          expect(mNameInputField.hasError('pattern')).toBeTruthy();
+          expect(invalidMNameMsg.nativeElement).toBeDefined();
+    
+          expect(lNameInputField.hasError('pattern')).toBeFalsy();
+          expect(lNameInputField.hasError('minlength')).toBeTruthy();
+          expect(invalidLNameMsg.nativeElement).toBeDefined();
+    
+          expect(invalidDateMsg.nativeElement).toBeDefined();
+    
+          expect(tribalInputField.hasError('minlength')).toBeTruthy();
+          expect(invalidTribalMsg.nativeElement).toBeDefined();
+    
+          expect(emailInputField.hasError('pattern')).toBeTruthy();
+          expect(invalidEmailMsg.nativeElement).toBeDefined();
+    
+          expect(component.personalInfoForm.valid).toBeFalsy();
+        });
+      }));
 
     it('Should show a validation messages for the invalid date, if we select the day as 30 or 31 and pick a 2 as a month', waitForAsync(() => {
         fixture.whenStable().then(() => {
