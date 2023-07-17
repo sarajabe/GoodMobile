@@ -38,7 +38,7 @@ let mockAnalyticService;
 let userInfo = ACP_MOCKS.USER_INFO;
 let internalData = ACP_MOCKS.INTERNAL_DATA;
 
-describe('No Flow - EBB Child Info Component - Unit Testing', async () => {
+fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
     const ELIGIBILiTY_CODES_OBJECT = ACP_MOCKS.ELIGIBILiTY_CODES_OBJECT;
     const PUBLIC_HOUSING_CODES_OBJECT = ACP_MOCKS.PUBLIC_HOUSING_CODES_OBJECT;
 

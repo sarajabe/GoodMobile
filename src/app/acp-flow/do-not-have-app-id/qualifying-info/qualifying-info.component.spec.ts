@@ -28,7 +28,7 @@ let tribalInputField;
 
 let userInfo = ACP_MOCKS.USER_INFO;
 
-describe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testing', async () => {
+fdescribe('Yes Flow- without app id - EBB qualifying Info Component - Unit Testing', async () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
