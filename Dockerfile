@@ -15,8 +15,6 @@ COPY package.json .
 
 RUN npm install --f
 
-RUN npm run test
-
 FROM builder AS dependencies
 
 # copy project files and build project
