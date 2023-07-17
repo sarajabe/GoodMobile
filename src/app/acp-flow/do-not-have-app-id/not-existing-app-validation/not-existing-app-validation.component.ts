@@ -36,7 +36,7 @@ export class NotExistingAppValidationComponent implements OnInit {
   public acpStatus: string;
   private grcaptcha;
   acpLink: any;
-  constructor(private router: Router, private ebbManager: EbbManager, private appState: AppState,
+  constructor(public router: Router, private ebbManager: EbbManager, private appState: AppState,
     private ebbService: EbbService, private modalHelper: ModalHelperService,
     private userProfileService: FirebaseUserProfileService,
     private cdRef: ChangeDetectorRef) {
@@ -117,7 +117,7 @@ export class NotExistingAppValidationComponent implements OnInit {
       );
   }
   }
-  private callCreateInternalApp(callVerify?): void {
+  public callCreateInternalApp(callVerify?): void {
     if (this.acpData) {
       window.scroll(0,0);
       this.appState.loading = true;

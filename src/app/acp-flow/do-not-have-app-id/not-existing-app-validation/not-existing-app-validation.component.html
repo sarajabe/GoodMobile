@@ -1,7 +1,7 @@
 <section class="page-section no-app" *ngIf="!acpSuccess && !acpError">
   <div *ngIf="activeStep !== 4">
     <h2 class="header-color">Don’t Worry!</h2>
-    <h4 class="secondary-font">Please provide the following information to verify your application!</h4>
+    <h4 class="secondary-font" id="stepTitle">Please provide the following information to verify your application!</h4>
     <div class="info-banner default-background">
       <div class="flex">
         <img src="/assets/icon/info-icon.svg" alt="Info Icon">
@@ -18,8 +18,8 @@
   </div>
   <div *ngIf="activeStep === 4">
     <h2 class="header-color">Almost there!</h2>
-    <h4 class="sub-header step-4">Customer Notice and Agreement</h4>
-    <p class="smaller">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with
+    <h4 class="sub-header step-4" id="stepTitle">Customer Notice and Agreement</h4>
+    <p class="smaller" id="stepDesc">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with
       Good Mobile, you should agree and initial the following:</p>
   </div>
   <section class="stepper">
@@ -45,10 +45,10 @@
 <app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
 <section class="navigation-section" *ngIf="!acpSuccess && !acpError">
   <div class="page-section navs">
-    <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
+    <p class="no-border" data-cy="cancelBtn" (click)="cancel()" id="cancelBtn">Cancel</p>
     <div class="right">
-      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 4 ? 'Next' :
+      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()" id="backBtn">Back</button>
+      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled" id="next-verify-button">{{activeStep !== 4 ? 'Next' :
         'Submit'}}</button>
     </div>
   </div>
