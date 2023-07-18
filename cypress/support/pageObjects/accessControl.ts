@@ -10,6 +10,7 @@ class AccessControl {
                 cy.get('[data-cy="firstName"]').type(firstName);
                 cy.get('[data-cy="lastName"]').type(lastName);
                 cy.get('[data-cy="email"]').type(email);
+                Cypress.env('newEmail' , email);
                 cy.get('[data-cy="password"]').type(password);
                 cy.get('[data-cy="confirmPassword"]').type(confirmPassword);
                 return this;
@@ -81,6 +82,36 @@ class AccessControl {
                 PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
                 cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
                 PageObjects.AccessControl.clickOnSubmitBtn();
+        };
+        newUserAcp(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.clickOnSignUpLink();
+                PageObjects.TitleExpectations.goToSignUpPage();
+                PageObjects.AccessControl.signUp(CONSTANT.ACCESS.NEW_SIGNUP_DATA2.FIRST_NAME,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.LAST_NAME,
+                        PageObjects.Dynamics.makeNewAcpEmail(),
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.PASSWORD,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.CONFIRMED_PASS);
+                PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+                PageObjects.AccessControl.clickOnSubmitBtn();
+                PageObjects.TitleExpectations.goToWelcomeOnBoardPage();
+        };
+        logInNewUserAcp( password) {
+                cy.get('[data-cy="loginEmail"]').clear();
+                const newEmail = Cypress.env('newEmail');
+                cy.get('[data-cy="loginEmail"]').type(newEmail);
+                cy.get('[data-cy="loginPassword"]').clear();
+                cy.get('[data-cy="loginPassword"]').type(password);
+                return this;
+        };
+        successfulLoginNewUserAcp(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logInNewUserAcp( CONSTANT.ACCESS.NEW_ACCOUNT.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToACPApplicationPage();
         };
 }
 export default new AccessControl();
