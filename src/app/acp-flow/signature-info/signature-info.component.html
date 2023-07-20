@@ -34,7 +34,7 @@
         Broadband Benefit to Good Mobile.
       </p>
     </div>
-    <label class="validation-message" *ngIf="
+    <label class="validation-message" data-cy="requiredSignature" *ngIf="
         (signatureForm.controls.firstCheck.touched &&
           signatureForm.controls.firstCheck.hasError('required')) ||
         (signatureForm.controls.secondCheck.touched &&
@@ -51,7 +51,7 @@
         signatureForm.controls.secondCheck.hasError('pattern') ||
         signatureForm.controls.thirdCheck.hasError('pattern') ||
         signatureForm.controls.forthCheck.hasError('pattern')
-      " id="consent-invalid-msg">
+      " id="consent-invalid-msg" data-cy="mismatchingMsg">
       Mismatching initials with your first charecter of your first name and first
       charecter of your last name
     </label>
@@ -66,7 +66,7 @@
         <span>Enter first & last name</span>
       </label>
       <p class="hint caption">{{fullName | uppercase}}</p>
-      <label class="validation-message" *ngIf="
+      <label class="validation-message" data-cy="requiredName" *ngIf="
           signatureForm.controls.name.hasError('required') &&
           signatureForm.controls.name.touched
         " id="fullname-required-msg">
@@ -75,13 +75,13 @@
       <label class="validation-message" *ngIf="
           !!signatureForm.controls.name.value &&
           signatureForm.hasError('mismatchedFullName')
-        " id="fullname-invalid-msg">
+        " id="fullname-invalid-msg" data-cy="fullnameInvalidMsg">
         Your full name does not match the previous registered one
       </label>
     </div>
     <div class="captcha">
       <app-re-captcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-re-captcha>
-      <label class="validation-message" *ngIf="showCaptchaError">Please verify that you are not a robot</label>
+      <label class="validation-message" data-cy="captchaRequired" *ngIf="showCaptchaError">Please verify that you are not a robot</label>
     </div>
   </form>
 </div>

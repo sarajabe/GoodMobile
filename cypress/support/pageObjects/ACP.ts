@@ -547,5 +547,332 @@ class Acp {
           cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
           cy.get('[data-cy="identityVerificationValue"]').should('have.text','6462');
      };
+     selectLastYearOption(){
+          cy.get('select').find('option').last().then($lastOption => {
+               cy.get('select').eq(2).select($lastOption.val());
+           });
+     };
+     selectLastYearOptionChildInfo(){
+          cy.get('select').find('option').last().then($lastOption => {
+               cy.get('select').eq(3).select($lastOption.val());
+          });
+     };
+     selectfirstYearOption(){
+          cy.get('select').eq(2).find('option').first().then($firstOption => {
+               cy.get('select').eq(2).select($firstOption.val());
+           });
+     };
+     invalidMessagesAcpFirstPageWithTribalID(){
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidDateMsg"]').should('have.text',' Date is invalid ');
+          cy.get('[data-cy="invalidTribalMsg"]').should('have.text',' Tribal ID is invalid ');
+          cy.get('[data-cy="invalid-phone-msg"]').should('have.text',' Phone Number must have 10 digits ');
+          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+     };
+     invalidMessagesAcpFirstPageSSN(){
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidDateMsg"]').should('have.text',' Date is invalid ');
+          cy.get('[data-cy="invalid-ssn-msg"]').should('have.text',' Last 4 SSN should be 4 digits');
+          cy.get('[data-cy="invalid-phone-msg"]').should('have.text',' Phone Number must have 10 digits ');
+          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+     };
+     requiredMessagesAcpChildInfo(){
+          cy.get('[data-cy="required-fname-msg"]').should('have.text',' First name is required ');
+          cy.get('[data-cy="required-lname-msg"]').should('have.text',' Last name is required ');
+          cy.get('[data-cy="required-month-msg"]').should('have.text',' Date of Birth is required ');
+          cy.get('[data-cy="required-idType-msg"]').should('have.text',' Government ID Type is required ');
+     };
+     invalidMessagesAcpChildInfoTribalID(){
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidDateMsg"]').should('have.text',' Date is invalid ');
+          cy.get('[data-cy="invalidTribalMsg"]').should('have.text',' Tribal ID is invalid ');
+     };
+     invalidMessagesAcpChildInfoSSN(){
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidDateMsg"]').should('have.text',' Date is invalid ');
+          cy.get('[data-cy="invalid-ssn-msg"]').should('have.text', ' Last 4 SSN should be 4 digits')
+     };
+     fillInInvalidSchoolName() {
+          cy.get('[data-cy="schoolName"]').click({force:true})
+          cy.get('[data-cy="schoolName"]').clear();
+          cy.get('[data-cy="schoolName"]').type('a');
+          return this;
+     };
+     fillInSchoolNameWithSpecialCharacter(){
+          cy.get('[data-cy="schoolName"]').click({force:true})
+          cy.get('[data-cy="schoolName"]').clear();
+          cy.get('[data-cy="schoolName"]').type('@');
+          return this;
+     }
+     clickOnTribalIDforChild() {
+          cy.get('[data-cy="tribalID"]').click();
+          return this;
+     };
+     clickOnSSN(){
+          cy.get('[data-cy="ssn"]').click();
+          return this;
+     };
+     fillInChildSSN(ssn_no) {
+          cy.get('[data-cy="ssnInput"]').click({force:true});
+          cy.get('[data-cy="ssnInput"]').clear();
+          cy.get('[data-cy="ssnInput"]').type(ssn_no);
+          return this;
+     };
+     firstCheckWithNum() {
+          cy.get('[data-cy="firstCheck"]').click()
+          cy.get('[data-cy="firstCheck"]').clear();
+          cy.get('[data-cy="firstCheck"]').type('11')
+          return this;
+     };
+     secondCheckWithNum() {
+          cy.get('[data-cy="secondCheck"]').click();
+          cy.get('[data-cy="secondCheck"]').clear();
+          cy.get('[data-cy="secondCheck"]').type('11');
+          return this;
+     };
+     thirdCheckWithNum() {
+          cy.get('[data-cy="thirdCheck"]').click();
+          cy.get('[data-cy="thirdCheck"]').clear();
+          cy.get('[data-cy="thirdCheck"]').type('11');
+          return this;
+     };
+     forthCheckWithNum() {
+          cy.get('[data-cy="forthCheck"]').click();
+          cy.get('[data-cy="forthCheck"]').clear();
+          cy.get('[data-cy="forthCheck"]').type('11');
+          return this;
+     };
+     firstCheckWithSpecialCharacter() {
+          cy.get('[data-cy="firstCheck"]').click()
+          cy.get('[data-cy="firstCheck"]').clear();
+          cy.get('[data-cy="firstCheck"]').type('@M')
+          return this;
+     };
+     secondCheckWithSpecialCharacter() {
+          cy.get('[data-cy="secondCheck"]').click();
+          cy.get('[data-cy="secondCheck"]').clear();
+          cy.get('[data-cy="secondCheck"]').type('@M');
+          return this;
+     };
+     thirdCheckWithSpecialCharacter() {
+          cy.get('[data-cy="thirdCheck"]').click();
+          cy.get('[data-cy="thirdCheck"]').clear();
+          cy.get('[data-cy="thirdCheck"]').type('@M');
+          return this;
+     };
+     forthCheckWithSpecialCharacter() {
+          cy.get('[data-cy="forthCheck"]').click();
+          cy.get('[data-cy="forthCheck"]').clear();
+          cy.get('[data-cy="forthCheck"]').type('@M');
+          return this;
+     };
+     enrollmentNewUserAcpRequiredInvalidValidation(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkNoRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
+               CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
+          cy.get('select').eq(0).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(1).select('30', { force: true }).should('have.value', '30');
+          this.selectLastYearOption();
+          this.clickOnTribalRadio();
+          PageObjects.Acp.fillITribalID(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.TRIBAL_ID);
+          PageObjects.Acp.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
+          PageObjects.Acp.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
+          this.invalidMessagesAcpFirstPageWithTribalID();
+          PageObjects.Acp.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_HAS_SPECIAL_CHARACTERS.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO_HAS_SPECIAL_CHARACTERS.LAST_NAME);
+          cy.get('select').eq(0).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(1).select('30', { force: true }).should('have.value', '30');
+          PageObjects.Acp.selectLastYearOption();
+          PageObjects.Acp.clickOnSSNRadio();
+          PageObjects.Acp.fillInSSN(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.SSN_NO);
+          PageObjects.Acp.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
+          PageObjects.Acp.fillInEmail(CONSTANT.ACP_DATA.PERSONAL_INFO_HAS_SPECIAL_CHARACTERS.Email);
+          PageObjects.Acp.clickOnNextBtn();
+          this.invalidMessagesAcpFirstPageSSN();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO2.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO2.LAST_NAME);
+          this.selectDareOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO2.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO2.PHONE_NUMBER);
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text','Address Information');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS.ZIP);
+          this.fillInMailingAddress(CONSTANT.ACP_DATA.INVALID_ADDRESS.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS.CITY);
+          this.fillInMailingAddress2(CONSTANT.ACP_DATA.INVALID_ADDRESS.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpSecondPage();
+          PageObjects.Acp.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS.CITY);
+          PageObjects.Acp.fillInPhysicalAddressInfo2(
+               CONSTANT.ACP_DATA.INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS.ZIP);
+          PageObjects.Acp.fillInMailingAddress(CONSTANT.ACP_DATA.VERIFIED_ADDRESS.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS.CITY);
+          PageObjects.Acp.fillInMailingAddress2(CONSTANT.ACP_DATA.INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS.ZIP);
+          this.invalidMessagesAcpSecondPage();
+          PageObjects.Acp.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.CITY);
+          PageObjects.Acp.fillInPhysicalAddressInfo2(
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ZIP);
+          PageObjects.Acp.fillInMailingAddress(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.CITY);
+          PageObjects.Acp.fillInMailingAddress2(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ZIP);
+          cy.get('[data-cy="useSameAddress"]').click();
+          cy.get('[data-cy="mailingTitle"]').should('not.exist');
+          cy.get('[data-cy="useSameAddress"]').click();
+          cy.get('[data-cy="mailingAddress1"]').should('be.empty');
+          cy.get('[data-cy="mail-city"]').should('be.empty');
+          cy.get('[data-cy="mail-state"]').should('be.empty');
+          cy.get('[data-cy="mail-zipCode"]').should('be.empty');
+          cy.get('[data-cy="useSameAddress"]').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text','Qualified Programs');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpThirdPage();
+          cy.get('li').eq(36).click({ force: true });
+          cy.get('li').eq(29).click({ force: true });
+          cy.get('li').eq(26).click({ force: true });
+          PageObjects.Acp.clickOnQualifyThroughMyChild();
+          PageObjects.Acp.clickOnNextBtn();
+          cy.get('[data-cy="requiredPublicHousing"]').should('have.text',' Public Housing is required ');
+          cy.get('[data-cy="schoolNameRequiredMsg"]').should('have.text',' School Name is required ');
+          this.requiredMessagesAcpChildInfo();
+          cy.get('select').eq(0).select('Housing Choice Voucher Program', { force: true }).invoke('val').should('eq', '1');
+          PageObjects.Acp.fillInInvalidSchoolName();
+          PageObjects.Acp.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
+            CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
+          cy.get('select').eq(1).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(2).select('30', { force: true }).should('have.value', '30');
+          this.selectLastYearOptionChildInfo();
+          PageObjects.Acp.clickOnTribalIDforChild();
+          PageObjects.Acp.fillITribalID(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.TRIBAL_ID);
+          PageObjects.Acp.clickOnNextBtn();
+          cy.get('[data-cy="invalidSchoolName"]').should('have.text',' School name is invalid ');
+          this.invalidMessagesAcpChildInfoTribalID();
+          PageObjects.Acp.clickOnNextBtn();
+          PageObjects.Acp.fillInSchoolNameWithSpecialCharacter();
+          PageObjects.Acp.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_HAS_SPECIAL_CHARACTERS.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO_HAS_SPECIAL_CHARACTERS.LAST_NAME);
+          cy.get('select').eq(1).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(2).select('30', { force: true }).should('have.value', '30');
+          this.selectLastYearOptionChildInfo();
+          PageObjects.Acp.clickOnSSN();
+          PageObjects.Acp.fillInChildSSN(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.SSN_NO);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpChildInfoSSN();
+          PageObjects.Acp.fillInSchoolName();
+          PageObjects.Acp.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO.LAST_NAME);
+          cy.get('select').eq(1).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(2).select('30', { force: true }).should('have.value', '30');
+          cy.get('select').eq(3).select('2007', { force: true }).should('have.value', '2007');
+          PageObjects.Acp.clickOnSSN();
+          PageObjects.Acp.fillInChildSSN(CONSTANT.ACP_DATA.PERSONAL_INFO.SSN_NO);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text', 'Required document(s) consent: ');
+          this.clickOnNextBtn();
+          cy.get('[data-cy="validationMessageCheckbox"]').eq(0).should('have.text', 'Please tick this box to confirm that you have read and understood what documents you need to provide.');
+          cy.get('[data-cy="validationMessageCheckbox"]').eq(1).should('have.text', 'Please tick this box to confirm that you have read and understood what documents you need to provide.');
+          cy.get('[data-cy="consentFormCheckbox"]').eq(0).click();
+          cy.get('[data-cy="consentFormCheckbox"]').eq(1).click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text','Almost there!');
+          this.clickOnVerifyBtn();
+          this.requiredMessagesAcpForthPage();
+          PageObjects.Acp.clickOnBackBtn();
+          cy.get('[data-cy="consentFormCheckbox"]').eq(0).should('not.be.checked');
+          cy.get('[data-cy="consentFormCheckbox"]').eq(1).should('not.be.checked');
+          PageObjects.Acp.clickOnBackBtn();
+          cy.get('[data-cy="schoolName"]').should('have.value','automated test ');
+          cy.get('#housingAssistance').should('have.value','1').contains('Housing Choice Voucher Program');
+          cy.get('[data-cy="firstName"]').should('have.value','Mirna');
+          cy.get('[data-cy="lastName"]').should('have.value','Young');
+          cy.get('[data-cy="ssnInput"]').should('have.value', '8888');
+          PageObjects.Acp.clickOnBackBtn();
+          cy.get('[data-cy="addressLookup"]').should('have.value','777 Stevens Ave, Portland, ME 04103');
+          cy.get('[data-cy="city"]').should('have.value','Portland');
+          cy.get('[data-cy="state"]').should('have.value','ME');
+          cy.get('[data-cy="zipCode"]').should('have.value','04103');
+          PageObjects.Acp.clickOnBackBtn();
+          cy.get('[data-cy="firstName"]').should('have.value','MRana');
+          cy.get('[data-cy="lastName"]').should('have.value','Yhaddad');
+          cy.get('[data-cy="ssn"]').should('have.value', '6462');
+          cy.get('[data-cy="phoneNumber"]').should('have.value','5122034783');
+          cy.get('[data-cy="email"]').should('have.value', newEmail);
+          PageObjects.Acp.clickOnNextBtn();
+          PageObjects.Acp.clickOnNextBtn();
+          PageObjects.Acp.clickOnNextBtn();
+          cy.get('[data-cy="consentFormCheckbox"]').eq(0).should('not.be.checked');
+          cy.get('[data-cy="consentFormCheckbox"]').eq(1).should('not.be.checked');
+          cy.get('[data-cy="consentFormCheckbox"]').eq(0).click();
+          cy.get('[data-cy="consentFormCheckbox"]').eq(1).click();
+          PageObjects.Acp.clickOnNextBtn();
+          PageObjects.Acp.firstCheckWithNum();
+          PageObjects.Acp.secondCheckWithNum();
+          PageObjects.Acp.thirdCheckWithNum();
+          PageObjects.Acp.forthCheckWithNum();
+          PageObjects.Acp.fillInFullName(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FULL_NAME);
+          this.clickOnVerifyBtn();
+          cy.get('[ data-cy="mismatchingMsg"]').should('have.text',' Mismatching initials with your first charecter of your first name and first charecter of your last name ');
+          cy.get('[data-cy="fullnameInvalidMsg"]').should('have.text',' Your full name does not match the previous registered one ');
+          cy.get('[data-cy="captchaRequired"]').should('have.text','Please verify that you are not a robot');
+          this.clickOnVerifyBtn();
+          PageObjects.Acp.firstCheckWithSpecialCharacter();
+          PageObjects.Acp.secondCheckWithSpecialCharacter();
+          PageObjects.Acp.thirdCheckWithSpecialCharacter();
+          PageObjects.Acp.forthCheckWithSpecialCharacter();
+          PageObjects.Acp.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO_HAS_SPECIAL_CHARACTERS.FULL_NAME);
+          this.clickOnVerifyBtn();
+          cy.get('[ data-cy="mismatchingMsg"]').should('have.text',' Mismatching initials with your first charecter of your first name and first charecter of your last name ');
+          cy.get('[data-cy="fullnameInvalidMsg"]').should('have.text',' Your full name does not match the previous registered one ');
+          cy.get('[data-cy="captchaRequired"]').should('have.text','Please verify that you are not a robot');
+          this.clickOnVerifyBtn();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO2.FULL_NAME);
+          this.clickOnVerifyBtn();
+          cy.get('[data-cy="captchaRequired"]').should('have.text','Please verify that you are not a robot');
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnVerifyBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="congratulationTitle"]').should('have.text','Congratulations!');
+          cy.get('[data-cy="acpBenefitsDescription"]').should('have.text','Your ACP benefits can now be applied to your Good Mobile 10GB ACP plan!');
+          cy.get('[data-cy="addNewLine"]').should('exist');
+     };
 };
 export default new Acp();
