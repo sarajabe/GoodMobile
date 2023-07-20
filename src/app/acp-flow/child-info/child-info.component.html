@@ -277,6 +277,11 @@
               id="required-tribal-msg">
               Tribal ID is required
             </label>
+            <label class="validation-message"
+            *ngIf="childInfoForm.controls.tribalId.dirty && !childInfoForm.controls.tribalId.valid && !!childInfoForm.controls.tribalId.value"
+            id="invalid-tribal-msg">
+            Tribal ID is invalid
+          </label>
           </div>
         </div>
       </div>
