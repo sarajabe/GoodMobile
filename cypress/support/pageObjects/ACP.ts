@@ -549,9 +549,9 @@ class Acp {
      };
 
      addNewLineHomeDeliveryActivateExistingUser(){
-
+          PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="actionAcpBtn"]').click();
-          cy.get('.main-title').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
           cy.get('[data-cy="checkBtn"]').click();
           PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
@@ -560,8 +560,8 @@ class Acp {
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
           PageObjects.Coverage.enterAddressRefBothCoverages();
           cy.get('[data-cy="checkBtn"]').click();
-          cy.get('.head-note').should('have.text','Your Phone is compatible!');
-          cy.get('.sub-note').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnHomeDelivery();
           PageObjects.ShippingPage.clickOnAddNewAddress();
@@ -587,13 +587,13 @@ class Acp {
           cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
           cy.get('[data-cy="addressCity"]').should('have.text','1250 WATERS PL  111, BRONX,');
           cy.get('[data-cy="statePostalCode"]').should('have.text','NY, 10461-2720');
-          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          cy.get('[data-cy="acpSummary"]').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
-          cy.get('.actions > .primary').click();
+          cy.get('[data-cy="actionAcpBtn"]').click();
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
-          cy.get('#new').click();
-          cy.get('.button').click()
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click()
           PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
@@ -601,12 +601,12 @@ class Acp {
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
           cy.get('[data-cy="activate-button"]').click();
           cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
-          cy.get('.title').should('have.text','Successfully activated!');
+          cy.get('[data-cy="successfullyActivatedTitle"]').should('have.text','Successfully activated!');
           cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
-          cy.get('.action > .button').should('have.text','Select your Device');
-          cy.get('.actions > .button').click();
+          cy.get('[data-cy="selectDeviceBtn"]').should('have.text','Select your Device');
+          cy.get('[data-cy="accountSummaryBtn"]').click();
           PageObjects.TitleExpectations.goToAccountSummaryPage();
-          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          cy.get('[data-cy="acpSummary"]').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
           cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
@@ -620,6 +620,7 @@ class Acp {
           cy.get('[data-cy="identityVerificationValue"]').should('have.text','6462');
      };
      addNewLineStorePickupActivateExistingUser(){
+          PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="actionAcpBtn"]').click();
           cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
           cy.get('[data-cy="checkBtn"]').click();
