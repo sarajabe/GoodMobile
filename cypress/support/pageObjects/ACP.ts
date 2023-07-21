@@ -557,7 +557,7 @@ class Acp {
                cy.get('select').eq(3).select($lastOption.val());
           });
      };
-     selectfirstYearOption(){
+     selectFirstYearOption(){
           cy.get('select').eq(2).find('option').first().then($firstOption => {
                cy.get('select').eq(2).select($firstOption.val());
            });
@@ -831,7 +831,16 @@ class Acp {
           cy.get('[data-cy="phoneNumber"]').should('have.value','5122034783');
           cy.get('[data-cy="email"]').should('have.value', newEmail);
           PageObjects.Acp.clickOnNextBtn();
+          cy.get('[data-cy="addressLookup"]').should('have.value','777 Stevens Ave, Portland, ME 04103');
+          cy.get('[data-cy="city"]').should('have.value','Portland');
+          cy.get('[data-cy="state"]').should('have.value','ME');
+          cy.get('[data-cy="zipCode"]').should('have.value','04103');
           PageObjects.Acp.clickOnNextBtn();
+          cy.get('[data-cy="schoolName"]').should('have.value','automated test ');
+          cy.get('#housingAssistance').should('have.value','1').contains('Housing Choice Voucher Program');
+          cy.get('[data-cy="firstName"]').should('have.value','Mirna');
+          cy.get('[data-cy="lastName"]').should('have.value','Young');
+          cy.get('[data-cy="ssnInput"]').should('have.value', '8888');
           PageObjects.Acp.clickOnNextBtn();
           cy.get('[data-cy="consentFormCheckbox"]').eq(0).should('not.be.checked');
           cy.get('[data-cy="consentFormCheckbox"]').eq(1).should('not.be.checked');
