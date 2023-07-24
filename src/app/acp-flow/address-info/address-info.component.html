@@ -96,7 +96,7 @@
 <form [formGroup]="mailingAddressForm" class="address-form bottom" id="mailingAddressForm" *ngIf="!useSameAddress"
   [class.acp-disabled]="!!disable">
   <div class="form-row bottom">
-    <p>What’s your Mailing Address?<span class="red">*</span></p>
+    <p data-cy="mailingTitle">What’s your Mailing Address?<span class="red">*</span></p>
     <p class="smallest grey space">Please provide a mailing address.</p>
     <div class="form-field half">
       <label class="outlined-label-input">

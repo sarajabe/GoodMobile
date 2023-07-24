@@ -51,7 +51,7 @@
         signatureForm.controls.secondCheck.hasError('pattern') ||
         signatureForm.controls.thirdCheck.hasError('pattern') ||
         signatureForm.controls.forthCheck.hasError('pattern')
-      " id="consent-invalid-msg">
+      " id="consent-invalid-msg" data-cy="mismatchingMsg">
       Mismatching initials with your first charecter of your first name and first
       charecter of your last name
     </label>
@@ -75,7 +75,7 @@
       <label class="validation-message" *ngIf="
           !!signatureForm.controls.name.value &&
           signatureForm.hasError('mismatchedFullName')
-        " id="fullname-invalid-msg">
+        " id="fullname-invalid-msg" data-cy="fullnameInvalidMsg">
         Your full name does not match the previous registered one
       </label>
     </div>

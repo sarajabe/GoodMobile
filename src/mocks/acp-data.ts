@@ -51,7 +51,33 @@ export const INVALID_FULL_USER_INFO = {
     appId: 'abcs',
     schoolName: '1'
 };
-
+export const INVALID_MIN_VAL_FULL_USER_INFO = {
+    firstName: '3',
+    middleName: '33',
+    lastName: 'M',
+    consumerEmail: 'mirna-haddad',
+    day: '32',
+    month: '13',
+    year: '2024',
+    ssn: '44',
+    tribal: '4',
+    phoneNumber: '123',
+    appId: 'abcs',
+    schoolName: '1'
+}
+export const INVALID_FULL_USER_INFO_WITH_LENGTHS = {
+    firstName: '333333333333333333333333333333333333333333333333333333333333333333',
+    middleName: '333333333333333333333333333333333333333333333333333333333333333333',
+    lastName: '333333333333333333333333333333333333333333333333333333333333333333',
+    consumerEmail: 'mirna-haddad',
+    day: '323',
+    month: '132',
+    year: '2024',
+    ssn: '44222',
+    tribal: '4493837973986911123jkbsjssssaaaaaaaaaaaaaaaaaaaaaa',
+    phoneNumber: '123',
+    appId: 'abcs'
+};
 export const VALID_DATA = {
     day: '13',
     month: '03',

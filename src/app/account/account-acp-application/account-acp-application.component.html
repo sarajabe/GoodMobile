@@ -248,7 +248,7 @@
                         </div>
                         <div class="actions"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.secondaryButtonName || !!ACP_PLAN_DESCS[planActivationStatus]?.linkName">
-                            <button class="button primary" data-cy="activateYourPlanBtn"
+                            <button class="button primary" data-cy="actionAcpBtn"
                                 [class.pending-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.pendingWidth"
                                 [class.hold-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.onHoldWidth"
                                 [class.long]="!!ACP_PLAN_DESCS[planActivationStatus]?.longClass"

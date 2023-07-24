@@ -184,7 +184,7 @@
         id="required-date-msg" data-cy="required-month-msg">
         Date of Birth is required
       </label>
-      <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg">
+      <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg" data-cy="invalidDateMsg">
         Date is invalid
       </label>
     </div>
@@ -257,7 +257,7 @@
           </label>
           <label class="validation-message"
             *ngIf="personalInfoForm.controls.tribalId.dirty && !personalInfoForm.controls.tribalId.valid && !!personalInfoForm.controls.tribalId.value"
-            id="invalid-tribal-msg">
+            id="invalid-tribal-msg" data-cy="invalidTribalMsg">
             Tribal ID is invalid
           </label>
         </div>

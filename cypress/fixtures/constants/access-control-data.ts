@@ -306,5 +306,10 @@ export const ACCESS = {
     TEST_L_USER: {
         EMAIL: "testluser@ztarmobile.com",
         PASSWORD: "Abc123"
+    },
+
+    NEW_ACCOUNT:{
+        EMAIL: "",
+        PASSWORD: "Ztar@123"
     }
 };

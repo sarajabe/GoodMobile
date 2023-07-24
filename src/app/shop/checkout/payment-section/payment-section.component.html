@@ -211,7 +211,7 @@
               </div>
               <div class="add-actions">
                 <p class="transparent" (click)="toggleNewCardForm()">Cancel</p>
-                <button class="button primary" data-cy="saveBtn" aria-label="save" (click)="saveCard()">Save</button>
+                <button class="button primary" data-cy="saveBtn" aria-label="save" (click)="saveCard()">{{!!saveCCInfo ? 'Save' : 'Proceed'}}</button>
               </div>
             </div>
           </section>

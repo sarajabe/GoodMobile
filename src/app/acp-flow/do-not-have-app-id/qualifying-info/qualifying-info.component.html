@@ -6,17 +6,18 @@
                 <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id">{{item?.value}}
             </label>
         </div>
-        <label class="validation-message"
+        <label class="validation-message" id="qualifying-validation-message"
             *ngIf="qualifyingForm.controls.option.hasError('required') && qualifyingForm.controls.option.touched">
             Please select one of the options above
         </label>
     </form>
 
     <form [formGroup]="childInfoForm" class="childInfoFormNonExistingApp"
-        *ngIf="qualifyingForm.controls.option.value === 'child'">
+        *ngIf="qualifyingForm.controls.option.value === 'child'" id="childForm">
         <div class="border-section"></div>
         <div class="form-section">
-            <p class="space">Please provide the Beneficiary Qualifying Person (BQP) information:<span class="red">*</span></p>
+            <p class="space">Please provide the Beneficiary Qualifying Person (BQP) information:<span
+                    class="red">*</span></p>
             <div class="form-row bottom">
                 <p class="space">BQP Full Name:<span class="red">*</span></p>
                 <div class="form-field half">
@@ -57,14 +58,15 @@
                         id="required-lname-msg" data-cy="required-lname-msg">
                         Last name is required
                     </label>
-                    <label class="validation-message" *ngIf="childInfoForm.controls.lastName.dirty && !!childInfoForm.controls.lastName.value && !childInfoForm.controls.lastName.valid"
+                    <label class="validation-message"
+                        *ngIf="childInfoForm.controls.lastName.dirty && !!childInfoForm.controls.lastName.value && !childInfoForm.controls.lastName.valid"
                         id="invalid-lname-msg" data-cy="invalid-lname-msg">
                         Last name is invalid
                     </label>
                 </div>
             </div>
             <div class="form-row bottom">
-                <p >BQP Date of Birth:<span class="red">*</span></p>
+                <p>BQP Date of Birth:<span class="red">*</span></p>
                 <div class="form-row half-row">
                     <div class="three-fields">
                         <div class="form-field">
@@ -90,38 +92,49 @@
                         </div>
                         <div class="form-field">
                             <div class="floating-label">
-                                <select id="day" data-cy="day" name="dayOfBirth" formControlName="day" autocomplete="cc-exp-day"
-                                class="floating-select" #dayOfBirth [class.dirty]="!!dayOfBirth.value" value="" (change)="checkMonth()">
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
-                                <option value="29">29</option>
-                                <option value="30" [class.disabled]="
+                                <select id="day" data-cy="day" name="dayOfBirth" formControlName="day"
+                                    autocomplete="cc-exp-day" class="floating-select" #dayOfBirth
+                                    [class.dirty]="!!dayOfBirth.value" value="" (change)="checkMonth()">
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29" [class.disabled]="
+                                !!childInfoForm.controls.month &&
+                                childInfoForm.controls.month.value &&
+                                childInfoForm.controls.month.value === '02' && 
+                                !leapYear
+                              " [disabled]="
+                                !!childInfoForm.controls.month &&
+                                childInfoForm.controls.month.value &&
+                                childInfoForm.controls.month.value === '02' && 
+                                !leapYear
+                              ">29</option>
+                                    <option value="30" [class.disabled]="
                                     !!childInfoForm.controls.month &&
                                     childInfoForm.controls.month.value &&
                                     childInfoForm.controls.month.value === '02'
@@ -130,9 +143,9 @@
                                     childInfoForm.controls.month.value &&
                                     childInfoForm.controls.month.value === '02'
                                   ">
-                                  30
-                                </option>
-                                <option value="31" [class.disabled]="
+                                        30
+                                    </option>
+                                    <option value="31" [class.disabled]="
                                     (!!monthOfBirth &&
                                       monthOfBirth.value &&
                                       childInfoForm.controls.month.value === '02') ||
@@ -149,9 +162,9 @@
                                     childInfoForm.controls.month.value === '09' ||
                                     childInfoForm.controls.month.value === '11'
                                   ">
-                                  31
-                                </option>
-                              </select>
+                                        31
+                                    </option>
+                                </select>
                                 <label class="day-width" [class.dirty]="!!dayOfBirth.value">DD</label>
                             </div>
                         </div>
@@ -169,12 +182,12 @@
                     <label class="validation-message" *ngIf="(childInfoForm.controls.month.hasError('required') && childInfoForm.controls.month.touched) ||
            (childInfoForm.controls.day.hasError('required') && childInfoForm.controls.day.touched)
            || (childInfoForm.controls.year.hasError('required') && childInfoForm.controls.year.touched)"
-                        id="required-month-msg" data-cy="required-month-msg">
+                        id="required-date-msg" data-cy="required-month-msg">
                         Date of Birth is required
                     </label>
-                    <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg">
+                    <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg" data-cy="invalidDateMsg">
                         Date is invalid
-                      </label>
+                    </label>
                 </div>
             </div>
             <div class="form-row bottom">
@@ -182,7 +195,8 @@
                 <p class="fields-note">Please select the ID you used during your National Verifier process</p>
                 <div class="radioBtn child">
                     <label class="form-control child primary-font-bold" for="ssn">
-                        <input type="radio" value="ssn" formControlName="identityType" id="ssn" data-cy="ssn" (change)="updateIdentitiyType()">Social Security Number
+                        <input type="radio" value="ssn" formControlName="identityType" id="ssn" data-cy="ssn"
+                            (change)="updateIdentitiyType()">Social Security Number
                         (SSN)
                     </label>
                 </div>
@@ -205,7 +219,8 @@
                 </div>
                 <div class="radioBtn child">
                     <label class="form-control child primary-font-bold" for="tribal">
-                        <input type="radio" value="tribal" formControlName="identityType" id="tribal" data-cy="tribalID" (change)="updateIdentitiyType()">Tribal ID
+                        <input type="radio" value="tribal" formControlName="identityType" id="tribal" data-cy="tribalID"
+                            (change)="updateIdentitiyType()">Tribal ID
                     </label>
                 </div>
                 <label class="validation-message"
@@ -216,7 +231,8 @@
                 <div class="form-field quarter"
                     *ngIf="!!childInfoForm.controls.identityType.value && childInfoForm.controls.identityType.value == 'tribal'">
                     <label class="outlined-label-input">
-                        <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal" data-cy="tribalID"/>
+                        <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal"
+                            data-cy="tribalID" />
                         <span>Tribal ID</span>
                     </label>
                     <label class="validation-message"

@@ -12,7 +12,7 @@ import { ACP_MOCKS } from 'src/mocks';
 import { By } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-describe('Signature Information Component - Unit Testing', () => {
+fdescribe('Signature Information Component - Unit Testing', () => {
   let component: SignatureInfoComponent;
   let fixture: ComponentFixture<SignatureInfoComponent>;
 
