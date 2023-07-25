@@ -74,7 +74,7 @@
         <button class="button primary" *ngIf="!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
         Add to cart
         </button>
-        <button class="button secondary white-button" *ngIf="!!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
+        <button class="button secondary white-button" data-cy="doIQualify" *ngIf="!!plan?.ebb" (click)="addPlanToCart(plan, i, true)">
           Do I Qualify
         </button>
       </div>

@@ -17,7 +17,7 @@
             </div>
         </section>
        <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
-            <h3 class="main-title">Adding a New Line:</h3>
+            <h3 class="main-title" data-cy="addingNewLineTitle">Adding a New Line:</h3>
             <form [formGroup]="newMobileServiceFrom" *ngIf="!successCehck && !errorCheck ">
                 <p class="sub-desc">Let's find out if the device, that you will use, is compatible with our network!</p>
                 <div class="form-row">
@@ -26,9 +26,9 @@
                         <p class="serial-device-note">Dial: *#06# on your phone to get your IMEI/MEID</p>
                         <label class="outlined-label-input">
                             <input placeholder=" " required formControlName="imei" name="equipmentNumber"
-                                id="equipmentNumber" restrictNumbers required
+                                id="equipmentNumber" data-cy="equipmentNumber" restrictNumbers required
                                 maxlength="18" />
-                            <span data-cy="equipmentNumber">Enter your device’s IMEI number</span>
+                            <span>Enter your device’s IMEI number</span>
                         </label>
                         <a class="imei-link" (click)="showWhatIsIMEI()">What is an IMEI/MEID number?</a>
                         <label class="validation-message"
@@ -45,7 +45,7 @@
                     <div class="form-field">
                         <p class="top-label">Enter your full address </p>
                         <label class="outlined-label-input flowed">
-                            <input formControlName="address" matInput type="search" list-formatter="description"  
+                            <input formControlName="address" matInput type="search" list-formatter="description" data-cy="addressRef"  
                                 type="search" (focus)="setFoucs = true" (blur)="setFoucs = false"
                                class="geolocate"  placeholder="  " [matAutocomplete]="auto" required
                                (input)="changedAddress()"/>
@@ -73,8 +73,8 @@
             <div *ngIf="!!successCehck && !errorCheck" class="success-check-banner" [class.success-bottom]="!!isEsim">
                 <img src="assets/icon/success-icon.svg" alt="Success Icon">
                 <div class="notes" *ngIf="!isEsim">
-                    <p class="head-note">Your Phone is compatible!</p>
-                    <p class="sub-note">You can use the device you have with our network!</p>
+                    <p class="head-note" data-cy="phoneIsCompatibleTitle">Your Phone is compatible!</p>
+                    <p class="sub-note" data-cy="phoneIsCompatibleSubTitle">You can use the device you have with our network!</p>
                 </div>
                 <div class="notes" *ngIf="!!isEsim">
                     <p class="head-note">Great news!</p>
@@ -118,7 +118,7 @@
             </div>
         </section>
         <section class="address-section" *ngIf="!!activeStep && activeStep === 2">
-            <h3 class="address-section-title">How do you want to get your package?</h3>
+            <h3 class="address-section-title" data-cy="addressSectionTitle">How do you want to get your package?</h3>
             <p class="smaller">Select the preferred method below:</p>
             <form #pickupOptionsForm="ngForm" class="pickups-form">
                 <div class="radioBtn">

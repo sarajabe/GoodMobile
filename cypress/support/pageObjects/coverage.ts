@@ -58,10 +58,11 @@ class Coverage {
         return this;
     };
     enterAddressRefBothCoverages() {
-        cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('123 William St, New York, NY 10038');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
-        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="addressRef"]').click({force:true});
+        cy.get('[data-cy="addressRef"]').clear();
+        cy.get('[data-cy="addressRef"]').type('123 William St, New York, NY 10038').then(() => {
+            cy.get('.mat-option-text').first().click();
+        });
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };

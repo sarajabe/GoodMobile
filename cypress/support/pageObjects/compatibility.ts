@@ -47,8 +47,9 @@ class Compatibility {
         return this;
     };
     enterIMEInumber(imei) {
-        cy.get('[data-cy=equipmentNumber]').click();
-        cy.get('[data-cy=equipmentNumber]').type(imei);
+        cy.get('[data-cy="equipmentNumber"]').click({force:true});
+        cy.get('[data-cy="equipmentNumber"]').clear();
+        cy.get('[data-cy="equipmentNumber"]').type(imei);
         return this;
     };
     assertIMEInumberRequired(){
@@ -75,10 +76,9 @@ class Compatibility {
         cy.get('#required-address-msg').should('have.text', 'Please select address from the autocomplete list');
     }
     addressRefNotSelectedFromList() {
-        cy.get('[data-cy="addressRef"]').click();
+        cy.get('[data-cy="addressRef"]').click({force:true});
         cy.get('[data-cy="addressRef"]').type('m');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
-        cy.get('.mat-option-text').first().click();
         cy.get('[data-cy="equipmentNumber"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;

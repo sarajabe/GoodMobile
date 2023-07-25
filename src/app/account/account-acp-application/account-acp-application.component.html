@@ -211,7 +211,7 @@
                             [src]="(!!planActivationStatus && planActivationStatus === 'ENROLLED') ? 'assets/icon/green-dot.svg' : 'assets/icon/pending-dot.svg'"
                             alt="dot icon"></span></p>
                 <div class="status-date">
-                    <p class="key bottom">Status: <span class="value status bold"
+                    <p class="key bottom">Status: <span class="value status bold" data-cy="acpPlanActivationStatusValue"
                             [class.complete-status]="(!!planActivationStatus && planActivationStatus === 'ENROLLED')">{{ACP_PLAN_STATUS_TITLE[planActivationStatus]}}</span>
                     </p>
                     <p class="key">Last modified: <span class="value">{{!!appDetails ? (appDetails?.updatedAt | date) :
@@ -313,7 +313,7 @@
                             [src]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE) ? 'assets/icon/green-dot.svg': (!!showNVOnHoldSection? 'assets/icon/red-dot.svg' : 'assets/icon/pending-dot.svg')"
                             alt="dot icon"></span></p>
                 <div class="status-date" *ngIf="!showNVErrorSection && !showExpiredSection && !showGenericError">
-                    <p class="key bottom">Status: <span class="value status bold"  data-cy="acpStatusValue"
+                    <p class="key bottom">Status: <span class="value status bold" data-cy="acpStatusValue"
                             [class.complete-status]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE)"
                             [class.alert-status]="!!showNVOnHoldSection">{{STATUS_TITLE[nvStatus]}}</span>
                     </p>

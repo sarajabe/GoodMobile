@@ -1,5 +1,5 @@
 <section class="page-section no-flow" *ngIf="!acpSuccess && !acpError">
-  <h2 class="header-color" id="stepTitle">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
+  <h2 class="header-color" id="stepTitle" data-cy="stepTitle">{{STEPS_CONTENT[activeStep]?.stepTitle}}</h2>
   <h5 class="secondary-font" id="stepDesc">{{STEPS_CONTENT[activeStep]?.stepDesc}}</h5>
   <p class="smaller" *ngIf="!!STEPS_CONTENT[activeStep]?.stepExtraDesc" id="stepExtraDesc">{{STEPS_CONTENT[activeStep]?.stepExtraDesc}}</p>
   <section class="stepper">
@@ -32,9 +32,8 @@
   <div class="page-section navs">
     <p class="no-border" data-cy="cancelBtn" id="cancelBtn" (click)="cancel()">Cancel</p>
     <div class="right">
-      <button class="button secondary" data-cy="backBtn" id="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" id="next-verify-button" aria-label="Next" (click)="goNext()"
-        *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
+      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
+      <button class="button primary" data-cy="verifyBtn" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
         'Verify'}}</button>
     </div>
   </div>

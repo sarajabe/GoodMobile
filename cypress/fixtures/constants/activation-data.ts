@@ -18,6 +18,12 @@ export const ACTIVATION = {
             POSTAL: '10029',
             ACCOUNT_PIN: '1254',
             CONFIRM_ACCOUNT_PIN: '1254'
+        },
+        ACP_NEW_NUMBER: {
+            ACTIVATION_CODE:'9802856', //9802895
+            POSTAL: '10029',
+            ACCOUNT_PIN: '1254',
+            CONFIRM_ACCOUNT_PIN: '1254'
         }
     }
 };
