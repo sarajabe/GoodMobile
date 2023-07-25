@@ -414,7 +414,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   }
   public checkDevice(): void {
     this.newMobileServiceFrom.markAllAsTouched();
-    if (!!this.newMobileServiceFrom.valid) {
+    if (!!this.newMobileServiceFrom.valid && !!this.displayedAddressModel) {
       const equipment = this.newMobileServiceFrom.controls.imei.value;
       this.appState.loading = true;
       this.equipmentService.checkDeviceCompatibilityV2(this.captchaResponse, this.displayedAddressModel?.postalCode,
