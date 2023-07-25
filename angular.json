@@ -175,7 +175,7 @@
               "browserTarget": "goodMobile:build:production"
             },
             "dev": {
-              "browserTarget": "goodMobile:build:dev"
+              "browserTarget": "goodMobile:build:develop"
             },
             "test": {
               "browserTarget": "goodMobile:build:test"

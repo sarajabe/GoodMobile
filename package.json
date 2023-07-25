@@ -12,7 +12,7 @@
     "start:prod": "ng serve -c production",
     "build": "ng build",
     "build:local": "ng build -c local",
-    "build:dev": "ng build -c dev",
+    "build:dev": "ng build -c develop",
     "build:test": "ng build -c test",
     "build:stage": "ng build -c stage",
     "build:prod": "ng build -c production",
