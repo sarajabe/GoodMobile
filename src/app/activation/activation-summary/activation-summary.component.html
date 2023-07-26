@@ -9,7 +9,7 @@
         </div>
         <div class="key-value-part">
             <p class="key">Your Number:</p>
-            <p class="value" data-cy="mdnValue">{{mdn | phone}}</p>
+            <p class="value" data-cy="mdnValue"><b>{{mdn | phone}}</b></p>
         </div>
         <div class="key-value-part" *ngIf="!!userAccount?.mslCode">
             <p class="key">Your MSL code:</p>
@@ -55,15 +55,15 @@
                 </p>
                 <p class="desc">To know more about your plan details visit your <b>Account Summary</b> at anytime!</p>
             </ng-container>
-            <ng-container *ngIf="!!userPlan?.basePlan?.ebb">
+            <ng-container *ngIf="!!userPlan?.basePlan?.ebb && (canPurchaseDevice || (!canPurchaseDevice && !!nextEnrollmentTryDate))">
                 <div class="hooray-box">
                     <h5 class="box-title">Hooray!<img src="assets/icon/hooray-icon.svg" class="title-img"
                             alt="Hooray Icon"></h5>
                     <p class="smaller">You may be eligible for a <b>$100 discount</b> on a new device. To get it, you
                         will pay as low as <b>$10.01</b></p>
-                    <p class="smaller last">You can head to your nearest Goodwill store to check if you are eligible for ACP device discount,
+                    <p class="smaller last">{{!!nextEnrollmentTryDate ? 'On ': ''}}<b *ngIf="nextEnrollmentTryDate">{{nextEnrollmentTryDate | date:'MM-dd-yyyy'}},</b> You can head to your nearest Goodwill store to check if you are eligible for ACP device discount,
                         or you can complete the process on our website!</p>
-                    <div class="action">
+                    <div class="action" *ngIf="!!canPurchaseDevice">
                         <button class="button primary" data-cy="selectDeviceBtn"
                             [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">Select your
                             Device</button>
