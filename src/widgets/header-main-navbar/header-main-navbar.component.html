@@ -166,7 +166,7 @@
                 id="account-summary-header" data-cy="account-summary-header">Account summary</a>
               <a *ngIf="!!displayAcpSection" class="sub-item"
                 [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
-                (click)="onLinkClick($event, 'acp')" id="acp-application-header">ACP summary</a>
+                (click)="onLinkClick($event, 'acp')" id="acp-application-header" data-cy="acp-application-header">ACP summary</a>
               <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header"

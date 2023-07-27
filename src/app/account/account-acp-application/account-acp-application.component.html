@@ -30,7 +30,7 @@
             <ng-container *ngIf="!!pendingACPDevice">
                 <div class="intro">
                     <img src="assets/icon/hooray-icon.svg" alt="hooray" width="50" height="50">
-                    <p class="smaller intro-desc">Your device order has been successfully placed!</p>
+                    <p class="smaller intro-desc" data-cy="orderDeviceSuccessfullyPlaced">Your device order has been successfully placed!</p>
                 </div>
                 <p class="tertiary text-color-primary" (click)="showDeviceCode=true;showACPCodeSection=false;" *ngIf="!showDeviceCode"><b>Show Device order Barcode </b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow"></p>
                 <div class="info-banner default-background device-code-section" *ngIf="showDeviceCode">
@@ -118,10 +118,10 @@
                                         </label>
                                     </div>
                                 </div>
-                                <p class="validation-message" *ngIf="showDeviceOptionError">Please Select an option to proceed</p>
+                                <p class="validation-message" data-cy="pleaseSelectOptionMsg" *ngIf="showDeviceOptionError">Please Select an option to proceed</p>
                             </div>
                             <div class="actions" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName">
-                                <button class="button primary" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
+                                <button class="button primary" data-cy="letStartBtn" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
                                     (click)="this[ACP_DEVICE_DESCS[acpDeviceCase]?.buttonAction]()">
                                     {{ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName}}</button>
                             </div>
@@ -236,11 +236,11 @@
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc2"></p>
                         <p class="description last" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc3"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc3" data-cy="mdnValue"></p>
-                        <p class="description mt-10"
+                        <p class="description mt-10" data-cy="acpDeviceOrderDescription"
                             [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc4"></p>
-                        <p class="description mt-10" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
+                        <p class="description mt-10" data-cy="acpDeviceProceedCollectDescription" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc5"
                             (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.descAction]()"></p>
                         <div class="stores-list" *ngIf="!!showStores">

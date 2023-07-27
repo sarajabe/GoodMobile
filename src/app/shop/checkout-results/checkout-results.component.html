@@ -32,19 +32,19 @@
     </div>
   </div>
   <div class="result-info">
-      <p class="smaller last-note">
+      <p class="smaller last-note" data-cy="storePickupDeviceSuccessful">
         You can always find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, 
         to provide it for the store clerk for your Device pickup.
       </p>
       <h5 class="order-note">Your order ID is: <a (click)="goToOrderDetails(orderId)">{{orderId}}</a></h5>
-      <a class="view-stores-link" (click)="showStores=true;" *ngIf="!showStores">View Stores</a>
-      <a class="view-stores-link hide" (click)="showStores=false;" *ngIf="!!showStores">Hide Stores</a>
+      <a class="view-stores-link" data-cy="viewStores" (click)="showStores=true;" *ngIf="!showStores">View Stores</a>
+      <a class="view-stores-link hide" data-cy="hideStores" (click)="showStores=false;" *ngIf="!!showStores">Hide Stores</a>
       <div class="stores-card" *ngIf="!!showStores">
         <app-stores-list></app-stores-list>
       </div>
   </div>
   <div class="result-actions">
-    <button class="button primary" (click)="goToOrderDetails(orderId)">
+    <button class="button primary" data-cy="orderDetailsBtn" (click)="goToOrderDetails(orderId)">
       Order Details
     </button>
   </div>
