@@ -164,7 +164,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         title: `Hooray!`,
         desc1: !!this.nextPurchaseDate ? `On <b>${this.nextPurchaseDate.getMonth()+1}/${this.nextPurchaseDate.getDate()}/${this.nextPurchaseDate.getFullYear()}</b>, you may be eligible for a <b>$100</b> discount on a new device from our phone catalog. Please make sure to check again later!` : `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
         desc2: null,
-        buttonName: 'Let’s get started!',
+        buttonName: !!this.canPurchaseADevice ? 'Let’s get started!' : null,
         buttonAction: 'goToAcpDevices'
       },
       'PENDING_NV_CASE': {
