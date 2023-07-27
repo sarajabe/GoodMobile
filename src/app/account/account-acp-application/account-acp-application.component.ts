@@ -113,6 +113,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   pendingACPDevice: boolean;
   dataCollected = false;
   canPurchaseADevice: any;
+  nextPurchaseDate: Date;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -161,7 +162,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/hooray-icon.svg`,
         imgPath2: `assets/icon/hooray2-icon.svg`,
         title: `Hooray!`,
-        desc1: `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
+        desc1: !!this.nextPurchaseDate ? `On <b>${this.nextPurchaseDate.getMonth()+1}/${this.nextPurchaseDate.getDate()}/${this.nextPurchaseDate.getFullYear()}</b>, you may be eligible for a <b>$100</b> discount on a new device from our phone catalog. Please make sure to check again later!` : `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
         desc2: null,
         buttonName: 'Let’s get started!',
         buttonAction: 'goToAcpDevices'
@@ -713,16 +714,19 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   this.ebbService.getDeviceEligibility(this.userProfile.ebbId).then((data) => {
                       this.dataCollected = true;
                       this.canPurchaseADevice = data?.canPurchaseADevice;
-                      if (!!data?.canPurchaseADevice) {
+                      this.nextPurchaseDate = !!data.nextEnrollmentTryDate ? new Date(data.nextEnrollmentTryDate) : null;
+                      if (!!data?.canPurchaseADevice || (!data.canPurchaseADevice && !!data.nextEnrollmentTryDate)) {
                         this.acpDeviceCase = 'ENROLLED_ACP_CASE';
                         this.acpDeviceOrder = null;
                         this.appState.loading = false;
                       } else {
                         this.ebbService.getACPDeviceDetails(this.userProfile.ebbId, this.userProfile.customerId).then((devices) => {
-                          this.getACPDeviceOrder(devices[0].orderId);
-                          this.appState.loading = false;
-                          this.acpPlan.acpDevice = devices[0];
-                          this.userPlansService.updateUserPlan(this.userProfile.id, this.acpPlan);
+                          if (!!devices) {
+                            this.getACPDeviceOrder(devices[0].orderId);
+                            this.appState.loading = false;
+                            this.acpPlan.acpDevice = devices[0];
+                            this.userPlansService.updateUserPlan(this.userProfile.id, this.acpPlan);
+                          }
                         }, (error) => {
                           this.toastHelper.showAlert(error.error.errors[0].message);
                         })
