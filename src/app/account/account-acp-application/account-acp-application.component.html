@@ -191,7 +191,7 @@
                         <p class="description last" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
                             [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
                         <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
-                            <button class="button primary" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
+                            <button class="button primary" data-cy="resumeFilingBtn" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
                                 *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
                                 (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
                                 [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
