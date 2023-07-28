@@ -2,7 +2,7 @@
     <div class="form-row">
       <div class="form-field half">
         <div class="floating-label">
-          <select class="floating-select cities" [(ngModel)]="selectedCity" id="cities" placeholder=" "
+          <select class="floating-select cities" [(ngModel)]="selectedCity" id="cities" data-cy="cities" placeholder=" "
           #cities="ngModel" name="cities" [class.dirty]="!!selectedCity"
           (ngModelChange)="selectCity()" required>
           <option *ngFor="let city of citiesList" [ngValue]="city">{{city}}</option>

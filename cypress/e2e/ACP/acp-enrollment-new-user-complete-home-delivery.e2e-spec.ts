@@ -17,4 +17,7 @@ describe('Signup then enroll in ACP plan - new user - complete - home delivery',
     it('Should purchase ACP plan with home delivery then activate', () =>{
         PageObjects.Acp.addNewLineHomeDeliveryActivate(); 
     });
+    it('Should purchase ACP device', () =>{
+        PageObjects.Acp.purchaseAcpDevice(); 
+    });
 });

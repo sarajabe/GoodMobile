@@ -31,6 +31,16 @@ class TitleExpectations {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
+    goToACPApplicationDevicesPage() {
+        cy.title().should('eq', 'Affordable Connectivity Program devices');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+        return this;
+    };
+    goToACPCheckoutDevicesPage() {
+        cy.title().should('eq', 'Checkout ACP Device');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+        return this;
+    };
     goToReportIssueConfirmationPage() {
         cy.title().should('eq', 'Confirmation ');
         return this;

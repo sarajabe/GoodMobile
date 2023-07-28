@@ -243,9 +243,9 @@
                             <div class="details">
                                 <div class="detail">
                                     <div class="detail-info">
-                                        <p class="bold smaller">{{userCart?.acpDevice?.title}}</p>
+                                        <p class="bold smaller" data-cy="acpDeviceName">{{userCart?.acpDevice?.title}}</p>
                                     </div>
-                                    <p class="price smallest">
+                                    <p class="price smallest" data-cy="acpDevicePrice">
                                         {{userCart?.acpDevice?.marketValue | currency:'USD':'symbol':0}}
                                     </p>
                                 </div>
@@ -253,7 +253,7 @@
                                     <div class="detail-info">
                                         <p class="bold smallest text-orange" >ACP Discount</p>
                                     </div>
-                                    <p class="price smallest text-orange">
+                                    <p class="price smallest text-orange" data-cy="acpDevicePriceDiscount">
                                        -{{userCart?.acpDevice?.marketValue - userCart?.acpDevice?.price | currency:'USD':'symbol':0}}
                                     </p>
                                 </div>

@@ -208,5 +208,9 @@ class HomePage {
         cy.contains('a', 'why Good2Go').click();
         return this;
     };
+    clickOnACPsummary() {
+        cy.get('[data-cy="acp-application-header"]').click({ force: true });
+        return this;
+    };
 };
 export default new HomePage();
