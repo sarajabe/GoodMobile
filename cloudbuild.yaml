@@ -31,6 +31,16 @@ steps:
       - '_VERSION=$_VERSION'
       - '.'
 
+  # Run unit test
+  - name: 'node14'
+    entrypoint: 'bash'
+    args: 
+      - -c
+      - |
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        apt update && apt install -y libappindicator1 fonts-liberation ./google-chrome-stable_current_amd64.deb
+        npm run test -- --watch=false
+
   # Push the image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: 
