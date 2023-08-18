@@ -311,5 +311,9 @@ export const ACCESS = {
     NEW_ACCOUNT:{
         EMAIL: "",
         PASSWORD: "Ztar@123"
+    },
+    ACCOUNT_WITH_NO_ACP:{
+        EMAIL: "empty@ztarmobile.com",
+        PASSWORD: "Abc123"
     }
 };

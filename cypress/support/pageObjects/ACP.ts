@@ -1260,5 +1260,24 @@ class Acp {
           cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text','Your ACP Device:Your device order has been successfully placed!');
           cy.get('[data-cy="acpDeviceProceedCollectDescription"]').should('have.text','You may now proceed and collect your device at your nearest store.');
      };
+     clickOnSelectDevice(){
+          cy.get('[data-cy="selectDevice"]').click();
+          return this;
+     };
+     clickOnGetACPnow(){
+          cy.get('[data-cy="modal--primary-url-button"]').click();
+          return this;
+     };
+     purchaseDeviceUserWithNoACPplan(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.clickOnSelectDevice();
+          cy.get('.modal-heading').should('have.text','Looking for ACP device benefits?');
+          cy.get('.acp-desc').should('have.text','To get your ACP device benefits, you should \n    enroll and activate your ACP plan first!');
+          cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Get ACP Now!');
+          this.clickOnGetACPnow();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+     };
 };
 export default new Acp();
