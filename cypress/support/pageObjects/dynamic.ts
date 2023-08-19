@@ -48,5 +48,20 @@ const Dynamics = function(): void {
         }
         return name;
     };
+    this.generateNewAppId = () => {
+        let appId = 'B';
+        const strValues = '0123456789';
+        let strTmp;
+        for (let i = 0; i < 5; i++) {
+            strTmp = strValues.charAt(Math.round(strValues.length * Math.random()));
+            appId = appId + strTmp;
+        };
+        appId = appId + '-';
+        for (let i = 0; i < 5; i++) {
+            strTmp = strValues.charAt(Math.round(strValues.length * Math.random()));
+            appId = appId + strTmp;
+        };
+        return appId;
+    };
 };
 export default new Dynamics();
