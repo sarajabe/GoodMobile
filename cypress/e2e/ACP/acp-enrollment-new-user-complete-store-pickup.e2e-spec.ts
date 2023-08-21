@@ -17,4 +17,7 @@ describe('Signup then enroll in ACP plan - new user - complete - store pickup', 
     it('Should purchase ACP plan with store pickup then activate', () =>{
         PageObjects.Acp.addNewLineStorePickupActivate()  
     });
+    it('Should purchase ACP device', () =>{
+        PageObjects.Acp.purchaseAcpDevice(); 
+    });
 });

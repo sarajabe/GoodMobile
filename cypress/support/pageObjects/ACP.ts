@@ -29,7 +29,8 @@ class Acp {
           return this;
      };
      clickOnSubmitBtn() {
-          cy.get('.primary').click();
+          cy.get('[data-cy="next-verify-button"]').click();
+          return this;
      };
      clickOnVerifyBtn() {
           cy.get('[data-cy="verifyBtn"]').click();
@@ -106,8 +107,10 @@ class Acp {
      fillInPhysicalAddressInfo(adrress1, city) {
           cy.get('[data-cy="addressLookup"]').click({force:true});
           cy.get('[data-cy="addressLookup"]').clear();
-          cy.get('[data-cy="addressLookup"]').type(adrress1);
-          cy.get('.mat-option-text').first().click();
+          cy.get('[data-cy="addressLookup"]').type(adrress1).then(() => {
+               cy.get('.mat-option-text').first().click();
+          });
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
           cy.get('[data-cy="city"]').click({force:true});
           cy.get('[data-cy="city"]').clear();
           cy.get('[data-cy="city"]').type(city);
@@ -126,8 +129,10 @@ class Acp {
      fillInMailingAddress(ADDRESS_LINE1, city) {
           cy.get('[data-cy="mailingAddress1"]').click({force:true});
           cy.get('[data-cy="mailingAddress1"]').clear();
-          cy.get('[data-cy="mailingAddress1"]').type(ADDRESS_LINE1);
-          cy.get('.mat-option-text').first().click();
+          cy.get('[data-cy="mailingAddress1"]').type(ADDRESS_LINE1).then(() => {
+               cy.get('.mat-option-text').first().click();
+          });
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
           cy.get('[data-cy="mail-city"]').click({force:true});
           cy.get('[data-cy="mail-city"]').clear();
           cy.get('[data-cy="mail-city"]').type(city);
@@ -174,6 +179,13 @@ class Acp {
           return this;
      };
      fillInACPAppID(acpID) {
+          cy.get('[data-cy="applicationId"]').click({force:true});
+          cy.get('[data-cy="applicationId"]').clear();
+          cy.get('[data-cy="applicationId"]').type(acpID);
+          Cypress.env('newAcpID', acpID);
+          return this;
+     };
+     fillInInvalidACPAppID(acpID) {
           cy.get('[data-cy="applicationId"]').click({force:true});
           cy.get('[data-cy="applicationId"]').clear();
           cy.get('[data-cy="applicationId"]').type(acpID);
@@ -599,7 +611,7 @@ class Acp {
           cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
           cy.get('select').eq(2).select('1991', { force: true }).should('have.value', '1991');
      };
-     selectDareAndMonth(){
+     selectDateAndMonth(){
           cy.get('select').eq(0).select('01', { force: true }).should('have.value', '01');
           cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
      };
@@ -617,7 +629,7 @@ class Acp {
           this.requiredMessagesAcpFirstPage();
           this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
                CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
-          this.selectDareAndMonth();
+          this.selectDateAndMonth();
           this.clickOnSSNRadio();
           this.fillInSSN(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.SSN_NO);
           this.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
@@ -713,11 +725,11 @@ class Acp {
           cy.get('[data-cy="acpSummary"]').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
-          cy.get('[data-cy="activateYourPlanBtn"]').click();
+          cy.get('[data-cy="actionAcpBtn"]').click();
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -740,10 +752,12 @@ class Acp {
           cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
           cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
           cy.get('[data-cy="identityVerificationValue"]').should('have.text','6462');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
      }
      addNewLineHomeDeliveryActivate(){
           cy.get('[data-cy="addNewLine"]').click();
-          cy.get('.main-title').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
           cy.get('[data-cy="checkBtn"]').click();
           PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
@@ -752,8 +766,8 @@ class Acp {
           PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
           PageObjects.Coverage.enterAddressRefBothCoverages();
           cy.get('[data-cy="checkBtn"]').click();
-          cy.get('.head-note').should('have.text','Your Phone is compatible!');
-          cy.get('.sub-note').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnHomeDelivery();
           PageObjects.ShippingPage.clickOnAddNewAddress();
@@ -782,23 +796,23 @@ class Acp {
           cy.get('.menu-item.ng-star-inserted > .items-link').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
-          cy.get('.actions > .primary').click();
+          cy.get('[data-cy="actionAcpBtn"]').click();
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
-          cy.get('#new').click();
-          cy.get('.button').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click()
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
           cy.get('[data-cy="activate-button"]').click();
           cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
-          cy.get('.title').should('have.text','Successfully activated!');
+          cy.get('[data-cy="successfullyActivatedTitle"]').should('have.text','Successfully activated!');
           cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
-          cy.get('.action > .button').should('have.text','Select your Device');
-          cy.get('.actions > .button').click();
+          cy.get('[data-cy="selectDeviceBtn"]').should('have.text','Select your Device');
+          cy.get('[data-cy="accountSummaryBtn"]').click();
           PageObjects.TitleExpectations.goToAccountSummaryPage();
-          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          cy.get('[data-cy="acpSummary"]').click();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
           cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
@@ -810,6 +824,8 @@ class Acp {
           cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
           cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
           cy.get('[data-cy="identityVerificationValue"]').should('have.text','6462');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
      };
      selectLastYearOption(){
           cy.get('select').find('option').last().then($lastOption => {
@@ -1194,7 +1210,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -1253,7 +1269,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -1276,6 +1292,502 @@ class Acp {
           cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
           cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
           cy.get('[data-cy="identityVerificationValue"]').should('have.text','6462');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
+     purchaseAcpDevice(){
+          cy.get('[data-cy="letStartBtn"]').click();
+          cy.get('[data-cy="pleaseSelectOptionMsg"]').should('have.text','Please Select an option to proceed');
+          cy.get('[data-cy="store"]').click();
+          cy.get('[data-cy="letStartBtn"]').click();
+          cy.get('[data-cy="popupTitle"]').should('have.text','Scan the barcode');
+          cy.get('[data-cy="done"]').click()
+          cy.get('[data-cy="store"]').click();
+          cy.get('[data-cy="letStartBtn"]').click();
+          cy.get('[data-cy="popupTitle"]').should('have.text','Scan the barcode');
+          cy.get('[data-cy="iconClose"]').click();
+          cy.get('[data-cy="online"]').click();
+          cy.get('[data-cy="letStartBtn"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          cy.get('[data-cy="selectDevice"]').click();
+          PageObjects.TitleExpectations.goToReviewCartPage();
+          cy.get('[data-cy="acpDeviceName"]').should('have.text','NUU TAB 8');
+          cy.get('[data-cy="acpDevicePrice"]').should('have.text',' $110.01 ');
+          cy.get('[data-cy="acpDevicePriceDiscount"]').should('have.text',' -$100.00 ');
+          cy.get('[data-cy="subtotal"]').should('have.text','Item(s) price: $10.01');
+          PageObjects.ReviewCart.clickOnCheckoutBtn();
+          PageObjects.TitleExpectations.goToACPCheckoutDevicesPage();
+          cy.get('[data-cy="storePickupTitle"]').should('have.text','In-Store Pickup');
+          cy.get('[data-cy="paymentCollectionInfo"]').should('have.text','Your payment will be collected at the store.');
+          cy.get('[data-cy="totalPaid"]').should('have.text','Total to be paid $10.01.');
+          cy.get('[data-cy="placeOrder"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('[data-cy="storePickupDeviceSuccessful"]').should('have.text',' You can always find your In-Store Pickup barcode in your Order Details page, to provide it for the store clerk for your Device pickup. ');
+          cy.get('[data-cy="viewStores"]').click();
+          cy.get('[data-cy="cities"]').should('exist');
+          cy.get('[data-cy="hideStores"]').click();
+          cy.get('[data-cy="cities"]').should('not.exist');
+          cy.get('[data-cy="orderDetailsBtn"]').click();
+          PageObjects.TitleExpectations.goToOrderDetailsPage();
+          cy.get('[data-cy="orderStatus"]').should('have.text','Pending')
+          cy.get('[data-cy="acpDeviceName"]').should('have.text','Nuu Tab 8');
+          cy.get('[data-cy="acpDevicePrice"]').should('have.text','$10.01');
+          cy.get('[data-cy="cancel"]').should('exist');
+          PageObjects.HomePage.clickOnACPsummary();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="orderDeviceSuccessfullyPlaced"]').should('have.text','Your device order has been successfully placed!');
+          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text','Your ACP Device:Your device order has been successfully placed!');
+          cy.get('[data-cy="acpDeviceProceedCollectDescription"]').should('have.text','You may now proceed and collect your device at your nearest store.');
+     };
+     requiredMessagesYesFlowAcpFirstPage(){
+          cy.get('[data-cy="required-applicationId-msg"]').should('have.text',' Application ID is required ');
+          cy.get('[data-cy="required-fname-msg"]').should('have.text',' First name is required ');
+          cy.get('[data-cy="required-lname-msg"]').should('have.text',' Last name is required ');
+          cy.get('[data-cy="required-month-msg"]').should('have.text',' Date of Birth is required ');
+          cy.get('[data-cy="required-idType-msg"]').should('have.text',' Government ID Type is required ');
+     };
+     invalidMessagesYesFlowAcpFirstPage(){
+          cy.get('[data-cy="invalid-applicationId-msg"]').should('have.text',' Application ID is invalid ');
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidDateMsg"]').should('have.text',' Date is invalid ');
+          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+          cy.get('[data-cy="invalid-ssn-msg"]').should('have.text',' Last 4 SSN should be 4 digits');
+     };
+     requiredMessagesYesFlowAcpSecondPage(){
+          cy.get('[data-cy="required-address-one-msg"]').should('have.text',' Address Line 1 is required ');
+          cy.get('[data-cy="required-city-msg"]').should('have.text',' City is required ');
+          cy.get('[data-cy="required-state-msg"]').should('have.text',' State is required ');
+          cy.get('[data-cy="required-zipcode-msg"]').should('have.text',' ZIP Code is required ');
+     };
+     invalidMessagesYesFlowAcpSecondPage(){
+          cy.get('[data-cy="invalid-city-msg"]').should('have.text',' City is invalid ');
+          cy.get('[data-cy="invalid-state-msg"]').should('have.text',' State is invalid ');
+          cy.get('[data-cy="invalid-zipcode-msg"]').should('have.text',' ZIP Code is invalid ');
+     };
+     requiredMessagesYesFlowAcpForthPage(){
+          cy.get('[data-cy="requiredSignature"]').should('have.text',' Initials are required , please make sure you filled all of them ');
+          cy.get('[data-cy="requiredName"]').should('have.text',' Full name is required ');
+          cy.get('[data-cy="captchaRequired"]').should('have.text','Please verify that you are not a robot');
+     };
+     selectInvalidDateOfBirth(){
+          cy.get('select').eq(0).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(1).select('31', { force: true }).should('have.value', '31');
+          this.selectLastYearOption();
+     };
+     enrollmentNewUserYesFlowAcpComplete(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkYesRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesYesFlowAcpFirstPage();
+          this.fillInInvalidACPAppID(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.APP_ID);
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.LAST_NAME);
+          this.selectInvalidDateOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.SSN_NO);
+          this.fillInEmail(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.EMAIL);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesFlowAcpFirstPage();
+          this.fillInACPAppID(PageObjects.Dynamics.generateNewAppId());
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_COMPLETE.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_COMPLETE.LAST_NAME);
+          this.selectDareOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_COMPLETE.SSN_NO);
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorGreat"]').should('have.text','Great!');
+          this.clickOnNextBtn();
+          this.requiredMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorAlmostThere"]').should('have.text','Almost there!');
+          this.clickOnSubmitBtn();
+          this.requiredMessagesYesFlowAcpForthPage();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.ACP_APP_COMPLETE.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnSubmitBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+     };
+     addNewLineStorePickupActivateYesFlow(){
+          cy.get('[data-cy="addNewLine"]').click();
+          cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="checkBtn"]').click();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+          PageObjects.Compatibility.addressRefNotSelectedFromList();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
+          PageObjects.Coverage.enterAddressRefBothCoverages();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="nextBtn"]').click();
+          cy.get('[data-cy="addressSectionTitle"]').should('have.text','How do you want to get your package?')
+          PageObjects.ShippingPage.clickOnStorePickup();
+          cy.get('[data-cy="barCodeVal"]').click();
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('[data-cy="orderWillBeAvailable"]').should('have.text','Your order will be available at any of the following stores:');
+          cy.get('[data-cy="storePickupSuccessful"]').should('have.text',' You can always find your SIM Card In-Store Pickup barcode in your Purchased Plans page, to provide it for the store clerk for your order pickup. ');
+          cy.get('[data-cy="purchasedPlansBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchasedPlansPage();
+          cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
+          cy.get('[data-cy="pickupBarCode"]').should('have.text','In-Store Pickup Barcode');
+          cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
+          cy.get('[data-cy="actionAcpBtn"]').click();
+          PageObjects.TitleExpectations.goToActivatePortYourSimPage();
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click()
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+          cy.get('[data-cy="activate-button"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('[data-cy="successfullyActivatedTitle"]').should('have.text','Successfully activated!');
+          cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
+          cy.get('[data-cy="selectDeviceBtn"]').should('have.text','Select your Device');
+          cy.get('[data-cy="accountSummaryBtn"]').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
+          cy.get('[data-cy="acpStatusValueComplete"]').should('have.text','Complete');
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Complete');
+          cy.get('[data-cy="mdnValue"]').should('have.text','Phone Number/MDN: (646) 662-1975');
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          const newAcpID = Cypress.env('newAcpID');
+          cy.get('[data-cy="applicationIdValue"]').should('have.text',newAcpID);
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4080');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
+     addNewLineHomeDeliveryActivateYesFlow(){
+          cy.get('[data-cy="addNewLine"]').click();
+          cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="checkBtn"]').click();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+          PageObjects.Compatibility.addressRefNotSelectedFromList();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
+          PageObjects.Coverage.enterAddressRefBothCoverages();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.ShippingPage.clickOnHomeDelivery();
+          PageObjects.ShippingPage.clickOnAddNewAddress();
+          PageObjects.ShippingPage.clickOnSaveBtn();
+          cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Name is a required field');
+          cy.get('[data-cy="addressRequiredMsg"]').should('have.text', 'Address is a Required Field');
+          cy.get('[data-cy="cityIsRequired"]').should('have.text', 'City is a Required Field');
+          cy.get('[data-cy="requiredStateMsg"]').should('have.text', 'State is a required field ');
+          cy.get('[data-cy="postalIsRequired"]').should('have.text', 'Postal Code is a Required Field');
+          PageObjects.ShippingPage.editShippingAddress(CONSTANT.SHIPPING.SHIPPING_DATA.NAME,
+               CONSTANT.SHIPPING.SHIPPING_DATA.SHIPPING_ADDRESS,
+               CONSTANT.SHIPPING.SHIPPING_DATA.SUITE_NO,
+               CONSTANT.SHIPPING.SHIPPING_DATA.CITY,
+               CONSTANT.SHIPPING.SHIPPING_DATA.STATE,
+               CONSTANT.SHIPPING.SHIPPING_DATA.POSTAL);
+          PageObjects.ShippingPage.clickOnSaveBtn();
+          PageObjects.ShippingPage.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
+          cy.get('[data-cy="purchasedPlansBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchasedPlansPage();
+          cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
+          cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+          cy.get('[data-cy="addressCity"]').should('have.text','1250 WATERS PL  111, BRONX,');
+          cy.get('[data-cy="statePostalCode"]').should('have.text','NY, 10461-2720');
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
+          cy.get('[data-cy="actionAcpBtn"]').click();
+          PageObjects.TitleExpectations.goToActivatePortYourSimPage();
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click()
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+          cy.get('[data-cy="activate-button"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('[data-cy="successfullyActivatedTitle"]').should('have.text','Successfully activated!');
+          cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
+          cy.get('[data-cy="selectDeviceBtn"]').should('have.text','Select your Device');
+          cy.get('[data-cy="accountSummaryBtn"]').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
+          cy.get('[data-cy="acpStatusValueComplete"]').should('have.text','Complete');
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Complete');
+          cy.get('[data-cy="mdnValue"]').should('have.text','Phone Number/MDN: (646) 662-1975');
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          const newAcpID = Cypress.env('newAcpID');
+          cy.get('[data-cy="applicationIdValue"]').should('have.text',newAcpID);
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4080');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
+     requiredMessagesYesWithoutIDFlowAcpFirstPage(){
+          cy.get('[data-cy="required-fname-msg"]').should('have.text',' First name is required ');
+          cy.get('[data-cy="required-lname-msg"]').should('have.text',' Last name is required ');
+          cy.get('[data-cy="required-month-msg"]').should('have.text',' Date of Birth is required ');
+          cy.get('[data-cy="required-idType-msg"]').should('have.text',' Government ID Type is required ');
+     };
+     invalidMessagesYesWithoutIDFlowAcpFirstPage(){
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidDateMsg"]').should('have.text',' Date is invalid ');
+          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+          cy.get('[data-cy="invalid-ssn-msg"]').should('have.text',' Last 4 SSN should be 4 digits');
+     };
+     requiredMessagesYesWithoutIDFlowAcpThirdPage(){
+          cy.get('[data-cy="qualifying-validation-message"]').should('have.text',' Please select one of the options above ');
+     };
+     requiredMessagesYesWithoutIDFlowwAcpForthPage(){
+          cy.get('[data-cy="requiredSignature"]').should('have.text',' Initials are required , please make sure you filled all of them ');
+          cy.get('[data-cy="requiredName"]').should('have.text',' Full name is required ');
+          cy.get('[data-cy="captchaRequired"]').should('have.text','Please verify that you are not a robot');
+     };
+     enrollmentNewUserYesWithoutIDFlowAcpComplete(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkYesWithoutIDRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesYesWithoutIDFlowAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.LAST_NAME);
+          this.selectInvalidDateOfBirth();
+          this.fillInEmail(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.EMAIL);
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.SSN_NO);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesWithoutIDFlowAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_COMPLETE.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_COMPLETE.LAST_NAME);
+          this.selectDareOfBirth();
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_COMPLETE.SSN_NO);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorDoNotWorry"]').should('have.text','Don’t Worry!');
+          this.clickOnNextBtn();
+          this.requiredMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorDoNotWorry"]').should('have.text','Don’t Worry!');
+          this.clickOnNextBtn();
+          this.requiredMessagesYesWithoutIDFlowAcpThirdPage();
+          this.clickOnIQualifyIndividually();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorAlmostThere"]').should('have.text','Almost there!');
+          this.clickOnSubmitBtn();
+          this.requiredMessagesYesFlowAcpForthPage();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.ACP_APP_COMPLETE.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnSubmitBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+     };
+     addNewLineStorePickupActivateYesWithoutIDFlow(){
+          cy.get('[data-cy="addNewLine"]').click();
+          cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="checkBtn"]').click();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+          PageObjects.Compatibility.addressRefNotSelectedFromList();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
+          PageObjects.Coverage.enterAddressRefBothCoverages();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="nextBtn"]').click();
+          cy.get('[data-cy="addressSectionTitle"]').should('have.text','How do you want to get your package?')
+          PageObjects.ShippingPage.clickOnStorePickup();
+          cy.get('[data-cy="barCodeVal"]').click();
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('[data-cy="orderWillBeAvailable"]').should('have.text','Your order will be available at any of the following stores:');
+          cy.get('[data-cy="storePickupSuccessful"]').should('have.text',' You can always find your SIM Card In-Store Pickup barcode in your Purchased Plans page, to provide it for the store clerk for your order pickup. ');
+          cy.get('[data-cy="purchasedPlansBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchasedPlansPage();
+          cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
+          cy.get('[data-cy="pickupBarCode"]').should('have.text','In-Store Pickup Barcode');
+          cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
+          cy.get('[data-cy="actionAcpBtn"]').click();
+          PageObjects.TitleExpectations.goToActivatePortYourSimPage();
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click()
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+          cy.get('[data-cy="activate-button"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('[data-cy="successfullyActivatedTitle"]').should('have.text','Successfully activated!');
+          cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
+          cy.get('[data-cy="selectDeviceBtn"]').should('have.text','Select your Device');
+          cy.get('[data-cy="accountSummaryBtn"]').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
+          cy.get('[data-cy="acpStatusValueComplete"]').should('have.text','Complete');
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Complete');
+          cy.get('[data-cy="mdnValue"]').should('have.text','Phone Number/MDN: (646) 662-1975');
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4080');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
+     addNewLineHomeDeliveryActivateYesWithoutIDFlow(){
+           cy.get('[data-cy="addNewLine"]').click();
+          cy.get('[data-cy="addingNewLineTitle"]').should('have.text','Adding a New Line:');
+          cy.get('[data-cy="checkBtn"]').click();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceRequired();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.NEWMEID.INVALID_MEID);
+          PageObjects.Compatibility.addressRefNotSelectedFromList();
+          PageObjects.Compatibility.assertIMEInumberAddressReferenceInvalid();
+          PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
+          PageObjects.Coverage.enterAddressRefBothCoverages();
+          cy.get('[data-cy="checkBtn"]').click();
+          cy.get('[data-cy="phoneIsCompatibleTitle"]').should('have.text','Your Phone is compatible!');
+          cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
+          cy.get('[data-cy="nextBtn"]').click();
+           PageObjects.ShippingPage.clickOnHomeDelivery();
+          PageObjects.ShippingPage.clickOnAddNewAddress();
+          PageObjects.ShippingPage.clickOnSaveBtn();
+          cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Name is a required field');
+          cy.get('[data-cy="addressRequiredMsg"]').should('have.text', 'Address is a Required Field');
+          cy.get('[data-cy="cityIsRequired"]').should('have.text', 'City is a Required Field');
+          cy.get('[data-cy="requiredStateMsg"]').should('have.text', 'State is a required field ');
+          cy.get('[data-cy="postalIsRequired"]').should('have.text', 'Postal Code is a Required Field');
+          PageObjects.ShippingPage.editShippingAddress(CONSTANT.SHIPPING.SHIPPING_DATA.NAME,
+               CONSTANT.SHIPPING.SHIPPING_DATA.SHIPPING_ADDRESS,
+               CONSTANT.SHIPPING.SHIPPING_DATA.SUITE_NO,
+               CONSTANT.SHIPPING.SHIPPING_DATA.CITY,
+               CONSTANT.SHIPPING.SHIPPING_DATA.STATE,
+               CONSTANT.SHIPPING.SHIPPING_DATA.POSTAL);
+          PageObjects.ShippingPage.clickOnSaveBtn();
+          PageObjects.ShippingPage.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('[data-cy="homeDeliverySuccessfulNewSIM"]').should('have.text','Lookout for your new SIM Card in the mail!');
+          cy.get('[data-cy="purchasedPlansBtn"]').click();
+          PageObjects.TitleExpectations.goToPurchasedPlansPage();
+          cy.get('[data-cy="planTitle"]').should('have.text',' Affordable Connectivity Program Plan');
+          cy.get('[data-cy="deliveryOption"]').should('have.text','Home Delivery');
+          cy.get('[data-cy="addressCity"]').should('have.text','1250 WATERS PL  111, BRONX,');
+          cy.get('[data-cy="statePostalCode"]').should('have.text','NY, 10461-2720');
+          cy.get('.menu-item.ng-star-inserted > .items-link').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Pending Activation');
+          cy.get('[data-cy="actionAcpBtn"]').click();
+          PageObjects.TitleExpectations.goToActivatePortYourSimPage();
+          cy.get('[data-cy="activateNewNumber"]').click();
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
+               CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+          cy.get('[data-cy="activate-button"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('[data-cy="successfullyActivatedTitle"]').should('have.text','Successfully activated!');
+          cy.get('[data-cy="mdnValue"]').should('have.text','(646) 662-1975');
+          cy.get('[data-cy="selectDeviceBtn"]').should('have.text','Select your Device');
+          cy.get('[data-cy="accountSummaryBtn"]').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpPlanActivationStatusValue"]').should('have.text','Enrolled');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','You are eligible for a $100 discount on a new device from our catalog! Hurry up and get yours today!');
+          cy.get('[data-cy="acpStatusValueComplete"]').should('have.text','Complete');
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Complete');
+          cy.get('[data-cy="mdnValue"]').should('have.text','Phone Number/MDN: (646) 662-1975');
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4080');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
      };
      enrollmentNewUserAcpPendingResolution(){
           PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  

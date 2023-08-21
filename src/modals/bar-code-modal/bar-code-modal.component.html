@@ -1,8 +1,8 @@
 <div class="modal">
   <div class="container model-container barcode-modal">
     <div class="modal-header">
-      <h2 class="modal-heading">{{context?.title}}</h2>
-      <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close"></i></button>
+      <h2 class="modal-heading" data-cy="popupTitle">{{context?.title}}</h2>
+      <button class="modal-close modal-toggle" (click)="closeDialog()"><i class="icon-close" data-cy="iconClose"></i></button>
     </div>
     <div class="modal-body">
       <div class="modal-content">

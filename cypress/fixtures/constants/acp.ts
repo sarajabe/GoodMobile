@@ -234,6 +234,33 @@ export const ACP_DATA = {
         STATE: 'AL',
         ZIP_CODE: '36066'
     },
+    ACP_APP_COMPLETE: {
+        FIRST_NAME: 'MRana',
+        LAST_NAME: 'Yhaddad',
+        FULL_NAME:'MRana Yhaddad',
+        TRIBAL_ID: '96969697',
+        YOB:'1991',
+        SSN_NO: '4080',
+        APP_ID:'B12345-67890',
+        EMAIL: 'acp-flow1@pavocom.com',
+        ADDRESS1: '325 n saint paul st',
+        CITY: 'dallas',
+        STATE: 'TX',
+        ZIP_CODE: '75201'
+    },
+    ACP_APP_INVALID_COMPLETE: {
+        FIRST_NAME: '444',
+        LAST_NAME: '4444',
+        FULL_NAME:'4444',
+        TRIBAL_ID: '8',
+        SSN_NO: '888',
+        APP_ID:'HD5+H876=',
+        EMAIL: 'ewww',
+        ADDRESS1: '325 n saint paul st',
+        CITY: 'dallas',
+        STATE: 'TX',
+        ZIP_CODE: '75201'
+    },
     ACP_APP_WITHOUT_ID_COMPLETE: {
         BRAND: 'good2go',
         FIRST_NAME: 'travis',
