@@ -1,6 +1,6 @@
 <section class="page-section no-app" *ngIf="!acpSuccess && !acpError">
   <div *ngIf="activeStep !== 4">
-    <h2 class="header-color">Don’t Worry!</h2>
+    <h2 class="header-color" data-cy="headerColorDoNotWorry">Don’t Worry!</h2>
     <h4 class="secondary-font" id="stepTitle">Please provide the following information to verify your application!</h4>
     <div class="info-banner default-background">
       <div class="flex">
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div *ngIf="activeStep === 4">
-    <h2 class="header-color">Almost there!</h2>
+    <h2 class="header-color" data-cy="headerColorAlmostThere">Almost there!</h2>
     <h4 class="sub-header step-4" id="stepTitle">Customer Notice and Agreement</h4>
     <p class="smaller" id="stepDesc">In choosing to apply for service under the Federal Affordable Connectivity Program (ACP) with
       Good Mobile, you should agree and initial the following:</p>
@@ -48,7 +48,7 @@
     <p class="no-border" data-cy="cancelBtn" (click)="cancel()" id="cancelBtn">Cancel</p>
     <div class="right">
       <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()" id="backBtn">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled" id="next-verify-button">{{activeStep !== 4 ? 'Next' :
+      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled" id="next-verify-button" data-cy="next-verify-button">{{activeStep !== 4 ? 'Next' :
         'Submit'}}</button>
     </div>
   </div>

@@ -36,7 +36,7 @@ class Activation {
         return this;
     };
 
-    enteractivationInfoForNewNumber(activationCODE, pin, confirmPin) {
+    enterActivationInfoForNewNumber(activationCODE, pin, confirmPin) {
         cy.get('[data-cy="activationCode"]').clear();
         cy.get('[data-cy="activationCode"]').type(activationCODE);
         cy.get('[data-cy="pinCode"]').click({force:true});
