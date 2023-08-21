@@ -1425,5 +1425,34 @@ class Acp {
           cy.go('back');
           PageObjects.TitleExpectations.goToACPApplicationPage();
      };
+     clickOnGotIt(){
+          cy.get('[data-cy="modal--primary-url-button"]').click();
+          return this;
+     };
+     assertPopupACPdeviceIsOrdered(){
+          cy.get('.modal-heading').should('have.text','You\'ve Claimed your Discount!');
+          cy.get('.acp-desc').should('have.text','Our records show that you have claimed your one-time device discount. If this is not correct, please contact customer care for more help.');
+          cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Got it!');
+     }
+     purchaseDeviceUserWithPendingACPdevice(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.clickOnSelectDevice();
+          this.assertPopupACPdeviceIsOrdered();
+          this.clickOnGotIt();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device:Your device order has been successfully placed!\n        You may now proceed and collect your device at your nearest store.');
+     };
+     purchaseDeviceUserWithShippedACPdevice(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.clickOnSelectDevice();
+          this.assertPopupACPdeviceIsOrdered();
+          this.clickOnGotIt();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device: Device successfully collected!');
+     };
 };
 export default new Acp();
