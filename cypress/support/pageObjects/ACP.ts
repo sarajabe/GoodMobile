@@ -657,7 +657,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -728,7 +728,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -1138,7 +1138,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -1197,7 +1197,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -1397,7 +1397,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
@@ -1543,7 +1543,7 @@ class Acp {
           PageObjects.TitleExpectations.goToActivatePortYourSimPage();
           cy.get('[data-cy="activateNewNumber"]').click();
           cy.get('[data-cy="nextBtn"]').click()
-          PageObjects.Activation.enteractivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
+          PageObjects.Activation.enterActivationInfoForNewNumber(CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACTIVATION_CODE,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.ACCOUNT_PIN,
                CONSTANT.ACTIVATION.ACTIVATION_DATA.ACP_NEW_NUMBER.CONFIRM_ACCOUNT_PIN);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
