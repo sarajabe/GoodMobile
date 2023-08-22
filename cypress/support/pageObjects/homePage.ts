@@ -152,6 +152,10 @@ class HomePage {
         cy.get('[data-cy="plansLink"]').click({ force: true });
         return this;
     };
+    clickOnDevices(){
+        cy.get('[data-cy="devicesLink"]').click({ force: true });
+        return this;
+    }
     clickOnShopMenu() {
         cy.get('.menu > [data-cy="shopMenu"]').click();
         return this;
