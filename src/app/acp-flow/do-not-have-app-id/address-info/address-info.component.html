@@ -13,68 +13,75 @@
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="address1" maxlength="50" id="addressLookup" data-cy="addressLookup"
-          #addressLookup type="text" />
+        <input formControlName="address1" matInput type="search" list-formatter="description" id="addressLookup"
+          data-cy="address1" #addressLookup class="geolocate" [matAutocomplete]="auto" required placeholder=" "
+          maxlength="50" (input)="changedAddress('addressInfoForm', addressInfoForm)" />
         <span>Address Line 1</span>
+        <mat-autocomplete #auto="matAutocomplete"
+          (optionSelected)="addressDetails($event,'addressInfoForm',addressInfoForm )">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{ option?.description }}
+          </mat-option>
+        </mat-autocomplete>
       </label>
-      <label class="validation-message" *ngIf="
-        addressInfoForm.controls.address1.hasError('required') &&
-        addressInfoForm.controls.address1.touched
-      " id="required-address-one-msg" data-cy="required-address-one-msg">
+      <label class="validation-message"
+        *ngIf="addressInfoForm.controls.address1.hasError('required') && addressInfoForm.controls.address1.touched"
+        id="required-address-one-msg" data-cy="required-address-one-msg">
         Address Line 1 is required
       </label>
+      <label class="validation-message vm"
+        *ngIf="!displayedAddressModel && !!addressInfoForm.controls.address1.value"
+        id="required-address-msg">Please select address from the autocomplete list</label>
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="address2" maxlength="50" id="address2" data-cy="address2" #addressLookup
-          type="text" />
+        <input placeholder=" " formControlName="address2" maxlength="50" id="mail-address2" data-cy="address2"
+          #addressLookup autocomplete="address-line2" type="text" />
         <span>Address Line 2 (Optional)</span>
       </label>
     </div>
     <div class="form-field half">
       <label class="outlined-label-input">
-        <input placeholder=" " formControlName="city" maxlength="50" id="city" data-cy="city" type="text" />
+        <input placeholder=" " formControlName="city" maxlength="50" id="mail-city" data-cy="city" type="text"
+          autocomplete="address-level2" />
         <span>City</span>
       </label>
-      <label class="validation-message" *ngIf="
-        addressInfoForm.controls.city.hasError('required') &&
-        addressInfoForm.controls.city.touched
-      " id="required-city-msg" data-cy="required-city-msg">
+      <label class="validation-message"
+        *ngIf="addressInfoForm.controls.city.hasError('required') && addressInfoForm.controls.city.touched"
+        id="required-city-msg" data-cy="required-city-msg">
         City is required
       </label>
-      <label class="validation-message" *ngIf="addressInfoForm.controls.city.hasError('pattern')" id="invalid-city-msg"
-        data-cy="invalid-city-msg">
+      <label class="validation-message" *ngIf="addressInfoForm.controls.city.hasError('pattern')"
+        id="invalid-city-msg" data-cy="invalid-city-msg">
         City is invalid
       </label>
     </div>
     <div class="form-field half double">
       <div class="form-section">
-        <label class="outlined-label-input ">
-          <input placeholder=" " formControlName="state" maxlength="2" id="state" data-cy="state" type="text"
-            minlength="2" />
+        <label class="outlined-label-input">
+          <input placeholder=" " formControlName="state" maxlength="2" id="mail-state" data-cy="mail-state" type="text"
+            autocomplete="address-level1" />
           <span>State</span>
         </label>
-        <label class="validation-message" *ngIf="
-          addressInfoForm.controls.state.hasError('required') &&
-          addressInfoForm.controls.state.touched
-        " id="required-state-msg" data-cy="required-state-msg">
+        <label class="validation-message"
+          *ngIf="addressInfoForm.controls.state.hasError('required') && addressInfoForm.controls.state.touched"
+          id="required-state-msg" data-cy="required-state-msg">
           State is required
         </label>
-        <label class="validation-message"
-          *ngIf="addressInfoForm.controls.state.invalid && addressInfoForm.controls.state.dirty  &&  !addressInfoForm.controls.state.hasError('required')"
+        <label class="validation-message" *ngIf="addressInfoForm.controls.state.hasError('pattern')"
           id="invalid-state-msg" data-cy="invalid-state-msg">
           State is invalid
         </label>
       </div>
       <div class="form-section">
-        <label class="outlined-label-input ">
-          <input placeholder=" " formControlName="zipCode" id="zipCode" data-cy="zipCode" type="text" maxlength="10" />
+        <label class="outlined-label-input">
+          <input placeholder=" " formControlName="zipCode" id="mail-zipCode" data-cy="mail-zipCode" type="text"
+            maxlength="10" autocomplete="postal-code" />
           <span>ZIP Code</span>
         </label>
-        <label class="validation-message" *ngIf="
-            addressInfoForm.controls.zipCode.hasError('required') &&
-            addressInfoForm.controls.zipCode.touched
-          " id="required-zipcode-msg" data-cy="required-zipcode-msg">
+        <label class="validation-message"
+          *ngIf="addressInfoForm.controls.zipCode.hasError('required') && addressInfoForm.controls.zipCode.touched"
+          id="required-zipcode-msg" data-cy="required-zipcode-msg">
           ZIP Code is required
         </label>
         <label class="validation-message" *ngIf="addressInfoForm.controls.zipCode.hasError('pattern')"
