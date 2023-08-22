@@ -11,7 +11,7 @@ describe('Login with a user has no ACP plan - purchase an acp device', () => {
     it('Should login with a user has no ACP plan', () => {
         PageObjects.AccessControl.logInUserWithNoAcp();
     });
-    it('purchase an acp device', () => {
-        PageObjects.Acp.purchaseDeviceUserWithNoACPplan();
+    it('Should assert that a user without ACP plan can not purchase ACP', () => {
+        PageObjects.Acp.assertUserWithNoAcpPlanCanNotPurchaseACP();
     });
 })
