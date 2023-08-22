@@ -288,7 +288,7 @@
                                 <div class="flex-set">
                                     <input placeholder=" " [(ngModel)]="zipCode" name="zipCode"
                                         [pattern]="zipCodePattern" id="zipCode" type="text" maxlength="10"
-                                        #equipmentNumber="ngModel" required (blur)="validateZipCode()"
+                                        #equipmentNumber="ngModel" required (input)="validateZipCode()"
                                         [class.disabled]="!!processingRequest" />
                                     <button class="button primary verify-button" aria-label="Next" type="submit"
                                         (click)="estimateTaxes()">
