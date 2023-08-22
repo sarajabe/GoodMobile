@@ -8,9 +8,9 @@ describe('Login with a user has pending ACP device - purchase an acp device', ()
         PageObjects.AccessControl.logoutFromAccount();
     });
     it('Should login with a user has pending ACP device', () => {
-        PageObjects.AccessControl.logInUserWithPendingACPdevice();
+        PageObjects.AccessControl.logInUserWithPendingAcpDevice();
     });
-    it('purchase an acp device', () => {
-        PageObjects.Acp.purchaseDeviceUserWithPendingACPdevice();
+    it('Should assert a user with pending ACP device -can not purchase another ACP device', () => {
+        PageObjects.Acp.assertUserWithPendingAcpDeviceCanNotPurchaseACP();
     });
 })

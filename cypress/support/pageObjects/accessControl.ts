@@ -113,7 +113,7 @@ class AccessControl {
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToACPApplicationPage();
         };
-        logInUserWithPendingACPdevice() {
+        logInUserWithPendingAcpDevice() {
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_PENDING_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_PENDING_ACP_DEVICE.PASSWORD);
@@ -121,7 +121,7 @@ class AccessControl {
                 PageObjects.TitleExpectations.goToACPApplicationPage();
                 return this;
         };
-        logInUserWithShippedACPdevice() {
+        logInUserWithShippedAcpDevice() {
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.PASSWORD);

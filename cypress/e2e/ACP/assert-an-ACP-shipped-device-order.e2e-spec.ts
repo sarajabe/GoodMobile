@@ -8,9 +8,9 @@ describe('Login with a user has shipped ACP device - purchase an acp device', ()
         PageObjects.AccessControl.logoutFromAccount();
     });
     it('Should login with a user has shipped ACP device', () => {
-        PageObjects.AccessControl.logInUserWithShippedACPdevice();
+        PageObjects.AccessControl.logInUserWithShippedAcpDevice();
     });
-    it('purchase an acp device', () => {
-        PageObjects.Acp.purchaseDeviceUserWithShippedACPdevice();
+    it('Should assert a user with shipped ACP device - can not purchase another ACP device', () => {
+        PageObjects.Acp.assertUserWithShippedAcpDeviceCanNotPurchaseACP();
     });
 })
