@@ -315,5 +315,13 @@ export const ACCESS = {
     ACCOUNT_WITH_NO_ACP:{
         EMAIL: "empty@ztarmobile.com",
         PASSWORD: "Abc123"
+    },
+    ACCOUNT_WITH_PENDING_ACP_DEVICE:{
+        EMAIL: "gm-larakh7@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
+    ACCOUNT_WITH_SHIPPED_ACP_DEVICE:{
+        EMAIL: "new-acp21@ppavocom.com",
+        PASSWORD: "Abc123"
     }
 };

@@ -121,5 +121,21 @@ class AccessControl {
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
                 return this;
         };
+        logInUserWithPendingAcpDevice() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_PENDING_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_PENDING_ACP_DEVICE.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToACPApplicationPage();
+                return this;
+        };
+        logInUserWithShippedAcpDevice() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToACPApplicationPage();
+                return this;
+        };
 }
 export default new AccessControl();

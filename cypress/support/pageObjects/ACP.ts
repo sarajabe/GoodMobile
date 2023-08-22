@@ -1725,12 +1725,21 @@ class Acp {
           cy.get('[data-cy="modal--primary-url-button"]').click();
           return this;
      };
+     clickOnGotIt(){
+          cy.get('[data-cy="modal--primary-url-button"]').click();
+          return this;
+     };
      assertPopupAcpDeviceUserHasNoACP(){
           cy.get('.modal-heading').should('have.text','Looking for ACP device benefits?');
           cy.get('.acp-desc').should('have.text','To get your ACP device benefits, you should \n    enroll and activate your ACP plan first!');
           cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Get ACP Now!');
      };
-     assertUserWithNoAcpPlanCanNotPurchaseACP(){
+     assertPopupACPdeviceIsOrdered(){
+          cy.get('.modal-heading').should('have.text','You\'ve Claimed your Discount!');
+          cy.get('.acp-desc').should('have.text','Our records show that you have claimed your one-time device discount. If this is not correct, please contact customer care for more help.');
+          cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Got it!');
+     };
+     assertUserWithPendingAcpDeviceCanNotPurchaseACP(){
           PageObjects.HomePage.clickOnShopMenu();
           PageObjects.HomePage.clickOnDevices();
           PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
@@ -1738,6 +1747,26 @@ class Acp {
           this.assertPopupAcpDeviceUserHasNoACP();
           this.clickOnGetACPnow();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
+     };
+     assertUserWithNoAcpPlanCanNotPurchaseACP(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.clickOnSelectDevice();
+          this.assertPopupACPdeviceIsOrdered();
+          this.clickOnGotIt();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device:Your device order has been successfully placed!\n        You may now proceed and collect your device at your nearest store.');
+     };
+     assertUserWithShippedAcpDeviceCanNotPurchaseACP(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.clickOnSelectDevice();
+          this.assertPopupACPdeviceIsOrdered();
+          this.clickOnGotIt();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device: Device successfully collected!');
      };
 };
 export default new Acp();
