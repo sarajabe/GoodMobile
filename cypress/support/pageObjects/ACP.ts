@@ -1717,9 +1717,22 @@ class Acp {
           cy.go('back');
           PageObjects.TitleExpectations.goToACPApplicationPage();
      };
+     clickOnSelectDevice(){
+          cy.get('[data-cy="selectDevice"]').click();
+          return this;
+     };
+     clickOnGetACPnow(){
+          cy.get('[data-cy="modal--primary-url-button"]').click();
+          return this;
+     };
      clickOnGotIt(){
           cy.get('[data-cy="modal--primary-url-button"]').click();
           return this;
+     };
+     assertPopupAcpDeviceUserHasNoACP(){
+          cy.get('.modal-heading').should('have.text','Looking for ACP device benefits?');
+          cy.get('.acp-desc').should('have.text','To get your ACP device benefits, you should \n    enroll and activate your ACP plan first!');
+          cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Get ACP Now!');
      };
      assertPopupACPdeviceIsOrdered(){
           cy.get('.modal-heading').should('have.text','You\'ve Claimed your Discount!');
@@ -1727,6 +1740,15 @@ class Acp {
           cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Got it!');
      };
      assertUserWithPendingAcpDeviceCanNotPurchaseACP(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.clickOnSelectDevice();
+          this.assertPopupAcpDeviceUserHasNoACP();
+          this.clickOnGetACPnow();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+     };
+     assertUserWithNoAcpPlanCanNotPurchaseACP(){
           PageObjects.HomePage.clickOnShopMenu();
           PageObjects.HomePage.clickOnDevices();
           PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
