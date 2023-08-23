@@ -94,9 +94,11 @@ class AccessControl {
                         CONSTANT.ACCESS.NEW_SIGNUP_DATA2.PASSWORD,
                         CONSTANT.ACCESS.NEW_SIGNUP_DATA2.CONFIRMED_PASS);
                 PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
-                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL0);
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
                 PageObjects.AccessControl.clickOnSubmitBtn();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
                 PageObjects.TitleExpectations.goToWelcomeOnBoardPage();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         };
         logInNewUserAcp( password) {
                 cy.get('[data-cy="loginEmail"]').clear();

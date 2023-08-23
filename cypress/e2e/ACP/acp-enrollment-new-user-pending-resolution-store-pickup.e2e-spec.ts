@@ -14,10 +14,10 @@ describe('Sign in then enroll in ACP plan - new user - pending resolution - stor
     it('Should enroll a new user acp pending resolution', () => {
         PageObjects.Acp.enrollmentNewUserAcpPendingResolution();
     });
-    // it('Should resume filling for acp ', () => {
-    //     PageObjects.Acp.resumeFillingFlow();
-    // });
-    // it('Should add new line with store pickup then activate', () =>{
-    //     PageObjects.Acp.addNewLineStorePickupActivate()  
-    // });
+    it('Should resume filling for acp ', () => {
+        PageObjects.Acp.resumeFillingFlow();
+    });
+    it('Should add new line with store pickup then activate', () =>{
+        PageObjects.Acp.addNewLineStorePickupActivate()  
+    });
 });

@@ -11,6 +11,27 @@ steps:
       - '--key=$_KEY'
       - '--project=ztar-mgmt-security-kms-pre'
 
+      # Decrypt the encrypted files 
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'kms'
+      - 'decrypt'
+      - '--ciphertext-file=$_CYPRESS_FILE_NAME'
+      - '--plaintext-file=$_DEC_CYPRESS_FILE_NAME'
+      - '--location=global'
+      - '--keyring=$_KEY_RING'
+      - '--key=$_KEY'
+      - '--project=ztar-mgmt-security-kms-pre'
+  - name: 'node'
+    entrypoint: bash
+    args: 
+      - '-c'
+      - 'npm install --f'
+      - 'npm run start'
+  - name: 'cypress/included:10.6.0'
+    entrypoint: 'npx'
+    args: ['cypress', 'run', '--browser', 'chrome', '--headless', '--spec' ,'cypress/e2e/ACP/acp-enrollment-new-user-pending-resolution-store-pickup.e2e-spec.ts'] 
+
   # Build the docker image using the Dockerfile in the repository, PROJECT_ID and COMMIT_SHA are provided by CloudBuild itself
   - name: 'gcr.io/cloud-builders/docker'
     args: 
