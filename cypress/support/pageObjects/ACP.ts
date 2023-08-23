@@ -337,72 +337,6 @@ class Acp {
           cy.get('[data-cy="forthCheck"]').type('MY');
           return this;
      };
-     firstCheckResumeFillingSignUp() {
-          cy.get('#initial1').click()
-          cy.get('#initial1').clear();
-          cy.get('#initial1').type('MY')
-          return this;
-     };
-     secondCheckResumeFillingSignUp() {
-          cy.get('#initial2').click();
-          cy.get('#initial2').clear();
-          cy.get('#initial2').type('MY');
-          return this;
-     };
-     thirdCheckResumeFillingSignUp() {
-          cy.get('#initial3').click();
-          cy.get('#initial3').clear();
-          cy.get('#initial3').type('MY');
-          return this;
-     };
-     forthCheckResumeFillingSignUp() {
-          cy.get('#initial4').click();
-          cy.get('#initial4').clear();
-          cy.get('#initial4').type('MY');
-          return this;
-     };
-     fifthCheckResumeFillingSignUp() {
-          cy.get('#initial10').click();
-          cy.get('#initial10').clear();
-          cy.get('#initial10').type('MY');
-          return this;
-     };
-     sixCheckResumeFillingSignUp() {
-          cy.get('#acpFederalSubsidyInitials').click();
-          cy.get('#acpFederalSubsidyInitials').clear();
-          cy.get('#acpFederalSubsidyInitials').type('MY');
-          return this;
-     };
-     sevenCheckResumeFillingSignUp() {
-          cy.get('#initial6').click()
-          cy.get('#initial6').clear();
-          cy.get('#initial6').type('MY')
-          return this;
-     };
-     eightCheckResumeFillingSignUp() {
-          cy.get('#initial7').click();
-          cy.get('#initial7').clear();
-          cy.get('#initial7').type('MY');
-          return this;
-     };
-     nineCheckResumeFillingSignUp() {
-          cy.get('#initial8').click();
-          cy.get('#initial8').clear();
-          cy.get('#initial8').type('MY');
-          return this;
-     };
-     // tenCheckResumeFillingSignUp() {
-     //      cy.get('#initial4').click();
-     //      cy.get('#initial4').clear();
-     //      cy.get('#initial4').type('MY');
-     //      return this;
-     // };
-     elevenCheckResumeFillingSignUp() {
-          cy.get('#initial9').click();
-          cy.get('#initial9').clear();
-          cy.get('#initial9').type('MY');
-          return this;
-     };
      mismatchedInitials() {
           cy.get('[data-cy="firstCheck"]').click();
           cy.get('[data-cy="firstCheck"]').clear();
@@ -482,12 +416,6 @@ class Acp {
           cy.get('[data-cy="name"]').click({force:true})
           cy.get('[data-cy="name"]').clear();
           cy.get('[data-cy="name"]').type(fullName)            
-          return this;
-     };
-     fillInFullNameResumeFilling(fullName) {
-          cy.get('#applicantSignatureForCertId').click({force:true})
-          cy.get('#applicantSignatureForCertId').clear();
-          cy.get('#applicantSignatureForCertId').type(fullName)
           return this;
      };
      notCapitalisedInitials() {
@@ -1789,6 +1717,19 @@ class Acp {
           cy.go('back');
           PageObjects.TitleExpectations.goToACPApplicationPage();
      };
+     assertUserInformationBanner(){
+          cy.get('[data-cy="bannerContentTitle"]').should('have.text',' Looking for ACP device benefits?');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','Look no further!Please finish your ACP enrollment and activation for a chance to claim up to $100 discount on a new device!');
+     }; 
+     assertNationalVerifierInfoBanner(){
+          cy.get('[data-cy="infoBannerTitle"]').should('have.text','Action Required:');
+          cy.get('[data-cy="infoBannerFirstDescription"]').should('have.text','Upload copies of your proof documentation:');
+          cy.get('[data-cy="infoBannerSecDescription"]').should('have.text','Please select “Resume Filing” to be redirected to the National Verifier.');
+          cy.get('[data-cy="infoBannerThirdDescription"]').should('have.text','Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.');
+          cy.get('[data-cy="infoBannerLastDescription"]').should('have.text','Please make sure to complete this step within 45 days.');
+          cy.get('[data-cy="resumeFilingBtn"]').should('have.text','Resume Filing ');
+          cy.get('[data-cy="qrCode"]').should('exist');
+     }; 
      enrollmentNewUserAcpPendingResolution(){
           PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
           PageObjects.TitleExpectations.goToPlansGMPage();
@@ -1811,12 +1752,12 @@ class Acp {
           this.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
           this.clickOnNextBtn();
           this.invalidMessagesAcpFirstPage();
-          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO.FIRST_NAME,
-               CONSTANT.ACP_DATA.PERSONAL_INFO.LAST_NAME);
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.LAST_NAME);
           this.selectDareOfBirth();
           this.clickOnSSNRadio();
-          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO.SSN_NO);
-          this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO.PHONE_NUMBER);
+          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.PHONE_NUMBER);
           this.fillInEmail(PageObjects.Dynamics.makeNewEmail());
           this.clickOnNextBtn();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
@@ -1833,11 +1774,11 @@ class Acp {
                CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
           this.clickOnNextBtn();
           this.invalidMessagesAcpSecondPage();
-          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS.ADDRESS_LINE1,
-               CONSTANT.ACP_DATA.VERIFIED_ADDRESS.CITY);
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.CITY);
           this.fillInPhysicalAddressInfo2(
-               CONSTANT.ACP_DATA.VERIFIED_ADDRESS.STATE,
-               CONSTANT.ACP_DATA.VERIFIED_ADDRESS.ZIP);
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ZIP);
           cy.get('[data-cy="useSameAddress"]').click();
           this.clickOnNextBtn();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
@@ -1861,7 +1802,7 @@ class Acp {
           this.secondCheckSignUp();
           this.thirdCheckSignUp();
           this.forthCheckSignUp();
-          this.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO.FULL_NAME);
+          this.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.FULL_NAME);
           PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
           this.clickOnVerifyBtn();
@@ -1870,36 +1811,18 @@ class Acp {
           cy.get('.title').should('have.text','Awesome, Almost Done!');
           cy.get('.description').should('have.text','Please select “Resume Filing” to be redirected to the National Verifier. Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.Please make sure to complete this step within 45 days.');
           cy.get('.button').should('exist');
-          // cy.get('.button').click();//
-          // cy.wait(CONSTANT.TIME.SPEED_TIME.LEVE5);//
-     };
-     resumeFillingFlow(){
-          cy.get('.button').click();
-          // cy.wait(CONSTANT.TIME.SPEED_TIME.LEVE5);
-          cy.url().should('eq', 'https://nvca-stg.universalservice.org/ebca-ui/#/termcondition');
-          // cy.url().should('eq', 'https://nvca-stg.universalservice.org/ebca-ui/#/error');
-          //
-          // cy.get('#nextBtn').click();
-          // this.firstCheckResumeFillingSignUp();
-          // this.secondCheckResumeFillingSignUp();
-          // this.thirdCheckResumeFillingSignUp();
-          // this.forthCheckResumeFillingSignUp();
-          // this.fifthCheckResumeFillingSignUp();
-          // this.sixCheckResumeFillingSignUp();
-          // this.sevenCheckResumeFillingSignUp();
-          // this.eightCheckResumeFillingSignUp();
-          // this.nineCheckResumeFillingSignUp();
-          // // this.tenCheckResumeFillingSignUp();
-          // this.elevenCheckResumeFillingSignUp();
-          // this.fillInFullNameResumeFilling(CONSTANT.ACP_DATA.PERSONAL_INFO.FULL_NAME);
-          // //checkbox
-          // cy.get('#certSubmitBtn').click();
-          // //
-          // cy.get('#returnToCarrierUrlBtn').click();
-          // PageObjects.TitleExpectations.goToACPEnrollemntPage();
-          // cy.get('.title').should('have.text','Congratulations!');
-          // cy.get('.description').should('have.text','Your ACP benefits can now be applied to your Good Mobile 10GB ACP plan!');
-          // cy.get('[data-cy="addNewLine"]').should('exist');
+          PageObjects.HomePage.clickOnACPsummary();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          this.assertUserInformationBanner();
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending Resolution');
+          this.assertNationalVerifierInfoBanner();
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4444');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
      };
      clickOnSelectDevice(){
           cy.get('[data-cy="selectDevice"]').click();

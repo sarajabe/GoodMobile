@@ -1,7 +1,7 @@
 import { PageObjects } from '../../support/pageObjects';
 import { CONSTANT } from '../../fixtures/constants'
 
-describe('Sign in then enroll in ACP plan - new user - pending resolution - store pickup', () => {
+describe('Sign in then enroll in ACP plan - new user - pending resolution - assert ACP summary', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
@@ -13,11 +13,5 @@ describe('Sign in then enroll in ACP plan - new user - pending resolution - stor
     });
     it('Should enroll a new user acp pending resolution', () => {
         PageObjects.Acp.enrollmentNewUserAcpPendingResolution();
-    });
-    it('Should resume filling for acp ', () => {
-        PageObjects.Acp.resumeFillingFlow();
-    });
-    it('Should add new line with store pickup then activate', () =>{
-        PageObjects.Acp.addNewLineStorePickupActivate()  
     });
 });

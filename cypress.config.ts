@@ -1,5 +1,4 @@
 import { defineConfig } from 'cypress'
-require('dotenv').config();
 
 export default defineConfig({
   projectId: '96mumg',
@@ -21,12 +20,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    baseUrl: 'https://gm-test.ztarmobile.io',
+    baseUrl: 'http://localhost:4000/home',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
-  },
-  env: {
-    GOOGLE_REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN,
-    REACT_APP_GOOGLE_CLIENTID: process.env.REACT_APP_GOOGLE_CLIENTID,
-    REACT_APP_GOOGLE_CLIENT_SECRET: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
   },
 })

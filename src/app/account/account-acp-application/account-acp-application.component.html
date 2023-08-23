@@ -84,7 +84,7 @@
                         <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
                             [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" alt="Icon">
                         <div class="banner-content">
-                            <p class="title" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
+                            <p class="title" data-cy="bannerContentTitle" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
                                 {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
                             <p class="description" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1" data-cy="youAreEligibleDescription"></p>
@@ -185,10 +185,10 @@
                     <img [src]="!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg'"
                         alt="Note Icon">
                     <div class="banner-content" *ngIf="!!ACP_DESCS[appStatus]">
-                        <p class="title" *ngIf="ACP_DESCS[appStatus]?.title">{{ACP_DESCS[appStatus]?.title}}</p>
-                        <p class="description" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
+                        <p class="title" *ngIf="ACP_DESCS[appStatus]?.title" data-cy="infoBannerTitle">{{ACP_DESCS[appStatus]?.title}}</p>
+                        <p class="description" data-cy="infoBannerFirstDescription" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
                             [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
-                        <p class="description last" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
+                        <p class="description last" data-cy="infoBannerLastDescription" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
                             [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
                         <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
                             <button class="button primary" data-cy="resumeFilingBtn" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
@@ -396,17 +396,17 @@
                     <img [src]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE) ? 'assets/icon/success-icon.svg' : (!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg')"
                         alt="note icon">
                     <div class="banner-content" *ngIf="!!NV_DESCS[nvStatus]">
-                        <p class="title" *ngIf="NV_DESCS[nvStatus]?.title">{{NV_DESCS[nvStatus]?.title}}</p>
-                        <p class="description" [class.last]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE"
+                        <p class="title" data-cy="infoBannerTitle" *ngIf="NV_DESCS[nvStatus]?.title">{{NV_DESCS[nvStatus]?.title}}</p>
+                        <p class="description" data-cy="infoBannerFirstDescription" [class.last]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE"
                             *ngIf="!!NV_DESCS[nvStatus]?.desc1" [innerHTML]="NV_DESCS[nvStatus]?.desc1"></p>
-                        <p class="description" *ngIf="!!NV_DESCS[nvStatus]?.desc2"
+                        <p class="description" data-cy="infoBannerSecDescription" *ngIf="!!NV_DESCS[nvStatus]?.desc2"
                             [innerHTML]="NV_DESCS[nvStatus]?.desc2"></p>
-                        <p class="description bottom-8" *ngIf="!!NV_DESCS[nvStatus]?.desc3"
+                        <p class="description bottom-8" data-cy="infoBannerThirdDescription" *ngIf="!!NV_DESCS[nvStatus]?.desc3"
                             [innerHTML]="NV_DESCS[nvStatus]?.desc3"></p>
-                        <p class="description last" *ngIf="!!NV_DESCS[nvStatus]?.desc4"
+                        <p class="description last" data-cy="infoBannerLastDescription" *ngIf="!!NV_DESCS[nvStatus]?.desc4"
                             [innerHTML]="NV_DESCS[nvStatus]?.desc4"></p>
                         <div class="actions" *ngIf="!!NV_DESCS[nvStatus]?.buttonName || !!NV_DESCS[nvStatus]?.linkName">
-                            <button class="button primary" [class.long]="!!NV_DESCS[nvStatus]?.longClass"
+                            <button class="button primary" data-cy="resumeFilingBtn" [class.long]="!!NV_DESCS[nvStatus]?.longClass"
                                 *ngIf="!!NV_DESCS[nvStatus]?.buttonName"
                                 (click)="this[NV_DESCS[nvStatus]?.buttonAction]()"
                                 [disabled]="!!this[NV_DESCS[nvStatus]?.disabledCondition]"
@@ -425,7 +425,7 @@
                     <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application and upload your documents
                         on your <b>smartphone</b>.</p>
                     <div class="qr">
-                        <qrcode [qrdata]="verificationDetails?.link" [width]="200" [errorCorrectionLevel]="'M'">
+                        <qrcode data-cy="qrCode" [qrdata]="verificationDetails?.link" [width]="200" [errorCorrectionLevel]="'M'">
                         </qrcode>
                     </div>
                 </div>

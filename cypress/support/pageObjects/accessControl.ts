@@ -98,7 +98,6 @@ class AccessControl {
                 PageObjects.AccessControl.clickOnSubmitBtn();
                 cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
                 PageObjects.TitleExpectations.goToWelcomeOnBoardPage();
-                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         };
         logInNewUserAcp( password) {
                 cy.get('[data-cy="loginEmail"]').clear();
