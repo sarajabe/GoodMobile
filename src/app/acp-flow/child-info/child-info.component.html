@@ -223,7 +223,8 @@
               id="required-date-msg" data-cy="required-month-msg">
               Date of Birth is required
             </label>
-            <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg" data-cy="invalidDateMsg">
+            <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg"
+              data-cy="invalidDateMsg">
               Date is invalid
             </label>
           </div>
@@ -268,7 +269,7 @@
           <div class="form-field quarter"
             *ngIf="!!childInfoForm.controls.identityType.value && childInfoForm.controls.identityType.value == 'tribal'">
             <label class="outlined-label-input">
-              <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal"
+              <input placeholder=" " formControlName="tribalId" minlength="2" maxlength="20" type="text" id="tribal"
                 data-cy="tribalIdInput" />
               <span>Tribal ID</span>
             </label>
@@ -278,10 +279,10 @@
               Tribal ID is required
             </label>
             <label class="validation-message"
-            *ngIf="childInfoForm.controls.tribalId.dirty && !childInfoForm.controls.tribalId.valid && !!childInfoForm.controls.tribalId.value"
-            id="invalid-tribal-msg" data-cy="invalidTribalMsg">
-            Tribal ID is invalid
-          </label>
+              *ngIf="childInfoForm.controls.tribalId.hasError('minlength') && !!childInfoForm.controls.tribalId.value"
+              id="invalid-tribal-msg" data-cy="invalidTribalMsg">
+              Tribal ID is invalid
+            </label>
           </div>
         </div>
       </div>

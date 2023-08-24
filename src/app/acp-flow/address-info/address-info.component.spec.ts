@@ -31,7 +31,7 @@ let mockPlacesAutocompleteService;
 let mockEbbService;
 let mockFirebaseUserProfileService;
 
-fdescribe('No flow - EBB Address Info Component - Unit Testing', async () => {
+describe('No flow - EBB Address Info Component - Unit Testing', async () => {
     beforeEach(async () => {
         mockEbbService = jasmine.createSpy('EBBService');
         mockFirebaseUserProfileService = jasmine.createSpy('FirebaseUserProfileService');

@@ -23,7 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { QualifyingInfoComponent } from '../qualifying-info/qualifying-info.component';
 import { SignatureInfoComponent } from '../../signature-info/signature-info.component';
 
-fdescribe('Non existing app id validation Component - Unit Testing', () => {
+describe('Non existing app id validation Component - Unit Testing', () => {
   let component: NotExistingAppValidationComponent;
   let fixture: ComponentFixture<NotExistingAppValidationComponent>;
   let personalInfoComponent: PersonalInfoNonExisitngAppComponent;

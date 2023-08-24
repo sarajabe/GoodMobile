@@ -22,7 +22,7 @@ import { AppIdAddressInfoComponent } from '../app-id-address-info/app-id-address
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SignatureInfoComponent } from '../../signature-info/signature-info.component';
 
-fdescribe('Acp app id Validation Component - Unit Testing', () => {
+describe('Acp app id Validation Component - Unit Testing', () => {
     let component: AppIdValidationComponent;
     let fixture: ComponentFixture<AppIdValidationComponent>;
     let appIdPersonalInfoComponent: AppIdPersonalInfoComponent;

@@ -421,7 +421,12 @@ fdescribe('No Flow - EBB Child Info Component - Unit Testing', async () => {
             tribalInputField.markAsDirty();
             fixture.detectChanges();
 
+            const invalidTribalMsg = fixture.debugElement.query(By.css('#invalid-tribal-msg'));
+
+
             expect(tribalInputField.hasError('minlength')).toBeTruthy();
+            expect(invalidTribalMsg.nativeElement).toBeDefined();
+
             expect(component.childInfoForm.valid).toBeFalsy();
         });
     }));

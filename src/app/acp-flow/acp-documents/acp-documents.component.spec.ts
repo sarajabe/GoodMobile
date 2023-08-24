@@ -12,7 +12,7 @@ import { ACP_MOCKS } from 'src/mocks';
 import { of } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-fdescribe('No Flow - ACP Documents Component - Unit Testing', () => {
+describe('No Flow - ACP Documents Component - Unit Testing', () => {
   let component: AcpDocumentsComponent;
   let fixture: ComponentFixture<AcpDocumentsComponent>;
 
