@@ -1768,5 +1768,86 @@ class Acp {
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device: Device successfully collected!');
      };
+     assertNationalVerifierInfoAttentionBanner(){
+          cy.get('[data-cy="infoBannerTitle"]').should('have.text','Attention!');
+          cy.get('[data-cy="infoBannerFirstDescription"]').should('have.text','It seems like you have not completed your ACP application with the National\n        Verifier yet. Please visit ACPbenefit.org to complete your application before\n        finish the enrollment with Good Mobile.');
+     }; 
+     enrollmentNewUserYesFlowAcpPending(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkYesRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesYesFlowAcpFirstPage();
+          this.fillInInvalidACPAppID(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.APP_ID);
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.LAST_NAME);
+          this.selectInvalidDateOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.SSN_NO);
+          this.fillInEmail(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.EMAIL);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesFlowAcpFirstPage();
+          this.fillInACPAppID(PageObjects.Dynamics.generateNewAppId());
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_PENDING.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_PENDING.LAST_NAME);
+          this.selectDareOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_PENDING.SSN_NO);
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorGreat"]').should('have.text','Great!');
+          this.clickOnNextBtn();
+          this.requiredMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.APPLICATION_PENDING.ADDRESS1,
+               CONSTANT.ACP_DATA.APPLICATION_PENDING.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.APPLICATION_PENDING.STATE,
+               CONSTANT.ACP_DATA.APPLICATION_PENDING.ZIP);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorAlmostThere"]').should('have.text','Almost there!');
+          this.clickOnSubmitBtn();
+          this.requiredMessagesYesFlowAcpForthPage();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.ACP_APP_PENDING.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnSubmitBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headNote"]').should('have.text','We are sorry!');
+          cy.get('[data-cy="acpAPPNotComplete"]').should('have.text',' It seems like you have not completed your ACP application with the National Verifier yet.');
+          cy.get('[data-cy="doneBtn"]').should('exist');
+          PageObjects.HomePage.clickOnACPsummary();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          this.assertUserInformationBanner();
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending');
+          this.assertNationalVerifierInfoAttentionBanner();
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          const newAcpID = Cypress.env('newAcpID');
+          cy.get('[data-cy="applicationIdValue"]').should('have.text',newAcpID);
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','8888');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
 };
 export default new Acp();
