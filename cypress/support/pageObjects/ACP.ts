@@ -1768,5 +1768,85 @@ class Acp {
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device: Device successfully collected!');
      };
+     enrollmentNewUserYesWithoutIdFlowAcpPending(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkYesWithoutIDRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesYesWithoutIDFlowAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.LAST_NAME);
+          this.selectInvalidDateOfBirth();
+          this.fillInEmail(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.EMAIL);
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_INVALID_COMPLETE.SSN_NO);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesWithoutIDFlowAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.ACP_APP_PENDING2.FIRST_NAME,
+               CONSTANT.ACP_DATA.ACP_APP_PENDING2.LAST_NAME);
+          this.selectDareOfBirth();
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.ACP_APP_PENDING2.SSN_NO);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorDoNotWorry"]').should('have.text','Don’t Worry!');
+          this.clickOnNextBtn();
+          this.requiredMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesYesFlowAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ZIP);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorDoNotWorry"]').should('have.text','Don’t Worry!');
+          this.clickOnNextBtn();
+          this.requiredMessagesYesWithoutIDFlowAcpThirdPage();
+          this.clickOnIQualifyIndividually();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headerColorAlmostThere"]').should('have.text','Almost there!');
+          this.clickOnSubmitBtn();
+          this.requiredMessagesYesFlowAcpForthPage();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.ACP_APP_PENDING2.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnSubmitBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headNote"]').should('have.text','We are sorry!');
+          cy.get('[data-cy="acpAPPNotComplete"]').should('have.text',' It seems like you have not completed your ACP application with the National Verifier yet.');
+          cy.get('[data-cy="doneBtn"]').should('exist');
+          PageObjects.HomePage.clickOnACPsummary();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          this.assertUserInformationBanner();
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending');
+          this.assertNationalVerifierInfoAttentionBanner();
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4444');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
+
 };
 export default new Acp();

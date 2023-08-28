@@ -14,7 +14,7 @@
     <div class="form-field half">
       <label class="outlined-label-input">
         <input formControlName="address1" matInput type="search" list-formatter="description" id="addressLookup"
-          data-cy="address1" #addressLookup class="geolocate" [matAutocomplete]="auto" required placeholder=" "
+        data-cy="addressLookup" #addressLookup class="geolocate" [matAutocomplete]="auto" required placeholder=" "
           maxlength="50" (input)="changedAddress('addressInfoForm', addressInfoForm)" />
         <span>Address Line 1</span>
         <mat-autocomplete #auto="matAutocomplete"
@@ -59,7 +59,7 @@
     <div class="form-field half double">
       <div class="form-section">
         <label class="outlined-label-input">
-          <input placeholder=" " formControlName="state" maxlength="2" id="mail-state" data-cy="mail-state" type="text"
+          <input placeholder=" " formControlName="state" maxlength="2" id="mail-state" data-cy="state" type="text"
             autocomplete="address-level1" />
           <span>State</span>
         </label>
@@ -75,7 +75,7 @@
       </div>
       <div class="form-section">
         <label class="outlined-label-input">
-          <input placeholder=" " formControlName="zipCode" id="mail-zipCode" data-cy="mail-zipCode" type="text"
+          <input placeholder=" " formControlName="zipCode" id="mail-zipCode" data-cy="zipCode" type="text"
             maxlength="10" autocomplete="postal-code" />
           <span>ZIP Code</span>
         </label>

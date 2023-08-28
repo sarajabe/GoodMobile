@@ -277,5 +277,18 @@ export const ACP_DATA = {
         STATE: 'TX',
         ZIP_CODE: '75201'
     },
-
+    ACP_APP_PENDING2: {
+        FIRST_NAME: 'MRana',
+        LAST_NAME: 'Yhaddad',
+        FULL_NAME:'MRana Yhaddad',
+        TRIBAL_ID: '96969697',
+        YOB:'1991',
+        SSN_NO: '4444',
+        APP_ID:'B12345-67890',
+        EMAIL: 'acp-flow1@pavocom.com',
+        ADDRESS1: '325 n saint paul st',
+        CITY: 'dallas',
+        STATE: 'TX',
+        ZIP_CODE: '75201'
+    },
 };
