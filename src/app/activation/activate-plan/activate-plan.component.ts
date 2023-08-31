@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUserPlan, SimActivationService } from '@ztarmobile/zwp-service-backend';
 import { ACTIVATION_ROUTE_URLS, ROUTE_URLS } from 'src/app/app.routes.names';
@@ -27,7 +27,7 @@ export class ActivatePlanComponent {
               private simActivationService: SimActivationService,
               private appState: AppState,
               private metaService: MetaService,
-              private formBuilder: UntypedFormBuilder,
+              private formBuilder: FormBuilder,
               private toastHelper: ToastrHelperService,
               private modalHelper: ModalHelperService) {
    

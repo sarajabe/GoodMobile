@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAutoCompletePrediction, IFirebaseAddress, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.service';
@@ -41,7 +41,7 @@ export class AddressLookupComponent implements OnDestroy, OnInit, OnChanges {
   private streetSearchText: string;
 
   constructor(private cdRef: ChangeDetectorRef, private placesAutoCompleteService: PlacesAutocompleteService,
-              private formBuilder: UntypedFormBuilder,private appState: AppState) {
+              private formBuilder: FormBuilder,private appState: AppState) {
     this.addressFieldsForm = formBuilder.group({
       alias:['', Validators.pattern(this.namePattern)],
       address1: ['', Validators.required],

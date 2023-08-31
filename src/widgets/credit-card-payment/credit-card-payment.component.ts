@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ICreditCardInfo } from '@ztarmobile/zwp-service-backend';
 import { CreditCardValidator } from '../validators/credit-card.validator';
 
@@ -20,7 +20,7 @@ export class CreditCardPaymentComponent implements OnDestroy, OnInit, OnChanges 
   private currentDate: Date;
   private cardFormCtrl: UntypedFormControl;
 
-  constructor(private cdRef: ChangeDetectorRef, private formBuilder: UntypedFormBuilder) {
+  constructor(private cdRef: ChangeDetectorRef, private formBuilder: FormBuilder) {
     this.expirationYearRange = [];
     this.currentDate = new Date();
 
