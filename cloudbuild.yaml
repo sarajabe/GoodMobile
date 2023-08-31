@@ -10,7 +10,12 @@ steps:
       - '--keyring=$_KEY_RING'
       - '--key=$_KEY'
       - '--project=ztar-mgmt-security-kms-pre'
-
+      
+  # run unit testing 
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'test']
   # Build the docker image using the Dockerfile in the repository, PROJECT_ID and COMMIT_SHA are provided by CloudBuild itself
   - name: 'gcr.io/cloud-builders/docker'
     args: 

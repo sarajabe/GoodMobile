@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountPaymentService, FirebaseUserProfileService, ICreditCardInfo, IFirebaseAddress, IFirebasePaymentMethod, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { PageScrollService } from 'ngx-page-scroll-core';
@@ -53,7 +53,7 @@ export class ChangePaymentComponent implements OnInit, OnDestroy {
   showSuccessBanner: boolean;
 
   constructor(private route: ActivatedRoute, private userPlansService: UserPlansService, private appState: AppState, private userProfileService: FirebaseUserProfileService,
-    private formBuilder: UntypedFormBuilder, private accountPaymentService: AccountPaymentService,private toastHelper: ToastrHelperService,private modalHelper: ModalHelperService, 
+    private formBuilder: FormBuilder, private accountPaymentService: AccountPaymentService,private toastHelper: ToastrHelperService,private modalHelper: ModalHelperService, 
     private pageScrollService: PageScrollService, private router: Router) {
     this.route.params.subscribe(params => {
       if (!!params) {

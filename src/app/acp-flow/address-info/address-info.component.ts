@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActionsAnalyticsService, IAutoCompletePrediction, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { IAcpAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable, Subscription } from 'rxjs';
@@ -37,7 +37,7 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
   private alive = true;
   private streetSearchText: string;
 
-  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager,
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager,
     private analyticsService: ActionsAnalyticsService, private placesAutoCompleteService: PlacesAutocompleteService,
     private appState: AppState) {
     this.addressInfoForm = formBuilder.group({

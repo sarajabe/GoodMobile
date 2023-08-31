@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IChangeDevice, IDeviceCompatibilityV1, IExistingOrder, IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { takeWhile } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class ReplaceSimComponent implements OnDestroy {
               private toastHelper: ToastrHelperService,
               private userDeviceService: UserDeviceService,
               private appState: AppState,
-              private formBuilder: UntypedFormBuilder,
+              private formBuilder: FormBuilder,
               private userAccountService: UserAccountService,
               private metaService: MetaService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
