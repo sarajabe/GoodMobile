@@ -19,7 +19,7 @@ FROM builder AS dependencies
 
 # copy project files and build project
 COPY . .
-
+RUN npm run test
 RUN npm run build:$VERSION $BUILD_ID $REVISION_ID
 
 FROM nginx as FINAL
