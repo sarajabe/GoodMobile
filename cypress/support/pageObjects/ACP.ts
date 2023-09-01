@@ -1875,5 +1875,19 @@ class Acp {
           PageObjects.TitleExpectations.goToACPApplicationPage();
           cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device: Device successfully collected!');
      };
+     assertAcpDeviceNamePrice(){
+          cy.get('[data-cy="deviceName"]').should('have.text','TAB 8');
+          cy.get('[data-cy="devicePrice"]').should('have.text','$10.01');
+          cy.get('[data-cy="deviceMarketPrice"]').should('have.text','$110.01');
+     };
+     selectAcpDeviceWithoutLogingIn(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnDevices();
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
+          this.assertAcpDeviceNamePrice()
+          this.clickOnSelectDevice();
+          PageObjects.TitleExpectations.goToLogInPage();
+     };
+
 };
 export default new Acp();

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from "lodash";
 import { filter, take, takeWhile } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class PaymentsListComponent implements OnInit, OnDestroy {
   private alive = true;
   showSuccessBanner: boolean;
 
-  constructor(private userProfileService: FirebaseUserProfileService, private appState: AppState, private router: Router, private formBuilder: UntypedFormBuilder, private route: ActivatedRoute,
+  constructor(private userProfileService: FirebaseUserProfileService, private appState: AppState, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
     private userPlansService: UserPlansService, private accountPaymentService: AccountPaymentService, private toastHelper: ToastrHelperService, private modalHelper: ModalHelperService) { 
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
       this.user = user;

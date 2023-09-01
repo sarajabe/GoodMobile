@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PASSWORD_PATTERN } from '../../app.config';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -21,7 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   public passwordResetSuccess = false;
   public codeVerified = false;
 
-  constructor(private userAuthService: AngularFireAuth, private formBuilder: UntypedFormBuilder, private toastHelper: ToastrHelperService,
+  constructor(private userAuthService: AngularFireAuth, private formBuilder: FormBuilder, private toastHelper: ToastrHelperService,
               private router: Router, private route: ActivatedRoute, private metaService: MetaService) {
     this.resetPasswordForm = formBuilder.group({
       password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12),
