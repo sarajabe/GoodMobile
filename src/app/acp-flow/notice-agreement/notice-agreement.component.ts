@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { EbbService, ISignAcpDetails } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { EBB_NAME_PATTERN } from 'src/app/app.config';
@@ -30,7 +30,7 @@ export class NoticeAgreementComponent implements OnInit, OnDestroy, OnChanges {
   public captchaValid: boolean;
   private alive = true;
 
-  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager, private ebbService: EbbService,
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager, private ebbService: EbbService,
     private appState: AppState) {
   }
 

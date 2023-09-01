@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService } from '@ztarmobile/zwp-service-backend';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
@@ -30,7 +30,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
 
   private alive = true;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: FormBuilder,
     public ebbService: EbbManager,
     public router: Router,
     private analyticsService: ActionsAnalyticsService) {

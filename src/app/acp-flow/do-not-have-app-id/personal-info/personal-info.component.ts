@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { EBB_NAME_PATTERN, EMAIL_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
@@ -23,7 +23,7 @@ export class PersonalInfoNonExisitngAppComponent implements OnInit, OnDestroy, O
   public showInvalidDateError = false;
   private alive = true;
   leapYear: boolean;
-  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager) {
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager) {
     this.getYearsValues();
     this.personalInfoForm = this.formBuilder.group({
       firstName: ['', Validators.compose([Validators.required, Validators.pattern(this.namePattern), Validators.minLength(1), Validators.maxLength(50)])],
