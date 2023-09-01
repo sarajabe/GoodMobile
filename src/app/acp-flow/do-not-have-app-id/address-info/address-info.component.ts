@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAutoCompletePrediction, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { IAcpAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable, Subscription } from 'rxjs';
@@ -28,7 +28,7 @@ export class AddressInfoNonAppExisitngComponent implements OnInit, OnChanges {
   private streetSearchText: string;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private ebbManager: EbbManager,
     private placesAutoCompleteService: PlacesAutocompleteService,
     private appState: AppState) {

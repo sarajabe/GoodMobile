@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { takeWhile } from "rxjs/operators";
 import { EbbService, IAcpDetails, IAcpUser } from "@ztarmobile/zwp-service-backend-v2";
@@ -59,7 +59,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   private alive = true;
   leapYear: boolean;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: FormBuilder,
     private ebbManager: EbbManager,
     private ebbService: EbbService,
     private toastHelper: ToastrHelperService,

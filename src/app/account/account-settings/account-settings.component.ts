@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserAuthService } from '@ztarmobile/zwp-services-auth';
 import {
   AccountPaymentService, FirebaseAccountPaymentService, FirebaseUserProfileService,
@@ -98,7 +98,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
 
   constructor(private userAccountService: UserAccountService,
     private fbUserProfileService: FirebaseUserProfileService,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private appState: AppState,
     private angularFireService: AngularFireAuth,
     private userPlansService: UserPlansService,

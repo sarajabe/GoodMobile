@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AccountPaymentService, CART_TYPES, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IUserPlan, MobileCustomPlansService, PlacesAutocompleteService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EquipmentService } from '@ztarmobile/zwp-service-backend-v2';
@@ -57,7 +57,7 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
   invalidAddress: boolean;
 
   constructor(private route: ActivatedRoute, private router: Router, private toastHelper: ToastrHelperService, private userPlansService: UserPlansService, private placesAutoCompleteService: PlacesAutocompleteService,
-              private userDeviceService: UserDeviceService, private mobilePlansService: MobileCustomPlansService, private formBuilder: UntypedFormBuilder,private appState: AppState,
+              private userDeviceService: UserDeviceService, private mobilePlansService: MobileCustomPlansService, private formBuilder: FormBuilder,private appState: AppState,
               private equipmentService: EquipmentService, private modalHelper: ModalHelperService) {
  
     this.stepsDetails = [

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IOrderItem, Order, OrderInfo, UserOrdersService } from '@ztarmobile/zwp-service-backend';
 import { PaginationInstance } from 'ngx-pagination';
@@ -134,7 +134,7 @@ export class AccountOrdersComponent implements OnInit {
               private modalHelper: ModalHelperService,
               private accountOrderService: UserOrdersService,
               private appState: AppState,
-              private formBuilder: UntypedFormBuilder,
+              private formBuilder: FormBuilder,
               private contentful: ContentfulService,
               private toastHelper: ToastrHelperService) {
 
