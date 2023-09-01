@@ -1,13 +1,4 @@
-FROM ztarhub/angular-13 as builder
-
-ARG _NPM_TOKEN
-ARG _VERSION
-
-ENV NPM_TOKEN=$_NPM_TOKEN
-ENV VERSION=$_VERSION
-
-# set working directoy to app
-WORKDIR /app
+FROM ztarhub/angular-13 as headlessChromeBuilder
 
 # Install Chrome dependencies
 RUN apt-get update && apt-get install -y \
@@ -21,12 +12,25 @@ RUN apt-get update && apt-get install -y \
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 RUN apt-get update && apt-get install -y google-chrome-stable
-   
+
+
+FROM headlessChromeBuilder as builder
+
+ARG _NPM_TOKEN
+ARG _VERSION
+
+ENV NPM_TOKEN=$_NPM_TOKEN
+ENV VERSION=$_VERSION
+
+# set working directoy to app
+WORKDIR /app
+
 # copy necessary files to install dependencies
 COPY .npmrc .
 COPY package.json .
 
 RUN npm install --f
+
 FROM builder AS dependencies
 
 # copy project files and build project
