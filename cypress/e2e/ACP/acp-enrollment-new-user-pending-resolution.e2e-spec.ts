@@ -1,7 +1,7 @@
 import { PageObjects } from '../../support/pageObjects';
 import { CONSTANT } from '../../fixtures/constants'
 
-describe('Sign in then enroll in ACP plan - new user - pending resolution - assert ACP summary', () => {
+describe('Signup then enroll in ACP plan - new user - pending resolution - assert ACP summary', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
