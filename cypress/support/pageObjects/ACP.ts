@@ -1796,7 +1796,8 @@ class Acp {
           this.clickOnSSNRadio();
           this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO.SSN_NO);
           this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO.PHONE_NUMBER);
-          this.fillInEmail(PageObjects.Dynamics.makeNewEmail());
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
           this.clickOnNextBtn();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
           cy.get('.header-color').should('have.text','Address Information');
