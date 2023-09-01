@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService, CART_TYPES, IChangePlanCartItem, IUserPlan, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { filter, takeWhile } from 'rxjs/operators';
@@ -23,7 +23,7 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
 
   private planPuchasedClicked = false;
   private alive = true;
-  constructor(private router: Router, private formBuilder: UntypedFormBuilder,
+  constructor(private router: Router, private formBuilder: FormBuilder,
     private userPlansService: UserPlansService, private appState: AppState,
     private modalHelper: ModalHelperService,
     private mobilePlansService: MobileCustomPlansService, private orderCheckoutService: OrderCheckoutService,

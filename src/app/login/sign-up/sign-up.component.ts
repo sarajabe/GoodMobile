@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthHelperService, UserAuthService } from '@ztarmobile/zwp-services-auth';
 import { ActionsAnalyticsService, FirebaseMobilePlansCartService, FirebaseUserProfileService, IUser, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
   private referredCode: string;
 
-  constructor(private userAuthService: UserAuthService, private formBuilder: UntypedFormBuilder, public router: RouterHelperService,
+  constructor(private userAuthService: UserAuthService, private formBuilder: FormBuilder, public router: RouterHelperService,
               private route: ActivatedRoute, private analyticsService: ActionsAnalyticsService,
               private toastHelper: ToastrHelperService, private metaService: MetaService, private angularFireService: AngularFireAuth,
               private firebaseMobilePlansCartService: FirebaseMobilePlansCartService, private userPlansService: UserPlansService,

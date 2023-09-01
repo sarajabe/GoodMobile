@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnDestroy, OnInit, HostListener } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import { Router } from '@angular/router';
@@ -34,7 +34,7 @@ export class ContactUsComponent implements OnDestroy, OnInit {
   private userObserver: Subscription;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     public router: Router,
     private contactEmailService: ContactEmailService,
     private userProfileService: FirebaseUserProfileService,
