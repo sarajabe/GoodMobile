@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAcpAddress, IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { EBB_NAME_PATTERN, EMAIL_PATTERN, NUMBERS_ONLY_PATTERN } from 'src/app/app.config';
@@ -23,7 +23,7 @@ export class AppIdPersonalInfoComponent implements OnInit, OnChanges {
   public years = [];
   private alive = true;
   leapYear: boolean;
-  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager) {
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager) {
     this.getYearsValues();
     this.personalInfoForm = this.formBuilder.group({
       applicationId: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z]{1}\d{5}\-\d{5}$/)])],

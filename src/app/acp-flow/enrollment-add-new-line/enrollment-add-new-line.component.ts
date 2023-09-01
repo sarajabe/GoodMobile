@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, EquipmentService, IAddress } from '@ztarmobile/zwp-service-backend-v2';
@@ -78,7 +78,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   isStorePickup: boolean;
   private dataCollected = false;
 
-  constructor(private formBuilder: UntypedFormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
+  constructor(private formBuilder: FormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
     private accountPaymentService: AccountPaymentService, private appState: AppState, private modalHelper: ModalHelperService,
     private router: Router, private equipmentService: EquipmentService, private mobileCustomPlansService: MobileCustomPlansService,
     private ebbService: EbbService, private mobilePlansService: MobileCustomPlansService,
