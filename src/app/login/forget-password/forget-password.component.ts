@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { EMAIL_PATTERN } from 'src/app/app.config';
@@ -23,7 +23,7 @@ export class ForgetPasswordComponent implements OnInit, AfterViewInit {
   public disableButton = false;
   private alive = true;
 
-  constructor(private angularAuthService: AngularFireAuth, private formBuilder: UntypedFormBuilder, private toastHelper: ToastrHelperService,
+  constructor(private angularAuthService: AngularFireAuth, private formBuilder: FormBuilder, private toastHelper: ToastrHelperService,
               private metaService: MetaService, private route: ActivatedRoute, private elRef: ElementRef) {
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (params && params[LOGIN_ROUTE_URLS.PARAMS.EMAIL]) {

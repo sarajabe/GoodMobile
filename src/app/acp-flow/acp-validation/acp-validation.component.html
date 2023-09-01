@@ -32,8 +32,8 @@
   <div class="page-section navs">
     <p class="no-border" data-cy="cancelBtn" id="cancelBtn" (click)="cancel()">Cancel</p>
     <div class="right">
-      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" data-cy="verifyBtn" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
+      <button class="button secondary" data-cy="backBtn" id="backBtn" aria-label="Next" (click)="goBack()">Back</button>
+      <button class="button primary" data-cy="verifyBtn" aria-label="Next" (click)="goNext()" id="next-verify-button" *ngIf="!enrolled">{{activeStep !== 5 ? 'Next' :
         'Verify'}}</button>
     </div>
   </div>
