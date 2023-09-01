@@ -1824,7 +1824,8 @@ class Acp {
           this.clickOnTribalRadio();
           this.fillITribalID(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.TRIBAL_ID);
           this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.PHONE_NUMBER);
-          this.fillInEmail(PageObjects.Dynamics.makeNewEmail());
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
           this.clickOnNextBtn();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
           cy.get('.header-color').should('have.text','Address Information');
