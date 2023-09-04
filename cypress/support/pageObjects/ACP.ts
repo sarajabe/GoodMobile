@@ -1717,6 +1717,114 @@ class Acp {
           cy.go('back');
           PageObjects.TitleExpectations.goToACPApplicationPage();
      };
+     assertUserInformationBanner(){
+          cy.get('[data-cy="bannerContentTitle"]').should('have.text',' Looking for ACP device benefits?');
+          cy.get('[data-cy="youAreEligibleDescription"]').should('have.text','Look no further!Please finish your ACP enrollment and activation for a chance to claim up to $100 discount on a new device!');
+     }; 
+     assertNationalVerifierInfoBanner(){
+          cy.get('[data-cy="infoBannerTitle"]').should('have.text','Action Required:');
+          cy.get('[data-cy="infoBannerFirstDescription"]').should('have.text','Upload copies of your proof documentation:');
+          cy.get('[data-cy="infoBannerSecDescription"]').should('have.text','Please select “Resume Filing” to be redirected to the National Verifier.');
+          cy.get('[data-cy="infoBannerThirdDescription"]').should('have.text','Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.');
+          cy.get('[data-cy="infoBannerLastDescription"]').should('have.text','Please make sure to complete this step within 45 days.');
+          cy.get('[data-cy="resumeFilingBtn"]').should('have.text','Resume Filing ');
+          cy.get('[data-cy="qrCode"]').should('exist');
+     }; 
+     enrollmentNewUserAcpPendingResolution(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkNoRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
+               CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
+          cy.get('select').eq(0).select('01', { force: true }).should('have.value', '01');
+          cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
+          this.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.LAST_NAME);
+          this.selectDareOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.PHONE_NUMBER);
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.header-color').should('have.text','Address Information');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.fillInMailingAddress(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInMailingAddress2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.CITY);
+          this.fillInPhysicalAddressInfo2(
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ZIP);
+          cy.get('[data-cy="useSameAddress"]').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.header-color').should('have.text','Qualified Programs');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpThirdPage();
+          cy.get('li').eq(26  ).click({ force: true });
+          this.clickOnIQualifyIndividually();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.header-color').should('have.text', 'Required document(s) consent: ');
+          this.clickOnNextBtn();
+          cy.get('.validation-message').should('have.text', 'Please tick this box to confirm that you have read and understood what documents you need to provide.');
+          cy.get('.consent-form > .ng-untouched').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.secondary-font').should('have.text','Customer Notice and Agreement');
+          this.clickOnVerifyBtn();
+          this.requiredMessagesAcpForthPage();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_RESOLUTION.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnVerifyBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.title').should('have.text','Awesome, Almost Done!');
+          cy.get('.description').should('have.text','Please select “Resume Filing” to be redirected to the National Verifier. Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.Please make sure to complete this step within 45 days.');
+          cy.get('.button').should('exist');
+          PageObjects.HomePage.clickOnACPsummary();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          this.assertUserInformationBanner();
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending Resolution');
+          this.assertNationalVerifierInfoBanner();
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','MRana Yhaddad');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','4444');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
      clickOnSelectDevice(){
           cy.get('[data-cy="selectDevice"]').click();
           return this;
