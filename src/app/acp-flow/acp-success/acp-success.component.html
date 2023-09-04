@@ -12,7 +12,7 @@
         <p class="description last" *ngIf="acpStatus === 'pendingAction'"><b>Please make sure to complete this step
             within 45 days.</b></p>
         <div class="actions" *ngIf="acpStatus === 'pendingAction'">
-          <button class="button primary" (click)="goToNationalVerifier()">Resume Filing</button>
+          <button class="button primary" data-cy="resumeFilingBtn" (click)="goToNationalVerifier()">Resume Filing</button>
         </div>
         <div class="actions" *ngIf="acpStatus !== 'pendingAction'">
           <button class="button primary" data-cy="addNewLine" (click)="addNewLine()">Add New Line</button>

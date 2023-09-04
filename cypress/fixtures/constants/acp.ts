@@ -42,14 +42,31 @@ export const ACP_DATA = {
         Email: 'testuser10@ztarmobile.com',
         FIRST_QUALIFYING_PROGRAM: 'Medicaid'
     },
+    PERSONAL_INFO_PENDING_RESOLUTION: {
+        FIRST_NAME: 'MRana',
+        LAST_NAME: 'Yhaddad',
+        FULL_NAME:'MRana Yhaddad',
+        MONTH: '01',
+        Day: '19',
+        YEAR: '1991',
+        MIN_YEAR_INVALID: '1891',
+        MAX_YEAR_INVALID: '2023',
+        ID_TYPE: 'SSN',
+        SSN_NO: '4444',
+        PHONE_NUMBER: '3463509034',
+        Email: 'testuser10@ztarmobile.com',
+        FIRST_QUALIFYING_PROGRAM: 'Medicaid'
+    },
     INVALID_PERSONAL_INFO: {
         FIRST_NAME: '444',
         LAST_NAME: '4444',
+        FULL_NAME:'4444',
         MONTH: '01',
         Day: '19',
         YEAR: '1991',
         ID_TYPE: 'SSN',
         SSN_NO: '888',
+        TRIBAL_ID: '8',
         PHONE_NUMBER: '0123',
         INVALID_PHONE_NUMBER: '1111111111',
         Email: 'ewww',
@@ -79,6 +96,12 @@ export const ACP_DATA = {
         CITY: 'Portland',
         STATE: 'ME',
         ZIP: '04103',
+    },
+    VERIFIED_ADDRESS3: {
+        ADDRESS_LINE1: '123 William St, New York, NY 10038',
+        CITY: 'New York',
+        STATE: 'NY',
+        ZIP: '10038',
     },
     INVALID_ADDRESS2: {
         ADDRESS_LINE1: '777 Stevens Ave, Portland, ME 04103',
@@ -277,7 +300,7 @@ export const ACP_DATA = {
         STATE: 'TX',
         ZIP_CODE: '75201'
     },
-    PERSONAL_INFO_PENDING_RESOLUTION:{
+    PERSONAL_INFO_PENDING_REVIEW:{
         FIRST_NAME: 'Test',
         LAST_NAME: 'User',
         FULL_NAME:'Test User',
@@ -289,5 +312,33 @@ export const ACP_DATA = {
         CITY: 'Miami',
         STATE: 'FL',
         ZIP_CODE: '33132'
-    }
+    },
+    PERSONAL_INFO_HAS_SPECIAL_CHARACTERS: {
+        FIRST_NAME: '@Mirna',
+        LAST_NAME: '@Young',
+        FULL_NAME:'@Mirna Young',
+        MONTH: '01',
+        Day: '19',
+        YEAR: '1991',
+        MIN_YEAR_INVALID: '1891',
+        MAX_YEAR_INVALID: '2023',
+        ID_TYPE: 'SSN',
+        SSN_NO: '@8888',
+        TRIBAL_ID: '@8888',
+        PHONE_NUMBER: '@5122034783',
+        Email: '(testuser10@ztarmobile.com',
+        FIRST_QUALIFYING_PROGRAM: 'Medicaid'
+    },
+    INVALID_ADDRESS_HAS_SPECIAL_CHARACTERS: {
+        ADDRESS_LINE1: '@123 Berry Lane',
+        CITY: '@Prattville',
+        STATE: '@AL',
+        ZIP: '@36066',
+    },
+    INVALID_ADDRESS_START_WITH_SPACE: {
+        ADDRESS_LINE1: ' 123 Berry Lane',
+        CITY: ' Prattville',
+        STATE: ' AL',
+        ZIP: ' 36066',
+    },
 };
