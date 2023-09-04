@@ -1279,6 +1279,7 @@ class Acp {
           cy.get('[data-cy="placeOrder"]').click();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
           PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          cy.get('.barcode').should('exist');
           cy.get('[data-cy="storePickupDeviceSuccessful"]').should('have.text',' You can always find your In-Store Pickup barcode in your Order Details page, to provide it for the store clerk for your Device pickup. ');
           cy.get('[data-cy="viewStores"]').click();
           cy.get('[data-cy="cities"]').should('exist');
@@ -1289,12 +1290,13 @@ class Acp {
           cy.get('[data-cy="orderStatus"]').should('have.text','Pending')
           cy.get('[data-cy="acpDeviceName"]').should('have.text','Nuu Tab 8');
           cy.get('[data-cy="acpDevicePrice"]').should('have.text','$10.01');
+          cy.get('.barcode').should('exist');
           cy.get('[data-cy="cancel"]').should('exist');
           PageObjects.HomePage.clickOnACPsummary();
           PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('.barcode').should('exist');
           cy.get('[data-cy="orderDeviceSuccessfullyPlaced"]').should('have.text','Your device order has been successfully placed!');
-          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text','Your ACP Device:Your device order has been successfully placed!');
-          cy.get('[data-cy="acpDeviceProceedCollectDescription"]').should('have.text','You may now proceed and collect your device at your nearest store.');
+          cy.get('[data-cy="acpDeviceOrderDescription"]').should('have.text',' Your ACP Device:Your device order has been successfully placed!\n        You may now proceed and collect your device at your nearest store.');
      };
      requiredMessagesYesFlowAcpFirstPage(){
           cy.get('[data-cy="required-applicationId-msg"]').should('have.text',' Application ID is required ');
@@ -1875,7 +1877,7 @@ class Acp {
           cy.get('.acp-desc').should('have.text','Our records show that you have claimed your one-time device discount. If this is not correct, please contact customer care for more help.');
           cy.get('[data-cy="modal--primary-url-button"]').should('have.text','Got it!');
      };
-     assertUserWithPendingAcpDeviceCanNotPurchaseACP(){
+     assertUserWithNoAcpPlanCanNotPurchaseACP(){
           PageObjects.HomePage.clickOnShopMenu();
           PageObjects.HomePage.clickOnDevices();
           PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
@@ -1884,7 +1886,7 @@ class Acp {
           this.clickOnGetACPnow();
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
      };
-     assertUserWithNoAcpPlanCanNotPurchaseACP(){
+     assertUserWithPendingAcpDeviceCanNotPurchaseACP(){
           PageObjects.HomePage.clickOnShopMenu();
           PageObjects.HomePage.clickOnDevices();
           PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
