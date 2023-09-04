@@ -2,7 +2,7 @@
     <div class="error-container">
         <img src="/assets/icon/error-icon.svg" alt="error-icon">
         <div class="notes">
-            <p class="head-note">We are sorry!</p>
+            <p class="head-note" data-cy="headNote">We are sorry!</p>
             <p class="desc" *ngIf="!!acpStatus && acpStatus === 'review'">Your ACP application is currently <b data-cy="underReviewStatus">Under
                     Review.</b></p>
             <p class="desc bold" data-cy="acpAPPNotFound" *ngIf="!!acpStatus && acpStatus === 'not-found'">Your ACP application is not found.</p>
@@ -46,6 +46,6 @@
 
 <section class="navigation-section" *ngIf="acpStatus !== 'not-found'">
     <div class="left">
-      <button class="button primary" aria-label="Next" (click)="goToAcp()">Done</button>
+      <button class="button primary" data-cy="doneBtn" aria-label="Next" (click)="goToAcp()">Done</button>
     </div>
   </section>
