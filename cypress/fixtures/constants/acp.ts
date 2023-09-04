@@ -300,6 +300,19 @@ export const ACP_DATA = {
         STATE: 'TX',
         ZIP_CODE: '75201'
     },
+    PERSONAL_INFO_PENDING_REVIEW:{
+        FIRST_NAME: 'Test',
+        LAST_NAME: 'User',
+        FULL_NAME:'Test User',
+        TRIBAL_ID: '96969698',
+        PHONE_NUMBER: '5122034783',
+        YOB:'1991',
+        EMAIL: 'acp-flow1@pavocom.com',
+        ADDRESS1: '401 Biscayne Blvd, Miami, FL 33132',
+        CITY: 'Miami',
+        STATE: 'FL',
+        ZIP_CODE: '33132'
+    },
     PERSONAL_INFO_HAS_SPECIAL_CHARACTERS: {
         FIRST_NAME: '@Mirna',
         LAST_NAME: '@Young',
