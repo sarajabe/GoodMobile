@@ -283,6 +283,10 @@ class Acp {
           cy.get('#indivisual').click();
           return this;
      };
+     clickOnQualifyThroughMyChild(){
+          cy.get('#child').click();
+          return this;
+     };
      fillInSchoolName() {
           cy.get('[data-cy="schoolName"]').click({force:true})
           cy.get('[data-cy="schoolName"]').clear();
