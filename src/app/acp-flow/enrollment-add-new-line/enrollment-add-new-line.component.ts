@@ -62,7 +62,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public option;
   public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
   public filteredOptionsSubscription: Subscription;
-  
+
   private planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
     E8: "Bureau of Indian Affairs General Assistance",
@@ -77,6 +77,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   private streetSearchText: string;
   isStorePickup: boolean;
   private dataCollected = false;
+  private acpData: any;
 
   constructor(private formBuilder: FormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
     private accountPaymentService: AccountPaymentService, private appState: AppState, private modalHelper: ModalHelperService,
@@ -134,13 +135,13 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                           this.dataCollected = true;
                           this.ebbService.getInternalApplication(user?.customerId, user?.ebbId).then((res) => {
                             if (!!res?.data) {
-                              const acpData = res?.data;
-                              if (!!acpData?.providerApplicationId || !acpData?.eligibilityCode) {
+                              this.acpData = res?.data;
+                              if (!!this.acpData?.providerApplicationId || !this.acpData?.eligibilityCode) {
                                 this.addressWithIdSection = true;
                                 this.addressCard = true;
                               } else {
-                                if (!!acpData?.eligibilityCode) {
-                                  const codes = acpData.eligibilityCode.split(',');
+                                if (!!this.acpData?.eligibilityCode) {
+                                  const codes = this.acpData.eligibilityCode.split(',');
                                   codes.map((code) => {
                                     if (!!this.TRIBAL_PROGRAMS[code]) {
                                       this.tribals.push(this.TRIBAL_PROGRAMS[code]);
@@ -148,45 +149,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                                   });
                                 }
                                 this.addressCard = false;
-                                if (!!acpData?.user?.address?.mail) {
-                                  const mailing = acpData?.user?.address?.mail;
-                                  this.appState.loading = true;
-                                  const shipping = {
-                                    address1: mailing?.address1,
-                                    address2: mailing?.address2,
-                                    postalCode: mailing?.zipCode,
-                                    city: mailing?.city,
-                                    state: mailing?.state,
-                                    name: mailing?.name || acpData?.user?.firstName,
-                                    country: "United States",
-                                  };
-                                  if (!this.verifiedAddress.address1) {
-                                    this.shippingService.verifyShippingAddress(shipping).then(
-                                      (result) => {
-                                        this.appState.loading = false;
-                                        if (!!result) {
-                                          this.applicationAddress = result[0];
-                                          this.applicationAddress.name = shipping?.name;
-                                          this.applicationAddress.alias = shipping?.name;
-                                          this.verifiedAddress = this.applicationAddress;
-                                          this.isAddressVerified = true;
-                                          this.addressNoOptionSection = true;
-                                          this.addressNoOptionNotVerfiedSection = false;
-                                          this.addressOption = 'mail';
-                                        }
-                                      },
-                                      (error) => {
-                                        this.appState.loading = false;
-                                        this.isAddressVerified = false;
-                                        this.addressNoOptionSection = false;
-                                        this.addressNoOptionNotVerfiedSection = true;
-                                        this.addressCard = true;
-                                      }
-                                    );
-                                  }
-                                } else {
-                                  this.addressWithIdSection = true;
-                                }
+                                this.validateAddressInfoFromACPApplication();
                               }
                               this.appState.loading = false;
                             }
@@ -257,7 +220,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         `);
   }
   public pickupOptionChanged(): void {
-    if (this.option === 'store'){
+    if (this.option === 'store') {
       this.selectedShippingAddress = null;
       this.shippingAddress = {} as IFirebaseAddress;
       this.addressCard = false;
@@ -267,15 +230,18 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.addressOption = '';
     } else if (this.option === 'home') {
       this.barCode = false;
+      setTimeout(() => {
+        this.validateAddressInfoFromACPApplication();
+      }, 200);
     }
   }
   public optionChanged(): void {
-      this.addressCard = false;
-      this.showShippingForm = false;
-      this.isAddressVerified = true;
-      this.isAdressAddedSuccessfully = false;
-      this.shippingAddress = {} as IFirebaseAddress;
-      this.selectedShippingAddress = {} as IFirebaseAddress;
+    this.addressCard = false;
+    this.showShippingForm = false;
+    this.isAddressVerified = true;
+    this.isAdressAddedSuccessfully = false;
+    this.shippingAddress = {} as IFirebaseAddress;
+    this.selectedShippingAddress = {} as IFirebaseAddress;
   }
   public changedAddress(): void {
     this.findPlace(this.newMobileServiceFrom.controls.address.value);
@@ -324,9 +290,9 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     this.selectedShippingAddress = {} as IFirebaseAddress;
   }
   public purchasePlan(isEsim?): void {
-    if (!!this.newMobileServiceFrom.valid && (!isEsim && !!this.option && ((this.option === 'home' && !!this.isAddressVerified) || (this.option === 'store' && !!this.barCode)) || !!isEsim )) {
+    if (!!this.newMobileServiceFrom.valid && (!isEsim && !!this.option && ((this.option === 'home' && !!this.isAddressVerified) || (this.option === 'store' && !!this.barCode)) || !!isEsim)) {
       this.clearCart();
-      this.isStorePickup = this.option === 'store'? true: false;
+      this.isStorePickup = this.option === 'store' ? true : false;
       this.mobilePlansService.setActivePlanId("");
       this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
       this.mobileCustomPlansService.setPlanExpectedDevice(null);
@@ -337,7 +303,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         this.mobilePlansService.seteSIM(true);
         this.mobilePlansService.setQrScanned(false);
       }
-      if(!!this.isStorePickup) {
+      if (!!this.isStorePickup) {
         this.mobilePlansService.setStorePickup(this.isStorePickup);
       }
       setTimeout(() => {
@@ -353,7 +319,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           usingPaymentProfile: false,
           voucherCode: null,
           haseSIM: !!isEsim ? true : false,
-          storePickup : this.isStorePickup
+          storePickup: this.isStorePickup
         };
         this.appState.loading = true;
         this.orderCheckoutService.checkoutNewPlan(data).then(
@@ -599,6 +565,56 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public setValidAddress(isValid: boolean): void {
     this.isValidAddress = isValid;
   }
+  private validateAddressInfoFromACPApplication() {
+    const acpData = this.acpData;
+    if (!!acpData?.user?.address?.mail) {
+      const mailing = acpData?.user?.address?.mail;
+      this.appState.loading = true;
+      const shipping = {
+        // fixed format in address1 so verify API accept and verify it
+        address1: mailing?.address1.includes(',') ? mailing?.address1.split(',')[0] : mailing?.address1,
+        address2: mailing?.address2,
+        postalCode: mailing?.zipCode,
+        city: mailing?.city,
+        state: mailing?.state,
+        name: mailing?.name || acpData?.user?.firstName,
+        country: "United States",
+      };
+      if (!this.verifiedAddress.address1) {
+        this.shippingService.verifyShippingAddress(shipping).then(
+          (result) => {
+            this.appState.loading = false;
+            if (!!result) {
+              this.applicationAddress = result[0];
+              this.applicationAddress.name = shipping?.name;
+              this.applicationAddress.alias = shipping?.name;
+              this.verifiedAddress = this.applicationAddress;
+              this.isAddressVerified = true;
+              this.addressNoOptionSection = true;
+              this.addressNoOptionNotVerfiedSection = false;
+              this.addressOption = 'mail';
+            }
+          },
+          (error) => {
+            this.appState.loading = false;
+            this.isAddressVerified = false;
+            this.addressNoOptionSection = false;
+            this.addressNoOptionNotVerfiedSection = true;
+            this.addressCard = true;
+          }
+        );
+      } else {
+        this.isAddressVerified = true;
+        this.addressNoOptionSection = true;
+        this.addressNoOptionNotVerfiedSection = false;
+        this.addressOption = 'mail';
+        this.appState.loading = false;
+      }
+    } else {
+      this.addressWithIdSection = true;
+      this.appState.loading = false;
+    }
+  }
   private clearCart(): void {
     sessionStorage.removeItem("useFromBalance");
     sessionStorage.removeItem("useFromReward");
@@ -713,7 +729,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         }
       }
     });
-
   }
   ngOnDestroy(): void {
     this.alive = false;
