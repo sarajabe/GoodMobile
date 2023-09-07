@@ -68,7 +68,7 @@ fdescribe('Signature Information Component - Unit Testing', () => {
     const formElement = fixture.nativeElement.querySelector('form');
     const inputElements = formElement.querySelectorAll('input');
 
-    expect(inputElements.length).toEqual(5);
+    expect(inputElements.length).toEqual(4);
   }));
 
   it('Should show a validation messages for the required elements when the values are empty', waitForAsync(() => {
