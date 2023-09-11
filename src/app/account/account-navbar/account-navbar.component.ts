@@ -100,7 +100,8 @@ export class AccountNavbarComponent implements OnInit {
         this.displayAcpSection = !!acpPlan ? true : false;
         if (!acpPlan) {
           this.appService.displayAcpSectionObs.subscribe(res => {
-            this.displayAcpSection = res;
+            const hasCanceledAcpPlan = plans.some((plan) => !!plan.basePlan.ebb && !!plan.canceled);
+            this.displayAcpSection = !hasCanceledAcpPlan && res;
             this.appService.loading = false;
           });
         }
