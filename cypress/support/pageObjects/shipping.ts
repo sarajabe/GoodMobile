@@ -132,7 +132,11 @@ class ShippingPage {
     clickOnBackBtn() {
         cy.get('[data-cy="backBtn"]').click({force:true});
         return this;
-    }
+    };
+    clickOnUseAnotherAddress() {
+        cy.get('[data-cy="useAnotherAddresslink"]').click();
+        return this;
+    };
     clickOnAddNewAddress() {
         cy.get('[data-cy="addNewAddress"]').click();
         return this;
