@@ -1,0 +1,63 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+/e2e/allure-results
+/e2e/allure-results/.png
+/cypress/reports
+/cypress/screenshots
+/cypress/videos
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.angular/cache
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+#e2e report file
+/e2e/report
+/e2e/reports
+
+#igone package-lock.json
+/package-lock.json
+
+#ignore debug.log
+debug.log
+/debug.log
+
+#igone yarn.lock
+yarn.lock
+
+#ignore sonarScanner
+.scannerwork
+/.scannerwork
