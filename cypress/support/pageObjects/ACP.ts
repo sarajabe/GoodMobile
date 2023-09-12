@@ -726,6 +726,8 @@ class Acp {
           cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnHomeDelivery();
+          cy.get('.current-address').should('exist');
+          PageObjects.ShippingPage.clickOnUseAnotherAddress();
           PageObjects.ShippingPage.clickOnAddNewAddress();
           PageObjects.ShippingPage.clickOnSaveBtn();
           cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Name is a required field');
@@ -1136,6 +1138,8 @@ class Acp {
           cy.get('[data-cy="phoneIsCompatibleSubTitle"]').should('have.text','You can use the device you have with our network!');
           cy.get('[data-cy="nextBtn"]').click();
           PageObjects.ShippingPage.clickOnHomeDelivery();
+          cy.get('.current-address').should('exist');
+          PageObjects.ShippingPage.clickOnUseAnotherAddress();
           PageObjects.ShippingPage.clickOnAddNewAddress();
           PageObjects.ShippingPage.clickOnSaveBtn();
           cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Name is a required field');
