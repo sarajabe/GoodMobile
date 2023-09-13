@@ -13,7 +13,7 @@
                 <li class="menu-item item-top-radius" (click)="resetAll()"><a
                                 [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SUMMARY]"
                                 routerLinkActive="active" [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.SUMMARY'"
-                                [routerLinkActiveOptions]="{exact: true}" class="items-link link-border-bottom">Account
+                                [routerLinkActiveOptions]="{exact: true}" class="items-link link-border-bottom" data-cy="accountSummary">Account
                                 summary</a></li>
                 <li *ngIf="!!displayAcpSection" class="menu-item" (click)="resetAll();isAcp = true;"><a class="items-link link-border-bottom"
                                 [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.ACP_APPLICATION'"

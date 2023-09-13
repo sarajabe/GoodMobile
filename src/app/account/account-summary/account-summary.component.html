@@ -214,12 +214,12 @@
               <div [class.displayNone]="innerWidth < 834 && !!hideManageYourPlanCard">
                 <div [class.last-element]="!userAccount && !selectedPlan?.planDevice">
                   <div class="data-height">
-                    <span class="title-text base-plan-title"><span
+                    <span class="title-text base-plan-title" data-cy="basePlan"><span
                         [class.promo-title]="!!isApplicablePromo">{{!!selectedPlan?.basePlan?.specialPromotion &&
                         !!isApplicablePromo ? selectedPlan?.basePlan?.specialPromotion?.promotionTitle :
                         selectedPlan?.basePlan?.title}}
                       </span>
-                      <!-- <span class="plan-data"
+                      <!-- <span class="plan-data" data-cy="planData"
                         *ngIf="filteredPlan?.data > 0 && !selectedPlan?.canceled && !!userAccount && !!selectedPlan">
                         {{(filteredPlan?.data/1024)}}GB 4G LTE Plan 
                       </span> -->
@@ -247,7 +247,7 @@
                   <div class="action-links"
                     [class.disabled]="!userAccount || !!selectedPlan?.canceled || (!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)">
                     <div class="links-container">
-                      <a class="change-action"
+                      <a class="change-action" data-cy="changePlan"
                         [class.disabled]="!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus"
                         *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!userAccount &&  !userAccount?.billingRenewalPaid"
                         (click)="changePlan()">

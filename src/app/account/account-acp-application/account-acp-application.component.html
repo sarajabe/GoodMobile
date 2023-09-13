@@ -6,7 +6,7 @@
     </p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
         <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
-        <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
+        <a data-cy="cancelApplication" (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
     <div class="acp-application-card" *ngIf="!!barCodeValue">
         <div class="card-header-part" [class.border-radius]="hideCardContentUI === true">
@@ -257,7 +257,7 @@
                                 [disabled]="!!this[ACP_PLAN_DESCS[planActivationStatus]?.disabledCondition]"
                                 [class.disabled]="!!this[ACP_PLAN_DESCS[planActivationStatus]?.disabledCondition]">{{ACP_PLAN_DESCS[planActivationStatus]?.primaryButtonName}}
                             </button>
-                            <button class="button secondary"
+                            <button class="button secondary" data-cy="selectExistingLineBtn"
                                 [class.pending-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.pendingWidth"
                                 [class.hold-width]="!!ACP_PLAN_DESCS[planActivationStatus]?.onHoldWidth"
                                 [class.long]="!!ACP_PLAN_DESCS[planActivationStatus]?.longClass"
