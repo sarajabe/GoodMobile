@@ -32,6 +32,15 @@
       </div>
     </form>
   </div>
+  <div *ngIf="!!planPuchasedClicked && !planPurchased">
+    <div class="success-purchase warning-background">
+      <img src="/assets/icon/warning-icon.svg" alt="warning-icon">
+      <div class="descs">
+        <p class="top-desc">We have received your request!</p>
+        <p class="desc">This might take few moments to process. <b>Please don't click "Submit"</b> again.</p>
+      </div>
+    </div>
+  </div>
   <div *ngIf="!!planPurchased">
     <h4 class="main-title">Current Phone Number:</h4>
     <div class="success-purchase">
