@@ -95,6 +95,9 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
           )
           .afterClosed().subscribe((result) => {
             if (result) {
+              // this session waitingAcpActivation should be cleared once 
+              // the user access his ACP summary page and his plan has been successfully activated with exiting plan
+              sessionStorage.setItem('waitingAcpActivation', 'true');
               this.appState.loading = true;
               this.mobilePlansService.clearUserCart().then(() => {
                 this.mobilePlansService.setBasePlan(this.ebbPlan);
