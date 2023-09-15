@@ -1764,6 +1764,12 @@ class Acp {
           cy.get('[data-cy="resumeFilingBtn"]').should('have.text','Resume Filing ');
           cy.get('[data-cy="qrCode"]').should('exist');
      }; 
+     assertNationalVerifierInfoBannerForAcpPendingReview(){
+          cy.get('[data-cy="infoBannerTitle"]').should('have.text','Under Review!');
+          cy.get('[data-cy="infoBannerFirstDescription"]').should('have.text','Your ACP application is currently under review.');
+          cy.get('[data-cy="infoBannerSecDescription"]').should('have.text','Please contact ACProgram@usac.org to\n        check on your application status before\n        finish the enrollment with Good Mobile.');
+          cy.get('[data-cy="resumeFilingBtn"]').should('have.text','Refresh ');
+     }; 
      enrollmentNewUserAcpPendingResolution(){
           PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
           PageObjects.TitleExpectations.goToPlansGMPage();
@@ -2035,8 +2041,8 @@ class Acp {
           this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.FIRST_NAME,
                CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.LAST_NAME);
           this.selectDareOfBirth();
-          this.clickOnTribalRadio();
-          this.fillITribalID(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.TRIBAL_ID);
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.SSN_NO);
           this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.PHONE_NUMBER);
           const newEmail = Cypress.env('newEmail');
           this.fillInEmail(newEmail);
@@ -2096,20 +2102,19 @@ class Acp {
           this.clickOnVerifyBtn();
           cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
           PageObjects.TitleExpectations.goToACPEnrollemntPage();
-          cy.get('[data-cy="congratulationTitle"]').should('have.text','Awesome, Almost Done!');
-          cy.get('.description').should('have.text','Please select “Resume Filing” to be redirected to the National Verifier. Once you are done, the National Verifier will redirect you back to Good Mobile to complete the process.Please make sure to complete this step within 45 days.');
-          cy.get('[data-cy="resumeFilingBtn"]').should('exist');
-          cy.get('[data-cy="qrCode"]').should('exist');
+          cy.get('[data-cy="headNote"]').should('have.text','We are sorry!');
+          cy.get('.desc').should('have.text','Your ACP application is currently Under Review.');
+          cy.get('[data-cy="doneBtn"]').should('exist');
           PageObjects.HomePage.clickOnACPsummary();
           PageObjects.TitleExpectations.goToACPApplicationPage();
           this.assertUserInformationBanner();
-          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending Resolution');
-          this.assertNationalVerifierInfoBanner();
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','Pending Review');
+          this.assertNationalVerifierInfoBannerForAcpPendingReview();
           cy.get('[data-cy="viewApplicationForm"]').click();
           PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
           cy.get('[data-cy="fullNameValue"]').should('have.text','Test User');
           cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
-          cy.get('[data-cy="identityVerificationValue"]').should('have.text','96969698');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','6416');
           cy.go('back');
           PageObjects.TitleExpectations.goToACPApplicationPage();
      };

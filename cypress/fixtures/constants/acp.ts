@@ -332,7 +332,7 @@ export const ACP_DATA = {
         FIRST_NAME: 'Test',
         LAST_NAME: 'User',
         FULL_NAME:'Test User',
-        TRIBAL_ID: '96969698',
+        SSN_NO: '6416',
         PHONE_NUMBER: '5122034783',
         YOB:'1991',
         EMAIL: 'acp-flow1@pavocom.com',
