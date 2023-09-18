@@ -148,6 +148,16 @@
                 }
             }
         }
+        .info-banner{
+            margin-bottom: 60px;
+            margin-top: 24px;
+            max-width: 915px;
+            width: 100%;
+            @media (max-width: $phablet-min-width-minus) {
+                margin-bottom: 32px;
+                padding: 18px;
+            }
+        }
         .success-purchase{
             display: flex;
             align-items: flex-start;

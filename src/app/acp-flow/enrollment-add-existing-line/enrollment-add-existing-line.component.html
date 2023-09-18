@@ -33,11 +33,14 @@
     </form>
   </div>
   <div *ngIf="!!planPuchasedClicked && !planPurchased">
-    <div class="success-purchase warning-background">
-      <img src="/assets/icon/warning-icon.svg" alt="warning-icon">
-      <div class="descs">
-        <p class="top-desc">We have received your request!</p>
-        <p class="desc">This might take few moments to process. <b>Please don't click "Submit"</b> again.</p>
+    <div class="info-banner warning-background">
+      <div class="flex center">
+        <img src="/assets/icon/warning-icon.svg" alt="warning-icon">
+        <div class="banner-content">
+          <p class="title">We have received your request!</p>
+          <p class="description last">This might take few moments to process. <b>Please don't click "Submit"</b> again.
+          </p>
+        </div>
       </div>
     </div>
   </div>
