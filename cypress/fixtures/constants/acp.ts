@@ -257,6 +257,15 @@ export const ACP_DATA = {
         STATE: 'AL',
         ZIP_CODE: '36066'
     },
+    PERSONAL_INFO_IN_PROGRESS:{
+        FIRST_NAME: 'Test',
+        LAST_NAME: 'User',
+        FULL_NAME:'Test User',
+        SSN_NO: '6415',
+        PHONE_NUMBER: '5122034783',
+        YOB:'1991',
+        EMAIL: 'acp-flow1@pavocom.com',
+    },
     ACP_APP_COMPLETE: {
         FIRST_NAME: 'MRana',
         LAST_NAME: 'Yhaddad',
