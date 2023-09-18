@@ -2113,6 +2113,112 @@ class Acp {
           cy.go('back');
           PageObjects.TitleExpectations.goToACPApplicationPage();
      };
+     assertNationalVerifierInfoBannerForAcpInProgress(){
+          cy.get('[data-cy="infoBannerTitle"]').should('have.text',' Please Check Back Soon!');
+          cy.get('[data-cy="infoBannerFirstDescription"]').should('have.text','You have submitted your ACP application successfully. Updates on your\n        application status will show up on this page.');
+          cy.get('[data-cy="infoBannerSecDescription"]').should('have.text','Please check again later!');
+          cy.get('[data-cy="resumeFilingBtn"]').should('have.text','Refresh ');
+     }; 
+     enrollmentNewUserAcpInProgress(){
+          PageObjects.welcomeOnBoard.clickOnShopPlansBtn();  
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkNoRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
+               CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
+          cy.get('select').eq(0).select('01', { force: true }).should('have.value', '01');
+          cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
+          this.clickOnTribalRadio();
+          this.fillITribalID(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.TRIBAL_ID);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
+          this.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
+          this.clickOnNextBtn();
+          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
+          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
+          cy.get('[data-cy="invalidTribalMsg"]').should('have.text',' Tribal ID is invalid ');
+          cy.get('[data-cy="invalid-phone-msg"]').should('have.text',' Phone Number must have 10 digits ');
+          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.LAST_NAME);
+          this.selectDareOfBirth();
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.PHONE_NUMBER);
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.header-color').should('have.text','Address Information');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.fillInMailingAddress(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInMailingAddress2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.CITY);
+          this.fillInPhysicalAddressInfo2(
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS3.ZIP);
+          cy.get('[data-cy="useSameAddress"]').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.header-color').should('have.text','Qualified Programs');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpThirdPage();
+          //Medicaid
+          cy.get('li').eq(26).click({ force: true });
+          this.clickOnIQualifyIndividually();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.header-color').should('have.text', 'Required document(s) consent: ');
+          this.clickOnNextBtn();
+          cy.get('.validation-message').should('have.text', 'Please tick this box to confirm that you have read and understood what documents you need to provide.');
+          cy.get('.consent-form > .ng-untouched').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('.secondary-font').should('have.text','Customer Notice and Agreement');
+          this.clickOnVerifyBtn();
+          this.requiredMessagesAcpForthPage();
+          this.firstCheckTU();
+          this.secondCheckTU();
+          this.thirdCheckTU();
+          this.forthCheckTU();
+          this.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnVerifyBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="headNote"]').should('have.text','We are sorry!');
+          cy.get('.desc').should('have.text','Your ACP application is currently Under Review.');
+          cy.get('[data-cy="doneBtn"]').should('exist');
+          PageObjects.HomePage.clickOnACPsummary();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          this.assertUserInformationBanner();
+          cy.get('[data-cy="acpStatusValue"]').should('have.text','In Progress');
+          this.assertNationalVerifierInfoBannerForAcpInProgress();
+          cy.get('[data-cy="viewApplicationForm"]').click();
+          PageObjects.TitleExpectations.goToAcpApplicationDetailsPage();
+          cy.get('[data-cy="fullNameValue"]').should('have.text','Test User');
+          cy.get('[data-cy="dateOfBirthValue"]').should('have.text','01/19/1991');
+          cy.get('[data-cy="identityVerificationValue"]').should('have.text','6415');
+          cy.go('back');
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+     };
      assertNationalVerifierInfoAttentionBanner(){
           cy.get('[data-cy="infoBannerTitle"]').should('have.text','Attention!');
           cy.get('[data-cy="infoBannerFirstDescription"]').should('have.text','It seems like you have not completed your ACP application with the National\n        Verifier yet. Please visit ACPbenefit.org to complete your application before\n        finish the enrollment with Good Mobile.');
