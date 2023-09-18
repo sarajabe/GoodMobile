@@ -442,7 +442,7 @@
                             [innerHTML]="NV_DESCS[nvStatus]?.note"></p>
                     </div>
                 </div>
-                <div class="qr-section" *ngIf="!!showQrCode">
+                <div class="qr-section" *ngIf="!!showQrCode && !!verificationDetails?.link">
                     <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application and upload your documents
                         on your <b>smartphone</b>.</p>
                     <div class="qr">
