@@ -5,7 +5,8 @@
         <span>{{providerApplicationID}}</span>
     </p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
-        <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
+        <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View
+            Application Form</a>
         <a (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
     <div class="acp-application-card" *ngIf="!!barCodeValue">
@@ -30,37 +31,48 @@
             <ng-container *ngIf="!!pendingACPDevice">
                 <div class="intro">
                     <img src="assets/icon/hooray-icon.svg" alt="hooray" width="50" height="50">
-                    <p class="smaller intro-desc" data-cy="orderDeviceSuccessfullyPlaced">Your device order has been successfully placed!</p>
+                    <p class="smaller intro-desc" data-cy="orderDeviceSuccessfullyPlaced">Your device order has been
+                        successfully placed!</p>
                 </div>
-                <p class="tertiary text-color-primary" (click)="showDeviceCode=true;showACPCodeSection=false;" *ngIf="!showDeviceCode"><b>Show Device order Barcode </b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow"></p>
+                <p class="tertiary text-color-primary" (click)="showDeviceCode=true;showACPCodeSection=false;"
+                    *ngIf="!showDeviceCode"><b>Show Device order Barcode </b> <img class="arrow-icon"
+                        src="assets/icon/arrow_circle.svg" alt="arrow"></p>
                 <div class="info-banner default-background device-code-section" *ngIf="showDeviceCode">
-                    <h5 class="title">Your Device order Barcode: <span class="tertiary text-color-primary" (click)="toggleDeviceCode()">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
-                    <p class="smallest">Take this barcode with instructions below to your Goodwill store clerk to collect your Device.</p>
+                    <h5 class="title">Your Device order Barcode: <span class="tertiary text-color-primary"
+                            (click)="toggleDeviceCode()">{{showDeviceCode ? 'Hide' : 'Show'}}</span></h5>
+                    <p class="smallest">Take this barcode with instructions below to your Goodwill store clerk to
+                        collect your Device.</p>
                     <div class="barcode-section">
-                        <ngx-barcode6 [bc-value]="acpDeviceOrder?.devices[0]?.itemId" [bc-display-value]="true" class="barCode-radios">
+                        <ngx-barcode6 [bc-value]="acpDeviceOrder?.devices[0]?.itemId" [bc-display-value]="true"
+                            class="barCode-radios">
                         </ngx-barcode6>
                     </div>
                     <p class="smaller text-color-grey">Item # {{acpDeviceOrder?.devices[0]?.itemId}}</p>
                     <p class="smallest clark">STORE’S CLERK INSTRUCTIONS</p>
                     <div class="instruction-flex">
                         <div class="instruction-details">
-                            <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60" height="64">
+                            <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon"
+                                width="60" height="64">
                             <p class="smallest img-claric">Select <b>‘Online Tablet Order’</b> button</p>
                         </div>
                         <div class="instruction-details">
-                            <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60" height="64">
+                            <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon"
+                                width="60" height="64">
                             <p class="smallest img-claric">Scan <b>Barcode</b></p>
                         </div>
                         <div class="instruction-details">
-                            <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon" width="60" height="64">
+                            <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon"
+                                width="60" height="64">
                             <p class="smallest img-claric">Scan <b>Device IMEI</b></p>
                         </div>
                     </div>
                 </div>
                 <div class="acp-code-section">
-                    <p class="tertiary text-color-primary" (click)="toggleACPCode()"><b>{{!!showACPCodeSection ? 'Hide ACP ID Barcode ' : 'Show ACP ID Barcode '}}</b> <img class="arrow-icon" src="assets/icon/arrow_circle.svg" alt="arrow" [class.rotate]="!showACPCodeSection"></p>
+                    <p class="tertiary text-color-primary" (click)="toggleACPCode()"><b>{{!!showACPCodeSection ? 'Hide
+                            ACP ID Barcode ' : 'Show ACP ID Barcode '}}</b> <img class="arrow-icon"
+                            src="assets/icon/arrow_circle.svg" alt="arrow" [class.rotate]="!showACPCodeSection"></p>
                     <div class="code-section" *ngIf="showACPCodeSection">
-                        <div class="barcode-section" >
+                        <div class="barcode-section">
                             <h5>Your ACP ID:</h5>
                             <ngx-barcode6 [bc-value]="barCodeValue" [bc-display-value]="true" class="barCode-radios">
                             </ngx-barcode6>
@@ -70,7 +82,8 @@
                 </div>
             </ng-container>
             <div class="banners-section">
-                <div class="info-banner success-background" *ngIf="!!showSPCard && !acpPlan" [class.none]="!!isDisplayNone"
+                <div class="info-banner success-background" *ngIf="!!showSPCard && !acpPlan"
+                    [class.none]="!!isDisplayNone"
                     [ngClass]="{'fade-in': !!showSuccessBanner, 'fade-out': !showSuccessBanner}">
                     <div class="flex center">
                         <img src="assets/icon/success-icon.svg" alt="Success Icon">
@@ -84,10 +97,12 @@
                         <img *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1"
                             [src]="ACP_DEVICE_DESCS[acpDeviceCase]?.imgPath1" alt="Icon">
                         <div class="banner-content">
-                            <p class="title" data-cy="bannerContentTitle" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
+                            <p class="title" data-cy="bannerContentTitle"
+                                *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.title">
                                 {{ACP_DEVICE_DESCS[acpDeviceCase]?.title}}</p>
                             <p class="description" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
-                                [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1" data-cy="youAreEligibleDescription"></p>
+                                [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc1"
+                                data-cy="youAreEligibleDescription"></p>
                             <p class="description last" *ngIf="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"
                                 [innerHTML]="ACP_DEVICE_DESCS[acpDeviceCase]?.desc2"></p>
                             <div class="device-checkout-options" *ngIf="canPurchaseADevice">
@@ -95,33 +110,37 @@
                                 <div class="options-container">
                                     <div class="radioBtn" [class.selected]="option === 'online'">
                                         <label class="form-control" for="online" (click)="selectDeviceOption('online')">
-                                          <input type="radio" value="online" [(ngModel)]="option" data-cy="online" id="online" name="online" required>
-                                          <div class="content">
-                                              <img src="/assets/icon/online.svg" alt="online" class="home-icon">
-                                              <div class="input-details">
-                                              <p class="smallest primary-font-bold">Choose Device Online</p>
-                                              <p class="caption">Order online & pick it up in-store</p>
-                                          </div>
-                                        </div>
+                                            <input type="radio" value="online" [(ngModel)]="option" data-cy="online"
+                                                id="online" name="online" required>
+                                            <div class="content">
+                                                <img src="/assets/icon/online.svg" alt="online" class="home-icon">
+                                                <div class="input-details">
+                                                    <p class="smallest primary-font-bold">Choose Device Online</p>
+                                                    <p class="caption">Order online & pick it up in-store</p>
+                                                </div>
+                                            </div>
                                         </label>
                                     </div>
                                     <div class="radioBtn" [class.selected]="option === 'store'">
                                         <label class="form-control" for="store" (click)="selectDeviceOption('store')">
-                                          <input type="radio" value="store" [(ngModel)]="option" data-cy="store" id="store" name="store" required>
-                                          <div class="content">
-                                              <img src="/assets/icon/store.svg" alt="store pickup" class="home-icon">
-                                              <div class="input-details">
-                                              <p class="smallest primary-font-bold">Pick Device In-Store</p>
-                                              <p class="caption">Choose it if you're at the store</p>
-                                          </div>
-                                        </div>
+                                            <input type="radio" value="store" [(ngModel)]="option" data-cy="store"
+                                                id="store" name="store" required>
+                                            <div class="content">
+                                                <img src="/assets/icon/store.svg" alt="store pickup" class="home-icon">
+                                                <div class="input-details">
+                                                    <p class="smallest primary-font-bold">Pick Device In-Store</p>
+                                                    <p class="caption">Choose it if you're at the store</p>
+                                                </div>
+                                            </div>
                                         </label>
                                     </div>
                                 </div>
-                                <p class="validation-message" data-cy="pleaseSelectOptionMsg" *ngIf="showDeviceOptionError">Please Select an option to proceed</p>
+                                <p class="validation-message" data-cy="pleaseSelectOptionMsg"
+                                    *ngIf="showDeviceOptionError">Please Select an option to proceed</p>
                             </div>
                             <div class="actions" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName">
-                                <button class="button primary" data-cy="letStartBtn" *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
+                                <button class="button primary" data-cy="letStartBtn"
+                                    *ngIf="!!ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName"
                                     (click)="this[ACP_DEVICE_DESCS[acpDeviceCase]?.buttonAction]()">
                                     {{ACP_DEVICE_DESCS[acpDeviceCase]?.buttonName}}</button>
                             </div>
@@ -185,13 +204,15 @@
                     <img [src]="!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg'"
                         alt="Note Icon">
                     <div class="banner-content" *ngIf="!!ACP_DESCS[appStatus]">
-                        <p class="title" *ngIf="ACP_DESCS[appStatus]?.title" data-cy="infoBannerTitle">{{ACP_DESCS[appStatus]?.title}}</p>
-                        <p class="description" data-cy="infoBannerFirstDescription" *ngIf="!!ACP_DESCS[appStatus]?.desc1"
-                            [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
-                        <p class="description last" data-cy="infoBannerLastDescription" *ngIf="!!ACP_DESCS[appStatus]?.desc2"
-                            [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
+                        <p class="title" *ngIf="ACP_DESCS[appStatus]?.title" data-cy="infoBannerTitle">
+                            {{ACP_DESCS[appStatus]?.title}}</p>
+                        <p class="description" data-cy="infoBannerFirstDescription"
+                            *ngIf="!!ACP_DESCS[appStatus]?.desc1" [innerHTML]="ACP_DESCS[appStatus]?.desc1"></p>
+                        <p class="description last" data-cy="infoBannerLastDescription"
+                            *ngIf="!!ACP_DESCS[appStatus]?.desc2" [innerHTML]="ACP_DESCS[appStatus]?.desc2"></p>
                         <div class="actions" *ngIf="!!ACP_DESCS[appStatus]?.buttonName">
-                            <button class="button primary" data-cy="resumeFilingBtn" [class.long]="!!ACP_DESCS[appStatus]?.longClass"
+                            <button class="button primary" data-cy="resumeFilingBtn"
+                                [class.long]="!!ACP_DESCS[appStatus]?.longClass"
                                 *ngIf="!!ACP_DESCS[appStatus]?.buttonName"
                                 (click)="this[ACP_DESCS[appStatus]?.buttonAction]()"
                                 [disabled]="!!this[ACP_DESCS[appStatus]?.disabledCondition]"
@@ -240,7 +261,8 @@
                             [class.separator]="!!ACP_PLAN_DESCS[planActivationStatus]?.showSeparator"
                             *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc4"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc4"></p>
-                        <p class="description mt-10" data-cy="acpDeviceProceedCollectDescription" *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
+                        <p class="description mt-10" data-cy="acpDeviceProceedCollectDescription"
+                            *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.desc5"
                             [innerHTML]="ACP_PLAN_DESCS[planActivationStatus]?.desc5"
                             (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.descAction]()"></p>
                         <div class="stores-list" *ngIf="!!showStores">
@@ -282,7 +304,8 @@
             <div class="header-flex">
                 <p class="title">Service Provider<span><img src="assets/icon/green-dot.svg" alt="dot icon"></span></p>
                 <div class="status-date">
-                    <p class="key bottom">Status: <span class="value complete-status bold" data-cy="acpStatusValueComplete">Complete</span></p>
+                    <p class="key bottom">Status: <span class="value complete-status bold"
+                            data-cy="acpStatusValueComplete">Complete</span></p>
                     <p class="key">Last modified: <span class="value">{{!!verificationDetails ?
                             (verificationDetails?.updatedAt |
                             date) : 'N/A'}}</span></p>
@@ -328,10 +351,6 @@
             </div>
         </div>
         <div class="card-content-part" *ngIf="!hideCardContentNV">
-            <p class="desc" *ngIf="!!showCardDesc">
-                Applicants must complete the ACP application via Good Mobile. Upon completion,
-                applicants will be redirected to the National Verifier to <b>{{verificationDetails?.status === ACP_STATUS.PENDING_CERT ? 'complete the ACP Qualification.' : 'upload necessary documents to certify their eligibility.'}}</b>
-            </p>
             <div class="info-banner warning-background documents-banner" *ngIf="!!showQrCode">
                 <div class="flex">
                     <img src="assets/icon/warning-icon.svg" alt="Warning Icon">
@@ -396,18 +415,20 @@
                     <img [src]="(!!nvStatus && nvStatus === ACP_STATUS.COMPLETE) ? 'assets/icon/success-icon.svg' : (!!showAlert ? 'assets/icon/error-icon.svg' : 'assets/icon/info-icon.svg')"
                         alt="note icon">
                     <div class="banner-content" *ngIf="!!NV_DESCS[nvStatus]">
-                        <p class="title" data-cy="infoBannerTitle" *ngIf="NV_DESCS[nvStatus]?.title">{{NV_DESCS[nvStatus]?.title}}</p>
-                        <p class="description" data-cy="infoBannerFirstDescription" [class.last]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE"
+                        <p class="title" data-cy="infoBannerTitle" *ngIf="NV_DESCS[nvStatus]?.title">
+                            {{NV_DESCS[nvStatus]?.title}}</p>
+                        <p class="description" data-cy="infoBannerFirstDescription"
+                            [class.last]="!!nvStatus && nvStatus === ACP_STATUS.COMPLETE"
                             *ngIf="!!NV_DESCS[nvStatus]?.desc1" [innerHTML]="NV_DESCS[nvStatus]?.desc1"></p>
                         <p class="description" data-cy="infoBannerSecDescription" *ngIf="!!NV_DESCS[nvStatus]?.desc2"
                             [innerHTML]="NV_DESCS[nvStatus]?.desc2"></p>
-                        <p class="description bottom-8" data-cy="infoBannerThirdDescription" *ngIf="!!NV_DESCS[nvStatus]?.desc3"
-                            [innerHTML]="NV_DESCS[nvStatus]?.desc3"></p>
-                        <p class="description last" data-cy="infoBannerLastDescription" *ngIf="!!NV_DESCS[nvStatus]?.desc4"
-                            [innerHTML]="NV_DESCS[nvStatus]?.desc4"></p>
+                        <p class="description bottom-8" data-cy="infoBannerThirdDescription"
+                            *ngIf="!!NV_DESCS[nvStatus]?.desc3" [innerHTML]="NV_DESCS[nvStatus]?.desc3"></p>
+                        <p class="description last" data-cy="infoBannerLastDescription"
+                            *ngIf="!!NV_DESCS[nvStatus]?.desc4" [innerHTML]="NV_DESCS[nvStatus]?.desc4"></p>
                         <div class="actions" *ngIf="!!NV_DESCS[nvStatus]?.buttonName || !!NV_DESCS[nvStatus]?.linkName">
-                            <button class="button primary" data-cy="resumeFilingBtn" [class.long]="!!NV_DESCS[nvStatus]?.longClass"
-                                *ngIf="!!NV_DESCS[nvStatus]?.buttonName"
+                            <button class="button primary" data-cy="resumeFilingBtn"
+                                [class.long]="!!NV_DESCS[nvStatus]?.longClass" *ngIf="!!NV_DESCS[nvStatus]?.buttonName"
                                 (click)="this[NV_DESCS[nvStatus]?.buttonAction]()"
                                 [disabled]="!!this[NV_DESCS[nvStatus]?.disabledCondition]"
                                 [class.disabled]="!!this[NV_DESCS[nvStatus]?.disabledCondition]">{{NV_DESCS[nvStatus]?.buttonName}}
@@ -425,7 +446,8 @@
                     <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application and upload your documents
                         on your <b>smartphone</b>.</p>
                     <div class="qr">
-                        <qrcode data-cy="qrCode" [qrdata]="verificationDetails?.link" [width]="200" [errorCorrectionLevel]="'M'">
+                        <qrcode data-cy="qrCode" [qrdata]="verificationDetails?.link" [width]="200"
+                            [errorCorrectionLevel]="'M'">
                         </qrcode>
                     </div>
                 </div>

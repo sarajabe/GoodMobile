@@ -342,7 +342,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         title: 'Please Check Back Soon!',
         desc1: `<b>You have submitted your ACP application successfully.</b> Updates on your
         application status will show up on this page.`,
-        desc2: `<b>Please make sure to complete this step within 45 days.</b>`,
+        desc2: `<b>Please check again later!</b>`,
         desc3: null,
         desc4: null,
         buttonName: 'Refresh',
