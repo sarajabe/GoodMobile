@@ -2026,18 +2026,15 @@ class Acp {
           this.requiredMessagesAcpFirstPage();
           this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
                CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
-          cy.get('select').eq(0).select('01', { force: true }).should('have.value', '01');
-          cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
+          cy.get('select').eq(0).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(1).select('30', { force: true }).should('have.value', '30');
+          this.selectLastYearOption();
           this.clickOnTribalRadio();
           this.fillITribalID(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.TRIBAL_ID);
           this.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
           this.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
           this.clickOnNextBtn();
-          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
-          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
-          cy.get('[data-cy="invalidTribalMsg"]').should('have.text',' Tribal ID is invalid ');
-          cy.get('[data-cy="invalid-phone-msg"]').should('have.text',' Phone Number must have 10 digits ');
-          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+          this.invalidMessagesAcpFirstPageWithTribalID();
           this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.FIRST_NAME,
                CONSTANT.ACP_DATA.PERSONAL_INFO_PENDING_REVIEW.LAST_NAME);
           this.selectDareOfBirth();
@@ -2138,18 +2135,15 @@ class Acp {
           this.requiredMessagesAcpFirstPage();
           this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
                CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
-          cy.get('select').eq(0).select('01', { force: true }).should('have.value', '01');
-          cy.get('select').eq(1).select('19', { force: true }).should('have.value', '19');
+          cy.get('select').eq(0).select('12', { force: true }).should('have.value', '12');
+          cy.get('select').eq(1).select('30', { force: true }).should('have.value', '30');
+          this.selectLastYearOption();
           this.clickOnTribalRadio();
           this.fillITribalID(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.TRIBAL_ID);
           this.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
           this.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
           this.clickOnNextBtn();
-          cy.get('[data-cy="invalid-fname-msg"]').should('have.text',' First name is invalid ');
-          cy.get('[data-cy="invalid-lname-msg"]').should('have.text',' Last name is invalid ');
-          cy.get('[data-cy="invalidTribalMsg"]').should('have.text',' Tribal ID is invalid ');
-          cy.get('[data-cy="invalid-phone-msg"]').should('have.text',' Phone Number must have 10 digits ');
-          cy.get('[data-cy="invalid-email-msg"]').should('have.text',' Email Address is invalid. Hint: watch out for extra spaces ');
+          this.invalidMessagesAcpFirstPageWithTribalID();
           this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.FIRST_NAME,
                CONSTANT.ACP_DATA.PERSONAL_INFO_IN_PROGRESS.LAST_NAME);
           this.selectDareOfBirth();
