@@ -4,8 +4,7 @@
 .header {
   max-width: 2000px;
   height: 64px;
-  opacity: 0.96;
-  background: #F8FCFE;
+  background: #f8fcfef5;
   box-shadow: 0px 4px 10px 0px #0000001A;
   position: fixed;
   top: 0;
@@ -284,6 +283,74 @@
               &.menuShown {
                 display: block;
               }
+
+              &.active-plans {
+                margin-top: 16px;
+                padding-left: 8px;
+
+                p {
+                  font-size: rem-calc(14px);
+                  line-height: 24px;
+                }
+
+                .title {
+                  font-family: $base-font-family-bold;
+                  color: #393939;
+                  margin-bottom: 8px;
+                }
+
+                .sub-title {
+                  margin-bottom: 8px;
+
+                  .button {
+                    background: transparent;
+                    color: black;
+                    padding: 0;
+                    min-width: unset;
+                    min-height: unset;
+                    font-size: rem-calc(14px);
+                    line-height: 24px;
+                    font-family: $base-font-family;
+
+                    &.disabled {
+                      cursor: not-allowed;
+                      color: $disabled-grey !important;
+                    }
+                  }
+
+                  &.last {
+                    margin-bottom: 0;
+                  }
+                }
+
+                .user-account-part {
+                  margin-bottom: 12px;
+
+                  .title-flex {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 8px;
+
+                    .title {
+                      margin-bottom: 0;
+                    }
+
+                    .mdn-list {
+                      max-width: 146px;
+                      width: 100%;
+                      height: 40px;
+                      font-size: 16px;
+                      line-height: 24px;
+                      color: $black;
+                      border-radius: 4px;
+                      border: 1px solid #5E5E5E;
+                      background: #FBFBFB;
+                      padding: 8px;
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -363,6 +430,119 @@
                 border: 2px solid #DDDDDD;
                 margin: 12px 0;
                 border-radius: 30px;
+              }
+
+              &.active-plans {
+                position: absolute;
+                top: 40px;
+                left: -262px;
+                padding: 16px 16px 20px;
+                z-index: 999;
+                width: 630px;
+                display: flex;
+                border-radius: 10px;
+                background: #F3F3F3;
+                box-shadow: 0px 5px 12px 0px rgba(0, 60, 117, 0.04), 0px 7px 16px 0px rgba(94, 94, 94, 0.12), 0px 4px 4px 0px rgba(94, 94, 94, 0.04);
+                cursor: default;
+
+                &:before {
+                  width: 0;
+                  height: 0;
+                  border-left: 12px solid transparent;
+                  border-right: 12px solid transparent;
+                  border-bottom: 12px solid #F3F3F3;
+                  content: " ";
+                  position: absolute;
+                  top: -11px;
+                  right: auto;
+                  left: 304px;
+                }
+
+                p {
+                  font-size: rem-calc(18px);
+                  line-height: 32px;
+                  border-bottom: 2px solid #DDD;
+                  padding: 12px 8px;
+                }
+
+                .title {
+                  color: #001B3E;
+                  font-family: $base-font-family-bold;
+                  padding-top: 0;
+                  padding-bottom: 16px;
+                }
+
+                .sub-title {
+                  padding: 0;
+
+                  .button {
+                    background: transparent;
+                    color: black;
+                    padding: 12px 8px;
+                    min-width: unset;
+                    min-height: unset;
+                    font-size: rem-calc(18px);
+                    line-height: 32px;
+                    color: #00668D;
+                    font-family: $base-font-family-bold;
+
+                    &.disabled {
+                      cursor: not-allowed;
+                      color: $disabled-grey !important;
+                    }
+
+                    &:hover {
+                      color: $hover-color;
+                    }
+                  }
+                }
+
+                .last {
+                  border: none;
+
+                  .button {
+                    padding-bottom: 0;
+                  }
+                }
+
+                .border {
+                  border-left: 2px solid #DDD;
+                  margin: 0 8px;
+                }
+
+                .user-account-part,
+                .new-account-part {
+                  width: 290px;
+                }
+
+                .user-account-part {
+                  .mdn-cell {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    border-bottom: 2px solid #DDD;
+                    padding: 0 8px 8px;
+
+                    .title {
+                      border: none;
+                      padding: 0;
+                      margin: 0;
+                    }
+
+                    .mdn-list {
+                      max-width: 146px;
+                      width: 100%;
+                      height: 40px;
+                      font-size: 16px;
+                      line-height: 24px;
+                      color: $black;
+                      border-radius: 4px;
+                      border: 1px solid #5E5E5E;
+                      background: #FBFBFB;
+                      padding: 8px;
+                    }
+                  }
+                }
               }
             }
           }

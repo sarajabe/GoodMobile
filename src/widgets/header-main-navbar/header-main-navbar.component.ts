@@ -140,7 +140,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
         });
         if (!!user.ebbId) {
           this.appState.acpAppResObs.subscribe(res => {
-            if(!!res) {
+            if (!!res) {
               if (!this.isActivatedAcpPlan) {
                 if (!!this.acpPlan && res.status === this.ACP_STATUS.COMPLETE && this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0) {
                   this.showActivatePlanContent = true;
@@ -158,7 +158,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
               this.verificationDetails = res;
               this.acpActionRequired = false;
               this.showACPActionBanner = false;
-            } 
+            }
           });
         } else {
           this.showActivatePlanContent = false;
@@ -166,7 +166,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
           this.showResumeFilingContentCopy = false;
           this.showActivatePlanContentCopy = false;
           this.appState.acpActiveAppRes.subscribe(res => {
-            if(!!res) {
+            if (!!res) {
               this.acpActionRequired = true;
               this.showACPActionBanner = (this.router.url.indexOf(ACCOUNT_ROUTE_URLS.ACP_APPLICATION) < 0 && this.pageUrl.indexOf(ACP_ROUTE_URLS.BASE) < 0) ? true : false;
               if (!!this.showACPActionBanner) {
@@ -203,6 +203,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     this.headerHeight = !!header && !!this.showACPActionBanner ? header.clientHeight : (window.innerWidth < 640 ? 58 : 64);
     this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (!!changes.pageUrl) {
       this.pageUrl = changes.pageUrl.currentValue;
@@ -268,6 +269,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       this.renderer.addClass(document.body, 'modal-closed');
     }
   }
+
   public logout(event): void {
     this.menuShowing = false;
     this.showResponsiveMenu = false;
@@ -283,6 +285,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
     this.checkoutService.setPayments({ card: { address1: '', address2: '', cardCode: '', cardNumber: '', last4: '', id: '', city: '', state: '', country: '', postalCode: '', method: '', name: '', alias: '', fullName: '', brand: '' } });
   }
+
   public getPriority(): void {
     if (!this.isLoggedIn) {
       const params = {};
@@ -296,6 +299,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       }
     }
   }
+
   public onLinkClick(event, page?: string): void {
     this.showResponsiveMenu = false;
     const screenWidth = window.innerWidth;
@@ -336,16 +340,19 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       this.mobilePlansService.setSimCard('');
     }
   }
+
   public setActiveItem(x: number): void {
     this.resetTimeout();
     this.activeItem = x;
   }
+
   public goToCart(): void {
     if (this.hasCartItem && !(this.router.url.indexOf('cart') > -1) && !this.isEbbPlan) {
       this.menuShowing = false;
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
     }
   }
+
   public resetTimeout(): void {
     if (!!this.timeout) {
       clearTimeout(this.timeout);
@@ -394,6 +401,47 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
     }
   }
 
+  public goToAddOns(): void {
+    if (!this.isExpiredAccount && !this.isPortIn) {
+      this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`]);
+    }
+  }
+
+  public changePlan(): void {
+    if (!this.isPortIn) {
+      if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.CHANGE_PLAN) {
+        // eslint-disable-next-line max-len
+        this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
+          .afterClosed().subscribe((result) => {
+            if (result) {
+              this.mobilePlansService.clearUserCart();
+              this.appState.clearSessionStorage();
+              const removedItems = [];
+              if (this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
+                removedItems.push(this.userCart.basePlan);
+              } else {
+                if (this.userCart.simsQuantity > 0) {
+                  removedItems.push({ id: !!this.userCart.planDevice ? this.userCart.planDevice.skuNumber : 'SIMUNI4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
+                }
+                if (!!this.userCart.addOns) {
+                  removedItems.push(this.userCart.addOns);
+                }
+              }
+              const params = {};
+              params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
+              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
+            }
+          }, (error) => {
+            console.error('error', error);
+          });
+      } else {
+        const params = {};
+        params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.selectedPlan.id;
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
+      }
+    }
+  }
+
   public userPlanSelected(userPlan: IUserPlan): void {
     if (!!userPlan.mdn) {
       if (!this.selectedPlan || (!!userPlan && userPlan.id !== this.selectedPlan.id)) {
@@ -436,14 +484,17 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       this.userPlansService.selectFirstUserPlan(true);
     }
   }
+
   public planCompare(plan1: IUserPlan, plan2: IUserPlan) {
     return !!plan1 && !!plan2 ? plan1.id === plan2.id : plan1 === plan2;
   }
+
   public getSelectorTitle(plan: IUserPlan): string {
     const mdn: string = (new PhonePipe()).transform(plan.mdn);
     const title = !!plan.portInRequestNumber ? `PortIn for ${mdn}` : (!!plan.canceled ? `${mdn} - Canceled` : mdn);
     return title;
   }
+
   private getMaintenanceContentFromContentful(): void {
     this.contentfulService.getContent('maintenanceModel').subscribe(contents => {
       if (!!contents) {
@@ -459,9 +510,11 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
 
     });
   }
+
   public goToACPApplication(): void {
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
   }
+
   public goToPaymentUpdate(): void {
     this.router.navigate(['/' + DUPLICATE_PAYMENTS_ROUTE_URLS.BASE + '/' + DUPLICATE_PAYMENTS_ROUTE_URLS.PAYMENT_ATTENTION]);
   }
@@ -485,6 +538,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
     }
   }
+  
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {
     this.showResponsiveMenu = false;
