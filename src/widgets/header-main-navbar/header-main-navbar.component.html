@@ -11,9 +11,8 @@
           <button class="close" (click)="showResponsiveMenu = false;toggleShowing()"><i class="icon-close"></i></button>
         </div>
         <ul class="responsive-menu">
-          <li class="responsive-item sub-menu-list" *ngIf="!!isLoggedIn" (click)="showAccountMenu = !showAccountMenu">
-            <div class="label-section">
-
+          <li class="responsive-item sub-menu-list" *ngIf="!!isLoggedIn">
+            <div class="label-section" (click)="showAccountMenu = !showAccountMenu">
               <div class="name">
                 <p><img class="item-icon" src="assets/icon/account.svg" alt="Account" /> Account
                 </p>

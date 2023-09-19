@@ -380,6 +380,12 @@
           cursor: pointer;
           position: relative;
 
+          @media (min-width: $desktop-min-width) {
+            height: 40px;
+            display: flex;
+            align-items: center;
+          }
+
           &:after {
             content: '';
             display: block;
