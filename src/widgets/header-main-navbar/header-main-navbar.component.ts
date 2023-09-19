@@ -421,7 +421,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                 removedItems.push(this.userCart.basePlan);
               } else {
                 if (this.userCart.simsQuantity > 0) {
-                  removedItems.push({ id: !!this.userCart.planDevice ? this.userCart.planDevice.skuNumber : 'SIMUNI4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
+                  removedItems.push({ id: !!this.userCart.planDevice ? this.userCart.planDevice.skuNumber : 'SIMGWLTMO4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
                 }
                 if (!!this.userCart.addOns) {
                   removedItems.push(this.userCart.addOns);
@@ -457,7 +457,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
                   removedItems.push(this.userCart.basePlan);
                 } else {
                   if (this.userCart.simsQuantity > 0) {
-                    removedItems.push({ id: 'SIMG2G4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
+                    removedItems.push({ id: 'SIMGWLTMO4GLTE', quantity: this.userCart.simsQuantity, price: 5, type: 'plan-item', title: 'SIM CARD' });
                   }
                   if (!!this.userCart.addOns) {
                     removedItems.push(this.userCart.addOns);
