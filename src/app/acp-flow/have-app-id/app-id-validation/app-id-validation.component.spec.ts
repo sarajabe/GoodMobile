@@ -116,6 +116,8 @@ fdescribe('Acp app id Validation Component - Unit Testing', () => {
 
         mockEbbManager.acpFlowSelected.and.returnValue('');
         mockEbbManager.acpFlowSelected = of(1);
+        
+        mockEbbService.getActiveInternalApplication.and.resolveTo({data: acpData});
 
         spyOn(component.router, 'navigate');
 

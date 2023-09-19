@@ -55,7 +55,7 @@ class AccessControl {
         };
         logoutFromAccountAfterBeingInACPApp() {
                 cy.get('[data-cy="account-menu-header"]').click({force: true});
-                cy.get('#logout-header').click({force: true});
+                cy.get('[data-cy="logout-header"]').click({force: true});
                 cy.title().should('eq','Login To Your Good Mobile Account | Good Mobile');
                 return this;
         };

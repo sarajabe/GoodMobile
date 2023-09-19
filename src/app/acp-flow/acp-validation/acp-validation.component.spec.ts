@@ -127,6 +127,7 @@ fdescribe('Acp Validation Component - Unit Testing', () => {
 
         mockEbbService.getCodes.and.resolveTo(ACP_MOCKS.ELIGIBILiTY_CODES_OBJECT);
         mockEbbService.getPublicHousingPrograms.and.resolveTo(ACP_MOCKS.PUBLIC_HOUSING_CODES_OBJECT);
+        mockEbbService.getActiveInternalApplication.and.resolveTo({data: acpData});
 
         mockEbbManager.activeStep.and.returnValue(1);
         mockEbbManager.activeStep = of(1);
