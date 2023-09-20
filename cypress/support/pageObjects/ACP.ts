@@ -2391,6 +2391,128 @@ class Acp {
           this.clickOnSelectDevice();
           PageObjects.TitleExpectations.goToLogInPage();
      };
-
+     enrollmentExistingUserAcpComplete(){
+          PageObjects.HomePage.clickOnShopMenu();
+          PageObjects.HomePage.clickOnPlans();
+          PageObjects.TitleExpectations.goToPlansGMPage();
+          this.clickOnDoIQualifyBtn();
+          PageObjects.TitleExpectations.goToACPPage();
+          this.clickOnApplyNowBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.checkNoRadioBtn();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.FIRST_NAME,
+               CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.LAST_NAME);
+          cy.get('select').eq(2).select('01', { force: true }).should('have.value', '01');
+          cy.get('select').eq(3).select('19', { force: true }).should('have.value', '19');
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.PHONE_NUMBER);
+          this.fillInEmail(CONSTANT.ACP_DATA.INVALID_PERSONAL_INFO.Email);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpFirstPage();
+          this.fillInPersonalInfoPart1(CONSTANT.ACP_DATA.PERSONAL_INFO2.FIRST_NAME,
+               CONSTANT.ACP_DATA.PERSONAL_INFO2.LAST_NAME);
+          cy.get('select').eq(2).select('01', { force: true }).should('have.value', '01');
+          cy.get('select').eq(3).select('19', { force: true }).should('have.value', '19');
+          cy.get('select').eq(4).select('1991', { force: true }).should('have.value', '1991');
+          this.clickOnSSNRadio();
+          this.fillInSSN(CONSTANT.ACP_DATA.PERSONAL_INFO2.SSN_NO);
+          this.fillInPhoneNumber(CONSTANT.ACP_DATA.PERSONAL_INFO2.PHONE_NUMBER);
+          const newEmail = Cypress.env('newEmail');
+          this.fillInEmail(newEmail);
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text','Address Information');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.fillInMailingAddress(CONSTANT.ACP_DATA.INVALID_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.CITY);
+          this.fillInMailingAddress2(CONSTANT.ACP_DATA.INVALID_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.INVALID_ADDRESS2.ZIP);
+          this.clickOnNextBtn();
+          this.invalidMessagesAcpSecondPage();
+          this.fillInPhysicalAddressInfo(CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ADDRESS_LINE1,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.CITY);
+          this.fillInPhysicalAddressInfo2(
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.STATE,
+               CONSTANT.ACP_DATA.VERIFIED_ADDRESS2.ZIP);
+          cy.get('[data-cy="useSameAddress"]').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text','Qualified Programs');
+          this.clickOnNextBtn();
+          this.requiredMessagesAcpThirdPage();
+          cy.get('li').eq(24).click({ force: true });
+          this.clickOnIQualifyIndividually();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text', 'Required document(s) consent: ');
+          this.clickOnNextBtn();
+          cy.get('[data-cy="validationMessageCheckbox"]').should('have.text', 'Please tick this box to confirm that you have read and understood what documents you need to provide.');
+          cy.get('[data-cy="consentFormCheckbox"]').click();
+          this.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="stepTitle"]').should('have.text','Almost there!');
+          this.clickOnVerifyBtn();
+          this.requiredMessagesAcpForthPage();
+          this.firstCheckSignUp();
+          this.secondCheckSignUp();
+          this.thirdCheckSignUp();
+          this.forthCheckSignUp();
+          this.fillInFullName(CONSTANT.ACP_DATA.PERSONAL_INFO2.FULL_NAME);
+          PageObjects.Recaptcha.checkRecaptchaCustomerInfo1();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          this.clickOnVerifyBtn();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL5);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+          cy.get('[data-cy="congratulationTitle"]').should('have.text','Congratulations!');
+          cy.get('[data-cy="acpBenefitsDescription"]').should('have.text','Your ACP benefits can now be applied to your Good Mobile 10GB ACP plan!');
+          cy.get('[data-cy="addNewLine"]').should('exist');
+          cy.get('[data-cy="selectExistingLineBtn"]').should('exist');
+     };
+     selectExistingLineForAcpApp(){
+          cy.get('[data-cy="selectExistingLineBtn"]').click();
+          cy.get('[data-cy="AcpTitle"]').should('have.text','ACP Enrollment');
+          cy.get('select').eq(2).select('(689) 286-4244', { force: true }).should('have.value', '6892864244');
+          cy.get('[data-cy="submitBtn"]').click();
+          cy.get('.modal-heading').should('have.text', 'Change to ACP plan');
+          cy.get('[data-cy="confirm-btn"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.MAX);
+          cy.get('.banner-content > .title').should('have.text','We have received your request!');
+          cy.get('.description').should('have.text','This might take few moments to process. Please don\'t click "Submit" again. ');
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
+          cy.get('[data-cy="successMsg"]').should('have.text','Success!');
+          cy.get('[data-cy="acpActivatedMsg"]').should('have.text','Your ACP benefits has been activated on:');
+          cy.get('[data-cy="mdnValue"]').should('have.text','6892864244');
+          cy.get('[data-cy="doneBtn"]').click();
+          cy.get('[data-cy="accountSummary"]').click();
+          cy.reload();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.get('[data-cy="basePlan"]').should('have.text','Affordable Connectivity Program ');
+          cy.get('[data-cy="planData"]').should('have.text',' 10GB 4G LTE Plan');
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="selectExistingLineBtn"]').should('not.exist');
+          cy.get('[data-cy="accountSummary"]').click();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+     };
+     cancelAcpPlan(){
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="selectExistingLineBtn"]').should('exist');
+          cy.get('[data-cy="cancelApplication"]').click();
+          cy.get('.modal-heading').should('have.text','Are you sure you want to cancel application?');
+          cy.get('[data-cy="confirm-btn"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToACPEnrollemntPage();
+     }
 };
 export default new Acp();

@@ -1,3 +1,4 @@
+import { PageObjects } from '../../support/pageObjects';
 import { CONSTANT } from '../../fixtures/constants/index';
 
 class AccountSummary {
@@ -197,7 +198,7 @@ class AccountSummary {
           return this;
      };
      clickOnChangePlan () {
-          cy.contains('a', 'Change plan').click({force: true});
+          cy.get('[data-cy="changePlan"]').click({force: true});
           return this;
      };
      clickOnCancelPlan () {
@@ -250,6 +251,38 @@ class AccountSummary {
      clickOnAndGoPurchasedPlans() {
           cy.get('.item-pending-activations > .items-link').click();
           cy.title().should('eq', `Purchased Plans`);
+     };
+     changePlanFromAcpTo2GbPlan(){
+          this.clickOnChangePlan();
+          cy.get('.modal-heading').should('have.text','Change ACP Plan');
+          cy.get('[data-cy="changeOnExpiryButton"]').click();
+          PageObjects.TitleExpectations.goToChangePlanPage();
+          PageObjects.Plans.clickOn2GBPlanChangePlanPage();
+          cy.get('.modal-heading').should('have.text','Before we continue');
+          cy.get('[data-cy="changePlanNowButton"]').click();
+          PageObjects.TitleExpectations.goToChangePlanSummaryPage();
+          cy.get('[data-cy="confirmButton"]').click();
+          PageObjects.TitleExpectations.goToReviewCartPage();
+          cy.get('.head-title').should('have.text', 'Review your cart');
+          cy.get('[data-cy="basePlan"]').should('have.text','2GB 4G LTE Plan');
+          PageObjects.ReviewCart.clickOnCheckoutBtn();
+          PageObjects.TitleExpectations.goToPaymentPage();
+          cy.get(':nth-child(3) > .payment-container > .title-checkbox').click();
+          cy.get('[data-cy="paymentMethod"]').click();
+          cy.get('[data-cy="nextBtn"]').click();
+          PageObjects.TitleExpectations.goToPlaceYourOrderPage();
+          cy.get('[data-cy="submitBtn"]').click();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL4);
+          PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
+          PageObjects.AccountSummary.clickOnGoAccountToSummaryBtn();
+          PageObjects.TitleExpectations.goToAccountSummaryPage();
+          cy.reload();
+          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          cy.get('[data-cy="basePlan"]').should('have.text','Unlimited Talk & text with 2GB Data ');
+          cy.get('[data-cy="planData"]').should('have.text',' 2GB 4G LTE Plan'); 
+          cy.get('[data-cy="acpSummary"]').click();
+          PageObjects.TitleExpectations.goToACPApplicationPage();
+          cy.get('[data-cy="selectExistingLineBtn"]').should('exist');
      };
 };
 export default new AccountSummary();

@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="actions">
-      <button class="button primary" (click)="userConfirmed()">{{!!isCheckoutFlow ? 'Proceed to checkout' : 'Change plan'}}</button>
+      <button class="button primary" data-cy="confirmButton" (click)="userConfirmed()">{{!!isCheckoutFlow ? 'Proceed to checkout' : 'Change plan'}}</button>
       <button class="button secondary" (click)="goToAccountSummary()">Cancel</button>
     </div>
   </div>

@@ -16,13 +16,13 @@
         </div>
         <div class="actions" *ngIf="acpStatus !== 'pendingAction'">
           <button class="button primary" data-cy="addNewLine" (click)="addNewLine()">Add New Line</button>
-          <button class="button secondary" (click)="selectExistingLine()"
+          <button class="button secondary" data-cy="selectExistingLineBtn" (click)="selectExistingLine()"
             *ngIf="!!activePlans && activePlans.length > 0">Select Existing Line</button>
         </div>
         <div class="qr-section" *ngIf="acpStatus === 'pendingAction'">
           <p class="smaller">Or <b>“Scan the QR Code”</b> complete your application on <b>your phone</b>.</p>
           <div class="qr">
-            <qrcode [qrdata]="link" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+            <qrcode data-cy="qrCode" [qrdata]="link" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
           </div>
         </div>
       </div>

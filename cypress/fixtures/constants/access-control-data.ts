@@ -303,6 +303,10 @@ export const ACCESS = {
         EMAIL: 'testuser@ztarmobile.com',
         PASSWORD: 'Abc123'
     },
+    TESTB_USER:{
+        EMAIL: 'testbuser@ztarmobile.com',
+        PASSWORD: 'Abc123'
+    },
     TEST_L_USER: {
         EMAIL: "testluser@ztarmobile.com",
         PASSWORD: "Abc123"

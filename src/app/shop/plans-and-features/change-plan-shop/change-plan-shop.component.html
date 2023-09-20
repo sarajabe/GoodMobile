@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="actions">
-            <a (click)="selectChangePlan()">
+            <a (click)="selectChangePlan()" data-cy="cartIcon">
               <img *ngIf="innerWidth > 1024" src="/assets/icon/base-cart-icon.svg" alt="cart-icon"
             onmouseover="this.src='/assets/icon/cart-long-button.svg'"
             onmouseout="this.src='/assets/icon/base-cart-icon.svg'">
