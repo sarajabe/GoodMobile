@@ -11,7 +11,7 @@ describe('Sign in then enroll in ACP plan - pending - select exisiting line - ch
     it('Should sign in with user that have existing line', () => {
         PageObjects.AccessControl.successfulLoginExisingUserWithMdn();
     });
-    it('Should verify a existing user with complete ACP status application', () => {
+    it('Should verify an existing user with complete ACP status application', () => {
         PageObjects.Acp.enrollmentExistingUserAcpComplete();
     });
     it('Should select Existing line', () => {
