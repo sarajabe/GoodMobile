@@ -336,5 +336,10 @@ class TitleExpectations {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
+    goToChangePlanSummaryPage(){
+        cy.title().should('eq', 'Change plan Summary');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+        return this;
+    }
 };
 export default new TitleExpectations();

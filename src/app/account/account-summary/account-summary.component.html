@@ -214,8 +214,8 @@
               <div [class.displayNone]="innerWidth < 834 && !!hideManageYourPlanCard">
                 <div [class.last-element]="!userAccount && !selectedPlan?.planDevice">
                   <div class="data-height">
-                    <span class="title-text base-plan-title" data-cy="basePlan"><span
-                        [class.promo-title]="!!isApplicablePromo">{{!!selectedPlan?.basePlan?.specialPromotion &&
+                    <span class="title-text base-plan-title"><span
+                        [class.promo-title]="!!isApplicablePromo" data-cy="basePlan">{{!!selectedPlan?.basePlan?.specialPromotion &&
                         !!isApplicablePromo ? selectedPlan?.basePlan?.specialPromotion?.promotionTitle :
                         selectedPlan?.basePlan?.title}}
                       </span>
@@ -226,7 +226,7 @@
                       <span *ngIf="filteredPlan?.data < 1"> No data</span>
                     </span>
                     <br>
-                    <p class="title-text" *ngIf="!!selectedPlan">
+                    <p class="title-text" *ngIf="!!selectedPlan" data-cy="planData">
                       {{selectedPlan?.basePlan?.subtitle}}</p>
                     <div [class.promoSpace]="!filteredPlan?.data > 0 || !!selectedPlan?.canceled || !userAccount">
                       <span class="title-info" *ngIf="!!userAccount && !!selectedPlan"><b>Plan

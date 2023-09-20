@@ -5,9 +5,9 @@ describe('Sign in then enroll in ACP plan - pending - select exisiting line - ch
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
-    // after(() => {
-    //     PageObjects.AccessControl.logoutFromAccount();
-    // });
+    after(() => {
+        PageObjects.AccessControl.logoutFromAccount();
+    });
     it('Should sign in with user that have existing line', () => {
         PageObjects.AccessControl.successfulLoginExisingUserWithMdn();
     });
@@ -17,10 +17,10 @@ describe('Sign in then enroll in ACP plan - pending - select exisiting line - ch
     it('Should select Existing line', () => {
         PageObjects.Acp.selectExistingLineForAcpApp();
     }); 
-    
-    //change the plan
-    PageObjects.AccountSummary.changePlanFromAcpTo2GbPlan();
-
-    //cancel ACP
-    
+    it('Should change plan from ACP to 2GB', () => {
+        PageObjects.AccountSummary.changePlanFromAcpTo2GbPlan();
+    });
+    it('Should cancel ACP plan', () =>{
+        PageObjects.Acp.cancelAcpPlan();
+    });
 })

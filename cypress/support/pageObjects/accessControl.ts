@@ -111,7 +111,7 @@ class AccessControl {
         successfulLoginExisingUserWithMdn(){
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
-                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TESTA_USER.EMAIL, CONSTANT.ACCESS.TESTA_USER.PASSWORD);
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TESTB_USER.EMAIL, CONSTANT.ACCESS.TESTB_USER.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
         };
