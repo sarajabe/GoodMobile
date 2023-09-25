@@ -4,8 +4,8 @@
         <div class="content-holder">
             <div class="activation-tabs">
                 <ul class="tab-list">
-                    <li class="tab-title" [class.active]="isNewNumber" *ngIf="!isPortOnly" (click)="isNewNumber = true">Activate with a new number</li>
-                    <li class="tab-title" [class.active]="!isNewNumber" *ngIf="!isNewOnly" (click)="isNewNumber = false">Keep your current number</li>
+                    <li class="tab-title" [class.active]="isNewNumber" *ngIf="!isPortOnly" (click)="isNewNumber = true">Activate a new number (Number Assigned by Good Mobile)</li>
+                    <li class="tab-title" [class.active]="!isNewNumber" *ngIf="!isNewOnly" (click)="isNewNumber = false">Transfer My Number (Port In from other provider)</li>
                 </ul>
             </div>
         </div>
