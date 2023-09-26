@@ -116,12 +116,12 @@
               <div class="new-account-part">
                 <p class="title">New Account</p>
                 <p class="sub-title">
-                  <button class="button thirdly" data-cy="plansLink"
+                  <button class="button thirdly" data-cy="plansLink" (click)="onLinkClick($event)"
                     [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Purchase
                     new Plan</button>
                 </p>
                 <p class="sub-title last">
-                  <button class="button thirdly"
+                  <button class="button thirdly" (click)="onLinkClick($event)"
                     [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</button>
                 </p>
               </div>
@@ -193,12 +193,12 @@
             <div class="new-account-part">
               <p class="title">New Account</p>
               <p class="sub-title">
-                <button class="button thirdly"
+                <button class="button thirdly" (click)="onLinkClick($event)"
                   [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Purchase
                   new Plan</button>
               </p>
               <p class="sub-title last">
-                <button class="button thirdly"
+                <button class="button thirdly" (click)="onLinkClick($event)"
                   [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</button>
               </p>
             </div>
