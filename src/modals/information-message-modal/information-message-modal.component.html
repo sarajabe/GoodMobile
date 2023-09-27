@@ -14,8 +14,8 @@
         <div *ngIf="!!context.customHTML" [innerHTML]="context.customHTML"></div>
       </div>
       <div class="modal-actions">
-        <button class="button primary" (click)="OK()" id="action-button" data-cy="action-button" *ngIf="!context.btnUrl">{{context.btnText || 'OK'}}</button>
-        <button class="button transparent" *ngIf="!!context.cancelBtn" (click)="cancel()" id="action-button" data-cy="action-button">{{context.cancelText ||
+        <button class="button primary" (click)="OK()" id="action-button" data-cy="changeOnExpiryButton" *ngIf="!context.btnUrl">{{context.btnText || 'OK'}}</button>
+        <button class="button transparent" *ngIf="!!context.cancelBtn" (click)="cancel()" id="action-button" data-cy="changePlanNowButton">{{context.cancelText ||
           'Cancel'}}</button>
           <a [href]="context.btnUrl" target="_blank" *ngIf="!!context.btnUrl">
             <button class="button primary" (click)="OK()" id="modal-button">{{context.btnText || 'OK'}}</button>

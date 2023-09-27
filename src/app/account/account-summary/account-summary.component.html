@@ -215,18 +215,18 @@
                 <div [class.last-element]="!userAccount && !selectedPlan?.planDevice">
                   <div class="data-height">
                     <span class="title-text base-plan-title"><span
-                        [class.promo-title]="!!isApplicablePromo">{{!!selectedPlan?.basePlan?.specialPromotion &&
+                        [class.promo-title]="!!isApplicablePromo" data-cy="basePlan">{{!!selectedPlan?.basePlan?.specialPromotion &&
                         !!isApplicablePromo ? selectedPlan?.basePlan?.specialPromotion?.promotionTitle :
                         selectedPlan?.basePlan?.title}}
                       </span>
-                      <!-- <span class="plan-data"
+                      <!-- <span class="plan-data" data-cy="planData"
                         *ngIf="filteredPlan?.data > 0 && !selectedPlan?.canceled && !!userAccount && !!selectedPlan">
                         {{(filteredPlan?.data/1024)}}GB 4G LTE Plan 
                       </span> -->
                       <span *ngIf="filteredPlan?.data < 1"> No data</span>
                     </span>
                     <br>
-                    <p class="title-text" *ngIf="!!selectedPlan">
+                    <p class="title-text" *ngIf="!!selectedPlan" data-cy="planData">
                       {{selectedPlan?.basePlan?.subtitle}}</p>
                     <div [class.promoSpace]="!filteredPlan?.data > 0 || !!selectedPlan?.canceled || !userAccount">
                       <span class="title-info" *ngIf="!!userAccount && !!selectedPlan"><b>Plan
@@ -247,7 +247,7 @@
                   <div class="action-links"
                     [class.disabled]="!userAccount || !!selectedPlan?.canceled || (!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus)">
                     <div class="links-container">
-                      <a class="change-action"
+                      <a class="change-action" data-cy="changePlan"
                         [class.disabled]="!!selectedPlan?.portInRequestNumber && !!selectedPlan?.portInStatus"
                         *ngIf="!!selectedPlan && !selectedPlan?.canceled && !!userAccount &&  !userAccount?.billingRenewalPaid"
                         (click)="changePlan()">

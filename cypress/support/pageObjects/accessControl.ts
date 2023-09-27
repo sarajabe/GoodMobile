@@ -26,6 +26,7 @@ class AccessControl {
         logIn(email, password) {
                 cy.get('[data-cy="loginEmail"]').clear();
                 cy.get('[data-cy="loginEmail"]').type(email);
+                Cypress.env('newEmail' , email);
                 cy.get('[data-cy="loginPassword"]').clear();
                 cy.get('[data-cy="loginPassword"]').type(password);
                 return this;
@@ -54,8 +55,8 @@ class AccessControl {
         };
         logoutFromAccountAfterBeingInACPApp() {
                 cy.get('[data-cy="account-menu-header"]').click({force: true});
-                cy.get('#logout-header').click({force: true});
-                cy.title().should('eq','Login To Your Good2Go Mobile Account | Good2Go Mobile');
+                cy.get('[data-cy="logout-header"]').click({force: true});
+                cy.title().should('eq','Login To Your Good Mobile Account | Good Mobile');
                 return this;
         };
         clickOnContinueSignUpBtn() {
@@ -106,6 +107,13 @@ class AccessControl {
                 cy.get('[data-cy="loginPassword"]').clear();
                 cy.get('[data-cy="loginPassword"]').type(password);
                 return this;
+        };
+        successfulLoginExisingUserWithMdn(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TESTB_USER.EMAIL, CONSTANT.ACCESS.TESTB_USER.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
         };
         successfulLoginNewUserAcp(){
                 PageObjects.HomePage.clickOnSignIn();

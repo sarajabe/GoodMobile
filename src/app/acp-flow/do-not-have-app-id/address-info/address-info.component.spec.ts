@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActionsAnalyticsService, FirebaseUserProfileService, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService, FirebaseUserProfileService, IAutoCompletePrediction, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { AddressInfoNonAppExisitngComponent } from './address-info.component';
 import { InjectionToken, SimpleChange } from '@angular/core';
 import { IGoogleTagManagerEventsConfig } from '@ztarmobile/zwp-service';
@@ -10,6 +10,7 @@ import { AppState } from 'src/app/app.service';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ACP_MOCKS } from 'src/mocks';
+import { of } from 'rxjs';
 
 let component: AddressInfoNonAppExisitngComponent;
 let fixture: ComponentFixture<AddressInfoNonAppExisitngComponent>;
@@ -24,6 +25,7 @@ let mockAnalyticService;
 let mockPlacesAutocompleteService;
 let mockEbbService;
 let mockFirebaseUserProfileService;
+let mockAutocompleteOptions: IAutoCompletePrediction[];
 
 fdescribe('Yes flow - without app id- EBB Address Info Component - Unit Testing', async () => {
   beforeEach(async () => {
@@ -66,6 +68,28 @@ fdescribe('Yes flow - without app id- EBB Address Info Component - Unit Testing'
     stateInputField = component.addressInfoForm.controls.state;
     zipCodeInputField = component.addressInfoForm.controls.zipCode;
 
+    fixture.detectChanges();
+    mockAutocompleteOptions = [
+      { description: 'Option 1',  matched_substrings: [],
+      place_id: '12345',
+      terms: [],
+      types: [],
+      main_text: 'Option 2' },
+      { description: 'Option 2', matched_substrings: [],
+      place_id: '12345',
+      terms: [],
+      types: [],
+      main_text: 'Option 3', },
+      { description: 'Option 3' , matched_substrings: [],
+      place_id: '12345',
+      terms: [],
+      types: [],
+      main_text: 'Option 1',},
+    ];
+
+    mockPlacesAutocompleteService.findAddress.and.returnValue(mockAutocompleteOptions);
+    mockPlacesAutocompleteService.findAddress = of(mockAutocompleteOptions);
+    
     fixture.detectChanges();
   });
 
@@ -309,6 +333,24 @@ fdescribe('Yes flow - without app id- EBB Address Info Component - Unit Testing'
       expect(cityInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.city);
       expect(stateInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.state);
       expect(zipCodeInputField.value).toEqual(ACP_MOCKS.FULL_USER_INFO.address.primary.zipCode);
+    });
+  }));
+  it('Should display autocomplete options as the user types in address1', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      spyOn(component,'findPlace');
+      component.filteredOptions = of(mockAutocompleteOptions);
+      fixture.detectChanges();
+
+      const inputElement = fixture.nativeElement.querySelector('#addressLookup');
+      addressOneInputField.setValue('Option');
+      fixture.detectChanges();
+      inputElement.dispatchEvent(new Event('input'));
+       // Wait for any pending asynchronous operations to complete
+      fixture.detectChanges();
+
+     // Assert that the autocomplete options are displayed
+      const optionElements = fixture.nativeElement.querySelectorAll('.mat-option');
+      expect(optionElements).toBeTruthy();
     });
   }));
 });

@@ -20,8 +20,8 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
   public activePlans: Array<IUserPlan>;
   public ebbPlan: MobilePlanItem;
   public planPurchased = false;
+  public planPuchasedClicked = false;
 
-  private planPuchasedClicked = false;
   private alive = true;
   constructor(private router: Router, private formBuilder: FormBuilder,
     private userPlansService: UserPlansService, private appState: AppState,
@@ -98,6 +98,7 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
               // this session waitingAcpActivation should be cleared once 
               // the user access his ACP summary page and his plan has been successfully activated with exiting plan
               sessionStorage.setItem('waitingAcpActivation', 'true');
+              this.planPuchasedClicked = true;
               this.appState.loading = true;
               this.mobilePlansService.clearUserCart().then(() => {
                 this.mobilePlansService.setBasePlan(this.ebbPlan);
@@ -128,13 +129,11 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                             action: 'change to ACP plan'
                           }
                           this.analyticsService.trackACPEvent(data);
-                          this.planPuchasedClicked = true;
                           this.appState.loading = false;
                           this.planPurchased = true;
                         },
                         (error) => {
                           this.appState.loading = false;
-                          this.planPuchasedClicked = true;
                           this.toastHelper.showAlert(error.message);
                           this.mobilePlansService.clearUserCart();
                           this.planPurchased = false;

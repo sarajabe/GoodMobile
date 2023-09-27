@@ -11,9 +11,8 @@
           <button class="close" (click)="showResponsiveMenu = false;toggleShowing()"><i class="icon-close"></i></button>
         </div>
         <ul class="responsive-menu">
-          <li class="responsive-item sub-menu-list" *ngIf="!!isLoggedIn" (click)="showAccountMenu = !showAccountMenu">
-            <div class="label-section">
-
+          <li class="responsive-item sub-menu-list" *ngIf="!!isLoggedIn">
+            <div class="label-section" (click)="showAccountMenu = !showAccountMenu">
               <div class="name">
                 <p><img class="item-icon" src="assets/icon/account.svg" alt="Account" /> Account
                 </p>
@@ -71,9 +70,8 @@
             <img class="item-icon" src="assets/icon/home-page.svg" alt="home" />
             <a id="homeMenu" [routerLink]="[ROUTE_URLS.HOME]" (click)="onLinkClick($event)">Home</a>
           </li>
-          <li class="responsive-item sub-menu-list" id="shopMenu" data-cy="shopMenu"
-            (click)="showShopMenu = !showShopMenu">
-            <div class="label-section">
+          <li class="responsive-item sub-menu-list" id="shopMenu">
+            <div class="label-section" data-cy="shopMenu" (click)="showShopMenu = !showShopMenu">
               <div class="name">
                 <p><img class="item-icon" src="assets/icon/cart.svg" alt="shop" /> Shop
                 </p>
@@ -81,16 +79,52 @@
               <div class="toggle-side"> <i class="arrow primary"
                   [ngClass]="{'down': !showShopMenu, 'up': !!showShopMenu}"></i></div>
             </div>
-            <div class="menu-wrapper" [class.menuShown]="!!showShopMenu">
-              <ul class=" sub-menu">
+            <div class="menu-wrapper" [class.menuShown]="!!showShopMenu"
+              *ngIf="!isLoggedIn || (!!isLoggedIn && !userHasActivePlans)">
+              <ul class="sub-menu">
                 <li class="item"><a
                     [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event)" data-cy="plansLink" >Plans</a></li>
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                    data-cy="plansLink">Plans</a></li>
                 <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
-                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-                    (click)="onLinkClick($event)" data-cy="devicesLink">Devices</a></li>
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
+                    data-cy="devicesLink">Devices</a></li>
               </ul>
+            </div>
+            <div class="menu-wrapper active-plans" [class.menuShown]="!!showShopMenu"
+              *ngIf="!!isLoggedIn && !!userHasActivePlans">
+              <div class="user-account-part">
+                <div class="title-flex">
+                  <p class="title">Your Account</p>
+                  <select class="mdn-list" id="phonePlan" name="phonePlan" [(ngModel)]="selectedPlan"
+                    (ngModelChange)="userPlanSelected($event)" [compareWith]="planCompare">
+                    <option *ngFor="let plan of userPlans" [ngValue]="plan">
+                      {{getSelectorTitle(plan)}}
+                    </option>
+                  </select>
+                </div>
+                <p class="sub-title">
+                  <button class="button thirdly" (click)="changePlan()" [class.disabled]="!!isPortIn">Change
+                    Plan</button>
+                </p>
+                <p class="sub-title last">
+                  <button class="button thirdly" (click)="goToAddOns()"
+                    [class.disabled]="!!isPortIn || !!isExpiredAccount">Order
+                    Add-ons</button>
+                </p>
+              </div>
+              <div class="new-account-part">
+                <p class="title">New Account</p>
+                <p class="sub-title">
+                  <button class="button thirdly" data-cy="plansLink" (click)="onLinkClick($event)"
+                    [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Purchase
+                    new Plan</button>
+                </p>
+                <p class="sub-title last">
+                  <button class="button thirdly" (click)="onLinkClick($event)"
+                    [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</button>
+                </p>
+              </div>
             </div>
           </li>
           <li class="responsive-item">
@@ -123,7 +157,9 @@
         </li>
         <li class="menu-item" id="shopMenu-header" data-cy="shopMenu">Shop <img class="shop-arrow"
             src="assets/icon/shop-arrow.svg" alt="Shop Arrow" />
-          <div class="shop-menu">
+
+
+          <div class="shop-menu" *ngIf="!isLoggedIn || (!!isLoggedIn && !userHasActivePlans)">
             <img class="shop-menu-arrow" src="assets/icon/shop-menu-arrow.svg" alt="Shop Menu Arrow" />
             <p class="item"><a
                 [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]"
@@ -133,6 +169,39 @@
             <p class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 (click)="onLinkClick($event)">Devices</a></p>
+          </div>
+          <div class="shop-menu active-plans" *ngIf="!!isLoggedIn && !!userHasActivePlans">
+            <div class="user-account-part">
+              <div class="mdn-cell">
+                <p class="title">Your Account</p>
+                <select class="mdn-list" id="phonePlan" name="phonePlan" [(ngModel)]="selectedPlan"
+                  (ngModelChange)="userPlanSelected($event)" [compareWith]="planCompare">
+                  <option *ngFor="let plan of userPlans" [ngValue]="plan">
+                    {{getSelectorTitle(plan)}}
+                  </option>
+                </select>
+              </div>
+              <p class="sub-title">
+                <button class="button thirdly" (click)="changePlan()" [class.disabled]="!!isPortIn">Change Plan</button>
+              </p>
+              <p class="sub-title last">
+                <button class="button thirdly" (click)="goToAddOns()"
+                  [class.disabled]="!!isPortIn || !!isExpiredAccount">Order Add-ons</button>
+              </p>
+            </div>
+            <div class="border"></div>
+            <div class="new-account-part">
+              <p class="title">New Account</p>
+              <p class="sub-title">
+                <button class="button thirdly" (click)="onLinkClick($event)"
+                  [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Purchase
+                  new Plan</button>
+              </p>
+              <p class="sub-title last">
+                <button class="button thirdly" (click)="onLinkClick($event)"
+                  [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</button>
+              </p>
+            </div>
           </div>
         </li>
         <li class="menu-item"><a id="check-your-phone-header" data-cy="check-your-phone-header"
@@ -166,7 +235,8 @@
                 id="account-summary-header" data-cy="account-summary-header">Account summary</a>
               <a *ngIf="!!displayAcpSection" class="sub-item"
                 [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
-                (click)="onLinkClick($event, 'acp')" id="acp-application-header" data-cy="acp-application-header">ACP summary</a>
+                (click)="onLinkClick($event, 'acp')" id="acp-application-header" data-cy="acp-application-header">ACP
+                summary</a>
               <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header"
