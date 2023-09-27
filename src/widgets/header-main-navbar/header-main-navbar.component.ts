@@ -403,12 +403,18 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
 
   public goToAddOns(): void {
     if (!this.isExpiredAccount && !this.isPortIn) {
+      this.showResponsiveMenu = false;
+      this.renderer.removeClass(document.body, 'modal-open');
+      this.renderer.addClass(document.body, 'modal-closed');
       this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`]);
     }
   }
 
   public changePlan(): void {
     if (!this.isPortIn) {
+      this.showResponsiveMenu = false;
+      this.renderer.removeClass(document.body, 'modal-open');
+      this.renderer.addClass(document.body, 'modal-closed');
       if (!!this.userCart && !!this.userCart.cartType && this.userCart.cartType !== CART_TYPES.CHANGE_PLAN) {
         // eslint-disable-next-line max-len
         this.modalHelper.showConfirmMessageModal('Clear Cart', 'Purchasing a plan will remove any other item in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
@@ -538,7 +544,7 @@ export class HeaderMainNavbarComponent implements OnInit, OnDestroy, AfterViewIn
       this.appState.globalAlertHeightReplySubject.next(this.headerHeight);
     }
   }
-  
+
   @HostListener('window:popstate', ['$event'])
   onPopState(event): void {
     this.showResponsiveMenu = false;
