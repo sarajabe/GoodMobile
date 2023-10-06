@@ -1,4 +1,4 @@
-FROM ztarhub/angular-14 as headlessChromeBuilder
+FROM node:18 as headlessChromeBuilder
 
 # Install common dependencies
 RUN apt-get update && apt-get install -y libxss1 libxtst6 libnss3 libgconf-2-4 
