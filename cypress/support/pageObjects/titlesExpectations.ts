@@ -154,7 +154,7 @@ class TitleExpectations {
         return this;
     };
     goToBringYourPhonePage () {
-        cy.title().should('eq', 'Keep Your Phone | Good2Go Mobile');
+        cy.title().should('eq', 'Keep Your Phone | Good Mobile');
         return this;
     };
     goToCheckCompatibilityPage () {

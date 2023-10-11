@@ -255,11 +255,11 @@ class AccountSummary {
      changePlanFromAcpTo2GbPlan(){
           this.clickOnChangePlan();
           cy.get('.modal-heading').should('have.text','Change ACP Plan');
-          cy.get('[data-cy="changeOnExpiryButton"]').click();
+          cy.get('[data-cy="okActionButton"]').click();
           PageObjects.TitleExpectations.goToChangePlanPage();
           PageObjects.Plans.clickOn2GBPlanChangePlanPage();
           cy.get('.modal-heading').should('have.text','Before we continue');
-          cy.get('[data-cy="changePlanNowButton"]').click();
+          cy.get('[data-cy="cancelActionButton"]').click();
           PageObjects.TitleExpectations.goToChangePlanSummaryPage();
           cy.get('[data-cy="confirmButton"]').click();
           PageObjects.TitleExpectations.goToReviewCartPage();

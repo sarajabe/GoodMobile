@@ -426,5 +426,15 @@ class PurchasedPlans {
         PageObjects.PurchaseSuccessful.clickOnPurchasedPlansBtn();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
+    purchase2GBPlanAfterCheckCompatibility(){
+        PageObjects.Plans.clickOnPlan_2_GB_Plans_Page();
+        PageObjects.TitleExpectations.goToReviewCartPage();
+        cy.get('.head-title').should('have.text', 'Review your cart');
+        cy.get('[data-cy="basePlan"]').should('have.text','2GB 4G LTE Plan');
+        cy.get('[data-cy="subtotal"]').should('have.text','Item(s) price: $10.00');
+        PageObjects.ReviewCart.clickOnEmptyCart();
+        PageObjects.ReviewCart.clickOnYesEmptyBtnFromPopUp();
+        PageObjects.TitleExpectations.goToHomePage();
+    };
 };
 export default new PurchasedPlans();
