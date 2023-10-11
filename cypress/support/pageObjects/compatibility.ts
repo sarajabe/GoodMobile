@@ -214,7 +214,7 @@ class Compatibility {
         cy.get('#required-address-msg').should('have.text','Please select address from the autocomplete list');
         PageObjects.TitleExpectations.goToCheckCompatibilityPage();
     };
-    checkCompatibilityValidAddressInalidImei(){
+    checkCompatibilityValidAddressInvalidImei(){
         PageObjects.HomePage.clickOnBringYourPhone();
         PageObjects.TitleExpectations.goToBringYourPhonePage();
         this.clickOnGetStartedBtn();
@@ -225,7 +225,7 @@ class Compatibility {
         cy.get('[data-cy="invalid-equipmentNumber-msg"]').should('have.text', ' Invalid serial, it should be between 11-18 digits ');
         PageObjects.TitleExpectations.goToCheckCompatibilityPage();
     };
-    checkCompatibilityInalidAddressInalidImei(){
+    checkCompatibilityInvalidAddressInvalidImei(){
         PageObjects.HomePage.clickOnBringYourPhone();
         PageObjects.TitleExpectations.goToBringYourPhonePage();
         this.clickOnGetStartedBtn();

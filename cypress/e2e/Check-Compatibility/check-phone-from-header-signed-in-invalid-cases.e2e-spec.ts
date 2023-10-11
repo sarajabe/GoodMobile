@@ -17,10 +17,10 @@ describe('Check compatibility from header - signed in - invalid cases', () => {
     });
     // check compatibility - invalid imei - valid address ref
     it('fill in invalid IMEI and valid address ref - assert validation message', () => {
-        PageObjects.Compatibility.checkCompatibilityValidAddressInalidImei();
+        PageObjects.Compatibility.checkCompatibilityValidAddressInvalidImei();
     });
     // check compatibility - invalid imei - invalid address ref
     it('fill in invalid IMEI and invalid address ref - assert validation message', () => {
-        PageObjects.Compatibility.checkCompatibilityInalidAddressInalidImei();
+        PageObjects.Compatibility.checkCompatibilityInvalidAddressInvalidImei();
     });
 });
