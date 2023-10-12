@@ -16,16 +16,16 @@ describe('Do not Sign in to insure from the links in header menu', () => {
         PageObjects.HomePage.clickOnPlans();
     });
     it('Should go to plans page', () => {
-        PageObjects.TitleExpectations.goToPlansG2GPage();
+        PageObjects.TitleExpectations.goToPlansGMPage();
     });
-    it('Should click on shop menu to shop for phones', () => {
-        PageObjects.HomePage.clickOnPhones();
+    it('Should click on shop menu to shop for a new plan', () => {
+        PageObjects.HomePage.clickOnShopMenu();
     });
-    it('Should click on purchase phone', () => {
-        PageObjects.HomePage.clickOnPhones();
+    it('Should click on shop menu to shop for devices', () => {
+        PageObjects.HomePage.clickOnDevices();
     });
-    it('Should go to phones page', () => {
-        PageObjects.TitleExpectations.goToPhonesPage();
+    it('Should go to ACP devices page', () => {
+        PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
     });
     it('Should click on bring your phone link', () => {
         PageObjects.HomePage.clickOnBringYourPhone();
@@ -34,7 +34,7 @@ describe('Do not Sign in to insure from the links in header menu', () => {
         PageObjects.TitleExpectations.goToBringYourPhonePage();
     });
     it('Should click on get started button', () => {
-        PageObjects.HomePage.clickOnGetStarted();
+        PageObjects.Compatibility.clickOnGetStartedBtn();
     });
     it('Should go to Check Compatibility page', () => {
         PageObjects.TitleExpectations.goToCheckCompatibilityPage();
@@ -43,7 +43,7 @@ describe('Do not Sign in to insure from the links in header menu', () => {
         PageObjects.HomePage.clickOnCoverage();
     });
     it('Should go to Coverage page', () => {
-        PageObjects.TitleExpectations.goToGood2GoCoveragePage();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
     });
     it('Should click activate link', () => {
         PageObjects.HomePage.clickOnActivate();

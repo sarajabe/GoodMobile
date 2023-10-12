@@ -19,7 +19,7 @@ describe('Sign in to insure from the links in account menu', () => {
         PageObjects.TitleExpectations.goToLogInPage();
     });
     it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST15_USER.EMAIL, CONSTANT.ACCESS.TEST15_USER.PASSWORD);
+        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_USER.EMAIL, CONSTANT.ACCESS.TEST_USER.PASSWORD);
     });
     it('Should click on login button', () => {
         PageObjects.AccessControl.logInButton();

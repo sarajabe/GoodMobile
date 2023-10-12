@@ -24,7 +24,7 @@
               <ul class="sub-menu">
                 <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                    id="account-summary-header" data-cy="account-summary-header">account summary</a></li>
+                    id="account-summary-header" data-cy="account-summary-header-responsive">account summary</a></li>
                 <li *ngIf="!!displayAcpSection" class="item"><a
                     [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
                     (click)="onLinkClick($event, 'acp')" routerLinkActive="active"
@@ -33,26 +33,26 @@
                     [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                     (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header"
-                    data-cy="purchased-plans-header">purchased plans</a></li>
+                    data-cy="purchased-plans-header-responsive">purchased plans</a></li>
                 <li class="item" [class.disabled]="!!isPortIn"><a (click)="onLinkClick($event, 'refill')"
-                    [class.disabled]="!!isPortIn" id="refill-account-header" data-cy="refill-account-header"
+                    [class.disabled]="!!isPortIn" id="refill-account-header" data-cy="refill-account-header-responsive"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">pay &
                     refill your account</a></li>
                 <li class="item" [class.disabled]="!!isExpiredAccount || !!isPortIn"><a
                     (click)="onLinkClick($event, 'addon')" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact: true}" [class.disabled]="!!isExpiredAccount || !!isPortIn"
-                    id="plan-addOns-header" data-cy="plan-addOns-header">plan add-ons</a></li>
+                    id="plan-addOns-header" data-cy="plan-addOns-header-responsive">plan add-ons</a></li>
                 <li class="item"><a [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
                     (click)="onLinkClick($event, 'orders')" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact: true}" id="your-orders-header">Your orders</a></li>
                 <li class="item" [class.disabled]="!!isPortIn"><a (click)="onLinkClick($event, 'payment')"
                     [class.disabled]="!!isPortIn" id="payment-history-header">payment history</a></li>
                 <li class="item" [class.disabled]="!!isPortIn"><a (click)="onLinkClick($event, 'usage')"
-                    [class.disabled]="!!isPortIn" id="usage-history-header" data-cy="usage-history-header">usage
+                    [class.disabled]="!!isPortIn" id="usage-history-header" data-cy="usage-history-header-responsive">usage
                     history</a></li>
                 <li class="item"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                    id="manage-device-header">manage device & sim</a></li>
+                    id="manage-device-header" data-cy="manage-device-header-responsive">manage device & sim</a></li>
                 <li class="item"><a [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
                     id="profile-setting-header">profile settings</a></li>
@@ -88,7 +88,7 @@
                     >Plans</a></li>
                 <li class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
                     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                    data-cy="devicesLink">Devices</a></li>
+                    data-cy="devicesLinkResponsive">Devices</a></li>
               </ul>
             </div>
             <div class="menu-wrapper active-plans" [class.menuShown]="!!showShopMenu"
@@ -104,11 +104,11 @@
                   </select>
                 </div>
                 <p class="sub-title">
-                  <button class="button thirdly" (click)="changePlan()" [class.disabled]="!!isPortIn">Change
+                  <button class="button thirdly" data-cy="changePlanResponsive" (click)="changePlan()" [class.disabled]="!!isPortIn">Change
                     Plan</button>
                 </p>
                 <p class="sub-title last">
-                  <button class="button thirdly" (click)="goToAddOns()"
+                  <button class="button thirdly" data-cy="orderAddOnsPlanResponsive" (click)="goToAddOns()"
                     [class.disabled]="!!isPortIn || !!isExpiredAccount">Order
                     Add-ons</button>
                 </p>
@@ -121,7 +121,7 @@
                     new Plan</button>
                 </p>
                 <p class="sub-title last">
-                  <button class="button thirdly" (click)="onLinkClick($event)"
+                  <button class="button thirdly" data-cy="devicesLinkResponsive" (click)="onLinkClick($event)"
                     [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</button>
                 </p>
               </div>
@@ -140,7 +140,7 @@
           </li>
           <li class="responsive-item">
             <img class="item-icon" src="assets/icon/toggle.svg" alt="activate" />
-            <a id="activate-responsive" data-cy="activate"
+            <a id="activate-responsive" data-cy="activateResponsive"
               [routerLink]="[ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.SIM_CHECK]" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Activate</a>
           </li>
@@ -166,7 +166,7 @@
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 (click)="onLinkClick($event)">Plans</a></p>
             <div class="menu-border"></div>
-            <p class="item"><a [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
+            <p class="item"><a data-cy="devicesLinkDesktop" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 (click)="onLinkClick($event)">Devices</a></p>
           </div>
@@ -182,10 +182,10 @@
                 </select>
               </div>
               <p class="sub-title">
-                <button class="button thirdly" (click)="changePlan()" [class.disabled]="!!isPortIn">Change Plan</button>
+                <button class="button thirdly" data-cy="changePlanDesktop" (click)="changePlan()" [class.disabled]="!!isPortIn">Change Plan</button>
               </p>
               <p class="sub-title last">
-                <button class="button thirdly" (click)="goToAddOns()"
+                <button class="button thirdly" data-cy="orderAddOnsPlanDesktop" (click)="goToAddOns()"
                   [class.disabled]="!!isPortIn || !!isExpiredAccount">Order Add-ons</button>
               </p>
             </div>
@@ -198,7 +198,7 @@
                   new Plan</button>
               </p>
               <p class="sub-title last">
-                <button class="button thirdly" (click)="onLinkClick($event)"
+                <button class="button thirdly" data-cy="devicesLinkDesktop" (click)="onLinkClick($event)"
                   [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</button>
               </p>
             </div>
@@ -211,7 +211,7 @@
         <li class="menu-item"><a id="coverage-header" data-cy="coverage-header"
             [routerLink]="[SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.LANDING_COVERAGE]" routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Coverage</a></li>
-        <li class="menu-item"> <a id="activate" data-cy="activate"
+        <li class="menu-item"> <a id="activate" data-cy="activateDesktop"
             [routerLink]="[ACTIVATION_ROUTE_URLS.BASE+'/'+ACTIVATION_ROUTE_URLS.SIM_CHECK]" routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)">Activate</a></li>
       </ul>
@@ -232,7 +232,7 @@
             <nav class="dropdown">
               <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.SUMMARY]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                id="account-summary-header" data-cy="account-summary-header">Account summary</a>
+                id="account-summary-header" data-cy="account-summary-header-desktop">Account summary</a>
               <a *ngIf="!!displayAcpSection" class="sub-item"
                 [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ACP_APPLICATION]"
                 (click)="onLinkClick($event, 'acp')" id="acp-application-header" data-cy="acp-application-header">ACP
@@ -240,25 +240,25 @@
               <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 (click)="onLinkClick($event, 'pendingPlans')" id="purchased-plans-header"
-                data-cy="purchased-plans-header">Purchased plans</a>
+                data-cy="purchased-plans-header-desktop">Purchased plans</a>
               <a class="sub-item" (click)="onLinkClick($event, 'refill')" [class.disabled]="!!isPortIn"
-                id="refill-account-header" data-cy="refill-account-header" routerLinkActive="active"
+                id="refill-account-header" data-cy="refill-account-header-desktop" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">Pay &
                 refill your account</a>
               <a class="sub-item" (click)="onLinkClick($event, 'addon')" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}" [class.disabled]="!!isExpiredAccount || !!isPortIn"
-                id="plan-addOns-header" data-cy="plan-addOns-header">Plan add-ons</a>
+                id="plan-addOns-header" data-cy="plan-addOns-header-desktop">Plan add-ons</a>
               <a class="sub-item" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.ORDERS]"
                 (click)="onLinkClick($event, 'orders')" id="your-orders-header">Your
                 orders</a>
               <a class="sub-item" (click)="onLinkClick($event, 'payment')" [class.disabled]="!!isPortIn"
                 id="payment-history-header" data-cy="payment-history-header">Payment history</a>
               <a class="sub-item" (click)="onLinkClick($event, 'usage')" [class.disabled]="!!isPortIn"
-                id="usage-history-header" data-cy="usage-history-header">Usage
+                id="usage-history-header" data-cy="usage-history-header-desktop">Usage
                 history</a>
               <a class="sub-item" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.MANAGE_DEVICES]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
-                id="manage-device-header">Manage device & sim</a>
+                id="manage-device-header" data-cy="manage-device-header-desktop">Manage device & sim</a>
               <a class="sub-item" [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.SETTINGS]"
                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onLinkClick($event)"
                 id="profile-setting-header" data-cy="profile-setting-header">Profile settings</a>
