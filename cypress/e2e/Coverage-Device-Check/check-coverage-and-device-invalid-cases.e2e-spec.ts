@@ -4,13 +4,13 @@ describe('Coverage and device check invalid', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
-    it('Should purchase plan - check both coverage and phone - check incalid cases', () => {
+    it('Should purchase plan - check both coverage and phone - check invalid cases', () => {
         PageObjects.Coverage.purchasePlanCheckBothCoverageDeviceInvalidCases();
     });
-    it('Should purchase plan - check ATT coverage and phone - check incalid cases', () => {
+    it('Should purchase plan - check ATT coverage and phone - check invalid cases', () => {
         PageObjects.Coverage.purchasePlanCheckAttCoverageDeviceInvalidCases();
     });
-    it('Should purchase plan - check TMO coverage and phone - check incalid cases', () => {
+    it('Should purchase plan - check TMO coverage and phone - check invalid cases', () => {
         PageObjects.Coverage.purchasePlanCheckTmoCoverageDeviceInvalidCases();
     });
 })
