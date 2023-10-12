@@ -20,11 +20,11 @@
     <div class="flex">
         <img src="assets/icon/success-icon.svg" alt="Success Icon">
         <div class="banner-content">
-            <p class="title">Awesome!</p>
-            <p class="description ">You are covered by our wireless networks!</p>
-            <p class="description last">You can go ahead and purchase a plan that works best for you.</p>
+            <p class="title" data-cy="awesomeMsg">Awesome!</p>
+            <p class="description " data-cy="youAareCoveredMsg">You are covered by our wireless networks!</p>
+            <p class="description last" data-cy="goToPurchasePlanMsg">You can go ahead and purchase a plan that works best for you.</p>
             <div class="actions">
-                <button class="button primary" aria-label="Shop Plans" (click)="goToPlans()">Shop Plans</button>
+                <button class="button primary" data-cy="shopPlanBtn" aria-label="Shop Plans" (click)="goToPlans()">Shop Plans</button>
             </div>
         </div>
     </div>
