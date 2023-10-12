@@ -69,7 +69,7 @@ class HomePage {
         return this;
     };
     clickOnContinue() {
-        cy.get('[data-cy="action-button"]').click();
+        cy.get('[data-cy="okActionButton"]').click();
         return this;
     };
     clickOnContactUs() {
@@ -125,7 +125,11 @@ class HomePage {
         return this;
     };
     clickOnBringYourPhone() {
-        cy.get('[data-cy=check-your-phone-header]').click();
+        cy.get('[data-cy="check-your-phone-header"]').click();
+        return this;
+    };
+    clickOnCheckYourPhone() {
+        cy.get('[data-cy="check-phone-button"]').click();
         return this;
     };
     clickOnOrderAddOns() {
