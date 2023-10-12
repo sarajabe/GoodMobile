@@ -7,7 +7,7 @@
     <div class="modal-body">
       <div class="modal-content">
         <div class="row">
-          <div *ngIf="!settings.enableHTML" class="msg">
+          <div *ngIf="!settings.enableHTML" class="msg" data-cy="skipDeviceCheckMessage">
             {{context.message}}
           </div>
           <div *ngIf="settings.enableHTML" [innerHTML]="context.message" class="msg"></div>
