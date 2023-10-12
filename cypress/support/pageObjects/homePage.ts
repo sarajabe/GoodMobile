@@ -153,7 +153,7 @@ class HomePage {
         return this;
     };
     clickOnPlans() {
-        cy.get('[data-cy="plansLink"]').click({ force: true });
+        cy.get('[data-cy="plansLinkDesktop"]').click({ force: true });
         return this;
     };
     clickOnDevices(){
@@ -161,7 +161,7 @@ class HomePage {
         return this;
     }
     clickOnShopMenu() {
-        cy.get('.menu > [data-cy="shopMenu"]').click();
+        cy.get('[data-cy="shopMenuDesktop"]').click();
         return this;
     };
     clickOnProfileSetting() {
