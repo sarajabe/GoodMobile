@@ -5,32 +5,7 @@ describe('Do not sign in then check compatibility att - android', () => {
     before(() => {
         PageObjects.BeforeAll.executeBeforeAll();
     });
-    it('Should click on bring your phone', () => {
-        PageObjects.HomePage.clickOnBringYourPhone();
-    });
-    it('Should go to check compatibility page', () => {
-        PageObjects.TitleExpectations.goToBringYourPhonePage();
-    });
-    it('Should click on get started button', () => {
-        PageObjects.HomePage.clickOnGetStarted();
-    });
-    it('Should go to check compatibility page', () => {
-        PageObjects.TitleExpectations.goToCheckCompatibilityPage();
-    });
-    it('Should enter the IME number and address reference', () => {
-        PageObjects.Compatibility.enterIMEInumber(CONSTANT.COMPATIBILITY.IMEIS.IMEI_ATT);
-        PageObjects.Compatibility.enterAddressRef();
-    });
-    it('Should check recaptcha', () => {
-        PageObjects.Recaptcha.invisibleRecaptcha();
-    });
-    it('Should click on check phone button', () => {
-        PageObjects.Compatibility.clickOnCheckPhoneButton();
-    });
-    it('Should click on continue button in pop up window', () => {
-        PageObjects.HomePage.clickOnContinue();
-    });
-    it('Should go to plans page', () => {
-        PageObjects.TitleExpectations.goToPlansG2GPage();
+    it('Should go to bring your phone and check compatibility ATT address - IMEI', () => {
+        PageObjects.Compatibility.checkCompatibilityAttAddressAndroidIMEI();
     });
 });

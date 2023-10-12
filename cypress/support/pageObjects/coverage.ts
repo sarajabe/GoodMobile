@@ -11,6 +11,7 @@ class Coverage {
     };
     enterAddressRefNoCoverage() {
         cy.get('[data-cy="addressRef"]').click();
+        cy.get('[data-cy="addressRef"]').clear();
         cy.get('[data-cy="addressRef"]').type('Jordan Creek Parkway,West Des Moines,IA undefined');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         cy.get('.mat-option-text').first().click();
@@ -18,29 +19,34 @@ class Coverage {
     };
     enterAddressRefTMO() {
         cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('2');
+        cy.get('[data-cy="addressRef"]').clear();
+        cy.get('[data-cy="addressRef"]').type('325 North Saint Paul Street, Dallas, TX 75201');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         cy.get('.mat-option-text').first().click();
         return this;
     };
     enterAddressRefATT() {
         cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('0 Duval St');
+        cy.get('[data-cy="addressRef"]').clear();
+        cy.get('[data-cy="addressRef"]').type('16 Village Ln, Colleyville, TX 76034');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         cy.get('.mat-option-text').first().click();
         return this;
     };
     invalidAddressRef() {
         cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('m');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
-        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="addressRef"]').clear();
+        cy.get('[data-cy="addressRef"]').type('m').then(() => {
+            cy.get('.mat-option-text').first().click();
+        });
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
     addressRefNotSelectedFromList() {
         cy.get('[data-cy="addressRef"]').click();
+        cy.get('[data-cy="addressRef"]').clear();
         cy.get('[data-cy="addressRef"]').type('mjgf');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
     assertAddressIsRequired(){
@@ -65,17 +71,18 @@ class Coverage {
     };
     enterAddressRefATTCoverages() {
         cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('16 Village Ln, Colleyville, TX 76034');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
-        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="addressRef"]').clear();
+        cy.get('[data-cy="addressRef"]').type('16 Village Ln, Colleyville, TX 76034').then(() => {
+            cy.get('.mat-option-text').first().click();
+        });
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
     enterAddressRefTMOCoverages() {
         cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('325 North Saint Paul Street, Dallas, TX 75201');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
-        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="addressRef"]').type('325 North Saint Paul Street, Dallas, TX 75201').then(() => {
+            cy.get('.mat-option-text').first().click();
+        });
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
@@ -89,7 +96,6 @@ class Coverage {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
-    
     clickOnCheckCoverageBtn() {
         cy.get('[data-cy="check-coverage"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
@@ -359,5 +365,59 @@ class Coverage {
         cy.get('.banner-content > .title').should('have.text', ' We are sorry!');
     };
 
+    clickOnCheckCoverageButton(){
+        cy.get('[data-cy="check-coverage-button"]').click({force:true});
+        return this;
+    };
+    assertAddressCoverdBanner(){
+        cy.get('[data-cy="awesomeMsg"]').should('have.text','Awesome!');
+        cy.get('[data-cy="youAareCoveredMsg"]').should('have.text','You are covered by our wireless networks!');
+        cy.get('[data-cy="goToPurchasePlanMsg"]').should('have.text','You can go ahead and purchase a plan that works best for you.');
+        cy.get('[data-cy="shopPlanBtn"]').should('exist');
+    };
+    checkCoverageATT(){
+        PageObjects.HomePage.clickOnCoverage();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        this.enterAddressRefATTCoverages();
+        PageObjects.Recaptcha.invisibleRecaptcha();
+        this.clickOnCheckCoverageButton();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        cy.url().should('eq', `${CONSTANT.URLS.DOMAIN}/support/coverage;networkType=att;zipCode=76034`);
+        this.assertAddressCoverdBanner();
+    };
+    checkCoverageTMO(){
+        PageObjects.HomePage.clickOnCoverage();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        this.enterAddressRefTMOCoverages();
+        PageObjects.Recaptcha.invisibleRecaptcha();
+        this.clickOnCheckCoverageButton();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        cy.url().should('eq', `${CONSTANT.URLS.DOMAIN}/support/coverage;networkType=tmo;zipCode=75201`);
+        this.assertAddressCoverdBanner();
+    };
+    checkCoverageBothAddressRef(){
+        PageObjects.HomePage.clickOnCoverage();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        this.enterAddressRefBothCoverages();
+        PageObjects.Recaptcha.invisibleRecaptcha();
+        this.clickOnCheckCoverageButton();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        cy.url().should('eq', `${CONSTANT.URLS.DOMAIN}/support/coverage;networkType=tmo;zipCode=10038`);
+        this.assertAddressCoverdBanner();
+    };
+    checkCoverageEmptyField(){
+        PageObjects.HomePage.clickOnCoverage();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        this.clickOnCheckCoverageButton();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        cy.get('[data-cy="requiredAddressValidationMsg"]').should('have.text','Full Address is required');
+    };
+    checkCoverageNotSelectedFromList(){
+        PageObjects.HomePage.clickOnCoverage();
+        PageObjects.TitleExpectations.goToGMCoveragePage();
+        this.addressRefNotSelectedFromList();
+        this.clickOnCheckCoverageButton();
+        cy.get('[data-cy="selectAddressValidationMsg"]').should('have.text','Please select address from the autocomplete list');
+    };
 };
 export default new Coverage();

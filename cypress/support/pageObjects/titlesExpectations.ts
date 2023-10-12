@@ -154,7 +154,7 @@ class TitleExpectations {
         return this;
     };
     goToBringYourPhonePage () {
-        cy.title().should('eq', 'Keep Your Phone | Good2Go Mobile');
+        cy.title().should('eq', 'Keep Your Phone | Good Mobile');
         return this;
     };
     goToCheckCompatibilityPage () {
@@ -166,8 +166,8 @@ class TitleExpectations {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
-    goToGood2GoCoveragePage () {
-        cy.title().should('eq', `Good2Go Coverage`);
+    goToGMCoveragePage () {
+        cy.title().should('eq', `Good Mobile | Support | Coverage`);
         return this;
     };
     goToSimCheckPage () {
