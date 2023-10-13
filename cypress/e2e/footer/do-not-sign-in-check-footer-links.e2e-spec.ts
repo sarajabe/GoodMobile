@@ -11,17 +11,14 @@ describe('Do not sign in to insure from the links in footer', () => {
     it('Should click on cell phone plans in footer menu', () => {
         PageObjects.Footer.clickOnCellPhonePlans();
     });
-    it('Should click on cell phones', () => {
-        PageObjects.Footer.clickOnCellPhones();
+    it('Should go to plans page', () => {
+        PageObjects.TitleExpectations.goToPlansGMPage();
     });
-    it('Should go to phones page', () => {
-        PageObjects.TitleExpectations.goToPhonesPage();
+    it('Should click on ACP devices', () => {
+        PageObjects.Footer.clickOnAcpDevices();
     });
-    it('Should click on 3G shutdown', () => {
-        PageObjects.Footer.clickOn3GShutdown();
-    });
-    it('Should go to 3G shutdown page', () => {
-        PageObjects.TitleExpectations.goTo3gShutdownPage();
+    it('Should go to ACP devices page', () => {
+        PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
     });
     it('Should click on account summary', () => {
         PageObjects.Footer.clickOnAccountSummary();
@@ -62,14 +59,26 @@ describe('Do not sign in to insure from the links in footer', () => {
     it('Should click on ACP', () => {
         PageObjects.Footer.clickOnACPApplication();
     });
-    it('Should go to login page', () => {
+    it('Should go to ACP page', () => {
         PageObjects.TitleExpectations.goToACPPage();
+    });
+    it('Should click on WiFi Calling', () => {
+        PageObjects.Footer.clickOnWiFiCalling();
+    });
+    it('Should go to WiFi Calling page', () => {
+        PageObjects.TitleExpectations.goToWifiCallingPage();
     });
     it('Should click on Set Up Your Data', () => {
         PageObjects.Footer.clickOnSetUpYourData();
     });
     it('Should go to Data Setup page', () => {
         PageObjects.TitleExpectations.goToSetupYourPhoneDataPage();
+    });
+    it('Should click on HD Voice', () => {
+        PageObjects.Footer.clickOnHdVoice();
+    });
+    it('Should go to HD Voice page', () => {
+        PageObjects.TitleExpectations.goToHDVoicePage();
     });
     it('Should click on Faqs', () => {
         PageObjects.Footer.clickOnFaqs();
@@ -80,7 +89,7 @@ describe('Do not sign in to insure from the links in footer', () => {
     it('Should click on Contact Us', () => {
         PageObjects.Footer.clickOnContactUs();
     });
-    it('Should go to General Good2Go Mobile | Support | Contact Us page', () => {
+    it('Should go to General Good Mobile | Support | Contact Us', () => {
         PageObjects.TitleExpectations.goToContactUsPage();
     });
     it('Should click on site map', () => {
@@ -90,39 +99,39 @@ describe('Do not sign in to insure from the links in footer', () => {
         PageObjects.TitleExpectations.goToSiteMapPage();
     });
     it('Should click on about good2go', () => {
-        PageObjects.Footer.clickOnAboutG2G();
+        PageObjects.Footer.clickOnAboutGM();
     });
-    it('Should go to Good2GoMobile | About Good2Go page', () => {
-        PageObjects.TitleExpectations.goToAboutGood2GoPage();
+    it('Should go to Good Mobile | About Good Mobile', () => {
+        PageObjects.TitleExpectations.goToAboutGMPage();
     });
-    it('Should click on why good2go', () => {
-        PageObjects.Footer.clickOnWhyG2G();
+    it('Should click on why GM', () => {
+        PageObjects.Footer.clickOnWhyGM();
     });
     it('Should go to Good2Go Mobile | Why Good2Go? page', () => {
-        PageObjects.TitleExpectations.goToWhyGood2GoPage();
+        PageObjects.TitleExpectations.goToWhyGMPage();
     });
     it('Should click on how it works', () => {
         PageObjects.Footer.clickOnHowItWorks();
     });
-    it('Should go to Good2Go| How It Works page', () => {
+    it('Should go to Good Mobile | Support | How It Works', () => {
         PageObjects.TitleExpectations.goToHowItWorksPage();
     });
     it('Should click on intl. calling', () => {
         PageObjects.Footer.clickOnIntlCalling();
     });
-    it('Should go to Good2Go| International Calling page', () => {
+    it('Should go to Good Mobile | Support | International Calling', () => {
         PageObjects.TitleExpectations.goToInternationalCallingPage();
     });
     it('Should click on Terms And Condition', () => {
         PageObjects.Footer.clickOnTermsAndCondition();
     });
-    it('Should go to Good2Go Mobile | Support | Terms & Conditions page', () => {
+    it('Should go to Good Mobile | Support | Terms & Conditions', () => {
         PageObjects.TitleExpectations.goToTermsAndConditionsPage();
     });
     it('Should click on Hearing Aid Compatibility', () => {
         PageObjects.Footer.clickOnHearingAid();
     });
-    it('Should go to Good2Go Mobile | Support | Hearing Aid Compatibility page', () => {
+    it('Should go to Good Mobile | Support | Hearing Aid Compatibility', () => {
         PageObjects.TitleExpectations.goToHearingAidCompatibilityPage();
     });
 });

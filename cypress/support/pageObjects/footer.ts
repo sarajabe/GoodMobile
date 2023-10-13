@@ -33,20 +33,20 @@ class Footer {
 
         return this;
     };
-    clickOn3GShutdown() {
-        cy.get('[data-cy="3gShutdown"] > a').click();
+    clickOnAcpDevices() {
+        cy.get('[data-cy="acpDevicesFooter"]').click();
         return this;
     };
     clickOnHowItWorks() {
         cy.get('[data-cy=howItWorks]').click();
         return this;
     };
-    clickOnWhyG2G() {
-        cy.get('[data-cy=whyG2g]').click();
+    clickOnWhyGM() {
+        cy.get('[data-cy="why-gm"]').click();
         return this;
     };
-    clickOnAboutG2G() {
-        cy.get('[data-cy=aboutG2g]').click();
+    clickOnAboutGM() {
+        cy.get('[data-cy="about-gm"]').click();
         return this;
     };
     clickOnSiteMap() {
@@ -87,7 +87,7 @@ class Footer {
         return this;
     };
     clickOnAccountSummary() {
-        cy.get('[data-cy="accountSummary"]').click();
+        cy.get('[data-cy="accountSummaryFooter"]').click();
         return this;
     };
     clickOnCellPhones() {
@@ -95,8 +95,20 @@ class Footer {
         return this;
     };
     clickOnCellPhonePlans() {
-        cy.get('[data-cy="cellPhonePlans"]').click();
+        cy.get('[data-cy="cellPhonePlansFooter"]').click();
         return this;
     };
+    clickOnACPApplication(){
+        cy.get('[data-cy="acp"]').click();
+        return this;
+    };
+    clickOnWiFiCalling(){
+        cy.get('[data-cy="wifiCalling"]').click({force:true});
+        return this;
+    };
+    clickOnHdVoice(){
+        cy.get('[data-cy="hdVoice"]').click({force:true});
+        return this;
+    }
 };
 export default new Footer();
