@@ -4,6 +4,10 @@ class HomePage {
         cy.get('[data-cy="do-i-qualify"]').click({force:true});
         return this;
     };
+    clickOnDoIQualifySectionBtn() {
+        cy.get('[data-cy="do-i-qualify-section-btn"]').click({force:true});
+        return this;
+    };
     swipeBanner() {
         cy.get('.swiper-button-prev').click({force:true});
         return this;
@@ -12,8 +16,8 @@ class HomePage {
         cy.contains('button[title="Buy Plan"]').click();
         return this;
     };
-    clickOnLearnMoreBtn(){
-        cy.get('.swiper-slide-active > .bottom-banner > .shop-plans-button > .button').click();
+    clickOnGetItToday(){
+        cy.get('[data-cy="get-it-tdy"]').click();
         return this;
     };
     clickOnGetStarted() {
@@ -32,12 +36,12 @@ class HomePage {
         cy.contains('a', 'Read the Terms and conditions').click();
         return this;
     };
-    clickOnG2gLogo() {
+    clickOnGmLogo() {
         cy.get('a > .logo').click();
         return this;
     };
     clickOnViewAllPlans() {
-        cy.get('[data-cy=viewAllPlans]').click();
+        cy.get('[data-cy="viewAllPlans"]').click();
         return this;
     };
     clickOnBackToSupport() {
@@ -85,7 +89,7 @@ class HomePage {
         return this;
     };
     clickOnCheckCompatibilityBtn() {
-        cy.get('[data-cy=Bring-phone]').click();
+        cy.get('[data-cy="Bring-phone"]').click();
         return this;
     };
     clickOnAllPlansButton() {
@@ -97,7 +101,7 @@ class HomePage {
         return this;
     };
     clickOnCheckCoverageButton() {
-        cy.get('[data-cy=check-coverage]').click();
+        cy.get('[data-cy="Check-Coverage"]').click();
         return this;
     };
     clickOnCheckYourCoverageBtn() {
