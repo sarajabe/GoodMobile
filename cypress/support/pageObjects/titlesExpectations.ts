@@ -217,8 +217,8 @@ class TitleExpectations {
         return this;
     };
     goToPaymentHistoryPage () {
-        cy.title().should('eq', `Payment History`);
-        cy.wait(20000);
+        cy.title().should('eq', `Good Mobile | Payment History`);
+        // cy.wait(20000);
         return this;
     };
     goToUsageHistoryPage () {
