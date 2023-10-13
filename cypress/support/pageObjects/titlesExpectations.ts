@@ -218,7 +218,6 @@ class TitleExpectations {
     };
     goToPaymentHistoryPage () {
         cy.title().should('eq', `Good Mobile | Payment History`);
-        // cy.wait(20000);
         return this;
     };
     goToUsageHistoryPage () {
@@ -236,11 +235,11 @@ class TitleExpectations {
         return this;
     };
     goToWifiCallingPage () {
-        cy.title().should('eq', `Good2Go Wi-Fi Calling`);
+        cy.title().should('eq', `Good Mobile Wi-Fi Calling`);
         return this;
     };
     goToSetupYourPhoneDataPage () {
-        cy.title().should('eq', `Data Setup`);
+        cy.title().should('eq', `Good Mobile | Support | Data Setup`);
         return this;
     };
     goToDataSetupAndroid () {
@@ -251,44 +250,44 @@ class TitleExpectations {
         cy.title().should('eq','Data Setup | IPhone');
     };
     goToHDVoicePage () {
-        cy.title().should('eq', `Good2Go HD Voice`);
+        cy.title().should('eq', `Good Mobile HD Voice`);
         return this;
     };
     goToFaqsPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | FAQs`);
+        cy.title().should('eq', `Good Mobile | Support | FAQs`);
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
     goToContactUsPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | Contact Us`);
+        cy.title().should('eq', `Good Mobile | Support | Contact Us`);
         return this;
     };
     goToSiteMapPage () {
-        cy.title().should('eq', `Good2Go Sitemap`);
+        cy.title().should('eq', `Good Mobile Sitemap`);
         return this;
     };
-    goToAboutGood2GoPage () {
-        cy.title().should('eq', `Good2GoMobile | About Good2Go`);
+    goToAboutGMPage () {
+        cy.title().should('eq', `Good Mobile | About Good Mobile`);
         return this;
     };
-    goToWhyGood2GoPage () {
-        cy.title().should('eq', `Good2Go Mobile | Why Good2Go?`);
+    goToWhyGMPage () {
+        cy.title().should('eq', `Good Mobile | Why Good Mobile?`);
         return this;
     };
     goToHowItWorksPage () {
-        cy.title().should('eq', `Good2Go| How It Works`);
+        cy.title().should('eq', `Good Mobile | Support | How It Works`);
         return this;
     };
     goToInternationalCallingPage () {
-        cy.title().should('eq', `Good2Go| International Calling`);
+        cy.title().should('eq', `Good Mobile | Support | International Calling`);
         return this;
     };
     goToTermsAndConditionsPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | Terms & Conditions`);
+        cy.title().should('eq', `Good Mobile | Support | Terms & Conditions`);
         return this;
     };
     goToHearingAidCompatibilityPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | Hearing Aid Compatibility`);
+        cy.title().should('eq', `Good Mobile | Support | Hearing Aid Compatibility`);
         return this;
     };
     goToShippingPage () {
