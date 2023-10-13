@@ -327,5 +327,17 @@ export const ACCESS = {
     ACCOUNT_WITH_SHIPPED_ACP_DEVICE:{
         EMAIL: "new-acp21@ppavocom.com",
         PASSWORD: "Abc123"
-    }
+    },
+    TEST_USER26_ACCOUNT:{
+        EMAIL: "testuser26@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
+    LARA_PAVO_ACCOUNT:{
+        EMAIL: "lara.khoury@pavocom.com",
+        PASSWORD: "Abc123"
+    },
+    TEST_A_USER: {
+        EMAIL: "testauser@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
 };
