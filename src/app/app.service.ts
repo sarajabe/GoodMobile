@@ -63,8 +63,6 @@ export class AppState {
     sessionStorage.removeItem('payment_id');
     sessionStorage.removeItem('auto_renew');
     sessionStorage.removeItem('purchased');
-    sessionStorage.removeItem('activation');
-    sessionStorage.removeItem('device');
     sessionStorage.removeItem('emailMdn');
     sessionStorage.removeItem('MoneyProReferral');
     sessionStorage.removeItem('tracked');

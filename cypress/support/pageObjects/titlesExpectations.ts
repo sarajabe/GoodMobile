@@ -31,6 +31,16 @@ class TitleExpectations {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
+    goToACPApplicationDevicesPage() {
+        cy.title().should('eq', 'Affordable Connectivity Program devices');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+        return this;
+    };
+    goToACPCheckoutDevicesPage() {
+        cy.title().should('eq', 'Checkout ACP Device');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+        return this;
+    };
     goToReportIssueConfirmationPage() {
         cy.title().should('eq', 'Confirmation ');
         return this;
@@ -65,7 +75,7 @@ class TitleExpectations {
         return this;
     };
     goToACPEnrollemntPage () {
-        cy.title().should('eq', 'Free UNLIMITED cell phone service with Government program | Good2Go Mobile');
+        cy.title().should('eq', 'Free UNLIMITED cell phone service with Government program | Good Mobile');
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
@@ -144,7 +154,7 @@ class TitleExpectations {
         return this;
     };
     goToBringYourPhonePage () {
-        cy.title().should('eq', 'Keep Your Phone | Good2Go Mobile');
+        cy.title().should('eq', 'Keep Your Phone | Good Mobile');
         return this;
     };
     goToCheckCompatibilityPage () {
@@ -156,8 +166,8 @@ class TitleExpectations {
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
-    goToGood2GoCoveragePage () {
-        cy.title().should('eq', `Good2Go Coverage`);
+    goToGMCoveragePage () {
+        cy.title().should('eq', `Good Mobile | Support | Coverage`);
         return this;
     };
     goToSimCheckPage () {
@@ -207,8 +217,7 @@ class TitleExpectations {
         return this;
     };
     goToPaymentHistoryPage () {
-        cy.title().should('eq', `Payment History`);
-        cy.wait(20000);
+        cy.title().should('eq', `Good Mobile | Payment History`);
         return this;
     };
     goToUsageHistoryPage () {
@@ -226,11 +235,11 @@ class TitleExpectations {
         return this;
     };
     goToWifiCallingPage () {
-        cy.title().should('eq', `Good2Go Wi-Fi Calling`);
+        cy.title().should('eq', `Good Mobile Wi-Fi Calling`);
         return this;
     };
     goToSetupYourPhoneDataPage () {
-        cy.title().should('eq', `Data Setup`);
+        cy.title().should('eq', `Good Mobile | Support | Data Setup`);
         return this;
     };
     goToDataSetupAndroid () {
@@ -241,44 +250,44 @@ class TitleExpectations {
         cy.title().should('eq','Data Setup | IPhone');
     };
     goToHDVoicePage () {
-        cy.title().should('eq', `Good2Go HD Voice`);
+        cy.title().should('eq', `Good Mobile HD Voice`);
         return this;
     };
     goToFaqsPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | FAQs`);
+        cy.title().should('eq', `Good Mobile | Support | FAQs`);
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
     goToContactUsPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | Contact Us`);
+        cy.title().should('eq', `Good Mobile | Support | Contact Us`);
         return this;
     };
     goToSiteMapPage () {
-        cy.title().should('eq', `Good2Go Sitemap`);
+        cy.title().should('eq', `Good Mobile Sitemap`);
         return this;
     };
-    goToAboutGood2GoPage () {
-        cy.title().should('eq', `Good2GoMobile | About Good2Go`);
+    goToAboutGMPage () {
+        cy.title().should('eq', `Good Mobile | About Good Mobile`);
         return this;
     };
-    goToWhyGood2GoPage () {
-        cy.title().should('eq', `Good2Go Mobile | Why Good2Go?`);
+    goToWhyGMPage () {
+        cy.title().should('eq', `Good Mobile | Why Good Mobile?`);
         return this;
     };
     goToHowItWorksPage () {
-        cy.title().should('eq', `Good2Go| How It Works`);
+        cy.title().should('eq', `Good Mobile | Support | How It Works`);
         return this;
     };
     goToInternationalCallingPage () {
-        cy.title().should('eq', `Good2Go| International Calling`);
+        cy.title().should('eq', `Good Mobile | Support | International Calling`);
         return this;
     };
     goToTermsAndConditionsPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | Terms & Conditions`);
+        cy.title().should('eq', `Good Mobile | Support | Terms & Conditions`);
         return this;
     };
     goToHearingAidCompatibilityPage () {
-        cy.title().should('eq', `Good2Go Mobile | Support | Hearing Aid Compatibility`);
+        cy.title().should('eq', `Good Mobile | Support | Hearing Aid Compatibility`);
         return this;
     };
     goToShippingPage () {
@@ -313,7 +322,7 @@ class TitleExpectations {
         cy.title().should('eq', `Good2Go Mobile| Cells Phones | Select Line`);
         return this;
     };
-    goToActivatePortYouSimPage () {
+    goToActivatePortYourSimPage () {
         cy.title().should('eq', `Activate | Port your SIM`);
         return this;
     };
@@ -321,5 +330,15 @@ class TitleExpectations {
         cy.title().should('eq', `Sign Up | Good Mobile`);
         return this;
     };
+    goToAcpApplicationDetailsPage () {
+        cy.title().should('eq', 'ACP Application | Affordable Connectivity Program | Good Mobile');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+        return this;
+    };
+    goToChangePlanSummaryPage(){
+        cy.title().should('eq', 'Change plan Summary');
+        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+        return this;
+    }
 };
 export default new TitleExpectations();

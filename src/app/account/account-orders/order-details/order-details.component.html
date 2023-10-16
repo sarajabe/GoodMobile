@@ -65,7 +65,7 @@
                                                 <img class="thumbnail phone" [src]="phoneImageSrc" alt="ACP device">
                                             </div>
                                             <div class="details">
-                                                <p class="title"><b>{{deviceDetails?.fields?.deviceMake | titlecase}} {{deviceDetails?.fields?.deviceModel | titlecase}}</b></p>
+                                                <p class="title" ><b data-cy="acpDeviceName">{{deviceDetails?.fields?.deviceMake | titlecase}} {{deviceDetails?.fields?.deviceModel | titlecase}}</b></p>
                                                 <p class="id smallest" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
                                                 <p class="text-orange smallest">ACP Benefits</p>
                                                 <p class="action" data-cy="cancel"
@@ -74,7 +74,7 @@
                                             </div>
                                         </div>
                                         <div class="price-side">
-                                            <p class="price"><b>${{device?.price}}</b></p>
+                                            <p class="price"><b data-cy="acpDevicePrice">${{device?.price}}</b></p>
                                         </div>
                                     </div>
                                     <div class="sub-item-section">

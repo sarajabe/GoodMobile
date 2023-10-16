@@ -10,32 +10,42 @@ steps:
       - '--keyring=$_KEY_RING'
       - '--key=$_KEY'
       - '--project=ztar-mgmt-security-kms-pre'
-
-  # Build the docker image using the Dockerfile in the repository, PROJECT_ID and COMMIT_SHA are provided by CloudBuild itself
-  - name: 'gcr.io/cloud-builders/docker'
-    args: 
-      - 'build'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/$_IMAGE:$COMMIT_SHA'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
-      - '--build-arg'
-      - '_NPM_USER=$_NPM_USERNAME'
-      - '--build-arg'
-      - '_NPM_PASS=$_NPM_PASSWORD'
-      - '--build-arg'
-      - '_NPM_EMAIL=$_NPM_EMAIL'
+      
+  # # Build the docker image using the Dockerfile in the repository, PROJECT_ID and COMMIT_SHA are provided by CloudBuild itself
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: 
+  #     - 'build'
+  #     - '-t'
+  #     - 'gcr.io/$PROJECT_ID/$_IMAGE:$COMMIT_SHA'
+  #     - '-t'
+  #     - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
+  #     - '--build-arg'
+  #     - '_NPM_USER=$_NPM_USERNAME'
+  #     - '--build-arg'
+  #     - '_NPM_PASS=$_NPM_PASSWORD'
+  #     - '--build-arg'
+  #     - '_NPM_EMAIL=$_NPM_EMAIL'
+  #     - '--build-arg'
+  #     - '_NPM_TOKEN=$_NPM_TOKEN'
+  #     - '--build-arg'
+  #     - '_VERSION=$_VERSION'
+  #     - '.'
+  # Build the docker image with two tags: commit hash, and latest
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
       - '--build-arg'
       - '_NPM_TOKEN=$_NPM_TOKEN'
       - '--build-arg'
       - '_VERSION=$_VERSION'
-      - '.'
-
-  # Push the image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: 
-      - 'push'
-      - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
+      - '--destination=gcr.io/$PROJECT_ID/$_IMAGE:$COMMIT_SHA'
+      - '--destination=gcr.io/$PROJECT_ID/$_IMAGE:latest'
+      - '--cache=true'
+      - '--cache-ttl=168h'
+  # # Push the image to Container Registry
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: 
+  #     - 'push'
+  #     - 'gcr.io/$PROJECT_ID/$_IMAGE:latest'
 
   # Deploy image to App Engine
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -50,8 +60,8 @@ steps:
     timeout: 1500s
 
 timeout: 2500s
-images:
-  - gcr.io/$PROJECT_ID/$_IMAGE:latest
+# images:
+#   - gcr.io/$PROJECT_ID/$_IMAGE:latest
   
 substitutions:
   _REGION: 'us-central1'

@@ -74,6 +74,8 @@ export class ActivateNewNumberComponent implements OnInit {
               this.toastHelper.showAlert('Activation data is missing, please try again!');
               this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.SIM_CHECK}`]);
             } else {
+              this.activationCode = sim.activationCode;
+              this.postalCode =  device.postalCode;
               const basePlan = { id: sim.prefundedPlan, price: sim.prefundedAmount, promoted: false, unlimited: true, type: 'Unlimited' } as IFireBasePlanItem;
               this.userPlan = {
                 id: 'prefunded', activationCode: sim.activationCode, planDevice: device,
@@ -154,7 +156,7 @@ export class ActivateNewNumberComponent implements OnInit {
         zip: this.postalCode,
         pin: this.pinCode
       };
-      if (this.userPlan.id === 'prefunded') {
+      if (this.userPlan?.id === 'prefunded') {
         requetBody.planDevice = this.userPlan.planDevice;
         requetBody.prefunded = true;
         requetBody.prefundedPlan = this.userPlan.basePlan.id;

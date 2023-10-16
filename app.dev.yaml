@@ -17,7 +17,7 @@ resources:
 network:
   instance_tag: goodwill-web-dev
   name: projects/ztar-network-shared-vpc-1-dev/global/networks/ztar-dev-shared-vpc-1
-  subnetwork_name: ztar-product-goodwill-us-cent1-test-subnet
+  subnetwork_name: ztar-product-goodwill-us-cent1-dev-subnet
   session_affinity: true
 
 liveness_check:

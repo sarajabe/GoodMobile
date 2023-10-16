@@ -10,6 +10,7 @@ class AccessControl {
                 cy.get('[data-cy="firstName"]').type(firstName);
                 cy.get('[data-cy="lastName"]').type(lastName);
                 cy.get('[data-cy="email"]').type(email);
+                Cypress.env('newEmail' , email);
                 cy.get('[data-cy="password"]').type(password);
                 cy.get('[data-cy="confirmPassword"]').type(confirmPassword);
                 return this;
@@ -25,6 +26,7 @@ class AccessControl {
         logIn(email, password) {
                 cy.get('[data-cy="loginEmail"]').clear();
                 cy.get('[data-cy="loginEmail"]').type(email);
+                Cypress.env('newEmail' , email);
                 cy.get('[data-cy="loginPassword"]').clear();
                 cy.get('[data-cy="loginPassword"]').type(password);
                 return this;
@@ -53,8 +55,8 @@ class AccessControl {
         };
         logoutFromAccountAfterBeingInACPApp() {
                 cy.get('[data-cy="account-menu-header"]').click({force: true});
-                cy.get('#logout-header').click({force: true});
-                cy.title().should('eq','Login To Your Good2Go Mobile Account | Good2Go Mobile');
+                cy.get('[data-cy="logout-header"]').click({force: true});
+                cy.title().should('eq','Login To Your Good Mobile Account | Good Mobile');
                 return this;
         };
         clickOnContinueSignUpBtn() {
@@ -102,6 +104,7 @@ class AccessControl {
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.EMAIL, CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
+                return this;
         };
         accountAlreadyHasAddOnsMultipleOrder(){
                 PageObjects.HomePage.clickOnSignIn();
@@ -109,6 +112,69 @@ class AccessControl {
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.GM_LARA_ACCOUNT.EMAIL, CONSTANT.ACCESS.GM_LARA_ACCOUNT.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
+                return this;
+        };
+        newUserAcp(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.clickOnSignUpLink();
+                PageObjects.TitleExpectations.goToSignUpPage();
+                PageObjects.AccessControl.signUp(CONSTANT.ACCESS.NEW_SIGNUP_DATA2.FIRST_NAME,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.LAST_NAME,
+                        PageObjects.Dynamics.makeNewAcpEmail(),
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.PASSWORD,
+                        CONSTANT.ACCESS.NEW_SIGNUP_DATA2.CONFIRMED_PASS);
+                PageObjects.Recaptcha.checkRecaptchaCustomerInfo();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+                PageObjects.AccessControl.clickOnSubmitBtn();
+                cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
+                PageObjects.TitleExpectations.goToWelcomeOnBoardPage();
+        };
+        logInNewUserAcp( password) {
+                cy.get('[data-cy="loginEmail"]').clear();
+                const newEmail = Cypress.env('newEmail');
+                cy.get('[data-cy="loginEmail"]').type(newEmail);
+                cy.get('[data-cy="loginPassword"]').clear();
+                cy.get('[data-cy="loginPassword"]').type(password);
+                return this;
+        };
+        successfulLoginExisingUserWithMdn(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TESTB_USER.EMAIL, CONSTANT.ACCESS.TESTB_USER.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+        };
+        successfulLoginNewUserAcp(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logInNewUserAcp( CONSTANT.ACCESS.NEW_ACCOUNT.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToACPApplicationPage();
+        };
+        logInUserWithNoAcp() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_NO_ACP.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_NO_ACP.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+                return this;
+        };
+        logInUserWithPendingAcpDevice() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_PENDING_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_PENDING_ACP_DEVICE.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToACPApplicationPage();
+                return this;
+        };
+        logInUserWithShippedAcpDevice() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToACPApplicationPage();
+                return this;
         };
 }
 export default new AccessControl();

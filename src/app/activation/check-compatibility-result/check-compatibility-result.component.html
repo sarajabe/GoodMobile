@@ -43,7 +43,9 @@
                     <app-plans-list></app-plans-list>
                 </div>
                 <div class="coverage-area" *ngIf="network === 'att'">
-                    <app-map [networkType]="network" [zipCode]="zip"></app-map>
+                    <iframe id="ATT_coverage" allowtransparency="true" src="https://www.att.com/maps/reseller.html"
+                    frameBorder="0" allowfullscreen>
+                    </iframe>
                 </div>
                 <div class="digital-map" *ngIf="network === 'tmo'">
                     <tmo-web-content-kit kit-type="map" client-id="g2g" variation="roamd-5g">

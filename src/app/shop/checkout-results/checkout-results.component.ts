@@ -11,7 +11,6 @@ import { AppState } from '../../app.service';
 import { MetaService } from '../../../services/meta-service.service';
 import { takeWhile, combineLatest } from 'rxjs/operators';
 import { SHOP_ROUTE_URLS, ROUTE_URLS, ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, PLANS_SHOP_ROUTE_URLS } from '../../app.routes.names';
-import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 
 @Component({
@@ -34,7 +33,6 @@ export class CheckoutResultsComponent implements OnDestroy {
   public purchasedPlanId: string;
   public purchasedPlan: IUserPlan;
   public user: IUser;
-  public stores = [];
   public orderId: string;
   public barCodeVal;
   public showStores = false;
@@ -44,7 +42,7 @@ export class CheckoutResultsComponent implements OnDestroy {
 
   constructor(private route: ActivatedRoute, private router: Router, private userPlansService: UserPlansService, private appState: AppState,
     private metaService: MetaService, private userProfileService: FirebaseUserProfileService,
-    private lookupsService: LookupsService, private toastHelper: ToastrHelperService,
+    private toastHelper: ToastrHelperService,
     private accountOrderService: UserOrdersService,) {
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => this.user = user);
     this.userPlansService.isSelectedPlanReady.pipe(combineLatest(this.route.params, (ready, params: Params) => {
@@ -88,13 +86,6 @@ export class CheckoutResultsComponent implements OnDestroy {
     setTimeout(() => {
       this.appState.clearSessionStorage();
     }, 1000);
-    this.lookupsService.getAvailableStores().then(stores => {
-      if (stores?.storesLocations?.length > 0) {
-        this.stores = stores?.storesLocations;
-      }
-    }, error => {
-      this.toastHelper.showAlert(error.error.errors[0].message);
-    });
   }
 
   ngOnDestroy(): void {

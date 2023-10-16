@@ -18,7 +18,7 @@
       </label>
       <label class="validation-message"
         *ngIf="addressInfoForm.controls.address1.hasError('required') && addressInfoForm.controls.address1.touched"
-        id="required-address-one-msg">
+        id="required-address-one-msg" data-cy="required-address-one-msg">
         Address Line 1 is required
       </label>
       <label class="validation-message vm" *ngIf="!primaryDisplayedAddressModel && !!addressInfoForm.controls.address1.value"
@@ -96,7 +96,7 @@
 <form [formGroup]="mailingAddressForm" class="address-form bottom" id="mailingAddressForm" *ngIf="!useSameAddress"
   [class.acp-disabled]="!!disable">
   <div class="form-row bottom">
-    <p>What’s your Mailing Address?<span class="red">*</span></p>
+    <p data-cy="mailingTitle">What’s your Mailing Address?<span class="red">*</span></p>
     <p class="smallest grey space">Please provide a mailing address.</p>
     <div class="form-field half">
       <label class="outlined-label-input">

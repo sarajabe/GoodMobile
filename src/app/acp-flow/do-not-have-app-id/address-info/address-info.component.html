@@ -1,85 +1,94 @@
-<form [formGroup]="addressInfoForm" class="addressInfoFormNonAppExists" [class.acp-disabled]="!!disable">
-    <div class="form-row bottom">
-      <div class="question">
-        <p class="space" data-cy="addressTitle">What’s your Full Address? <span class="red">*</span>
-        </p>
-        <p class="tooltip-note caption"><span class="tooltip">
-          <img src="assets/icon/info-icon.svg" class="info"
-              alt="Tooltip Info Icon" />
+<form [formGroup]="addressInfoForm" class="addressInfoFormNonAppExists" [class.acp-disabled]="!!disable"
+  id="addressInfoForm">
+  <div class="form-row bottom">
+    <div class="question">
+      <p class="space" data-cy="addressTitle">What’s your Full Address? <span class="red">*</span>
+      </p>
+      <p class="tooltip-note caption"><span class="tooltip">
+          <img src="assets/icon/info-icon.svg" class="info" alt="Tooltip Info Icon" />
           <span class="tooltiptext">
-              <p class="smaller">Please make sure you enter the same address entered in the ACP application here.</p>
+            <p class="smaller">Please make sure you enter the same address entered in the ACP application here.</p>
           </span>
-      </span></p>
-      </div>
-      <div class="form-field half">
-        <label class="outlined-label-input">
-          <input placeholder=" " formControlName="address1" maxlength="50" id="addressLookup" data-cy="addressLookup"
-          #addressLookup type="text" />
-          <span>Address Line 1</span>
-        </label>
-        <label class="validation-message" *ngIf="
-        addressInfoForm.controls.address1.hasError('required') &&
-        addressInfoForm.controls.address1.touched
-      " id="required-address-one-msg">
+        </span></p>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input formControlName="address1" matInput type="search" list-formatter="description" id="addressLookup"
+        data-cy="addressLookup" #addressLookup class="geolocate" [matAutocomplete]="auto" required placeholder=" "
+          maxlength="50" (input)="changedAddress('addressInfoForm', addressInfoForm)" />
+        <span>Address Line 1</span>
+        <mat-autocomplete #auto="matAutocomplete"
+          (optionSelected)="addressDetails($event,'addressInfoForm',addressInfoForm )">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{ option?.description }}
+          </mat-option>
+        </mat-autocomplete>
+      </label>
+      <label class="validation-message"
+        *ngIf="addressInfoForm.controls.address1.hasError('required') && addressInfoForm.controls.address1.touched"
+        id="required-address-one-msg" data-cy="required-address-one-msg">
         Address Line 1 is required
       </label>
-      </div>
-      <div class="form-field half">
-        <label class="outlined-label-input">
-          <input placeholder=" " formControlName="address2" maxlength="50" id="address2" data-cy="address2"
-          #addressLookup type="text" />
-          <span>Address Line 2 (Optional)</span>
-        </label>
-      </div>
-      <div class="form-field half">
-        <label class="outlined-label-input">
-          <input placeholder=" " formControlName="city" maxlength="50" id="city" data-cy="city" type="text" />
-          <span>City</span>
-        </label>
-        <label class="validation-message" *ngIf="
-        addressInfoForm.controls.city.hasError('required') &&
-        addressInfoForm.controls.city.touched
-      " id="required-city-msg" data-cy="required-city-msg">
+      <label class="validation-message vm"
+        *ngIf="!displayedAddressModel && !!addressInfoForm.controls.address1.value"
+        id="required-address-msg">Please select address from the autocomplete list</label>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="address2" maxlength="50" id="mail-address2" data-cy="address2"
+          #addressLookup autocomplete="address-line2" type="text" />
+        <span>Address Line 2 (Optional)</span>
+      </label>
+    </div>
+    <div class="form-field half">
+      <label class="outlined-label-input">
+        <input placeholder=" " formControlName="city" maxlength="50" id="mail-city" data-cy="city" type="text"
+          autocomplete="address-level2" />
+        <span>City</span>
+      </label>
+      <label class="validation-message"
+        *ngIf="addressInfoForm.controls.city.hasError('required') && addressInfoForm.controls.city.touched"
+        id="required-city-msg" data-cy="required-city-msg">
         City is required
       </label>
       <label class="validation-message" *ngIf="addressInfoForm.controls.city.hasError('pattern')"
         id="invalid-city-msg" data-cy="invalid-city-msg">
         City is invalid
       </label>
-      </div>
-      <div class="form-field half double">
-        <div class="form-section">
-          <label class="outlined-label-input ">
-            <input placeholder=" " formControlName="state" maxlength="2" id="state" data-cy="state" type="text" minlength="2"/>
-                <span>State</span>
-          </label>
-          <label class="validation-message" *ngIf="
-          addressInfoForm.controls.state.hasError('required') &&
-          addressInfoForm.controls.state.touched
-        " id="required-state-msg" data-cy="required-state-msg">
+    </div>
+    <div class="form-field half double">
+      <div class="form-section">
+        <label class="outlined-label-input">
+          <input placeholder=" " formControlName="state" maxlength="2" id="mail-state" data-cy="state" type="text"
+            autocomplete="address-level1" />
+          <span>State</span>
+        </label>
+        <label class="validation-message"
+          *ngIf="addressInfoForm.controls.state.hasError('required') && addressInfoForm.controls.state.touched"
+          id="required-state-msg" data-cy="required-state-msg">
           State is required
         </label>
-        <label class="validation-message" *ngIf="addressInfoForm.controls.state.invalid && addressInfoForm.controls.state.dirty  &&  !addressInfoForm.controls.state.hasError('required')"
+        <label class="validation-message" *ngIf="addressInfoForm.controls.state.hasError('pattern')"
           id="invalid-state-msg" data-cy="invalid-state-msg">
           State is invalid
         </label>
-        </div>
-        <div class="form-section">
-          <label class="outlined-label-input ">
-            <input placeholder=" " formControlName="zipCode" id="zipCode" data-cy="zipCode" type="text" maxlength="10" />
-            <span>ZIP Code</span>
-          </label>
-          <label class="validation-message" *ngIf="
-            addressInfoForm.controls.zipCode.hasError('required') &&
-            addressInfoForm.controls.zipCode.touched
-          " id="required-zipcode-msg" data-cy="required-zipcode-msg">
-            ZIP Code is required
-          </label>
-          <label class="validation-message" *ngIf="addressInfoForm.controls.zipCode.hasError('pattern')"
-            id="invalid-zipcode-msg" data-cy="invalid-zipcode-msg">
-            ZIP Code is invalid
-          </label>
-        </div>
+      </div>
+      <div class="form-section">
+        <label class="outlined-label-input">
+          <input placeholder=" " formControlName="zipCode" id="mail-zipCode" data-cy="zipCode" type="text"
+            maxlength="10" autocomplete="postal-code" />
+          <span>ZIP Code</span>
+        </label>
+        <label class="validation-message"
+          *ngIf="addressInfoForm.controls.zipCode.hasError('required') && addressInfoForm.controls.zipCode.touched"
+          id="required-zipcode-msg" data-cy="required-zipcode-msg">
+          ZIP Code is required
+        </label>
+        <label class="validation-message" *ngIf="addressInfoForm.controls.zipCode.hasError('pattern')"
+          id="invalid-zipcode-msg" data-cy="invalid-zipcode-msg">
+          ZIP Code is invalid
+        </label>
       </div>
     </div>
-  </form>
+  </div>
+</form>

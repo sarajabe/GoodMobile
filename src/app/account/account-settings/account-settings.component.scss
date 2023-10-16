@@ -15,15 +15,18 @@
     }
   }
 }
+
 .second-row {
   @media (max-width: $desktop-min-width-minus) {
     display: flex;
     flex: 1 0 34%;
     flex-wrap: wrap;
+
     .account-card {
       &.billing {
         margin-right: 6%;
       }
+
       &.ebb {
         width: 100%;
         order: 3;
@@ -31,10 +34,12 @@
       }
     }
   }
+
   @media (max-width: $ipad-min-width-minus) {
     flex-direction: column;
   }
 }
+
 .forth-row {
   @media (max-width: $desktop-min-width-minus) {
     .account-card {
@@ -44,91 +49,111 @@
     }
   }
 }
+
 .new-address-form {
   ::ng-deep {
     .seven {
-      width: 50%!important;
+      width: 50% !important;
+
       @media(max-width: $phablet-min-width-minus) {
-        width: 100%!important;
+        width: 100% !important;
       }
     }
+
     .billing-label {
       padding-left: 15px;
+
       @media(max-width: $desktop-min-width-minus) {
         padding-left: 0;
       }
     }
-    .form-section { 
-        .eight{
-            padding-left: 0;
-            padding-right: 0;
-            width: 50%;
+
+    .form-section {
+      .eight {
+        padding-left: 0;
+        padding-right: 0;
+        width: 50%;
+      }
+
+      .four {
+        padding-right: 0;
+        width: 50%;
+      }
+
+      @media(max-width: $desktop-min-width-minus) {
+        .eight {
+          padding-right: 10px;
         }
+
         .four {
-            padding-right: 0;
-            width: 50%;
+          padding-left: 10px;
         }
-        @media(max-width: $desktop-min-width-minus) {
-            .eight {
-                padding-right: 10px;
-            }
-            .four {
-                padding-left: 10px;
-            }
+      }
+
+      @media(max-width: $phablet-min-width-minus) {
+        .eight {
+          width: 100%;
+          padding-right: 0px;
         }
-        @media(max-width: $phablet-min-width-minus) {
-            .eight {
-                width: 100%;
-                padding-right: 0px;
-            }
-            .four {
-                width: 100%;
-                padding-left: 0;
-                padding-right: 0px;
-            }
+
+        .four {
+          width: 100%;
+          padding-left: 0;
+          padding-right: 0px;
         }
+      }
     }
+
     .address-lookup-details {
+      .four {
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+
+      @media(max-width: $desktop-min-width-minus) {
         .four {
-            &:first-child {
-                padding-left: 0;
-            }
-            &:last-child {
-                padding-right: 0;
-            }
+          &:first-child {
+            padding-right: 0px;
+          }
+
+          &:nth-child(2) {
+            padding-left: 10px;
+          }
+
+          &:last-child {
+            padding-right: 0px;
+          }
         }
-        @media(max-width: $desktop-min-width-minus) {
-            .four {
-                &:first-child {
-                    padding-right: 0px;
-                }
-                &:nth-child(2) {
-                    padding-left: 10px;
-                }
-                &:last-child {
-                    padding-right: 0px;
-                }
-            }
+      }
+
+      @media(max-width: $phablet-min-width-minus) {
+        .four {
+          width: 100%;
+
+          &:nth-child(2) {
+            padding-left: 0px;
+          }
         }
-        @media(max-width: $phablet-min-width-minus) {
-            .four {
-                width: 100%;
-                &:nth-child(2) {
-                    padding-left: 0px;
-                }
-            }
-        }
+      }
     }
+  }
 }
-}
+
 .ebb-header-section {
   display: flex;
+
   .enrolled-container {
     background-color: #f2fafc;
     width: 118.8px;
     height: 43.2px;
     border-radius: 50px;
     margin-left: 19px;
+
     .enrolled {
       font-size: rem-calc(20px);
       font-weight: bold;
@@ -136,15 +161,18 @@
       color: #7dd0de;
       padding: 13px 22px;
       font-family: $secondary-font-family;
+
       @media (max-width: $desktop-min-width-minus) {
         font-size: rem-calc(18px);
       }
     }
+
     @media (max-width: $desktop-min-width-minus) {
       margin-top: -9px;
     }
   }
 }
+
 .account-card {
   .card-action {
     .action {
@@ -152,10 +180,12 @@
         &.right {
           float: right;
         }
+
         &.space {
           margin-right: 45px;
         }
       }
+
       @media (max-width: 1229.9px) {
         display: block;
         margin-bottom: 10px;
@@ -173,18 +203,22 @@
         color: white;
         width: 25px;
         height: 25px;
+
         @media (max-width: $desktop-min-width-minus) {
-            width: unset;
-            padding: 6px 0;
+          width: unset;
+          padding: 6px 0;
         }
       }
+
       .action-plus {
-        padding: 0px 3px;
+        padding: 0px 2px;
         margin-right: 5px;
+
         .plus-img {
           width: 20px;
           height: 15px;
           padding-bottom: 4px;
+
           @media (max-width: $desktop-min-width-minus) {
             width: 10px;
             height: 15px;
@@ -192,13 +226,16 @@
           }
         }
       }
+
       .action-minus {
         padding: 0px 6px;
         margin-right: 5px;
+
         .minus-img {
           width: 15px;
           height: 15px;
           padding-bottom: 4px;
+
           @media (max-width: $desktop-min-width-minus) {
             width: 12px;
             height: 15px;
@@ -206,130 +243,172 @@
           }
         }
       }
+
       .close-action {
         padding: 0px 2px;
+
         img {
           width: 20px;
-          height: 35px;
+          height: 40px;
           padding-bottom: 3px;
         }
       }
     }
   }
-  .flex-form-row{
+
+  .flex-form-row {
     display: flex;
     width: 100%;
     justify-content: space-between;
+
     @media(max-width: $phablet-min-width-minus) {
-     flex-direction: column;
+      flex-direction: column;
     }
+
     fieldset {
       width: 48%;
       padding-left: 15px;
+
       @media(max-width: $desktop-min-width-minus) {
         padding-left: 0;
-       }
-       @media(max-width: $phablet-min-width-minus) {
+      }
+
+      @media(max-width: $phablet-min-width-minus) {
         width: 100%;
-       }
+      }
     }
   }
+
   &.CC {
     .card-subtitle {
       font-family: $base-font-family;
     }
+
     .card-content {
       margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .info-details {
+        .card-action {
+          @media (max-width: 1249.9px) {
+            justify-content: end;
+          }
+        }
+      }
+
       .flex-display {
         display: flex;
         justify-content: space-between;
         max-width: 415px;
+
         @media(max-width: $phablet-min-width-minus) {
           max-width: 100%;
         }
       }
+
       .form-field {
         width: 100%;
         max-width: 190px;
+
         @media(max-width: $phablet-min-width-minus) {
           max-width: 100%;
         }
       }
+
       .floating-label {
         .floating-select {
-            color: #000000de;
-            height: 44px;
-            &.dirty {
-                ~ {
-                    label {
-                        top: -6px;
-                        font-size: rem-calc(12px);
-                        background-color: white;
-                        width: 30px;
-                        color: #00000099;
-                    }
-                }
-            }
+          color: #000000de;
+          height: 44px;
+
+          &.dirty {
             ~ {
               label {
-                  top: 13px;
+                top: -6px;
+                font-size: rem-calc(12px);
+                background-color: white;
+                width: 30px;
+                color: #00000099;
               }
-          }
-           &.disabled {
-                cursor: not-allowed;
             }
+          }
+
+          ~ {
+            label {
+              top: 13px;
+            }
+          }
+
+          &.disabled {
+            cursor: not-allowed;
+          }
         }
-    }
+      }
+
       .sperator {
         color: #898383;
         padding: 10px 7px;
         font-size: rem-calc(28px);
       }
+
       .no-wrap {
         white-space: nowrap;
       }
     }
+
     .info-details {
       display: flex;
+
       .info {
         display: inline-flex;
         flex-wrap: wrap;
         flex-basis: 95%;
+
         .brand {
           padding-right: 3px;
         }
+
         .responsive {
           @media (#{$larger-than-desktop}) {
             display: none;
           }
         }
+
         @media (max-width: 1150px) {
           flex-basis: 82%;
         }
       }
+
       .card-action {
         display: flex;
         width: 355px;
         margin-top: 0;
         margin-bottom: 0;
       }
+
       @media (max-width: $desktop-min-width-minus) {
         display: flex;
         flex-direction: column;
         margin: 10px 0 25px;
+
         .info {
           display: block;
+
           b {
             display: block;
             margin-bottom: 5px;
           }
+
           .responsive {
             display: inline;
             float: right;
+
             .close-action {
               padding: 5px 3px;
               background-color: $primary-color;
               border-radius: 50%;
+
               img {
                 width: 19px;
                 padding-bottom: 1px;
@@ -337,27 +416,33 @@
             }
           }
         }
+
         .desktop {
           display: none;
         }
+
         .card-action {
           width: 100%;
           display: block;
+
           .action {
             margin-top: 10px;
           }
         }
       }
+
       @media (max-width: 345px) {
         .info {
           max-width: 207px;
         }
       }
     }
+
     .card-action {
       @media (max-width: $desktop-min-width-minus) {
         display: flex;
         flex-direction: column-reverse;
+
         .action {
           &.toggle {
             margin-top: 17px;
@@ -366,29 +451,38 @@
       }
     }
   }
+
   &.shipping {
     .info-details {
       display: flex;
+      justify-content: space-between;
       margin-bottom: 20px;
+
       .title {
         flex-basis: 30%;
+
         @media (max-width: 1150px) {
           flex-basis: 26%;
         }
       }
+
       .address-info {
         flex-basis: 39%;
+
         .info {
           margin-bottom: 0;
         }
       }
+
       .card-action {
         display: flex;
       }
+
       @media (max-width: $desktop-min-width-minus) {
         .title {
           flex-basis: 30%;
         }
+
         .address-info {
           flex-basis: 43%;
         }
@@ -396,6 +490,7 @@
         .card-action {
           flex-basis: 27%;
           justify-content: flex-end;
+
           .action {
             &.edit {
               margin-left: 10px;
@@ -404,8 +499,10 @@
           }
         }
       }
+
       @media (max-width: $phablet-min-width-minus) {
         flex-direction: column;
+
         .title {
           .mobile {
             float: right;
@@ -415,8 +512,10 @@
             padding: 2px;
             width: 26px;
             height: 26px;
+
             .close-action {
               padding: 0px 1.5px;
+
               img {
                 width: 19px;
                 padding-bottom: 20px;
@@ -424,11 +523,13 @@
             }
           }
         }
+
         .card-action {
           .action {
             &.desktop {
               display: none;
             }
+
             &.edit {
               width: 100%;
               margin-left: 0;
@@ -438,29 +539,37 @@
         }
       }
     }
+
     .card-action {
       &.full {
         @media (max-width: $desktop-min-width-minus) {
           display: flex;
+
           .action {
             flex-basis: 100%;
+
             &.toggled {
               flex-basis: 50%;
             }
+
             &.space {
               flex-basis: 50%;
               margin-left: 15px;
             }
           }
         }
+
         @media (max-width: $phablet-min-width-minus) {
           flex-direction: column-reverse;
+
           .action {
             &.right {
               margin-left: 0;
             }
+
             &.toggled {
               background-color: transparent;
+
               .action-title {
                 display: none;
               }
@@ -470,122 +579,150 @@
       }
     }
   }
+
   .ebb-info {
     display: flex;
     width: 100%;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 55px;
+
     .title {
       font-weight: bold;
       font-size: rem-calc(22px);
       line-height: 45px;
       font-family: $base-font-family-bold;
       margin-bottom: 14px;
+
       @media (max-width: $desktop-min-width-minus) {
         font-size: rem-calc(14px);
         line-height: 22px;
         margin-bottom: 6px;
       }
     }
+
     .value {
       font-weight: normal;
       font-size: rem-calc(17px);
       font-family: $base-font-family;
+
       @media (max-width: $desktop-min-width-minus) {
         font-size: rem-calc(13px);
       }
     }
   }
 }
+
 .icon-plus {
   padding: 2px !important;
   margin-right: 5px;
 }
+
 .icon-minus {
   color: white;
   padding: 2px !important;
   margin-right: 5px;
 }
+
 .hidden {
   display: none !important;
 }
+
 .preferredPayments {
   margin: 20px 0;
   display: flex;
+
   &.hidden {
     display: none;
   }
+
   .info-details {
     flex-wrap: wrap;
     display: inline-flex;
     flex-basis: 100%;
+
     .mobile-section {
       &.verticalCenter {
         display: flex;
         align-items: center;
       }
+
       flex-basis: 40%;
+
       .info {
         font-size: rem-calc(17px);
         line-height: 30px;
+
         b {
           display: block;
           font-size: 22px;
           margin-bottom: 5px;
+
           @media (max-width: 1200px) {
             max-width: 100px;
           }
         }
       }
     }
+
     .paymentMethod-section {
       .info {
         font-size: rem-calc(17px);
         line-height: 23px;
         margin-bottom: 7px;
+
         b {
           display: block;
           font-size: 22px;
           margin-bottom: 5px;
         }
+
         &.disabled {
           color: $disabled-grey;
         }
+
         @media (max-width: 1100px) {
           max-width: 185px;
         }
       }
+
       @media (max-width: 1250px) {
         max-width: 250px;
       }
     }
   }
+
   .action {
     display: flex;
     justify-content: flex-start;
     width: 272px;
+
     .changeAction {
       font-size: rem-calc(20px);
       font-weight: bold;
       line-height: 30px;
     }
+
     .action-icon {
       background-color: $primary-color;
       padding: 6px 4px;
       border-radius: 50%;
       color: white;
     }
+
     .icon {
       margin-right: 5px;
     }
+
     .action-plus {
-      padding: 0px 3px;
+      padding: 0px 2px;
       margin-right: 5px;
+
       .plus-img {
         width: 20px;
         height: 15px;
         padding-bottom: 4px;
+
         @media (max-width: $desktop-min-width-minus) {
           width: 10px;
           height: 15px;
@@ -593,13 +730,16 @@
         }
       }
     }
+
     .action-minus {
       padding: 0px 6px;
       margin-right: 5px;
+
       .minus-img {
         width: 15px;
         height: 15px;
         padding-bottom: 4px;
+
         @media (max-width: $desktop-min-width-minus) {
           width: 12px;
           height: 15px;
@@ -607,40 +747,49 @@
         }
       }
     }
+
     .close-action {
       padding: 0px 2px;
+
       img {
         width: 20px;
-        height: 35px;
+        height: 40px;
         padding-bottom: 3px;
       }
     }
+
     &.disabled {
       color: $disabled-grey;
       cursor: not-allowed;
+
       .disabled {
         padding: 7px;
         background-color: $disabled-grey;
         border-radius: 50%;
       }
     }
+
     .responsive {
       display: none;
     }
   }
+
   @media (max-width: $desktop-min-width-minus) {
     padding-bottom: 20px;
     margin: 7px 0;
     display: flex;
     flex-direction: column;
+
     .info-details {
       display: flex;
       flex-direction: column;
       flex-basis: 100%;
+
       .mobile-section {
         .info {
           font-size: rem-calc(12px);
           line-height: 14px;
+
           b {
             font-size: rem-calc(14px);
             line-height: 16px;
@@ -648,11 +797,13 @@
           }
         }
       }
+
       .paymentMethod-section {
         .info {
           font-size: rem-calc(12px);
           line-height: 14px;
           max-width: 100%;
+
           b {
             font-size: rem-calc(14px);
             line-height: 16px;
@@ -660,6 +811,7 @@
         }
       }
     }
+
     .action {
       flex-basis: 100%;
       background-color: $primary-color;
@@ -668,6 +820,7 @@
       padding: 4px;
       margin-top: 15px;
       width: 100%;
+
       .changeAction {
         font-size: rem-calc(12px);
         line-height: 24px;
@@ -675,9 +828,11 @@
       }
     }
   }
+
   @media (max-width: $phablet-min-width-minus) {
     display: block;
     margin-top: 20px;
+
     .info-details {
       .mobile-section {
         .info {
@@ -685,6 +840,7 @@
           line-height: 22px;
         }
       }
+
       .paymentMethod-section {
         .info {
           font-size: rem-calc(15px);
@@ -692,6 +848,7 @@
         }
       }
     }
+
     .action {
       justify-content: flex-start;
       background-color: $primary-color;
@@ -701,17 +858,21 @@
       text-align: center;
       height: 34px;
       margin: 15px auto 0;
+
       &.disabled {
         background-color: $disabled-grey;
         color: white;
+
         .disabled {
           color: white;
         }
       }
+
       .changeAction {
         .desktop {
           display: none;
         }
+
         .responsive {
           display: inline;
         }
@@ -719,26 +880,32 @@
     }
   }
 }
+
 .toggle-icon {
   background-color: $primary-color;
   padding: 1px 10px;
   border-radius: 50%;
   margin-right: 5px;
+
   @media(max-width: $desktop-min-width-minus) {
     padding: 1px 8px;
   }
+
   .arrow.down {
     border-width: 0 2px 2px 0;
     border-color: white;
     margin-bottom: 5px;
   }
+
   .arrow.up {
     border-width: 0 2px 2px 0;
     border-color: white;
   }
 }
+
 .toggle-section {
   width: 337px;
+
   .toggle-action {
     color: $primary-color;
     cursor: pointer;
@@ -752,16 +919,20 @@
   @media (min-width: $desktop-min-width) {
     margin-left: 10%;
   }
+
   @media (min-width: $desktop-min-width) and (max-width: 1200px) {
     margin-left: 5%;
   }
+
   @media (min-width: $phablet-min-width) and (max-width: $desktop-min-width) {
     margin-bottom: 29px;
   }
+
   @media (max-width: $phablet-min-width) {
     margin-bottom: 43px;
   }
 }
+
 .font-size-12 {
   @media (max-width: 1024.9px) and (min-width: 640px) {
     font-size: rem-calc(12px);

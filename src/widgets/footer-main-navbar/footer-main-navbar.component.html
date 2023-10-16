@@ -8,17 +8,17 @@
                 <p class="text-color-primary primary-font-bold section-title"><span>Shop</span><i class="arrow primary" [ngClass]="{'down': !showShop, 'up': !!showShop}" ></i></p>
                 <ul class="section-menu">
                     <li class="section-link">
-                        <a class="caption" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Cell phone plans</a>
+                        <a class="caption" data-cy="cellPhonePlansFooter" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.PLANS_AND_FEATURES + '/' + PLANS_SHOP_ROUTE_URLS.NEW_PLAN]">Cell phone plans</a>
                     </li>
                     <li class="section-link">
-                        <a class="caption" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</a>
+                        <a class="caption" data-cy="acpDevicesFooter" [routerLink]="[SHOP_ROUTE_URLS.BASE + '/' + SHOP_ROUTE_URLS.ACP_DEVICES]">ACP Devices</a>
                     </li>
                 </ul>
             </div>
             <div class="footer-section" [ngClass]="{'active': showAccount == true}" (click)="showAccount=!showAccount;showShop = false; showSupport = false;showAbout = false;" >
                 <p class="text-color-primary primary-font-bold section-title"><span>Account</span><i class="arrow primary" [ngClass]="{'down': !showAccount, 'up': !!showAccount}" ></i></p>
                 <ul class="section-menu">
-                    <li class="section-link" data-cy="accountSummary"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ ACCOUNT_ROUTE_URLS.SUMMARY]">Account summary</a></li>
+                    <li class="section-link" data-cy="accountSummaryFooter"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ ACCOUNT_ROUTE_URLS.SUMMARY]">Account summary</a></li>
                     <li class="section-link" data-cy="payAndRefill"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAY_AND_RENEW]">Pay & refill your account</a></li>
                     <li class="section-link" data-cy="yourOrders"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.ORDERS]">Your orders</a></li>
                     <li class="section-link" data-cy="paymentrHistory"><a class="caption" [routerLink]="[ACCOUNT_ROUTE_URLS.BASE +'/'+ACCOUNT_ROUTE_URLS.PAYMENTS]">Payment history</a></li>
@@ -32,9 +32,9 @@
                 <p class="text-color-primary primary-font-bold section-title"><span>Support</span><i class="arrow primary" [ngClass]="{'down': !showSupport, 'up': !!showSupport}" ></i></p>
                 <ul class="section-menu">
                     <li class="section-link" data-cy="acp"><a class="caption" [routerLink]="[ROUTE_URLS.ACP]">Affordable Connectivity Program</a></li>
-                    <li class="section-link" data-cy="wifiCalling"><a class="caption" [routerLink]="[ROUTE_URLS.WIFI_CALLING]">WiFi Calling</a></li>
+                    <li class="section-link" ><a class="caption" data-cy="wifiCalling" [routerLink]="[ROUTE_URLS.WIFI_CALLING]">WiFi Calling</a></li>
                     <li class="section-link" data-cy="setupYourPhoneData"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]">Setup your phone data</a></li>
-                    <li class="section-link" data-cy="hdVoice"><a class="caption" [routerLink]="[ROUTE_URLS.HD_VOICE]">HD Voice</a></li>
+                    <li class="section-link" ><a class="caption" data-cy="hdVoice" [routerLink]="[ROUTE_URLS.HD_VOICE]">HD Voice</a></li>
                     <li class="section-link" data-cy="faqs"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.FAQS]">FAQs</a></li>
                     <li class="section-link" data-cy="contactUs"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.CONTACT_US]">Contact us</a></li>
                     <li class="section-link" data-cy="sitemapLink"><a class="caption" [routerLink]="[SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.SITEMAP]">Sitemap</a></li>

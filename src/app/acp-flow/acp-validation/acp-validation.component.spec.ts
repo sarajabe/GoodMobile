@@ -1,296 +1,572 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, InjectionToken } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FirebaseEBBService, FirebaseUserProfileService, IFirebaseEbbDetails, IUser, IUserPlan, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService, FirebaseEBBService, FirebaseUserProfileService, PlacesAutocompleteService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
-import { MatDialogRef } from '@angular/material/dialog';
-import { PageScrollService } from 'ngx-page-scroll-core';
+import { NgxPageScrollCoreModule, PageScrollService } from 'ngx-page-scroll-core';
 import { NgxPrintModule } from 'ngx-print';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { of } from 'rxjs';
-import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
-import { InformationMessageModalComponent, InformationMessageModalContext } from 'src/modals/information-message-modal/information-message-modal.component';
-import { ModalHelperService, ModalSetting } from 'src/services/modal-helper.service';
+import { InformationMessageModalComponent } from 'src/modals/information-message-modal/information-message-modal.component';
+import { ModalHelperService } from 'src/services/modal-helper.service';
 import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
 import { ReCaptchaComponent } from 'src/widgets/re-captcha/re-captcha.component';
-import { ACCOUNT_ROUTE_URLS, ACP_ROUTE_URLS, ROUTE_URLS } from '../../app.routes.names';
 import { AcpValidationComponent } from './acp-validation.component';
-fdescribe('AcpValidationComponent', () => {
+import { EbbManager } from 'src/services/ebb.service';
+import { By } from '@angular/platform-browser';
+import { ACP_MOCKS } from 'src/mocks';
+import { PersonalInfoComponent } from '../personal-info/personal-info.component';
+import { IGoogleTagManagerEventsConfig } from '@ztarmobile/zwp-service';
+import { of, ReplaySubject } from 'rxjs';
+import { AddressInfoComponent } from '../address-info/address-info.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ChildInfoComponent } from '../child-info/child-info.component';
+import { AcpDocumentsComponent } from '../acp-documents/acp-documents.component';
+import { SignatureInfoComponent } from '../signature-info/signature-info.component';
+
+fdescribe('Acp Validation Component - Unit Testing', () => {
     let component: AcpValidationComponent;
     let fixture: ComponentFixture<AcpValidationComponent>;
-    let informationMessageModalComponent: InformationMessageModalComponent;
-    let informationMessageModalfixture: ComponentFixture<InformationMessageModalComponent>;
-    let mockFirebaseEBBService;
+    let personalInfoComponent: PersonalInfoComponent;
+    let personalFixture: ComponentFixture<PersonalInfoComponent>;
+    let addressComponent: AddressInfoComponent;
+    let addressFixture: ComponentFixture<AddressInfoComponent>;
+    let childInfoComponent: ChildInfoComponent;
+    let childFixture: ComponentFixture<ChildInfoComponent>;
+    let acpDocumentsComponent: AcpDocumentsComponent;
+    let documentsFixture: ComponentFixture<AcpDocumentsComponent>;
+    let signatureComponent: SignatureInfoComponent;
+    let signatureFixture: ComponentFixture<SignatureInfoComponent>;
+
     let mockEbbService;
-    let mockUserPlansService;
     let mockFirebaseUserProfileService;
     let mockModalHelperService;
-    const PLANS = [
-        {
-            activationCode: '0494791',
-            autoRenewPlan: true,
-            basePlan: {
-                cycleDays: 0,
-                ebb: false,
-                id: 'GOODMOBILE-6GB-30',
-                parentId: 'GOODMOBILE-UNLIMITED-CATEGORY',
-                price: 25,
-                promoMoPrice: 0,
-                promoted: true,
-                specialPromotion: {
-                    promotionAmount: 0,
-                    promotionCycles: 1,
-                    promotionDescription: 'First 3 months for 50% discount',
-                    promotionDiscount: '50%',
-                    promotionTitle: '3-month introductory at our lowest price ever'
-                },
-                subscriptionCycles: 1,
-                subtitle: '3GB 4G LTE',
-                title: 'Unlimited Talk, Text & Data',
-                type: 'base-plan',
-                unlimited: true
-            },
-            cartType: 'new_plan',
-            createdAt: 1645701146256,
-            id: '-MwfQeP8xm9JmjakEJyk',
-            mdn: '5122031956',
-            noPlan: false,
-            orderId: 'BWVOYIGCBCK6FNI1',
-            orderShipMethod: 'usps_first_class_mail/letter',
-            orders: {
-                BWVOYIGCBCK6FNI1: {
-                    intent: 'NEW',
-                    orderId: 'BWVOYIGCBCK6FNI1'
-                }
-            },
-            paymentMethodId: '060046714620220224',
-            planDevice: {
-                brand: 'Apple',
-                capableOf5G: false,
-                compatible: true,
-                eSimCapable: false,
-                equipmentType: '4GLTE',
-                iccidRequired: false,
-                id: '353260073063169',
-                make: 'Apple',
-                manufacturer: 'Apple',
-                marketingName: 'iPhone 6S',
-                model: 'iPhone 6S (A1633)',
-                network: 'tmo',
-                networkType: 'GSM',
-                os: 'iOS',
-                portRequired: false,
-                postalCode: '00962',
-                serialNumber: '353260073063169',
-                serialType: 'imei',
-                simSize: 'Nano',
-                skuIdentifier: 'T',
-                skuNumber: 'SIMGWLTMO4GLTE',
-                technology: 'LTE',
-                valid: true
-            },
-            serverSyncTimestamp: '2022-02-24T05:14:02.920902-06:00[US/Central]',
-            shippingAddress: {
-                address1: '800 North 23rd Street',
-                address2: '',
-                alias: 'rashed rabadi',
-                city: 'Philadelphia',
-                country: 'United States',
-                id: '-MwfQeFE_JwD6NDxhPhp',
-                postalCode: '19130',
-                state: 'PA'
-            },
-            shippingAddressId: '-MwfQeFE_JwD6NDxhPhp',
-            showActivationNotification: true,
-            simsQuantity: 1,
-            title: 'Unlimited Talk, Text & Data',
-            transactionId: '3aac22c8-0593-4e83-82dc-e6594b956cb7',
-            trialPlanId: '',
-            updatedAt: 1645701242924,
-            userId: 'zRIcMhANxvSmKnWTu7MJ7kEQ43u1'
-        }
-    ];
-    const USER = {
-        createdAt: 1642697057082,
-        customerId: 'A6426970504',
-        email: 'rashed.rabadi@pavocom.com',
-        firstName: 'Rashed',
-        id: 'zRIcMhANxvSmKnWTu7MJ7kEQ43u1',
-        lastName: 'Rabadi',
-        paymentMethods: [
-            {
-                address1: '800 North 23rd Street',
-                address2: '',
-                alias: 'VISA Ending in 1111',
-                brand: 'VISA',
-                city: 'Philadelphia',
-                country: 'United States',
-                defaultCreditCard: false,
-                expirationDate: '0430',
-                fullName: 'rashed rabadi',
-                id: '666114721020220224',
-                isDefault: true,
-                last4: '1111',
-                lastUpdate: 1645721456215,
-                method: 'Credit Card',
-                name: 'rashed rabadi',
-                postalCode: '19130',
-                state: 'PA',
-                updatedAt: 1645721456215
-            },
-            {
-                address1: '800 North 23rd Street',
-                alias: 'VISA Ending in 1111',
-                brand: 'VISA',
-                city: 'Philadelphia',
-                country: 'United States',
-                defaultCreditCard: false,
-                expirationDate: '0431',
-                fullName: 'rashed rabadi',
-                id: '060046714620220224',
-                isDefault: true,
-                last4: '1111',
-                lastUpdate: 1645701145617,
-                method: 'Credit Card',
-                name: 'rashed rabadi',
-                postalCode: '19130',
-                state: 'PA',
-                updatedAt: 1645701145617
-            }
-        ],
-        shippingAddresses: [
-            {
-                address1: '800 North 23rd Street',
-                address2: '',
-                city: 'Philadelphia',
-                country: 'United States',
-                createdAt: 1645701145620,
-                id: '-MwfQeFE_JwD6NDxhPhp',
-                isDefault: true,
-                name: 'rashed rabadi',
-                postalCode: '19130',
-                state: 'PA'
-            }
-        ],
-        updatedAt: 1645785895947,
-        verified: false,
-        fullName: 'Rashed Rabadi'
-    };
-    const IUSER = {} as IUser;
-    const DATA_OBJECT = {
-        data: {
-            eligibilityCodes: [
-                { code: 'Medicaid ' }, { code: 'Supplemental Nutrition Assistance Program (SNAP) ' },
-                { code: 'School Lunch/Breakfast Program ' }
-            ]
-        }
-    };
-    const MODAL_CONTEXT = {
-        message: 'ACP Plan Exist',
-        title: true,
-        btnText: 'Account Summary',
-        btnUrl: `${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`,
-        hasCloseLink: false,
-        customClass: '',
-        customHTML: '',
-        cancelBtn: false,
-        cancelText: '',
-        noteText: 'You already have a Federal Affordable Connectivity plan!'
-    } as InformationMessageModalContext;
-    const mockedDialog = { result: true, context: MODAL_CONTEXT, setCloseGuard: () => { } };
+    let mockEbbManager;
+    let mockPlacesAutocompleteService;
+    let appPersonalInfo;
+    let appAddressInfo;
+    let appChildInfo;
+    let mockAnalyticService;
+
+    let acpData = ACP_MOCKS.ACP_DATA;
+
     @Component({ selector: 'app-invisible-recaptcha', template: '' })
+
     class MockRecaptchaComponent { }
+
     beforeEach(async () => {
-        mockEbbService = jasmine.createSpyObj(['EBBService', 'sign', 'verifyACP', 'logVerifyError', 'getACPApplicationStatus', 'getCodes']);
-        mockFirebaseEBBService = jasmine.createSpyObj(['FirebaseEBBService', 'clearEBBDetails', 'saveEbbDetails', 'ebbDetails']);
-        mockUserPlansService = jasmine.createSpyObj(['UserPlansService', 'userPlans']);
+        mockEbbService = jasmine.createSpyObj(['EBBService', 'verifyACP', 'logVerifyError', 'getACPApplicationStatus', 'getActiveInternalApplication', 'createInternalApplication', 'verifyACPWithOrWithoutAppId', 'getCodes', 'getPublicHousingPrograms']);
         mockFirebaseUserProfileService = jasmine.createSpyObj(['FirebaseUserProfileService', 'userProfileObservable']);
-        mockModalHelperService = jasmine.createSpyObj(['ModalHelperService', 'showInformationMessageModal', 'setCloseGuard']);
+        mockModalHelperService = jasmine.createSpyObj(['ModalHelperService', 'showInformationMessageModal', 'closeDialog']);
+        mockAnalyticService = jasmine.createSpyObj(['ActionsAnalyticsService', 'trackACPEvent']);
+        mockEbbManager = jasmine.createSpyObj(['EbbManager', 'activeStep', 'validateCurrentStep', 'acpFlowSelected', 'eligibilityCodeDescs', 'setCodesDescs', 'codesSubject']);
+        mockPlacesAutocompleteService = jasmine.createSpyObj(['PlacesAutocompleteService', 'findAddress', 'findDetailedAddressFields']);
+
         await TestBed.configureTestingModule({
-            declarations: [AcpValidationComponent, InformationMessageModalComponent, MockRecaptchaComponent],
-            imports: [FormsModule,
+            declarations: [
+                AcpValidationComponent,
+                PersonalInfoComponent,
+                AddressInfoComponent,
+                ChildInfoComponent,
+                AcpDocumentsComponent,
+                SignatureInfoComponent,
+                InformationMessageModalComponent,
+                MockRecaptchaComponent
+            ],
+            imports: [
+                FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
                 NgxPrintModule,
-                ToastrModule.forRoot()
+                MatAutocompleteModule,
+                ToastrModule.forRoot(),
+                NgxPageScrollCoreModule.forRoot({ duration: 200 }),
             ],
             providers: [
+                { provide: PageScrollService },
                 { provide: EbbService },
+                { provide: EbbManager },
+                { provide: PlacesAutocompleteService },
                 { provide: ToastrService, useValue: ToastrService },
                 { provide: FirebaseEBBService },
+                { provide: ActionsAnalyticsService, useValue: new InjectionToken<IGoogleTagManagerEventsConfig>('GoogleTagManagerEvents') },
                 { provide: ModalHelperService },
                 { provide: UserPlansService },
-                { provide: PageScrollService },
                 { provide: FirebaseUserProfileService },
-                { provide: MatDialogRef },
                 { provide: InvisibleRecaptchaComponent, useClass: MockRecaptchaComponent },
                 { provide: ReCaptchaComponent, useClass: MockRecaptchaComponent },
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
+
         TestBed.overrideProvider(EbbService, { useValue: mockEbbService });
-        TestBed.overrideProvider(FirebaseEBBService, { useValue: mockFirebaseEBBService });
-        TestBed.overrideProvider(UserPlansService, { useValue: mockUserPlansService });
         TestBed.overrideProvider(FirebaseUserProfileService, { useValue: mockFirebaseUserProfileService });
         TestBed.overrideProvider(ModalHelperService, { useValue: mockModalHelperService });
-        TestBed.overrideProvider(MatDialogRef, { useValue: mockedDialog });
+        TestBed.overrideProvider(ActionsAnalyticsService, { useValue: mockAnalyticService });
+        TestBed.overrideProvider(EbbManager, { useValue: mockEbbManager });
+        TestBed.overrideProvider(PlacesAutocompleteService, { useValue: mockPlacesAutocompleteService });
         TestBed.compileComponents();
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(AcpValidationComponent);
         component = fixture.componentInstance;
-        informationMessageModalfixture = TestBed.createComponent(InformationMessageModalComponent);
-        informationMessageModalComponent = informationMessageModalfixture.componentInstance;
-        component.captchaValid = true;
-        component.SITE_ID = INVISIBLE_CAPTCHA_ID;
-        mockFirebaseEBBService.ebbDetails.and.returnValue({} as IFirebaseEbbDetails);
-        mockFirebaseEBBService.ebbDetails = of({});
-        mockUserPlansService.userPlans.and.returnValue(PLANS);
-        mockUserPlansService.userPlans = of(PLANS);
-        mockFirebaseUserProfileService.userProfileObservable.and.returnValue(USER);
-        mockFirebaseUserProfileService.userProfileObservable = of(USER);
-        mockEbbService.getCodes.and.resolveTo(DATA_OBJECT);
-        mockModalHelperService.setCloseGuard.and.resolveTo(mockedDialog);
-        mockModalHelperService.showInformationMessageModal.and.resolveTo(mockedDialog);
-        component.userProfile = IUSER;
+
+        personalFixture = TestBed.createComponent(PersonalInfoComponent);
+        personalInfoComponent = personalFixture.componentInstance;
+
+        addressFixture = TestBed.createComponent(AddressInfoComponent);
+        addressComponent = addressFixture.componentInstance;
+
+        childFixture = TestBed.createComponent(ChildInfoComponent);
+        childInfoComponent = childFixture.componentInstance;
+
+        documentsFixture = TestBed.createComponent(AcpDocumentsComponent);
+        acpDocumentsComponent = documentsFixture.componentInstance;
+
+        signatureFixture = TestBed.createComponent(SignatureInfoComponent);
+        signatureComponent = signatureFixture.componentInstance;
+
+        mockEbbService.getCodes.and.resolveTo(ACP_MOCKS.ELIGIBILiTY_CODES_OBJECT);
+        mockEbbService.getPublicHousingPrograms.and.resolveTo(ACP_MOCKS.PUBLIC_HOUSING_CODES_OBJECT);
+        mockEbbService.getActiveInternalApplication.and.resolveTo({data: acpData});
+
+        mockEbbManager.activeStep.and.returnValue(1);
+        mockEbbManager.activeStep = of(1);
+
+        mockEbbManager.acpFlowSelected.and.returnValue('');
+        mockEbbManager.acpFlowSelected = of(1);
+
+        mockEbbManager.eligibilityCodeDescs.and.returnValue([ACP_MOCKS.ELIGIBILiTY_CODES_DESCS]);
+        mockEbbManager.eligibilityCodeDescs = of([ACP_MOCKS.ELIGIBILiTY_CODES_DESCS]);
+
+        mockEbbManager.codesSubject = new ReplaySubject<any>(1);
+        mockEbbManager.codesSubject.next([ACP_MOCKS.ELIGIBILiTY_CODES_DESCS]);
+
         spyOn(component.router, 'navigate');
+
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should create component successfully', () => {
         expect(component).toBeTruthy();
     });
-    it('should check if Verfy is on step 4 instead of step 3', () => {
-        component.activeStep = 4;
+
+    it('Should check if the activeStep is 1, so the app-personal-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 1;
+            fixture.detectChanges();
+
+            appPersonalInfo = fixture.debugElement.query(By.css('app-personal-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc'));
+
+            expect(appPersonalInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[1].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[1].stepDesc);
+            expect(stepExtraDesc).toBeNull();
+        });
+    }));
+
+    it('Should check if step 1 will have a regular next button', () => {
+        component.activeStep = 1;
         fixture.detectChanges();
+
         const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
         fixture.detectChanges();
-        expect(nextVerifyButton).toBeDefined();
-        expect(nextVerifyButton.innerHTML).toEqual('Verify');
-    });
-    it('should check if step 3 will have a regular next button', () => {
-        component.activeStep = 3;
-        fixture.detectChanges();
-        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
-        fixture.detectChanges();
+
         expect(nextVerifyButton).toBeDefined();
         expect(nextVerifyButton.innerHTML).toEqual('Next');
     });
-    it('should check if the user already enrolled and purchased the ACP plan (he completed the step5) a popup will appear', () => {
-        component.activeStep = 5;
-        component.alreadyEnrolled = true;
-        component.isActivatedWithEbbPlan = true;
-        component.router.url.includes(ACP_ROUTE_URLS.BASE);
-        fixture.detectChanges();
-        fixture.detectChanges();
-        const submitButton = fixture.debugElement.query(By.css('#submit-button')).nativeElement;
-        fixture.detectChanges();
-        submitButton.click();
-        fixture.detectChanges();
-        expect(submitButton.innerHTML).toEqual('Submit');
-    });
-});
 
+    it('Should click on next from the step 1 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 1;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(1, true);
+    });
+
+    it('Should check if the activeStep is 2, so the app-address-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 2;
+            fixture.detectChanges();
+
+            appAddressInfo = fixture.debugElement.query(By.css('app-address-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc'));
+
+            expect(appAddressInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[2].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[2].stepDesc);
+            expect(stepExtraDesc).toBeNull();
+        });
+    }));
+
+    it('Should check if step 2 will have a regular next button', () => {
+        component.activeStep = 2;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Next');
+    });
+
+    it('Should click on next from the step 2 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 2;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(2, true);
+    });
+
+    it('Should check if the activeStep is 3, so the app-child-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 3;
+            fixture.detectChanges();
+
+            appChildInfo = fixture.debugElement.query(By.css('app-child-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc'));
+
+            expect(appChildInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[3].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[3].stepDesc);
+            expect(stepExtraDesc).toBeNull();
+        });
+    }));
+
+    it('Should check if step 3 will have a regular next button', () => {
+        component.activeStep = 3;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Next');
+    });
+
+    it('Should click on next from the step 3 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 3;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(3, true);
+    });
+
+    it('Should check if the activeStep is 4, so the app-acp-documents should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 4;
+            component.acpData = acpData;
+            fixture.detectChanges();
+
+            const appDocsInfo = fixture.debugElement.query(By.css('app-acp-documents'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc')).nativeElement;
+
+            expect(appDocsInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[4].stepTitle);
+            expect(stepDesc.innerHTML).toEqual('');
+            expect(stepExtraDesc.innerHTML).toEqual(component.STEPS_CONTENT[4].stepExtraDesc);
+        });
+    }));
+
+    it('Should check if step 4 will have a regular next button', () => {
+        component.activeStep = 4;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Next');
+    });
+
+    it('Should click on next from the step 4 and make sure that the validateCurrentStep is called', () => {
+        component.activeStep = 4;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        nextVerifyButton.click();
+        fixture.detectChanges();
+
+        acpDocumentsComponent.docDetails.push({ id: 'generic', closeTab: false, consent: false, category: [], proofs: ACP_MOCKS.ACP_DOCUMENTS_MOCK.proofs, slides: ACP_MOCKS.ACP_DOCUMENTS_MOCK.slides, text: ACP_MOCKS.ACP_DOCUMENTS_MOCK.text });
+        acpDocumentsComponent.nextClicked = true;
+        documentsFixture.detectChanges();
+
+        const requiredDocumentsMsg = documentsFixture.debugElement.query(By.css('#required-checkbox-msg'));
+
+        expect(mockEbbManager.validateCurrentStep).toHaveBeenCalledWith(4, true);
+        expect(requiredDocumentsMsg.nativeElement).toBeDefined();
+    });
+
+    it('Should check if the activeStep is 5, so the app-signature-info should be rendered in the DOM', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.activeStep = 5;
+            component.acpData = acpData;
+            fixture.detectChanges();
+
+            const appSignatureInfo = fixture.debugElement.query(By.css('app-signature-info'));
+            const stepTitle = fixture.debugElement.query(By.css('#stepTitle')).nativeElement;
+            const stepDesc = fixture.debugElement.query(By.css('#stepDesc')).nativeElement;
+            const stepExtraDesc = fixture.debugElement.query(By.css('#stepExtraDesc')).nativeElement;
+
+            expect(appSignatureInfo).toBeTruthy();
+            expect(stepTitle.innerHTML).toEqual(component.STEPS_CONTENT[5].stepTitle);
+            expect(stepDesc.innerHTML).toEqual(component.STEPS_CONTENT[5].stepDesc);
+            expect(stepExtraDesc.innerHTML).toEqual(component.STEPS_CONTENT[5].stepExtraDesc);
+        });
+    }));
+
+    it('Should check if Verify button is on step 5', () => {
+        component.acpData = acpData;
+        component.activeStep = 5;
+        fixture.detectChanges();
+
+        const nextVerifyButton = fixture.debugElement.query(By.css('#next-verify-button')).nativeElement;
+        fixture.detectChanges();
+
+        expect(nextVerifyButton).toBeDefined();
+        expect(nextVerifyButton.innerHTML).toEqual('Verify');
+    });
+
+    it('Should check if user already enrolled then call callGetVerifyAcp', () => {
+        spyOn(component, 'callGetVerifyAcp');
+        fixture.detectChanges();
+
+        component.enrolled = true;
+        component.ebbId = ACP_MOCKS.APPLICATION_ID.ebbId;
+        fixture.detectChanges();
+
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.callGetVerifyAcp).toHaveBeenCalledWith(component.ebbId);
+        expect(component.enrolled).toBeTruthy();
+    });
+
+    it('Should listens for setUserInfo changes in activeStep = 1 and make sure that validate email and phone is called in the personal component', () => {
+        spyOn(personalInfoComponent.setUserInfo, 'emit');
+        spyOn(component, 'callCreateInternalApp');
+        spyOn(component, 'setPersonalInfo');
+        spyOn(personalInfoComponent, 'validateEmailAndPhone');
+
+        personalFixture.detectChanges();
+        fixture.detectChanges();
+
+        component.activeStep = 1;
+        component.acpData = acpData;
+        component.goNext();
+        fixture.detectChanges();
+
+        personalInfoComponent.ngOnInit();
+        personalFixture.detectChanges();
+
+        expect(personalInfoComponent.validateEmailAndPhone).toHaveBeenCalled();
+    });
+
+    it('Should listens for setAddresses changes in activeStep = 2 and make sure that the addressInfoForm is markasTouched in the address component', () => {
+        mockEbbManager.activeStep = of(2);
+
+        spyOn(component, 'callCreateInternalApp');
+        spyOn(component, 'setUserAddresses');
+
+        addressFixture.detectChanges();
+        fixture.detectChanges();
+
+        component.activeStep = 2;
+        component.goNext();
+        fixture.detectChanges();
+
+        addressComponent.ngOnInit();
+        addressFixture.detectChanges();
+
+        expect(addressComponent.addressInfoForm.touched).toBeTruthy();
+    });
+
+    it('Should listens for setChildInfo changes in activeStep = 3 and make sure that the codes and qualifying forms are all markasTouched in the child component', () => {
+        mockEbbManager.activeStep = of(3);
+
+        spyOn(childInfoComponent.setChildInfo, 'emit');
+        spyOn(component, 'callCreateInternalApp');
+        spyOn(component, 'setBqpUserInfo');
+
+        childFixture.detectChanges();
+        fixture.detectChanges();
+
+        component.activeStep = 3;
+        component.goNext();
+        fixture.detectChanges();
+
+        childInfoComponent.ngOnInit();
+        childFixture.detectChanges();
+
+        expect(childInfoComponent.codesForm.touched).toBeTruthy();
+        expect(childInfoComponent.qualifyingForm.touched).toBeTruthy();
+    });
+
+    it('Should listens for setSignature changes in activeStep = 5 and make sure that the signatureForm is markasTouched in the signature component', () => {
+        mockEbbManager.activeStep = of(5);
+        mockEbbManager.acpFlowSelected = of('no');
+
+        spyOn(component, 'callCreateInternalApp');
+        spyOn(component, 'setSignedValue');
+        spyOn(String.prototype, 'toUpperCase')
+        spyOn(signatureComponent, 'matchingFullName');
+
+        signatureFixture.detectChanges();
+        fixture.detectChanges();
+
+        component.activeStep = 5;
+        component.acpData = acpData;
+        component.goNext();
+        fixture.detectChanges();
+
+        signatureComponent.fullName = 'mirna haddad';
+        signatureComponent.ngOnInit();
+        signatureFixture.detectChanges();
+
+        expect(signatureComponent.signatureForm.touched).toBeTruthy();
+    });
+
+    it('Should click on back when active step is 1 and make sure the back emitter is emitted with true', () => {
+        spyOn(component, 'goBack').and.callThrough();
+        spyOn(component.back, 'emit');
+        fixture.detectChanges();
+
+        component.activeStep = 1;
+        fixture.detectChanges();
+
+        const backButton = fixture.debugElement.query(By.css('#backBtn')).nativeElement;
+        backButton.click();
+
+        expect(component.goBack).toHaveBeenCalled();
+        expect(backButton).toBeTruthy();
+        expect(component.back.emit).toHaveBeenCalledWith(true);
+    });
+
+    it('Should click on back when active step is 2 to make sure that the active step will be equals -1 and the rendered compoenent will be the personal info', () => {
+        spyOn(component, 'goBack').and.callThrough();
+        fixture.detectChanges();
+
+        component.activeStep = 2;
+        fixture.detectChanges();
+
+        const backButton = fixture.debugElement.query(By.css('#backBtn')).nativeElement;
+        backButton.click();
+
+        appPersonalInfo = fixture.debugElement.query(By.css('app-personal-info'));
+
+        expect(mockEbbService.getActiveInternalApplication).toHaveBeenCalled();
+        expect(component.goBack).toHaveBeenCalled();
+        expect(component.activeStep).toEqual(1);
+        expect(appPersonalInfo).toBeTruthy();
+        expect(backButton).toBeTruthy();
+    });
+
+    it('Should click on back when active step is 3 to make sure that the active step will be equals -1 and the rendered compoenent will be the address', () => {
+        fixture.detectChanges();
+        spyOn(component, 'goBack').and.callThrough();
+        fixture.detectChanges();
+
+        component.activeStep = 3;
+        fixture.detectChanges();
+
+        const backButton = fixture.debugElement.query(By.css('#backBtn')).nativeElement;
+        backButton.click();
+
+        appAddressInfo = fixture.debugElement.query(By.css('app-address-info'));
+
+        expect(mockEbbService.getActiveInternalApplication).toHaveBeenCalled();
+        expect(component.goBack).toHaveBeenCalled();
+        expect(component.activeStep).toEqual(2);
+        expect(appAddressInfo).toBeTruthy();
+        expect(backButton).toBeTruthy();
+    });
+
+    it('Should click on back when active step is 4 to make sure that the active step will be equals -1 and the rendered compoenent will be the child info', () => {
+        spyOn(component, 'goBack').and.callThrough();
+        fixture.detectChanges();
+
+        component.activeStep = 4;
+        fixture.detectChanges();
+
+        const backButton = fixture.debugElement.query(By.css('#backBtn')).nativeElement;
+        backButton.click();
+
+        appChildInfo = fixture.debugElement.query(By.css('app-child-info'));
+
+        expect(mockEbbService.getActiveInternalApplication).toHaveBeenCalled();
+        expect(component.goBack).toHaveBeenCalled();
+        expect(component.activeStep).toEqual(3);
+        expect(appChildInfo).toBeTruthy();
+        expect(backButton).toBeTruthy();
+    });
+
+    it('Should click on back when active step is 5 to make sure that the active step will be equals -1 and the rendered compoenent will be the acp documents info', () => {
+        spyOn(component, 'goBack').and.callThrough();
+        fixture.detectChanges();
+
+        component.acpData = acpData;
+        component.activeStep = 5;
+        fixture.detectChanges();
+
+        const backButton = fixture.debugElement.query(By.css('#backBtn')).nativeElement;
+        backButton.click();
+
+        const appDocs = fixture.debugElement.query(By.css('app-acp-documents'));
+
+        expect(mockEbbService.getActiveInternalApplication).toHaveBeenCalled();
+        expect(component.goBack).toHaveBeenCalled();
+        expect(component.activeStep).toEqual(4);
+        expect(appDocs).toBeTruthy();
+        expect(backButton).toBeTruthy();
+    });
+
+    it('Should click on cancel button and make sure it will call the correct function and it navigates to the landing page ', waitForAsync(() => {
+        const cancelButton = fixture.debugElement.query(By.css('#cancelBtn')).nativeElement;
+        cancelButton.click();
+        fixture.detectChanges();
+
+        expect(component.router.navigate).toHaveBeenCalled();
+    }));
+
+    it('Should check if there is acp errors so app-acp-error should be rendered in the dom', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.acpError = true;
+            fixture.detectChanges();
+
+            const appAcpError = fixture.debugElement.query(By.css('app-acp-error'));
+            expect(appAcpError).toBeTruthy();
+        });
+    }));
+
+    it('Should check if the user is complete with the acp flow  so app-acp-success should be rendered in the dom', waitForAsync(() => {
+        fixture.whenStable().then(() => {
+            component.acpSuccess = true;
+            fixture.detectChanges();
+
+            const appAcpSuccess = fixture.debugElement.query(By.css('app-acp-success'));
+            expect(appAcpSuccess).toBeTruthy();
+        });
+    }));
+});

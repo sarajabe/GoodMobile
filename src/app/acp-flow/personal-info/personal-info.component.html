@@ -169,10 +169,10 @@
         <label class="validation-message" *ngIf="(personalInfoForm.controls.month.hasError('required') && personalInfoForm.controls.month.touched) ||
            (personalInfoForm.controls.day.hasError('required') && personalInfoForm.controls.day.touched)
            || (personalInfoForm.controls.year.hasError('required') && personalInfoForm.controls.year.touched)"
-          id="required-month-msg" data-cy="required-month-msg">
+          id="required-date-msg" data-cy="required-month-msg">
           Date of Birth is required
         </label>
-        <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg">
+        <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg" data-cy="invalidDateMsg">
           Date is invalid
         </label>
       </div>
@@ -218,13 +218,18 @@
           *ngIf="!!personalInfoForm.controls.option.value && personalInfoForm.controls.option.value == 'tribal'">
           <label class="outlined-label-input">
             <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal"
-              data-cy="tribalID" />
+              data-cy="tribalIdInput" />
             <span>Tribal ID</span>
           </label>
           <label class="validation-message"
             *ngIf="personalInfoForm.controls.tribalId.touched && !personalInfoForm.controls.tribalId.value"
             id="required-tribal-msg">
             Tribal ID is required
+          </label>
+          <label class="validation-message"
+            *ngIf="personalInfoForm.controls.tribalId.dirty && !personalInfoForm.controls.tribalId.valid && !!personalInfoForm.controls.tribalId.value"
+            id="invalid-tribal-msg" data-cy="invalidTribalMsg">
+            Tribal ID is invalid
           </label>
         </div>
       </div>
@@ -243,10 +248,11 @@
           id="phoneNumber" data-cy="phoneNumber" (input)="checkPhoneNumber()" />
         <span>Phone Number</span>
       </label>
-      <label class="validation-message" *ngIf="personalInfoForm.controls.phoneNumber.touched && personalInfoForm.controls.phoneNumber.hasError('required')"
-      id="invalid-phone-msg" data-cy="invalid-phone-msg">
-      Phone Number is required
-    </label>
+      <label class="validation-message"
+        *ngIf="personalInfoForm.controls.phoneNumber.touched && personalInfoForm.controls.phoneNumber.hasError('required')"
+        id="invalid-phone-msg" data-cy="invalid-phone-msg">
+        Phone Number is required
+      </label>
       <label class="validation-message" *ngIf="personalInfoForm.controls.phoneNumber.hasError('minlength')"
         id="invalid-phone-msg" data-cy="invalid-phone-msg">
         Phone Number must have 10 digits
@@ -273,8 +279,8 @@
         id="required-email-msg" data-cy="required-email-msg">
         Email Address is required
       </label>
-      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('pattern')" id="invalid-email-msg"
-        data-cy="invalid-email-msg">
+      <label class="validation-message" *ngIf="personalInfoForm.controls.email.hasError('pattern')"
+        id="invalid-email-msg" data-cy="invalid-email-msg">
         Email Address is invalid. Hint: watch out for extra spaces
       </label>
     </div>

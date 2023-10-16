@@ -5,15 +5,15 @@
             How do you want to activate your plan?</h1>
         <div class="options">
             <label class="radio-label" for="new">
-                <input type="radio" value="new" [(ngModel)]="option" id="new" #optionRef="ngModel" [disabled]="isPortOnly" [class.disabled]="isPortOnly" (ngModelChange)="showValidation = false">Activate with a New Number
+                <input type="radio" value="new" [(ngModel)]="option" id="new" data-cy="activateNewNumber" #optionRef="ngModel" [disabled]="isPortOnly" [class.disabled]="isPortOnly" (ngModelChange)="showValidation = false">Activate a new number (Number Assigned by Good Mobile)
             </label>
             <label class="radio-label" for="port" >
-                <input type="radio" value="port" [(ngModel)]="option"  id="port" #optionRef="ngModel" (ngModelChange)="showValidation = false">Keep your Current Number
+                <input type="radio" value="port" [(ngModel)]="option"  id="port" #optionRef="ngModel" (ngModelChange)="showValidation = false">Transfer My Number (Port In from other provider)
             </label>
             <label class="validation-message" *ngIf="!!showValidation">Please select one of the options</label>
         </div>
        <div class="action">
-        <button class="button primary" (click)="selectOption()">Next <img class="icon" src="assets/icon/right-circle-arrow.svg"/></button>
+        <button class="button primary" data-cy="nextBtn" (click)="selectOption()">Next <img class="icon" src="assets/icon/right-circle-arrow.svg"/></button>
        </div>
     </div>
 </section>

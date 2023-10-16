@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActionsAnalyticsService, FirebaseEBBService, IAutoCompletePrediction, IFirebaseAddress, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActionsAnalyticsService, IAutoCompletePrediction, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { IAcpAddress } from '@ztarmobile/zwp-service-backend-v2';
 import { Observable, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -32,13 +32,13 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
   public mailingDisplayedAddressModel: any = {};
   public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
   public filteredOptionsSubscription: Subscription;
-  
+
   private displayedAddressModel: any = {};
   private alive = true;
   private streetSearchText: string;
 
-  constructor(private formBuilder: UntypedFormBuilder, private ebbManager: EbbManager, private firebaseEBBService: FirebaseEBBService,
-    private analyticsService: ActionsAnalyticsService,   private placesAutoCompleteService: PlacesAutocompleteService,
+  constructor(private formBuilder: FormBuilder, private ebbManager: EbbManager,
+    private analyticsService: ActionsAnalyticsService, private placesAutoCompleteService: PlacesAutocompleteService,
     private appState: AppState) {
     this.addressInfoForm = formBuilder.group({
       address1: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])],
@@ -66,7 +66,7 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
         }
         if (!!this.addressInfoForm.valid && (!!this.useSameAddress || (!this.useSameAddress && this.mailingAddressForm.valid)) && !!this.primaryDisplayedAddressModel && !!this.mailingDisplayedAddressModel) {
           this.prepareData();
-          this.setAddresses.emit({ primary: this.primaryAddress, mail: this.mailingAddress });          
+          this.setAddresses.emit({ primary: this.primaryAddress, mail: this.mailingAddress });
           this.goToNext.emit(3);
         }
       }
@@ -93,17 +93,17 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
 
   public changedAddress(formName, form): void {
     this.findPlace(form?.controls?.address1?.value);
-    if(formName === 'mailingAddressForm') {
+    if (formName === 'mailingAddressForm') {
       this.mailingDisplayedAddressModel = null;
-    } else if(formName === 'addressInfoForm'){
+    } else if (formName === 'addressInfoForm') {
       this.primaryDisplayedAddressModel = null;
     } else {
       this.primaryDisplayedAddressModel = null;
       this.mailingDisplayedAddressModel = null;
     }
   }
-  public checkMailingAddress() : void {
-    if(!this.useSameAddress) {
+  public checkMailingAddress(): void {
+    if (!this.useSameAddress) {
       this.mailingAddress = {} as IAcpAddress;
       this.mailingAddressForm.reset();
     }
@@ -128,17 +128,17 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
                 event.main_text
               );
               const address = `${this.displayedAddressModel?.address1}, ${this.displayedAddressModel?.city
-              }, ${this.displayedAddressModel?.state} ${this.displayedAddressModel?.zipCode
-                ? this.displayedAddressModel?.zipCode
-                : ''
-              }`;
+                }, ${this.displayedAddressModel?.state} ${this.displayedAddressModel?.zipCode
+                  ? this.displayedAddressModel?.zipCode
+                  : ''
+                }`;
               form.controls.city.setValue(this.displayedAddressModel.city);
               form.controls.state.setValue(this.displayedAddressModel.state);
               form.controls.zipCode.setValue(this.displayedAddressModel.zipCode);
               form.controls.address1.setValue(address);
-              if(formName === 'mailingAddressForm') {
+              if (formName === 'mailingAddressForm') {
                 this.mailingDisplayedAddressModel = this.displayedAddressModel;
-              } else if(formName === 'addressInfoForm'){
+              } else if (formName === 'addressInfoForm') {
                 this.primaryDisplayedAddressModel = this.displayedAddressModel;
               } else {
                 this.primaryDisplayedAddressModel = this.displayedAddressModel;
@@ -209,7 +209,7 @@ export class AddressInfoComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private populateForms(): void {
+  public populateForms(): void {
     if (!!this.primary) {
       this.addressInfoForm.controls.address1.setValue(this.primary.address1);
       this.addressInfoForm.controls.address2.setValue(this.primary.address2);

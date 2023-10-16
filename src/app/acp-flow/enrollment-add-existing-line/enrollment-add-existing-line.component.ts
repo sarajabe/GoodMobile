@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService, CART_TYPES, IChangePlanCartItem, IUserPlan, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { filter, takeWhile } from 'rxjs/operators';
@@ -20,22 +20,22 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
   public activePlans: Array<IUserPlan>;
   public ebbPlan: MobilePlanItem;
   public planPurchased = false;
+  public planPuchasedClicked = false;
 
-  private planPuchasedClicked = false;
   private alive = true;
-  constructor(private router: Router, private formBuilder: UntypedFormBuilder,
+  constructor(private router: Router, private formBuilder: FormBuilder,
     private userPlansService: UserPlansService, private appState: AppState,
     private modalHelper: ModalHelperService,
     private mobilePlansService: MobileCustomPlansService, private orderCheckoutService: OrderCheckoutService,
-    private toastHelper: ToastrHelperService, private analyticsService: ActionsAnalyticsService) { 
-      this.mobilePlansService.isConfigurationReady
+    private toastHelper: ToastrHelperService, private analyticsService: ActionsAnalyticsService) {
+    this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => {
         this.ebbPlan = this.mobilePlansService.allBasePlans.find(
           (plan) => !!plan.ebb
         );
       });
-    }
+  }
 
   ngOnInit(): void {
     this.currentMobileNumberForm = this.formBuilder.group({
@@ -62,10 +62,9 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                   this.appState.loading = false;
                 } else {
                   this.appState.loading = false;
-                  this.goToAcpLanding();
                 }
               });
-            } else if(!!userEbbPlan && !this.planPuchasedClicked){
+            } else if (!!userEbbPlan && !this.planPuchasedClicked) {
               this.goToAcpLanding();
             }
           }, 200);
@@ -77,34 +76,38 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
   }
   public purchasePlan(): void {
     this.currentMobileNumberForm.markAllAsTouched();
-    if(!!this.currentMobileNumberForm.valid) {
-        this.currentMobileNumberForm.markAllAsTouched();
-        if (!!this.currentMobileNumberForm.valid) {
-          let selectedMdn = this.currentMobileNumberForm.controls.mdn.value;
-          const selectedPlan = this.activePlans.find(
-            (p) => p.mdn === selectedMdn
-          );
-          selectedMdn = new PhonePipe().transform(selectedMdn);
-          const message = `Are you sure you want to change your $${selectedPlan.basePlan.price} ${selectedPlan.title} of number ${selectedMdn} to ACP plan (Your plan change will take affect immediately)?`;
-          this.modalHelper
-            .showConfirmMessageModal(
-              "Change to ACP plan",
-              message,
-              "Yes",
-              "No",
-              "clean-cart-modal"
-            )
-            .afterClosed().subscribe((result) => {
-              if (result) {
-                this.appState.loading = true;
-                this.mobilePlansService.clearUserCart().then(() => {
-                  this.mobilePlansService.setBasePlan(this.ebbPlan);
-                  this.mobilePlansService.setCartType(
-                    CART_TYPES.CHANGE_PLAN
-                  );
-                  sessionStorage.removeItem("useFromBalance");
-                  sessionStorage.removeItem("useFromReward");
-                  this.mobilePlansService.setActivePlanId(selectedPlan.id);
+    if (!!this.currentMobileNumberForm.valid) {
+      this.currentMobileNumberForm.markAllAsTouched();
+      if (!!this.currentMobileNumberForm.valid) {
+        let selectedMdn = this.currentMobileNumberForm.controls.mdn.value;
+        const selectedPlan = this.activePlans.find(
+          (p) => p.mdn === selectedMdn
+        );
+        selectedMdn = new PhonePipe().transform(selectedMdn);
+        const message = `Are you sure you want to change your $${selectedPlan.basePlan.price} ${selectedPlan.title} of number ${selectedMdn} to ACP plan (Your plan change will take affect immediately)?`;
+        this.modalHelper
+          .showConfirmMessageModal(
+            "Change to ACP plan",
+            message,
+            "Yes",
+            "No",
+            "clean-cart-modal"
+          )
+          .afterClosed().subscribe((result) => {
+            if (result) {
+              // this session waitingAcpActivation should be cleared once 
+              // the user access his ACP summary page and his plan has been successfully activated with exiting plan
+              sessionStorage.setItem('waitingAcpActivation', 'true');
+              this.planPuchasedClicked = true;
+              this.appState.loading = true;
+              this.mobilePlansService.clearUserCart().then(() => {
+                this.mobilePlansService.setBasePlan(this.ebbPlan);
+                this.mobilePlansService.setCartType(
+                  CART_TYPES.CHANGE_PLAN
+                );
+                sessionStorage.removeItem("useFromBalance");
+                sessionStorage.removeItem("useFromReward");
+                this.mobilePlansService.setActivePlanId(selectedPlan.id).then(() => {
                   const data: IChangePlanCartItem = {
                     nextCycleRenew: false,
                     basePlanId: this.ebbPlan.id,
@@ -126,13 +129,11 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                             action: 'change to ACP plan'
                           }
                           this.analyticsService.trackACPEvent(data);
-                          this.planPuchasedClicked = true;
                           this.appState.loading = false;
                           this.planPurchased = true;
                         },
                         (error) => {
                           this.appState.loading = false;
-                          this.planPuchasedClicked = true;
                           this.toastHelper.showAlert(error.message);
                           this.mobilePlansService.clearUserCart();
                           this.planPurchased = false;
@@ -140,9 +141,10 @@ export class EnrollmentAddExistingLineComponent implements OnInit {
                       );
                   }, 300);
                 });
-              }
-            });
-        }
+              });
+            }
+          });
+      }
     }
   }
   public goToAcpSummary(): void {

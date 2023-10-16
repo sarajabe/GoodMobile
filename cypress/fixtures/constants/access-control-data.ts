@@ -315,8 +315,41 @@ export const ACCESS = {
         EMAIL: 'testuser@ztarmobile.com',
         PASSWORD: 'Abc123'
     },
+    TESTB_USER:{
+        EMAIL: 'testbuser@ztarmobile.com',
+        PASSWORD: 'Abc123'
+    },
     TEST_L_USER: {
         EMAIL: "testluser@ztarmobile.com",
         PASSWORD: "Abc123"
-    }
+    },
+
+    NEW_ACCOUNT:{
+        EMAIL: "",
+        PASSWORD: "Ztar@123"
+    },
+    ACCOUNT_WITH_NO_ACP:{
+        EMAIL: "empty@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
+    ACCOUNT_WITH_PENDING_ACP_DEVICE:{
+        EMAIL: "gm-larakh7@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
+    ACCOUNT_WITH_SHIPPED_ACP_DEVICE:{
+        EMAIL: "new-acp21@ppavocom.com",
+        PASSWORD: "Abc123"
+    },
+    TEST_USER26_ACCOUNT:{
+        EMAIL: "testuser26@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
+    LARA_PAVO_ACCOUNT:{
+        EMAIL: "lara.khoury@pavocom.com",
+        PASSWORD: "Abc123"
+    },
+    TEST_A_USER: {
+        EMAIL: "testauser@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
 };

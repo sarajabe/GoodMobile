@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseAccountPaymentService, IAddress,
@@ -111,7 +111,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   rewardApplied: boolean;
   shippingMethod: IShippingMethod;
 
-  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: UntypedFormBuilder, private analyticsService: ActionsAnalyticsService,
+  constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: FormBuilder, private analyticsService: ActionsAnalyticsService,
               private checkoutService: CheckoutService, private mobilePlansService: MobileCustomPlansService, private accountPaymentService: AccountPaymentService,
               private metaService: MetaService, private router: Router, private userPlansService: UserPlansService, private userAccountService: UserAccountService,
               private modalHelper: ModalHelperService, private voucherActivationService: VoucherActivationService, private cdRef: ChangeDetectorRef,
@@ -177,6 +177,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.firebaseAccountPaymentService.paymentMethodsList.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
       if (!!methods) {
         this.methodsList = methods;
+        this.methodsList = this.methodsList.filter((method) => !!method?.id);
         if ((this.methodsList.length === 0 || this.isNewPayment) && !this.cart?.activationCode) {
           this.showAddCardSection = true;
           this.autoRenew = true;
@@ -192,7 +193,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
             }
             if (!!p?.card && !!p?.card?.cardNumber) {
               this.isNewPayment = true;
-              this.convertPaymentData(false);
+              this.convertPaymentData();
             } else {
               this.isNewPayment = false;
             }
@@ -724,7 +725,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
             });
           } else {
             sessionStorage.setItem('payment_id', '1');
-            this.convertPaymentData(true);
+            this.convertPaymentData();
             this.isNewPayment = true;
             this.resetPayment();
             setTimeout(() => {
@@ -737,7 +738,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       });
     }
   }
-  private convertPaymentData(pushToList?: boolean): void {
+  private convertPaymentData(): void {
     const newPaymentMethod = {} as IFirebasePaymentMethod;
     newPaymentMethod.address1 = this.paymentInfo.address1;
     newPaymentMethod.address2 = this.paymentInfo.address2;
@@ -755,7 +756,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     newPaymentMethod.id = '';
     this.selectedPaymentMethod = newPaymentMethod;
     if (!!this.methodsList && this.methodsList.length > 0) {
-      this.methodsList.push(newPaymentMethod);
+      this.methodsList.unshift(newPaymentMethod);
       this.selectedPaymentMethod = newPaymentMethod;
     } else {
       this.enteredCard = newPaymentMethod;

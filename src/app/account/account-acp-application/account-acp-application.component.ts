@@ -65,7 +65,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     PENDING_WITH_MDN: 'Pending',
     ON_HOLD: 'On Hold',
     PENDING_ACTIVATION: 'Pending Activation',
-    ENROLLED: 'Enrolled'
+    ENROLLED: 'Enrolled',
+    WAITING_ACTIVATION_RESULT: 'Pending Activation'
   };
   public hideCardContentNV = false;
   public hideCardContentSP = false;
@@ -111,6 +112,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   option: any;
   showDeviceOptionError: boolean;
   pendingACPDevice: boolean;
+  dataCollected = false;
+  canPurchaseADevice: any;
+  nextPurchaseDate: Date;
 
   constructor(
     private accountHeaderService: AccountHeaderService,
@@ -123,7 +127,6 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     private userPlansService: UserPlansService,
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
-    private lookupsService: LookupsService,
     private accountOrderService: UserOrdersService,) {
 
     this.accountHeaderService.setPageTitle('Your ACP application');
@@ -160,9 +163,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         imgPath1: `assets/icon/hooray-icon.svg`,
         imgPath2: `assets/icon/hooray2-icon.svg`,
         title: `Hooray!`,
-        desc1: `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
+        desc1: !!this.nextPurchaseDate ? `On <b>${this.nextPurchaseDate.getMonth() + 1}/${this.nextPurchaseDate.getDate()}/${this.nextPurchaseDate.getFullYear()}</b>, you may be eligible for a <b>$100</b> discount on a new device from our phone catalog. Please make sure to check again later!` : `You are eligible for a <b>$100</b> discount on a new device from our catalog! Hurry up and get yours today!`,
         desc2: null,
-        buttonName: 'Let’s get started!',
+        buttonName: !!this.canPurchaseADevice ? 'Let’s get started!' : null,
         buttonAction: 'goToAcpDevices'
       },
       'PENDING_NV_CASE': {
@@ -268,6 +271,16 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         topBottomClass: false,
         longClass: true
       },
+      'WAITING_ACTIVATION_RESULT': {
+        title: 'note',
+        desc1: 'Your ACP plan is being activated. This might take few moments to process. Please refresh the page or check again later!',
+        desc2: null,
+        desc3: null,
+        primaryButtonName: null,
+        primaryButtonAction: null,
+        secondaryButtonName: null,
+        secondaryButtonAction: null,
+      },
       'ENROLLED': {
         title: 'Note:',
         desc1: 'Your ACP plan is active.',
@@ -275,7 +288,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         desc3: `<b>Phone Number/MDN:</b><br> ${(new PhonePipe()).transform(this.acpPlan?.mdn)}`,
         desc4: !!this.acpDeviceOrder ? (this.acpDeviceOrder?.status === 'SHIPPED' ? ` <b>Your ACP Device:</b><br> <span>Device <b>successfully</b> collected!</span>` : this.acpDeviceOrder?.status === 'PENDING' ? ` <b>Your ACP Device:</b><br><span>Your device order has been <b>successfully</b> placed!<br>
         You may now proceed and <b>collect</b> your device at your nearest store.</span>`: null) : null,
-        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>` : `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : (!!this.acpDeviceOrder && (this.acpDeviceOrder?.status === 'SHIPPED') )? `<span class="break"><b>Device IMEI</b><br><span>${this.deviceIMEI}</span></span>` :null,
+        desc5: !!this.acpDeviceOrder && this.acpDeviceOrder?.status === 'PENDING' ? !!this.showStores ? `<span class="text-color-primary pointer tertiary"><b>Hide Stores<b></span>` : `<span class="text-color-primary pointer tertiary"><b> Show Stores</b></span>` : (!!this.acpDeviceOrder && (this.acpDeviceOrder?.status === 'SHIPPED')) ? `<span class="break"><b>Device IMEI</b><br><span>${this.deviceIMEI}</span></span>` : null,
         showSeparator: true,
         primaryButtonName: null,
         primaryButtonAction: null,
@@ -340,7 +353,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         title: 'Please Check Back Soon!',
         desc1: `<b>You have submitted your ACP application successfully.</b> Updates on your
         application status will show up on this page.`,
-        desc2: `<b>Please make sure to complete this step within 45 days.</b>`,
+        desc2: `<b>Please check again later!</b>`,
         desc3: null,
         desc4: null,
         buttonName: 'Refresh',
@@ -701,28 +714,37 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 !plan.portInRequestNumber &&
                 !plan.canceled
             );
-            if (!!this.acpPlan && !!this.acpPlan.acpDevice && !!this.acpPlan.acpDevice.orderId) {
-              this.appState.loading = true;
-              this.accountOrderService.getOrderById(this.acpPlan.acpDevice.orderId).then((order) => {
-                this.acpDeviceOrder = order;
-                this.pendingACPDevice = !!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING' ? true : false;
-                if (!!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING') {
-                  this.lookupsService.getAvailableStores().then(stores => {
-                    if (stores?.storesLocations?.length > 0) {
-                      this.stores = stores?.storesLocations;
+            if (!!this.acpPlan && this.acpPlan.mdn) {
+              if (!!this.acpPlan.acpDevice && !!this.acpPlan.acpDevice.orderId) {
+                this.appState.loading = true;
+                this.getACPDeviceOrder(this.acpPlan.acpDevice.orderId);
+                this.canPurchaseADevice = false;
+              } else {
+                this.appState.loading = true;
+                if (!this.dataCollected) {
+                  this.ebbService.getDeviceEligibility(this.userProfile.ebbId).then((data) => {
+                    this.dataCollected = true;
+                    this.canPurchaseADevice = data?.canPurchaseADevice;
+                    this.nextPurchaseDate = !!data.nextEnrollmentTryDate ? new Date(data.nextEnrollmentTryDate) : null;
+                    if (!!data?.canPurchaseADevice || (!data.canPurchaseADevice && !!data.nextEnrollmentTryDate)) {
+                      this.acpDeviceCase = 'ENROLLED_ACP_CASE';
+                      this.acpDeviceOrder = null;
+                      this.appState.loading = false;
+                    } else {
+                      this.ebbService.getACPDeviceDetails(this.userProfile.ebbId, this.userProfile.customerId).then((devices) => {
+                        if (!!devices) {
+                          this.getACPDeviceOrder(devices[0].orderId);
+                          this.appState.loading = false;
+                          this.acpPlan.acpDevice = devices[0];
+                          this.userPlansService.updateUserPlan(this.userProfile.id, this.acpPlan);
+                        }
+                      }, (error) => {
+                        this.toastHelper.showAlert(error.error.errors[0].message);
+                      })
                     }
-                  }, error => {
-                    this.toastHelper.showAlert(error.error.errors[0].message);
-
                   })
                 }
-                const deviceOrder: any = this.acpDeviceOrder;
-                this.deviceIMEI = this.acpDeviceOrder.status === 'SHIPPED' && !!this.acpDeviceOrder.devices && this.acpDeviceOrder.devices.length > 0 ? deviceOrder.devices[0].imei : null;
-              }, (error) => {
-                this.acpDeviceOrder = null
-              });
-            } else {
-              this.acpDeviceOrder = null;
+              }
             }
             if (!!this.isActivatedAcpPlan) {
               this.showAcpPlanActivationCard = true;
@@ -748,11 +770,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                 }
               });
               this.appDetails.updatedAt = this.acpPlan?.updatedAt;
-              if (!this.acpPlan?.acpDevice) {
-                this.acpDeviceCase = 'ENROLLED_ACP_CASE';
-                this.showDeviceOptions = true;
-              }
               this.planActivationStatus = 'ENROLLED';
+              sessionStorage.removeItem('waitingAcpActivation');
             } else {
               this.appState.acpAppRes.subscribe(details => {
                 this.appState.loading = false;
@@ -787,6 +806,13 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                       this.showAttentionBanner = false;
                       this.planActivationStatus = 'PENDING_ACTIVATION';
                       this.showAcpPlanActivationCard = true;
+                      // case specific for add existing plan flow
+                      const isWaitingAcpActivationResponse = sessionStorage.getItem('waitingAcpActivation');
+                      if (!!isWaitingAcpActivationResponse) {
+                        this.showAttentionBanner = false;
+                        this.planActivationStatus = 'WAITING_ACTIVATION_RESULT';
+                        this.showAcpPlanActivationCard = true;
+                      }
                     }
                     this.acpDeviceCase = 'PENDING_ACP_CASE';
                   }
@@ -972,5 +998,16 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     this.seconds %= 60;
     this.minutes = this.minutes < 10 ? '0' + this.minutes : this.minutes;
     this.seconds = this.seconds < 10 ? '0' + this.seconds : this.seconds;
+  }
+
+  private getACPDeviceOrder(orderID): void {
+    this.accountOrderService.getOrderById(orderID).then((order) => {
+      this.acpDeviceOrder = order;
+      this.pendingACPDevice = !!this.acpDeviceOrder && this.acpDeviceOrder.status === 'PENDING' ? true : false;
+      const deviceOrder: any = this.acpDeviceOrder;
+      this.deviceIMEI = this.acpDeviceOrder.status === 'SHIPPED' && !!this.acpDeviceOrder.devices && this.acpDeviceOrder.devices.length > 0 ? deviceOrder.devices[0].imei : null;
+    }, (error) => {
+      this.acpDeviceOrder = null
+    });
   }
 }

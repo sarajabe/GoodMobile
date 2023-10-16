@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { takeWhile } from "rxjs/operators";
 import { EbbService, IAcpDetails, IAcpUser } from "@ztarmobile/zwp-service-backend-v2";
@@ -59,7 +59,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
   private alive = true;
   leapYear: boolean;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: FormBuilder,
     private ebbManager: EbbManager,
     private ebbService: EbbService,
     private toastHelper: ToastrHelperService,
@@ -144,6 +144,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
         "",
         Validators.compose([
           Validators.maxLength(50),
+          Validators.minLength(2),
           Validators.pattern(ALPHANUMERIC_PATTERN),
         ]),
       ],
@@ -401,7 +402,7 @@ export class ChildInfoComponent implements OnInit, OnChanges {
       this.childInfoForm.controls.year.value;
   }
 
-  private populateForm(): void {
+  public populateForm(): void {
     this.childInfoForm.controls.firstName.setValue(this.userInfo.firstName);
     this.childInfoForm.controls.middleName.setValue(this.userInfo.middleName);
     this.childInfoForm.controls.lastName.setValue(this.userInfo.lastName);

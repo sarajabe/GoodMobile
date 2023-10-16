@@ -32,28 +32,19 @@
     </div>
   </div>
   <div class="result-info">
-      <p class="smaller last-note">
+      <p class="smaller last-note" data-cy="storePickupDeviceSuccessful">
         You can always find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, 
         to provide it for the store clerk for your Device pickup.
       </p>
       <h5 class="order-note">Your order ID is: <a (click)="goToOrderDetails(orderId)">{{orderId}}</a></h5>
-      <a class="view-stores-link" (click)="showStores=true;" *ngIf="!showStores">View Stores</a>
-      <a class="view-stores-link hide" (click)="showStores=false;" *ngIf="!!showStores">Hide Stores</a>
-      <div *ngIf="!!showStores">
-        <div class="stores-card">
-          <div *ngFor="let store of stores; let i =index" class="stores" [class.last-store]="i === (stores.length -1)">
-            <img src="/assets/icon/store-alt.svg" alt="store-icon">
-            <div class="store-details">
-              <h4 class="store-name">{{store?.name}}</h4>
-              <p class="smaller">{{store?.address1}}</p>
-              <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
-            </div>
-          </div>
-        </div>
+      <a class="view-stores-link" data-cy="viewStores" (click)="showStores=true;" *ngIf="!showStores">View Stores</a>
+      <a class="view-stores-link hide" data-cy="hideStores" (click)="showStores=false;" *ngIf="!!showStores">Hide Stores</a>
+      <div class="stores-card" *ngIf="!!showStores">
+        <app-stores-list></app-stores-list>
       </div>
   </div>
   <div class="result-actions">
-    <button class="button primary" (click)="goToOrderDetails(orderId)">
+    <button class="button primary" data-cy="orderDetailsBtn" (click)="goToOrderDetails(orderId)">
       Order Details
     </button>
   </div>
@@ -136,22 +127,15 @@
     </div>
     <div class="result-info">
       <div *ngIf="!!isStorePickup">
-        <h5 class="top-note">Your order will be available at any of the following stores:</h5>
+        <h5 class="top-note" data-cy="orderWillBeAvailable">Your order will be available at any of the following stores:</h5>
         <div class="stores-card">
-          <div *ngFor="let store of stores; let i =index" class="stores" [class.last-store]="i === (stores.length -1)">
-            <img src="/assets/icon/store-alt.svg" alt="store-icon">
-            <div class="store-details">
-              <h4 class="store-name">{{store?.name}}</h4>
-              <p class="smaller">{{store?.address1}}</p>
-              <p class="smaller">{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
-            </div>
-          </div>
+          <app-stores-list></app-stores-list>
         </div>
       </div>
       <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
         <ng-container *ngIf="!!purchasedPlanId">
-          <div *ngIf="!!purchasedPlan && !!isStorePickup" data-cy="storePickupSuccessful">
-            <p class="smaller last-note">
+          <div *ngIf="!!purchasedPlan && !!isStorePickup">
+            <p class="smaller last-note" data-cy="storePickupSuccessful">
               You can always find your <b>SIM Card In-Store Pickup barcode</b> in your <b>Purchased Plans</b> page, 
               to provide it for the store clerk for your order pickup.
             </p>

@@ -69,7 +69,7 @@ class HomePage {
         return this;
     };
     clickOnContinue() {
-        cy.get('[data-cy="action-button"]').click();
+        cy.get('[data-cy="okActionButton"]').click();
         return this;
     };
     clickOnContactUs() {
@@ -117,7 +117,7 @@ class HomePage {
         return this;
     };
     clickOnActivate() {
-        cy.get('[data-cy=activate]').click();
+        cy.get('[data-cy="activateDesktop"]').click();
         return this;
     };
     clickOnCoverage() {
@@ -125,15 +125,19 @@ class HomePage {
         return this;
     };
     clickOnBringYourPhone() {
-        cy.get('[data-cy=check-your-phone-header]').click();
+        cy.get('[data-cy="check-your-phone-header"]').click();
+        return this;
+    };
+    clickOnCheckYourPhone() {
+        cy.get('[data-cy="check-phone-button"]').click();
         return this;
     };
     clickOnOrderAddOns() {
-        cy.contains('a', 'Order Add-ons').click({ force: true });
+        cy.get('[data-cy="orderAddOnsPlanDesktop"]').click({ force: true });
         return this;
     };
     clickOnChangePlan() {
-        cy.contains('a', 'Change plan').click({ force: true });
+        cy.get('[data-cy="changePlanDesktop"]').click({ force: true });
         return this;
     };
     clickOnPurchasePhone() {
@@ -149,11 +153,15 @@ class HomePage {
         return this;
     };
     clickOnPlans() {
-        cy.get('[data-cy="plansLink"]').click({ force: true });
+        cy.get('[data-cy="plansLinkDesktop"]').click({ force: true });
         return this;
     };
+    clickOnDevices(){
+        cy.get('[data-cy="devicesLinkDesktop"]').click({ force: true });
+        return this;
+    }
     clickOnShopMenu() {
-        cy.get('.menu > [data-cy="shopMenu"]').click();
+        cy.get('[data-cy="shopMenuDesktop"]').click();
         return this;
     };
     clickOnProfileSetting() {
@@ -161,7 +169,7 @@ class HomePage {
         return this;
     };
     clickOnManageDevice() {
-        cy.get('[data-cy=manage-device-header]').click({ force: true });
+        cy.get('[data-cy="manage-device-header-desktop"]').click({ force: true });
         return this;
     };
     clickOnAccountReferAfriend() {
@@ -169,7 +177,7 @@ class HomePage {
         return this;
     };
     clickOnUsageHistory() {
-        cy.get('[data-cy=usage-history-header]').click({ force: true });
+        cy.get('[data-cy="usage-history-header-desktop"]').click({ force: true });
         return this;
     };
     clickOnPaymentHistory() {
@@ -177,19 +185,19 @@ class HomePage {
         return this;
     };
     clickOnPlanAddOns() {
-        cy.get('[data-cy=plan-addOns-header]').click({ force: true });
+        cy.get('[data-cy="plan-addOns-header-desktop"]').click({ force: true });
         return this;
     };
     clickOnRefillAccount() {
-        cy.get('[data-cy=refill-account-header]').click({ force: true });
+        cy.get('[data-cy="refill-account-header-desktop"]').click({ force: true });
         return this;
     };
     clickOnPurchasedPlan() {
-        cy.get('[data-cy=purchased-plans-header]').click({ force: true });
+        cy.get('[data-cy="purchased-plans-header-desktop"]').click({ force: true });
         return this;
     };
     clickOnAccountSummary() {
-        cy.get('[data-cy=account-summary-header]').click({ force: true });
+        cy.get('[data-cy="account-summary-header-desktop"]').click({ force: true });
         return this;
     };
     clickOnMyAccount() {
@@ -206,6 +214,10 @@ class HomePage {
     };
     clickOnWhyG2G() {
         cy.contains('a', 'why Good2Go').click();
+        return this;
+    };
+    clickOnACPsummary() {
+        cy.get('[data-cy="acp-application-header"]').click({ force: true });
         return this;
     };
 };

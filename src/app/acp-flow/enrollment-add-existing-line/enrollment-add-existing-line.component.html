@@ -1,5 +1,5 @@
 <section class="enrollment-exisitng-page">
-  <h1 class="title">ACP Enrollment</h1>
+  <h1 class="title" data-cy="AcpTitle">ACP Enrollment</h1>
   <div *ngIf="!planPurchased">
     <div class="success-acp-banner">
       <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
@@ -32,14 +32,26 @@
       </div>
     </form>
   </div>
+  <div *ngIf="!!planPuchasedClicked && !planPurchased">
+    <div class="info-banner warning-background">
+      <div class="flex">
+        <img src="/assets/icon/warning-icon.svg" alt="warning-icon">
+        <div class="banner-content">
+          <p class="title">We have received your request!</p>
+          <p class="description last">This might take few moments to process. <b>Please don't click "Submit"</b> again.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="!!planPurchased">
     <h4 class="main-title">Current Phone Number:</h4>
     <div class="success-purchase">
       <img src="/assets/icon/enrollment-success.svg" alt="success-icon">
       <div class="descs">
-        <p class="top-desc">Success!</p>
-        <p class="desc">Your ACP benefits has been activated on:</p>
-        <p class="desc">{{currentMobileNumberForm.controls.mdn.value}}</p>
+        <p class="top-desc" data-cy="successMsg">Success!</p>
+        <p class="desc" data-cy="acpActivatedMsg">Your ACP benefits has been activated on:</p>
+        <p class="desc" data-cy="mdnValue">{{currentMobileNumberForm.controls.mdn.value}}</p>
         <p class="desc">You may now enjoy your ACP benefits!</p>
       </div>
     </div>
@@ -50,7 +62,7 @@
     <p class="no-border" (click)="cancel()">Cancel</p>
   </div>
   <div class="right">
-    <button class="button primary" (click)="purchasePlan()" *ngIf="!planPurchased">Submit</button>
-    <button class="button primary" (click)="goToAcpSummary()" *ngIf="!!planPurchased">Done</button>
+    <button class="button primary" data-cy="submitBtn" (click)="purchasePlan()" *ngIf="!planPurchased">Submit</button>
+    <button class="button primary" data-cy="doneBtn" (click)="goToAcpSummary()" *ngIf="!!planPurchased">Done</button>
   </div>
 </section>

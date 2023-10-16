@@ -195,7 +195,7 @@ describe('Contact Us Component - Unit Test', async () => {
             const facebookIcon: DebugElement = fixture.debugElement.query(By.css('#facebookLink'));
             fixture.detectChanges();
 
-            expect(facebookIcon.nativeElement.getAttribute('href')).equal('https://www.facebook.com/goodmobileusa/');
+            expect(facebookIcon.nativeElement.getAttribute('href')).toEqual('https://www.facebook.com/goodmobileusa/');
         });
     }));
 
@@ -204,7 +204,7 @@ describe('Contact Us Component - Unit Test', async () => {
             const twitterIcon: DebugElement = fixture.debugElement.query(By.css('#twitterLink'));
             fixture.detectChanges();
 
-            expect(twitterIcon.nativeElement.getAttribute('href')).equal('https://twitter.com/goodmobileusa');
+            expect(twitterIcon.nativeElement.getAttribute('href')).toEqual('https://twitter.com/goodmobileusa');
         });
     }));
 
@@ -213,7 +213,7 @@ describe('Contact Us Component - Unit Test', async () => {
             const instagramIcon: DebugElement = fixture.debugElement.query(By.css('#instagramLink'));
             fixture.detectChanges();
 
-            expect(instagramIcon.nativeElement.getAttribute('href')).equals('https://www.instagram.com/goodmobileusa/');
+            expect(instagramIcon.nativeElement.getAttribute('href')).toEqual('https://www.instagram.com/goodmobileusa/');
         });
     }));
 });

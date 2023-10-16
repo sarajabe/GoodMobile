@@ -20,11 +20,11 @@
     <div class="flex">
         <img src="assets/icon/success-icon.svg" alt="Success Icon">
         <div class="banner-content">
-            <p class="title">Awesome!</p>
-            <p class="description ">You are covered by our wireless networks!</p>
-            <p class="description last">You can go ahead and purchase a plan that works best for you.</p>
+            <p class="title" data-cy="awesomeMsg">Awesome!</p>
+            <p class="description " data-cy="youAareCoveredMsg">You are covered by our wireless networks!</p>
+            <p class="description last" data-cy="goToPurchasePlanMsg">You can go ahead and purchase a plan that works best for you.</p>
             <div class="actions">
-                <button class="button primary" aria-label="Shop Plans" (click)="goToPlans()">Shop Plans</button>
+                <button class="button primary" data-cy="shopPlanBtn" aria-label="Shop Plans" (click)="goToPlans()">Shop Plans</button>
             </div>
         </div>
     </div>
@@ -36,9 +36,9 @@
         <h2 class="header-color">Great Coverage on the Country’s Best Networks:</h2>
         <h5 class="secondary-font">Check the following map for more information:</h5>
     </div>
-    <div class="map-container">
+    <div class="map-container" [class.hidden]="networkType === 'att'">
         <div id="map">
-            <app-map-navigator (navigatedToZip)="udpateStatus($event)" [postal]="zipCode"></app-map-navigator>
+            <app-map-navigator (navigatedToZip)="udpateStatus($event)" [postal]="zipCode" *ngIf="networkType !== 'att'"></app-map-navigator>
         </div>
         <div class="map-legend">
             <ul class="color-options">
@@ -65,6 +65,11 @@
             </ul>
         </div>
     </div>
+    <div class="map-container" *ngIf="networkType === 'att'">
+        <iframe id="ATT_coverage" allowtransparency="true" src="https://www.att.com/maps/reseller.html"
+            frameBorder="0" allowfullscreen>
+        </iframe>
+    </div>
     <div class="lte-card">
         <div class="header" (click)="showLteDetails = !showLteDetails">
             <div class="question">
@@ -76,7 +81,7 @@
             </div>
         </div>
         <div class="lte-details" *ngIf="!!showLteDetails">
-            <p class="smaller">LTE stands for Long Term Evolution and is short for a very technical process for high-speed data for phones and other mobile devices. We got you covered with a reliable 4G LTE phone network. Compatible device required. 4G LTE not available everywhere.</p>
+            <p class="smaller">LTE stands for Long Term Evolution and is short for a very technical process for high-speed data for phones and other mobile devices. We got you covered with a reliable 5G phone network. Compatible device required. 5G not available everywhere.</p>
             <hr>
             <h5>Important information about this map:</h5>
             <p class="smaller">These maps provide a predicted high-level approximation of wireless coverage. There are gaps in coverage that are not shown by this high-level approximation. Actual coverage may <b>differ</b> from map graphics and may be affected by <b>terrain, weather, network changes, foliage, buildings, constructions, signal strength, high-usage periods, customer equipment, </b>& other factors. </p> 

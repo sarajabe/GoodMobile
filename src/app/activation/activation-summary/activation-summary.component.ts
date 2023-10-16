@@ -1,8 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FirebaseUserProfileService, IUserAccount, IUserPlan, UserAccountService, UserDeviceService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { EbbService } from '@ztarmobile/zwp-service-backend-v2';
 import { takeWhile } from 'rxjs/operators';
 import { ACCOUNT_ROUTE_URLS, ACTIVATION_ROUTE_URLS, ROUTE_URLS, SHOP_ROUTE_URLS, SUPPORT_ROUTE_URLS } from 'src/app/app.routes.names';
+import { AppState } from 'src/app/app.service';
 import { CUSTOMER_CARE_NUMBER } from 'src/environments/environment';
 import { MetaService } from 'src/services/meta-service.service';
 
@@ -26,6 +28,8 @@ export class ActivationSummaryComponent implements OnDestroy {
   public SHOP_ROUTE_URLS = SHOP_ROUTE_URLS;
 
   private alive = true;
+  canPurchaseDevice: any;
+  nextEnrollmentTryDate: any;
 
   constructor(private router: Router,
     private userAccountService: UserAccountService,
@@ -33,7 +37,9 @@ export class ActivationSummaryComponent implements OnDestroy {
     private route: ActivatedRoute,
     private metaService: MetaService,
     private userDeviceService: UserDeviceService,
-    private userProfileService: FirebaseUserProfileService) {
+    private userProfileService: FirebaseUserProfileService,
+    private ebbService: EbbService,
+    private appState: AppState) {
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params) {
         if (params[ACTIVATION_ROUTE_URLS.PARAMS.PORTIN_NUMBER]) {
@@ -43,27 +49,38 @@ export class ActivationSummaryComponent implements OnDestroy {
     });
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
       this.barCodeVal = !!user?.ebbId ? `${user?.ebbId}` : null;
+      this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
+        if (ready) {
+          this.userPlan = this.userPlansService.selectedUserPlan;
+          if (!!this.userPlan.eSIM) {
+            this.iseSIM = true;
+          }
+          if (!!this.userPlan && !!this.userPlan.basePlan.ebb) {
+            this.appState.loading = true;
+            this.ebbService.getDeviceEligibility(user.ebbId).then((data) => {
+              this.appState.loading = false;
+              this.canPurchaseDevice = data.canPurchaseADevice;
+              this.nextEnrollmentTryDate = new Date(data.nextEnrollmentTryDate);
+            }, (error) => {
+              this.appState.loading = false;
+              this.canPurchaseDevice = false;
+            });
+          }
+          if (!!this.userPlan && !!this.userPlan.planDevice) {
+            if (this.userPlan.planDevice.manufacturer.toLowerCase().indexOf('apple') > -1) {
+              this.os = 'ios';
+            } else {
+              this.os = 'android';
+            }
+            this.network = this.userPlan.planDevice.network;
+            this.mdn = this.userPlan.mdn;
+            if (this.network.toLowerCase() === 'tmo') {
+              this.isTmoNetwork = true;
+            }
+          }
+        }
+      });
     })
-    this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
-      if (ready) {
-        this.userPlan = this.userPlansService.selectedUserPlan;
-        if (!!this.userPlan.eSIM) {
-          this.iseSIM = true;
-        }
-        if (!!this.userPlan && !!this.userPlan.planDevice) {
-          if (this.userPlan.planDevice.manufacturer.toLowerCase().indexOf('apple') > -1) {
-            this.os = 'ios';
-          } else {
-            this.os = 'android';
-          }
-          this.network = this.userPlan.planDevice.network;
-          this.mdn = this.userPlan.mdn;
-          if (this.network.toLowerCase() === 'tmo') {
-            this.isTmoNetwork = true;
-          }
-        }
-      }
-    });
     this.mdn = this.route.snapshot.paramMap.get(SHOP_ROUTE_URLS.PARAMS.MDN);
     if (!!this.mdn) {
       this.userDeviceService.checkDeviceNetworkByMdn(this.mdn).then((result) => {

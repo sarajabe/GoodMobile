@@ -33,7 +33,7 @@
             </mat-option>
           </mat-autocomplete>      
         <label class="blur-background validation-message" *ngIf="(!address && addressRef.touched) || (!!displayValidation && !address)"
-          id="required-address-msg" data-cy="selectAddressValidationMsg">Full Address is required</label>
+          id="required-address-msg" data-cy="requiredAddressValidationMsg">Full Address is required</label>
         <label class="blur-background validation-message" *ngIf="!displayedAddressModel && !!address"
           id="required-address-msg" data-cy="selectAddressValidationMsg">Please select address from the autocomplete list</label>
       </div>

@@ -52,15 +52,15 @@
                         alt="device">
                 </div>
                 <div class="device-desc-section">
-                    <p class="device-name">{{item?.fields?.deviceModel}}</p>
+                    <p class="device-name" data-cy="deviceName">{{item?.fields?.deviceModel}}</p>
                     <div class="prices">
-                        <h4 class="price">{{item?.fields?.price | currency}}</h4>
+                        <h4 class="price" data-cy="devicePrice">{{item?.fields?.price | currency}}</h4>
                         <div class="market">
-                            <p class="market-price smaller">{{item?.fields?.marketValue | currency}}</p>
+                            <p class="market-price smaller" data-cy="deviceMarketPrice">{{item?.fields?.marketValue | currency}}</p>
                             <p class="bottom-border"></p>
                         </div>
                     </div>
-                    <button class="button primary" (click)="selectDevice(item)" id="select-device">Select Device</button>
+                    <button class="button primary" (click)="selectDevice(item)" id="select-device" data-cy="selectDevice">Select Device</button>
                 </div>
             </div>
         </div>
@@ -73,11 +73,11 @@
                                 alt="device">
                         </div>
                         <div class="device-desc-section">
-                            <p class="device-name">{{item?.fields?.deviceModel}}</p>
+                            <p class="device-name" data-cy="deviceName">{{item?.fields?.deviceModel}}</p>
                             <div class="prices">
-                                <p class="price">{{item?.fields?.price | currency}}</p>
+                                <p class="price" data-cy="devicePrice">{{item?.fields?.price | currency}}</p>
                                 <div class="market">
-                                    <p class="smaller market-price">{{item?.fields?.marketValue | currency}}</p>
+                                    <p class="smaller market-price" data-cy="deviceMarketPrice">{{item?.fields?.marketValue | currency}}</p>
                                     <p class="bottom-border"></p>
                                 </div>
                             </div>

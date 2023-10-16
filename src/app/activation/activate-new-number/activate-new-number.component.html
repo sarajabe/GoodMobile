@@ -87,8 +87,8 @@
                     [uiBlockMessage]="processingRequest? null : 'Activate'" id="activate-button" data-cy="activate-button">
                     Activate
                 </button>
-                <span class="validation-message" *ngIf="!userPlan?.planDevice">You need to register your device before
-                    you continue</span>
+                <p class="validation-message" *ngIf="!userPlan?.planDevice">You need to register your device before
+                    you continue</p>
             </div>
         </form>
     </div>

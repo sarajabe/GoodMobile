@@ -1,14 +1,14 @@
 <section class="page-section app-info" *ngIf="!acpSuccess && !acpError">
-  <div *ngIf="activeStep !== 2">
-    <h2 class="header-color">Great!</h2>
-    <h4 class="secondary-font" data-cy="personalInfoHeader">Please provide the following information to verify your
+  <div *ngIf="activeStep !== 3">
+    <h2 class="header-color" data-cy="headerColorGreat">Great!</h2>
+    <h4 class="secondary-font" data-cy="personalInfoHeader" id="stepTitle">Please provide the following information to verify your
       application!</h4>
     <div class="info-banner default-background">
       <div class="flex">
         <img src="/assets/icon/info-icon.svg" alt="Info Icon">
         <div class="banner-content">
           <p class="title">Note:</p>
-          <p class="description">Please enter the information <b>EXACTLY</b> as you entered in the ACP application
+          <p class="description" id="stepDesc">Please enter the information <b>EXACTLY</b> as you entered in the ACP application
             including: <b>(spaces, commas, or any special characters).</b>
           </p>
           <p class="description last">Providing inaccurate information could lead you being ineligible for the ACP
@@ -17,10 +17,10 @@
       </div>
     </div>
   </div>
-  <div *ngIf="activeStep === 2 ">
-    <h2 class="header-color">Almost there!</h2>
-    <h4 class="step-2" data-cy="noticeAgreementHeader">Customer Notice and Agreement</h4>
-    <p class="smaller">To apply for service under the Federal ACP with Good Mobile, you should agree and initial the following:</p>
+  <div *ngIf="activeStep === 3 ">
+    <h2 class="header-color" data-cy="headerColorAlmostThere">Almost there!</h2>
+    <h4 class="step-2" data-cy="noticeAgreementHeader" id="stepTitle">Customer Notice and Agreement</h4>
+    <p class="smaller" id="stepDesc">To apply for service under the Federal ACP with Good Mobile, you should agree and initial the following:</p>
   </div>
   <section class="stepper">
     <div class="step" *ngFor="let step of steps" [class.active]="activeStep === step" [class.done]="activeStep > step">
@@ -31,7 +31,11 @@
   <app-app-id-personal-info *ngIf="activeStep === 1" (goToNext)="next($event)" (setUserInfo)="setPersonalInfo($event)"
     [savedInfo]="{user:acpData?.user, appId: acpData?.providerApplicationId}" [disable]="!!enrolled">
   </app-app-id-personal-info>
-  <app-signature-info *ngIf="activeStep === 2" (goToNext)="next($event)" [fName]="acpData?.user?.firstName"
+  <app-app-id-address-info *ngIf="activeStep === 2" (goToNext)="next($event)" (setAddresses)="setUserAddresses($event)"
+  [primary]="primaryAddress" [userId]="userProfile?.id"
+  [disable]="!!enrolled || !!is609ErrorCode">
+</app-app-id-address-info>
+  <app-signature-info *ngIf="activeStep === 3" (goToNext)="next($event)" [fName]="acpData?.user?.firstName"
     [lName]="acpData?.user?.lastName" [signed]="userSignedAgreement" (setSignature)="setSignedValue($event)"
     [disable]="!!enrolled" [appId]="acpData?.providerApplicationId"></app-signature-info>
 </section>
@@ -39,10 +43,10 @@
 <app-acp-error *ngIf="!!acpError" [acpStatus]="acpStatus"></app-acp-error>
 <section class="navigation-section" *ngIf="!acpSuccess && !acpError">
   <div class="page-section navs">
-    <p class="no-border" data-cy="cancelBtn" (click)="cancel()">Cancel</p>
+    <p class="no-border" data-cy="cancelBtn" (click)="cancel()" id="cancelBtn">Cancel</p>
     <div class="right">
-      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()">Back</button>
-      <button class="button primary" aria-label="Next" (click)="goNext()" *ngIf="!enrolled">{{activeStep !== 2 ? 'Next' :
+      <button class="button secondary" data-cy="backBtn" aria-label="Next" (click)="goBack()" id="backBtn">Back</button>
+      <button class="button primary" aria-label="Next" (click)="goNext()" data-cy="next-verify-button" *ngIf="!enrolled" id="next-verify-button">{{activeStep !== 3 ? 'Next' :
         'Submit'}}</button>
     </div>
   </div>

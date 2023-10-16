@@ -9,7 +9,7 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage'),
+      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
@@ -37,8 +37,22 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false,
+    browsers: ['ChromeHeadless'],
+    customLaunchers: {
+        ChromeHeadless: {
+            base: 'Chrome',
+            flags: [
+                '--headless',
+                '--disable-gpu',
+                '--no-sandbox',
+                '--remote-debugging-port=9222'
+            ]
+        }
+    },
+    browserDisconnectTimeout: 10000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 60000,
+    singleRun: true,
     restartOnFileChange: true
   });
 };

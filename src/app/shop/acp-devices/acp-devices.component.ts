@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAcpDevice, IUserPlan, MobileCustomPlansService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { CatalogCoreService } from '@ztarmobile/zwp-service-backend-v2';
+import { CatalogCoreService, EbbService } from '@ztarmobile/zwp-service-backend-v2';
 import { SimpleAuthService } from '@ztarmobile/zwp-services-auth';
 import { ClipboardService } from 'ngx-clipboard';
 import { filter, takeWhile } from 'rxjs/operators';
@@ -53,11 +53,15 @@ export class AcpDevicesComponent implements OnInit {
   private isLoggedIn = false;
   questionIdParam: any;
   isCopied: boolean;
+  canPurchaseDevice: any;
+  nextEnrollmentTryDate: Date;
+  user: import("@ztarmobile/zwp-service-backend").IUser;
 
   constructor(private catalogServices: CatalogCoreService, private contentfulService: ContentfulService, private clipboardService: ClipboardService,
     private appState: AppState, private toastHelper: ToastrHelperService, private route: ActivatedRoute, private location: Location,
     private cd: ChangeDetectorRef, private userPlansService: UserPlansService, private mobilePlansService: MobileCustomPlansService, private router: Router,
-    private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService, private simpleAuthService: SimpleAuthService) {
+    private userProfileService: FirebaseUserProfileService, private modalHelper: ModalHelperService, private simpleAuthService: SimpleAuthService,
+    private ebbService: EbbService) {
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
       this.acpPlan = plans.find((p) => p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb && !p.canceled);
       this.pendingAcpPlan = plans.find((p) => !p.mdn && !p.portInRequestNumber && !!p.basePlan.ebb);
@@ -71,6 +75,11 @@ export class AcpDevicesComponent implements OnInit {
     });
     this.simpleAuthService.userState.pipe(takeWhile(() => this.alive)).subscribe((authState) => {
       this.isLoggedIn = !!authState && !authState.isAnonymous;
+      if (!!this.isLoggedIn) {
+        this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => {
+          this.user = user;
+        });
+      }
     });
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[SHOP_ROUTE_URLS.PARAMS.CHANGE_DEVICE]) {
@@ -208,20 +217,33 @@ export class AcpDevicesComponent implements OnInit {
       }
     });
   }
+  private showAcpDevicePopupForNextCycle(): void {
+    const customHTML = `
+    <p class="acp-desc">You may be eligible for ACP device discount <b>on your next plan renewal date.</b> Please check again later!</p>`;
+    this.modalHelper.showACPModal(`ACP Device Discount`, customHTML, 'Got it!', null, 'acp-device-modal', true).afterClosed().subscribe((data) => {
+      if (!!data) {
+        this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
+      }
+    });
+  }
   private checkSelectDeviceBehavior(item): void {
-    this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive), filter((user) => !!user)).subscribe((user) => {
-      if (!!user) {
-        if (!user.ebbId) { this.showNoAcpDevicePopup(); }
-        else if (!!user.ebbId) {
-          if (!!this.pendingAcpPlan) {
-            //pending acp plan
-            this.showPendingAcpDevicePopup();
-          } else if (!this.hasAcpPlan && !this.pendingAcpPlan) {
-            this.showNoAcpDevicePopup();
-          } else if (!!this.hasAcpPlan) {
-            if (!this.acpPlan.acpDevice) {
+    if (!!this.user) {
+      if (!this.user.ebbId) { this.showNoAcpDevicePopup(); }
+      else if (!!this.user.ebbId) {
+        if (!!this.pendingAcpPlan) {
+          //pending acp plan
+          this.showPendingAcpDevicePopup();
+        } else if (!this.hasAcpPlan && !this.pendingAcpPlan) {
+          this.showNoAcpDevicePopup();
+        } else if (!!this.hasAcpPlan) {
+          this.appState.loading = true;
+          this.ebbService.getDeviceEligibility(this.user.ebbId).then((data) => {
+            this.appState.loading = false;
+            this.canPurchaseDevice = data.canPurchaseADevice;
+            this.nextEnrollmentTryDate = !!data.nextEnrollmentTryDate ? new Date(data.nextEnrollmentTryDate): null;
+            if (!!this.canPurchaseDevice) {
               if (!!this.cart && !!this.cart.cartType && this.cart.cartType !== CART_TYPES.GENERIC_CART) {
-                this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new plan will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
+                this.modalHelper.showConfirmMessageModal('Clear Cart', 'Adding new device will remove other items in your cart. Do you want to proceed?', 'Yes', 'No', 'clean-cart-modal')
                   .afterClosed().subscribe((result) => {
                     if (!!result) {
                       this.clearCart();
@@ -233,14 +255,21 @@ export class AcpDevicesComponent implements OnInit {
               } else {
                 this.addDeviceToCart(item);
               }
-
             } else {
-              this.showExistingAcpDevicePopup();
+              console.info('nextenroll ', this.nextEnrollmentTryDate)
+              if (!this.canPurchaseDevice && !!this.nextEnrollmentTryDate) {
+                this.showAcpDevicePopupForNextCycle()
+              } else {
+                this.showExistingAcpDevicePopup();
+              }
             }
-          }
+          }, (error) => {
+            this.appState.loading = false;
+            this.canPurchaseDevice = false;
+          });
         }
       }
-    });
+    }
   }
   private removeAcpDevice(): void {
     sessionStorage.removeItem('acp-device');

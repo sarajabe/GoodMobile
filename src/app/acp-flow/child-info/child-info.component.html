@@ -2,11 +2,12 @@
   <form [formGroup]="codesForm" class="childInfoForm codes">
     <div class="form-row bottom">
       <p>What program do you participate in?<span class="red">*</span></p>
-      <p class="smallest grey space">Choose which program you qualify through for the Afforadable Connectivity Program.</p>
+      <p class="smallest grey space">Choose which program you qualify through for the Afforadable Connectivity Program.
+      </p>
       <div class="form-field width">
         <div class="drop-down-floating-label">
-          <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Select a Qualifying Program'" [data]="eligibilityCodes"
-            formControlName="selectedItems" ngDefaultControl (onSelect)="onItemSelect($event)"
+          <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Select a Qualifying Program'"
+            [data]="eligibilityCodes" formControlName="selectedItems" ngDefaultControl (onSelect)="onItemSelect($event)"
             class="floating-select dirty" (blur)="onItemDeSelect($event)" (onDeSelect)="onItemDeSelect($event)"
             [disabled]="!!disable">
           </ng-multiselect-dropdown>
@@ -31,7 +32,7 @@
           <label class="housing-width" [class.dirty]="!!publicHousingAssistance.value">Federal Public Housing
             Options</label>
         </div>
-        <label class="validation-message"
+        <label class="validation-message" id="required-public-housing" data-cy="requiredPublicHousing"
           *ngIf="codesForm.controls.housingAssistance.hasError('required') && codesForm.controls.housingAssistance.touched">
           Public Housing is required
         </label>
@@ -42,16 +43,16 @@
       <p class="specify">Please specify:</p>
       <div class="form-field width">
         <label class="outlined-label-input">
-          <input placeholder=" " formControlName="schoolName" maxlength="50" type="text" id="schoolName"
+          <input placeholder=" " formControlName="schoolName" minlength="2" maxlength="50" type="text" id="schoolName"
             data-cy="schoolName" />
           <span>School Name</span>
         </label>
-        <label class="validation-message" data-cy="schoolNameRequiredMsg"
+        <label class="validation-message" data-cy="schoolNameRequiredMsg" id="required-school-name"
           *ngIf="codesForm.controls.schoolName.hasError('required') && codesForm.controls.schoolName.touched">
           School Name is required
         </label>
-        <label class="validation-message"
-          *ngIf="codesForm.controls.schoolName.dirty && codesForm.controls.schoolName.hasError('pattern')">
+        <label class="validation-message" id="invalid-school-name" data-cy="invalidSchoolName"
+          *ngIf="codesForm.controls.schoolName.dirty && codesForm.controls.schoolName.invalid && !!codesForm.controls.schoolName.value">
           School name is invalid
         </label>
       </div>
@@ -66,7 +67,7 @@
           <input type="radio" [value]="item?.id" formControlName="option" [id]="item?.id">{{item?.value}}
         </label>
       </div>
-      <label class="validation-message"
+      <label class="validation-message" id="qualifying-validation-message" data-cy="qualifying-validation-message"
         *ngIf="qualifyingForm.controls.option.hasError('required') && qualifyingForm.controls.option.touched">
         Please select one of the options above
       </label>
@@ -76,8 +77,8 @@
       *ngIf="qualifyingForm.controls.option.value === 'child'">
       <div class="border-section"></div>
       <div class="form-section bottom">
-        <p class="space">Please provide the Beneficiary Qualifying Person (BQP) information:<span
-            class="red">*</span></p>
+        <p class="space">Please provide the Beneficiary Qualifying Person (BQP) information:<span class="red">*</span>
+        </p>
         <div class="form-row bottom">
           <p class="fields-title">BQP Full Name:<span class="red">*</span></p>
           <div class="form-field half">
@@ -183,7 +184,17 @@
                     <option value="26">26</option>
                     <option value="27">27</option>
                     <option value="28">28</option>
-                    <option value="29">29</option>
+                    <option value="29" [class.disabled]="
+                    !!childInfoForm.controls.month &&
+                    childInfoForm.controls.month.value &&
+                    childInfoForm.controls.month.value === '02' && 
+                    !leapYear
+                  " [disabled]="
+                    !!childInfoForm.controls.month &&
+                    childInfoForm.controls.month.value &&
+                    childInfoForm.controls.month.value === '02' && 
+                    !leapYear
+                  ">29</option>
                     <option value="30"
                       [class.disabled]="!!childInfoForm.controls.month && childInfoForm.controls.month.value && childInfoForm.controls.month.value === '02'"
                       [disabled]="!!childInfoForm.controls.month && childInfoForm.controls.month.value && childInfoForm.controls.month.value === '02'">
@@ -209,10 +220,11 @@
             </div>
             <label class="validation-message"
               *ngIf="(childInfoForm.controls.month.hasError('required') && childInfoForm.controls.month.touched) || (childInfoForm.controls.day.hasError('required') && childInfoForm.controls.day.touched) || (childInfoForm.controls.year.hasError('required') && childInfoForm.controls.year.touched)"
-              id="required-month-msg" data-cy="required-month-msg">
+              id="required-date-msg" data-cy="required-month-msg">
               Date of Birth is required
             </label>
-            <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg">
+            <label class="validation-message date" *ngIf="!!showInvalidDateError" id="invalid-date-msg"
+              data-cy="invalidDateMsg">
               Date is invalid
             </label>
           </div>
@@ -231,7 +243,7 @@
             *ngIf="!!childInfoForm.controls.identityType.value && childInfoForm.controls.identityType.value == 'ssn'">
             <label class="outlined-label-input">
               <input placeholder=" " formControlName="ssn" restrictNumbers minlength="4" maxlength="4" type="text"
-                id="ssn" data-cy="ssn" />
+                id="ssn" data-cy="ssnInput" />
               <span>Last 4 SSN</span>
             </label>
             <label class="validation-message"
@@ -257,14 +269,19 @@
           <div class="form-field quarter"
             *ngIf="!!childInfoForm.controls.identityType.value && childInfoForm.controls.identityType.value == 'tribal'">
             <label class="outlined-label-input">
-              <input placeholder=" " formControlName="tribalId" maxlength="20" type="text" id="tribal"
-                data-cy="tribalID" />
+              <input placeholder=" " formControlName="tribalId" minlength="2" maxlength="20" type="text" id="tribal"
+                data-cy="tribalIdInput" />
               <span>Tribal ID</span>
             </label>
             <label class="validation-message"
               *ngIf="childInfoForm.controls.tribalId.touched && !childInfoForm.controls.tribalId.value"
               id="required-tribal-msg">
               Tribal ID is required
+            </label>
+            <label class="validation-message"
+              *ngIf="childInfoForm.controls.tribalId.hasError('minlength') && !!childInfoForm.controls.tribalId.value"
+              id="invalid-tribal-msg" data-cy="invalidTribalMsg">
+              Tribal ID is invalid
             </label>
           </div>
         </div>

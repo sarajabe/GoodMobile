@@ -107,5 +107,9 @@ class Plans {
         cy.get('[data-cy="clickOnCartIcon"]').click();
         return this;
     };
+    clickOn2GBPlanChangePlanPage(){
+        cy.get(':nth-child(1) > .data-tab').click();
+        cy.get('[data-cy="cartIcon"]').click();
+    }
 };
 export default new Plans();

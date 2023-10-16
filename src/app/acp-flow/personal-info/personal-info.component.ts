@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionsAnalyticsService } from '@ztarmobile/zwp-service-backend';
 import { IAcpUser } from '@ztarmobile/zwp-service-backend-v2';
@@ -30,8 +30,8 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
 
   private alive = true;
 
-  constructor(private formBuilder: UntypedFormBuilder,
-    private ebbService: EbbManager,
+  constructor(private formBuilder: FormBuilder,
+    public ebbService: EbbManager,
     public router: Router,
     private analyticsService: ActionsAnalyticsService) {
 
@@ -56,6 +56,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.ebbService.activeStep.pipe(takeWhile(() => this.alive)).subscribe((step) => {
       if (!!step && step === 1) {
+        this.validateEmailAndPhone();
         this.personalInfoForm.markAllAsTouched();
         if (!!this.personalInfoForm.valid && !this.showInvalidDateError) {
           this.trackEvent();
@@ -186,8 +187,33 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
         this.showInvalidDateError = false;
       }
     }
-
   }
+
+  public validateEmailAndPhone(): void {
+    const phone = this.personalInfoForm.controls.phoneNumber.value;
+    const mail = this.personalInfoForm.controls.email.value;
+    if (!!phone) {
+      this.personalInfoForm.controls.getPhones.setValidators([Validators.required]);
+      this.personalInfoForm.controls.getPhones.updateValueAndValidity();
+      if (!this.personalInfoForm.controls.getPhones.value) {
+        this.personalInfoForm.controls.getPhones.setValue(null);
+      }
+    } else {
+      this.personalInfoForm.controls.getPhones.clearValidators();
+      this.personalInfoForm.controls.getPhones.updateValueAndValidity();
+    }
+    if (!!mail) {
+      this.personalInfoForm.controls.getEmails.setValidators([Validators.required]);
+      this.personalInfoForm.controls.getEmails.updateValueAndValidity();
+      if (!this.personalInfoForm.controls.getEmails.value) {
+        this.personalInfoForm.controls.getEmails.setValue(null);
+      }
+    } else {
+      this.personalInfoForm.controls.getEmails.clearValidators();
+      this.personalInfoForm.controls.getEmails.updateValueAndValidity();
+    }
+  }
+
   private trackEvent(): void {
     const data = {
       event: 'personal_info',
@@ -206,7 +232,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private populateForm(): void {
+  public populateForm(): void {
     this.personalInfoForm.controls.firstName.setValue(this.savedInfo?.firstName);
     this.personalInfoForm.controls.middleName.setValue(this.savedInfo?.middleName);
     this.personalInfoForm.controls.lastName.setValue(this.savedInfo?.lastName);
