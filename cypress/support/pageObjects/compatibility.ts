@@ -78,26 +78,28 @@ class Compatibility {
     }
     addressRefNotSelectedFromList() {
         cy.get('[data-cy="addressRef"]').click({force:true});
+        cy.get('[data-cy="addressRef"]').clear();
         cy.get('[data-cy="addressRef"]').type('m');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         cy.get('[data-cy="equipmentNumber"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };
     enterAddressRef() {
     cy.get('[data-cy="addressRef"]').click();
-    cy.get('[data-cy="addressRef"]').type('2');
-    cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
-    cy.get('.mat-option-text').first().click();
+    cy.get('[data-cy="addressRef"]').clear();
+    cy.get('[data-cy="addressRef"]').type('2').then(() => {
+        cy.get('.mat-option-text').first().click();
+    });
     cy.get('[data-cy="equipmentNumber"]').click();
     cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
     };
     enterTmoAddressRef() {
         cy.get('[data-cy="addressRef"]').click();
-        cy.get('[data-cy="addressRef"]').type('325 North Saint Paul Street, Dallas, TX 75201');
-        cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL3);
-        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="addressRef"]').clear();
+        cy.get('[data-cy="addressRef"]').type('325 North Saint Paul Street, Dallas, TX 75201').then(() => {
+            cy.get('.mat-option-text').first().click();
+        });
         cy.get('[data-cy="equipmentNumber"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL1);
         return this;
@@ -236,6 +238,10 @@ class Compatibility {
         cy.get('[data-cy="invalid-equipmentNumber-msg"]').should('have.text', ' Invalid serial, it should be between 11-18 digits ');
         cy.get('#required-address-msg').should('have.text','Please select address from the autocomplete list');
         PageObjects.TitleExpectations.goToCheckCompatibilityPage();
+    };
+    assertValidationMsgInvalidIMEI(){
+        cy.get('[data-cy="validationMsgInvalidIMEI"]').should('have.text', ' Field should be filled out with correct IMEI Number. ');
+        return this;
     };
 };
 export default new Compatibility();
