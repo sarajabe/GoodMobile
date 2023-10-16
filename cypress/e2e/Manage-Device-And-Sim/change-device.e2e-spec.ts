@@ -29,7 +29,6 @@ describe('Change device from manage device and sim page ', () => {
     it('Should go to manage devices page', () => {
         PageObjects.TitleExpectations.goToManageDevicesPage();
     });
-    //
     it('click on check another device', () => {
         PageObjects.ManageDevices.clickOnCheckAnotherDevice();
     });
@@ -45,7 +44,7 @@ describe('Change device from manage device and sim page ', () => {
         PageObjects.ManageDevices.clickOnValidate();
     });
     it(`Should assert validation message`, () => {
-        cy.get('#required-address-msg').should('have.text','Please select address from the autocomplete list');
+        PageObjects.Coverage.assertAddressNotSelectedFromList();
     });
     it('Should stay in the page', () => {
         PageObjects.TitleExpectations.goToManageDevicesPage();
@@ -59,7 +58,7 @@ describe('Change device from manage device and sim page ', () => {
         PageObjects.Recaptcha.invisibleRecaptcha();
     });
     it(`Should assert validation message`, () => {
-        cy.get('[data-cy="validationMsgInvalidIMEI"]').should('have.text', ' Field should be filled out with correct IMEI Number. ');
+        PageObjects.Compatibility.assertValidationMsgInvalidIMEI();
     });
     it('Should stay in the page', () => {
         PageObjects.TitleExpectations.goToManageDevicesPage();
@@ -73,7 +72,8 @@ describe('Change device from manage device and sim page ', () => {
         PageObjects.Recaptcha.invisibleRecaptcha();
     });
     it(`Should assert validation message`, () => {
-        cy.get('[data-cy="validationMsgInvalidIMEI"]').should('have.text', ' Field should be filled out with correct IMEI Number. ');
+        PageObjects.Compatibility.assertValidationMsgInvalidIMEI();
+        PageObjects.Coverage.assertAddressNotSelectedFromList();
     });
     it('Should stay in the page', () => {
         PageObjects.TitleExpectations.goToManageDevicesPage();
