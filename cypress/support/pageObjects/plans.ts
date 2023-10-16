@@ -95,6 +95,10 @@ class Plans {
         cy.get('#select-GOOMOBILE-6GB-20').click();
         return this;
     };
+    clickOn6GbACP_From_Home_Page() {
+        cy.get('#select-GOOMOBILE-6GB-ACP').click();
+        return this;
+    };
     clickOn15GB_From_Plans_Page() {
         cy.get(':nth-child(4) > .actions > .button').click();
         return this;
