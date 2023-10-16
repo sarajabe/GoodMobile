@@ -344,10 +344,6 @@ export const ACCESS = {
         EMAIL: "testuser26@ztarmobile.com",
         PASSWORD: "Abc123"
     },
-    LARA_PAVO_ACCOUNT:{
-        EMAIL: "lara.khoury@pavocom.com",
-        PASSWORD: "Abc123"
-    },
     TEST_A_USER: {
         EMAIL: "testauser@ztarmobile.com",
         PASSWORD: "Abc123"

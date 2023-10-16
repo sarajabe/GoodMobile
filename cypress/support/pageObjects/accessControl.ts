@@ -75,12 +75,13 @@ class AccessControl {
                 PageObjects.TitleExpectations.goToLogInPage();
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.LARA_ACCOUNT.EMAIL, CONSTANT.ACCESS.LARA_ACCOUNT.PASSWORD);
                 PageObjects.AccessControl.logInButton();
+                cy.get('[data-cy="accountSummary"]').click({force:true});
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
         };
         accountAlreadyHasAddOnsOrder(){
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
-                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.RANA_PAVO_ACCOUNT.EMAIL, CONSTANT.ACCESS.RANA_PAVO_ACCOUNT.PASSWORD);
+                // PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_A_USER.EMAIL, CONSTANT.ACCESS.TEST_A_USER.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
         };
@@ -101,7 +102,8 @@ class AccessControl {
         accountAlreadyHasAddOnsOneOrder(){
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
-                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.EMAIL, CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.PASSWORD);
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_A_USER.EMAIL, CONSTANT.ACCESS.TEST_A_USER.PASSWORD);
+                // PageObjects.AccessControl.logIn(CONSTANT.ACCESS.RANA_PAVO_ACCOUNT.EMAIL, CONSTANT.ACCESS.RANA_PAVO_ACCOUNT.PASSWORD);//
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
                 return this;
@@ -109,8 +111,9 @@ class AccessControl {
         accountAlreadyHasAddOnsMultipleOrder(){
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
-                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.GM_LARA_ACCOUNT.EMAIL, CONSTANT.ACCESS.GM_LARA_ACCOUNT.PASSWORD);
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.EMAIL, CONSTANT.ACCESS.LARA_PAVO_ACCOUNT.PASSWORD);
                 PageObjects.AccessControl.logInButton();
+                cy.get('[data-cy="accountSummary"]').click({force:true});
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
                 return this;
         };

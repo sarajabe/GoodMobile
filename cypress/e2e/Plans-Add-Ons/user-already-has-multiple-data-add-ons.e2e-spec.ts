@@ -9,7 +9,7 @@ describe('User already has multiple data add ons', () => {
     it('Should login successfully with user has multiple data add ons', () => {
         PageObjects.AccessControl.accountAlreadyHasAddOnsMultipleOrder();
     });
-    // it('Should assert a user has multiple data add ons', () => {
-    //     PageObjects.PlanAddOns.assertUserHasMultipleDataAddOns();
-    // });
+    it('Should assert a user has multiple data add ons', () => {
+        PageObjects.PlanAddOns.assertUserHasMultipleDataAddOns();
+    });
 })
