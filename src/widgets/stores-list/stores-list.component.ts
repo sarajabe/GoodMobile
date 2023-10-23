@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { LookupsService } from '@ztarmobile/zwp-service-backend-v2';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AppState } from 'src/app/app.service';
-import { ToastrHelperService } from 'src/services/toast-helper.service';
+import { ContentfulService } from 'src/services/contentful.service';
 
 @Component({
   selector: 'app-stores-list',
@@ -9,6 +9,7 @@ import { ToastrHelperService } from 'src/services/toast-helper.service';
   styleUrls: ['./stores-list.component.scss']
 })
 export class StoresListComponent implements OnInit {
+  @ViewChild('storesForm') storesForm: NgForm;
   public citiesList;
   public selectedCity = 'Albuquerque';
   allStores: any;
@@ -16,30 +17,34 @@ export class StoresListComponent implements OnInit {
   stores = [];
   
 
-  constructor(private lookupsService: LookupsService, private toastHelper: ToastrHelperService, private appState: AppState) { 
-    this.appState.loading = true;
-    this.lookupsService.getAvailableStores().then(stores => {
-      this.appState.loading = false;
-      if(stores?.storesLocations?.length > 0) {
-        this.today = new Date();
-        this.allStores = stores?.storesLocations;
-        this.allStores = this.allStores.filter((store) => new Date(store.launchDate) <= this.today)
-        this.citiesList = [...new Set(this.allStores.map(item => item.city))];
-        this.stores = stores?.storesLocations.filter((store) => store.city === this.selectedCity && new Date(store.launchDate) <= this.today);
-      }
-    }, error => {
-      this.appState.loading = false;
-      this.toastHelper.showAlert(error.error.errors[0].message);
-
-    })
+  constructor(public appState: AppState,
+    private contentfulService: ContentfulService) { 
   }
 
   public selectCity(): void {
     this.stores = [];
-    this.stores = this.allStores.filter((store) => store.city === this.selectedCity && new Date(store.launchDate) <= this.today);
+    this.stores = this.allStores.filter((store) => store?.fields?.city === this.selectedCity && new Date(this.mapDate(store?.fields?.launchDate)) <= this.today);
   }
   
   ngOnInit(): void {
+    this.today = new Date();
+    this.appState.loading = true;
+    this.contentfulService.getContent('storeLocations').subscribe(res => {
+      if(!!res && !!res[0]?.fields && res[0]?.fields?.stores?.length > 0) {
+        this.appState.loading = false;
+        this.allStores = res[0]?.fields?.stores;
+        this.allStores = this.allStores.filter((store) => new Date(this.mapDate(store?.fields?.launchDate)) <= this.today)
+        this.citiesList = [...new Set(this.allStores.map(item => item?.fields?.city))];
+        this.stores = this.allStores.filter((store) => store?.fields?.city === this.selectedCity && new Date(this.mapDate(store?.fields?.launchDate)) <= this.today);
+
+      }
+    }, error => {
+      this.appState.loading = false;
+    })
+  }
+
+  public mapDate(launchDate): any {
+    return new Date(launchDate).toJSON();
   }
 
 }
