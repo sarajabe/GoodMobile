@@ -81,7 +81,7 @@ class AccessControl {
         accountAlreadyHasAddOnsOrder(){
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
-                // PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_A_USER.EMAIL, CONSTANT.ACCESS.TEST_A_USER.PASSWORD);
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_A_USER.EMAIL, CONSTANT.ACCESS.TEST_A_USER.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToAccountSummaryPage();
         };

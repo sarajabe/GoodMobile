@@ -546,7 +546,7 @@
                     <br *ngIf="!!payGoAddons && payGoAddons?.length > 0 && !!userAccount && userAccount?.activeAddOns">
                     <div class="payGo-section"
                       *ngIf="!!payGoAddons && payGoAddons?.length > 0 && !!userAccount && userAccount?.activeAddOns">
-                      <div class="title-info"><b>{{payGoAddons?.length}} * Individual Country
+                      <div class="title-info"><b data-cy="payGoInfo">{{payGoAddons?.length}} * Individual Country
                           Calling</b></div>
                       <div class="payGo-info"><span>{{payGoAddonPlan?.price| currency}}</span>
                       </div>

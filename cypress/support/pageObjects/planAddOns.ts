@@ -165,14 +165,13 @@ class PlanAddOns {
         PageObjects.AccountSummary.clickOnGoAccountToSummaryBtn();
         PageObjects.TitleExpectations.goToAccountSummaryPage();
     };
-    // assertUserHasDataAddOnsInternationalCalling(){
-    //     cy.get('[data-cy="addOns"]').should('not.exist');
-    //     PageObjects.TitleExpectations.goToAccountSummaryPage();
-    //     cy.get('[data-cy="internationalAddOns"]').should('not.exist');
-    //     PageObjects.TitleExpectations.goToAccountSummaryPage();
-    //     cy.get('[data-cy="orderAddOns"]').should('not.exist');
-    //     PageObjects.TitleExpectations.goToAccountSummaryPage();
-    // };
+    assertUserHasDataAddOnsInternationalCalling(){
+        cy.get('[data-cy="addOns"]').should('not.exist');
+        cy.get('[data-cy="addOnsInfo"]').should('have.text','1 * 1GB 4G LTE');
+        cy.get('[data-cy="payGoInfo"]').should('have.text','3 * Individual Country Calling');
+        cy.get('[data-cy="orderAddOns"]').should('exist');
+        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    };
     assertUserHasOneDataAddOns(){
         cy.get('[data-cy="addOnsInfo"]').should('have.text','1 * 1GB 4G LTE');
         cy.get('[data-cy="addOnsPrice"]').should('have.text','$10.00');
