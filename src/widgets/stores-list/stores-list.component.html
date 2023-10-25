@@ -15,23 +15,23 @@
   <p class="caption caption-grey"><b>{{stores?.length}} {{stores?.length > 1 ? 'stores' : 'store'}}</b> available in {{selectedCity}}</p>
    <div class="stores-section" [class.scroll] = "stores?.length > 2">
        <div *ngFor="let store of stores" class="stores" [class.border]="!!stores && stores?.length > 1">
-         <p class="smaller primary-font-bold">{{store?.name}}</p>
+         <p class="smaller primary-font-bold">{{store?.fields?.name}}</p>
          <div class="store-details">
            <img src="/assets/icon/location-pin-blue.svg" alt="location">
            <div class="info">
-             <p class="smallest">{{store?.address1}},{{store?.city}},{{store?.state}} {{store?.postalCode}}</p>
+             <p class="smallest">{{store?.fields?.address1}},{{store?.fields?.city}},{{store?.fields?.state}} {{store?.fields?.postalCode}}</p>
            </div>
          </div>
          <div class="store-details">
           <img src="/assets/icon/calendar-blue.svg" alt="calendar" class="calendar">
           <div class="info">
-            <p class="smallest">{{store?.workingHours}}</p>
+            <p class="smallest">{{store?.fields?.workingHours}}</p>
           </div>
         </div>
          <div class="store-details">
           <img src="/assets/icon/call.svg" alt="call">
           <div class="info">
-            <p class="smallest">{{store?.phone}}</p>
+            <p class="smallest">{{store?.fields?.phone}}</p>
           </div>
         </div>
        </div>

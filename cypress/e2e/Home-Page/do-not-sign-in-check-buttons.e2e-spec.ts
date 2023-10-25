@@ -8,20 +8,29 @@ describe('Do not Sign in to insure from the buttons and actions  in home page', 
      before(() => {
           PageObjects.BeforeAll.executeBeforeAll();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
      it('Should go to home page', () => {
           PageObjects.TitleExpectations.goToHomePage();
      });
-     it('Should click on learn more button', () => {
-          PageObjects.HomePage.clickOnLearnMoreBtn();
+     it('Should click on get it today button', () => {
+          PageObjects.HomePage.clickOnGetItToday();
      });
-     it('Should go to plans page to buy a plan', () => {
-          PageObjects.TitleExpectations.goToPlansPage();
+     it('Should go to ACP device page', () => {
+          PageObjects.TitleExpectations.goToACPApplicationDevicesPage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
+     });
+     it('Should click on do i qualify button', () => {
+          PageObjects.HomePage.clickOnDoIQualifyBtn();
+     });
+     it('Should go to acp ladning page', () => {
+          PageObjects.TitleExpectations.goToACPPage();
+     });
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
      it('Should go to home page after being in plans page', () => {
           PageObjects.TitleExpectations.goToHomePage();
@@ -30,46 +39,46 @@ describe('Do not Sign in to insure from the buttons and actions  in home page', 
           PageObjects.HomePage.clickOnViewAllPlans();
      });
      it('Should go to plans page to see all available plans', () => {
-          PageObjects.TitleExpectations.goToPlansG2GPage();
+          PageObjects.TitleExpectations.goToPlansGMPage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
-     it('Should go to home page to select the 1GB plan', () => {
+     it('Should go to home page to select the 6GB ACP plan', () => {
           PageObjects.TitleExpectations.goToHomePage();
      });
-     it('Should click on select plan button for 1GB', () => {
-          PageObjects.Plans.clickOnPlan_1_GB();
+     it('Should click on select plan button for 6GB ACP plan', () => {
+          PageObjects.Plans.clickOn6GbACP_From_Home_Page();
      });
-     it('Should go to plans page and see all 1GB plan details', () => {
-          PageObjects.TitleExpectations.goToPlansPage();
+     it('Should go to plans page', () => {
+          PageObjects.TitleExpectations.goToPlansGMPage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
-     it('Should go to home page to select the 3GB plan ', () => {
+     it('Should go to home page to select the 2GB plan ', () => {
           PageObjects.TitleExpectations.goToHomePage();
      });
-     it('Should click on select plan button for 3GB', () => {
-          PageObjects.Plans.clickOnPlan3GB();
+     it('Should click on select plan button for 2GB', () => {
+          PageObjects.Plans.clickOnPlan_2_GB_Home_Page();
      });
-     it('Should go to plans page and see all 3GB plan details', () => {
-          PageObjects.TitleExpectations.goToPlansPage();
+     it('Should go to plans page', () => {
+          PageObjects.TitleExpectations.goToPlansGMPage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
      it('Should go to home page to select the 6GB plan ', () => {
           PageObjects.TitleExpectations.goToHomePage();
      });
      it('Should click on select plan button for 6GB', () => {
-          PageObjects.Plans.clickOnPlan_6_GB();
+          PageObjects.Plans.clickOn6GB_From_Home_Page();
      });
-     it('Should go to plans page and see all 6GB plan details', () => {
-          PageObjects.TitleExpectations.goToPlansPage();
+     it('Should go to plans page', () => {
+          PageObjects.TitleExpectations.goToPlansGMPage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
      it('Should go to home page  to test the check compatibility btn', () => {
           PageObjects.TitleExpectations.goToHomePage();
@@ -80,8 +89,17 @@ describe('Do not Sign in to insure from the buttons and actions  in home page', 
      it('Should go to Check Compatibility page', () => {
           PageObjects.TitleExpectations.goToCheckCompatibilityPage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
+     });
+     it('Should click on do i qualify button', () => {
+          PageObjects.HomePage.clickOnDoIQualifyBtn();
+     });
+     it('Should go to acp ladning page', () => {
+          PageObjects.TitleExpectations.goToACPPage();
+     });
+     it('Should click on GM Logo ', () => {
+          PageObjects.HomePage.clickOnGmLogo();
      });
      it('Should go to home page to test the check your coverage btn ', () => {
           PageObjects.TitleExpectations.goToHomePage();
@@ -89,23 +107,11 @@ describe('Do not Sign in to insure from the buttons and actions  in home page', 
      it('Should click on check coverage button', () => {
           PageObjects.HomePage.clickOnCheckCoverageButton();
      });
-     it('Should go to Good2Go Coverage page', () => {
-          PageObjects.TitleExpectations.goToGood2GoCoveragePage();
+     it('Should go to GM Coverage page', () => {
+          PageObjects.TitleExpectations.goToGMCoveragePage();
      });
-     it('Should click on G2G Logo ', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
-     });
-     it('Should go to home page to test the check your coverage btn ', () => {
-          PageObjects.TitleExpectations.goToHomePage();
-     });
-     it('Should click on check your coverage button', () => {
-          PageObjects.HomePage.clickOnCheckYourCoverageBtn();
-     });
-     it('Should go to Good2Go Coverage page', () => {
-          PageObjects.TitleExpectations.goToGood2GoCoveragePage();
-     });
-     it('Should click on G2G Logo', () => {
-          PageObjects.HomePage.clickOnG2gLogo();
+     it('Should click on Home', () => {
+          cy.get('#home-header').click();
      });
      it('Should go to home page', () => {
           PageObjects.TitleExpectations.goToHomePage();

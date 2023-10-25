@@ -41,7 +41,7 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
     private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService,
     private analyticsService: ActionsAnalyticsService) {
-      
+
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[ROUTE_URLS.PARAMS.USER_PLAN_ID]) {
         this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((plans) => {
@@ -49,18 +49,18 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
             this.userPlan = plans.find((p) => p.id === params[ROUTE_URLS.PARAMS.USER_PLAN_ID]);
             this.selectedPlanInfo = this.userPlansService.getCustomizableMobilePlanFromUserPlan(this.userPlan);
             this.mobilePlansService.isConfigurationReady.pipe(takeWhile(() => this.alive)).subscribe(() => {
-                this.allBasePlans = this.mobilePlansService.allBasePlans;
-                this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId  && ((!!plan.specialPromotion && !!plan.specialPromotion.isSpecific) || !plan.isSpecialPromotion) && !plan.ebb && plan.id !== this.userPlan.basePlan.id);
-                this.filteredPlans.sort((a, b) => a.price - b.price);
-                this.selectedPlan = this.filteredPlans[this.filteredPlans.length - 1];
-                this.selectedPrice = this.selectedPlan.price;
-                this.filteredPlans.map((p) => this.plansPrices.push(p.price))
+              this.allBasePlans = this.mobilePlansService.allBasePlans;
+              this.filteredPlans = this.allBasePlans.filter((plan) => !!plan.parentId && ((!!plan.specialPromotion && !!plan.specialPromotion.isSpecific) || !plan.isSpecialPromotion) && !plan.ebb && plan.id !== this.userPlan.basePlan.id);
+              this.filteredPlans.sort((a, b) => a.price - b.price);
+              this.selectedPlan = this.filteredPlans[this.filteredPlans.length - 1];
+              this.selectedPrice = this.selectedPlan.price;
+              this.filteredPlans.map((p) => this.plansPrices.push(p.price))
             });
           }
         });
         this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => {
           this.userAccount = account;
-          if (!!this.userAccount && this.userAccount.plan.bundleId.endsWith('EXP'))  {
+          if (!!this.userAccount && this.userAccount.plan.bundleId.endsWith('EXP')) {
             this.isExpiredPlan = true;
           }
         });
@@ -111,9 +111,9 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
             this.mobilePlansService.setCartType(CART_TYPES.CHANGE_PLAN);
             sessionStorage.removeItem('useFromBalance');
             sessionStorage.removeItem('useFromReward');
+            sessionStorage.removeItem('changeNextCycle'); // this should be false for expired plans
             this.mobilePlansService.setActivePlanId(this.userPlansService.selectedUserPlan.id);
             const params = {};
-            params[SHOP_ROUTE_URLS.PARAMS.CHANGE_NEXT_CYCLE] = result;
             this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHANGE_SUMMARY}`, params]);
           });
         }

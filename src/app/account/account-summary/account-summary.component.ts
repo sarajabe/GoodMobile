@@ -287,7 +287,7 @@ export class AccountSummaryComponent implements OnInit, OnDestroy {
       }
       if (!!this.userAccount && this.userAccount.activeAddOns) {
         this.dataAddons = this.userAccount.activeAddOns.filter((addon) => addon.type === 'add-on-data');
-        this.payGoAddons = this.userAccount.activeAddOns.filter((addon) => addon.id === 'G2GINTLPAYGO');
+        this.payGoAddons = this.userAccount.activeAddOns.filter((addon) => addon.id === 'GDWLINTLPAYGO');
         this.internationalAddons = this.userAccount.activeAddOns.filter((addon) => addon.id === 'UNLILD65');
       }
     });

@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="check-another-device" *ngIf="!showCompatibleForm">
-                        <button class="button thirdly" (click)="openDeviceForm()"
+                        <button class="button thirdly" data-cy="check-another-device" (click)="openDeviceForm()"
                             [class.disabled]="selectedPlan?.canceled">Check Another Device</button>
                     </div>
                     <div class="action-card" *ngIf="!!showCompatibleForm">
@@ -105,7 +105,7 @@
                                                 [routerLink]=" [SUPPORT_ROUTE_URLS.BASE+'/'+SUPPORT_ROUTE_URLS.DATA_SETUP]"><b>Click
                                                     here</b></a> for data settings.</p>
                                         <div class="actions">
-                                            <button class="button primary" (click)="showSuccessBanner=false">Got
+                                            <button class="button primary" data-cy="gorItBtn" (click)="showSuccessBanner=false">Got
                                                 it!</button>
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
                                 <p class="description last taxes-color"><b>{{newSimOrder?.price | currency}} + taxes</b>
                                 </p>
                                 <div class="actions" *ngIf="!showReplacementForm">
-                                    <button class="button thirdly" (click)="getReplacement()"
+                                    <button class="button thirdly" data-cy="getReplacementSIM" (click)="getReplacement()"
                                         [class.disabled]="selectedPlan?.canceled">Get a Replacement SIM</button>
                                 </div>
                             </div>

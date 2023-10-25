@@ -222,7 +222,7 @@
                                 <div class="detail">
                                     <div class="detail-info">
                                         <p class="bold smaller">{{planCategory('sim')}}</p>
-                                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>    
+                                        <p class="bold smaller" data-cy="replacementSimCartType" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>    
                                     </div>
                                     <p class="price smaller">
                                         ${{userCart?.cartType === CART_TYPES.PLAN_ITEMS ? newSimOrder?.price : 0}}
