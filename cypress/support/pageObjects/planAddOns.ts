@@ -262,5 +262,26 @@ class PlanAddOns {
         PageObjects.PlaceOrder.deletePlan();
         PageObjects.PlaceOrder.clickOnYesFromThePopUp();
     };
+    assertUserHas5OrderOneInternationalCalling(){
+        cy.get('[data-cy="addOns"]').should('not.exist');
+        cy.get('[data-cy="addOnsInfo"]').should('have.text','5 * 1GB 4G LTE');
+        cy.get('[data-cy="addOnsPrice"]').should('have.text','$10.00');
+        cy.get('[data-cy="payGoInfo"]').should('have.text','1 * Individual Country Calling');
+        PageObjects.AccountSummary.clickOnOrderAddOns();
+        PageObjects.TitleExpectations.goToPlanAddOnsPage();
+        cy.get('.validation-message').should('have.text',' You have already purchased 5GB of data add-ons.')
+        cy.get('[data-cy="plusIcon"]').should('be.disabled');
+        cy.get('[data-cy="minusIcon"]').should('be.disabled');
+    };
+    assertAddonBehaviorMdnCancelled(){
+        cy.get('[data-cy="addOns"]').should('not.be', 'clickable');
+        cy.get('[data-cy="internationalAddOns"]').should('not.be', 'clickable');
+        PageObjects.TitleExpectations.goToAccountSummaryPage();
+        PageObjects.AccountSummary.clickOnPlanAddOns();
+        PageObjects.TitleExpectations.goToPlanAddOnsPage();
+        cy.get('.validation-message').should('have.text','Your plan is CANCELED, renew now?')
+        cy.get('[data-cy="plusIcon"]').should('be.disabled');
+        cy.get('[data-cy="minusIcon"]').should('be.disabled');
+    };
 };
 export default new PlanAddOns();

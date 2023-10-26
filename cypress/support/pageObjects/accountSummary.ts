@@ -113,7 +113,7 @@ class AccountSummary {
           return this;
      };
      clickOnOrderAddOns(){
-          cy.contains('a', 'Order add-ons').click({force: true});
+          cy.get('[data-cy="orderAddOns"]').click({force: true});
           return this;
      };
      clickOnChangePlanNow () {
