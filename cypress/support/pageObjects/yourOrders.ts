@@ -208,12 +208,8 @@ class YouOrders {
     clickOnSecondOrderDetails() {
         cy.get('[data-cy="orderDetails"]').eq(1).click();
     };
-    clickOnYourOrders6thChild() {
-        cy.get(':nth-child(6) > .items-link').click();
-        return this;
-    };
-    clickOnYourOrders7thChild() {
-        cy.get(':nth-child(7) > .items-link').click();
+    clickOnYourOrders() {
+        cy.get('[data-cy="yourOrder"]').click();
         return this;
     };
     clickOnSortByDate() {
@@ -276,33 +272,33 @@ class YouOrders {
         return this;
     };
     ordersPageStorePickupOption(){
-        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        this.clickOnYourOrders();
         PageObjects.TitleExpectations.goToOrdersPage();
         cy.get('[data-cy="status"]').first().should('have.text', 'Pending');
         cy.get('[data-cy="simImg"]').first().should('be.visible');
         cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $35.09');
-        PageObjects.YouOrders.clickOnViewInvoice();
+        this.clickOnViewInvoice();
         PageObjects.TitleExpectations.goToReceiptDetailsPage();
         cy.get('.sub-note').should('have.text','Your order has been confirmed!')
     }
     ordersDetailsPageStorePickupOption(){
-        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        this.clickOnYourOrders();
         PageObjects.TitleExpectations.goToOrdersPage();
         cy.get('[data-cy="status"]').first().should('have.text', 'Pending');
         cy.get('[data-cy="simImg"]').first().should('be.visible');
         cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $35.09');
-        PageObjects.YouOrders.clickOnOrderDetails();
+        this.clickOnOrderDetails();
         PageObjects.TitleExpectations.goToOrderDetailsPage();
         cy.get('[data-cy="shippingFees"]').should('have.text', '$0.00');
         cy.get('[data-cy="total"]').should('have.text', 'Total: $35.09');
         cy.get('[data-cy="shippingAddress"]').should('not.exist');
     }
     reportIssueStorePickupFlow(){
-        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        this.clickOnYourOrders();
         PageObjects.TitleExpectations.goToOrdersPage();
-        PageObjects.YouOrders.clickOnOrderDetails();
+        this.clickOnOrderDetails();
         PageObjects.TitleExpectations.goToOrderDetailsPage();
-        PageObjects.YouOrders.clickOnReportAnIssue();
+        this.clickOnReportAnIssue();
         PageObjects.TitleExpectations.goToReportAnIssuePage();
         cy.get('.options-container > :nth-child(1)').should('have.class','disabled');//clickOnorderNotReceived
         cy.get('.options-container > :nth-child(3)').should('have.class','disabled');//clickOnUpdateShippingAddress
@@ -312,9 +308,9 @@ class YouOrders {
         
     }
     storePickupInvoice(){
-        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        this.clickOnYourOrders();
         PageObjects.TitleExpectations.goToOrdersPage();
-        PageObjects.YouOrders.clickOnViewInvoice();
+        this.clickOnViewInvoice();
         PageObjects.TitleExpectations.goToReceiptDetailsPage();
         cy.get('[data-cy="merchantValue"]').should('have.text','Good Mobile');
         cy.get('[data-cy="itemName"]').should('have.text','Unlimited Talk & text with 6GB Data');
@@ -336,6 +332,17 @@ class YouOrders {
         cy.get('.ng-star-inserted > .details > p').should('have.text','The receipt has successfully been emailed to testuser@ztarmobile.com\n      ');
         cy.get('[data-cy="action-button"]').click();
         cy.get('.print-option').click();
-    }
+    };
+    ordersDetailsPagePlanAddOns(){
+        this.clickOnYourOrders();
+        PageObjects.TitleExpectations.goToOrdersPage();
+        cy.get('[data-cy="status"]').first().should('have.text', 'Purchased');
+        cy.get('[data-cy="orderTotal"]').first().should('have.text', 'Total: $11.40');
+        this.clickOnOrderDetails();
+        PageObjects.TitleExpectations.goToOrderDetailsPage();
+        cy.get('[data-cy="addOns"]').should('have.text', '(Addon)');
+        cy.get('[data-cy="total"]').should('have.text', 'Total: $11.40');
+        cy.get('[data-cy="shippingAddress"]').should('not.exist');
+    };
 };
 export default new YouOrders();

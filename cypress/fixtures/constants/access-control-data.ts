@@ -87,6 +87,18 @@ export const ACCESS = {
         EMAIL: 'rana.haddad@ztarmobile.com',
         PASSWORD: 'Abc123'
     },
+    RANA_PAVO_ACCOUNT: {
+        EMAIL: 'rana.haddad@pavocom.com',
+        PASSWORD: 'Abc123'
+    },
+    LARA_PAVO_ACCOUNT: {
+        EMAIL: 'lara.khoury@pavocom.com',
+        PASSWORD: 'Abc123'
+    },
+    GM_LARA_ACCOUNT: {
+        EMAIL: 'gm-larakh@ztarmobile.com',
+        PASSWORD: 'Abc123'
+    },
     // ATT mdns
     LARA_ACCOUNT: {
         EMAIL: 'lara.khoury1992@gmail.com',
@@ -330,10 +342,6 @@ export const ACCESS = {
     },
     TEST_USER26_ACCOUNT:{
         EMAIL: "testuser26@ztarmobile.com",
-        PASSWORD: "Abc123"
-    },
-    LARA_PAVO_ACCOUNT:{
-        EMAIL: "lara.khoury@pavocom.com",
         PASSWORD: "Abc123"
     },
     TEST_A_USER: {
