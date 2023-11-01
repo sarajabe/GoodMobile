@@ -113,7 +113,7 @@ class AccountSummary {
           return this;
      };
      clickOnOrderAddOns(){
-          cy.contains('a', 'Order add-ons').click({force: true});
+          cy.get('[data-cy="orderAddOns"]').click({force: true});
           return this;
      };
      clickOnChangePlanNow () {
@@ -246,6 +246,10 @@ class AccountSummary {
      };
      clickOnChangePlanLink () {
           cy.contains('a', 'Change plan').click({force: true});
+          return this;
+     };
+     clickOnPlanAddOns(){
+          cy.get('[data-cy="plansAddOns"]').click({force: true});
           return this;
      };
      clickOnAndGoPurchasedPlans() {

@@ -28,12 +28,12 @@
                                 [routerLinkActiveOptions]="{exact: true}">Pay &
                                 refill your account</a></li>
                 <li class="menu-item" (click)="resetAll(); isPlanAddOns = true;"
-                        [class.disabled]="!!isExpiredAccount || !!isPortIn"><a class="items-link link-border-bottom"
+                        [class.disabled]="!!isExpiredAccount || !!isPortIn"><a class="items-link link-border-bottom" data-cy="plansAddOns"
                                 [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS'"
                                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                                 [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS]">Plan
                                 add-ons</a></li>
-                <li class="menu-item" (click)="resetAll();isOrders = true;"><a class="items-link link-border-bottom"
+                <li class="menu-item" data-cy="yourOrder" (click)="resetAll();isOrders = true;"><a class="items-link link-border-bottom"
                                 [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.ORDERS'"
                                 [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.ORDERS]"
                                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Your

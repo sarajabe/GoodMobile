@@ -179,9 +179,9 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="smaller bold" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
+                        <p class="smaller bold" data-cy="addOnsPlan" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
                         <p class="smaller" *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
-                        <p class="smaller bold">(Data Add-On)</p>
+                        <p class="smaller bold" data-cy="dataAddOns">(Data Add-On)</p>
 
                       </div>
                       <p class="price smaller">
@@ -191,7 +191,7 @@
                     <p class="quantity">Quantity: {{dataAddons[0]?.quantity}}</p>
                     <div class="actions">
                       <a class="link first" (click)="goToAddons()">Change</a>
-                      <a class="link" (click)="clearUserCart(dataAddons[0].id)">Delete</a>
+                      <a class="link" data-cy="deletePlan" (click)="clearUserCart(dataAddons[0].id)">Delete</a>
                     </div>
                   </div>
                 </div>
@@ -216,7 +216,7 @@
                     </div>
                     <p class="quantity">Quantity: {{internationalAddon[0]?.quantity}}</p>
                     <div class="actions">
-                      <a class="link" (click)="clearUserCart(internationalAddon[0].id)">Delete</a>
+                      <a class="link" data-cy="deletePlan" (click)="clearUserCart(internationalAddon[0].id)">Delete</a>
                     </div>
                   </div>
                 </div>
@@ -228,9 +228,9 @@
                   <div class="details" *ngFor="let item of talkAndTextAddons">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold smaller" *ngIf="!!item?.title">{{item?.title}}</p>
+                        <p class="bold smaller" data-cy="internationalPayGoPlan" *ngIf="!!item?.title">{{item?.title}}</p>
                         <p class="smaller" *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
-                        <p class="bold smaller">(Talk & text add-on)</p>
+                        <p class="bold smaller" data-cy="talkTextAddOns">(Talk & text add-on)</p>
 
                       </div>
                       <p class="price smaller">
@@ -239,7 +239,7 @@
                     </div>
                     <p class="quantity smaller">Quantity: {{item?.quantity}}</p>
                     <div class="actions" *ngIf=" talkAndTextAddons.length === 1">
-                      <a class="link" (click)="clearUserCart(talkAndTextAddons[0].id)">Delete</a>
+                      <a class="link" data-cy="deletePlan" (click)="clearUserCart(talkAndTextAddons[0].id)">Delete</a>
                     </div>
                   </div>
                 </div>
@@ -287,7 +287,7 @@
                     <p class="quantity smallest">Quantity: {{userCart?.quantity}}</p>
                     <div class="actions">
                       <a class="link first" (click)="goToDevices()">Change</a>
-                      <a class="link" (click)="clearUserCart('device')">Delete</a>
+                      <a class="link" data-cy="deletePlan" (click)="clearUserCart('device')">Delete</a>
                     </div>
                   </div>
                 </div>

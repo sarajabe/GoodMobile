@@ -503,10 +503,10 @@
                   <div class="flex-container responsive-flex-container">
                     <div class="dataAddOns-section">
                       <div *ngIf="!!dataAddons && dataAddons?.length > 0 && !!userAccount && userAccount?.activeAddOns">
-                        <div class="title-info"> <b>{{dataAddons?.length}} *
+                        <div class="title-info" data-cy="addOnsInfo"> <b>{{dataAddons?.length}} *
                             {{dataAddons[0]?.subTitle}}</b> </div>
                         <div class="dataAddOns-info">
-                          <span>{{gigPlanAddon?.price| currency}}</span>
+                          <span data-cy="addOnsPrice">{{gigPlanAddon?.price| currency}}</span>
                         </div>
                       </div>
                       <div
@@ -514,7 +514,7 @@
                         <div class="title-info"> <b>{{gigPlanAddon?.subtitle}}</b></div>
                         <div class="addons-links"
                           [class.disabled]="!userAccount || !!selectedPlan?.canceled || !!userAccount?.pastDue">
-                          <a (click)="orderAddon()">
+                          <a data-cy="addOns" (click)="orderAddon()">
                             <span class="action-icon icon plus-icon"><img
                                 src="assets/icon/white-plus.svg"></span>Purchase
                             now?</a>
@@ -536,7 +536,7 @@
                         <div class="title-info"><b>International calling add-on</b></div>
                         <div class="addons-links"
                           [class.disabled]="!userAccount || !!selectedPlan?.canceled || !!userAccount?.pastDue">
-                          <a (click)="orderAddon('International')">
+                          <a data-cy="internationalAddOns" (click)="orderAddon('International')">
                             <span class="action-icon icon plus-icon"><img
                                 src="assets/icon/white-plus.svg"></span>Purchase
                             now?</a>
@@ -546,14 +546,14 @@
                     <br *ngIf="!!payGoAddons && payGoAddons?.length > 0 && !!userAccount && userAccount?.activeAddOns">
                     <div class="payGo-section"
                       *ngIf="!!payGoAddons && payGoAddons?.length > 0 && !!userAccount && userAccount?.activeAddOns">
-                      <div class="title-info"><b>{{payGoAddons?.length}} * Individual Country
+                      <div class="title-info"><b data-cy="payGoInfo">{{payGoAddons?.length}} * Individual Country
                           Calling</b></div>
                       <div class="payGo-info"><span>{{payGoAddonPlan?.price| currency}}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="action-links action-responsive" (click)="orderAddon()"
+                <div class="action-links action-responsive" data-cy="orderAddOns" (click)="orderAddon()"
                   [class.disabled]="!!selectedPlan?.canceled || !userAccount || !!userAccount?.pastDue">
                   <a class="edit-action">
                     <span class="action-icon icon plus-icon"><img class="plus-img"
@@ -590,12 +590,13 @@
                 </div>
                 <div class="action-links" [class.disabled]="!!selectedPlan?.canceled || !userAccount">
                   <div class="links-container column-direction">
-                    <a class="change-action hidden" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges">
+                    <a class="change-action hidden" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges && !selectedPlan?.basePlan?.ebb">
                       <img class="action-icon" src="/assets/icon/refill-voucher-icon.svg"> Refill
                       with Voucher</a>
-                    <a class="top-action" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges">
+                    <a class="top-action" (click)="makePayment()" *ngIf="!userAccount?.hasPendingChanges && !selectedPlan?.basePlan?.ebb">
                       <img class="action-icon icon-padding" src="/assets/icon/refill-credit-icon.svg"> Refill with
                       Credit Card</a>
+                      <p *ngIf="!userAccount?.hasPendingChanges && !!selectedPlan?.basePlan?.ebb" class="smaller"><b>Your service is covered through the ACP</b></p>
                   </div>
                 </div>
               </div>

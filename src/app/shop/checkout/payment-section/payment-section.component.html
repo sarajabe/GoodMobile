@@ -45,7 +45,7 @@
     </div>
     <div class="payment-option">
       <label class="payment-container">
-        <input type="checkbox" [(ngModel)]="payWithCard" class="title-checkbox" (change)="togglePayWithCard()">
+        <input type="checkbox" data-cy="creditCardPayment" [(ngModel)]="payWithCard" class="title-checkbox" (change)="togglePayWithCard()">
         <img src="assets/icon/credit-card.png" alt="credit card" /> 
         <h6 class="checkbox-label">Credit Card</h6>
       </label>
