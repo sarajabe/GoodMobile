@@ -38,27 +38,28 @@
       <div class="radioBtn" *ngIf="cart?.cartType !== CART_TYPES.GENERIC_CART">
         <label class="form-control" for="home">
           <input type="radio" value="home" [(ngModel)]="option" data-cy="homeDelivery" id="home" name="home" required
-          (change)="pickupOptionChanged()">
+            (change)="pickupOptionChanged()">
           <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
           <div class="input-details">
-          <p class="value">Home Delivery</p>
-          <p class="caption">I’d like to have my package delivered to my door.</p>
-        </div>
+            <p class="value">Home Delivery</p>
+            <p class="caption">I’d like to have my package delivered to my door.</p>
+          </div>
         </label>
       </div>
       <div *ngIf="!!option && option === 'home'">
         <div class="info-banner error-background" *ngIf="!!showAddressRequiredError">
           <div class="flex center">
-            <img src="assets/icon/error-icon.svg" alt="Error Icon"/>
+            <img src="assets/icon/error-icon.svg" alt="Error Icon" />
             <div class="banner-content">
               <p class="description last">Please select a shipping address or add a new address.</p>
             </div>
           </div>
-          </div>
+        </div>
         <div class="checkout-card">
           <p class="card-title">Shipping Details</p>
           <div class="card-content" id="addressDetails">
-            <p class="info primary-font-bold" id="selectAddress">Please select a shipping address or add a new address:</p>
+            <p class="info primary-font-bold" id="selectAddress">Please select a shipping address or add a new address:
+            </p>
             <div class="methods-list" *ngIf="!!addressesList && addressesList?.length > 0" id="addresses">
               <label class="form-control" *ngFor="let address of addressesList; let i = index"
                 [class.hidden]="i > 1 && !showAllAddresses"
@@ -107,11 +108,12 @@
             </div>
           </div>
           <div class="sub-card-content">
-            <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="shippingMethodItems" name="items"/>
+            <input type="checkbox" class="hidden-checkbox" id="items" [(ngModel)]="shippingMethodItems" name="items" />
             <label class="sub-label" for="items">Shipping Method <img class="icon" src="assets/icon/arrow_circle.svg"
                 alt="arrow icon" /></label>
             <div class="tab-content">
-              <p class="info primary-font-bold" >Please select a shipping method and a delivery option for your order:</p>
+              <p class="info primary-font-bold">Please select a shipping method and a delivery option for your order:
+              </p>
               <!-- <div class="alert-box" *ngIf="!hasPhone">
               <img src="/assets/icon/red-alert.svg" alt="alert">
               <p class="alert-info"><b>Note:</b> Due to global shipping delays, expedited shipping methods are currently
@@ -174,45 +176,48 @@
       <div class="radioBtn">
         <label class="form-control" for="store">
           <input type="radio" value="store" [(ngModel)]="option" data-cy="storePickup" id="store" name="store" required
-          (change)="pickupOptionChanged()">
+            (change)="pickupOptionChanged()">
           <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
           <div class="input-details">
-          <p class="value">Store Pickup</p>
-          <p class="caption">I’d like to collect my package from a store.</p>
-        </div>
+            <p class="value">In-Store Pickup</p>
+            <p class="caption">I’d like to collect my package from a store.</p>
+          </div>
         </label>
       </div>
       <div *ngIf="!!option && option === 'store'" class="stores-option-section">
         <div class="store-section">
-        <div class="inner-paddings">
-          <h4 class="sub-head">You can pick up your SIM Card at any of the following stores:</h4>
+          <div class="inner-paddings">
+            <h4 class="sub-head">You can pick up your SIM Card at any of the following stores:</h4>
+          </div>
+          <hr class="border">
+          <div class="inner-paddings end">
+            <app-stores-list></app-stores-list>
+          </div>
         </div>
-        <hr class="border">
-        <div class="inner-paddings end">
-          <app-stores-list></app-stores-list>
-        </div>
-      </div>
-      <div class="info-banner default-background">
-        <div class="flex">
+        <div class="info-banner default-background">
+          <div class="flex">
             <img src="assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">
-                <p class="title">The barcode is required to get your package from the store!</p>
-                <p class="description last">It will be in your purchased plans and your order receipt.</p>
-                <div class="actions">
-                  <form #barCodeCheck="ngForm" class="barCoder-form">
-                    <input type="checkbox" [(ngModel)]="barCode" name="barCodeVal" required
-                        #barCodeVal="ngModel" id="barCodeVal">
-                    <label class="label" for="barCodeVal">I understand that.</label>
+              <p class="title">The barcode is required to get your package from the store!</p>
+              <p class="description last">It will be in your purchased plans and your order receipt.</p>
+              <div class="actions">
+                <form #barCodeCheck="ngForm" class="barCoder-form">
+                  <input type="checkbox" [(ngModel)]="barCode" name="barCodeVal" required #barCodeVal="ngModel"
+                    id="barCodeVal">
+                  <label class="label" for="barCodeVal">I understand that.</label>
                 </form>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
       </div>
+      <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
+        (isValidateClicked)="validatePersonStep($event)" [option]="option"></app-in-person-delivery-selector>
     </form>
   </div>
 </section>
-<section class="navigation-section" [class.blur]="!!showShippingForm || !option || (!!option && option === 'store' && !barCode)">
+<section class="navigation-section"
+  [class.blur]="!!showShippingForm || !option || (!!option && option === 'store' && !barCode) || (!!option && option === 'person' && !isPersonStepValidated)">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goToCart()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" id="continue-shipping" data-cy="nextBtn">Next</button>
