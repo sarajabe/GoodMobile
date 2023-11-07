@@ -212,7 +212,8 @@
         </div>
       </div>
       <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
-        (isValidateClicked)="validatePersonStep($event)" [option]="option"></app-in-person-delivery-selector>
+        (isValidateClicked)="validatePersonStep($event)" [option]="option"
+        [cart]="cart"></app-in-person-delivery-selector>
     </form>
   </div>
 </section>

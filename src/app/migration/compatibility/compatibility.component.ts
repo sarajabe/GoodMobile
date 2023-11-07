@@ -341,6 +341,7 @@ export class CompatibilityComponent implements OnInit, OnDestroy {
       sessionStorage.removeItem('useFromReward');
       sessionStorage.removeItem('shippingAddress');
       sessionStorage.removeItem('storePickup');
+      sessionStorage.removeItem('personPickup');
       sessionStorage.removeItem('shippingMethod');
       sessionStorage.removeItem('plan_id');
       this.mobilePlansService.setCartType(CART_TYPES.MIGRATION);

@@ -46,7 +46,9 @@
                   <div class="details summary">
                     <div class="detail">
                       <p class="smaller">Subtotal</p>
-                      <p class="smaller" data-cy="subtotal"><b>{{(!!selectedPhone ? (details?.subtotal + details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )| currency}}</b></p>
+                      <p class="smaller" data-cy="subtotal"><b>{{(!!selectedPhone ? (details?.subtotal +
+                          details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )|
+                          currency}}</b></p>
                     </div>
                     <div class="detail" *ngIf="!isGenericType">
                       <p class="smaller text-orange">Discount total</p>
@@ -84,25 +86,32 @@
             <div class="tab-content">
               <input class="hidden-checkbox" type="checkbox" id="lines" [(ngModel)]="line" />
               <label class="sub-label secondary" for="lines">
-                <span class="header-color">Line {{!!topupMdn? topupMdn: (!!purchasedMdn? purchasedMdn : '#1')}}</span><img class="icon"
-                  src="assets/icon/arrow_circle.svg" alt="arrow icon" />
+                <span class="header-color">Line {{!!topupMdn? topupMdn: (!!purchasedMdn? purchasedMdn :
+                  '#1')}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon" />
               </label>
               <div class="items-sub-content"
                 *ngIf="!userCart?.addOns && (userCart?.simsQuantity === 0 || !userCart?.simsQuantity) && !isGenericType">
                 <div class="item-details">
                   <div class="image-side">
-                    <img class="image" src="/assets/icon/plan_thumbnail.svg" alt="plan" *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN" />
-                    <img class="image" [src]="promoDetails[userCart?.basePlan?.specialPromotion?.code].img" alt="plan" *ngIf="!!userCart?.basePlan?.specialPromotion?.promotionData && userCart?.basePlan?.specialPromotion?.promotionData > 0 && userCart?.cartType === CART_TYPES.NEW_PLAN"/>
+                    <img class="image" src="/assets/icon/plan_thumbnail.svg" alt="plan"
+                      *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN" />
+                    <img class="image" [src]="promoDetails[userCart?.basePlan?.specialPromotion?.code].img" alt="plan"
+                      *ngIf="!!userCart?.basePlan?.specialPromotion?.promotionData && userCart?.basePlan?.specialPromotion?.promotionData > 0 && userCart?.cartType === CART_TYPES.NEW_PLAN" />
                   </div>
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
                         <p class="smaller primary-font-bold" data-cy="basePlan">{{ userCart?.basePlan?.subtitle }}</p>
-                        <p *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN">{{ userCart?.basePlan?.title }}</p>
-                        <p *ngIf="!!userCart?.basePlan?.specialPromotion && userCart?.cartType === CART_TYPES.NEW_PLAN" class="promo bold">{{userCart?.basePlan?.specialPromotion?.promotionTitle}}</p>
-                        <p class="smaller primary-font-bold" *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">
+                        <p
+                          *ngIf="!userCart?.basePlan?.isSpecialPromotion || userCart?.cartType !== CART_TYPES.NEW_PLAN">
+                          {{ userCart?.basePlan?.title }}</p>
+                        <p *ngIf="!!userCart?.basePlan?.specialPromotion && userCart?.cartType === CART_TYPES.NEW_PLAN"
+                          class="promo bold">{{userCart?.basePlan?.specialPromotion?.promotionTitle}}</p>
+                        <p class="smaller primary-font-bold"
+                          *ngIf="userCart?.cartType === CART_TYPES.CHANGE_PLAN && !isTrialUpgrade">
                           (Change Plan)</p>
-                        <p class="smaller primary-font-bold" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New plan)
+                        <p class="smaller primary-font-bold" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN">(New
+                          plan)
                         </p>
                         <p class="bold" *ngIf="userCart?.cartType === CART_TYPES.TOPUP_PLAN">(Refill Plan)
                         </p>
@@ -154,7 +163,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="sub-item-section" *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN && !userCart?.activationCode">
+                <div class="sub-item-section"
+                  *ngIf="userCart?.cartType === CART_TYPES.NEW_PLAN && !userCart?.activationCode">
                   <hr class="short" />
                   <div class="item-details">
                     <img class="thumbnail"
@@ -162,7 +172,8 @@
                     <div class="details">
                       <div class="detail">
                         <div class="detail-info">
-                          <p class="smaller primary-font-bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM Card'}}</p>
+                          <p class="smaller primary-font-bold" data-cy="simType">{{!!userCart?.eSIM ? 'eSIM ': 'SIM
+                            Card'}}</p>
                         </div>
                         <p class="smaller price">$0</p>
                       </div>
@@ -179,7 +190,8 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="smaller bold" data-cy="addOnsPlan" *ngIf="!!dataAddons[0]?.title">{{dataAddons[0]?.title}}</p>
+                        <p class="smaller bold" data-cy="addOnsPlan" *ngIf="!!dataAddons[0]?.title">
+                          {{dataAddons[0]?.title}}</p>
                         <p class="smaller" *ngIf="!!dataAddons[0]?.subtitle">{{dataAddons[0]?.subtitle}}</p>
                         <p class="smaller bold" data-cy="dataAddOns">(Data Add-On)</p>
 
@@ -228,7 +240,8 @@
                   <div class="details" *ngFor="let item of talkAndTextAddons">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold smaller" data-cy="internationalPayGoPlan" *ngIf="!!item?.title">{{item?.title}}</p>
+                        <p class="bold smaller" data-cy="internationalPayGoPlan" *ngIf="!!item?.title">{{item?.title}}
+                        </p>
                         <p class="smaller" *ngIf="!!item?.subtitle">{{item?.subtitle}}</p>
                         <p class="bold smaller" data-cy="talkTextAddOns">(Talk & text add-on)</p>
 
@@ -255,7 +268,8 @@
                         <p class="bold smaller">{{planCategory('sim')}}</p>
                         <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.MIGRATION">(Migration
                           Order)</p>
-                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)</p>
+                        <p class="bold smaller" *ngIf="userCart?.cartType === CART_TYPES.PLAN_ITEMS">(Replacement Sim)
+                        </p>
 
                       </div>
                       <p class="price smaller">
@@ -276,8 +290,8 @@
                     <div class="detail">
                       <div class="detail-info">
                         <p class="bold smaller">{{userCart?.acpDevice?.title}}</p>
-                        <p class="bold smallest text-orange" >ACP Benefits</p>
-                        <p class="smallest" >ACP Promotion</p>
+                        <p class="bold smallest text-orange">ACP Benefits</p>
+                        <p class="smallest">ACP Promotion</p>
 
                       </div>
                       <p class="price smaller">
@@ -304,16 +318,23 @@
           <div class="card-tab">
             <div class="tab-content-show">
               <label class="sub-label address-change">
-                <span>Delivery Methods</span><a (click)="goToShippingSection()" data-cy="changeShippingAddress">Change</a>
+                <span>Delivery Methods</span><a (click)="goToShippingSection()"
+                  data-cy="changeShippingAddress">Change</a>
               </label>
               <div class="delivery-methods-section">
-                <img [src]="!!isStorePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon">
+                <img
+                  [src]="!!isStorePickup ? '/assets/icon/delivery-pick.svg' : (!!isInPersonDelivery ? '/assets/icon/person-delivery.svg' : '/assets/icon/delivery-home.svg' )"
+                  alt="delivery-icon">
                 <div class="details">
-                  <p class="smaller title" data-cy="deliveryMethod">{{!!isStorePickup? 'Store Pickup': 'Home Delivery'}}</p>
+                  <p class="smaller title" data-cy="deliveryMethod">{{!!isStorePickup ? 'Store Pickup' :
+                    (!!isInPersonDelivery ? 'In-Person Delivery' : 'Home Delivery')}}
+                  </p>
                   <div class="sub-content-show address" *ngIf="!!shippingAddress?.address1">
-                    <p class="desc">{{ !!shippingAddress?.name ?  shippingAddress?.name : shippingAddress?.alias}}, {{ shippingAddress?.address1 }}</p>
+                    <p class="desc">{{ !!shippingAddress?.name ? shippingAddress?.name : shippingAddress?.alias}}, {{
+                      shippingAddress?.address1 }}</p>
                     <p class="desc" *ngIf="!!shippingAddress?.address2">{{ shippingAddress?.address2 }}</p>
-                    <p class="desc">{{ shippingAddress?.city }}, {{ shippingAddress?.state }} {{ shippingAddress?.postalCode
+                    <p class="desc">{{ shippingAddress?.city }}, {{ shippingAddress?.state }} {{
+                      shippingAddress?.postalCode
                       }}</p>
                   </div>
                 </div>
@@ -346,15 +367,15 @@
                       <div class="detail">
                         <div class="detail-info">
                           <p class="bold" data-cy="SIMCard">SIM Card</p>
-                          <p class="quantity" data-cy="shippedSimQuantity" >Quantity: 1</p>
+                          <p class="quantity" data-cy="shippedSimQuantity">Quantity: 1</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
-        </div>
         </div>
         <div class="place-order-card" *ngIf="!isMigration || (!!isMigration && orderShippingMethod?.price > 0)">
           <div class="card-header">
@@ -384,8 +405,10 @@
                     <div class="details">
                       <div class="details-flex">
                         <div class="flex">
-                          <p class="title smaller primary-font-bold" data-cy="cardBrand">{{ !!cardInfo?.brand ? cardInfo?.brand : 'Credit' }} Card</p>
-                          <p class="desc smaller">Ending in {{ !!cardInfo?.last4 ? cardInfo?.last4 : (cardInfo?.cardNumber | slice:-4) }}</p>
+                          <p class="title smaller primary-font-bold" data-cy="cardBrand">{{ !!cardInfo?.brand ?
+                            cardInfo?.brand : 'Credit' }} Card</p>
+                          <p class="desc smaller">Ending in {{ !!cardInfo?.last4 ? cardInfo?.last4 :
+                            (cardInfo?.cardNumber | slice:-4) }}</p>
                         </div>
                         <div class="amount">
                           <p class="key smaller primary-font-bold">Deducted Amount</p>
@@ -441,11 +464,11 @@
               <div class="delivery-methods-section">
                 <img [src]="deviceImage" alt="ACP device">
                 <div class="details">
-                  <p class="smaller title" >{{userCart?.acpDevice?.title}}</p>
+                  <p class="smaller title">{{userCart?.acpDevice?.title}}</p>
                 </div>
               </div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -454,6 +477,7 @@
 <section class="navigation-section">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goToPaymentSection()">Back</button>
-    <button class="button primary" data-cy="submitBtn" (click)="placeOrder()">{{!!isGenericType ? 'Place Order' : 'Submit'}}</button>
+    <button class="button primary" data-cy="submitBtn" (click)="placeOrder()">{{!!isGenericType ? 'Place Order' :
+      'Submit'}}</button>
   </div>
 </section>

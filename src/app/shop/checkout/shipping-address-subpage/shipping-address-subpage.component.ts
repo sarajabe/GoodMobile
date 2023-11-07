@@ -360,19 +360,23 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
           this.removeEmptyValues(this.selectedShippingAddress);
           this.checkoutService.updateShippingAddress(this.selectedShippingAddress);
           this.checkoutService.updateStorePickup(undefined);
+          this.checkoutService.updateInPersonDelivery(undefined);
           sessionStorage.setItem('shippingAddress', JSON.stringify(this.selectedShippingAddress));
           sessionStorage.setItem('shippingMethod', JSON.stringify(this.orderShippingMethod));
           this.analyticsService.trackAddShippingInfoGA4(this.cart, this.orderShippingMethod.title, this.simPrice, this.simId);
           sessionStorage.removeItem('storePickup');
+          sessionStorage.removeItem('personPickup');
           this.goToNextStep();
         }
       } else if (this.option === 'store') {
         this.checkoutService.updateStorePickup(this.barCode);
+        this.checkoutService.updateInPersonDelivery(undefined);
         sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
         this.checkoutService.updateShippingAddress(undefined);
         this.checkoutService.updateShippingMethod(undefined);
         sessionStorage.removeItem('shippingAddress');
         sessionStorage.removeItem('shippingMethod');
+        sessionStorage.removeItem('personPickup');
         this.goToNextStep();
       } else if (this.option === 'person') {
         if (!!this.isPersonStepValidated) {
@@ -381,6 +385,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
           sessionStorage.removeItem('shippingAddress');
           sessionStorage.removeItem('shippingMethod');
           this.checkoutService.updateStorePickup(undefined);
+          this.checkoutService.updateInPersonDelivery(true);
           this.checkoutService.updateShippingAddress(undefined);
           this.checkoutService.updateShippingMethod(undefined);
           this.goToNextStep();

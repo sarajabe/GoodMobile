@@ -40,6 +40,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   public shippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public storedShippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public storePickup = false;
+  public inPerson = false;
   public storedPaymentId: string;
   public billingName: string;
   public deviceImageURL: string;
@@ -160,12 +161,15 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       address1: '', name: '', cardCode: '', cardNumber: '', city: '',
       country: '', expirationDate: '', id: '', postalCode: '', state: ''
     });
-    this.checkoutService.setPayments({card: {
-      address1: '', name: '', cardCode: '', cardNumber: '', city: '',
-      country: '', expirationDate: '', id: '', postalCode: '', state: ''
-    }});
+    this.checkoutService.setPayments({
+      card: {
+        address1: '', name: '', cardCode: '', cardNumber: '', city: '',
+        country: '', expirationDate: '', id: '', postalCode: '', state: ''
+      }
+    });
     this.checkoutService.updateShippingAddress({});
     this.checkoutService.updateStorePickup(false);
+    this.checkoutService.updateInPersonDelivery(false);
     sessionStorage.removeItem('false');
     setTimeout(() => {
       this.paymentSubscription.unsubscribe();
@@ -225,11 +229,18 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       }
     });
     this.checkoutService.storePickupSubject.pipe(takeWhile(() => this.alive)).subscribe((isPickup) => {
-     this.storePickup = isPickup;
-     if(!!this.storePickup) {
-      this.orderShippingMethod = {} as IShippingMethod;
-      this.calculateTotal();
-     }
+      this.storePickup = isPickup;
+      if (!!this.storePickup) {
+        this.orderShippingMethod = {} as IShippingMethod;
+        this.calculateTotal();
+      }
+    });
+    this.checkoutService.inPersonSubject.pipe(takeWhile(() => this.alive)).subscribe((isPerson) => {
+      this.inPerson = isPerson;
+      if (!!this.inPerson) {
+        this.orderShippingMethod = {} as IShippingMethod;
+        this.calculateTotal();
+      }
     });
     // listen to shipping method changes
     this.checkoutService.shippingMethodSubject.pipe(takeWhile(() => this.alive)).subscribe((method) => {
@@ -244,8 +255,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.paymentSubscription = this.checkoutService.paymentsSubject.pipe(takeWhile(() => this.alive)).subscribe((payments) => {
       this.useFromBalanceStored = !!payments && !!payments.balanceAmount ? payments.balanceAmount : this.useFromBalanceStored;
       this.useFromRewardStored = !!payments && !!payments.rewardsAmount ? payments.rewardsAmount : this.useFromRewardStored;
-      if (!!payments){
-        if(!!payments.card) {
+      if (!!payments) {
+        if (!!payments.card) {
           const paymentInfo = payments.card;
           this.usingPaymentProfile = !!paymentInfo.id;
           if (!!paymentInfo.id) {
@@ -275,8 +286,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           }
           this.calculateTaxesAndFees();
         } else {
-           this.paymentIsSelected = false;
-           this.calculateTotal();
+          this.paymentIsSelected = false;
+          this.calculateTotal();
         }
       } else {
         this.cardInfo = null;
@@ -493,48 +504,48 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       }
     }
     if (!!this.flowSettings) {
-    const shippingAddressStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
-    const paymentStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_CREDIT_CARD);
-    if (document.location.href.indexOf('shipping') > -1) {
-      // shippingAddressStep.state = FLOW_STATE.STATE_CURRENT;
-      if (this.currentStep.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT) {
-        shippingAddressStep.nextStepId = FLOW_STEPS_IDS.STEP_CHECKOUT;
-      }
-      this.currentStep = shippingAddressStep;
-      this.shippingInfoReceived = false;
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
-    } else if (document.location.href.indexOf('billing') > -1) {
-      paymentStep.state = FLOW_STATE.STATE_CURRENT;
-      if (this.currentStep.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT) {
-        paymentStep.nextStepId = FLOW_STEPS_IDS.STEP_CHECKOUT;
-      }
-      if (!!this.shippingAddress && (!!this.shippingAddress.address1 || !!this.shippingAddress.id)) {
-        this.shippingInfoReceived = true; // if the user enters shipping then goes to payment and clicks back and forward from browser
-        const shippingAddressStepIndex = this.flowSettings.steps.findIndex((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
-        this.flowSettings.steps[shippingAddressStepIndex].state = FLOW_STATE.STATE_DONE;
-      }
-      if(!!this.storePickup) {
-        const shippingAddressStepIndex = this.flowSettings.steps.findIndex((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
-        this.flowSettings.steps[shippingAddressStepIndex].state = FLOW_STATE.STATE_DONE;
-      }
-      const paymentStepIndex = this.flowSettings.steps
-        .findIndex((flowStep) => (flowStep.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_VOUCHER || flowStep.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_CREDIT_CARD));
-      this.flowSettings.steps[paymentStepIndex].state = FLOW_STATE.STATE_CURRENT;
-      this.currentStep = paymentStep;
-      this.paymentInfoReceived = false;
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PAYMENT_SECTION}`]);
-    } else if (document.location.href.indexOf('customerinfo') > -1) {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
-    }
-    else {
-      if (!!this.saveOnce) {
-        if (document.location.href.endsWith('/checkout') || document.location.href.indexOf('/checkout;') > -1) {
-          window.history.back();
+      const shippingAddressStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
+      const paymentStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_CREDIT_CARD);
+      if (document.location.href.indexOf('shipping') > -1) {
+        // shippingAddressStep.state = FLOW_STATE.STATE_CURRENT;
+        if (this.currentStep.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT) {
+          shippingAddressStep.nextStepId = FLOW_STEPS_IDS.STEP_CHECKOUT;
         }
-        this.saveOnce = false;
+        this.currentStep = shippingAddressStep;
+        this.shippingInfoReceived = false;
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
+      } else if (document.location.href.indexOf('billing') > -1) {
+        paymentStep.state = FLOW_STATE.STATE_CURRENT;
+        if (this.currentStep.flowStepId === FLOW_STEPS_IDS.STEP_CHECKOUT) {
+          paymentStep.nextStepId = FLOW_STEPS_IDS.STEP_CHECKOUT;
+        }
+        if (!!this.shippingAddress && (!!this.shippingAddress.address1 || !!this.shippingAddress.id)) {
+          this.shippingInfoReceived = true; // if the user enters shipping then goes to payment and clicks back and forward from browser
+          const shippingAddressStepIndex = this.flowSettings.steps.findIndex((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
+          this.flowSettings.steps[shippingAddressStepIndex].state = FLOW_STATE.STATE_DONE;
+        }
+        if (!!this.storePickup || !!this.inPerson) {
+          const shippingAddressStepIndex = this.flowSettings.steps.findIndex((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
+          this.flowSettings.steps[shippingAddressStepIndex].state = FLOW_STATE.STATE_DONE;
+        }
+        const paymentStepIndex = this.flowSettings.steps
+          .findIndex((flowStep) => (flowStep.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_VOUCHER || flowStep.flowStepId === FLOW_STEPS_IDS.STEP_PAYMENT_CREDIT_CARD));
+        this.flowSettings.steps[paymentStepIndex].state = FLOW_STATE.STATE_CURRENT;
+        this.currentStep = paymentStep;
+        this.paymentInfoReceived = false;
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PAYMENT_SECTION}`]);
+      } else if (document.location.href.indexOf('customerinfo') > -1) {
+        this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
+      }
+      else {
+        if (!!this.saveOnce) {
+          if (document.location.href.endsWith('/checkout') || document.location.href.indexOf('/checkout;') > -1) {
+            window.history.back();
+          }
+          this.saveOnce = false;
+        }
       }
     }
-  }
   }
   public enableShippingAddressEditing(event): void {
     const shippingAddressStep = this.flowSettings.steps.find((step) => step.flowStepId === FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
@@ -748,10 +759,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     }
     this.total = total >= 0 ? total : 0;
     this.checkoutService.setTotal(total);
-    this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod?.price ? this.orderShippingMethod.price : 0, taxes: !!this.paymentIsSelected ? this.taxes: 0, fees: !!this.paymentIsSelected ? this.fees: 0, discount: this.discount, method: !!this.orderShippingMethod && Object.keys(this.orderShippingMethod).length > 0 ? this.orderShippingMethod : null });
+    this.checkoutService.updateTotalDetails({ subtotal: this.baseTotal, shipping: !!this.orderShippingMethod?.price ? this.orderShippingMethod.price : 0, taxes: !!this.paymentIsSelected ? this.taxes : 0, fees: !!this.paymentIsSelected ? this.fees : 0, discount: this.discount, method: !!this.orderShippingMethod && Object.keys(this.orderShippingMethod).length > 0 ? this.orderShippingMethod : null });
   }
   public checkout(): void {
-    if(!!this.currentPlan?.cartType) {
+    if (!!this.currentPlan?.cartType) {
       switch (this.currentPlan.cartType) {
         case CART_TYPES.NEW_PLAN:
           this.checkoutNewPlan();
@@ -801,6 +812,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
               this.checkoutService.shippingAddressSubject.next(undefined);
               this.checkoutService.storePickupSubject.next(undefined);
+              this.checkoutService.inPersonSubject.next(undefined);
               this.router.navigate([ROUTE_URLS.HOME]);
               break;
             case CART_TYPES.PLAN_ITEMS:
@@ -813,6 +825,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.flowSettings.steps = [{} as IFlowIndicatorStep];
               this.checkoutService.shippingAddressSubject.next(undefined);
               this.checkoutService.storePickupSubject.next(undefined);
+              this.checkoutService.inPersonSubject.next(undefined);
               sessionStorage.setItem('removeFromCart', 'true');
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
@@ -823,6 +836,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
               this.checkoutService.shippingAddressSubject.next(undefined);
               this.checkoutService.storePickupSubject.next(undefined);
+              this.checkoutService.inPersonSubject.next(undefined);
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
             case CART_TYPES.MIGRATION:
@@ -832,6 +846,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
               this.checkoutService.shippingAddressSubject.next(undefined);
               this.checkoutService.storePickupSubject.next(undefined);
+              this.checkoutService.inPersonSubject.next(undefined);
               sessionStorage.setItem('isMigrationSimRemoved', 'true');
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
@@ -842,6 +857,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               this.appState.clearSessionStorage();
               this.checkoutService.shippingAddressSubject.next(undefined);
               this.checkoutService.storePickupSubject.next(undefined);
+              this.checkoutService.inPersonSubject.next(undefined);
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
           }
@@ -910,10 +926,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           basePlanId: this.currentPlan.basePlan.id,
           simsQuantity: this.currentPlan.simsQuantity,
           paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
-          shippingAddress: !this.storePickup ? this.shippingAddress: null,
+          shippingAddress: !this.storePickup && !this.inPerson ? this.shippingAddress : null,
           usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
           voucherCode: !!this.currentPlan.voucherData ? this.currentPlan.voucherData.code : null,
-          orderShipMethod: !!this.orderShippingMethod && !this.storePickup  ? this.orderShippingMethod.id : null,
+          orderShipMethod: !!this.orderShippingMethod && !this.storePickup && !this.inPerson ? this.orderShippingMethod.id : null,
           autoRenewPlan: this.autoRenewPlan,
           promoCode: !!this.autoRenewPlan ? '' + this.currentPlan.basePlan.promoPrice : null,
           savePaymentMethod: !!this.cardInfo && (!!this.cardInfo?.cardNumber || !!this.cardInfo?.id) && this.saveCcInfo ? true : false,
@@ -1018,8 +1034,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 this.cardInfo.type = 'creditCard';
               }
               purchaseDetails = {
-                shippingAddress: !this.storePickup ? this.shippingAddress: null,
-                orderShipMethod: !this.storePickup ? this.orderShippingMethod.id: null,
+                shippingAddress: !this.storePickup && !this.inPerson ? this.shippingAddress : null,
+                orderShipMethod: !this.storePickup && !this.inPerson ? this.orderShippingMethod.id : null,
                 userPlanId: this.activeUserPlanId,
                 simsQuantity: 1,
                 paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
@@ -1048,8 +1064,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 purchaseDetails = {
                   mdn: this.changeRequestMdn,
                   addOns: this.currentPlan.addOns,
-                  shippingAddress: !this.storePickup ? this.shippingAddress: null,
-                  orderShipMethod: !this.storePickup ? this.orderShippingMethod.id: null,
+                  shippingAddress: !this.storePickup && !this.inPerson ? this.shippingAddress : null,
+                  orderShipMethod: !this.storePickup && !this.inPerson ? this.orderShippingMethod.id : null,
                   userPlanId: this.activeUserPlanId,
                   simsQuantity: 1,
                   paymentInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber || !!this.cardInfo.state) ? this.cardInfo : null,
@@ -1104,8 +1120,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       purchaseDetails.newAddOnId = '';
     }
     if (this.currentPlan.simsQuantity > 0) {
-      purchaseDetails.shippingAddress = !this.storePickup ? this.shippingAddress: null;
-      purchaseDetails.orderShipMethod = !this.storePickup ? this.orderShippingMethod.id: null;
+      purchaseDetails.shippingAddress = !this.storePickup && !this.inPerson ? this.shippingAddress : null;
+      purchaseDetails.orderShipMethod = !this.storePickup && !this.inPerson ? this.orderShippingMethod.id : null;
       purchaseDetails.simsQuantity = 1;
     }
     const SIMDetails = { shippingPrice: this.orderShippingMethod.price, SIMPrice: this.newSimOrder.price, SIMId: this.newSimOrder.id };
@@ -1132,6 +1148,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.appState.clearSessionStorage();
       this.checkoutService.shippingAddressSubject.next(undefined);
       this.checkoutService.storePickupSubject.next(undefined);
+      this.checkoutService.inPersonSubject.next(undefined);
       this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.MANAGE_DEVICES}`]);
     }
     if (item === 'sim' && !!cartHasMultipleItems) { // cart has sim and addon and want to remove sim.
@@ -1147,6 +1164,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.flowSettings.steps = [{} as IFlowIndicatorStep];
       this.checkoutService.shippingAddressSubject.next(undefined);
       this.checkoutService.storePickupSubject.next(undefined);
+      this.checkoutService.inPersonSubject.next(undefined);
       this.analyticsService.trackRermoveFromCartGA4([this.currentPlan.basePlan]);
       this.router.navigate([ROUTE_URLS.HOME]);
     }
@@ -1157,6 +1175,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         this.appState.clearSessionStorage();
         this.checkoutService.shippingAddressSubject.next(undefined);
         this.checkoutService.storePickupSubject.next(undefined);
+        this.checkoutService.inPersonSubject.next(undefined);
         this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`]);
       } else {
         let cartAddons = this.currentPlan.addOns;
@@ -1184,15 +1203,15 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!!this.currentPlan.planExpectedDevice || (!this.currentPlan.planDevice && !this.currentPlan.planExpectedDevice)) {
       this.mobilePlansService.setPlanDevice(device); // send default SIM if the user selects a phone from shop or no device at all
     }
-    if(!!this.isVoucherPayment) {
+    if (!!this.isVoucherPayment) {
       this.mobilePlansService.setAutoRenewPlan(false);
     }
     const cart = {
       currentPlan: this.currentPlan,
-      shippingAddress: this.hasShippingItems && !this.storePickup ? this.shippingAddress : null,
+      shippingAddress: this.hasShippingItems && !this.storePickup && !this.inPerson ? this.shippingAddress : null,
       cardInfo: !!this.cardInfo && (!!this.cardInfo?.id || !!this.cardInfo?.cardNumber) ? this.cardInfo : null,
       options: {
-        autoRenewPlan: !!this.isVoucherPayment? false : this.currentPlan.autoRenewPlan,
+        autoRenewPlan: !!this.isVoucherPayment ? false : this.currentPlan.autoRenewPlan,
         isVoucherPayment: this.isVoucherPayment,
         saveCcInfo: !!this.cardInfo && !!this.cardInfo?.cardNumber ? !!this.saveCcInfo : false,
         usingPaymentProfile: !!this.cardInfo && !!this.cardInfo?.id ? true : false,
@@ -1203,7 +1222,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         haseSIM: this.currentPlan.eSIM,
         storePickup: !!this.currentPlan?.activationCode ? false : this.storePickup
       },
-      orderShippingMethod: this.hasShippingItems && !this.storePickup ? this.orderShippingMethod : null,
+      orderShippingMethod: this.hasShippingItems && !this.storePickup && !this.inPerson ? this.orderShippingMethod : null,
       hasShippingItems: this.hasShippingItems,
     };
     this.checkoutService.checkoutNewPlan(cart).then(() => {
@@ -1263,7 +1282,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         network: 'tmo', networkType: 'GSM', skuIdentifier: this.currentPlan.planDevice.skuIdentifier, skuNumber: this.currentPlan.planDevice.skuNumber
       }
     };
-    if (!this.currentPlan.eSIM && !this.storePickup) {
+    if (!this.currentPlan.eSIM && !this.storePickup && !this.inPerson) {
       orderDetails.shippingAddress = this.shippingAddress;
       orderDetails.orderShipMethod = this.orderShippingMethod.id
     } else {
@@ -1310,7 +1329,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         balanceAmount: this.useFromBalanceStored,
         storePickup: this.storePickup
       },
-        }).then(() => {
+    }).then(() => {
       this.appState.loading = false;
       this.mobilePlansService.clearUserCart();
       this.appState.clearSessionStorage();
@@ -1374,7 +1393,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         usingPaymentProfile: (!!this.cardInfo && !!this.cardInfo?.id ? true : false),
         savePaymentMethod: (!!this.cardInfo && !!this.cardInfo?.id ? false : this.saveCcInfo),
         rewardsAmount: this.useFromRewardStored, balanceAmount: this.useFromBalanceStored,
-        shippingAddress: !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup ? this.shippingAddress : null, orderShipMethod: !!this.orderShippingMethod && !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup? this.orderShippingMethod.id : null, userPlanId: this.activeUserPlanId, simsQuantity: 1, haseSIM: this.currentPlan.eSIM,
+        shippingAddress: !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup && !this.inPerson ? this.shippingAddress : null, orderShipMethod: !!this.orderShippingMethod && !!this.shippingAddress && this.shippingAddress.address1 && !this.storePickup && !this.inPerson ? this.orderShippingMethod.id : null, userPlanId: this.activeUserPlanId, simsQuantity: 1, haseSIM: this.currentPlan.eSIM,
         storePickup: this.storePickup
       },
       this.taxes, this.fees, false, this.currentPlan, this.orderShippingMethod.price, this.newSimOrder.price, this.newSimOrder.id)
@@ -1409,7 +1428,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!this.isLoggedIn) {
       this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SIGN_IN);
     } else {
-      if (!!this.hasShippingItems && this.storedShippingAddress == null && !this.storePickup) { // no Activation code then there is a free SIM
+      if (!!this.hasShippingItems && this.storedShippingAddress == null && !this.storePickup && !this.inPerson) { // no Activation code then there is a free SIM
         this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
 
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
@@ -1461,7 +1480,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
   private getStoredData(): void {
     this.storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
-    this.storePickup =  JSON.parse(sessionStorage.getItem('storePickup'));
+    this.storePickup = JSON.parse(sessionStorage.getItem('storePickup'));
+    this.inPerson = JSON.parse(sessionStorage.getItem('personPickup'));
     if (!!this.storedShippingAddress) {
       this.shippingAddress = Object.assign({}, this.storedShippingAddress) as IFirebaseAddress;
       this.shippingInfoReceived = true;
@@ -1469,7 +1489,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     const storedShippingMethod = JSON.parse(sessionStorage.getItem('shippingMethod'));
     if (!!storedShippingMethod) {
       this.orderShippingMethod = storedShippingMethod;
-    } else if (!storedShippingMethod && !this.storePickup){
+    } else if (!storedShippingMethod && !this.storePickup && !this.inPerson) {
       this.shippingConfigurationService.shippingMethods.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
         this.orderShippingMethod = methods[0];
       }, (error) => {
@@ -1493,7 +1513,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
   private applyResetEstimatedTaxes(error?): void {
     this.appState.loading = false;
-    if(!!error) {
+    if (!!error) {
       this.toastHelper.showAlert(error.error.message);
     }
     this.estimatedTaxes = 0;

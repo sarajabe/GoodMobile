@@ -25,7 +25,6 @@ export class FooterMainNavbarComponent implements OnInit {
   public showShop: boolean;
   public showSupport: boolean;
   public showAbout: boolean;
-  public sharedContent;
   public innerWidth: any;
   public isLoggedIn = false;
   public userProfile: IUser;
@@ -49,7 +48,6 @@ export class FooterMainNavbarComponent implements OnInit {
       this.displayAcpSection = res;
     });
     this.innerWidth = window.innerWidth;
-    this.sharedContent = this.contentful.getContent('sharedContent');
   }
 
   @HostListener('window:resize', ['$event'])

@@ -69,7 +69,7 @@ import { InPersonDeliverySelectorComponent } from './in-person-delivery-selector
     ActivationHeaderComponent,
     StoresListComponent,
     InPersonDeliverySelectorComponent
-   ],
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -79,7 +79,7 @@ import { InPersonDeliverySelectorComponent } from './in-person-delivery-selector
     NgxPaginationModule,
     MatAutocompleteModule,
     SwiperModule
-    ],
+  ],
   exports: [
     HeaderMainNavbarComponent,
     FooterMainNavbarComponent,

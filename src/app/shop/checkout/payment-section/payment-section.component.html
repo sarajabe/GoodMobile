@@ -1,345 +1,384 @@
 <section class="payment-section checkout-step">
   <div class="progress-banner">
-    <div class="step" *ngIf="!!shippingAddress || !!isStorePickup">
-        <picture>
-            <source srcset='assets/icon/enabled-checkout-shipping-tablet.png' media="(min-width: 640px)">
-            <source srcset='assets/icon/enabled-checkout-shipping-mobile.png' media="(min-width: 320px)">
-            <img src="assets/icon/enabled-checkout-shipping-tablet.png" alt="shipping" class="step-image">
-        </picture>
+    <div class="step" *ngIf="!!shippingAddress || !!isStorePickup || !!isInPersonDelivery">
+      <picture>
+        <source srcset='assets/icon/enabled-checkout-shipping-tablet.png' media="(min-width: 640px)">
+        <source srcset='assets/icon/enabled-checkout-shipping-mobile.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-shipping-tablet.png" alt="shipping" class="step-image">
+      </picture>
     </div>
-    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots" *ngIf="!!shippingAddress || !!isStorePickup">
+    <img class="tracking-icon dots" src="assets/icon/tracking-dots.svg" alt="dots"
+      *ngIf="!!shippingAddress || !!isStorePickup || !!isInPersonDelivery">
     <div class="step">
-        <picture>
-            <source srcset='assets/icon/enabled-checkout-payment-tablet.png' media="(min-width: 640px)">
-            <source srcset='assets/icon/enabled-checkout-payment-mobile.png' media="(min-width: 320px)">
-            <img src="assets/icon/enabled-checkout-payment-tablet.png" alt="payment" class="step-image">
-        </picture>
+      <picture>
+        <source srcset='assets/icon/enabled-checkout-payment-tablet.png' media="(min-width: 640px)">
+        <source srcset='assets/icon/enabled-checkout-payment-mobile.png' media="(min-width: 320px)">
+        <img src="assets/icon/enabled-checkout-payment-tablet.png" alt="payment" class="step-image">
+      </picture>
     </div>
     <picture>
       <source srcset='assets/icon/tracking-dots-disabled.svg' media="(min-width: 320px)">
       <img class="tracking-icon dots" src="assets/icon/tracking-dots-disabled.svg" alt="dots">
-  </picture>
-   
+    </picture>
+
     <div class="step">
-        <picture>
-            <source srcset='assets/icon/disabled-checkout-overview-tablet.png' media="(min-width: 640px)">
-            <source srcset='assets/icon/disabled-checkout-overview-mobile.png' media="(min-width: 320px)">
-            <img src="assets/icon/disabled-checkout-overview-tablet.png" alt="overview" class="step-image">
-        </picture>
+      <picture>
+        <source srcset='assets/icon/disabled-checkout-overview-tablet.png' media="(min-width: 640px)">
+        <source srcset='assets/icon/disabled-checkout-overview-mobile.png' media="(min-width: 320px)">
+        <img src="assets/icon/disabled-checkout-overview-tablet.png" alt="overview" class="step-image">
+      </picture>
     </div>
-</div>
-<div class="page-section payment">
-  <div class="cart-total" id="cart-section">
-    <p>Checkout</p>
-    <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
   </div>
-  <h1 class="step-title" id="title">How do you want to pay?</h1>
-  <ng-container *ngIf="!isMigration || (!!isMigration &&  (!!shippingMethod && shippingMethod.price > 0))">
-    <div class="info-banner error-background" *ngIf="!!morePaymentNeeded">
-      <div class="flex center">
-        <img src="assets/icon/error-icon.svg" alt="Error Icon"/>
-        <div class="banner-content">
-          <p class="description last" data-cy="paymentRequired"><b>Note: </b>Please make sure you specify the payment method to complete your request.</p>
+  <div class="page-section payment">
+    <div class="cart-total" id="cart-section">
+      <p>Checkout</p>
+      <p data-cy="total"><span>Est. Total:</span>{{total | currency:'USD':'symbol':0}}</p>
+    </div>
+    <h1 class="step-title" id="title">How do you want to pay?</h1>
+    <ng-container *ngIf="!isMigration || (!!isMigration &&  (!!shippingMethod && shippingMethod.price > 0))">
+      <div class="info-banner error-background" *ngIf="!!morePaymentNeeded">
+        <div class="flex center">
+          <img src="assets/icon/error-icon.svg" alt="Error Icon" />
+          <div class="banner-content">
+            <p class="description last" data-cy="paymentRequired"><b>Note: </b>Please make sure you specify the payment
+              method to complete your request.</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="payment-option">
-      <label class="payment-container">
-        <input type="checkbox" data-cy="creditCardPayment" [(ngModel)]="payWithCard" class="title-checkbox" (change)="togglePayWithCard()">
-        <img src="assets/icon/credit-card.png" alt="credit card" /> 
-        <h6 class="checkbox-label">Credit Card</h6>
-      </label>
-    </div>
-    <div class="checkout-card" *ngIf="!!payWithCard">
-      <p class="card-title">Pay with Credit Card</p>
-      <div class="card-content">
-        <p class="info">Please select a banking card or add a new one:</p>
-        <div class="methods-list" *ngIf="!!methodsList && methodsList?.length > 0">
-          <label class="form-control" *ngFor="let method of methodsList; let i=index" [class.hidden]="i > 1 && !showAllPayments"
-            [class.last]="(i === 1 && !showAllPayments) || (i === (methodsList?.length - 1) && !!showAllPayments) || (methodsList?.length === 1)">
-            <div class="radio-container">
-              <input type="radio" id="CC_{{method.id}}" [value]='method'  data-cy="paymentMethod"
-                [(ngModel)]="selectedPaymentMethod" (change)="toggleExistingPaymentMethod(method, $event)" [disabled]="!!disableCard">
-            </div>
-            <div class="details">
-              <p><b>{{!!method?.brand ? method?.brand : 'Card'}} ending in {{method?.last4}}</b></p>
-              <p>{{method?.fullName}}</p>
-              <p>{{method?.address1}}{{!!method?.address2 ? ',' + method?.address2 : ''}}</p>
-              <p>{{method?.city}}, {{method?.state}} {{method?.postalCode}}</p>
-            </div>
-          </label>
-        </div>
-        <div class="methods-list" *ngIf="!!methodsList && methodsList?.length == 0 && !!enteredCard">
-          <label class="form-control" >
-            <div class="radio-container">
-              <input type="radio" id="CC_new" [value]='enteredCard'  data-cy="paymentMethod"
-                [(ngModel)]="enteredCard" (change)="toggleExistingPaymentMethod(method, $event)" [disabled]="!!disableCard">
-            </div>
-            <div class="details">
-              <p><b>{{!!enteredCard?.brand ? enteredCard?.brand : 'Card'}} ending in {{enteredCard?.last4}}</b></p>
-              <p>{{enteredCard?.fullName}}</p>
-              <p>{{enteredCard?.address1}}{{!!enteredCard?.address2 ? ',' + enteredCard?.address2 : ''}}</p>
-              <p>{{enteredCard?.city}}, {{enteredCard?.state}} {{enteredCard?.postalCode}}</p>
-            </div>
-          </label>
-        </div>
-        <label class="payment-container autopay" *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART"> 
-          <input type="checkbox" [(ngModel)]="autoRenew" (change)="updateAutoRenew()"  class="auto-pay-checkbox" >
-          <h5 class="checkbox-label">Allow Auto Payment</h5>
+      <div class="payment-option">
+        <label class="payment-container">
+          <input type="checkbox" data-cy="creditCardPayment" [(ngModel)]="payWithCard" class="title-checkbox"
+            (change)="togglePayWithCard()">
+          <img src="assets/icon/credit-card.png" alt="credit card" />
+          <h6 class="checkbox-label">Credit Card</h6>
         </label>
-        <div class="showMore" *ngIf="methodsList?.length > 2" (click)="showAllPayments = !showAllPayments">
-          <p class="more" data-cy="showMoreAndLess">{{!!showAllPayments ? 'Show less' : 'Show more'}}</p>
-          <i class="arrow down" [class.rotate]="!!showAllPayments"></i>
-        </div>
-        <div class="add-new" *ngIf="!!methodsList && (methodsList?.length < 10 || methodsList?.length == 0) && !disableCard">
-          <div class="add-trigger" (click)="toggleNewCardForm()">
-            <img class="add" [src]="!showAddCardSection ? '/assets/icon/plus.svg' : '/assets/icon/minus.svg'" alt="add" />
-            <p class="add-text" data-cy="addAnotherCard">{{!!methodsList && methodsList?.length < 10 && methodsList?.length > 0 ? 'Add another card' : 'Add new card'}}</p>
+      </div>
+      <div class="checkout-card" *ngIf="!!payWithCard">
+        <p class="card-title">Pay with Credit Card</p>
+        <div class="card-content">
+          <p class="info">Please select a banking card or add a new one:</p>
+          <div class="methods-list" *ngIf="!!methodsList && methodsList?.length > 0">
+            <label class="form-control" *ngFor="let method of methodsList; let i=index"
+              [class.hidden]="i > 1 && !showAllPayments"
+              [class.last]="(i === 1 && !showAllPayments) || (i === (methodsList?.length - 1) && !!showAllPayments) || (methodsList?.length === 1)">
+              <div class="radio-container">
+                <input type="radio" id="CC_{{method.id}}" [value]='method' data-cy="paymentMethod"
+                  [(ngModel)]="selectedPaymentMethod" (change)="toggleExistingPaymentMethod(method, $event)"
+                  [disabled]="!!disableCard">
+              </div>
+              <div class="details">
+                <p><b>{{!!method?.brand ? method?.brand : 'Card'}} ending in {{method?.last4}}</b></p>
+                <p>{{method?.fullName}}</p>
+                <p>{{method?.address1}}{{!!method?.address2 ? ',' + method?.address2 : ''}}</p>
+                <p>{{method?.city}}, {{method?.state}} {{method?.postalCode}}</p>
+              </div>
+            </label>
           </div>
-          <section class="add-new-card-section" *ngIf="!!showAddCardSection">
-            <form [formGroup]="paymentInfoForm" class="checkout-payment-form">
-              <h3 class="form-label">Credit Card Details:</h3>
-              <fieldset class="relative">
-                <label for="fullName">Name on card <span class="form-text error validation-message">*</span></label>
-                <input id="fullName" data-cy="fullName" type="text" name="fullName"  formControlName="fullName"
-                  minlength="1" maxlength="30"  autocomplete="cc-given-name" class="input-icon">
-                <img class="icon" src="assets/icon/user.svg" />
-                <label class="validation-message" data-cy="requiredNameMsg"
-                  *ngIf="paymentInfoForm.controls.fullName.touched && !paymentInfoForm.controls.fullName.value">Name on card is
-                  required. </label>
-                <label class="validation-message" data-cy="invalidNameOnCardMsg"
-                  *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
-                  Name. </label>
-              </fieldset>
-              <fieldset class="relative">
-                <label for="cardNumber">Card Number <span class="form-text error validation-message">*</span></label>
-                <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber formControlName="cardNumber" maxlength="19"
-                  autocomplete="cc-number" class="input-icon">
-                <img class="icon" src="assets/icon/credit.svg" />
-                <label class="validation-message" data-cy="requiredCardNoMsg"
-                  *ngIf="paymentInfoForm.controls.cardNumber.touched && paymentInfoForm.controls.cardNumber.hasError('required')">Card number is required. </label>
-                <label class="validation-message" data-cy="invalidCardNoMsg"
-                  *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid && paymentInfoForm.controls.cardNumber.value">Invalid
-                  Credit Card Number. </label>
-              </fieldset>
-              <fieldset class="multiple">
-                <div class="cvv relative">
-                  <label for="cardCode">CVV <span class="form-text error validation-message">*</span></label>
-                  <input id="cardCode" data-cy="cardCode" type="password" name="cardCode" restrictNumbers
-                    formControlName="cardCode" minlength="3" maxlength="4" autocomplete="cc-csc"  class="input-icon">
-                  <img class="icon" src="assets/icon/lock.svg" />
-                  <label class="validation-message" data-cy="cvvRequiredMsg"
-                    *ngIf="paymentInfoForm.controls.cardCode.touched && paymentInfoForm.controls.cardCode.hasError('required')">CVV
-                    is required. </label>
-                  <label class="validation-message" data-cy="cvvInvalidMsg"
-                    *ngIf="paymentInfoForm.controls.cardCode.dirty && !paymentInfoForm.controls.cardCode.valid && paymentInfoForm.controls.cardCode.value">CVV
-                    is invalid. </label>
-                </div>
-                <div class="date">
-                  <div class="expiry">
-                    <fieldset>
-                      <label for="cardExpirationMonth">Expiry Month <span class="form-text error validation-message">*</span></label>
-                      <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth" formControlName="cardExpirationMonth"
-                        autocomplete="cc-exp-month">
-                        <option value="" selected disabled hidden>MM</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                      </select>
-                    </fieldset>
-                    <fieldset>
-                      <label for="cardExpirationYear">Expiry Year <span class="form-text error validation-message">*</span></label>
-                      <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear" formControlName="cardExpirationYear"
-                        autocomplete="cc-exp-year">
-                        <option value="" selected disabled hidden>YY</option>
-                        <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}</option>
-                      </select>
-                    </fieldset>
+          <div class="methods-list" *ngIf="!!methodsList && methodsList?.length == 0 && !!enteredCard">
+            <label class="form-control">
+              <div class="radio-container">
+                <input type="radio" id="CC_new" [value]='enteredCard' data-cy="paymentMethod" [(ngModel)]="enteredCard"
+                  (change)="toggleExistingPaymentMethod(method, $event)" [disabled]="!!disableCard">
+              </div>
+              <div class="details">
+                <p><b>{{!!enteredCard?.brand ? enteredCard?.brand : 'Card'}} ending in {{enteredCard?.last4}}</b></p>
+                <p>{{enteredCard?.fullName}}</p>
+                <p>{{enteredCard?.address1}}{{!!enteredCard?.address2 ? ',' + enteredCard?.address2 : ''}}</p>
+                <p>{{enteredCard?.city}}, {{enteredCard?.state}} {{enteredCard?.postalCode}}</p>
+              </div>
+            </label>
+          </div>
+          <label class="payment-container autopay"
+            *ngIf="!!cart && cart?.cartType !== CART_TYPES.MIGRATION && cart?.cartType !== CART_TYPES.PLAN_ITEMS && cart?.cartType !== CART_TYPES.GENERIC_CART">
+            <input type="checkbox" [(ngModel)]="autoRenew" (change)="updateAutoRenew()" class="auto-pay-checkbox">
+            <h5 class="checkbox-label">Allow Auto Payment</h5>
+          </label>
+          <div class="showMore" *ngIf="methodsList?.length > 2" (click)="showAllPayments = !showAllPayments">
+            <p class="more" data-cy="showMoreAndLess">{{!!showAllPayments ? 'Show less' : 'Show more'}}</p>
+            <i class="arrow down" [class.rotate]="!!showAllPayments"></i>
+          </div>
+          <div class="add-new"
+            *ngIf="!!methodsList && (methodsList?.length < 10 || methodsList?.length == 0) && !disableCard">
+            <div class="add-trigger" (click)="toggleNewCardForm()">
+              <img class="add" [src]="!showAddCardSection ? '/assets/icon/plus.svg' : '/assets/icon/minus.svg'"
+                alt="add" />
+              <p class="add-text" data-cy="addAnotherCard">{{!!methodsList && methodsList?.length < 10 &&
+                  methodsList?.length> 0 ? 'Add another card' : 'Add new card'}}</p>
+            </div>
+            <section class="add-new-card-section" *ngIf="!!showAddCardSection">
+              <form [formGroup]="paymentInfoForm" class="checkout-payment-form">
+                <h3 class="form-label">Credit Card Details:</h3>
+                <fieldset class="relative">
+                  <label for="fullName">Name on card <span class="form-text error validation-message">*</span></label>
+                  <input id="fullName" data-cy="fullName" type="text" name="fullName" formControlName="fullName"
+                    minlength="1" maxlength="30" autocomplete="cc-given-name" class="input-icon">
+                  <img class="icon" src="assets/icon/user.svg" />
+                  <label class="validation-message" data-cy="requiredNameMsg"
+                    *ngIf="paymentInfoForm.controls.fullName.touched && !paymentInfoForm.controls.fullName.value">Name
+                    on card is
+                    required. </label>
+                  <label class="validation-message" data-cy="invalidNameOnCardMsg"
+                    *ngIf="paymentInfoForm.controls.fullName.dirty && paymentInfoForm.controls.fullName.errors?.pattern">Invalid
+                    Name. </label>
+                </fieldset>
+                <fieldset class="relative">
+                  <label for="cardNumber">Card Number <span class="form-text error validation-message">*</span></label>
+                  <input id="cardNumber" data-cy="cardNumber" type="tel" name="cardNumber" ccNumber
+                    formControlName="cardNumber" maxlength="19" autocomplete="cc-number" class="input-icon">
+                  <img class="icon" src="assets/icon/credit.svg" />
+                  <label class="validation-message" data-cy="requiredCardNoMsg"
+                    *ngIf="paymentInfoForm.controls.cardNumber.touched && paymentInfoForm.controls.cardNumber.hasError('required')">Card
+                    number is required. </label>
+                  <label class="validation-message" data-cy="invalidCardNoMsg"
+                    *ngIf="paymentInfoForm.controls.cardNumber.dirty && !paymentInfoForm.controls.cardNumber.valid && paymentInfoForm.controls.cardNumber.value">Invalid
+                    Credit Card Number. </label>
+                </fieldset>
+                <fieldset class="multiple">
+                  <div class="cvv relative">
+                    <label for="cardCode">CVV <span class="form-text error validation-message">*</span></label>
+                    <input id="cardCode" data-cy="cardCode" type="password" name="cardCode" restrictNumbers
+                      formControlName="cardCode" minlength="3" maxlength="4" autocomplete="cc-csc" class="input-icon">
+                    <img class="icon" src="assets/icon/lock.svg" />
+                    <label class="validation-message" data-cy="cvvRequiredMsg"
+                      *ngIf="paymentInfoForm.controls.cardCode.touched && paymentInfoForm.controls.cardCode.hasError('required')">CVV
+                      is required. </label>
+                    <label class="validation-message" data-cy="cvvInvalidMsg"
+                      *ngIf="paymentInfoForm.controls.cardCode.dirty && !paymentInfoForm.controls.cardCode.valid && paymentInfoForm.controls.cardCode.value">CVV
+                      is invalid. </label>
                   </div>
-                  <label class="validation-message no-wrap" data-cy="expiryMonthRequiredMsg"
-                     *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
+                  <div class="date">
+                    <div class="expiry">
+                      <fieldset>
+                        <label for="cardExpirationMonth">Expiry Month <span
+                            class="form-text error validation-message">*</span></label>
+                        <select id="cardExpirationMonth" data-cy="cardExpirationMonth" name="cardExpirationMonth"
+                          formControlName="cardExpirationMonth" autocomplete="cc-exp-month">
+                          <option value="" selected disabled hidden>MM</option>
+                          <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </select>
+                      </fieldset>
+                      <fieldset>
+                        <label for="cardExpirationYear">Expiry Year <span
+                            class="form-text error validation-message">*</span></label>
+                        <select id="cardExpirationYear" data-cy="cardExpirationYear" name="cardExpirationYear"
+                          formControlName="cardExpirationYear" autocomplete="cc-exp-year">
+                          <option value="" selected disabled hidden>YY</option>
+                          <option *ngFor="let expYear of expirationYearRange" value="{{expYear}}">{{expYear}}</option>
+                        </select>
+                      </fieldset>
+                    </div>
+                    <label class="validation-message no-wrap" data-cy="expiryMonthRequiredMsg"
+                      *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationMonth.hasError('required')">
                       Expiration month is required
-                  </label>
-                  <label class="validation-message no-wrap" data-cy="expiryYearRequiredMsg"
+                    </label>
+                    <label class="validation-message no-wrap" data-cy="expiryYearRequiredMsg"
                       *ngIf="(paymentInfoForm.controls.cardExpirationYear.touched || paymentInfoForm.controls.cardExpirationMonth.touched) && paymentInfoForm.controls.cardExpirationYear.hasError('required')">
-                          Expiration year is required
-                  </label>
-                  <label class="validation-message no-wrap" data-cy="invalidExpiryDateMsg"
-                    *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
-                    Expiration date must be valid
-                  </label>
+                      Expiration year is required
+                    </label>
+                    <label class="validation-message no-wrap" data-cy="invalidExpiryDateMsg"
+                      *ngIf="(paymentInfoForm.controls.cardExpirationMonth.touched || paymentInfoForm.controls.cardExpirationYear.touched) && paymentInfoForm.errors?.cardExpirationInvalid && (paymentInfoForm.controls.cardExpirationMonth.valid || !paymentInfoForm.controls.cardExpirationYear.valid)">
+                      Expiration date must be valid
+                    </label>
+                  </div>
+                </fieldset>
+              </form>
+              <div class="save-card">
+                <label class="payment-container">
+                  <input type="checkbox" d="saveCardDetailsCheckbox" name="saveCardDetailsCheckbox"
+                    [checked]="saveCCInfo" [(ngModel)]="saveCCInfo" (change)="updateSaveCCInfoChanged()"
+                    [disabled]="!!autoRenew" [class.disabled]="!!autoRenew">
+                  <b> Save card details</b>
+                </label>
+              </div>
+              <div class="billing-section">
+                <h4 class="form-label">Billing Address</h4>
+                <label class="payment-container" *ngIf="!!shippingAddress">
+                  <input type="checkbox" id="billingSameAsShipping" name="billingSameAsShipping"
+                    [(ngModel)]="billingSameAsShipping" (change)="toggleSharedAddress()">
+                  <b>Same as shipping address.</b>
+                </label>
+                <div class="shipping-banner" *ngIf="!!billingSameAsShipping">
+                  <img class="info-icon" alt="info" src="assets/icon/location.svg">
+                  <div class="banner-note">
+                    <p class="title"><b>{{!!shippingAddress?.name ? shippingAddress?.name : shippingAddress?.alias}}</b>
+                    </p>
+                    <p class="note">{{shippingAddress?.address1}}</p>
+                    <p class="note" *ngIf="shippingAddress?.address2">{{shippingAddress?.address2}}</p>
+                    <p class="note">{{shippingAddress?.city}}, {{shippingAddress?.state}}
+                      {{shippingAddress?.postalCode}}</p>
+                  </div>
                 </div>
-              </fieldset>
-            </form>
-            <div class="save-card">
-              <label class="payment-container">
-                <input type="checkbox" d="saveCardDetailsCheckbox" name="saveCardDetailsCheckbox" [checked]="saveCCInfo"
-                [(ngModel)]="saveCCInfo" (change)="updateSaveCCInfoChanged()"
-                [disabled]="!!autoRenew" [class.disabled]="!!autoRenew" >
-               <b> Save card details</b>
-              </label>
-            </div>
-            <div class="billing-section">
-              <h4 class="form-label">Billing Address</h4>
-              <label class="payment-container"  *ngIf="!!shippingAddress">
-                <input type="checkbox" id="billingSameAsShipping" name="billingSameAsShipping"
-                  [(ngModel)]="billingSameAsShipping" (change)="toggleSharedAddress()">
-                <b>Same as shipping address.</b>
-              </label>
-              <div class="shipping-banner" *ngIf="!!billingSameAsShipping">
-                <img class="info-icon" alt="info" src="assets/icon/location.svg">
-                <div class="banner-note">
-                  <p class="title"><b>{{!!shippingAddress?.name ? shippingAddress?.name : shippingAddress?.alias}}</b></p>
-                  <p class="note">{{shippingAddress?.address1}}</p>
-                  <p class="note" *ngIf="shippingAddress?.address2">{{shippingAddress?.address2}}</p>
-                  <p class="note">{{shippingAddress?.city}}, {{shippingAddress?.state}} {{shippingAddress?.postalCode}}</p>
+                <div class="billing-address-section" *ngIf="!billingSameAsShipping">
+                  <app-address-lookup [displayedAddress]="billingAddress" (isValid)="setValidAddress($event)"
+                    [resetForm]="resetBillingForm" (addressChange)="addressLookUpChanged($event)" [showAlias]="true"
+                    [touchForm]="touchBillingForm">
+                  </app-address-lookup>
+                </div>
+                <div class="add-actions">
+                  <p class="transparent" (click)="toggleNewCardForm()">Cancel</p>
+                  <button class="button primary" data-cy="saveBtn" aria-label="save" (click)="saveCard()">{{!!saveCCInfo
+                    ? 'Save' : 'Proceed'}}</button>
                 </div>
               </div>
-              <div class="billing-address-section" *ngIf="!billingSameAsShipping">
-                <app-address-lookup [displayedAddress]="billingAddress" (isValid)="setValidAddress($event)" [resetForm]="resetBillingForm"
-                  (addressChange)="addressLookUpChanged($event)" [showAlias]="true" [touchForm]="touchBillingForm">
-                </app-address-lookup>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="payment-option" *ngIf="totalBalance > 0">
+        <label class="payment-container balance">
+          <input type="checkbox" [(ngModel)]="payWithTotalBalance" class="title-checkbox"
+            (change)="togglePayWithTotalBalance()">
+          <img src="assets/icon/balance.svg" alt="Balance" />
+          <div class="balance-amounts"><span>Account Balance</span><span class="amount">{{(totalBalance - balanceAmount
+              - rewardAmount) | currency}}</span></div>
+        </label>
+      </div>
+      <div class="checkout-card" *ngIf="payWithTotalBalance">
+        <div class="balance-title">
+          <p class="card-title">Pay with Account Balance</p>
+          <p class="amount-title">Total Balance <span class="amount">{{(totalBalance - balanceAmount - rewardAmount) |
+              currency}}</span></p>
+        </div>
+        <div class="card-content">
+          <div class="balance-section"
+            *ngIf="!!userAccount && userAccount.accountBalance > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
+            <label class="payment-container amounts">
+              <input type="checkbox" [(ngModel)]="payWithBalance" class="title-checkbox"
+                (change)="togglePayWithBalance()">
+              <span>Pay from Account Balance</span>
+            </label>
+            <div class="available-section">
+              <img src="assets/icon/green-dollar.svg" alt="green dollar sign" />
+              <p class="available">Available </p>
+              <p class="amount">{{(userAccount?.accountBalance - balanceAmount) | currency}}</p>
+            </div>
+          </div>
+          <div class="balance-payment" *ngIf="!!payWithBalance">
+            <p class="note">Please enter an amount to use from your account balance</p>
+            <div class="payment-amount">
+              <div class="input-payment">
+                <label for="balance">Balance<span class="form-text error validation-message">*</span></label>
+                <input id="balance" data-cy="balance" class="amount-input" type="text" numbersOnly
+                  [max]="maxBalanceAllowed" [min]="0" [(ngModel)]="usedBalance" [pattern]="decimalPattern"
+                  #balance="ngModel" (input)="changeBalance()" (blur)="setBalance()">
               </div>
-              <div class="add-actions">
-                <p class="transparent" (click)="toggleNewCardForm()">Cancel</p>
-                <button class="button primary" data-cy="saveBtn" aria-label="save" (click)="saveCard()">{{!!saveCCInfo ? 'Save' : 'Proceed'}}</button>
+              <button class="button primary" (click)="applyBalance()" type="button" aria-label="apply">Apply</button>
+            </div>
+            <label class="validation-message" *ngIf="!!usedBalance && usedBalance > (total - rewardAmount)">Max amount
+              required is {{total - rewardAmount}}</label>
+            <label class="validation-message"
+              *ngIf="!balance.valid && usedBalance > userAccount?.accountBalance">Invalid amount</label>
+            <div class="balance-banner" *ngIf="!!balanceApplied">
+              <img src="assets/icon/green-dollar.svg" alt="green dollar sign" />
+              <p class="applied"><b>{{balanceAmount | currency}}</b> Successfully Applied</p>
+            </div>
+          </div>
+          <div class="balance-section"
+            *ngIf="!!userAccount && !!userAccount.rewards && userAccount.rewards.available > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
+            <label class="payment-container amounts">
+              <input type="checkbox" [(ngModel)]="payWithReward" class="title-checkbox"
+                (change)="togglePayWithReward()">
+              <span>Pay from Refer a Friend Reward</span>
+            </label>
+            <div class="available-section">
+              <img src="assets/icon/green-dollar.svg" alt="green dollar sign" />
+              <p class="available">Available </p>
+              <p class="amount">{{userAccount.rewards.available - rewardAmount | currency}}</p>
+            </div>
+          </div>
+          <div class="balance-payment" *ngIf="!!payWithReward">
+            <p class="note">Please enter an amount to use from Refer a Friend Reward</p>
+            <div class="payment-amount">
+              <div class="input-payment">
+                <label for="reward">Balance<span class="form-text error validation-message">*</span></label>
+                <input id="reward" class="amount-input" type="number" max="maxRewardAllowed" [min]="0"
+                  [(ngModel)]="usedReward" [pattern]="decimalPattern" #reward="ngModel" (input)="changeReward()"
+                  (blur)="setReward()" />
+              </div>
+              <button class="button primary" (click)="applyReward()" type="button" aria-label="apply">Apply</button>
+            </div>
+            <label class="validation-message" *ngIf="!!usedReward && usedReward > (total - balanceAmount)">Max amount
+              required is {{total - balanceAmount}}</label>
+            <label class="validation-message" *ngIf="!!usedReward && (usedReward > userAccount?.rewards?.available)">Max
+              amount available is {{userAccount?.rewards?.available}}</label>
+            <label class="validation-message" *ngIf="!reward.valid">Invalid amount</label>
+            <div class="balance-banner" *ngIf="!!rewardApplied">
+              <img src="assets/icon/green-dollar.svg" alt="green dollar sign" />
+              <p class="applied"><b>{{rewardAmount | currency}}</b> Successfully Applied</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="payment-option" *ngIf="!!showVoucherSection">
+        <label class="payment-container voucher">
+          <input type="checkbox" [(ngModel)]="payWithVoucher" class="title-checkbox" (change)="togglePayWithVoucher()">
+          <img src="assets/icon/voucher-illu.svg" alt="Voucher" />
+          <h6 class="checkbox-label">Top-up Card / Voucher</h6>
+        </label>
+      </div>
+      <div class="checkout-card" *ngIf="!!payWithVoucher">
+        <p class="card-title">Top-up / Voucher Details</p>
+        <div class="card-content">
+          <p class="smaller">Got a top-up card or voucher? Fill out the PIN in the field below:</p>
+          <form [formGroup]="voucherForm" class="voucher-form">
+            <label for="voucher" class="label">Top-up / Voucher PIN</label>
+            <div class="actions">
+              <div class="input-field">
+                <input id="voucher" data-cy="voucher" type="text" name="voucher" formControlName="voucher"
+                  placeholder="Enter Voucher Code here" restrictNumbers minlength="12" maxlength="12" required
+                  (input)="voucherInputChanged()">
+                <label class="validation-message"
+                  *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('required')">Voucher
+                  PIN is required</label>
+                <label class="validation-message"
+                  *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('minlength')">Voucher
+                  PIN is invalid</label>
+              </div>
+              <button class="button primary" (click)="applyVoucher()">Apply</button>
+            </div>
+          </form>
+          <div *ngIf="!!showVoucherSuccess" class="info-banner success-background">
+            <div class="flex">
+              <img src="assets/icon/success-icon.svg" alt="Icon">
+              <div class="banner-content">
+                <p class="title">Success!</p>
+                <p class="description">Successfully deducted</p>
+                <h5>{{voucherDetuctedAmount | currency}}</h5>
+                <p class="description last">Remaining amount</p>
+                <h5>{{voucherRemainingAmount | currency}}</h5>
               </div>
             </div>
-          </section>
-        </div>
-      </div>
-    </div>
-    <div class="payment-option" *ngIf="totalBalance > 0">
-      <label class="payment-container balance">
-        <input type="checkbox" [(ngModel)]="payWithTotalBalance" class="title-checkbox" (change)="togglePayWithTotalBalance()">
-        <img src="assets/icon/balance.svg" alt="Balance" /> <div class="balance-amounts"><span>Account Balance</span><span class="amount">{{(totalBalance - balanceAmount - rewardAmount) | currency}}</span></div> 
-      </label>
-    </div>
-    <div class="checkout-card" *ngIf="payWithTotalBalance">
-      <div class="balance-title">
-        <p class="card-title">Pay with Account Balance</p>
-        <p class="amount-title">Total Balance <span class="amount">{{(totalBalance - balanceAmount - rewardAmount) | currency}}</span></p>
-      </div>
-      <div class="card-content">
-        <div class="balance-section" *ngIf="!!userAccount && userAccount.accountBalance > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="payment-container amounts">
-            <input type="checkbox" [(ngModel)]="payWithBalance" class="title-checkbox"  (change)="togglePayWithBalance()">
-            <span>Pay from Account Balance</span>
-          </label>
-          <div class="available-section">
-            <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
-            <p class="available">Available </p>
-            <p class="amount">{{(userAccount?.accountBalance - balanceAmount) | currency}}</p>
           </div>
-        </div>
-        <div class="balance-payment" *ngIf="!!payWithBalance">
-          <p class="note">Please enter an amount to use from your account balance</p>
-          <div class="payment-amount">
-            <div class="input-payment">
-              <label for="balance">Balance<span class="form-text error validation-message">*</span></label>
-              <input id="balance" data-cy="balance" class="amount-input" type="text" numbersOnly [max]="maxBalanceAllowed" [min]="0" [(ngModel)]="usedBalance" [pattern]="decimalPattern" #balance="ngModel" (input)="changeBalance()"  (blur)="setBalance()">
+          <div *ngIf="!!showVoucherError" class="info-banner error-background">
+            <div class="flex">
+              <img src="assets/icon/error-icon.svg" alt="Icon">
+              <div class="banner-content">
+                <p class="title">Oops!</p>
+                <p class="description">Invalid Voucher PIN enetred, please try again.</p>
+              </div>
             </div>
-            <button class="button primary" (click)="applyBalance()" type="button" aria-label="apply">Apply</button>
-          </div>
-          <label class="validation-message" *ngIf="!!usedBalance && usedBalance > (total - rewardAmount)">Max amount required is {{total - rewardAmount}}</label>
-          <label class="validation-message" *ngIf="!balance.valid && usedBalance > userAccount?.accountBalance">Invalid amount</label>
-          <div class="balance-banner" *ngIf="!!balanceApplied">
-            <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
-            <p class="applied"><b>{{balanceAmount | currency}}</b> Successfully Applied</p>
-          </div>
-        </div>
-        <div class="balance-section" *ngIf="!!userAccount && !!userAccount.rewards && userAccount.rewards.available > 0 && ((!!cart.phones && cart.phones.length===0)|| (!cart.phones))">
-          <label class="payment-container amounts">
-            <input type="checkbox" [(ngModel)]="payWithReward" class="title-checkbox" (change)="togglePayWithReward()">
-            <span>Pay from Refer a Friend Reward</span>
-          </label>
-          <div class="available-section">
-            <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
-            <p class="available">Available </p>
-            <p class="amount">{{userAccount.rewards.available - rewardAmount | currency}}</p>
-          </div>
-        </div>
-        <div class="balance-payment" *ngIf="!!payWithReward">
-          <p class="note">Please enter an amount to use from Refer a Friend Reward</p>
-          <div class="payment-amount">
-            <div class="input-payment">
-              <label for="reward">Balance<span class="form-text error validation-message">*</span></label>
-              <input id="reward"  class="amount-input" type="number" max="maxRewardAllowed" [min]="0" [(ngModel)]="usedReward" [pattern]="decimalPattern" #reward="ngModel" (input)="changeReward()"  (blur)="setReward()" />
-            </div>
-            <button class="button primary" (click)="applyReward()" type="button" aria-label="apply">Apply</button>
-          </div>
-          <label class="validation-message" *ngIf="!!usedReward && usedReward > (total - balanceAmount)">Max amount required is {{total - balanceAmount}}</label>
-          <label class="validation-message" *ngIf="!!usedReward && (usedReward > userAccount?.rewards?.available)">Max amount available is {{userAccount?.rewards?.available}}</label>
-          <label class="validation-message" *ngIf="!reward.valid">Invalid amount</label>
-          <div class="balance-banner" *ngIf="!!rewardApplied">
-            <img src="assets/icon/green-dollar.svg" alt="green dollar sign"/>
-            <p class="applied"><b>{{rewardAmount | currency}}</b> Successfully Applied</p>
           </div>
         </div>
       </div>
-    </div>
-    <div class="payment-option" *ngIf="!!showVoucherSection">
-      <label class="payment-container voucher">
-        <input type="checkbox" [(ngModel)]="payWithVoucher" class="title-checkbox" (change)="togglePayWithVoucher()">
-        <img src="assets/icon/voucher-illu.svg" alt="Voucher" /> 
-        <h6 class="checkbox-label">Top-up Card / Voucher</h6>
-      </label>
-    </div>
-    <div class="checkout-card" *ngIf="!!payWithVoucher">
-      <p class="card-title">Top-up / Voucher Details</p>
-      <div class="card-content">
-        <p class="smaller">Got a top-up card or voucher? Fill out the PIN in the field below:</p>
-        <form [formGroup]="voucherForm" class="voucher-form">
-          <label for="voucher" class="label">Top-up / Voucher PIN</label>
-          <div class="actions">
-            <div class="input-field">
-            <input id="voucher" data-cy="voucher" type="text" name="voucher"  formControlName="voucher"
-            placeholder="Enter Voucher Code here" restrictNumbers minlength="12" maxlength="12" required (input)="voucherInputChanged()">
-            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('required')">Voucher PIN is required</label>
-            <label class="validation-message" *ngIf="voucherForm.controls.voucher.touched && voucherForm.controls.voucher.hasError('minlength')">Voucher PIN is invalid</label>
-          </div>
-            <button class="button primary" (click)="applyVoucher()">Apply</button>
-          </div>
-        </form>
-        <div *ngIf="!!showVoucherSuccess" class="info-banner success-background">
-          <div class="flex">
-          <img src="assets/icon/success-icon.svg" alt="Icon">
-          <div class="banner-content">
-            <p class="title">Success!</p>
-            <p class="description">Successfully deducted</p>
-             <h5>{{voucherDetuctedAmount | currency}}</h5>
-            <p class="description last">Remaining amount</p>
-            <h5>{{voucherRemainingAmount | currency}}</h5>
-          </div>
-        </div>
-        </div>
-        <div *ngIf="!!showVoucherError" class="info-banner error-background">
-          <div class="flex">
-          <img src="assets/icon/error-icon.svg" alt="Icon">
-          <div class="banner-content">
-          <p class="title">Oops!</p>
-          <p class="description">Invalid Voucher PIN enetred, please try again.</p>
-            </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </ng-container>
-</div>
+    </ng-container>
+  </div>
 </section>
-<section class="navigation-section" [class.blur]="showAddCardSection || (!payWithCard && !payWithVoucher && !payWithTotalBalance) || (!!payWithVoucher && ((!!voucherForm.invalid || !!showVoucherError) || (!applyVoucherCalled)))">
+<section class="navigation-section"
+  [class.blur]="showAddCardSection || (!payWithCard && !payWithVoucher && !payWithTotalBalance) || (!!payWithVoucher && ((!!voucherForm.invalid || !!showVoucherError) || (!applyVoucherCalled)))">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goBack()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn">Next</button>
-</div>
+  </div>
 </section>
-<app-invisible-recaptcha  (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha ></app-invisible-recaptcha>
+<app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha></app-invisible-recaptcha>

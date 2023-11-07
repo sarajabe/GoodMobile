@@ -51,6 +51,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   public shippingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public saveCCInfo = true;
   public isStorePickup = false;
+  public isInPersonDelivery = false;
   public billingSameAsShipping = false;
   public billingAddress: IFirebaseAddress = {} as IFirebaseAddress;
   public isValidAddress = false;
@@ -139,6 +140,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     }, { validator: this.validExpirationDate('cardExpirationMonth', 'cardExpirationYear') });
     const storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
     this.isStorePickup = JSON.parse(sessionStorage.getItem('storePickup'));
+    this.isInPersonDelivery = JSON.parse(sessionStorage.getItem('personPickup'));
     if (!!storedShippingAddress) {
       this.shippingAddress = Object.assign({}, storedShippingAddress) as IFirebaseAddress;
       this.billingSameAsShipping = true;

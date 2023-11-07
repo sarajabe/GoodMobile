@@ -1,40 +1,50 @@
 <section class="page-section device-checkout">
-    <div class="cart-total" id="cart-section">
-        <h4>Checkout</h4>
-        <h4 data-cy="total"><span class="smallest">Total:</span>{{total | currency:'USD':'symbol':0}}</h4>
+  <div class="cart-total" id="cart-section">
+    <h4>Checkout</h4>
+    <h4 data-cy="total"><span class="smallest">Total:</span>{{total | currency:'USD':'symbol':0}}</h4>
+  </div>
+  <h3 class="head-title">Order Pickup</h3>
+
+  <form #pickupOptionsForm="ngForm" class="pickups-form">
+    <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
+      (isValidateClicked)="validatePersonStep($event)" [option]="option"
+      [cart]="userCart"></app-in-person-delivery-selector>
+    <div class="radioBtn">
+      <label class="form-control" for="store">
+        <input type="radio" value="store" [(ngModel)]="option" id="store" name="store" required>
+        <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
+        <div class="input-details">
+          <p class="title">In-Store Pickup</p>
+          <p class="caption">I’d like to collect my package from a store.</p>
+        </div>
+      </label>
+      <div class="package-content" *ngIf="!!option && option === 'store'">
+        <div class="header-part">
+          <p class="title">Pick up & Pay for your device at any of the following stores:</p>
+        </div>
+        <hr>
+        <div class="content-part">
+          <app-stores-list></app-stores-list>
+        </div>
+      </div>
     </div>
-    <h3 class="head-title">Order Pickup</h3>
-    <div class="blue-card">
-        <div class="device-store" >
-          <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
-          <h5 class="value" data-cy="storePickupTitle">In-Store Pickup</h5>
-        </div>
-        <div class="store-section">
-            <div class="soon-section">
-                <img src="assets/img/stores-soon.svg" alt="more stores coming soon">
-            </div>
-            <div class="inner-paddings">
-            <p class="header-color primary-font-bold">Pick up & Pay for your device at any of the following stores:</p>
-            </div>
-            <hr class="border">
-            <div class="inner-paddings end">
-                <app-stores-list></app-stores-list>
-            </div>
-        </div>
+  </form>
+
+
+  <div class="payment-card" *ngIf="!!option && option === 'store'">
+    <div class="content">
+      <img src="assets/img/credit-or-cash.svg" alt="Credit or cash" />
+      <div class="info">
+        <h5 data-cy="paymentCollectionInfo">Your payment will be collected at the store.</h5>
+        <p class="smaller" data-cy="totalPaid">Total to be paid <b>{{total | currency:'USD':'symbol':0}}</b>.</p>
       </div>
-      <div class="payment-card">
-        <div class="content">
-            <img src="assets/img/credit-or-cash.svg" alt="Credit or cash"/>
-            <div class="info">
-                <h5 data-cy="paymentCollectionInfo">Your payment will be collected at the store.</h5>
-                <p class="smaller" data-cy="totalPaid">Total to be paid <b>{{total | currency:'USD':'symbol':0}}</b>.</p>
-            </div>
-        </div>
-      </div>
+    </div>
+  </div>
 </section>
-<section class="navigation-section">
-    <div class="page-section navs">
-        <p class="no-border"(click)="goToCart()">Back</p>
-      <button class="button primary" id="place-order" data-cy="placeOrder" (click)="placeOrder()">Place Order</button>
-    </div>
-  </section>
+<section class="navigation-section"
+  [class.blur]="!option || (!!option && option === 'person' && !isPersonStepValidated)">
+  <div class="page-section navs">
+    <p class="no-border" (click)="goToCart()">Back</p>
+    <button class="button primary" id="place-order" data-cy="placeOrder" (click)="placeOrder()">Place Order</button>
+  </div>
+</section>

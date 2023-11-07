@@ -118,6 +118,7 @@ export class UpgradeOfferComponent implements OnInit {
     this.mobilePlansService.clearUserCart().then(() => {
       sessionStorage.removeItem('shippingAddress');
       sessionStorage.removeItem('storePickup');
+      sessionStorage.removeItem('personPickup');
       sessionStorage.removeItem('shippingMethod');
       sessionStorage.removeItem('payment_id');
       sessionStorage.setItem('auto_renew', !!plan.autoRenewPlan ? 'true' : 'false');

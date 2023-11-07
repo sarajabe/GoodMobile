@@ -1,4 +1,84 @@
 <div class="in-person-delivery-option">
+    <div *ngIf="!!showSideBar" [@slideInOut] class="sidebar">
+        <div class="close-bar">
+            <a class="close-button" (click)="showSideBar = false; checkDrawer();" title="Close">
+                <img src="assets/icon/drawer-close-icon.svg" width="28" height="28" alt="EXIT" />
+            </a>
+        </div>
+        <div class="page-section">
+            <div class="sidebar-content">
+                <div class="flex-titles">
+                    <div class="titles-part">
+                        <h3 class="title">Fulfill Items</h3>
+                        <h6 class="sub-title">Please fulfill the items below:</h6>
+                    </div>
+                    <div class="last">
+                        <a class="close-button" (click)="showSideBar = false; checkDrawer();" title="Close">
+                            <img src="assets/icon/drawer-close-icon.svg" width="28" height="28" alt="EXIT" />
+                        </a>
+                        <p class="agent-code smaller">Agent ID: {{agentForm.controls.code.value}}</p>
+                    </div>
+                </div>
+                <div class="main-box">
+                    <div class="box-content">
+                        <p class="smaller">{{!!this.cart?.acpDevice ? this.cart?.acpDevice?.deviceModel : 'SIM Card
+                            (New)' }}</p>
+                        <p class="sku-value">SKU# {{!!this.cart?.acpDevice ? this.cart?.acpDevice?.sku :
+                            this.cart?.planDevice?.skuNumber }}</p>
+                        <form [formGroup]="itemsForm" id="itemsForm">
+                            <fieldset>
+                                <div class="input-flex">
+                                    <div class="input-part">
+                                        <label class="outlined-label-input">
+                                            <input id="fulfilledItem" type="text" formControlName="fulfilledItem"
+                                                placeholder=" ">
+                                            <span>{{!!this.cart?.acpDevice ? 'Enter Device IMEI' : 'Activation
+                                                Code'}}</span>
+                                        </label>
+                                        <label class="validation-message"
+                                            *ngIf="itemsForm.controls.fulfilledItem.touched && itemsForm.controls.fulfilledItem.hasError('required')"
+                                            id="required-activation-code-msg">{{!!this.cart?.acpDevice ? 'Device IMEI' :
+                                            'Activation Code'}} is a required field</label>
+                                    </div>
+                                    <button class="button primary" id="submit" (click)="submitItems()">Submit</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <div class="where-to-find-part">
+                            <a (click)="showActivationCodeBox = !showActivationCodeBox;">{{!!this.cart?.acpDevice ?
+                                'Where to find the IMEI?' : 'Where to find the activation code?'}}
+                                <img src="assets/icon/arrow-blue.svg" width="24" height="24"
+                                    [class.rotate]="!!showActivationCodeBox" alt="Arrow Icon"></a>
+                            <ng-container *ngIf="!!this.cart?.planDevice">
+                                <div class="part-box" *ngIf="!!showActivationCodeBox">
+                                    <p class="smallest">Your Activation Code is a <b>7-digit number</b> on the back of
+                                        your
+                                        SIM Card, you can find it on the bottom of the card.</p>
+                                    <img src="assets/img/sim-card-activation-code.svg" width="179" height="100"
+                                        alt="SIM Card">
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!!this.cart?.acpDevice">
+                            <div class="part-box" *ngIf="!!showActivationCodeBox">
+                                <div class="flex">
+                                    <img src="assets/icon/primary-info-icon.svg" width="24" height="24" alt="Info Icon">
+                                    <div class="content">
+                                        <p class="smaller">To find your IMEI or MEID:</p>
+                                        <p class="caption top">Your IMEI/MEID is needed if you want to unlock your
+                                            device to use on other networks.</p>
+                                        <p class="smallest"><b>Check the sticker under your device’s battery</b></p>
+                                        <p class="smallest top">Note: it may be listed as “DEC”</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!!showSideBar" [@fadeInOut] class="overlay"></div>
     <label class="form-control" for="person">
         <input type="radio" value="person" id="person" name="person" [(ngModel)]="option"
             (change)="selectPersonOption()" required>
@@ -15,30 +95,57 @@
         </div>
         <hr>
         <div class="content-part">
-            <form [formGroup]="agentForm">
-                <fieldset>
-                    <p class="smaller">Enter Agent Code Below:</p>
-                    <div class="input-flex">
-                        <div class="input-part">
-                            <label class="outlined-label-input">
-                                <input id="code" type="text" formControlName="code" placeholder=" "
-                                    (input)="isValidateButtonClicked = false;">
-                                <span>Agent Code</span>
-                            </label>
-                            <label class="validation-message"
-                                *ngIf="agentForm.controls.code.touched && agentForm.controls.code.hasError('required')"
-                                id="required-agent-msg">Agent
-                                code is a required field</label>
-                            <label class="validation-message"
-                                *ngIf="!!agentForm.controls.code.value && !!isValidateButtonClicked && !isAgentCodeVerified"
-                                id="invalid-agent-msg">Agent
-                                code is invalid</label>
+            <ng-container *ngIf="!isFulfilledItem">
+                <form [formGroup]="agentForm" id="agentForm">
+                    <fieldset>
+                        <p class="smaller">Enter Agent Code Below:</p>
+                        <div class="input-flex">
+                            <div class="input-part">
+                                <label class="outlined-label-input">
+                                    <input id="code" type="text" formControlName="code" placeholder=" "
+                                        (input)="isValidateButtonClicked = false;">
+                                    <span>Agent Code</span>
+                                </label>
+                                <label class="validation-message"
+                                    *ngIf="agentForm.controls.code.touched && agentForm.controls.code.hasError('required')"
+                                    id="required-agent-msg">Agent
+                                    code is a required field</label>
+                                <label class="validation-message"
+                                    *ngIf="!!agentForm.controls.code.value && !!isValidateButtonClicked && !isAgentCodeVerified"
+                                    id="invalid-agent-msg">Agent
+                                    code is invalid</label>
+                            </div>
+                            <button class="button primary" id="validate-agent-code"
+                                (click)="validateAgentCode()">Validate</button>
                         </div>
-                        <button class="button primary" id="validate-agent-code"
-                            (click)="validateAgentCode()">Validate</button>
+                    </fieldset>
+                </form>
+            </ng-container>
+            <ng-container *ngIf="!!isFulfilledItem">
+                <div class="info-banner success-background">
+                    <div class="flex">
+                        <img src="assets/icon/success-icon.svg" width="32" height="32" alt="Success Icon">
+                        <div class="banner-content">
+                            <h5 class="title">Your Item is <b>successfully Fulfilled</b> By:
+                                <b>{{agentForm.controls.code.value}}</b>
+                            </h5>
+                        </div>
                     </div>
-                </fieldset>
-            </form>
+                </div>
+                <div class="item-overview-part">
+                    <img [src]="!!this.cart?.acpDevice ? 'assets/icon/primary-device-icon.svg' : 'assets/icon/primary-sim-card.svg'"
+                        width="24" height="24" [alt]="!!this.cart?.acpDevice ? 'Device Icon' : 'SIM Card'">
+                    <div class="details">
+                        <p class="smaller">{{!!this.cart?.acpDevice ? this.cart?.acpDevice?.deviceModel : 'SIM Card
+                            (New)'}}</p>
+                        <p class="smallest">Quantity: 1</p>
+                        <p class="smallest value" *ngIf="!!this.cart?.planDevice">Activation Code:
+                            {{itemsForm.controls.fulfilledItem.value}}</p>
+                        <p class="smallest value" *ngIf="!!this.cart?.acpDevice">IMEI:
+                            {{itemsForm.controls.fulfilledItem.value}}</p>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>
