@@ -588,8 +588,12 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         requestBody.autoRenewPlan = !!options?.autoRenewPlan ? true : false;
         requestBody.orderShipMethod = checkoutNewPlan?.orderShippingMethod?.id;
         requestBody.deliveryMethod = checkoutNewPlan?.deliveryMethod;
+        requestBody.paymentType = checkoutNewPlan?.paymentType;
         if (!!checkoutNewPlan.cardInfo) {
           requestBody.paymentMethod = { id: checkoutNewPlan?.cardInfo?.id };
+        }
+        if(!checkoutNewPlan?.orderShippingMethod) {
+          delete requestBody.orderShipMethod
         }
         if(!shippingAddress && !shippingAddress?.id) {
           delete requestBody.shippingAddress;

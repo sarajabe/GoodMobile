@@ -82,6 +82,8 @@ export class ChangePlanShopComponent implements OnInit, OnDestroy {
         if (result !== null && result !== undefined) {
           this.mobilePlansService.clearUserCart().then(() => {
             sessionStorage.removeItem('shippingAddress');
+            sessionStorage.removeItem('storePickup');
+            sessionStorage.removeItem('personPickup');
             sessionStorage.removeItem('shippingMethod');
             sessionStorage.removeItem('payment_id');
             sessionStorage.removeItem('auto_renew');

@@ -112,6 +112,29 @@ export class InPersonDeliverySelectorComponent implements OnInit {
         }
     }
 
+    public addValidatorsForFulfillItem(): void {
+        if (!!this.cart) {
+            if (!!this.cart?.acpDevice) {
+                this.itemsForm.controls.fulfilledItem.setValidators([
+                    Validators.compose([
+                        Validators.required,
+                        Validators.minLength(11),
+                        Validators.maxLength(18)
+                    ]),
+                ]);
+                this.itemsForm.controls.fulfilledItem.updateValueAndValidity();
+            } else if (!!this.cart?.planDevice) {
+                this.itemsForm.controls.fulfilledItem.setValidators([
+                    Validators.compose([
+                        Validators.required,
+                        Validators.pattern('^[A-Z]+\\d{6}|\\d{7}$')
+                    ]),
+                ]);
+                this.itemsForm.controls.fulfilledItem.updateValueAndValidity();
+            }
+        }
+    }
+
     @HostListener('window:resize', ['$event'])
     onResize(event): void {
         this.innerWidth = window.screen.width;

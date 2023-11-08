@@ -107,6 +107,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   public catalogChecked = false;
   public selectedPhoneFromCatalog: ICatalogItem;
   public discount = 0;
+  public isPayWithCash = false;
   private paymentSubscription: Subscription;
   private saveOnce = true;
   private nextCycleRenew = false;
@@ -226,19 +227,25 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           this.shippingInfoReceived = true;
           this.estimateShippingArrival();
         }
+      } else {
+        this.shippingAddress = {} as IFirebaseAddress;
       }
     });
     this.checkoutService.storePickupSubject.pipe(takeWhile(() => this.alive)).subscribe((isPickup) => {
       this.storePickup = isPickup;
       if (!!this.storePickup) {
+        this.shippingAddress = {} as IFirebaseAddress;
         this.orderShippingMethod = {} as IShippingMethod;
+        this.inPerson = false;
         this.calculateTotal();
       }
     });
     this.checkoutService.inPersonSubject.pipe(takeWhile(() => this.alive)).subscribe((isPerson) => {
       this.inPerson = isPerson;
       if (!!this.inPerson) {
+        this.shippingAddress = {} as IFirebaseAddress;
         this.orderShippingMethod = {} as IShippingMethod;
+        this.storePickup = false;
         this.calculateTotal();
       }
     });
@@ -255,6 +262,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.paymentSubscription = this.checkoutService.paymentsSubject.pipe(takeWhile(() => this.alive)).subscribe((payments) => {
       this.useFromBalanceStored = !!payments && !!payments.balanceAmount ? payments.balanceAmount : this.useFromBalanceStored;
       this.useFromRewardStored = !!payments && !!payments.rewardsAmount ? payments.rewardsAmount : this.useFromRewardStored;
+      this.isPayWithCash = payments?.cash;
       if (!!payments) {
         if (!!payments.card) {
           const paymentInfo = payments.card;
@@ -1220,12 +1228,13 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         fees: this.fees,
         simId: this.newSimOrder.id,
         simPrice: this.newSimOrder.price,
-        haseSIM: this.currentPlan.eSIM,
+        haseSIM: !!this.currentPlan?.eSIM ? this.currentPlan?.eSIM : false,
         storePickup: !!this.currentPlan?.activationCode ? false : this.storePickup
       },
       orderShippingMethod: this.hasShippingItems && !this.storePickup && !this.inPerson ? this.orderShippingMethod : null,
       hasShippingItems: this.hasShippingItems,
-      deliveryMethod: !!this.storePickup ? 'storePickup' : (!!this.hasShippingItems && !!this.shippingAddress ? 'homeDelivery' : 'inPersonDelivery')
+      deliveryMethod: !!this.storePickup ? 'storePickup' : (!!this.inPerson? 'inPersonDelivery' : 'homeDelivery'),
+      paymentType: this.currentPlan?.cartType === this.CART_TYPES.GENERIC_CART && !!this.isPayWithCash ? 'cash' : 'creditCard'
     };
     this.checkoutService.checkoutNewPlan(cart).then(() => {
       this.checkoutService.paymentsSubject.next(null);
@@ -1413,7 +1422,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
   private initFlowControl(): void {
     const hasActivationCode = (!!this.currentPlan.planDevice ? !!this.currentPlan.planDevice.activationCode : false) || !!this.currentPlan.activationCode || (!!this.currentPlan.eSIM && !this.currentPlan.phones);
-    this.hasShippingItems = (!hasActivationCode && (this.currentPlan.cartType === CART_TYPES.NEW_PLAN))
+    this.hasShippingItems = (!hasActivationCode && (this.currentPlan.cartType === CART_TYPES.NEW_PLAN && !this.inPerson && !this.storePickup))
       || (this.currentPlan.simsQuantity > 0 && !this.currentPlan.eSIM);
 
     if (this.flowSettings.hasShippingMode === this.hasShippingItems) {
@@ -1430,7 +1439,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!this.isLoggedIn) {
       this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SIGN_IN);
     } else {
-      if (!!this.hasShippingItems && this.storedShippingAddress == null && !this.storePickup && !this.inPerson) { // no Activation code then there is a free SIM
+      if ((!!this.hasShippingItems && this.storedShippingAddress == null) || !this.storePickup || !this.inPerson) { // no Activation code then there is a free SIM
         this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
 
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);

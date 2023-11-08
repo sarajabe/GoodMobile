@@ -86,6 +86,8 @@ export class CartComponent implements OnInit, OnDestroy {
         if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
           sessionStorage.removeItem('shippingAddress');
           sessionStorage.removeItem('shippingMethod');
+          sessionStorage.removeItem('storePickup');
+          sessionStorage.removeItem('personPickup');
           sessionStorage.removeItem('payment_id');
           this.isGenericType = true;
           this.deviceImage = this.userCart.acpDevice.imgUrl;

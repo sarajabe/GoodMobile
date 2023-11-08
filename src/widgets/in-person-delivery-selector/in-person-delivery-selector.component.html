@@ -31,7 +31,7 @@
                                     <div class="input-part">
                                         <label class="outlined-label-input">
                                             <input id="fulfilledItem" type="text" formControlName="fulfilledItem"
-                                                placeholder=" ">
+                                                restrictNumbers (input)="addValidatorsForFulfillItem()" placeholder=" ">
                                             <span>{{!!this.cart?.acpDevice ? 'Enter Device IMEI' : 'Activation
                                                 Code'}}</span>
                                         </label>
@@ -39,6 +39,10 @@
                                             *ngIf="itemsForm.controls.fulfilledItem.touched && itemsForm.controls.fulfilledItem.hasError('required')"
                                             id="required-activation-code-msg">{{!!this.cart?.acpDevice ? 'Device IMEI' :
                                             'Activation Code'}} is a required field</label>
+                                        <label class="validation-message"
+                                            *ngIf="itemsForm.controls.fulfilledItem.value && (itemsForm.controls.fulfilledItem.hasError('pattern') || itemsForm.controls.fulfilledItem.hasError('minlength'))"
+                                            id="required-activation-code-msg">{{!!this.cart?.acpDevice ? 'IMEI' :
+                                            'Activation Code'}} is invalid</label>
                                     </div>
                                     <button class="button primary" id="submit" (click)="submitItems()">Submit</button>
                                 </div>
@@ -59,18 +63,19 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="!!this.cart?.acpDevice">
-                            <div class="part-box" *ngIf="!!showActivationCodeBox">
-                                <div class="flex">
-                                    <img src="assets/icon/primary-info-icon.svg" width="24" height="24" alt="Info Icon">
-                                    <div class="content">
-                                        <p class="smaller">To find your IMEI or MEID:</p>
-                                        <p class="caption top">Your IMEI/MEID is needed if you want to unlock your
-                                            device to use on other networks.</p>
-                                        <p class="smallest"><b>Check the sticker under your device’s battery</b></p>
-                                        <p class="smallest top">Note: it may be listed as “DEC”</p>
+                                <div class="part-box" *ngIf="!!showActivationCodeBox">
+                                    <div class="flex">
+                                        <img src="assets/icon/primary-info-icon.svg" width="24" height="24"
+                                            alt="Info Icon">
+                                        <div class="content">
+                                            <p class="smaller">To find your IMEI or MEID:</p>
+                                            <p class="caption top">Your IMEI/MEID is needed if you want to unlock your
+                                                device to use on other networks.</p>
+                                            <p class="smallest"><b>Check the sticker under your device’s battery</b></p>
+                                            <p class="smallest top">Note: it may be listed as “DEC”</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </ng-container>
                         </div>
                     </div>
