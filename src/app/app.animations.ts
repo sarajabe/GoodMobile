@@ -1,5 +1,25 @@
 import { trigger, state, style, transition, animate, group, keyframes } from '@angular/animations';
 
+export const drawerSlideInOutAnimation = [
+  trigger('slideInOut', [
+    transition(':enter', [
+      style({ transform: 'translateX(100%)' }),
+      animate('0.5s ease-in-out', style({ transform: 'translateX(0%)' })),
+    ]),
+    // transition(':leave', [animate('0.3s ease-in-out', style({ transform: 'translateX(100%)' }))]),
+  ]),
+];
+
+export const drawerFadeInOutAnimation = [
+  trigger('fadeInOut', [
+    transition(':enter', [
+      style({ opacity: '0' }),
+      animate('200ms ease-in-out', style({ opacity: '.1' })),
+    ]),
+    // transition(':leave', [animate('200ms ease-in-out', style({ opacity: '0' }))]),
+  ]),
+];
+
 export const SlideInOutAnimation = [trigger('slideInOut', [
   state('in', style({
     'max-height': '500px', opacity: '1', visibility: 'visible'

@@ -32,6 +32,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   @ViewChild('packageForm') packageForm: NgForm;
   @ViewChild('barCodeCheck') barCodeCheck: NgForm;
   @Input() isLoggedIn: boolean;
+
   public total = 0;
   public shippingMethodItems = true;
   public showAllAddresses = false;
@@ -41,7 +42,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public shippingMethods: IShippingMethod[];
   public shippingDeliveryService = [];
   public shippingDeliveryOptions = [];
-  public selectedShippingServiceOption ='';
+  public selectedShippingServiceOption = '';
   public orderShippingMethod: IShippingMethod;
   public shippingServiceType = '';
   public addressesList: Array<IFirebaseAddress> = [];
@@ -66,6 +67,8 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public barCode = false;
   public option;
   public CART_TYPES = CART_TYPES;
+  public isPersonStepValidated = false;
+
   private alive = true;
   storedAddress: IFirebaseAddress;
 
@@ -92,9 +95,10 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   ngOnInit(): void {
     this.analyticsService.trackCheckoutSteps(2, 'Shipping');
     this.flowSettings = this.checkoutService.initFlowControlSettings(this.checkoutService.needsShipping, this.isLoggedIn);
-   
+
     const storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
     const storePickup = JSON.parse(sessionStorage.getItem('storePickup'));
+    const personPickup = JSON.parse(sessionStorage.getItem('personPickup'));
     if (!!storedShippingAddress) {
       this.storedAddress = storedShippingAddress as IFirebaseAddress;
       this.option = 'home';
@@ -106,9 +110,12 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     } else {
       this.shippingAddress = {} as IFirebaseAddress;
     }
-    if(!!storePickup) {
+    if (!!storePickup) {
       this.option = 'store';
       this.barCode = storePickup;
+    }
+    if (!!personPickup) {
+      this.option = 'person';
     }
     const storedPayment = sessionStorage.getItem('payment_id');
     if (!!storedPayment && (!!storedShippingAddress || !!storePickup)) {
@@ -129,8 +136,8 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
             this.addressesList.splice(index, 1);
             this.addressesList.unshift(this.selectedShippingAddress);
             this.showAddressRequiredError = false;
-          } 
-          else if(!!this.storedAddress && Object.keys(this.storedAddress).length>0){
+          }
+          else if (!!this.storedAddress && Object.keys(this.storedAddress).length > 0) {
             this.addressesList.push(this.storedAddress);
             this.selectedShippingAddress = this.addressesList[0];
           }
@@ -161,9 +168,9 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
             this.shippingMethods = this.shippingMethods.filter((method: any) => method.shipper !== 'fedex');
           }
           this.shippingMethods.map(item => {
-            if (!this.shippingDeliveryService.some(elm => elm === item?.shipper)) {               
+            if (!this.shippingDeliveryService.some(elm => elm === item?.shipper)) {
               this.shippingDeliveryService.push(item.shipper);
-            } 
+            }
             this.shippingDeliveryOptions = this.shippingMethods.filter(method => method.shipper === item?.shipper)
           });
           const savedMethod = JSON.parse(sessionStorage.getItem('shippingMethod'));
@@ -277,20 +284,20 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
                 </div>
                 </div>
                `;
-               this.modalHelper.showInformationMessageModal('Verify your shipping address',
-               '',
-               'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address','', 'verified')
-               .afterClosed().subscribe((result) => {
+            this.modalHelper.showInformationMessageModal('Verify your shipping address',
+              '',
+              'Keep current address', null, true, 'usp-pop-up-modal', this.customHtml, true, 'Use verified address', '', 'verified')
+              .afterClosed().subscribe((result) => {
                 if (result) {
-                  if(result === 'verified') {  
+                  if (result === 'verified') {
                     const name = this.shippingAddress.name;
                     addresses[0].name = name;
                     this.selectedShippingAddress = addresses[0];
                     this.addNewAddress(addresses[0]);
                   } else {
-                  // PRIMARY
-                  this.selectedShippingAddress = this.shippingAddress;
-                  this.addNewAddress(this.shippingAddress);
+                    // PRIMARY
+                    this.selectedShippingAddress = this.shippingAddress;
+                    this.addNewAddress(this.shippingAddress);
                   }
                   this.showShippingForm = false;
                   this.showAddressRequiredError = false;
@@ -298,7 +305,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
                   this.shippingMethodForm.form.reset();
                   this.touchShippingForm = false;
                 }
-             
+
               }, (error) => {
                 console.error('error step', error);
               });
@@ -312,7 +319,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     }
   }
   public pickupOptionChanged(): void {
-    if (this.option === 'store'){
+    if (this.option === 'store') {
       this.selectedShippingAddress = null;
       this.shippingAddress = {} as IFirebaseAddress;
       this.orderShippingMethod = {} as IShippingMethod;
@@ -325,41 +332,73 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       this.barCode = false;
     }
   }
+
+  public selectPersonOption(event): void {
+    if (!!event) {
+      this.option = event;
+    }
+  }
+
+  public validatePersonStep(event): void {
+    this.isPersonStepValidated = event;
+  }
+
   public nextCheckoutStep(): void {
     this.pickupOptionsForm.form.markAllAsTouched();
-    if(!!this.pickupOptionsForm.valid) {
-      if(this.option === 'home') {
+    if (!!this.pickupOptionsForm.valid) {
+      if (this.option === 'home') {
         if (!!this.showShippingForm) {
           this.shippingMethodForm.form.markAllAsTouched();
           this.touchShippingForm = true;
-        } else if(!this.selectedShippingAddress || !!this.selectedShippingAddress && Object.keys(this.selectedShippingAddress).length === 0) {
+        } else if (!this.selectedShippingAddress || !!this.selectedShippingAddress && Object.keys(this.selectedShippingAddress).length === 0) {
           this.showAddressRequiredError = true;
           this.touchShippingForm = false;
-          window.scroll(0,100);
+          window.scroll(0, 100);
         }
         this.packageForm.form.markAllAsTouched();
-        if (this.packageForm.valid && !!this.selectedShippingAddress &&  Object.keys(this.selectedShippingAddress).length !== 0 && (!this.touchShippingForm || (!!this.touchShippingForm && !!this.shippingMethodForm && this.shippingMethodForm.form.valid)) ){
+        if (this.packageForm.valid && !!this.selectedShippingAddress && Object.keys(this.selectedShippingAddress).length !== 0 && (!this.touchShippingForm || (!!this.touchShippingForm && !!this.shippingMethodForm && this.shippingMethodForm.form.valid))) {
           this.removeEmptyValues(this.selectedShippingAddress);
           this.checkoutService.updateShippingAddress(this.selectedShippingAddress);
           this.checkoutService.updateStorePickup(undefined);
+          this.checkoutService.updateInPersonDelivery(undefined);
           sessionStorage.setItem('shippingAddress', JSON.stringify(this.selectedShippingAddress));
           sessionStorage.setItem('shippingMethod', JSON.stringify(this.orderShippingMethod));
           this.analyticsService.trackAddShippingInfoGA4(this.cart, this.orderShippingMethod.title, this.simPrice, this.simId);
           sessionStorage.removeItem('storePickup');
+          sessionStorage.removeItem('personPickup');
           this.goToNextStep();
         }
       } else if (this.option === 'store') {
-        this.checkoutService.updateStorePickup(this.barCode);
-        sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
+        this.checkoutService.updateInPersonDelivery(undefined);
+        if (!!this.cart && this.cart.cartType === CART_TYPES.GENERIC_CART) {
+          this.checkoutService.updateStorePickup(true);
+          sessionStorage.setItem('storePickup', JSON.stringify(true));
+        } else {
+          this.checkoutService.updateStorePickup(this.barCode);
+          sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
+        }
         this.checkoutService.updateShippingAddress(undefined);
         this.checkoutService.updateShippingMethod(undefined);
         sessionStorage.removeItem('shippingAddress');
         sessionStorage.removeItem('shippingMethod');
+        sessionStorage.removeItem('personPickup');
         this.goToNextStep();
+      } else if (this.option === 'person') {
+        if (!!this.isPersonStepValidated) {
+          sessionStorage.setItem('personPickup', JSON.stringify(true));
+          sessionStorage.removeItem('storePickup');
+          sessionStorage.removeItem('shippingAddress');
+          sessionStorage.removeItem('shippingMethod');
+          this.checkoutService.updateStorePickup(undefined);
+          this.checkoutService.updateInPersonDelivery(true);
+          this.checkoutService.updateShippingAddress(undefined);
+          this.checkoutService.updateShippingMethod(undefined);
+          this.goToNextStep();
+        }
       }
-     
     }
   }
+
   public goToCart(): void {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
   }

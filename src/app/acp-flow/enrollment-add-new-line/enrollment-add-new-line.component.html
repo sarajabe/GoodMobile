@@ -16,7 +16,7 @@
                 <div class="border" *ngIf="step < steps.length"></div>
             </div>
         </section>
-       <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
+        <section *ngIf="!!activeStep && activeStep === 1" class="compatability-section">
             <h3 class="main-title" data-cy="addingNewLineTitle">Adding a New Line:</h3>
             <form [formGroup]="newMobileServiceFrom" *ngIf="!successCehck && !errorCheck ">
                 <p class="sub-desc">Let's find out if the device, that you will use, is compatible with our network!</p>
@@ -45,15 +45,15 @@
                     <div class="form-field">
                         <p class="top-label">Enter your full address </p>
                         <label class="outlined-label-input flowed">
-                            <input formControlName="address" data-cy="addressRef" matInput type="search" list-formatter="description"  
-                                type="search" (focus)="setFoucs = true" (blur)="setFoucs = false"
-                               class="geolocate"  placeholder="  " [matAutocomplete]="auto" required
-                               (input)="changedAddress()"/>
-                               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
-                                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                   {{ option?.description }}
-                                 </mat-option>
-                               </mat-autocomplete>        
+                            <input formControlName="address" data-cy="addressRef" matInput type="search"
+                                list-formatter="description" type="search" (focus)="setFoucs = true"
+                                (blur)="setFoucs = false" class="geolocate" placeholder="  " [matAutocomplete]="auto"
+                                required (input)="changedAddress()" />
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addressDetails($event)">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                    {{ option?.description }}
+                                </mat-option>
+                            </mat-autocomplete>
                             <span [class.focused]="!!setFoucs || !!newMobileServiceFrom.controls.address.touched"
                                 [class.not-focused]="!setFoucs && !newMobileServiceFrom.controls.address.value"
                                 [class.error]="!!newMobileServiceFrom.controls.address.touched && !!newMobileServiceFrom.controls.address.errors"
@@ -74,7 +74,8 @@
                 <img src="assets/icon/success-icon.svg" alt="Success Icon">
                 <div class="notes" *ngIf="!isEsim">
                     <p class="head-note" data-cy="phoneIsCompatibleTitle">Your Phone is compatible!</p>
-                    <p class="sub-note" data-cy="phoneIsCompatibleSubTitle">You can use the device you have with our network!</p>
+                    <p class="sub-note" data-cy="phoneIsCompatibleSubTitle">You can use the device you have with our
+                        network!</p>
                 </div>
                 <div class="notes" *ngIf="!!isEsim">
                     <p class="head-note">Great news!</p>
@@ -123,8 +124,8 @@
             <form #pickupOptionsForm="ngForm" class="pickups-form">
                 <div class="radioBtn">
                     <label class="form-control" for="home">
-                        <input type="radio" value="home" [(ngModel)]="option" data-cy="homeDelivery" id="home" name="home" required
-                            (change)="pickupOptionChanged()">
+                        <input type="radio" value="home" [(ngModel)]="option" data-cy="homeDelivery" id="home"
+                            name="home" required (change)="pickupOptionChanged()">
                         <img src="/assets/icon/home.svg" alt="pickup icon" class="home-icon">
                         <div class="input-details">
                             <p class="value">Home Delivery</p>
@@ -134,14 +135,14 @@
                 </div>
                 <div *ngIf="!!option && option === 'home'">
                     <div class="info-banner success-background banner-specific" *ngIf="!!isAdressAddedSuccessfully">
-                    <div class="flex">
-                        <img src="assets/icon/success-icon.svg" alt="Success Icon">
-                        <div class="banner-content">
-                            <p class="title">Awesome!</p>
-                            <p class="description last">Your address has been successfully added!</p>
+                        <div class="flex">
+                            <img src="assets/icon/success-icon.svg" alt="Success Icon">
+                            <div class="banner-content">
+                                <p class="title">Awesome!</p>
+                                <p class="description last">Your address has been successfully added!</p>
+                            </div>
                         </div>
                     </div>
-                  </div>
                     <div class="address-card">
                         <h4 class="card-title">Shipping Details</h4>
                         <div class="card-content" id="addressDetails">
@@ -166,21 +167,22 @@
                                                 {{applicationAddress?.postalCode}}</p>
                                         </div>
                                     </div>
-                                    <a class="link" data-cy="useAnotherAddresslink" (click)="changeAddressOption()">Use another address <img
-                                            class="arrow-img" alt="arrow"
+                                    <a class="link" data-cy="useAnotherAddresslink" (click)="changeAddressOption()">Use
+                                        another address <img class="arrow-img" alt="arrow"
                                             [src]="!!addressCard?'/assets/icon/circle-arrow-up-primary.svg': '/assets/icon/circle-arrow-down-primary.svg'"></a>
                                 </div>
                             </div>
                             <div *ngIf="!!addressNoOptionNotVerfiedSection" class="inner-padding">
                                 <div class="tooltip-info-section" id="selectAddress">
                                     <p class="info smaller">The address you entered in the
-                                    ACP application form couldn't be validated for
-                                    shipping:</p>
+                                        ACP application form couldn't be validated for
+                                        shipping:</p>
                                     <div class="address-tooltip">
                                         <img src="/assets/icon/why-arrow.svg" alt="arrow" class="why-img">
                                         <a class="info-link">Why?</a>
                                         <div class="tooltipInfo">
-                                            <p class="tip-note">Possible <b>typos</b> or <b>misspellings</b> could have been made, or
+                                            <p class="tip-note">Possible <b>typos</b> or <b>misspellings</b> could have
+                                                been made, or
                                                 a conflict in
                                                 the <b>city</b>, <b>state</b> and <b>ZIP code</b>.</p>
                                             <div class="address-details">
@@ -225,13 +227,12 @@
                                 <div class="showMore" *ngIf="addressesList?.length > 2"
                                     (click)="showAllAddresses = !showAllAddresses">
                                     <a class="link">{{!!showAllAddresses ? 'Show less' : 'Show more'}}
-                                        <img
-                                            class="arrow-img" alt="arrow"
+                                        <img class="arrow-img" alt="arrow"
                                             [src]="!!showAllAddresses?'/assets/icon/circle-arrow-up-primary.svg': '/assets/icon/circle-arrow-down-primary.svg'">
                                     </a>
                                 </div>
                                 <div class="new-address">
-                                    <div class="toggle-title" data-cy="addNewAddress"  (click)="
+                                    <div class="toggle-title" data-cy="addNewAddress" (click)="
                                 showShippingForm = !showShippingForm;
                                 selectedShippingAddress = null;
                                 isAddressVerified = false;
@@ -269,8 +270,8 @@
                 </div>
                 <div class="radioBtn">
                     <label class="form-control" for="store">
-                        <input type="radio" data-cy="storePickup" value="store" [(ngModel)]="option" id="store" name="store" required
-                            (change)="pickupOptionChanged()">
+                        <input type="radio" data-cy="storePickup" value="store" [(ngModel)]="option" id="store"
+                            name="store" required (change)="pickupOptionChanged()">
                         <img src="/assets/icon/store.svg" alt="pickup icon" class="store-icon">
                         <div class="input-details">
                             <p class="value">Store Pickup</p>
@@ -307,6 +308,9 @@
                         </div>
                     </div>
                 </div>
+                <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
+                    (isValidateClicked)="validatePersonStep($event)" [option]="option"
+                    [cart]="cart"></app-in-person-delivery-selector>
             </form>
         </section>
         <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha
@@ -331,25 +335,27 @@
         </div>
     </div> -->
 </section>
-<section class="navigation-section" >
+<section class="navigation-section">
     <div class="page-section navs" [class.end]="!!planPurchased">
-        <button class="button thirdly noPadding" data-cy="cancel" (click)="cancel()" *ngIf="!planPurchased">Cancel</button>
+        <button class="button thirdly noPadding" data-cy="cancel" (click)="cancel()"
+            *ngIf="!planPurchased">Cancel</button>
         <div class="right" *ngIf="!planPurchased">
             <button class="button secondary" data-cy="backBtn" aria-label="Back"
                 (click)="activeStep = activeStep -1;successCehck = true" *ngIf="activeStep !== 1">Back</button>
             <button class="button primary" data-cy="checkBtn" aria-label="Check" (click)="checkDevice()"
                 *ngIf="!successCehck && !errorCheck && activeStep === 1">Check</button>
-            <button class="button primary"  data-cy="nextBtn" aria-label="Next" (click)="goToStep2()"
+            <button class="button primary" data-cy="nextBtn" aria-label="Next" (click)="goToStep2()"
                 *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
                 [disabled]="!!errorCheck">Next</button>
             <button class="button primary" *ngIf="activeStep === 2"
                 [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
                 [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
-                (click)="purchasePlan()"  data-cy="nextBtn">Submit</button>
+                (click)="purchasePlan()" data-cy="nextBtn">Submit</button>
         </div>
         <div class="right end" *ngIf="!!planPurchased">
-            <button class="button primary" data-cy="continueBtn" (click)="goToPendingActivation()">{{!!isStorePickup ? 'Continue' : 'Done'}}</button>
+            <button class="button primary" data-cy="continueBtn" (click)="goToPendingActivation()">{{!!isStorePickup ?
+                'Continue' : 'Done'}}</button>
         </div>
     </div>
-    
+
 </section>

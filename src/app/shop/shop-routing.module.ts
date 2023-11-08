@@ -9,7 +9,6 @@ import { CheckoutResultsComponent } from './checkout-results/checkout-results.co
 import { AuthEmailGuardService } from 'src/providers/user-auth-service/auth-email-guard.service';
 import { CartComponent } from './cart/cart.component';
 import { AcpDevicesComponent } from './acp-devices/acp-devices.component';
-import { DeviceCheckoutComponent } from './device-checkout/device-checkout.component';
 
 const routes: Routes = [
   { path: '', component: ShopMainComponent, children: [
@@ -28,8 +27,7 @@ const routes: Routes = [
     description: 'Your purchase with Good Mobile is successful'} as IPageMeta},
     {path: SHOP_ROUTE_URLS.CHECKOUT_SHORT, redirectTo: `${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`, pathMatch: 'full'},
     {path: SHOP_ROUTE_URLS.CART,component: CartComponent, data: {title: 'Your Cart', description: 'Review your items in cart and start your checkout process'}},
-    {path: SHOP_ROUTE_URLS.ACP_DEVICES, component: AcpDevicesComponent, data: {title: 'Affordable Connectivity Program devices', description: 'A discount up to $100 on a laptop, tablet, or desktop computer'}},
-    {path: SHOP_ROUTE_URLS.DEVICE_CHECKOUT, component: DeviceCheckoutComponent, data: {title: 'Checkout ACP Device', description: 'Place your order of the ACP device and get up to $100 discount'}},
+    {path: SHOP_ROUTE_URLS.ACP_DEVICES, component: AcpDevicesComponent, data: {title: 'Affordable Connectivity Program devices', description: 'A discount up to $100 on a laptop, tablet, or desktop computer'}}
   ]}
 ];
 

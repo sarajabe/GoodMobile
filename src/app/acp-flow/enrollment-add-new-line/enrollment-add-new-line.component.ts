@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
-import { EbbService, EquipmentService, IAddress } from '@ztarmobile/zwp-service-backend-v2';
+import { EbbService, EquipmentService, IAddress, OrdersService } from '@ztarmobile/zwp-service-backend-v2';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import { Observable, Subscription } from 'rxjs';
 import { filter, take, takeWhile } from 'rxjs/operators';
@@ -62,6 +62,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public option;
   public filteredOptions: Observable<Array<IAutoCompletePrediction>>;
   public filteredOptionsSubscription: Subscription;
+  public isPersonStepValidated = false;
+  public isPersonOption = false;
 
   private planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
@@ -86,7 +88,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     private userProfileService: FirebaseUserProfileService, private userPlansService: UserPlansService,
     private toastHelper: ToastrHelperService, private shippingService: ShippingService,
     private orderCheckoutService: OrderCheckoutService, private analyticsService: ActionsAnalyticsService,
-    private pageScrollService: PageScrollService
+    private pageScrollService: PageScrollService,
+    private ordersService: OrdersService
   ) {
     this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
@@ -197,6 +200,11 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.reCaptcha?.execute(); // reset recaptcha every 2 minutes to avoid invalid or expired recaptcha error
     }, 1.8 * 60 * 1000);
   }
+
+  ngOnDestroy(): void {
+    this.alive = false;
+    this.filteredOptionsSubscription?.unsubscribe();
+  }
   public showWhatIsIMEI(): void {
     this.modalHelper.showInformationMessageModal('3 Ways to find your MEID or IMEI', '', 'Got it', null,
       true, 'compatibility-help-modal-IME',
@@ -219,21 +227,38 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       </div>
         `);
   }
+
+  public selectPersonOption(event): void {
+    if (!!event) {
+      this.option = event;
+    }
+  }
+
+  public validatePersonStep(event): void {
+    this.isPersonStepValidated = event;
+  }
+
   public pickupOptionChanged(): void {
     if (this.option === 'store') {
-      this.selectedShippingAddress = null;
-      this.shippingAddress = {} as IFirebaseAddress;
-      this.addressCard = false;
-      this.selectedShippingAddress = {} as IFirebaseAddress;
-      this.isAddressVerified = false;
-      this.showShippingForm = false;
-      this.addressOption = '';
+      this.resetAddressFields();
     } else if (this.option === 'home') {
       this.barCode = false;
       setTimeout(() => {
         this.validateAddressInfoFromACPApplication();
       }, 200);
+    } else if (this.option === 'person') {
+      this.barCode = false;
+      this.resetAddressFields();
     }
+  }
+  private resetAddressFields(): void {
+    this.selectedShippingAddress = null;
+    this.shippingAddress = {} as IFirebaseAddress;
+    this.addressCard = false;
+    this.selectedShippingAddress = {} as IFirebaseAddress;
+    this.isAddressVerified = false;
+    this.showShippingForm = false;
+    this.addressOption = '';
   }
   public optionChanged(): void {
     this.addressCard = false;
@@ -290,11 +315,14 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     this.selectedShippingAddress = {} as IFirebaseAddress;
   }
   public purchasePlan(isEsim?): void {
-    if (!!this.newMobileServiceFrom.valid && (!isEsim && !!this.option && ((this.option === 'home' && !!this.isAddressVerified) || (this.option === 'store' && !!this.barCode)) || !!isEsim)) {
+    if (!!this.newMobileServiceFrom.valid && (!isEsim && !!this.option && ((this.option === 'home' && !!this.isAddressVerified) || (this.option === 'store' && !!this.barCode) || (this.option === 'person' && !!this.isPersonStepValidated)) || !!isEsim)) {
       this.clearCart();
       this.isStorePickup = this.option === 'store' ? true : false;
+      this.isPersonOption = this.option === 'person' ? true : false;
       this.mobilePlansService.setActivePlanId("");
-      this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
+      if (!!this.option && this.option !== 'person') {
+        this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
+      }
       this.mobileCustomPlansService.setPlanExpectedDevice(null);
       this.mobilePlansService.setBasePlan(this.ebbPlan);
       this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
@@ -307,23 +335,25 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         this.mobilePlansService.setStorePickup(this.isStorePickup);
       }
       setTimeout(() => {
-        const data: INewPlanCartItem = {
-          autoRenewPlan: true,
-          basePlanId: this.ebbPlan.id,
-          orderShipMethod: !!isEsim ? null : "usps_first_class_mail/letter",
-          promoCode: "5",
-          savePaymentMethod: false,
-          shippingAddress: !!isEsim || !!this.isStorePickup ? null : (!!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress : this.selectedShippingAddress),
-          paymentInfo: null,
-          simsQuantity: 0,
-          usingPaymentProfile: false,
-          voucherCode: null,
-          haseSIM: !!isEsim ? true : false,
-          storePickup: this.isStorePickup
-        };
+        let data = {} as any;
+        if (!!this.option && this.option === 'home' && !isEsim) {
+          data = {
+            autoRenewPlan: true,
+            orderShipMethod: "usps_first_class_mail/letter",
+            shippingAddress: { id: !!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress?.id : this.selectedShippingAddress?.id },
+            haseSIM: false,
+            deliveryMethod: 'homeDelivery'
+          };
+        } else {
+          data = {
+            autoRenewPlan: true,
+            haseSIM: !!isEsim ? true : false,
+            deliveryMethod: !!this.isStorePickup ? 'storePickup' : 'inPersonDelivery'
+          };
+        }
         this.appState.loading = true;
-        this.orderCheckoutService.checkoutNewPlan(data).then(
-          (result) => {
+        this.ordersService.placeOrder(data).then((result) => {
+          if (!!result) {
             this.appState.loading = false;
             const data: any = {
               event: 'ACP_new_purchase',
@@ -338,16 +368,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
               data.marketingDetails = this.marketingDetails;
             }
             this.analyticsService.trackACPEvent(data);
-            this.analyticsService.trackSucceededCheckout(
-              result.orderId,
-              this.cart,
-              0,
-              0,
-              0,
-              true,
-              true,
-              { id: !!this.compatibileDevice.skuNumber ? this.compatibileDevice.skuNumber : "SIMGWLTMO4GLTE", price: 5 }
-            );
+            this.analyticsService.trackSucceededCheckout(result.orderId, this.cart, 0, 0, 0, true, true, { id: !!this.compatibileDevice.skuNumber ? this.compatibileDevice.skuNumber : "SIMGWLTMO4GLTE", price: 5 });
             this.userProfileService.userProfileObservable.pipe(take(1)).subscribe((data) => {
               if (!!data && data.activeCampaign) {
                 data.activeCampaign = {} as IMarketingDetails;
@@ -363,21 +384,23 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
             params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = result?.userPlanId;
             this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
             window.scroll(0, 0);
-          },
+          }
+        },
           (error) => {
             this.planPuchasedClicked = true;
             this.toastHelper.showAlert(error.message);
             this.appState.loading = false;
             this.planPurchased = false;
             this.mobilePlansService.clearUserCart();
-          }
-        );
+          });
       }, 500);
     }
   }
+
   public onOptionChange(): void {
     this.simOption = this.simOptionsForm.get('option').value;
   }
+
   public checkDevice(): void {
     this.newMobileServiceFrom.markAllAsTouched();
     if (!!this.newMobileServiceFrom.valid && !!this.displayedAddressModel) {
@@ -426,6 +449,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         });
     }
   }
+
   public tryAgain(): void {
     this.successCehck = false;
     this.errorCheck = false;
@@ -485,6 +509,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.invalidAddress = true;
     }
   }
+
   public addAddress(): void {
     this.shippingMethodForm.form.markAllAsTouched();
     this.touchShippingForm = true;
@@ -558,6 +583,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   public addressLookUpChanged(address: IAddress): void {
     this.shippingAddress = Object.assign(this.shippingAddress, address);
   }
@@ -565,6 +591,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public setValidAddress(isValid: boolean): void {
     this.isValidAddress = isValid;
   }
+
   private validateAddressInfoFromACPApplication() {
     const acpData = this.acpData;
     if (!!acpData?.user?.address?.mail) {
@@ -615,6 +642,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.appState.loading = false;
     }
   }
+
   private clearCart(): void {
     sessionStorage.removeItem("useFromBalance");
     sessionStorage.removeItem("useFromReward");
@@ -729,9 +757,5 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-  ngOnDestroy(): void {
-    this.alive = false;
-    this.filteredOptionsSubscription?.unsubscribe();
   }
 }

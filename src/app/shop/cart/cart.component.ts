@@ -45,15 +45,16 @@ export class CartComponent implements OnInit, OnDestroy {
   public estimatedResult = false;
   public userCart: CustomizableMobilePlan;
   public promoDetails = {
-    "2X2GHolidays2022": {img: "assets/icon/2X2GHolidays2022.svg"},
-    "2X6GHolidays2022": {img: "assets/icon/2X6GHolidays2022.svg"},
-    "2X3GHolidays2022": {img: "assets/icon/2X3GHolidays2022.svg"},
+    "2X2GHolidays2022": { img: "assets/icon/2X2GHolidays2022.svg" },
+    "2X6GHolidays2022": { img: "assets/icon/2X6GHolidays2022.svg" },
+    "2X3GHolidays2022": { img: "assets/icon/2X3GHolidays2022.svg" },
   }
   public deviceImage = 'assets/img/loading.gif';
   private planInCatalogChecked = false;
   private allBasePlans: Array<IBasePlan>;
   private alive = true;
   planInCatalog: IBasePlan;
+
   constructor(private router: Router, private modalHelper: ModalHelperService, private mobilePlansService: MobileCustomPlansService,
     private appState: AppState, private analyticsService: ActionsAnalyticsService, private shippingConfigurationService: ShippingConfigurationService,
     private userPlanService: UserPlansService, private userAccountService: UserAccountService,
@@ -66,7 +67,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.mobilePlansService.setReferralCode(this.user.referredWithCode);
         }
       }, 300);
-    
+
     });
     this.shippingConfigurationService.newSimOrder.pipe(takeWhile(() => this.alive)).subscribe((order) => {
       this.newSimOrder = order;
@@ -81,56 +82,62 @@ export class CartComponent implements OnInit, OnDestroy {
     this.mobilePlansService.currentPlan.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.userCart = plan;
       setTimeout(() => {
-          this.autoRenew = this.userCart?.autoRenewPlan;
-          if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
-            this.isGenericType = true;
-            this.deviceImage = this.userCart.acpDevice.imgUrl;
-            if (!!this.userCart.activePlanId) {
-              this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
-                if (!!plan) {
-                  this.purchasedMdn = (new PhonePipe()).transform(plan.mdn);
+        this.autoRenew = this.userCart?.autoRenewPlan;
+        if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
+          sessionStorage.removeItem('shippingAddress');
+          sessionStorage.removeItem('shippingMethod');
+          sessionStorage.removeItem('storePickup');
+          sessionStorage.removeItem('personPickup');
+          sessionStorage.removeItem('payment_id');
+          this.isGenericType = true;
+          this.deviceImage = this.userCart.acpDevice.imgUrl;
+          if (!!this.userCart.activePlanId) {
+            this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
+              if (!!plan) {
+                this.purchasedMdn = (new PhonePipe()).transform(plan.mdn);
+              }
+            });
+          }
+        }
+        if (!!this.userCart && !!this.userCart?.activePlanId && this.userCart?.cartType === CART_TYPES.CHANGE_PLAN) {
+          this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
+            if (!!this.userCart && !!this.userCart.basePlan.isSpecialPromotion) {
+              this.userAccountService.checkAvailablePromotion(plan.mdn).then((result) => {
+                if (!!result) {
+                  const applicableIndex = result.findIndex((promo) => promo.code === this.userCart.basePlan.specialPromotion.code);
+                  this.isApplicablePromo = applicableIndex > -1 ? true : false;
                 }
               });
             }
-          }
-          if (!!this.userCart && !!this.userCart?.activePlanId && this.userCart?.cartType === CART_TYPES.CHANGE_PLAN) {
-            this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
-              if (!!this.userCart && !!this.userCart.basePlan.isSpecialPromotion) {
-                this.userAccountService.checkAvailablePromotion(plan.mdn).then((result) => {
-                  if (!!result) {
-                    const applicableIndex = result.findIndex((promo) => promo.code === this.userCart.basePlan.specialPromotion.code);
-                    this.isApplicablePromo = applicableIndex > -1 ? true : false;
-                  }
-                });
+          });
+        }
+        if (!!this.userCart && this.userCart?.cartType === CART_TYPES.TOPUP_PLAN && !this.isTopupChecked || this.userCart.cartType === CART_TYPES.CHANGE_PLAN || this.userCart.cartType === CART_TYPES.PLAN_ITEMS) {
+          const activeUserPlanId = !!this.userCart.activePlanId ? this.userCart.activePlanId : sessionStorage.getItem('plan_id');
+          this.userPlanService.getUserPlan(activeUserPlanId).then((plan) => {
+            if (!!plan) {
+              if (this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
+                this.autoRenew = this.userCart.autoRenewPlan;
               }
-            });
-          }
-          if (!!this.userCart && this.userCart?.cartType === CART_TYPES.TOPUP_PLAN && !this.isTopupChecked || this.userCart.cartType === CART_TYPES.CHANGE_PLAN || this.userCart.cartType === CART_TYPES.PLAN_ITEMS) {
-            const activeUserPlanId = !!this.userCart.activePlanId ? this.userCart.activePlanId : sessionStorage.getItem('plan_id');
-            this.userPlanService.getUserPlan(activeUserPlanId).then((plan) => {
-              if (!!plan) {
-                if (this.userCart.cartType !== CART_TYPES.PLAN_ITEMS) {
-                  this.autoRenew = this.userCart.autoRenewPlan;
-                }
-                this.topupMdn = (new PhonePipe()).transform(plan.mdn);
-              }
-            });
-            this.isTopupChecked = true;
-          }
-          if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN) {
-            this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
-              this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
-              this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
-              if (!this.planInCatalog && !this.planInCatalogChecked) {
-                this.planInCatalogChecked = true;
-                this.showExpiredPlansPopup();
-              }
-            });
-          }
+              this.topupMdn = (new PhonePipe()).transform(plan.mdn);
+            }
+          });
+          this.isTopupChecked = true;
+        }
+        if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN) {
+          this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
+            this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
+            this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
+            if (!this.planInCatalog && !this.planInCatalogChecked) {
+              this.planInCatalogChecked = true;
+              this.showExpiredPlansPopup();
+            }
+          });
+        }
       }, 500);
       this.appState.loading = false;
     });
   }
+
   ngOnDestroy(): void {
     this.alive = false;
   }
@@ -138,6 +145,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public goToDevices(): void {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
   }
+
   public goToPlans(changePlan): void {
     if (!!changePlan) {
       this.modalHelper.showConfirmMessageModal(
@@ -151,7 +159,7 @@ export class CartComponent implements OnInit, OnDestroy {
             sessionStorage.removeItem('removeFromCart');
             if (this.userCart.cartType === CART_TYPES.CHANGE_PLAN) {
               const params = {};
-              params[ROUTE_URLS.PARAMS.USER_PLAN_ID]=this.userCart.activePlanId;
+              params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userCart.activePlanId;
               this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
             } else {
               const params = {};
@@ -169,13 +177,14 @@ export class CartComponent implements OnInit, OnDestroy {
 
     }
   }
+
   public deleteCart(event, allCart?): void {
     if (!this.userCart) {
       return;
     }
     let question;
     let confirmMessage;
-    if(this.userCart.cartType === CART_TYPES.NEW_PLAN) {
+    if (this.userCart.cartType === CART_TYPES.NEW_PLAN) {
       allCart = true;
     }
     if (!!allCart) {
@@ -242,6 +251,7 @@ export class CartComponent implements OnInit, OnDestroy {
         }
       });
   }
+
   public clearUserCart(event, isItForPhone?: boolean): void {
     if (!this.isGenericType && !!this.selectedPhone && !!isItForPhone) {
       const question = 'To delete the device, check compatibility is needed!';
@@ -260,16 +270,15 @@ export class CartComponent implements OnInit, OnDestroy {
       this.deleteCart(event);
     }
   }
+
   public checkout(): void {
-    if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.DEVICE_CHECKOUT}`]);
-    } else {
-      this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`]);
-    }
+    this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}`]);
   }
+
   public cancel(): void {
     this.router.navigate([ROUTE_URLS.HOME]);
   }
+
   public updateAutoRenew(): void {
     if (!this.autoRenew) {
       this.autoRenew = false;
@@ -284,15 +293,18 @@ export class CartComponent implements OnInit, OnDestroy {
 
     }
   }
+
   public goToAddons(): void {
     const params = {};
     params[ACCOUNT_ROUTE_URLS.PARAMS.CHANGE_ADDON] = true;
     this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`, params]);
   }
+
   public validateZipCode(): void {
     this.validZipCode = /^\d{5}(-\d{4})?$/.test(this.zipCode);
     return this.validZipCode;
   }
+
   public estimateTaxes(): void {
     const purchasedDetails: any = {};
     purchasedDetails.basePlanId = this.userCart.id;
@@ -363,12 +375,14 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   public filterAddons(planAddons): boolean {
     this.dataAddons = planAddons.filter((addon) => addon.type === 'add-on-data');
     this.internationalAddon = planAddons.filter((addon) => addon.id === 'GOODMOBILE-UNLIMITED-INTERNATIONAL');
     this.talkAndTextAddons = planAddons.filter((addon) => addon.type === 'add-on-talkandtext' && addon.id !== 'GOODMOBILE-UNLIMITED-INTERNATIONAL');
     return true;
   }
+
   public planCategory(category): string {
     switch (category) {
       case 'plan': {
@@ -384,6 +398,7 @@ export class CartComponent implements OnInit, OnDestroy {
         return '';
     }
   }
+
   public calculateTotal(subTotal?): number {
     let total = 0;
     if (!this.userCart) {
@@ -487,7 +502,6 @@ export class CartComponent implements OnInit, OnDestroy {
     return total >= 0 ? total : 0;
   }
 
-
   private applyEstimatedTaxes(result): void {
     this.estimatedTaxes = result.taxes;
     this.estimatedFees = result.fees;
@@ -495,6 +509,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.taxes = this.estimatedTaxes === 0 || !!this.estimatedTaxes ? true : false;
     this.appState.loading = false;
   }
+
   private applyResetEstimatedTaxes(error): void {
     this.appState.loading = false;
     this.toastHelper.showAlert(error.error.message);
@@ -504,65 +519,66 @@ export class CartComponent implements OnInit, OnDestroy {
     this.estimatedResult = false;
     this.zipCode = '';
   }
-  private removeItemFromCart(item: string, allCart?:boolean): void {
+
+  private removeItemFromCart(item: string, allCart?: boolean): void {
     const cartHasMultipleItems = this.userCart.simsQuantity > 0 && !!this.userCart?.addOns && this.userCart?.addOns?.length > 0;
-    if(!allCart) {
-    if (item === 'sim') {
-      if(!!this.userCart.addOns && this.userCart.addOns.length > 0) {
-        this.userCart.simsQuantity = 0;
-        this.mobilePlansService.setSimPurchaseQuantity(0);
-      } else {
-        this.mobilePlansService.clearUserCart();
-        this.appState.clearSessionStorage();
-        this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.MANAGE_DEVICES}`]);
+    if (!allCart) {
+      if (item === 'sim') {
+        if (!!this.userCart.addOns && this.userCart.addOns.length > 0) {
+          this.userCart.simsQuantity = 0;
+          this.mobilePlansService.setSimPurchaseQuantity(0);
+        } else {
+          this.mobilePlansService.clearUserCart();
+          this.appState.clearSessionStorage();
+          this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.MANAGE_DEVICES}`]);
+        }
       }
-    }
-    if (item === 'plan') {
+      if (item === 'plan') {
+        this.mobilePlansService.clearUserCart();
+        if (!!this.userCart.voucherData) {
+          this.mobilePlansService.removeVoucherCode();
+        }
+        this.appState.clearSessionStorage();
+        this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
+        this.router.navigate([ROUTE_URLS.HOME]);
+      }
+      if (item !== 'sim' && item !== 'plan') { // remove from addons
+        if (!!this.userCart.addOns && this.userCart.addOns.length === 1 && !!cartHasMultipleItems) { // cart has sim and one addon
+          if (!!this.userCart.voucherData) {
+            this.mobilePlansService.removeVoucherCode();
+          }
+        }
+        if (!!this.userCart.addOns && this.userCart.addOns?.length === 1 && !cartHasMultipleItems) { // if cart has only one addon then clear cart
+          this.mobilePlansService.clearUserCart();
+          if (!!this.userCart.voucherData) {
+            this.mobilePlansService.removeVoucherCode();
+          }
+          this.appState.clearSessionStorage();
+          this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`]);
+        } else {
+          let cartAddons = this.userCart?.addOns;
+          cartAddons = cartAddons.filter((addon) => addon.id !== item);
+          this.mobilePlansService.setAddonsList(cartAddons, this.userCart).then(() => {
+          });
+        }
+        this.analyticsService.trackRermoveFromCartGA4(this.userCart.addOns);
+      }
+    } else {
       this.mobilePlansService.clearUserCart();
+      this.mobilePlansService.setSimPurchaseQuantity(0);
+      this.checkoutService.paymentsSubject.next(null);
+      this.checkoutService.detailsSubject.next(null);
       if (!!this.userCart.voucherData) {
         this.mobilePlansService.removeVoucherCode();
       }
-      this.appState.clearSessionStorage();
-      this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
+      if (!!this.userCart.basePlan && !!this.userCart.basePlan.parentId) {
+        this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
+      }
+      if (!!this.userCart.addOns && this.userCart.addOns.length > 0) {
+        this.analyticsService.trackRermoveFromCartGA4(this.userCart.addOns);
+      }
       this.router.navigate([ROUTE_URLS.HOME]);
     }
-    if (item !== 'sim' && item !== 'plan') { // remove from addons
-      if (!!this.userCart.addOns && this.userCart.addOns.length === 1 && !!cartHasMultipleItems) { // cart has sim and one addon
-        if (!!this.userCart.voucherData) {
-          this.mobilePlansService.removeVoucherCode();
-        }
-      }
-      if (!!this.userCart.addOns && this.userCart.addOns?.length === 1 && !cartHasMultipleItems) { // if cart has only one addon then clear cart
-        this.mobilePlansService.clearUserCart();
-        if (!!this.userCart.voucherData) {
-          this.mobilePlansService.removeVoucherCode();
-        }
-        this.appState.clearSessionStorage();
-        this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.PLAN_ADD_ONS}`]);
-      } else {
-        let cartAddons = this.userCart?.addOns;
-        cartAddons = cartAddons.filter((addon) => addon.id !== item);
-        this.mobilePlansService.setAddonsList(cartAddons, this.userCart).then(() => {
-        });
-      }
-      this.analyticsService.trackRermoveFromCartGA4(this.userCart.addOns);
-    }
-  } else {
-    this.mobilePlansService.clearUserCart();
-    this.mobilePlansService.setSimPurchaseQuantity(0);
-    this.checkoutService.paymentsSubject.next(null);
-    this.checkoutService.detailsSubject.next(null);
-    if (!!this.userCart.voucherData) {
-      this.mobilePlansService.removeVoucherCode();
-    }
-    if (!!this.userCart.basePlan && !!this.userCart.basePlan.parentId) {
-    this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
-    }
-    if(!!this.userCart.addOns && this.userCart.addOns.length > 0) {
-      this.analyticsService.trackRermoveFromCartGA4(this.userCart.addOns);
-    }
-    this.router.navigate([ROUTE_URLS.HOME]);
-  }
   }
 
   private showExpiredPlansPopup(): void {

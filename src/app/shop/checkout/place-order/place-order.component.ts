@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FadeInOutAnimation } from '../../../../app/app.animations';
 import { CheckoutService } from '../checkout.service';
-import { ICreditCardInfo, CustomizableMobilePlan, CART_TYPES, ActionsAnalyticsService, FirebaseAccountPaymentService, ShippingConfigurationService, MobileCustomPlansService, UserPlansService, UserAccountService, ICatalogItem, IPlanAddOn, IVoucherData, IShippingMethod, IFirebaseAddress } from '@ztarmobile/zwp-service-backend';
+import { ICreditCardInfo, CustomizableMobilePlan, CART_TYPES, ActionsAnalyticsService, FirebaseAccountPaymentService, ShippingConfigurationService, MobileCustomPlansService, UserPlansService, UserAccountService, ICatalogItem, IPlanAddOn, IVoucherData, IShippingMethod, IFirebaseAddress, IAcpDevice } from '@ztarmobile/zwp-service-backend';
 import { IFlowIndicator, FLOW_STEPS_IDS, FLOW_STATE } from '../flow-indicator/flow-indicator';
 import { Router } from '@angular/router';
 import { MetaService } from '../../../../services/meta-service.service';
@@ -22,7 +22,7 @@ import { ToastrHelperService } from 'src/services/toast-helper.service';
 export class PlaceOrderComponent implements OnInit, OnDestroy {
   @Input() isLoggedIn: boolean;
 
-  public selectedPhone: ICatalogItem;
+  public selectedPhone: IAcpDevice;
   public summary = true;
   public items = true;
   public line = true;
@@ -36,7 +36,6 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   public isTopupChecked = false;
   public autoRenew;
   public topupMdn: string;
-  public isItemUnavailable: boolean;
   public dataAddons: Array<IPlanAddOn> = [];
   public internationalAddon: IPlanAddOn = null;
   public talkAndTextAddons: Array<IPlanAddOn> = [];
@@ -48,9 +47,9 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   public showBalanceSection = false;
   public balanceAmount = 0;
   public promoDetails = {
-    "2X2GHolidays2022": {img: "assets/icon/2X2GHolidays2022.svg"},
-    "2X6GHolidays2022": {img: "assets/icon/2X6GHolidays2022.svg"},
-    "2X3GHolidays2022": {img: "assets/icon/2X3GHolidays2022.svg"},
+    "2X2GHolidays2022": { img: "assets/icon/2X2GHolidays2022.svg" },
+    "2X6GHolidays2022": { img: "assets/icon/2X6GHolidays2022.svg" },
+    "2X3GHolidays2022": { img: "assets/icon/2X3GHolidays2022.svg" },
   }
   public CART_TYPES = CART_TYPES;
   public SITE_ID = INVISIBLE_CAPTCHA_ID;
@@ -66,6 +65,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   public usedReward = 0;
   public details;
   public isStorePickup = false;
+  public isInPersonDelivery = false;
   public deviceImage = 'assets/img/loading.gif';
   private alive = true;
 
@@ -109,7 +109,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       this.isMigration = this.userCart.cartType === CART_TYPES.MIGRATION;
       this.isReplacement = this.userCart.cartType === CART_TYPES.PLAN_ITEMS && !this.userCart.addOns && this.userCart.simsQuantity > 0;
       const storedMethod = JSON.parse(sessionStorage.getItem('shippingMethod'));
-     
+
       this.shippingConfigurationService.shippingMethods.pipe(takeWhile(() => this.alive)).subscribe((methods) => {
         if (!!storedMethod) {
           this.orderShippingMethod = methods.find((m) => m.id === storedMethod.id);
@@ -119,6 +119,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       });
       this.storedShippingAddress = JSON.parse(sessionStorage.getItem('shippingAddress'));
       this.isStorePickup = JSON.parse(sessionStorage.getItem('storePickup'));
+      this.isInPersonDelivery = JSON.parse(sessionStorage.getItem('personPickup'));
 
       if (!!this.storedShippingAddress) {
         this.shippingAddress = Object.assign({}, this.storedShippingAddress) as IFirebaseAddress;
@@ -128,12 +129,17 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
           this.shippingAddress = address;
         });
       }
-      if(!this.isStorePickup) {
+      if (!this.isStorePickup) {
         this.checkoutService.storePickupSubject.pipe(take(1)).subscribe((storePickup) => {
           this.isStorePickup = storePickup;
         });
       }
-      this.showShippingCard = (!!this.shippingAddress && this.shippingAddress.address1) || !!this.isStorePickup ? true : false;
+      if (!this.isInPersonDelivery) {
+        this.checkoutService.inPersonSubject.pipe(take(1)).subscribe((inPerson) => {
+          this.isInPersonDelivery = inPerson;
+        });
+      }
+      this.showShippingCard = (!!this.shippingAddress && this.shippingAddress.address1) || !!this.isStorePickup || !!this.isInPersonDelivery ? true : false;
       if (!!storedPaymentId && storedPaymentId !== '1') {
         this.accountPaymentService.getPaymentMethod(storedPaymentId).then((method) => {
           this.cardInfo = Object.assign(this.cardInfo, method);
@@ -147,7 +153,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
               this.cardInfo = Object.assign(this.cardInfo, method);
               this.showBillingAddress = true;
             });
-        } else {
+          } else {
             this.cardInfo = method?.card;
             this.showBillingAddress = true;
           }
@@ -188,7 +194,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
             sessionStorage.removeItem('removeFromCart');
             if (this.userCart.cartType === CART_TYPES.CHANGE_PLAN) {
               const params = {};
-              params[ROUTE_URLS.PARAMS.USER_PLAN_ID]=this.userCart.activePlanId;
+              params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.userCart.activePlanId;
               this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.CHANGE_PLAN}`, params]);
             } else {
               const params = {};
@@ -265,12 +271,12 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
               this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.SUMMARY}`]);
               break;
             case CART_TYPES.GENERIC_CART:
-                this.checkoutService.paymentsSubject.next(null);
-                this.checkoutService.detailsSubject.next(null);
-                this.mobilePlansService.clearUserCart();
-                this.appState.clearSessionStorage();
-                this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
-                break;
+              this.checkoutService.paymentsSubject.next(null);
+              this.checkoutService.detailsSubject.next(null);
+              this.mobilePlansService.clearUserCart();
+              this.appState.clearSessionStorage();
+              this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.ACP_DEVICES}`]);
+              break;
             default:
               this.analyticsService.trackRermoveFromCartGA4([this.userCart.basePlan]);
               this.mobilePlansService.clearUserCart();
@@ -335,7 +341,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   private prepareOrderData(cart): void {
     this.userCart = cart;
     this.autoRenew = this.userCart.autoRenewPlan;
-    if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
+    if (!!this.userCart && this.userCart?.cartType === CART_TYPES.GENERIC_CART) {
       this.isGenericType = true;
       this.deviceImage = this.userCart.acpDevice.imgUrl;
       if (!!this.userCart.activePlanId) {
@@ -370,26 +376,9 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
       });
       this.isTopupChecked = true;
     }
-    if (!!this.userCart && !!this.userCart.phones) {
-      this.selectedPhone = this.userCart.phones[0];
-      if (!!this.selectedPhone && this.selectedPhone.stock > 0) {
-        this.isItemUnavailable = false;
-      } else {
-        this.isItemUnavailable = true;
-        let customHtml = ``;
-        if (this.userCart.cartType === CART_TYPES.NEW_PLAN) {
-          customHtml = `The item ${this.userCart.phones[0].name}, is currently unavailable.
-                 Please choose another phone or remove it from cart to proceed.`;
-        } else {
-          customHtml = `The item ${this.userCart.phones[0].name}, is currently unavailable.
-                  Please choose another phone or remove it.`;
-        }
-        if (!document.body.classList.contains('modal-open')) {
-          this.modalHelper.showItemOutOFStockModal('Action Required', customHtml, this.userCart, 'out-of-stock-modal', false);
-        }
-      }
+    if (!!this.userCart && !!this.userCart.acpDevice) {
+      this.selectedPhone = this.userCart.acpDevice;
     }
-    // this.appState.loading = false;
   }
   private removeItemFromCart(item: string): void {
     const cartHasMultipleItems = this.userCart.simsQuantity > 0 && !!this.userCart.addOns && this.userCart.addOns.length > 0;

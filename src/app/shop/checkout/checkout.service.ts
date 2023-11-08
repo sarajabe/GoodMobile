@@ -35,6 +35,7 @@ import { AppState } from '../../app.service';
 import { ToastrHelperService } from '../../../services/toast-helper.service';
 import { SHOP_ROUTE_URLS, ROUTE_URLS, MIGRATION_ROUTE_URLS, OFFERS_ROUTE_URLS, ACTIVATION_ROUTE_URLS } from '../../app.routes.names';
 import { filter } from 'rxjs/operators';
+import { OrdersService } from '@ztarmobile/zwp-service-backend-v2';
 
 export interface CheckoutCartOptions {
   isVoucherPayment: boolean;
@@ -89,8 +90,8 @@ export interface CheckoutSimCardItem extends ICartSimItem {
 
 export interface CheckoutSimCard extends ICartSimCard {
   userPlanId: string;
-  haseSIM?:boolean;
-  storePickup?:boolean;
+  haseSIM?: boolean;
+  storePickup?: boolean;
 }
 
 export interface ICheckoutService {
@@ -113,6 +114,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   public shippingMethodSubject: ReplaySubject<IShippingMethod> = new ReplaySubject<IShippingMethod>(1);
   public shippingAddressSubject: ReplaySubject<IFirebaseAddress> = new ReplaySubject<IFirebaseAddress>(1);
   public storePickupSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  public inPersonSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
   public PaymentInfoSubject: ReplaySubject<ICreditCardInfo> = new ReplaySubject<ICreditCardInfo>(1);
   // eslint-disable-next-line max-len
@@ -139,7 +141,8 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     private toastHelper: ToastrHelperService,
     private changePlanService: ChangePlanService,
     private appState: AppState,
-    private simpleAuthService: SimpleAuthService) {
+    private simpleAuthService: SimpleAuthService,
+    private ordersService: OrdersService) {
 
     this.userCartObservable = this.userCartReplySubject.asObservable();
     this.simpleAuthService.registerDependentService('checkout-service', this);
@@ -177,6 +180,9 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   public updateStorePickup(storePickup): void {
     this.storePickupSubject.next(storePickup);
   }
+  public updateInPersonDelivery(inPerson): void {
+    this.inPersonSubject.next(inPerson);
+  }
   public updatePaymentMethod(method): void {
     this.PaymentInfoSubject.next(method);
   }
@@ -212,15 +218,15 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     this.taxesSubject.next(true);
   }
 
-  public checkoutNewPlan(checkoutNewPlan: CheckoutNewPlan): Promise<void> {
-    const options: CheckoutCartOptions = checkoutNewPlan.options;
+  public checkoutNewPlan(checkoutNewPlan: any): Promise<void> {
+    const options: CheckoutCartOptions = checkoutNewPlan?.options;
     return new Promise<void>((resolve, reject) => {
       // this is important to save this value for later when user activate the plan
       const setAutoRenewPromise: Promise<void> = this.mobilePlansService.setAutoRenewPlan(options.autoRenewPlan);
       this.mobilePlansService.setStorePickup(options.storePickup);
-      const prepareCartValuesPromise: Promise<INewPlanCartItem> = this.prepareCartItems(checkoutNewPlan);
+      const prepareCartValuesPromise: Promise<any> = this.prepareCartItems(checkoutNewPlan);
       const allPromises = Promise.all([setAutoRenewPromise, prepareCartValuesPromise]);
-      allPromises.then((items: [void, INewPlanCartItem]) => {
+      allPromises.then((items: [void, any]) => {
         this.checkoutPlanNew(items[1], checkoutNewPlan).then(() => resolve(), (error) => reject(error));
       }, (error) => reject(error));
     });
@@ -312,7 +318,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         this.actionsAnalyticsService.trackItemSucceededPurchase(response.orderId, cart, taxes, fees, SIMDetails.shippingCost, SIMDetails.simPrice, SIMDetails.simId);
         params[SHOP_ROUTE_URLS.PARAMS.SUCCESSFUL_PURCHASE] = 'both';
         params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = response.orderId;
-        if(!!cart?.storePickup) {
+        if (!!cart?.storePickup) {
           params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
         }
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
@@ -400,7 +406,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           } else {
             params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = checkoutSimCardItem.userPlanId;
             params[SHOP_ROUTE_URLS.PARAMS.ORDER_SIM] = true;
-            if(!!checkoutSimCardItem?.storePickup) {
+            if (!!checkoutSimCardItem?.storePickup) {
               params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
             }
             this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT_RESULTS}`, params]);
@@ -493,13 +499,13 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     this.placeOrder.next(placeOrder);
   }
 
-  private checkoutPlanNew(cart: INewPlanCartItem, checkoutNewPlan: CheckoutNewPlan): Promise<void> {
+  private checkoutPlanNew(cart: any, checkoutNewPlan: any): Promise<void> {
     const currentPlan: CustomizableMobilePlan = checkoutNewPlan.currentPlan;
     const orderShippingMethod: IShippingMethod = checkoutNewPlan.orderShippingMethod;
     const shippingAddress: IFirebaseAddress = checkoutNewPlan.shippingAddress;
     const isPhoneOnly = currentPlan.cartType === CART_TYPES.GENERIC_CART ? true : false;
     return new Promise<void>((resolve, reject) => {
-      this.orderCheckoutService.checkoutNewPlan(cart).then((response) => {
+      this.ordersService.placeOrder(cart).then((response) => {
         currentPlan.autoRenewPlan = cart.autoRenewPlan;
         currentPlan.cartType = PURCHASE_INTENT.NEW;
         const includeFreeSIM = !!currentPlan.activationCode ? false : true;
@@ -515,15 +521,15 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         if (isPhoneOnly) {
           params[ROUTE_URLS.PARAMS.PHONE_PURCHASE] = true;
         }
-        if(!!cart?.storePickup) {
+        if (!!cart?.storePickup) {
           params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
         }
         if (!!currentPlan.activationCode) {
-          params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION]=true;
+          params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION] = true;
         }
         params[ROUTE_URLS.PARAMS.USER_ORDER_ID] = response.orderId;
         setTimeout(() => {
-          if(!!currentPlan?.acpDevice && !!response?.userPlanId) {
+          if (!!currentPlan?.acpDevice && !!response?.userPlanId) {
             this.userPlanService.getUserPlan(response.userPlanId).then((p) => {
               const plan = p;
               currentPlan.acpDevice.orderId = response.orderId;
@@ -569,43 +575,29 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     });
   }
 
-  private prepareCartItems(checkoutNewPlan: CheckoutNewPlan): Promise<INewPlanCartItem> {
-    const currentPlan: CustomizableMobilePlan = checkoutNewPlan.currentPlan;
-    const shippingAddress: IFirebaseAddress = checkoutNewPlan.shippingAddress;
-    const cardInfo: ICreditCardInfo = checkoutNewPlan.cardInfo;
-    const options: CheckoutCartOptions = checkoutNewPlan.options;
-    const orderShippingMethod: IShippingMethod = checkoutNewPlan.orderShippingMethod;
-    return new Promise<INewPlanCartItem>((resolve, reject) => {
+  private prepareCartItems(checkoutNewPlan: any): Promise<any> {
+    const currentPlan: CustomizableMobilePlan = checkoutNewPlan?.currentPlan;
+    const cardInfo: ICreditCardInfo = checkoutNewPlan?.cardInfo;
+    const shippingAddress: any = checkoutNewPlan?.shippingAddress;
+    return new Promise<any>((resolve, reject) => {
       try {
-        if (!!cardInfo && cardInfo?.address1) {
-          cardInfo.address1 = AccountPaymentService.shortenAddress(cardInfo.address1, 30);
+        const requestBody: any = {};
+        const options: CheckoutCartOptions = checkoutNewPlan?.options;
+        requestBody.shippingAddress = { id: checkoutNewPlan?.shippingAddress?.id };
+        requestBody.haseSIM = checkoutNewPlan?.options?.haseSIM;
+        requestBody.autoRenewPlan = !!options?.autoRenewPlan ? true : false;
+        requestBody.orderShipMethod = checkoutNewPlan?.orderShippingMethod?.id;
+        requestBody.deliveryMethod = checkoutNewPlan?.deliveryMethod;
+        requestBody.paymentType = checkoutNewPlan?.paymentType;
+        if (!!checkoutNewPlan.cardInfo) {
+          requestBody.paymentMethod = { id: checkoutNewPlan?.cardInfo?.id };
         }
-        if (!!cardInfo && !!cardInfo?.address2) {
-          cardInfo.address2 = AccountPaymentService.shortenAddress(cardInfo.address2, 30);
+        if(!checkoutNewPlan?.orderShippingMethod) {
+          delete requestBody.orderShipMethod
         }
-        if (!!cardInfo && !!cardInfo?.city) {
-          cardInfo.city = AccountPaymentService.shortenAddress(cardInfo.city, 20);
+        if(!shippingAddress && !shippingAddress?.id) {
+          delete requestBody.shippingAddress;
         }
-        if (!!cardInfo && !!cardInfo?.id) {
-          cardInfo.type = 'creditCardProfile';
-        }
-        if (!!cardInfo && !!cardInfo?.cardNumber) {
-          cardInfo.type = 'creditCard';
-        }
-        const requestBody = {
-          basePlanId: currentPlan.basePlan.id,
-          simsQuantity: currentPlan.simsQuantity,
-          paymentInfo: !currentPlan.voucherData ? cardInfo: null,
-          shippingAddress: checkoutNewPlan.shippingAddress,
-          usingPaymentProfile: options.usingPaymentProfile,
-          voucherCode: !!currentPlan.voucherData ? currentPlan.voucherData.code : null,
-          orderShipMethod: !!orderShippingMethod ? orderShippingMethod.id : null,
-          autoRenewPlan: options.autoRenewPlan,
-          promoCode: options.autoRenewPlan ? '' + currentPlan.basePlan.promoPrice : null,
-          savePaymentMethod: options.saveCcInfo,
-          haseSIM: options.haseSIM,
-          storePickup: options.storePickup
-        };
         if (!cardInfo?.cardNumber && !cardInfo?.id && !!currentPlan?.voucherData && currentPlan?.voucherData?.code) {
           delete requestBody.paymentInfo; // if user enter enough voucher remove payment info property from request
         }

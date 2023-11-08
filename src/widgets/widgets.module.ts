@@ -35,6 +35,7 @@ import { ActivationHeaderComponent } from './activation-header/activation-header
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SafeHtmlPipe } from './pipes/safeHtml.pipe';
 import { StoresListComponent } from './stores-list/stores-list.component';
+import { InPersonDeliverySelectorComponent } from './in-person-delivery-selector/in-person-delivery-selector.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { StoresListComponent } from './stores-list/stores-list.component';
     BannersComponent,
     ActivationHeaderComponent,
     StoresListComponent,
-   ],
+    InPersonDeliverySelectorComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -77,7 +79,7 @@ import { StoresListComponent } from './stores-list/stores-list.component';
     NgxPaginationModule,
     MatAutocompleteModule,
     SwiperModule
-    ],
+  ],
   exports: [
     HeaderMainNavbarComponent,
     FooterMainNavbarComponent,
@@ -107,7 +109,8 @@ import { StoresListComponent } from './stores-list/stores-list.component';
     FeaturedPlansComponent,
     BannersComponent,
     ActivationHeaderComponent,
-    StoresListComponent
+    StoresListComponent,
+    InPersonDeliverySelectorComponent
   ],
   providers: [SimpleDateFormatPipe, SafePipe, SafeHtmlPipe, ModalHelperService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

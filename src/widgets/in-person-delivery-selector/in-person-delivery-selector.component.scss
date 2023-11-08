@@ -1,0 +1,379 @@
+@import '../../styles/modules/variables';
+@import '../../styles/modules/mixins';
+
+::ng-deep {
+    .in-person-delivery-option {
+        background: #f8fcfe;
+        border: 1px solid $primary-color;
+        box-shadow: 0px 4px 12px rgba(165, 163, 163, 0.25);
+        border-radius: 10px;
+        padding: 16px;
+
+        .sidebar {
+            position: fixed;
+            background: #fbfbfb;
+            height: 100%;
+            right: 0 !important;
+            top: 0;
+            z-index: 999;
+            overflow-y: auto;
+            width: 85%;
+            background: $white;
+            box-shadow: -5px 0px 8px 0px rgba(0, 88, 149, 0.02), -7px 0px 16px 4px rgba(94, 94, 94, 0.10), -4px 0px 4px 0px rgba(94, 94, 94, 0.04);
+
+            @media (max-width: $phablet-min-width-minus) {
+                width: 100%;
+                top: 100px;
+                border-radius: 8px 8px 0px 0px;
+            }
+
+            .close-bar {
+                background: #F2F4F5;
+                box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+                padding: 12px 24px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    display: none;
+                }
+
+                .close-button {
+                    img {
+                        width: 28px;
+                        height: 28px;
+                    }
+                }
+            }
+
+            .sidebar-content {
+                padding-top: 24px;
+                max-width: 1200px;
+                width: 100%;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    padding-top: 16px;
+                }
+
+                .flex-titles {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .titles-part {
+                        .title {
+                            margin-bottom: 4px;
+                        }
+
+                        .sub-title {
+                            font-family: $base-font-family;
+                            margin: 0;
+                        }
+                    }
+
+                    .last {
+                        @media (max-width: $phablet-min-width-minus) {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-end;
+                            justify-content: space-between;
+                        }
+
+                        .close-button {
+                            @media (min-width: $phablet-min-width) {
+                                display: none;
+                            }
+                        }
+
+                        .agent-code {
+                            color: #727272;
+                        }
+                    }
+                }
+
+                .main-box {
+                    margin-top: 32px;
+                    padding: 16px 12px;
+                    border-radius: 6px;
+                    border: 1px solid #99BCD5;
+                    background: #F2F7FA;
+
+                    @media (max-width: $phablet-min-width-minus) {
+                        margin-top: 24px;
+                    }
+
+                    .box-content {
+                        padding: 20px 24px;
+                        border-radius: 10px;
+                        background: $white;
+                        box-shadow: 0px 5px 16px 0px rgba(0, 60, 117, 0.02), 0px 8px 30px 0px rgba(94, 94, 94, 0.08), 0px 4px 12px 0px rgba(94, 94, 94, 0.03);
+
+                        .smaller {
+                            margin-bottom: 4px;
+                            font-family: $base-font-family-bold;
+
+                            @media (max-width: $phablet-min-width-minus) {
+                                margin-bottom: 2px;
+                            }
+                        }
+
+                        .sku-value {
+                            color: #727272;
+                            margin-bottom: 18px;
+                        }
+
+                        .where-to-find-part {
+                            margin-top: 4px;
+
+                            a {
+                                font-size: rem-calc(18px);
+                                line-height: 18px;
+                                font-family: $secondary-font-family-bold;
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+                                padding: 8px;
+                                width: fit-content;
+
+                                @media (max-width: $phablet-min-width-minus) {
+                                    font-size: rem-calc(16px);
+                                    line-height: 16px;
+                                }
+
+                                img {
+                                    width: 24px;
+                                    height: 24px;
+                                    transform: rotate(180deg);
+
+                                    @media (max-width: $phablet-min-width-minus) {
+                                        width: 20px;
+                                        height: 20px;
+                                    }
+                                }
+
+                                .rotate {
+                                    transform: rotate(0);
+                                }
+                            }
+
+                            .part-box {
+                                border-radius: 8px;
+                                background: #F2F7FA;
+                                padding: 16px;
+                                max-width: 491px;
+                                width: 100%;
+                                display: flex;
+                                align-items: center;
+                                gap: 16px;
+
+                                .smallest {
+                                    margin: 0;
+                                }
+
+                                img {
+                                    width: 179px;
+                                    height: 100px;
+
+                                    @media (max-width: $phablet-min-width-minus) {
+                                        width: 143px;
+                                        height: 80px;
+                                    }
+                                }
+
+                                .flex {
+                                    display: flex;
+                                    gap: 12px;
+
+                                    @media (max-width: $phablet-min-width-minus) {
+                                        gap: 8px;
+                                    }
+
+                                    img {
+                                        width: 24px;
+                                        height: 24px;
+                                    }
+
+                                    .content {
+                                        .top {
+                                            margin-top: 2px;
+                                        }
+
+                                        .smaller {
+                                            margin: 0;
+                                        }
+
+                                        .caption {
+                                            margin-bottom: 12px;
+
+                                            @media (max-width: $phablet-min-width-minus) {
+                                                margin-bottom: 8px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .overlay {
+            z-index: 12;
+            top: 0;
+            opacity: 1;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            position: fixed;
+            background: rgba(77, 82, 87, 0.64);
+            backdrop-filter: blur(2.5px);
+        }
+
+        .content-part,
+        .box-content {
+            padding: 24px 24px 32px;
+
+            @media (max-width: $phablet-min-width-minus) {
+                padding: 20px 16px 28px;
+            }
+
+            form {
+                fieldset {
+                    margin-bottom: 0;
+
+                    .smaller {
+                        font-family: $base-font-family-bold;
+                        margin-bottom: 10px;
+
+                        @media (max-width: $phablet-min-width-minus) {
+                            margin-bottom: 7px;
+                        }
+                    }
+
+                    .input-flex {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 16px;
+                        flex-wrap: wrap;
+
+                        .input-part {
+                            .outlined-label-input {
+                                width: 214px;
+                            }
+
+                            .validation-message {
+                                margin-bottom: 0;
+                            }
+                        }
+
+                        button {
+                            margin-top: 3px;
+
+                            @media (max-width: $phablet-min-width-minus) {
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-bottom: 0;
+            gap: 10px;
+
+            .person-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .input-details {
+                .title {
+                    font-family: $base-font-family-bold;
+                }
+            }
+        }
+
+        .package-content {
+            margin-top: 24px;
+            border-radius: 10px;
+            background: $white;
+            box-shadow: 0px 5px 16px 0px rgba(0, 60, 117, 0.02), 0px 8px 30px 0px rgba(94, 94, 94, 0.08), 0px 4px 12px 0px rgba(94, 94, 94, 0.03);
+
+            .header-part {
+                padding: 24px;
+
+                @media (max-width: $phablet-min-width-minus) {
+                    padding: 20px 16px 16px;
+                }
+
+                .title {
+                    font-family: $base-font-family-bold;
+                    color: #6A509B;
+                    margin-bottom: 2px;
+                }
+
+                .smallest {
+                    padding-left: 4px;
+                }
+            }
+
+            hr {
+                border-top: 1px solid #D9E6EF;
+                margin: 0;
+                max-width: none;
+            }
+
+            .content-part {
+                .info-banner {
+                    max-width: 512px;
+                    width: 100%;
+                    margin: 0;
+
+                    .title {
+                        margin: 0;
+                        font-family: $secondary-font-family;
+                        font-weight: 400;
+
+                        b {
+                            font-family: $secondary-font-family-bold;
+                        }
+                    }
+                }
+
+                .item-overview-part {
+                    margin-top: 32px;
+                    display: flex;
+                    gap: 8px;
+
+                    @media (max-width: $phablet-min-width-minus) {
+                        margin-top: 20px;
+                    }
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+
+                    .details {
+                        .smaller {
+                            margin-bottom: 4px;
+                            font-family: $base-font-family-bold;
+                        }
+
+                        .smallest {
+                            margin-bottom: 2px;
+
+                            &.value {
+                                margin: 0;
+                                color: #727272;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
