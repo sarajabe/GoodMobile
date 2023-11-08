@@ -287,6 +287,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
           this.calculateTaxesAndFees();
         } else {
           this.paymentIsSelected = false;
+          this.cardInfo = {} as ICreditCardInfo;
           this.calculateTotal();
         }
       } else {
@@ -1412,7 +1413,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
   private initFlowControl(): void {
     const hasActivationCode = (!!this.currentPlan.planDevice ? !!this.currentPlan.planDevice.activationCode : false) || !!this.currentPlan.activationCode || (!!this.currentPlan.eSIM && !this.currentPlan.phones);
-    this.hasShippingItems = (!hasActivationCode && (this.currentPlan.cartType === CART_TYPES.NEW_PLAN || this.currentPlan.cartType === CART_TYPES.GENERIC_CART))
+    this.hasShippingItems = (!hasActivationCode && (this.currentPlan.cartType === CART_TYPES.NEW_PLAN))
       || (this.currentPlan.simsQuantity > 0 && !this.currentPlan.eSIM);
 
     if (this.flowSettings.hasShippingMode === this.hasShippingItems) {

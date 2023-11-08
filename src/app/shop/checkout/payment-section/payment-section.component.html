@@ -92,7 +92,7 @@
                 <div class="radio-container">
                   <input type="radio" id="CC_{{method.id}}" [value]='method' data-cy="paymentMethod"
                     [(ngModel)]="selectedPaymentMethod" (change)="toggleExistingPaymentMethod(method, $event)"
-                    [disabled]="!!disableCard">
+                    [disabled]="!!disableCard" name="paymentMethod">
                 </div>
                 <div class="details">
                   <p><b>{{!!method?.brand ? method?.brand : 'Card'}} ending in {{method?.last4}}</b></p>
@@ -107,7 +107,7 @@
                 <div class="radio-container">
                   <input type="radio" id="CC_new" [value]='enteredCard' data-cy="paymentMethod"
                     [(ngModel)]="enteredCard" (change)="toggleExistingPaymentMethod(method, $event)"
-                    [disabled]="!!disableCard">
+                    [disabled]="!!disableCard" name="paymentMethod">
                 </div>
                 <div class="details">
                   <p><b>{{!!enteredCard?.brand ? enteredCard?.brand : 'Card'}} ending in {{enteredCard?.last4}}</b></p>

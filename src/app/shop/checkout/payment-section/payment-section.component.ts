@@ -123,6 +123,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     private shippingConfigurationService: ShippingConfigurationService, private toastHelper: ToastrHelperService, private appState: AppState,
     private shippingService: ShippingService, private voucherService: VoucherService, private plansConfigurationService: PlansConfigurationService,) {
     this.storedPaymentId = sessionStorage.getItem('payment_id'); // initial value to keep the saved id in case the user wants to edit and he keeps the same payment selection
+    this.payWithCash = !!sessionStorage.getItem('cash') ? true : false;
     this.expirationYearRange = [];
     this.currentDate = new Date();
     const year = parseInt(this.currentDate.getFullYear().toString().substr(-2), 10);
@@ -188,10 +189,15 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           this.showAddCardSection = true;
           this.autoRenew = true;
           this.payWithCard = true;
+          this.paymentOption = 'card';
+          sessionStorage.removeItem('cash');
         }
         if (!!this.storedPaymentId && this.storedPaymentId !== '1') {
           this.selectedPaymentMethod = this.methodsList.find((method) => method.id === this.storedPaymentId);
           this.payWithCard = !!this.selectedPaymentMethod && this.selectedPaymentMethod.id ? true : false;
+          if(!!this.payWithCard) {
+            this.paymentOption = 'card';
+          }
         } else {
           this.checkoutService.paymentsSubject.pipe(takeWhile(() => this.alive)).subscribe((p) => {
             if (!!p && !!p?.card) {
@@ -242,6 +248,8 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
                   this.totalBalance = availableRewards + this.userAccount.accountBalance;
                   if (this.totalBalance === 0 && !this.cart?.activationCode && !this.isInPersonPickup && this.cart.cartType !== CART_TYPES.GENERIC_CART) { // if the user doesn't have balance or reward then he will pay with card only
                     this.payWithCard = true;
+                    this.paymentOption = 'card';
+                    sessionStorage.removeItem('cash');
                   }
                   const useFromReward = sessionStorage.getItem('useFromReward');
                   const useFromBalance = sessionStorage.getItem('useFromBalance');
@@ -289,6 +297,8 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           });
         } else if (!this.cart?.activationCode) {
           this.payWithCard = true;
+          this.paymentOption = 'card';
+          sessionStorage.removeItem('cash');
         }
         if (!!this.cart?.activationCode) {
           this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
@@ -318,8 +328,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         }
         if (cart.cartType === CART_TYPES.GENERIC_CART && !!this.isStorePickup) {
           this.payWithCash = true;
-          this.payWithCard = false;
-          this.paymentOption = null;
+          this.resetPayWithCard();
         }
       }
     });
@@ -340,14 +349,15 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
 
   public togglePayWithCash(): void {
     this.payWithCard = false;
-    this.paymentOption = null;
-    this.morePaymentNeeded = false;
+    this.resetPayWithCard();
   }
 
   public togglePaymentOptionChanged(): void {
     if (!!this.paymentOption && this.paymentOption === 'card') {
       this.payWithCard = true;
+      this.paymentOption = 'card';
       this.payWithCash = false;
+      sessionStorage.removeItem('cash');
       this.togglePayWithCard();
     }
   }
@@ -393,7 +403,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           this.showVoucherError = false;
           this.showVoucherSuccess = true;
           this.voucherAmount = (res?.pinValue / 100);
-          this.checkoutService.setPayments({ card: null, balanceAmount: 0, rewardsAmount: 0, voucherAmount: this.voucherAmount });
+          this.checkoutService.setPayments({ card: null, balanceAmount: 0, rewardsAmount: 0, voucherAmount: this.voucherAmount, cash: !!this.payWithCash });
           const voucherData = {
             limit: res?.pinValue / 100,
             code: this.voucherForm.controls.voucher.value
@@ -589,6 +599,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.showAddCardSection = !this.showAddCardSection;
     this.showCardRequired = false;
     this.payWithCard = true;
+    this.paymentOption = 'card';
     this.selectedPaymentMethod = null;
     this.autoRenew = true;
   }
@@ -691,7 +702,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       sessionStorage.setItem('useFromBalance', this.balanceAmount.toString());
       sessionStorage.setItem('useFromReward', this.rewardAmount.toString());
       this.analyticsService.trackAddPaymentInfoGA4(this.cart, paymentType, this.simPrice, this.simId);
-      this.checkoutService.setPayments({ card: !this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount })
+      this.checkoutService.setPayments({ card: !!this.payWithCard?(!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo): null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash})
       // this.checkoutService.updatePaymentMethod(this.selectedPaymentMethod);
       // this.checkoutService.updateCreditBalance({balanceAmount: this.balanceAmount, rewardsAmount: this.rewardAmount});
       this.processPayment();
@@ -715,10 +726,10 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   }
   public goBack(): void {
     if (!!this.cart?.eSIM && (!this.cart?.phones || (!!this.cart?.phones && this.cart?.phones.length === 0)) || !!this.cart?.activationCode || (!!this.cart.addOns && this.cart?.addOns?.length > 0 && this.cart.simsQuantity < 1)) {
-      this.checkoutService.setPayments({ card: !this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount })
+      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo): null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
     } else {
-      this.checkoutService.setPayments({ card: !this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount })
+      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo): null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
     }
   }
@@ -825,5 +836,15 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.paymentInfo.cardNumber = this.paymentInfo.cardNumber.toString().replace(/\t\s+|-/g, '');
     this.paymentInfo.type = 'creditCard'
     this.paymentInfo.country = 'United States';
+  }
+  private resetPayWithCard(): void {
+    this.payWithCard = false;
+    this.paymentOption = null;
+    this.morePaymentNeeded = false;
+    sessionStorage.removeItem('payment_id');
+    this.selectedPaymentMethod = null;
+    this.billingAddress = {} as IFirebaseAddress;
+    this.paymentInfoForm.reset();
+    sessionStorage.setItem('cash', 'true');
   }
 }

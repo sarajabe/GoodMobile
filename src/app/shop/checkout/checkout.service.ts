@@ -219,7 +219,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   }
 
   public checkoutNewPlan(checkoutNewPlan: any): Promise<void> {
-    const options: CheckoutCartOptions = checkoutNewPlan.options;
+    const options: CheckoutCartOptions = checkoutNewPlan?.options;
     return new Promise<void>((resolve, reject) => {
       // this is important to save this value for later when user activate the plan
       const setAutoRenewPromise: Promise<void> = this.mobilePlansService.setAutoRenewPlan(options.autoRenewPlan);
@@ -576,19 +576,23 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
   }
 
   private prepareCartItems(checkoutNewPlan: any): Promise<any> {
-    const currentPlan: CustomizableMobilePlan = checkoutNewPlan.currentPlan;
-    const cardInfo: ICreditCardInfo = checkoutNewPlan.cardInfo;
+    const currentPlan: CustomizableMobilePlan = checkoutNewPlan?.currentPlan;
+    const cardInfo: ICreditCardInfo = checkoutNewPlan?.cardInfo;
+    const shippingAddress: any = checkoutNewPlan?.shippingAddress;
     return new Promise<any>((resolve, reject) => {
       try {
         const requestBody: any = {};
-        const options: CheckoutCartOptions = checkoutNewPlan.options;
-        requestBody.shippingAddress = { id: checkoutNewPlan.shippingAddress.id };
-        requestBody.haseSIM = checkoutNewPlan.options.haseSIM;
-        requestBody.autoRenewPlan = !!options.autoRenewPlan ? true : false;
-        requestBody.orderShipMethod = checkoutNewPlan.orderShippingMethod.id;
-        requestBody.deliveryMethod = checkoutNewPlan.deliveryMethod;
+        const options: CheckoutCartOptions = checkoutNewPlan?.options;
+        requestBody.shippingAddress = { id: checkoutNewPlan?.shippingAddress?.id };
+        requestBody.haseSIM = checkoutNewPlan?.options?.haseSIM;
+        requestBody.autoRenewPlan = !!options?.autoRenewPlan ? true : false;
+        requestBody.orderShipMethod = checkoutNewPlan?.orderShippingMethod?.id;
+        requestBody.deliveryMethod = checkoutNewPlan?.deliveryMethod;
         if (!!checkoutNewPlan.cardInfo) {
-          requestBody.paymentMethod = { id: checkoutNewPlan.cardInfo.id };
+          requestBody.paymentMethod = { id: checkoutNewPlan?.cardInfo?.id };
+        }
+        if(!shippingAddress && !shippingAddress?.id) {
+          delete requestBody.shippingAddress;
         }
         if (!cardInfo?.cardNumber && !cardInfo?.id && !!currentPlan?.voucherData && currentPlan?.voucherData?.code) {
           delete requestBody.paymentInfo; // if user enter enough voucher remove payment info property from request

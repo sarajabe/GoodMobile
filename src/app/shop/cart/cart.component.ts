@@ -84,6 +84,9 @@ export class CartComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.autoRenew = this.userCart?.autoRenewPlan;
         if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
+          sessionStorage.removeItem('shippingAddress');
+          sessionStorage.removeItem('shippingMethod');
+          sessionStorage.removeItem('payment_id');
           this.isGenericType = true;
           this.deviceImage = this.userCart.acpDevice.imgUrl;
           if (!!this.userCart.activePlanId) {

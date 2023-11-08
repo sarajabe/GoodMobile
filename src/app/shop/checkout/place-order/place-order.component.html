@@ -46,8 +46,7 @@
                   <div class="details summary">
                     <div class="detail">
                       <p class="smaller">Subtotal</p>
-                      <p class="smaller" data-cy="subtotal"><b>{{(!!selectedPhone ? (details?.subtotal +
-                          details?.discount + selectedPhone?.price): (details?.subtotal + details?.discount) )|
+                      <p class="smaller" data-cy="subtotal"><b>{{details?.subtotal + details?.discount|
                           currency}}</b></p>
                     </div>
                     <div class="detail" *ngIf="!isGenericType">
@@ -351,17 +350,17 @@
               <div class="items-sub-content-show" *ngIf="!userCart?.eSIM || !!selectedPhone">
                 <div class="flex-content">
                   <div class="item-details" *ngIf="!!selectedPhone">
-                    <img class="thumbnail phone" [src]="selectedPhone?.image" alt="Mobile" />
+                    <img class="thumbnail phone" [src]="selectedPhone?.imgUrl" alt="Mobile" />
                     <div class="details">
                       <div class="detail">
                         <div class="detail-info">
-                          <p class="bold">{{ selectedPhone?.description }}</p>
+                          <p class="bold">{{ selectedPhone?.deviceModel }}</p>
                           <p class="quantity">Quantity: 1</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="item-details" *ngIf="!userCart?.eSIM">
+                  <div class="item-details" *ngIf="!userCart?.eSIM && !selectedPhone">
                     <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card" />
                     <div class="details">
                       <div class="detail">
@@ -417,7 +416,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="item-details mt-24" *ngIf="!!isGenericType">
+                  <div class="item-details mt-24" *ngIf="!!isGenericType && !showBillingAddress">
                     <img src="assets/icon/cash-icon.svg" alt="Cash Icon" />
                     <div class="details">
                       <div class="details-flex">
@@ -426,7 +425,7 @@
                         </div>
                         <div class="amount">
                           <p class="key smaller primary-font-bold">Collected Amount</p>
-                          <p class="value">$10.01</p>
+                          <p class="value">{{total | currency}}</p>
                         </div>
                       </div>
                     </div>
@@ -455,14 +454,14 @@
             </div>
           </div>
         </div>
-        <div class="place-order-card" *ngIf="!!isGenericType">
+        <div class="place-order-card" *ngIf="!!isGenericType && (!!isStorePickup || !!isInPersonDelivery)">
           <div class="card-header">
             <h3 class="title">Pick-up Details</h3>
           </div>
           <div class="card-tab">
             <div class="tab-content-show">
               <label class="sub-label address-change">
-                <span>In-Store Pickup</span>
+                <span>{{!!isStorePickup? 'In-Store Pickup': 'In-person Delivery'}}</span>
               </label>
               <div class="delivery-methods-section">
                 <img [src]="deviceImage" alt="ACP device">
