@@ -35,7 +35,7 @@
     </div>
     <h1 class="step-title">How do you want to get your {{!!cart?.acpDevice ? 'device' : 'package'}}?</h1>
     <form #pickupOptionsForm="ngForm" class="pickups-form">
-      <div class="radioBtn" *ngIf="cart?.cartType !== CART_TYPES.GENERIC_CART">
+      <div class="radioBtn" *ngIf="!!cart && cart?.cartType !== CART_TYPES.GENERIC_CART">
         <label class="form-control" for="home">
           <input type="radio" value="home" [(ngModel)]="option" data-cy="homeDelivery" id="home" name="home" required
             (change)="pickupOptionChanged()">
@@ -194,7 +194,8 @@
             <app-stores-list></app-stores-list>
           </div>
         </div>
-        <div class="info-banner default-background">
+        <div class="info-banner default-background"
+          *ngIf="!!cart && cart.cartType !== CART_TYPES.GENERIC_CART">
           <div class="flex">
             <img src="assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">
@@ -218,7 +219,7 @@
   </div>
 </section>
 <section class="navigation-section"
-  [class.blur]="!!showShippingForm || !option || (!!option && option === 'store' && !barCode) || (!!option && option === 'person' && !isPersonStepValidated)">
+  [class.blur]="!!showShippingForm || !option || (!!option && option === 'store' && !barCode && !!this.cart && this.cart?.cartType !== CART_TYPES.GENERIC_CART) || (!!option && option === 'person' && !isPersonStepValidated)">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goToCart()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" id="continue-shipping" data-cy="nextBtn">Next</button>

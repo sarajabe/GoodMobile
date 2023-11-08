@@ -341,13 +341,14 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
             autoRenewPlan: true,
             orderShipMethod: "usps_first_class_mail/letter",
             shippingAddress: { id: !!this.addressNoOptionSection && this.addressOption === 'mail' ? this.verifiedAddress?.id : this.selectedShippingAddress?.id },
-            haseSIM: false
+            haseSIM: false,
+            deliveryMethod: 'homeDelivery'
           };
         } else {
           data = {
             autoRenewPlan: true,
             haseSIM: !!isEsim ? true : false,
-            storePickup: this.isStorePickup
+            deliveryMethod: !!this.isStorePickup ? 'storePickup' : 'inPersonDelivery'
           };
         }
         this.appState.loading = true;

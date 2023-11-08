@@ -342,7 +342,7 @@ export class PlaceOrderComponent implements OnInit, OnDestroy {
   private prepareOrderData(cart): void {
     this.userCart = cart;
     this.autoRenew = this.userCart.autoRenewPlan;
-    if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
+    if (!!this.userCart && this.userCart?.cartType === CART_TYPES.GENERIC_CART && !this.showBillingAddress && !this.cardInfo) {
       this.isGenericType = true;
       this.deviceImage = this.userCart.acpDevice.imgUrl;
       if (!!this.userCart.activePlanId) {

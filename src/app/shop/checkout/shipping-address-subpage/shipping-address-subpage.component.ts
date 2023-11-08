@@ -32,7 +32,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   @ViewChild('packageForm') packageForm: NgForm;
   @ViewChild('barCodeCheck') barCodeCheck: NgForm;
   @Input() isLoggedIn: boolean;
-  
+
   public total = 0;
   public shippingMethodItems = true;
   public showAllAddresses = false;
@@ -369,9 +369,14 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
           this.goToNextStep();
         }
       } else if (this.option === 'store') {
-        this.checkoutService.updateStorePickup(this.barCode);
         this.checkoutService.updateInPersonDelivery(undefined);
-        sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
+        if (!!this.cart && this.cart.cartType === CART_TYPES.GENERIC_CART) {
+          this.checkoutService.updateStorePickup(true);
+          sessionStorage.setItem('storePickup', JSON.stringify(true));
+        } else {
+          this.checkoutService.updateStorePickup(this.barCode);
+          sessionStorage.setItem('storePickup', JSON.stringify(this.barCode));
+        }
         this.checkoutService.updateShippingAddress(undefined);
         this.checkoutService.updateShippingMethod(undefined);
         sessionStorage.removeItem('shippingAddress');

@@ -218,15 +218,15 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     this.taxesSubject.next(true);
   }
 
-  public checkoutNewPlan(checkoutNewPlan: CheckoutNewPlan): Promise<void> {
+  public checkoutNewPlan(checkoutNewPlan: any): Promise<void> {
     const options: CheckoutCartOptions = checkoutNewPlan.options;
     return new Promise<void>((resolve, reject) => {
       // this is important to save this value for later when user activate the plan
       const setAutoRenewPromise: Promise<void> = this.mobilePlansService.setAutoRenewPlan(options.autoRenewPlan);
       this.mobilePlansService.setStorePickup(options.storePickup);
-      const prepareCartValuesPromise: Promise<INewPlanCartItem> = this.prepareCartItems(checkoutNewPlan);
+      const prepareCartValuesPromise: Promise<any> = this.prepareCartItems(checkoutNewPlan);
       const allPromises = Promise.all([setAutoRenewPromise, prepareCartValuesPromise]);
-      allPromises.then((items: [void, INewPlanCartItem]) => {
+      allPromises.then((items: [void, any]) => {
         this.checkoutPlanNew(items[1], checkoutNewPlan).then(() => resolve(), (error) => reject(error));
       }, (error) => reject(error));
     });
@@ -499,7 +499,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     this.placeOrder.next(placeOrder);
   }
 
-  private checkoutPlanNew(cart: any, checkoutNewPlan: CheckoutNewPlan): Promise<void> {
+  private checkoutPlanNew(cart: any, checkoutNewPlan: any): Promise<void> {
     const currentPlan: CustomizableMobilePlan = checkoutNewPlan.currentPlan;
     const orderShippingMethod: IShippingMethod = checkoutNewPlan.orderShippingMethod;
     const shippingAddress: IFirebaseAddress = checkoutNewPlan.shippingAddress;
@@ -575,7 +575,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
     });
   }
 
-  private prepareCartItems(checkoutNewPlan: CheckoutNewPlan): Promise<any> {
+  private prepareCartItems(checkoutNewPlan: any): Promise<any> {
     const currentPlan: CustomizableMobilePlan = checkoutNewPlan.currentPlan;
     const cardInfo: ICreditCardInfo = checkoutNewPlan.cardInfo;
     return new Promise<any>((resolve, reject) => {
@@ -586,6 +586,7 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         requestBody.haseSIM = checkoutNewPlan.options.haseSIM;
         requestBody.autoRenewPlan = !!options.autoRenewPlan ? true : false;
         requestBody.orderShipMethod = checkoutNewPlan.orderShippingMethod.id;
+        requestBody.deliveryMethod = checkoutNewPlan.deliveryMethod;
         if (!!checkoutNewPlan.cardInfo) {
           requestBody.paymentMethod = { id: checkoutNewPlan.cardInfo.id };
         }

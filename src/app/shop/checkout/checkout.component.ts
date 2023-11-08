@@ -1224,6 +1224,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       },
       orderShippingMethod: this.hasShippingItems && !this.storePickup && !this.inPerson ? this.orderShippingMethod : null,
       hasShippingItems: this.hasShippingItems,
+      deliveryMethod: !!this.storePickup ? 'storePickup' : (!!this.hasShippingItems && !!this.shippingAddress ? 'homeDelivery' : 'inPersonDelivery')
     };
     this.checkoutService.checkoutNewPlan(cart).then(() => {
       this.checkoutService.paymentsSubject.next(null);
