@@ -14,6 +14,8 @@ import { WifiCallingComponent } from './wifi-calling/wifi-calling.component';
 import { LandingEbbComponent } from './landing-ebb/landing-ebb.component';
 import { AuthEmailGuardService } from 'src/providers/user-auth-service/auth-email-guard.service';
 import { AcpDetailsComponent } from './acp-details/acp-details.component';
+import { CareWiseComponent } from './care-wise/care-wise.component';
+import { UtmGuard } from 'src/providers/utm-guard';
 const routes: Routes = [
   {
     path: '', component: HomeComponent, data: {
@@ -79,6 +81,14 @@ const routes: Routes = [
       title: 'ACP | Affordable Connectivity Program | Good Mobile',
       description: 'Get FREE UNLIMITED Data, Talk and Text with the Affordable Connectivity Program (ACP). Check to see if you’re eligible and apply to the ACP benefits to reduce your monthly bills.'
     } as IPageMeta
+  },
+  {    
+    path: ROUTE_URLS.CARE_WISE_ACP, component: CareWiseComponent, data: {
+      title: 'ACP | Affordable Connectivity Program | Good Mobile',
+      description: 'Get FREE UNLIMITED Data, Talk and Text with the Affordable Connectivity Program (ACP). Check to see if you’re eligible and apply to the ACP benefits to reduce your monthly bills.',
+      utmCriteria: { utmSource: 'care_wise_mobile_app', utmMedium: 'affiliates', utmCampaign: 'care_wise', utmId: '23Q4002' }
+    } as IPageMeta,
+    canActivate: [UtmGuard],
   },
   { path: ROUTE_URLS.DATA_SETUP, redirectTo: `${SUPPORT_ROUTE_URLS.NAME}/${SUPPORT_ROUTE_URLS.DATA_SETUP}`, pathMatch: 'full' },
   { path: ROUTE_URLS.CHECK_PHONE, redirectTo: `${ACTIVATION_ROUTE_URLS.NAME}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, pathMatch: 'full' },

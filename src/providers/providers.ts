@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AuthGuardService } from './user-auth-service/auth-guard.service';
 import { AuthEmailGuardService } from './user-auth-service/auth-email-guard.service';
+import { UtmGuard } from './utm-guard';
 
 @NgModule({
   imports: [
@@ -8,7 +9,8 @@ import { AuthEmailGuardService } from './user-auth-service/auth-email-guard.serv
   ],
   providers: [
     AuthGuardService, // Auth
-    AuthEmailGuardService // Auth
+    AuthEmailGuardService,// Auth
+    UtmGuard
   ]
 })
 export class TelecomsServicesModule {
