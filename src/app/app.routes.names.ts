@@ -37,6 +37,7 @@ export const ROUTE_URLS = {
   HD_VOICE: 'get-better-voice-quality-with-hd-voice-volte',
   EBB: 'emergency-broadband-benefit',
   ACP: 'affordable-connectivity-program',
+  CARE_WISE_ACP:'care-wise-affordable-connectivity-program',
   POSTER_ACP: 'ACP',
   POSTER_ACP_SMALL: 'acp',
   PLANS: 'plans',

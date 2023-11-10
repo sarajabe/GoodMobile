@@ -1,0 +1,200 @@
+<div class="care-wise-landing-ebb-page">
+    <section class="banner-section">
+        <div class="banner-img">
+            <picture>
+              <source srcset='assets/img/wise-care-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+              <source srcset='assets/img/wise-care-desktop.png' media="(min-width: 1025px)" type="image/png">
+              <source srcset='assets/img/wise-care-tablet.png' media="(min-width: 640px)" type="image/png">
+              <source srcset='assets/img/wise-care-tablet.webp' media="(min-width: 640px)" type="image/webp">
+              <source srcset='assets/img/wise-care-mobile.png' media="(max-width: 639.9px)" type="image/png">
+              <source srcset='assets/img/wise-care-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+              <img src="assets/img/wise-care-desktop.png" alt="6GB Free ACP plan" height="456" width="1920">
+            </picture>
+          </div>
+        <div class="banner-text-content">
+          <p class="caption caption-text"><img src="assets/img/fcc-logo-blue.svg" alt="fcc-logo" width="24" height="24">GOVERNMENT BENEFIT PROGRAM</p>
+          <div class="centerlized-content">
+            <h1 class="title">Affordable Connectivity Program</h1>
+            <h4 class="subtitle"><b>FREE</b> Unlimited Talk, Text with <b>10GB</b> of high-speed data<b>*</b> + up to <b>$100</b> discount on a new tablet!</h4>
+            <p class="description">We are excited to bring to you the <b>federal government program</b> that provides ACP benefits for eligible customers.</p>
+            <h5>Brought to you by </h5>
+            <img src="/assets/img/care-wise-logo.svg" alt="care-wise" width="261" height="93" class="care-wise">
+            <button class="button primary" data-cy="bannerApplyNowBtn" aria-label="apply now" (click)="goToACPForm()">Apply Now</button>
+            <p class="footer footer-note">*After high-speed data allowance is used, data speeds are slowed to a maximum of 128Kbps for the rest of the term.</p>
+          </div>
+        </div>
+    </section>
+    <section class="icons-row" id="icons">
+      <img src="assets/img/wise-medicaid.svg" alt="medicaid-logo">
+      <img src="assets/img/wise-snap.svg" alt="SNAP-logo">
+      <img src="assets/img/wise-fedral.svg" alt="fedral-logo" class="desktop-only">
+      <img src="assets/img/wise-SSSA.svg" alt="ssa-logo">
+      <img src="assets/img/wise-lifeline.svg" alt="Lifeline-logo">
+      <img src="assets/img/wise-snap-food.svg" alt="wise-food-logo">
+      <img src="assets/img/wise-wec.svg" alt="wec-food-logo" class="desktop-only">
+    </section>
+    <section #acpDiscount id="acpDiscount" class="acp-condition">
+    <p class="caption caption-note">AFFORDABLE CONNECTIVITY PROGRAM</p>
+      <div class="content-side">
+        <h2 class="section-header" data-cy="whoIsEligibleHeader">Who Is Eligible for the Affordable Connectivity Program?</h2>
+        <h5 class="section-note">Household is eligible for the Affordable Connectivity Program benefit if:</h5>
+        <div class="condition">
+          <img class="check" src="assets/icon/purple-check-circle.svg" alt="checkmark" width="24" height="24">
+          <p class="condition-description">
+            The household income is at or below 200% of the <a [routerLink]="['/' + ROUTE_URLS.ACP_DETAILS_LONG]" fragment="house-hold-income"><b>Federal Poverty Guidelines</b></a>.
+            <span class="or">OR</span>
+          </p>
+        </div>
+        <div class="condition">
+          <img class="check" src="assets/icon/purple-check-circle.svg" alt="checkmark" width="24" height="24">
+          <p class="condition-description long">If a member of the household participates in one of these programs below:</p>
+        </div>
+        <ul class="sub-condition">
+            <li><span>Medicaid</span></li>
+            <li><span>Supplemental Nutrition Assistance Program (SNAP)</span></li>
+            <li><span>The National School Lunch Program or the School Breakfast Program, including through the USDA Community Eligibility Provision, and WIC</span></li>
+            <li><span>Supplemental Security Income (SSI)</span></li>
+            <li><span>Federal Public Housing Assistance</span></li>
+            <li><span class="text-color-primary"><a href="https://www.fcc.gov/lifeline-consumers"
+              target="_blank"><b>Lifeline</b></a></span></li>
+            <li><span>Veterans and Survivors Pension Benefits Fund</span></li>
+            <li><span>Received a Federal Pell Grant during the current award year</span></li>
+            <li><span>Meets the eligibility criteria for a participating provider's existing low-income internet program;</span></li>
+            <div class="or"><b>OR</b></div>
+        </ul>
+        <div class="condition">
+          <img class="check" src="assets/icon/purple-check-circle.svg" alt="checkmark" width="24" height="24">
+          <p class="condition-description"><span>Participates in one of these assistance programs and lives on <a href="https://www.affordableconnectivity.gov/do-i-qualify/enhanced-tribal-benefit/#qualifying-lands"
+            target="_blank"><b class="text-color-primary">Qualifying Tribal lands:</b></a></span></p>
+        </div>
+        <ul class="sub-condition">
+            <li><span>Bureau of Indian Affairs General Assistance,</span></li>
+            <li><span>Tribal Head Start (only households meeting the 
+              relevant income qualifying standard),</span></li>
+            <li><span>Tribal Temporary Assistance for Needy Families (Tribal TANF), or</span></li>
+            <li><span>Food Distribution Program on Indian Reservations.</span></li>
+        </ul>
+        <p class="smaller last-note">For details on required documents for eligibility check <b><a (click)="goToEssentials()">Click here</a></b></p>
+        <div class="action">
+          <button class="button secondary" data-cy="startHere" (click)="goToACPForm()">Start Here</button>
+        </div>
+        <div class="important">
+          <p class="caption important-note"><b>Important:</b> ACP eligibility is determined through the National Verifier, the federal government’s application and approval for determining eligibility. Good Mobile does not determine customer ACP eligibility.</p>
+        </div>
+      </div>
+    </section>
+    <section class="page-section acp-docs" #acpDocs id="acpDocs">
+      <p class="caption caption-note">REQUIRED DOCUMENTS</p>
+      <h2 class="header-color">Essential documents applicants should have at hand when applying:</h2>
+      <h5 class="normal">For eligibility check:</h5>
+      <div class="docs-card">
+        <div class="collapsable-header">
+          <h4 class="header-color">Proofs required</h4>
+          <div class="img">
+            <img [src]="hideCardContent ? 'assets/icon/path-down-icon.svg' : 'assets/icon/path-up-icon.svg'"
+            alt="arrow icon" (click)="hideCardContent = !hideCardContent">
+          </div>
+        </div>
+        <div class="content" >
+          <p class="intro">This guide identifies the documents you can submit to show that you qualify for the Affordable Connectivity Program (ACP). <a (click)="hideCardContent = !hideCardContent" *ngIf="!!hideCardContent"><b>View Documents</b></a> </p>
+          <div class="sub-content" *ngIf="!hideCardContent">
+            <div class="sub-note">
+              <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
+              <p class="smaller">Please make sure all of your documents are <b>current</b>. The National Verifier <b>CANNOT</b> accept <b>expired documentation.</b></p>
+            </div>
+            <div class="sub-note">
+              <img src="/assets/icon/check-circle.svg" alt="check-icon" class="check-icon">
+              <p class="smaller">Send <b>copies</b> or <b>pictures of your original, valid</b> documents. <b>NEVER</b> send the <b>original document</b>.</p>
+            </div>
+            <div class="ordered-section">
+              <p class="smaller"><b>1- Valid Government ID</b></p>
+              <p class="smaller">Provide documents such as:</p>
+              <div class="sub-info">
+                <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">Military state or Tribal ID</p>
+                </div>
+                <div class="info">
+                    <p class="circle"></p>
+                    <p class="smallest">U.S Driver’s License</p>
+                </div>
+                <div class="info">
+                    <p class="circle"></p>
+                    <p class="smallest">Passport</p>
+                </div>
+                <div class="info">
+                    <p class="circle"></p>
+                    <p class="smallest">Survivors Benefit Summary letter</p>
+                </div>
+              </div>
+              <p class="smallest">That includes <b>first & last name, date of birth, & future expiration date.</b></p>
+            </div>
+            <div class="ordered-section">
+              <p class="smaller"><b>2- Provide a letter or official document as a proof</b></p>
+              <p class="smaller">If you participate in one of the qualifying programs, you need to provide:</p>
+              <div class="sub-info">
+                <div class="info">
+                  <p class="circle"></p>
+                  <p class="smallest">Benefit award letter or Approval letter</p>
+                </div>
+                <div class="info">
+                    <p class="circle"></p>
+                    <p class="smallest">Screenshot of online portal </p>
+                </div>
+                <div class="info">
+                    <p class="circle"></p>
+                    <p class="smallest">Survivors Benefit Summary letter</p>
+                </div>
+              </div>
+              <p class="smallest">That clearly states the <b>name of the person</b> in the house hold <b>who qualifies</b>, name of the <b>program</b>, name of the <b>government</b> or <b>Tribal agency</b> that <b>issued the document</b>, & issue date within the past <b>12 months</b> or <b>future expiration date</b>.</p>
+            </div>
+          </div>
+          <p class="smaller mt-24" *ngIf="!hideCardContent">You can view a document with guiding examples to the documents needed for your next step:<br>
+            <a href="assets/ACP-documents.pdf" download=""><b>View Guide <img src="/assets/icon/circle-right-arrow.svg" alt="arrow" width="20" height="20"></b></a>
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="steps-section">
+    <p class="caption caption-note">READY TO GO?</p>
+      <h2 class="title">Just 3 steps to sign up</h2>
+      <h5 class="subtitle">Let’s get started:</h5>
+      <div class="cards-container">
+        <div class="acp-card">
+          <div class="header">
+            <img class="step-image" src="assets/img/acp-step1.svg" alt="step1">
+          </div>
+          <p class="card-title">Apply for the Program</p>
+          <div class="card-desc">
+            <p>Fill out the Affordable Connectivity Program
+            form and sign the consent.</p>
+            <button class="button primary"  data-cy="applyNow3StepsSection" (click)="goToACPForm()">Apply Now</button>
+          </div>
+        </div>
+        <div class="acp-card">
+          <div class="header">
+            <img class="step-image" src="assets/img/acp-step2.svg" alt="step2">
+          </div>
+          <p class="card-title">Finalize Your Application</p>
+          <div class="card-desc"><p>You must finalize your application with the National Verifier. You will then be redirected back
+            to Good Mobile.</p></div>
+        </div>
+        <div class="acp-card">
+          <div class="header">
+            <img class="step-image" src="assets/img/acp-step3.svg" alt="step3">
+          </div>
+          <p class="card-title">Activate & enjoy your plan</p>
+          <div class="card-desc"><p>Receive confirmation of your ACP enrollment. 
+            We will contact you to confirm your enrollment. It may take 
+            24 to 48 hours to process your application.</p></div>
+        </div>
+      </div>
+      <div class="notes">
+        <p class="footer disc">Enjoy unlimited talk and text. Bring your own device get free shipping with all orders and a free 
+          SIM. Plus, if you live in an eligible household on a Tribal land you can get any eligible plan for free.</p>
+        <p class="footer disc">See <a
+          [routerLink]="SUPPORT_ROUTE_URLS.BASE +'/'+SUPPORT_ROUTE_URLS.TERMS_AND_CONDITIONS +'/'+'mobile-broadband-disclosure'">goodmobile.org/broadband</a> for details of network management policies.</p>
+      </div>
+    </section>
+  </div>
+  

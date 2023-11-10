@@ -44,6 +44,7 @@ import { LandingEbbComponent } from './landing-ebb/landing-ebb.component';
 import { PhoneManagementService } from 'src/services/phones.service';
 import { CommonModule } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CareWiseComponent } from './care-wise/care-wise.component';
 
 const metadata: Metadata = {
   author: 'ZtarMobile',
@@ -68,7 +69,8 @@ const zwpConfig: ZwpConfig = {
         NotFoundComponent,
         WifiCallingComponent,
         NewsletterComponent,
-        LandingEbbComponent
+        LandingEbbComponent,
+        CareWiseComponent
     ],
     imports: [
         AngularFireModule.initializeApp(ENV_FIREBASE_CONFIG),
