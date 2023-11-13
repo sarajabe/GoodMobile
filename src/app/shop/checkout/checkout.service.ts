@@ -513,13 +513,15 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
           checkoutNewPlan.options.fees, cart.autoRenewPlan, includeFreeSIM, { id: checkoutNewPlan.options.simId, price: checkoutNewPlan.options.simPrice });
         resolve();
         const params = {};
-        if ((checkoutNewPlan.hasShippingItems && !!shippingAddress) || (!!cart?.storePickup)) {
+        if (!!cart && !isPhoneOnly && (cart?.deliveryMethod === 'homeDelivery' || cart?.deliveryMethod === 'storePickup' || cart?.deliveryMethod === 'inPersonDelivery')) {
           params[ROUTE_URLS.PARAMS.SELECTED_PLAN] = response.userPlanId;
         } else { // activation flow
-          params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = response.userPlanId;
+          if (!isPhoneOnly) {
+            params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = response.userPlanId;
+          }
         }
         if (isPhoneOnly) {
-          params[ROUTE_URLS.PARAMS.PHONE_PURCHASE] = true;
+          params[SHOP_ROUTE_URLS.PARAMS.PHONE_PURCHASE] = true;
         }
         if (!!cart?.storePickup) {
           params[SHOP_ROUTE_URLS.PARAMS.STORE_PICKUP] = true;
@@ -592,10 +594,10 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
         if (!!checkoutNewPlan.cardInfo) {
           requestBody.paymentMethod = { id: checkoutNewPlan?.cardInfo?.id };
         }
-        if(!checkoutNewPlan?.orderShippingMethod) {
+        if (!checkoutNewPlan?.orderShippingMethod) {
           delete requestBody.orderShipMethod
         }
-        if(!shippingAddress && !shippingAddress?.id) {
+        if (!shippingAddress && !shippingAddress?.id) {
           delete requestBody.shippingAddress;
         }
         if (!cardInfo?.cardNumber && !cardInfo?.id && !!currentPlan?.voucherData && currentPlan?.voucherData?.code) {

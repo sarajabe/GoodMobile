@@ -141,13 +141,87 @@ fdescribe('In Person Delivery Component - Unit Testing', async () => {
         component.itemsForm.markAllAsTouched();
         fixture.detectChanges();
 
-        const requiredItemMsg = fixture.debugElement.query(By.css('#required-activation-code-msg'));
+        const requiredItemMsg = fixture.debugElement.query(By.css('#required-item-msg'));
 
         expect(itemInputField.errors.required).toBeTruthy();
         expect(requiredItemMsg.nativeElement).toBeDefined();
 
         expect(component.itemsForm.valid).toBeFalsy();
     }));
+
+    it('Should set item field as invalid when value is invalid ( Activation Code )', waitForAsync(() => {
+        component.agentForm.controls.code.setValue('123');
+        spyOn(component.isValidateClicked, 'emit');
+        component.validateAgentCode();
+        fixture.detectChanges();
+
+        component.cart = {} as CustomizableMobilePlan;
+        component.cart.planDevice = {} as UserDevice;
+
+        itemInputField.setValue('000');
+        itemInputField.markAsTouched();
+        component.itemsForm.markAllAsTouched();
+
+        component.addValidatorsForFulfillItem();
+        fixture.detectChanges();
+
+        const invalidItemMsg = fixture.debugElement.query(By.css('#invalid-item-msg'));
+
+        expect(itemInputField.hasError('pattern')).toBeTruthy();
+        expect(itemInputField.hasError('minlength')).toBeFalsy();
+        expect(invalidItemMsg.nativeElement).toBeDefined();
+
+        expect(component.itemsForm.valid).toBeFalsy();
+    }));
+
+    it('Should set item field as invalid when value is invalid ( Device IMEI )', waitForAsync(() => {
+        component.agentForm.controls.code.setValue('123');
+        spyOn(component.isValidateClicked, 'emit');
+        component.validateAgentCode();
+        fixture.detectChanges();
+
+        component.cart = {} as CustomizableMobilePlan;
+        component.cart.acpDevice = {} as IAcpDevice;
+
+        itemInputField.setValue('14555');
+        itemInputField.markAsTouched();
+        component.itemsForm.markAllAsTouched();
+
+        component.addValidatorsForFulfillItem();
+        fixture.detectChanges();
+
+        const invalidItemMsg = fixture.debugElement.query(By.css('#invalid-item-msg'));
+
+        expect(itemInputField.hasError('pattern')).toBeFalsy();
+        expect(itemInputField.hasError('minlength')).toBeTruthy();
+        expect(invalidItemMsg.nativeElement).toBeDefined();
+
+        expect(component.itemsForm.valid).toBeFalsy();
+    }));
+
+    it('Should not call submitItems and emit isValidateClicked when form is invalid', () => {
+        component.agentForm.controls.code.setValue('123');
+        const isValidateClickedEmitSpy = spyOn(component.isValidateClicked, 'emit');
+        component.validateAgentCode();
+        fixture.detectChanges();
+
+        itemInputField.setValue('');
+        const submitButton = fixture.debugElement.query(By.css('#submit'));
+        fixture.detectChanges();
+
+        component.cart = {} as CustomizableMobilePlan;
+        fixture.detectChanges();
+
+        const handleSuccessOverviewSpy = spyOn(component, 'handleSuccessOverview');
+        const submitItemsSpy = spyOn(component, 'submitItems').and.callThrough();
+        fixture.detectChanges();
+
+        submitButton.nativeElement.click();
+
+        expect(submitItemsSpy).toHaveBeenCalled();
+        expect(isValidateClickedEmitSpy).toHaveBeenCalledWith(false);
+        expect(handleSuccessOverviewSpy).not.toHaveBeenCalledWith();
+    });
 
     it('Should call submitItems for cart with ACP device and emit isValidateClicked when form is valid', () => {
         component.agentForm.controls.code.setValue('123');
@@ -207,29 +281,5 @@ fdescribe('In Person Delivery Component - Unit Testing', async () => {
         expect(handleSuccessOverviewSpy).toHaveBeenCalledWith();
         expect(mobileCustomPlansService.setPlanDevice).toHaveBeenCalledWith(component.fulfilledPlanDevice);
         expect(mobileCustomPlansService.setAcpDevice).not.toHaveBeenCalled();
-    });
-
-    it('Should not call submitItems and emit isValidateClicked when form is invalid', () => {
-        component.agentForm.controls.code.setValue('123');
-        const isValidateClickedEmitSpy = spyOn(component.isValidateClicked, 'emit');
-        component.validateAgentCode();
-        fixture.detectChanges();
-
-        itemInputField.setValue('');
-        const submitButton = fixture.debugElement.query(By.css('#submit'));
-        fixture.detectChanges();
-
-        component.cart = {} as CustomizableMobilePlan;
-        fixture.detectChanges();
-
-        const handleSuccessOverviewSpy = spyOn(component, 'handleSuccessOverview');
-        const submitItemsSpy = spyOn(component, 'submitItems').and.callThrough();
-        fixture.detectChanges();
-
-        submitButton.nativeElement.click();
-
-        expect(submitItemsSpy).toHaveBeenCalled();
-        expect(isValidateClickedEmitSpy).toHaveBeenCalledWith(false);
-        expect(handleSuccessOverviewSpy).not.toHaveBeenCalledWith();
     });
 });

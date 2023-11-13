@@ -74,7 +74,8 @@ export class InPersonDeliverySelectorComponent implements OnInit {
         if (!!this.itemsForm.valid && !!this.cart) {
             const fulfilledObject = {
                 fulfillmentData: {
-                    value: this.itemsForm.controls.fulfilledItem.value
+                    value: this.itemsForm.controls.fulfilledItem.value,
+                    agentCode: this.agentForm?.controls?.code?.value
                 }
             };
             if (!!this.cart?.acpDevice) {

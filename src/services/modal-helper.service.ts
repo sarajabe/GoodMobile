@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IUserPlan, IFirebaseAddress, IFirebasePaymentMethod, CustomizableMobilePlan } from '@ztarmobile/zwp-service-backend';
 import { IUser } from '@ztarmobile/zwp-services-auth';
-import { ManagePaymentModalComponent } from '../modals/manage-payment-modal/manage-payment-modal.component';
 import { ManageAddressModalComponent } from '../modals/manage-address-modal/manage-address-modal.component';
 import { ManagePaymentSpecificModalComponent } from '../modals/manage-payment-specific-modal/manage-payment-specific-modal.component';
 import { ConfirmMessageModalComponent } from '../modals/confirm-message-modal/confirm-message-modal.component';
@@ -72,17 +71,6 @@ export interface IModalHelper {
 })
 export class ModalHelperService {
   constructor(private dialog: MatDialog) {
-  }
-  public showManagePaymentModal(user: IUser, userPlan: IUserPlan, isManage?: boolean, paymentId?: string, customClass?: string): MatDialogRef<any> {
-    return this.dialog.open(ManagePaymentModalComponent, {
-      data: {
-        isManage,
-        paymentId,
-        userPlan,
-        user,
-        customClass
-      }
-    });
   }
 
   public showManageShippingAddressesModal(user: IUser, userPlan: IUserPlan, isManage?: boolean, addressId?: string, customClass?: string,

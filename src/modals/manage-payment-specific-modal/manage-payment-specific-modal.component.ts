@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { IUser } from '@ztarmobile/zwp-services-auth';
 import { take } from 'rxjs/operators';
 import {
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { PlatformLocation } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { INVISIBLE_CAPTCHA_ID } from 'src/environments/environment';
+import { InvisibleRecaptchaComponent } from 'src/widgets/invisible-recaptcha/invisible-recaptcha.component';
 
 export class G2gPaymentModalContext {
   public paymentMethodId: string;
@@ -30,6 +32,8 @@ export class G2gPaymentModalContext {
   templateUrl: './manage-payment-specific-modal.component.html'
 })
 export class ManagePaymentSpecificModalComponent implements OnInit {
+  @ViewChild('reCaptcha') reCaptcha: InvisibleRecaptchaComponent;
+
   public paymentInfo: ICreditCardInfo;
   public isValidPaymentInfo: boolean;
   public processingRequest: boolean;
@@ -38,21 +42,24 @@ export class ManagePaymentSpecificModalComponent implements OnInit {
   public editMode: boolean;
   public context: any;
   public selectedMethodId: string;
+  public recaptchaResponse: any;
+  public SITE_ID = INVISIBLE_CAPTCHA_ID;
+  public captchaValid = false;
 
   private isValidBillingAddress: boolean;
   private isValidCardInfo: boolean;
   private paymentMethodsListSubscription: Subscription;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private firebaseAccountPaymentService: FirebaseAccountPaymentService,
-              private toastHelper: ToastrHelperService,
-              private accountPaymentService: AccountPaymentService,
-              private userPlanService: UserPlansService,
-              private router: Router,
-              public dialog: MatDialogRef<G2gPaymentModalContext>,
-              private location: PlatformLocation) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private firebaseAccountPaymentService: FirebaseAccountPaymentService,
+    private toastHelper: ToastrHelperService,
+    private accountPaymentService: AccountPaymentService,
+    private userPlanService: UserPlansService,
+    private router: Router,
+    public dialog: MatDialogRef<G2gPaymentModalContext>,
+    private location: PlatformLocation) {
     this.context = data;
     this.editMode = false;
-    location.onPopState(() => { this.beforeDismiss();this.dialog.close();});
+    location.onPopState(() => { this.beforeDismiss(); this.dialog.close(); });
   }
 
   ngOnInit(): void {
@@ -65,6 +72,12 @@ export class ManagePaymentSpecificModalComponent implements OnInit {
       this.methodsList = methods;
       this.fillPaymentInfoForm();
     });
+    setInterval(() => {
+      if (!!this.reCaptcha && !!this.context?.isManage) {
+        this.reCaptcha.resetReCaptcha(); // reset recaptcha every 2 minutes to avoid invalid or expired recaptcha error
+        this.reCaptcha.execute();
+      }
+    }, 1.8 * 60 * 1000);
   }
 
   beforeClose(): boolean {
@@ -85,6 +98,11 @@ export class ManagePaymentSpecificModalComponent implements OnInit {
     this.isValidPaymentInfo = false;
     this.beforeDismiss();
     this.dialog.close(methodId);
+  }
+
+  public resolvedCaptcha(captchaResponse: string): void {
+    this.recaptchaResponse = captchaResponse;
+    this.captchaValid = !!captchaResponse;
   }
 
   public makePaymentMethodAsDefault(methodKey): void {
@@ -140,7 +158,7 @@ export class ManagePaymentSpecificModalComponent implements OnInit {
     return addressLabel.toLowerCase();
   }
 
-  public savePaymentInfo(): void{
+  public savePaymentInfo(): void {
     this.paymentInfo.fullName = this.context.user.fullName;
     this.paymentInfo.email = this.context.user.email;
     this.paymentInfo.id = this.context.paymentMethodId;
@@ -161,16 +179,22 @@ export class ManagePaymentSpecificModalComponent implements OnInit {
               console.warn(error);
             });
           } else {
-            this.accountPaymentService.addPaymentMethod(this.paymentInfo).then((methodId) => {
+            this.accountPaymentService.addPaymentMethod(this.paymentInfo, this.recaptchaResponse).then((methodId) => {
               if (!!this.context.userPlan && this.context.isManage) {
                 this.makePaymentMethodAsDefault(methodId);
+                this.reCaptcha.resetReCaptcha();
+                this.reCaptcha.execute();
               } else {
+                this.reCaptcha.resetReCaptcha();
+                this.reCaptcha.execute();
                 this.toastHelper.showSuccess('New payment method was added successfully');
                 this.closeDialog();
               }
             }, (error) => {
               this.processingRequest = false;
               this.toastHelper.showAlert(error.message);
+              this.reCaptcha.resetReCaptcha();
+              this.reCaptcha.execute();
               console.warn(error);
             });
           }

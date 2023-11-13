@@ -32,7 +32,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     CHANGE: 'CHANGE_PLAN',
     NEW_SIM: 'NEW_SIM'
   };
-  public ORDER_STATUS= {
+  public ORDER_STATUS = {
     UPDATE_NEEDED: 'UPDATE_NEEDED',
     INVESTIGATE: 'INVESTIGATE',
     PENDING: 'PENDING',
@@ -44,7 +44,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     VOIDED: 'VOIDED',
     COLLECTED: 'COLLECTED'
   };
-  public STATUS_TITLE= {
+  public STATUS_TITLE = {
     UPDATE_NEEDED: 'Action Required',
     INVESTIGATE: 'Pending',
     PENDING: 'Pending',
@@ -78,9 +78,11 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
   public phoneImageSrc = 'assets/img/loading-copy.gif';
   public deviceDetails: IACPDevice;
   public isCollected = false;
+  public isInPersonDelivery = false;
+
   constructor(private accountOrderService: UserOrdersService, private accountHeaderService: AccountHeaderService, private route: ActivatedRoute, private catalogService: CatalogCoreService,
-              private router: Router, private appState: AppState, private shippingService: ShippingService,  private modalHelper: ModalHelperService,
-              private toastHelper: ToastrHelperService, private shippmentService: ShipmentService, private contentful: ContentfulService, private userPlansService: UserPlansService) {
+    private router: Router, private appState: AppState, private shippingService: ShippingService, private modalHelper: ModalHelperService,
+    private toastHelper: ToastrHelperService, private shippmentService: ShipmentService, private contentful: ContentfulService, private userPlansService: UserPlansService) {
     this.accountHeaderService.setAccountMenuVisibility(false);
     this.route.params.subscribe(params => {
       if (!!params) {
@@ -91,7 +93,7 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     this.accountHeaderService.setPageTitle('');
     this.screenWidth = window.innerWidth;
     this.shipping = window.innerWidth > 1024 && this.shipping ? true : false;
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -120,10 +122,10 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     const params = {};
     params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_ID] = order?.id;
     params[ACCOUNT_ROUTE_URLS.PARAMS.FROM_DETAILS] = true;
-    if(!!order?.storePickup) {
+    if (!!order?.storePickup) {
       params[ACCOUNT_ROUTE_URLS.PARAMS.STORE_PICKUP] = order?.storePickup;
       params[ACCOUNT_ROUTE_URLS.PARAMS.ORDER_STATUS] = order?.status;
-      if(!!order?.cards && order?.cards?.length > 0 || !!order?.devices && order?.devices?.length > 0) {
+      if (!!order?.cards && order?.cards?.length > 0 || !!order?.devices && order?.devices?.length > 0) {
         params[ACCOUNT_ROUTE_URLS.PARAMS.ITEM_ID] = !!order?.cards && order?.cards?.length > 0 ? order?.cards[0]?.itemId : order?.devices[0]?.itemId;
       }
     }
@@ -155,17 +157,17 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
             </div>`;
               this.appState.loading = false;
               this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address',
-              '', 'verified')
+                'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address',
+                '', 'verified')
                 .afterClosed().subscribe((result) => {
                   if (result) {
-                    if(result === 'verified') { 
+                    if (result === 'verified') {
                       selectedAddress = addresses[0];
                       selectedAddress.name = address.name;
                       currentAddress.shippingName = selectedAddress.name;
                     } else {
-                    selectedAddress = address;
-                    currentAddress.shippingName = selectedAddress.name;
+                      selectedAddress = address;
+                      currentAddress.shippingName = selectedAddress.name;
                     }
                     this.appState.loading = true;
                     this.accountOrderService.updateOrderShippingAddress(orderId, selectedAddress).then(() => {
@@ -185,15 +187,15 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
                       this.orderInfo.shippingInfo.shippingAddress = Object.assign({} as IFirebaseAddress, JSON.parse(original));
                       this.toastHelper.showAlert(error.message);
                     });
-                  } 
+                  }
                 }, (error) => {
                   this.appState.loading = false;
                 });
-            } 
+            }
           }, (error) => {
             this.appState.loading = false;
             const customHtml2 =
-            `<div class="flex-container">
+              `<div class="flex-container">
             <div class="pop-header1">
               <p>There’s a chance that you may not receive your package by mail. Please re-visit the possible issues:</p>
             </div>
@@ -222,60 +224,65 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
       .afterClosed().subscribe((result) => {
         if (!!result) {
           this.appState.loading = true;
-            this.accountOrderService.cancelWithRefund(this.orderId).then((order) => {
-              this.appState.loading = false;
-              if (!!isReplacement) {
-                this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
-                  const associatedPlan = plans.find((p) => p.mdn === this.orderInfo.mdn);
-                  if (!!associatedPlan) {
-                    associatedPlan.planDevice.pendingNewSim = false;
-                    this.userPlansService.updateUserPlan(associatedPlan.userId, associatedPlan);
-                  }
-                });
-              }
-              if (this.orderInfo.devices && this.orderInfo.devices.length > 0 ) {
-                this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
-                  const associatedPlan = plans.find((p) => p.mdn === this.orderInfo.mdn);
-                  if (!!associatedPlan) {
-                    associatedPlan.acpDevice = null;
-                    delete associatedPlan.acpDevice;
-                    this.userPlansService.updateUserPlan(associatedPlan.userId, associatedPlan);
-                  }
-                });
-              }
-              this.toastHelper.showSuccess('Your order has been canceled successfully!');
-              this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
-            }).catch((error) => {
-              this.appState.loading = false;
-              this.toastHelper.showAlert(error.message);
-              console.error(error);
-            });
+          this.accountOrderService.cancelWithRefund(this.orderId).then((order) => {
+            this.appState.loading = false;
+            if (!!isReplacement) {
+              this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
+                const associatedPlan = plans.find((p) => p.mdn === this.orderInfo.mdn);
+                if (!!associatedPlan) {
+                  associatedPlan.planDevice.pendingNewSim = false;
+                  this.userPlansService.updateUserPlan(associatedPlan.userId, associatedPlan);
+                }
+              });
+            }
+            if (this.orderInfo.devices && this.orderInfo.devices.length > 0) {
+              this.userPlansService.userPlans.pipe(take(1)).subscribe((plans) => {
+                const associatedPlan = plans.find((p) => p.mdn === this.orderInfo.mdn);
+                if (!!associatedPlan) {
+                  associatedPlan.acpDevice = null;
+                  delete associatedPlan.acpDevice;
+                  this.userPlansService.updateUserPlan(associatedPlan.userId, associatedPlan);
+                }
+              });
+            }
+            this.toastHelper.showSuccess('Your order has been canceled successfully!');
+            this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ORDERS}`]);
+          }).catch((error) => {
+            this.appState.loading = false;
+            this.toastHelper.showAlert(error.message);
+            console.error(error);
+          });
         }
       });
   }
   public showTrackingInfo(): void {
-    this.modalHelper.showTrackingModal('Delivery updates', this.trackingInfo , this.orderInfo.shipments[0].trackingNumber, 'delivery')
+    this.modalHelper.showTrackingModal('Delivery updates', this.trackingInfo, this.orderInfo.shipments[0].trackingNumber, 'delivery')
   }
 
   public open(): void {
-   if(!this.changeAddressClicked){
-     this.address = !this.address;
-   }
+    if (!this.changeAddressClicked) {
+      this.address = !this.address;
+    }
   }
   private getOrderDetails(orderId): void {
     this.appState.loading = true;
     this.accountOrderService.getOrderById(orderId).then((order) => {
       if (!!order) {
         this.orderInfo = order;
-        const orderTemp:any = order;
-        this.orderInfo.status =  orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? 'COLLECTED' : this.orderInfo.status
+        if (this.orderInfo?.deliveryMethod === 'inPersonDelivery') {
+          this.isInPersonDelivery = true;
+        } else {
+          this.isInPersonDelivery = false;
+        }
+        const orderTemp: any = order;
+        this.orderInfo.status = orderTemp.storePickup && this.orderInfo.status === 'SHIPPED' ? 'COLLECTED' : this.orderInfo.status
         if (!!this.orderInfo.devices && this.orderInfo.devices.length > 0) {
           this.appState.loading = true;
           this.catalogService.getAcpDeviceBySkuFromContentful(this.orderInfo.devices[0].sku).then((data) => {
             this.deviceDetails = data;
             this.phoneImageSrc = 'assets/icon/device-icon.png'
             this.appState.loading = false;
-          },(error) => {
+          }, (error) => {
             this.appState.loading = false;
           });
         }
@@ -306,10 +313,10 @@ export class OrderDetailsComponent implements OnInit, AfterViewInit {
     //   console.info('wee ', error);
     // });
   }
-   // eslint-disable-next-line @typescript-eslint/member-ordering
-   @HostListener('window:resize', ['$event'])
-   onResize(event): void {
-       this.screenWidth = window.screen.width;
-       this.shipping = window.innerWidth > 1024 ? true : false;
-   }
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.screenWidth = window.screen.width;
+    this.shipping = window.innerWidth > 1024 ? true : false;
+  }
 }

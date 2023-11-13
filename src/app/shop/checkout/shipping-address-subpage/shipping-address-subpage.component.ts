@@ -72,7 +72,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   private alive = true;
   storedAddress: IFirebaseAddress;
 
-  constructor(private userProfileService: FirebaseUserProfileService, private shippingConfigurationService: ShippingConfigurationService, private router: Router,
+  constructor(private userProfileService: FirebaseUserProfileService, private shippingConfigurationService: ShippingConfigurationService, public router: Router,
     private checkoutService: CheckoutService, private accountPaymentService: AccountPaymentService,
     private modalHelper: ModalHelperService,
     private shippingService: ShippingService,
