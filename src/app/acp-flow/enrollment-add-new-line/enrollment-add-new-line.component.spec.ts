@@ -9,7 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ENV_FIREBASE_CONFIG } from 'src/environments/environment';
 import { ActionsAnalyticsService, CART_TYPES, MobileCustomPlansService, MobilePlanItem, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { EndpointUrl, IGoogleTagManagerEventsConfig, ZMP_G2G_BFF_ENDPOINT_URL } from '@ztarmobile/zwp-service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppState } from 'src/app/app.service';
 import { EbbService, OrdersService } from '@ztarmobile/zwp-service-backend-v2';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
@@ -43,13 +43,12 @@ fdescribe('EnrollmentAddNewLineComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule,
         MatDialogModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        HttpClientTestingModule
       ],
       providers: [
         PlacesAutocompleteService,
         { provide: EndpointUrl, useValue: true },
-        HttpClient,
-        HttpHandler,
         AppState,
         EbbService,
         { provide: ZMP_G2G_BFF_ENDPOINT_URL, useValue: true },
