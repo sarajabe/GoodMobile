@@ -606,7 +606,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.appState.loading = true;
       const shipping = {
         // fixed format in address1 so verify API accept and verify it
-        address1: mailing?.address1.includes(',') ? mailing?.address1.split(',')[0] : mailing?.address1,
+        address1: mailing?.address1?.includes(',') ? mailing?.address1?.split(',')[0] : mailing?.address1,
         address2: mailing?.address2,
         postalCode: mailing?.zipCode,
         city: mailing?.city,
