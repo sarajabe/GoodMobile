@@ -1,250 +1,353 @@
 <section class="page-section checkout-result-page-section">
-  <ng-container *ngIf="!!isAcpDevice" >
-  <div class="result-details-section">
-   <h1 class="acp-device-title">Order Pickup!</h1>
-   <h5 class="acp-device-subtitle">Your order has been successfully placed!</h5>
-   <div class="info-banner default-background purchase-special">
-    <div class="flex">
-      <img src="assets/icon/purple-circle-check.svg" alt="Success Icon" class="check-icon">
-      <div class="banner-content">
-        <h5 class="title">Barcode is required for In-Store Device Pickup!</h5>
-        <p class="smaller banner-note" *ngIf="!!barCodeVal">Your Device Order Barcode: </p>
-        <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true" class="barcode-container"></ngx-barcode6>
-        <p class="smaller device-price" *ngIf="!!purchasedPlan">You will pay <b>{{purchasedPlan?.acpDevice?.price | currency}}</b> at the store.</p>
-        <div class="clerk-instructions">
-          <p class="tertiary text-color-primary" (click)="showClerkInstruction = !showClerkInstruction"><b>{{!!showClerkInstruction ? 'Hide Store’s Clerk Instructions ' : 'Show Store’s Clerk Instructions '}}</b> <img class="arrow-icon" src="assets/icon/circle-arrow-up-primary.svg" alt="arrow" [class.rotate]="!showClerkInstruction"></p>
-          <div *ngIf="!!showClerkInstruction" class="instruction-flex">
-            <div class="instruction-details">
-              <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60" height="64">
-              <p class="smallest img-claric">Select <b>‘Online Tablet Order’</b> button</p>
-          </div>
-          <div class="instruction-details">
-              <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60" height="64">
-              <p class="smallest img-claric">Scan <b>Barcode</b></p>
-          </div>
-          <div class="instruction-details">
-              <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon" width="60" height="64">
-              <p class="smallest img-claric">Scan <b>Device IMEI</b></p>
-          </div>
-          </div>
-        </div>
+  <ng-container *ngIf="!!isAcpDevice">
+    <div class="img-section" *ngIf="!!isInPersonDelivery">
+      <picture class="banner-image-container">
+        <source srcset='assets/img/checkout-result-img-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+        <source srcset='assets/img/checkout-result-img-mobile.png' media="(max-width: 639.9px)" type="image/png">
+        <source srcset='assets/img/checkout-result-img-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+        <source srcset='assets/img/checkout-result-img-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+        <source srcset='assets/img/checkout-result-img-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+        <source srcset='assets/img/checkout-result-img-desktop.png' media="(min-width: 1025px)" type="image/png">
+        <img src="assets/img/checkout-result-img-desktop.png" alt="purchase successful Image" height="400" width="2000">
+      </picture>
+      <div class="title-section">
+        <h1 class="title">Purchase Successful!</h1>
+        <h4 class="sub-title">Your ACP Device has been purchased!</h4>
       </div>
     </div>
-  </div>
-  <div class="result-info">
-      <p class="smaller last-note" data-cy="storePickupDeviceSuccessful">
-        You can always find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, 
-        to provide it for the store clerk for your Device pickup.
-      </p>
-      <h5 class="order-note">Your order ID is: <a (click)="goToOrderDetails(orderId)">{{orderId}}</a></h5>
-      <a class="view-stores-link" data-cy="viewStores" (click)="showStores=true;" *ngIf="!showStores">View Stores</a>
-      <a class="view-stores-link hide" data-cy="hideStores" (click)="showStores=false;" *ngIf="!!showStores">Hide Stores</a>
-      <div class="stores-card" *ngIf="!!showStores">
-        <app-stores-list></app-stores-list>
-      </div>
-  </div>
-  <div class="result-actions">
-    <button class="button primary" data-cy="orderDetailsBtn" (click)="goToOrderDetails(orderId)">
-      Order Details
-    </button>
-  </div>
-  <div class="img-section acp-device">
-    <picture class="banner-image-container">
-      <source srcset='assets/img/checkout-result-no-blue-img-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
-      <source srcset='assets/img/checkout-result-no-blue-img-mobile.png' media="(max-width: 639.9px)" type="image/png">
-      <source srcset='assets/img/checkout-result-no-blue-img-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
-      <source srcset='assets/img/checkout-result-no-blue-img-tablet.png' media="(max-width: 1024.9px)" type="image/png">
-      <source srcset='assets/img/checkout-result-no-blue-img-desktop.webp' media="(min-width: 1025px)" type="image/webp">
-      <source srcset='assets/img/checkout-result-no-blue-img-desktop.png' media="(min-width: 1025px)" type="image/png">
-      <img src="assets/img/checkout-result-no-blue-img-desktop.png" alt="purchase successful Image" height="400" width="2000">
-    </picture>
-  </div>
-</div>
+    <div class="result-details-section">
+      <ng-container *ngIf="!!isStorePickup">
+        <h1 class="acp-device-title">Order Pickup!</h1>
+        <h5 class="acp-device-subtitle">Your order has been successfully placed!</h5>
+        <div class="info-banner default-background purchase-special">
+          <div class="flex">
+            <img src="assets/icon/purple-circle-check.svg" alt="Success Icon" class="check-icon">
+            <div class="banner-content">
+              <h5 class="title">Barcode is required for In-Store Device Pickup!</h5>
+              <p class="smaller banner-note" *ngIf="!!barCodeVal">Your Device Order Barcode: </p>
+              <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true"
+                class="barcode-container"></ngx-barcode6>
+              <p class="smaller device-price" *ngIf="!!purchasedPlan">You will pay <b>{{purchasedPlan?.acpDevice?.price
+                  |
+                  currency}}</b> at the store.</p>
+              <div class="clerk-instructions">
+                <p class="tertiary text-color-primary" (click)="showClerkInstruction = !showClerkInstruction">
+                  <b>{{!!showClerkInstruction ? 'Hide Store’s Clerk Instructions ' : 'Show Store’s Clerk Instructions
+                    '}}</b> <img class="arrow-icon" src="assets/icon/circle-arrow-up-primary.svg" alt="arrow"
+                    [class.rotate]="!showClerkInstruction">
+                </p>
+                <div *ngIf="!!showClerkInstruction" class="instruction-flex">
+                  <div class="instruction-details">
+                    <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60"
+                      height="64">
+                    <p class="smallest img-claric">Select <b>‘Online Tablet Order’</b> button</p>
+                  </div>
+                  <div class="instruction-details">
+                    <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60"
+                      height="64">
+                    <p class="smallest img-claric">Scan <b>Barcode</b></p>
+                  </div>
+                  <div class="instruction-details">
+                    <img class="instruction-img" src="/assets/icon/device-scan.svg" alt="device-scan-icon" width="60"
+                      height="64">
+                    <p class="smallest img-claric">Scan <b>Device IMEI</b></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="result-info">
+          <p class="smaller last-note" data-cy="storePickupDeviceSuccessful">
+            You can always find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page,
+            to provide it for the store clerk for your Device pickup.
+          </p>
+          <h5 class="order-note">Your order ID is: <a (click)="goToOrderDetails(orderId)">{{orderId}}</a></h5>
+          <a class="view-stores-link" data-cy="viewStores" (click)="showStores=true;" *ngIf="!showStores">View
+            Stores</a>
+          <a class="view-stores-link hide" data-cy="hideStores" (click)="showStores=false;" *ngIf="!!showStores">Hide
+            Stores</a>
+          <div class="stores-card" *ngIf="!!showStores">
+            <app-stores-list></app-stores-list>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button class="button primary" data-cy="orderDetailsBtn" (click)="goToOrderDetails(orderId)">
+            Order Details
+          </button>
+        </div>
+        <div class="img-section acp-device">
+          <picture class="banner-image-container">
+            <source srcset='assets/img/checkout-result-no-blue-img-mobile.webp' media="(max-width: 639.9px)"
+              type="image/webp">
+            <source srcset='assets/img/checkout-result-no-blue-img-mobile.png' media="(max-width: 639.9px)"
+              type="image/png">
+            <source srcset='assets/img/checkout-result-no-blue-img-tablet.webp' media="(max-width: 1024.9px)"
+              type="image/webp">
+            <source srcset='assets/img/checkout-result-no-blue-img-tablet.png' media="(max-width: 1024.9px)"
+              type="image/png">
+            <source srcset='assets/img/checkout-result-no-blue-img-desktop.webp' media="(min-width: 1025px)"
+              type="image/webp">
+            <source srcset='assets/img/checkout-result-no-blue-img-desktop.png' media="(min-width: 1025px)"
+              type="image/png">
+            <img src="assets/img/checkout-result-no-blue-img-desktop.png" alt="purchase successful Image" height="400"
+              width="2000">
+          </picture>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!!isInPersonDelivery">
+        <div class="info-banner success-background">
+          <div class="flex">
+            <img src="assets/icon/green-check.svg" alt="Success Icon">
+            <div class="banner-content">
+              <h5 class="title">Your Order has been placed!</h5>
+              <p class="smaller banner-note">Order ID is:</p>
+              <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a>
+            </div>
+          </div>
+        </div>
+        <div class="result-info">
+          <div>
+            <p class="smaller top-note">You have <b>successfully collected</b> your ACP Device from Goodwill’s agent.
+            </p>
+            <p class="smaller last-note">Enjoy your service with Good Mobile!<br>
+              You can always view your ACP benefits details on your <a (click)="goToAcpSummary()"><b>ACP Summary</b></a>
+              page.</p>
+          </div>
+          <div class="result-actions">
+            <button class="button primary" (click)="goToHome()">
+              Done
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
   </ng-container>
   <ng-container *ngIf="!isAcpDevice">
-  <div class="img-section">
-    <picture class="banner-image-container">
-      <source srcset='assets/img/checkout-result-img-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
-      <source srcset='assets/img/checkout-result-img-mobile.png' media="(max-width: 639.9px)" type="image/png">
-      <source srcset='assets/img/checkout-result-img-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
-      <source srcset='assets/img/checkout-result-img-tablet.png' media="(max-width: 1024.9px)" type="image/png">
-      <source srcset='assets/img/checkout-result-img-desktop.webp' media="(min-width: 1025px)" type="image/webp">
-      <source srcset='assets/img/checkout-result-img-desktop.png' media="(min-width: 1025px)" type="image/png">
-      <img src="assets/img/checkout-result-img-desktop.png" alt="purchase successful Image" height="400" width="2000">
-    </picture>
-    <div class="title-section">
-      <h1 class="title">Purchase Successful!</h1>
-      <h4 class="sub-title">{{!!isChangePlanSummary && !isOrderSim && !isPlanAddon? 'Your Good Mobile Plan change has
-        been
-        purchased!':
-        (!isChangePlanSummary && !isOrderSim && !!isPlanAddon? 'Your Plan Add-on has been purchased!' : (
-        !isChangePlanSummary && !!isOrderSim && !isPlanAddon? 'Your Replacement SIM has been purchased!' :
-        (
-        !!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'both' ? 'Your Replacement SIM + Plan add-on have been purchased!' :
-        (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'addon' ? 'Your Plan Add-on has been purchased!' :'Your Good Mobile Plan has been purchased!')
-        )))}}</h4>
-    </div>
-  </div>
-  <div class="result-details-section">
-    <div class="info-banner success-background" *ngIf="!isStorePickup">
-      <div class="flex">
-        <img src="assets/icon/green-check.svg" alt="Success Icon">
-        <div class="banner-content">
-          <h5 class="title">Your Order has been placed!</h5>
-          <p class="smaller banner-note">Order ID is:</p>
-          <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a>
-        </div>
+    <div class="img-section">
+      <picture class="banner-image-container">
+        <source srcset='assets/img/checkout-result-img-mobile.webp' media="(max-width: 639.9px)" type="image/webp">
+        <source srcset='assets/img/checkout-result-img-mobile.png' media="(max-width: 639.9px)" type="image/png">
+        <source srcset='assets/img/checkout-result-img-tablet.webp' media="(max-width: 1024.9px)" type="image/webp">
+        <source srcset='assets/img/checkout-result-img-tablet.png' media="(max-width: 1024.9px)" type="image/png">
+        <source srcset='assets/img/checkout-result-img-desktop.webp' media="(min-width: 1025px)" type="image/webp">
+        <source srcset='assets/img/checkout-result-img-desktop.png' media="(min-width: 1025px)" type="image/png">
+        <img src="assets/img/checkout-result-img-desktop.png" alt="purchase successful Image" height="400" width="2000">
+      </picture>
+      <div class="title-section">
+        <h1 class="title">Purchase Successful!</h1>
+        <h4 class="sub-title">{{!!isChangePlanSummary && !isOrderSim && !isPlanAddon? 'Your Good Mobile Plan change has
+          been
+          purchased!':
+          (!isChangePlanSummary && !isOrderSim && !!isPlanAddon? 'Your Plan Add-on has been purchased!' : (
+          !isChangePlanSummary && !!isOrderSim && !isPlanAddon? 'Your Replacement SIM has been purchased!' :
+          (
+          !!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'both' ? 'Your Replacement SIM + Plan
+          add-on have been purchased!' :
+          (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases == 'addon' ? 'Your Plan Add-on has been
+          purchased!' :'Your Good Mobile Plan has been purchased!')
+          )))}}</h4>
       </div>
     </div>
-    <div class="info-banner default-background purchase-special" *ngIf="!!isStorePickup">
-      <div class="flex">
-        <img src="assets/icon/purple-circle-check.svg" alt="Success Icon" class="check-icon">
-        <div class="banner-content" >
-          <h5 class="title">Your order ID is:  <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a></h5>
-          <p class="smaller banner-note" *ngIf="!isOrderSim && (!isSuccessfulMultiplePurchases || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases !== 'both')) && !!barCodeVal">Your SIM Card Pickup Barcode:</p>
-          <p class="smaller banner-note" *ngIf="(!!isOrderSim || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases === 'both')) && !!barCodeVal">Your Replacement SIM Card Pickup Barcode: </p>
-          <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true" class="barcode-container"></ngx-barcode6>
-          <p class="smaller device-price" *ngIf="!!purchasedPlan">You will pay <b>{{purchasedPlan?.acpDevice?.price | currency}}</b> at the store.</p>
-          <div class="clerk-instructions">
-            <p class="tertiary text-color-primary" (click)="showClerkInstruction = !showClerkInstruction"><b>{{!!showClerkInstruction ? 'Hide Store’s Clerk Instructions ' : 'Show Store’s Clerk Instructions '}}</b> <img class="arrow-icon" src="assets/icon/circle-arrow-up-primary.svg" alt="arrow" [class.rotate]="!showClerkInstruction"></p>
-            <div *ngIf="!!showClerkInstruction" class="instruction-flex">
-              <div class="instruction-details">
-                <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60" height="64">
-                <p class="smallest img-claric">Select <b>‘Online SIM Card Pickup’</b> button</p>
-            </div>
-            <div class="instruction-details">
-                <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60" height="64">
-                <p class="smallest img-claric">Scan <b>Barcode</b></p>
-            </div>
-            <div class="instruction-details">
-                <img class="instruction-img" src="/assets/icon/sim-scan.svg" alt="sim-scan-icon" width="60" height="64">
-                <p class="smallest img-claric">Scan <b>SIM card</b></p>
-            </div>
-            </div>
+    <div class="result-details-section">
+      <div class="info-banner success-background" *ngIf="!isStorePickup">
+        <div class="flex">
+          <img src="assets/icon/green-check.svg" alt="Success Icon">
+          <div class="banner-content">
+            <h5 class="title">Your Order has been placed!</h5>
+            <p class="smaller banner-note">Order ID is:</p>
+            <a class="banner-link" (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a>
           </div>
         </div>
       </div>
-    </div>
-    <div class="result-info">
-      <div *ngIf="!!isStorePickup">
-        <h5 class="top-note" data-cy="orderWillBeAvailable">Your order will be available at any of the following stores:</h5>
-        <div class="stores-card">
-          <app-stores-list></app-stores-list>
+      <div class="info-banner default-background purchase-special" *ngIf="!!isStorePickup">
+        <div class="flex">
+          <img src="assets/icon/purple-circle-check.svg" alt="Success Icon" class="check-icon">
+          <div class="banner-content">
+            <h5 class="title">Your order ID is: <a class="banner-link"
+                (click)="goToOrderDetails(orderId)"><b>{{orderId}}</b></a></h5>
+            <p class="smaller banner-note"
+              *ngIf="!isOrderSim && (!isSuccessfulMultiplePurchases || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases !== 'both')) && !!barCodeVal">
+              Your SIM Card Pickup Barcode:</p>
+            <p class="smaller banner-note"
+              *ngIf="(!!isOrderSim || (!!isSuccessfulMultiplePurchases && isSuccessfulMultiplePurchases === 'both')) && !!barCodeVal">
+              Your Replacement SIM Card Pickup Barcode: </p>
+            <ngx-barcode6 data-cy="barcode" [bc-value]="barCodeVal" [bc-display-value]="true"
+              class="barcode-container"></ngx-barcode6>
+            <p class="smaller device-price" *ngIf="!!purchasedPlan">You will pay <b>{{purchasedPlan?.acpDevice?.price |
+                currency}}</b> at the store.</p>
+            <div class="clerk-instructions">
+              <p class="tertiary text-color-primary" (click)="showClerkInstruction = !showClerkInstruction">
+                <b>{{!!showClerkInstruction ? 'Hide Store’s Clerk Instructions ' : 'Show Store’s Clerk Instructions
+                  '}}</b> <img class="arrow-icon" src="assets/icon/circle-arrow-up-primary.svg" alt="arrow"
+                  [class.rotate]="!showClerkInstruction">
+              </p>
+              <div *ngIf="!!showClerkInstruction" class="instruction-flex">
+                <div class="instruction-details">
+                  <img class="instruction-img" src="/assets/icon/card-scan.svg" alt="card-scan-icon" width="60"
+                    height="64">
+                  <p class="smallest img-claric">Select <b>‘Online SIM Card Pickup’</b> button</p>
+                </div>
+                <div class="instruction-details">
+                  <img class="instruction-img" src="/assets/icon/barcode-scan.svg" alt="barcode-scan-icon" width="60"
+                    height="64">
+                  <p class="smallest img-claric">Scan <b>Barcode</b></p>
+                </div>
+                <div class="instruction-details">
+                  <img class="instruction-img" src="/assets/icon/sim-scan.svg" alt="sim-scan-icon" width="60"
+                    height="64">
+                  <p class="smallest img-claric">Scan <b>SIM card</b></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
-        <ng-container *ngIf="!!purchasedPlanId">
-          <div *ngIf="!!purchasedPlan && !!isStorePickup">
-            <p class="smaller last-note" data-cy="storePickupSuccessful">
-              You can always find your <b>SIM Card In-Store Pickup barcode</b> in your <b>Purchased Plans</b> page, 
-              to provide it for the store clerk for your order pickup.
-            </p>
+      <div class="result-info">
+        <div *ngIf="!!isStorePickup">
+          <h5 class="top-note" data-cy="orderWillBeAvailable">Your order will be available at any of the following
+            stores:</h5>
+          <div class="stores-card">
+            <app-stores-list></app-stores-list>
           </div>
-          <div *ngIf="!!purchasedPlan && !isStorePickup">
-            <p class="smaller top-note" data-cy="homeDeliverySuccessfulNewSIM">Lookout for your <b>new SIM Card</b> in the mail!</p>
-            <p class="smaller last-note" data-cy="activateNewSIM">
-              Once your SIM card <b>arrives</b> in a couple of days, we will help you get your SIM card <b>activated</b>
-              with a brand new phone number, or transfer your active number (port in) from another provider. You can
-              view your plan details and activate it through your <b>Purchased Plans</b> page.
-            </p>
-          </div>
-          <div class="result-actions">
-            <button class="button primary" data-cy="purchasedPlansBtn" (click)="goToPurchasedPlans()">
-              Purchased Plans
-            </button>
-          </div>
+        </div>
+        <ng-container *ngIf="!isChangePlanSummary && !isPlanAddon && !isOrderSim && !isSuccessfulMultiplePurchases">
+          <ng-container *ngIf="!!purchasedPlanId">
+            <div *ngIf="!!purchasedPlan && !!isStorePickup">
+              <p class="smaller last-note" data-cy="storePickupSuccessful">
+                You can always find your <b>SIM Card In-Store Pickup barcode</b> in your <b>Purchased Plans</b> page,
+                to provide it for the store clerk for your order pickup.
+              </p>
+            </div>
+            <div *ngIf="!!purchasedPlan && !!isInPersonDelivery">
+              <p class="smaller last-note">
+                You may proceed to <b>activate your plan & SIM</b> in the next step, or from your <a *ngIf="!isAcpPlan"
+                  (click)="goToPurchasedPlans()"><b>Purchased Plans</b></a><a *ngIf="!!isAcpPlan"
+                  (click)="goToAcpSummary()"><b>ACP Summary</b></a> page at
+                your convenience!
+              </p>
+            </div>
+            <div *ngIf="!!purchasedPlan && !isStorePickup && !isInPersonDelivery">
+              <p class="smaller top-note" data-cy="homeDeliverySuccessfulNewSIM">Lookout for your <b>new SIM Card</b> in
+                the mail!</p>
+              <p class="smaller last-note" data-cy="activateNewSIM">
+                Once your SIM card <b>arrives</b> in a couple of days, we will help you get your SIM card
+                <b>activated</b>
+                with a brand new phone number, or transfer your active number (port in) from another provider. You can
+                view your plan details and activate it through your <b>Purchased Plans</b> page.
+              </p>
+            </div>
+            <div class="result-actions flex-actions" *ngIf="!!isInPersonDelivery">
+              <button class="button primary" data-cy="purchasedPlansBtn" (click)="goToActivation()">
+                Activate Now
+              </button>
+              <button class="button secondary" data-cy="purchasedPlansBtn" (click)="goToHome()">
+                Done
+              </button>
+            </div>
+            <div class="result-actions" *ngIf="!isInPersonDelivery">
+              <button class="button primary" data-cy="purchasedPlansBtn" (click)="goToPurchasedPlans()">
+                Purchased Plans
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!!isActivationFlow">
+            <p class="smaller top-note">You can <b>activate</b> your plan right now.</p>
+            <p class="smaller last-note">You may now <b>proceed to activate</b> your plan and SIM in the next step!
+              Or at your convenience from your <b>Purchased Plans</b> page at any time!</p>
+            <div class="result-actions flex-actions">
+              <button class="button primary smaller" (click)="goToActivation()">
+                Activate Now
+              </button>
+              <button class="button secondary smaller" (click)="goToPurchasedPlans()">
+                Purchased Plans
+              </button>
+            </div>
+          </ng-container>
         </ng-container>
-        <ng-container *ngIf="!!isActivationFlow">
-          <p class="smaller top-note">You can <b>activate</b> your plan right now.</p>
-          <p class="smaller last-note">You may now <b>proceed to activate</b> your plan and SIM in the next step!
-            Or at your convenience from your <b>Purchased Plans</b> page at any time!</p>
-          <div class="result-actions flex-actions">
-            <button class="button primary smaller" (click)="goToActivation()">
-              Activate Now
-            </button>
-            <button class="button secondary smaller" (click)="goToPurchasedPlans()">
-              Purchased Plans
-            </button>
-          </div>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="!!isChangePlanSummary && !isOrderSim && !isPlanAddon">
-        <p class="smaller last-note change">Note that it may take several minutes for the new plan services to fully set on the
-          network. Please refresh your <b>Account Summary</b> page in a few minutes to see the new data balances.</p>
-        <p class="smaller last-note change-last" *ngIf="nextCycle && !!selectedUserPlan?.basePlan">Effective on
-          {{selectedUserPlan.basePlan.renewDate | date}}</p>
-        <div class="result-actions">
-          <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
-            Account Summary
-          </button>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!isChangePlanSummary && !isOrderSim && !!isPlanAddon">
-        <p class="smaller last-note addon" data-cy="purchasedAddOns">You can view your plan and add-on details through your
-          <b>Account Summary</b> page.
-        </p>
-        <div class="result-actions">
-          <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
-            Account Summary
-          </button>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!!isOrderSim && !isPlanAddon && !isChangePlanSummary">
-        <div *ngIf="!isStorePickup">
-          <h5 class="top-note">Lookout for your <b>Replacement SIM Card</b> in the mail!</h5>
-          <p class="smaller last-note">You can view your plan details and activate it through your <b>Account Summary</b> page.
-          </p>
+        <ng-container *ngIf="!!isChangePlanSummary && !isOrderSim && !isPlanAddon">
+          <p class="smaller last-note change">Note that it may take several minutes for the new plan services to fully
+            set on the
+            network. Please refresh your <b>Account Summary</b> page in a few minutes to see the new data balances.</p>
+          <p class="smaller last-note change-last" *ngIf="nextCycle && !!selectedUserPlan?.basePlan">Effective on
+            {{selectedUserPlan.basePlan.renewDate | date}}</p>
           <div class="result-actions">
-            <button class="button primary" (click)="goToAccountSummary(true)" data-cy="goToSummaryBtn">
+            <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
               Account Summary
             </button>
           </div>
-        </div>
-        <div *ngIf="!!isStorePickup">
-          <p class="smaller last-note">
-            You can find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, to provide it for
-            the store clerk for your order pickup.
-          </p>
-          <div class="result-actions">
-            <button class="button primary" (click)="goToOrderDetails(orderId)">
-              Order Details
-            </button>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!!isSuccessfulMultiplePurchases">
-        <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !!isStorePickup">
-          <p class="smaller last-note">You can find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, to
-            provide it for the store clerk for your order pickup.</p>
-          <div class="result-actions">
-            <button class="button primary" (click)="goToOrderDetails(orderId)">
-              Order Details
-            </button>
-          </div>
-        </div>
-        <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !isStorePickup">
-          <h5 class="top-note">Look out for your <b>Replacement SIM Card</b> in the mail!</h5>
-          <p class="smaller last-note">You can view your plan add-ons and details and activate your plan through your <b>Account
-              Summary page.</b></p>
-          <div class="result-actions">
-            <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
-              Go to Summary
-            </button>
-          </div>
-        </div>
-        <div *ngIf="isSuccessfulMultiplePurchases == 'addon' && !isStorePickup">
-          <h5 class="top-note">New SIM purchase Failed!</h5>
-          <p class="smaller last-note">Your SIM has
-            <strong>NOT</strong> been successfully ordered, please try again
+        </ng-container>
+        <ng-container *ngIf="!isChangePlanSummary && !isOrderSim && !!isPlanAddon">
+          <p class="smaller last-note addon" data-cy="purchasedAddOns">You can view your plan and add-on details through
+            your
+            <b>Account Summary</b> page.
           </p>
           <div class="result-actions">
             <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
-              Go to Summary
+              Account Summary
             </button>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!!isOrderSim && !isPlanAddon && !isChangePlanSummary">
+          <div *ngIf="!isStorePickup">
+            <h5 class="top-note">Lookout for your <b>Replacement SIM Card</b> in the mail!</h5>
+            <p class="smaller last-note">You can view your plan details and activate it through your <b>Account
+                Summary</b> page.
+            </p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToAccountSummary(true)" data-cy="goToSummaryBtn">
+                Account Summary
+              </button>
+            </div>
+          </div>
+          <div *ngIf="!!isStorePickup">
+            <p class="smaller last-note">
+              You can find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b> page, to provide it for
+              the store clerk for your order pickup.
+            </p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToOrderDetails(orderId)">
+                Order Details
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!!isSuccessfulMultiplePurchases">
+          <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !!isStorePickup">
+            <p class="smaller last-note">You can find your <b>In-Store Pickup barcode</b> in your <b>Order Details</b>
+              page, to
+              provide it for the store clerk for your order pickup.</p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToOrderDetails(orderId)">
+                Order Details
+              </button>
+            </div>
+          </div>
+          <div *ngIf="isSuccessfulMultiplePurchases == 'both' && !isStorePickup">
+            <h5 class="top-note">Look out for your <b>Replacement SIM Card</b> in the mail!</h5>
+            <p class="smaller last-note">You can view your plan add-ons and details and activate your plan through your
+              <b>Account
+                Summary page.</b>
+            </p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
+                Go to Summary
+              </button>
+            </div>
+          </div>
+          <div *ngIf="isSuccessfulMultiplePurchases == 'addon' && !isStorePickup">
+            <h5 class="top-note">New SIM purchase Failed!</h5>
+            <p class="smaller last-note">Your SIM has
+              <strong>NOT</strong> been successfully ordered, please try again
+            </p>
+            <div class="result-actions">
+              <button class="button primary" (click)="goToAccountSummary()" data-cy="goToSummaryBtn">
+                Go to Summary
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
 </section>

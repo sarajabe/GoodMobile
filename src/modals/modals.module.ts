@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ManagePaymentModalComponent } from './manage-payment-modal/manage-payment-modal.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ManageAddressModalComponent } from './manage-address-modal/manage-address-modal.component';
@@ -31,7 +30,7 @@ import { AlertSecurityModalComponent } from './alert-security-modal/alert-securi
 
 
 @NgModule({
-    declarations: [ManagePaymentModalComponent, ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
+    declarations: [ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
         InformationMessageModalComponent,
         AddActivatedNumberModalComponent,
         InputModalComponent,
@@ -54,7 +53,7 @@ import { AlertSecurityModalComponent } from './alert-security-modal/alert-securi
     imports: [
         CommonModule, WidgetsModule, FormsModule, ReactiveFormsModule, MatAutocompleteModule, NgxBarcode6Module
     ],
-    exports: [ManagePaymentModalComponent, ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
+    exports: [ManageAddressModalComponent, ManagePaymentSpecificModalComponent, ConfirmMessageModalComponent, ConfirmPasswordModalComponent,
         InformationMessageModalComponent, AddActivatedNumberModalComponent, InputModalComponent, EditCcModalComponent, SelectPaymentModalComponent, ShippingAddressModalComponent, SimReplacementModalComponent,
         WifiCallingModalComponent, TrackingModalComponent,
         RoutingModalComponent, FiveGModalComponent, eSimReplacementModalComponent,

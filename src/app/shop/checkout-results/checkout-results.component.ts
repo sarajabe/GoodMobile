@@ -37,7 +37,9 @@ export class CheckoutResultsComponent implements OnDestroy {
   public barCodeVal;
   public showStores = false;
   public showClerkInstruction = true;
-  
+  public isInPersonDelivery = false;
+  public isAcpPlan = false;
+
   private alive = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private userPlansService: UserPlansService, private appState: AppState,
@@ -118,6 +120,14 @@ export class CheckoutResultsComponent implements OnDestroy {
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.PLANS_AND_FEATURES}/${PLANS_SHOP_ROUTE_URLS.NEW_PLAN}`]);
   }
 
+  public goToHome(): void {
+    this.router.navigate([`${ROUTE_URLS.HOME}`]);
+  }
+
+  public goToAcpSummary(): void {
+    this.router.navigate([`${ACCOUNT_ROUTE_URLS.BASE}/${ACCOUNT_ROUTE_URLS.ACP_APPLICATION}`]);
+  }
+
   public goToCompatability(): void {
     const params = {};
     params[ROUTE_URLS.PARAMS.USER_PLAN_ID] = this.purchasedPlanId;
@@ -129,10 +139,18 @@ export class CheckoutResultsComponent implements OnDestroy {
       if (!!order) {
         this.appState.loading = false;
         this.isStorePickup = order?.storePickup;
-        if(!!this.isAcpDevice && !!order?.devices && order?.devices?.length > 0) {
+        if (!!order?.plans && order?.plans?.length > 0 && order?.plans[0]?.basePlanId.toLowerCase().includes('acp')) {
+          this.isAcpPlan = true;
+        } else {
+          this.isAcpPlan = false;
+        }
+        if (order?.deliveryMethod === 'inPersonDelivery') {
+          this.isInPersonDelivery = true;
+        }
+        if (!!this.isAcpDevice && !!order?.devices && order?.devices?.length > 0) {
           this.barCodeVal = order?.devices[0]?.itemId;
         }
-        else if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
+        else if (!!order?.id && !!order?.cards && order?.cards?.length > 0) {
           this.barCodeVal = `${order?.cards[0]?.itemId}`;
         }
       }

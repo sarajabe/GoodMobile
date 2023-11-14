@@ -205,16 +205,18 @@
                     <label class="sub-label" for="payment">
                         <span>{{!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup ? (!!planPaymentMethod || !!isEBBPlan ? 'Delivery & Payment Details' : 'Delivery Details') : 'Payment Details'}}</span><img class="icon" src="assets/icon/arrow_circle.svg" alt="arrow icon">
                     </label>
-                    <ng-container *ngIf="!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup">
+                    <ng-container
+                    *ngIf="!!pendingPlan?.shippingAddress || !!pendingPlan?.storePickup || !!isInPersonDelivery">
                         <div class="sub-header">
                             <p class="title">Delivery Methods</p>
                         </div>
                         <div class="card-content sub">
                             <div class="item-details">
-                                <div class="details-side" [class.center]="!!pendingPlan?.storePickup">
-                                    <img [src]="!!pendingPlan?.storePickup?'/assets/icon/delivery-pick.svg': '/assets/icon/delivery-home.svg'" alt="delivery-icon" class="delivery-img">
+                                <div class="details-side" [class.center]="!!pendingPlan?.storePickup || !!isInPersonDelivery">
+                                    <img [src]="!!pendingPlan?.storePickup ? '/assets/icon/delivery-pick.svg' : (!!isInPersonDelivery ? '/assets/icon/grey-person-delivery.svg' : '/assets/icon/delivery-home.svg')" alt="delivery-icon" class="delivery-img">
                                     <div class="delivery-details">
-                                        <p class="smaller title" data-cy="deliveryOption">{{!!pendingPlan?.storePickup? 'Store Pickup': 'Home Delivery'}}</p>
+                                        <p class="smaller title" data-cy="deliveryOption">{{!!pendingPlan?.storePickup ? 'Store Pickup' : (!!isInPersonDelivery
+                                            ? 'In-Person Delivery' : 'Home Delivery')}}</p>
                                         <div class="details" *ngIf="!!pendingPlan?.shippingAddress">
                                             <p class="smaller desc"><b>{{!!currentShippingAddress?.name ?
                                                     currentShippingAddress?.name : currentShippingAddress?.alias}}</b></p>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { AccountPaymentService, ActionsAnalyticsService, CART_TYPES, CustomizableMobilePlan, FirebaseUserProfileService, IAutoCompletePrediction, IDeviceCompatibilityV1, IFirebaseAddress, IMarketingDetails, INewPlanCartItem, MobileCustomPlansService, MobilePlanItem, OrderCheckoutService, PlacesAutocompleteService, ShippingService, UserAccountService, UserPlansService } from '@ztarmobile/zwp-service-backend';
 import { EbbService, EquipmentService, IAddress, OrdersService } from '@ztarmobile/zwp-service-backend-v2';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import { Observable, Subscription } from 'rxjs';
@@ -24,8 +24,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   @ViewChild('pickupOptionsForm') pickupOptionsForm: NgForm;
   public steps = [1, 2];
   public activeStep: number;
-  public newMobileServiceFrom: UntypedFormGroup;
-  public simOptionsForm: UntypedFormGroup;
+  public newMobileServiceFrom: FormGroup;
+  public simOptionsForm: FormGroup;
   public ebbPlan: MobilePlanItem;
   public compatibileDevice: IDeviceCompatibilityV1 = {} as IDeviceCompatibilityV1;
   public addressesList: Array<IFirebaseAddress> = [];
@@ -65,7 +65,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public isPersonStepValidated = false;
   public isPersonOption = false;
 
-  private planPuchasedClicked = false;
+  public planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
     E8: "Bureau of Indian Affairs General Assistance",
     E9: "Tribal Temporary Assistance for Needy Families (Tribal TANF)",
@@ -83,14 +83,22 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private placesAutoCompleteService: PlacesAutocompleteService,
     private accountPaymentService: AccountPaymentService, private appState: AppState, private modalHelper: ModalHelperService,
-    private router: Router, private equipmentService: EquipmentService, private mobileCustomPlansService: MobileCustomPlansService,
+    public router: Router, private equipmentService: EquipmentService,
     private ebbService: EbbService, private mobilePlansService: MobileCustomPlansService,
     private userProfileService: FirebaseUserProfileService, private userPlansService: UserPlansService,
     private toastHelper: ToastrHelperService, private shippingService: ShippingService,
     private orderCheckoutService: OrderCheckoutService, private analyticsService: ActionsAnalyticsService,
     private pageScrollService: PageScrollService,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private userAccountService: UserAccountService
   ) {
+    this.appState.isMarketingCampaign.pipe(takeWhile(() => this.alive)).subscribe((isCampaign) => {
+      this.utms = JSON.parse(sessionStorage.getItem('utms'));
+      this.setMarketingObjectToCart();
+    });
+  }
+
+  ngOnInit(): void {
     this.mobilePlansService.isConfigurationReady
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => {
@@ -103,13 +111,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       .subscribe((plan) => {
         this.cart = plan;
       });
-    this.appState.isMarketingCampaign.pipe(takeWhile(() => this.alive)).subscribe((isCampaign) => {
-      this.utms = JSON.parse(sessionStorage.getItem('utms'));
-      this.setMarketingObjectToCart();
-    });
-  }
-
-  ngOnInit(): void {
     this.showShippingForm = false;
     this.prepareMarketingDetails();
     const callBackUrl = `${ACP_CALLBACK_URL}/${ACP_ROUTE_URLS.BASE}`;
@@ -193,7 +194,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
         Validators.required
       ],
     });
-    this.simOptionsForm = new UntypedFormGroup({
+    this.simOptionsForm = new FormGroup({
       option: new UntypedFormControl('', Validators.required)
     });
     setInterval(() => {
@@ -320,10 +321,10 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.isStorePickup = this.option === 'store' ? true : false;
       this.isPersonOption = this.option === 'person' ? true : false;
       this.mobilePlansService.setActivePlanId("");
-      if (!!this.option && this.option !== 'person') {
-        this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
+      if ((!isEsim && !!this.option && this.option !== 'person') || !!this.isEsim) {
+        this.mobilePlansService.setPlanDevice(this.compatibileDevice);
       }
-      this.mobileCustomPlansService.setPlanExpectedDevice(null);
+      this.mobilePlansService.setPlanExpectedDevice(null);
       this.mobilePlansService.setBasePlan(this.ebbPlan);
       this.mobilePlansService.setCartType(CART_TYPES.NEW_PLAN);
       this.mobilePlansService.setMarketingObject(this.marketingDetails);
@@ -348,7 +349,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           data = {
             autoRenewPlan: true,
             haseSIM: !!isEsim ? true : false,
-            deliveryMethod: !!this.isStorePickup ? 'storePickup' : 'inPersonDelivery'
+            deliveryMethod: !isEsim ? (!!this.isStorePickup ? 'storePickup' : 'inPersonDelivery'): null
           };
         }
         this.appState.loading = true;
@@ -387,6 +388,12 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           }
         },
           (error) => {
+            this.planPuchasedClicked = true;
+            this.toastHelper.showAlert(error.message);
+            this.appState.loading = false;
+            this.planPurchased = false;
+            this.mobilePlansService.clearUserCart();
+          }).catch(error => {
             this.planPuchasedClicked = true;
             this.toastHelper.showAlert(error.message);
             this.appState.loading = false;
@@ -434,8 +441,8 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
                   this.compatibileDevice.network = 'att';
                 }
                 this.successCehck = true;
-                this.mobileCustomPlansService.setPlanDevice(this.compatibileDevice);
-                this.mobileCustomPlansService.setPlanExpectedDevice(null);
+                this.mobilePlansService.setPlanDevice(this.compatibileDevice);
+                this.mobilePlansService.setPlanExpectedDevice(null);
               }
             } else {
               this.successCehck = false;
@@ -631,6 +638,16 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           }
         );
       } else {
+        // We have to add this vrfied address to user profile for tracking and to get an ID for it
+        this.appState.loading = true;
+        this.userAccountService.addShippingAddress(this.verifiedAddress).then((newAddressId) => {
+          this.verifiedAddress.id = newAddressId;
+
+          this.appState.loading = false;
+        }, (error) => {
+          this.appState.loading = false;
+          this.toastHelper.showAlert(error.message);
+        });
         this.isAddressVerified = true;
         this.addressNoOptionSection = true;
         this.addressNoOptionNotVerfiedSection = false;
@@ -643,7 +660,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
     }
   }
 
-  private clearCart(): void {
+  public clearCart(): void {
     sessionStorage.removeItem("useFromBalance");
     sessionStorage.removeItem("useFromReward");
     sessionStorage.removeItem("removeFromCart");

@@ -118,12 +118,12 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
 
   constructor(private firebaseAccountPaymentService: FirebaseAccountPaymentService, private formBuilder: FormBuilder, private analyticsService: ActionsAnalyticsService,
     private checkoutService: CheckoutService, private mobilePlansService: MobileCustomPlansService, private accountPaymentService: AccountPaymentService,
-    private metaService: MetaService, private router: Router, private userPlansService: UserPlansService, private userAccountService: UserAccountService,
+    private metaService: MetaService, public router: Router, private userPlansService: UserPlansService, private userAccountService: UserAccountService,
     private modalHelper: ModalHelperService, private voucherActivationService: VoucherActivationService, private cdRef: ChangeDetectorRef,
     private shippingConfigurationService: ShippingConfigurationService, private toastHelper: ToastrHelperService, private appState: AppState,
     private shippingService: ShippingService, private voucherService: VoucherService, private plansConfigurationService: PlansConfigurationService,) {
     this.storedPaymentId = sessionStorage.getItem('payment_id'); // initial value to keep the saved id in case the user wants to edit and he keeps the same payment selection
-    this.payWithCash = !!sessionStorage.getItem('cash') ? true : false;
+    this.payWithCash = JSON.parse(sessionStorage.getItem('cash'));
     this.expirationYearRange = [];
     this.currentDate = new Date();
     const year = parseInt(this.currentDate.getFullYear().toString().substr(-2), 10);
@@ -837,7 +837,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.paymentInfo.type = 'creditCard'
     this.paymentInfo.country = 'United States';
   }
-  private resetPayWithCard(): void {
+  public resetPayWithCard(): void {
     this.payWithCard = false;
     this.paymentOption = null;
     this.morePaymentNeeded = false;

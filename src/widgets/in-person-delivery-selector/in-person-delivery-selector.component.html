@@ -37,11 +37,11 @@
                                         </label>
                                         <label class="validation-message"
                                             *ngIf="itemsForm.controls.fulfilledItem.touched && itemsForm.controls.fulfilledItem.hasError('required')"
-                                            id="required-activation-code-msg">{{!!this.cart?.acpDevice ? 'Device IMEI' :
+                                            id="required-item-msg">{{!!this.cart?.acpDevice ? 'Device IMEI' :
                                             'Activation Code'}} is a required field</label>
                                         <label class="validation-message"
                                             *ngIf="itemsForm.controls.fulfilledItem.value && (itemsForm.controls.fulfilledItem.hasError('pattern') || itemsForm.controls.fulfilledItem.hasError('minlength'))"
-                                            id="required-activation-code-msg">{{!!this.cart?.acpDevice ? 'IMEI' :
+                                            id="invalid-item-msg">{{!!this.cart?.acpDevice ? 'IMEI' :
                                             'Activation Code'}} is invalid</label>
                                     </div>
                                     <button class="button primary" id="submit" (click)="submitItems()">Submit</button>

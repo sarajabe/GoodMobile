@@ -563,9 +563,6 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     this.isEditingEmail = false;
     this.userForm.controls.email.setValue(this.currentUserInfo.email);
   }
-  public addPaymentMethod(): void {
-    this.modalHelper.showManagePaymentModal(this.user, this.selectedPlan, false, null, 'payment-method-modal');
-  }
 
   public editPaymentMethod(method: IFirebasePaymentMethod): void {
     const exp = method.expirationDate;

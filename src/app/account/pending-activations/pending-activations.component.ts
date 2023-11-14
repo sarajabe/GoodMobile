@@ -57,28 +57,30 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
   public iccid;
   public stores = [];
   public viewStores = false;
+  activationCode: Params;
+  public isInPersonDelivery = false;
+
   private userId: string;
   private alive = true;
-  activationCode: Params;
 
   constructor(private toastHelper: ToastrHelperService,
-              private accountHeaderService: AccountHeaderService,
-              private router: Router,
-              private appState: AppState,
-              private shippingService: ShippingService,
-              private modalHelper: ModalHelperService,
-              private userPlansService: UserPlansService,
-              private userProfileService: FirebaseUserProfileService,
-              private simpleAuthService: SimpleAuthService,
-              private accountPaymentService: AccountPaymentService,
-              private metaService: MetaService,
-              private contentful: ContentfulService,
-              private route: ActivatedRoute,
-              private shippingConfigurationService: ShippingConfigurationService,
-              private accountOrderService: UserOrdersService,
-              private lookupsService: LookupsService,
-              private clipboardService: ClipboardService) {
-              
+    private accountHeaderService: AccountHeaderService,
+    private router: Router,
+    private appState: AppState,
+    private shippingService: ShippingService,
+    private modalHelper: ModalHelperService,
+    private userPlansService: UserPlansService,
+    private userProfileService: FirebaseUserProfileService,
+    private simpleAuthService: SimpleAuthService,
+    private accountPaymentService: AccountPaymentService,
+    private metaService: MetaService,
+    private contentful: ContentfulService,
+    private route: ActivatedRoute,
+    private shippingConfigurationService: ShippingConfigurationService,
+    private accountOrderService: UserOrdersService,
+    private lookupsService: LookupsService,
+    private clipboardService: ClipboardService) {
+
     this.route.params.pipe(takeWhile(() => this.alive)).subscribe((params: Params) => {
       if (!!params && params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE]) {
         this.activationCode = params[ACTIVATION_ROUTE_URLS.PARAMS.ACTIVATION_CODE];
@@ -123,12 +125,17 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       if (!!this.currentUserPlan) {
         this.getShippingAddres();
         this.calculateTotal(this.currentUserPlan);
+        if ((!!this.currentUserPlan?.planDevice && !!this.currentUserPlan?.planDevice?.fulfillmentData) || (!!this.currentUserPlan?.acpDevice && !!this.currentUserPlan?.acpDevice?.fulfillmentData)) {
+          this.isInPersonDelivery = true;
+        } else {
+          this.isInPersonDelivery = false;
+        }
       }
-      if(!!this.currentUserPlan?.storePickup) {
+      if (!!this.currentUserPlan?.storePickup) {
         this.getOrderDetails();
         this.appState.loading = true;
         this.lookupsService.getAvailableStores().then(stores => {
-          if(stores?.storesLocations?.length > 0) {
+          if (stores?.storesLocations?.length > 0) {
             this.stores = stores?.storesLocations;
           }
           this.appState.loading = false;
@@ -140,12 +147,12 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
         this.iccid = null;
         this.orderPicked = false;
       }
-      this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb  ? true : false;
+      this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb ? true : false;
       this.config.totalItems = this.pendingPlans.length;
       this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((ready) => {
         this.loadingPlan = !ready;
       });
-      
+
     });
     this.innerWidth = window.innerWidth;
   }
@@ -160,27 +167,27 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
         this.planPaymentMethod = method;
       });
       if (!!this.currentUserPlan.phones) {
-          const allPhones = Object.values(this.currentUserPlan.phones);
-          this.purchasedPhone = allPhones[0];
-          if (!!this.purchasedPhone) {
-            this.contentful.getPhoneImgBySku('sku', this.purchasedPhone.sku).pipe(take(1)).subscribe((finishID) => {
-              if (!!finishID) {
-                this.contentful.getPhoneImg('finishes', finishID).pipe(take(1)).subscribe((src) => {
-                  if (!!src) {
-                    this.phoneImageLink = src.imageUrl;
-                  }
-                });
-              }
-            });
-            this.appState.loading = true;
-            this.accountOrderService.getOrderById(this.currentUserPlan.orderId).then((order) => {
-              this.deliveredPhone = order.status === 'SHIPPED' ? true : false;
-              this.appState.loading = false;
-            }, (error) => {
-              this.appState.loading = false;
-              this.toastHelper.showWarning(`An error occured while trying to get the status of your phone's shipment status`);
-            });
-          }
+        const allPhones = Object.values(this.currentUserPlan.phones);
+        this.purchasedPhone = allPhones[0];
+        if (!!this.purchasedPhone) {
+          this.contentful.getPhoneImgBySku('sku', this.purchasedPhone.sku).pipe(take(1)).subscribe((finishID) => {
+            if (!!finishID) {
+              this.contentful.getPhoneImg('finishes', finishID).pipe(take(1)).subscribe((src) => {
+                if (!!src) {
+                  this.phoneImageLink = src.imageUrl;
+                }
+              });
+            }
+          });
+          this.appState.loading = true;
+          this.accountOrderService.getOrderById(this.currentUserPlan.orderId).then((order) => {
+            this.deliveredPhone = order.status === 'SHIPPED' ? true : false;
+            this.appState.loading = false;
+          }, (error) => {
+            this.appState.loading = false;
+            this.toastHelper.showWarning(`An error occured while trying to get the status of your phone's shipment status`);
+          });
+        }
       } else {
         this.purchasedPhone = null;
       }
@@ -201,10 +208,10 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       const customHtml = `<p class="note">You will be activating your <b>${this.currentUserPlan.title}</b> Plan on your <b>${this.currentUserPlan.planDevice.marketingName}</b> Device</p>
       <p class="note">Do you wish to proceed or would you like to change the device?</p>`;
       this.modalHelper.showInformationMessageModal('Confirmation', '', 'Activate Plan', null,
-      true, 'pending-confirmation', customHtml, true, 'Change Device','', 'change'
-     ).afterClosed().subscribe((res) => {
+        true, 'pending-confirmation', customHtml, true, 'Change Device', '', 'change'
+      ).afterClosed().subscribe((res) => {
         if (res) {
-          if(res === 'change') {
+          if (res === 'change') {
             this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
           } else {
             this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHOOSE_ACTIVATION_PATH}`, params]);
@@ -218,8 +225,8 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
         this.router.navigate([`${ACTIVATION_ROUTE_URLS.BASE}/${ACTIVATION_ROUTE_URLS.CHECK_PHONE}`, params]);
       }
     }
-    
-    
+
+
   }
 
   public pageChanged(page: number): void {
@@ -228,11 +235,16 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       this.planIndex = index;
       this.userPlansService.selectUserPlan(this.pendingPlans[index].id);
       this.currentUserPlan = this.pendingPlans[index];
+      if ((!!this.currentUserPlan?.planDevice && !!this.currentUserPlan?.planDevice?.fulfillmentData) || (!!this.currentUserPlan?.acpDevice && !!this.currentUserPlan?.acpDevice?.fulfillmentData)) {
+        this.isInPersonDelivery = true;
+      } else {
+        this.isInPersonDelivery = false;
+      }
       this.isEBBPlan = !!this.currentUserPlan && !!this.currentUserPlan.basePlan && !!this.currentUserPlan.basePlan.ebb ? true : false;
       this.getShippingAddres();
       this.getUserPlan(this.pendingPlans[index].id);
       this.calculateTotal(this.currentUserPlan);
-      if(!!this.currentUserPlan?.storePickup) {
+      if (!!this.currentUserPlan?.storePickup) {
         this.getOrderDetails();
       } else {
         this.iccid = null;
@@ -268,10 +280,10 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
             </div>`;
               this.appState.loading = false;
               this.modalHelper.showInformationMessageModal('Verify your shipping address', '',
-              'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address','', 'verified')
-              .afterClosed().subscribe((result) => {
+                'Keep current address', null, true, 'usp-pop-up-modal', customHtml, true, 'Use verified address', '', 'verified')
+                .afterClosed().subscribe((result) => {
                   if (result) {
-                    if(result === 'verified') {  
+                    if (result === 'verified') {
                       selectedAddress = addresses[0];
                       selectedAddress.name = address.name;
                     } else {
@@ -291,7 +303,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
                       }
                       this.toastHelper.showAlert(error.message);
                     });
-                  } 
+                  }
                 }, (error) => {
                   this.appState.loading = false;
                 });
@@ -398,7 +410,7 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
       if (!!order) {
         this.appState.loading = false;
         this.orderPicked = order.status === 'SHIPPED' ? true : false;
-        if(!!order?.id && !!order?.cards && order?.cards?.length > 0) {
+        if (!!order?.id && !!order?.cards && order?.cards?.length > 0) {
           this.barCodeValues = `${order?.cards[0]?.itemId}`;
           this.iccid = order?.cards[0]?.simNumber;
         }

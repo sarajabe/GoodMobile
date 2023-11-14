@@ -55,6 +55,8 @@
               </div>
             </div>
           </div>
+          <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha
+          ></app-invisible-recaptcha>
         </ng-container>
         <div class="row form-section modal-actions">
           <button *ngIf="!!context.isManage" class="button" (click)="savePaymentInfo()"
