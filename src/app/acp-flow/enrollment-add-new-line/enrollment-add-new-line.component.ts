@@ -321,7 +321,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       this.isStorePickup = this.option === 'store' ? true : false;
       this.isPersonOption = this.option === 'person' ? true : false;
       this.mobilePlansService.setActivePlanId("");
-      if (!!this.option && this.option !== 'person') {
+      if ((!isEsim && !!this.option && this.option !== 'person') || !!this.isEsim) {
         this.mobilePlansService.setPlanDevice(this.compatibileDevice);
       }
       this.mobilePlansService.setPlanExpectedDevice(null);
@@ -349,7 +349,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           data = {
             autoRenewPlan: true,
             haseSIM: !!isEsim ? true : false,
-            deliveryMethod: !!this.isStorePickup ? 'storePickup' : 'inPersonDelivery'
+            deliveryMethod: !isEsim ? (!!this.isStorePickup ? 'storePickup' : 'inPersonDelivery'): null
           };
         }
         this.appState.loading = true;
@@ -388,6 +388,12 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           }
         },
           (error) => {
+            this.planPuchasedClicked = true;
+            this.toastHelper.showAlert(error.message);
+            this.appState.loading = false;
+            this.planPurchased = false;
+            this.mobilePlansService.clearUserCart();
+          }).catch(error => {
             this.planPuchasedClicked = true;
             this.toastHelper.showAlert(error.message);
             this.appState.loading = false;

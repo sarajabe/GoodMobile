@@ -525,8 +525,10 @@
                                     </div>
                                     <div class="details">
                                         <p class="smaller primary-font-bold desktop">{{device?.description}}</p>
-                                        <p class="id smaller" *ngIf="device?.itemId">Item # {{device?.itemId}}</p>
-                                        <p class="id smaller" *ngIf="!!isInPersonDelivery">IMEI: 1234567890689</p>
+                                        <p class="id smaller" *ngIf="device?.itemId">Item # <b>{{device?.itemId}}</b>
+                                        </p>
+                                        <p class="id smaller" *ngIf="!!isInPersonDelivery">IMEI: <b>{{device?.imei}}</b>
+                                        </p>
                                         <div class="barCodes-details"
                                             *ngIf="orderInfo?.status === ORDER_STATUS.PENDING && !isInPersonDelivery">
                                             <ngx-barcode6 data-cy="barcode" [bc-value]="device?.itemId"
@@ -547,10 +549,10 @@
                                             <div class="flex">
                                                 <img src="assets/icon/success-icon.svg" alt="Success Icon">
                                                 <div class="banner-content">
-                                                    <h5>Barcode Scan Successful!</h5>
+                                                    <h5 *ngIf="!isInPersonDelivery">Barcode Scan Successful!</h5>
                                                     <p class="description smaller">You have <b>successfully collected
                                                             your ACP Device</b> {{!!isInPersonDelivery ? 'from Goodwill
-                                                            agent' : 'at the store'}}!</p>
+                                                        agent' : 'at the store'}}!</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -559,12 +561,16 @@
                                 <div class="item-details" *ngFor="let sim of orderInfo?.cards; let i = index">
                                     <div class="image-section">
                                         <img class="thumbnail" src="assets/icon/sim-image.svg" alt="SIM card">
-                                        <p class="title smaller primary-font-bold mb-12 mobile">{{!!isInPersonDelivery ? 'Physical SIM' : 'SIM Card'}}</p>
+                                        <p class="title smaller primary-font-bold mb-12 mobile">{{!!isInPersonDelivery ?
+                                            'Physical SIM' : 'SIM Card'}}</p>
                                     </div>
                                     <div class="details">
-                                        <p class="title smaller primary-font-bold mb-12 desktop">{{!!isInPersonDelivery ? 'Physical SIM' : 'SIM Card'}}</p>
-                                        <p class="id smaller" *ngIf="sim?.itemId">Item # {{ sim?.itemId }}</p>
-                                        <p class="id smaller" *ngIf="!!isInPersonDelivery">Activation Code: 1224567</p>
+                                        <p class="title smaller primary-font-bold mb-12 desktop">{{!!isInPersonDelivery
+                                            ? 'Physical SIM' : 'SIM Card'}}</p>
+                                        <p class="id smaller" *ngIf="sim?.itemId">Item # <b>{{sim?.itemId}}</b></p>
+                                        <p class="id smaller"
+                                            *ngIf="!!isInPersonDelivery && !!orderInfo?.activationCode">
+                                            Activation Code: <b>{{orderInfo?.activationCode}}</b></p>
                                         <div class="barCodes-details"
                                             *ngIf="orderInfo?.status === ORDER_STATUS.PENDING && !isInPersonDelivery">
                                             <ngx-barcode6 data-cy="barcode" [bc-value]="sim?.itemId"
@@ -588,7 +594,7 @@
                                                     <h5 *ngIf="!isInPersonDelivery">Barcode Scan Successful!</h5>
                                                     <p class="description smaller">You have <b>successfully collected
                                                             your SIM card</b> {{!!isInPersonDelivery ? 'from Goodwill
-                                                            agent' : 'at the store'}}!</p>
+                                                        agent' : 'at the store'}}!</p>
                                                     <p class="description smaller last">You can now <b>activate your
                                                             plan</b> and enjoy your Good Mobile service! </p>
                                                 </div>

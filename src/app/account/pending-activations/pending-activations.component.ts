@@ -115,8 +115,6 @@ export class PendingActivationsComponent implements OnInit, OnDestroy, AccountPa
     });
     this.userPlansService.userPlans.pipe(takeWhile(() => this.alive)).subscribe((pendingPlans) => {
       this.pendingPlans = pendingPlans.filter((plan) => !plan.mdn);
-      console.log('PENDING PLANS', this.pendingPlans);
-
       if (!this.currentUserPlan && !!pendingPlans[0]) {
         this.userPlansService.selectUserPlan(this.pendingPlans[0]?.id);
         this.currentUserPlan = this.pendingPlans[0];

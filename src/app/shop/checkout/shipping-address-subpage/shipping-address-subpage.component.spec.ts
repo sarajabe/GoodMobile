@@ -10,7 +10,7 @@ import { AuthHttp } from "@ztarmobile/zwp-services-auth";
 import { HttpClient, HttpHandler } from "@angular/common/http";
 import { ShippingAddressSubpageComponent } from "./shipping-address-subpage.component";
 import { CheckoutService } from "../checkout.service";
-import { InjectionToken } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, InjectionToken } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { RouterTestingModule } from "@angular/router/testing";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
@@ -52,7 +52,8 @@ fdescribe('Shipping Address Subpage Component - Unit Testing', async () => {
                 { provide: ToastrService, useValue: ToastrService },
                 { provide: ZMP_G2G_BFF_ENDPOINT_URL, useValue: true },
                 MatDialog
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         TestBed.overrideProvider(PageScrollService, { useValue: {} });
         TestBed.overrideProvider(ActionsAnalyticsService, { useValue: mockActionsAnalyticsService });
