@@ -84,11 +84,7 @@ export class CartComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.autoRenew = this.userCart?.autoRenewPlan;
         if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
-          sessionStorage.removeItem('shippingAddress');
-          sessionStorage.removeItem('shippingMethod');
-          sessionStorage.removeItem('storePickup');
-          sessionStorage.removeItem('personPickup');
-          sessionStorage.removeItem('payment_id');
+         this.clearSession();
           this.isGenericType = true;
           this.deviceImage = this.userCart.acpDevice.imgUrl;
           if (!!this.userCart.activePlanId) {
@@ -124,6 +120,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.isTopupChecked = true;
         }
         if (!!this.userCart && this.userCart.cartType === CART_TYPES.NEW_PLAN) {
+          this.clearSession();
           this.plansConfigurationService.planConfiguration.pipe(take(1)).subscribe((conf) => {
             this.allBasePlans = conf.allPlans.filter((p) => !p.archived);
             this.planInCatalog = this.allBasePlans.find((p) => p.id === this.userCart.basePlan.id);
@@ -596,7 +593,13 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+   private clearSession(): void {
+    sessionStorage.removeItem('shippingAddress');
+    sessionStorage.removeItem('shippingMethod');
+    sessionStorage.removeItem('storePickup');
+    sessionStorage.removeItem('personPickup');
+    sessionStorage.removeItem('payment_id');
+   }
   @HostListener('document:keydown', ['$event'])
   onKeyDownHandler(event: KeyboardEvent): void {
     if (event.key === 'Escape' || event.key === 'esc') {

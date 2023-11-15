@@ -190,12 +190,13 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
           this.autoRenew = true;
           this.payWithCard = true;
           this.paymentOption = 'card';
+          this.payWithCash = false;
           sessionStorage.removeItem('cash');
         }
         if (!!this.storedPaymentId && this.storedPaymentId !== '1') {
           this.selectedPaymentMethod = this.methodsList.find((method) => method.id === this.storedPaymentId);
           this.payWithCard = !!this.selectedPaymentMethod && this.selectedPaymentMethod.id ? true : false;
-          if(!!this.payWithCard) {
+          if (!!this.payWithCard) {
             this.paymentOption = 'card';
           }
         } else {
@@ -249,6 +250,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
                   if (this.totalBalance === 0 && !this.cart?.activationCode && !this.isInPersonPickup && this.cart.cartType !== CART_TYPES.GENERIC_CART) { // if the user doesn't have balance or reward then he will pay with card only
                     this.payWithCard = true;
                     this.paymentOption = 'card';
+                    this.payWithCash = false;
                     sessionStorage.removeItem('cash');
                   }
                   const useFromReward = sessionStorage.getItem('useFromReward');
@@ -298,6 +300,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         } else if (!this.cart?.activationCode) {
           this.payWithCard = true;
           this.paymentOption = 'card';
+          this.payWithCash = false;
           sessionStorage.removeItem('cash');
         }
         if (!!this.cart?.activationCode) {
@@ -328,6 +331,11 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
         }
         if (cart.cartType === CART_TYPES.GENERIC_CART && !!this.isStorePickup) {
           this.payWithCash = true;
+          this.resetPayWithCard();
+        }
+        if (cart.cartType === CART_TYPES.GENERIC_CART && !!this.isInPersonPickup) {
+          this.payWithCash = false;
+          this.payWithCard = false;
           this.resetPayWithCard();
         }
       }
@@ -702,7 +710,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
       sessionStorage.setItem('useFromBalance', this.balanceAmount.toString());
       sessionStorage.setItem('useFromReward', this.rewardAmount.toString());
       this.analyticsService.trackAddPaymentInfoGA4(this.cart, paymentType, this.simPrice, this.simId);
-      this.checkoutService.setPayments({ card: !!this.payWithCard?(!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo): null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash})
+      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo) : null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
       // this.checkoutService.updatePaymentMethod(this.selectedPaymentMethod);
       // this.checkoutService.updateCreditBalance({balanceAmount: this.balanceAmount, rewardsAmount: this.rewardAmount});
       this.processPayment();
@@ -726,10 +734,10 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
   }
   public goBack(): void {
     if (!!this.cart?.eSIM && (!this.cart?.phones || (!!this.cart?.phones && this.cart?.phones.length === 0)) || !!this.cart?.activationCode || (!!this.cart.addOns && this.cart?.addOns?.length > 0 && this.cart.simsQuantity < 1)) {
-      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo): null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
+      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo) : null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
     } else {
-      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo): null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
+      this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo) : null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
     }
   }

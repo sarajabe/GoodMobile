@@ -214,12 +214,12 @@
       </div>
       <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
         (isValidateClicked)="validatePersonStep($event)" [option]="option"
-        [cart]="cart"></app-in-person-delivery-selector>
+        [cart]="cart" [resetInPersonDelivery]="resetInPersonDelivery"></app-in-person-delivery-selector>
     </form>
   </div>
 </section>
 <section class="navigation-section"
-  [class.blur]="!!showShippingForm || !option || (!!option && option === 'store' && !barCode && !!this.cart && this.cart?.cartType !== CART_TYPES.GENERIC_CART) || (!!option && option === 'person' && !isPersonStepValidated)">
+  [class.blur]="(!!showShippingForm && option === 'home') || !option || (!!option && option === 'store' && !barCode && !!this.cart && this.cart?.cartType !== CART_TYPES.GENERIC_CART) || (!!option && option === 'person' && !isPersonStepValidated)">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goToCart()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" id="continue-shipping" data-cy="nextBtn">Next</button>

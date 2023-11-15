@@ -585,20 +585,46 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
       try {
         const requestBody: any = {};
         const options: CheckoutCartOptions = checkoutNewPlan?.options;
+
+        if (!!cardInfo && cardInfo?.address1) {
+          cardInfo.address1 = AccountPaymentService.shortenAddress(cardInfo.address1, 30);
+        }
+        if (!!cardInfo && !!cardInfo?.address2) {
+          cardInfo.address2 = AccountPaymentService.shortenAddress(cardInfo.address2, 30);
+        }
+        if (!!cardInfo && !!cardInfo?.city) {
+          cardInfo.city = AccountPaymentService.shortenAddress(cardInfo.city, 20);
+        }
+        if (!!cardInfo && !!cardInfo?.id) {
+          cardInfo.type = 'creditCardProfile';
+        }
+        if (!!cardInfo && !!cardInfo?.cardNumber) {
+          cardInfo.cardNumber = cardInfo?.cardNumber.toString().replace(/\s/g, '');
+          cardInfo.type = 'creditCard';
+        }
+        if (!!cardInfo && !!cardInfo?.fullName) {
+          cardInfo.nameOnCard = cardInfo?.fullName;
+        }
         requestBody.shippingAddress = { id: checkoutNewPlan?.shippingAddress?.id };
         requestBody.haseSIM = checkoutNewPlan?.options?.haseSIM;
         requestBody.autoRenewPlan = !!options?.autoRenewPlan ? true : false;
         requestBody.orderShipMethod = checkoutNewPlan?.orderShippingMethod?.id;
         requestBody.deliveryMethod = checkoutNewPlan?.deliveryMethod;
         requestBody.paymentType = checkoutNewPlan?.paymentType;
-        if (!!checkoutNewPlan.cardInfo) {
+        if (!!checkoutNewPlan.cardInfo && !!checkoutNewPlan?.cardInfo?.id) {
           requestBody.paymentMethod = { id: checkoutNewPlan?.cardInfo?.id };
+        } else {
+          requestBody.paymentMethod = cardInfo;
+          requestBody.savePaymentMethod = options.saveCcInfo;
         }
         if (!checkoutNewPlan?.orderShippingMethod) {
           delete requestBody.orderShipMethod
         }
         if (!shippingAddress && !shippingAddress?.id) {
           delete requestBody.shippingAddress;
+        }
+        if (!!currentPlan.voucherData) {
+          requestBody.voucherCode = currentPlan.voucherData.code;
         }
         if (!cardInfo?.cardNumber && !cardInfo?.id && !!currentPlan?.voucherData && currentPlan?.voucherData?.code) {
           delete requestBody.paymentInfo; // if user enter enough voucher remove payment info property from request
@@ -609,5 +635,4 @@ export class CheckoutService implements IAuthStateDependentService, ICheckoutSer
       }
     });
   }
-
 }
