@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomizableMobilePlan, IAcpDevice, MobileCustomPlansService, UserDevice } from '@ztarmobile/zwp-service-backend';
 import { drawerSlideInOutAnimation, drawerFadeInOutAnimation } from 'src/app/app.animations';
@@ -11,10 +11,11 @@ import { ContentfulService } from 'src/services/contentful.service';
     animations: [drawerSlideInOutAnimation, drawerFadeInOutAnimation],
 })
 
-export class InPersonDeliverySelectorComponent implements OnInit {
+export class InPersonDeliverySelectorComponent implements OnInit, OnChanges {
     @Output() personOption: EventEmitter<string> = new EventEmitter<string>();
     @Output() isValidateClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() option;
+    @Input() resetInPersonDelivery;
     @Input() cart: CustomizableMobilePlan;
 
     public agentForm: FormGroup;
@@ -51,11 +52,21 @@ export class InPersonDeliverySelectorComponent implements OnInit {
                 this.agentCodes = res;
             }
         });
+       
     }
-
+    ngOnChanges(changes: SimpleChanges) {
+        // Handle input changes
+        if(!!this.resetInPersonDelivery) {
+            this.isFulfilledItem = false;
+            this.agentForm.reset();
+            this.itemsForm.reset();
+            this.isValidateClicked.emit(false);
+        }
+      }
     public validateAgentCode(): void {
         this.agentForm.markAllAsTouched();
         this.isValidateButtonClicked = true;
+        this.resetInPersonDelivery = false;
         if (!!this.agentForm.valid) {
             if (this.agentCodes.some(code => code?.fields?.code === this.agentForm?.controls?.code?.value)) {
                 this.isAgentCodeVerified = true;

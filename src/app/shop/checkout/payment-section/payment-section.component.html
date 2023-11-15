@@ -402,7 +402,7 @@
   </div>
 </section>
 <section class="navigation-section"
-  [class.blur]="showAddCardSection || (!payWithCard && !payWithVoucher && !payWithTotalBalance && ((cart?.cartType === CART_TYPES.GENERIC_CART && !!isStorePickup && !payWithCash) || (cart?.cartType === CART_TYPES.GENERIC_CART && !!isInPersonPickup && (!payWithCash && !payWithCard)))) || (!!payWithVoucher && ((!!voucherForm.invalid || !!showVoucherError) || (!applyVoucherCalled)))">
+  [class.blur]="(!!showAddCardSection && payWithCard) || (!payWithCard && !payWithVoucher && !payWithTotalBalance && ((cart?.cartType === CART_TYPES.GENERIC_CART && !!isStorePickup && !payWithCash) || (cart?.cartType === CART_TYPES.GENERIC_CART && !!isInPersonPickup && (!payWithCash && !payWithCard)))) || (!!payWithVoucher && ((!!voucherForm.invalid || !!showVoucherError) || (!applyVoucherCalled)))">
   <div class="page-section navs">
     <button class="button secondary" data-cy="backBtn" (click)="goBack()">Back</button>
     <button class="button primary" (click)="nextCheckoutStep()" data-cy="nextBtn">Next</button>

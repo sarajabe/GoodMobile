@@ -64,7 +64,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public filteredOptionsSubscription: Subscription;
   public isPersonStepValidated = false;
   public isPersonOption = false;
-
+  public resetInPersonDelivery = false;
   public planPuchasedClicked = false;
   private TRIBAL_PROGRAMS = {
     E8: "Bureau of Indian Affairs General Assistance",
@@ -242,8 +242,10 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
   public pickupOptionChanged(): void {
     if (this.option === 'store') {
       this.resetAddressFields();
+      this.resetInPersonDelivery = true;
     } else if (this.option === 'home') {
       this.barCode = false;
+      this.resetInPersonDelivery = true;
       setTimeout(() => {
         this.validateAddressInfoFromACPApplication();
       }, 200);

@@ -68,6 +68,7 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
   public option;
   public CART_TYPES = CART_TYPES;
   public isPersonStepValidated = false;
+  public resetInPersonDelivery = false;
 
   private alive = true;
   storedAddress: IFirebaseAddress;
@@ -326,16 +327,30 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
       this.selectedShippingServiceOption = '';
       this.shippingServiceType = '';
       sessionStorage.removeItem('shippingMethod');
+      sessionStorage.removeItem('personPickup');
+      this.checkoutService.updateInPersonDelivery(undefined);
       this.checkoutService.updateShippingMethod(undefined);
       this.showShippingForm = false;
+      this.resetInPersonDelivery = true;
     } else if (this.option === 'home') {
       this.barCode = false;
+      this.resetInPersonDelivery = true;
+      sessionStorage.removeItem('personPickup');
+      sessionStorage.removeItem('storePickup');
+      this.checkoutService.updateStorePickup(undefined);
+      this.checkoutService.updateInPersonDelivery(undefined);
     }
   }
 
   public selectPersonOption(event): void {
     if (!!event) {
       this.option = event;
+      this.showShippingForm = false;
+      sessionStorage.removeItem('shippingMethod');
+      sessionStorage.removeItem('storePickup');
+      this.checkoutService.updateShippingAddress(undefined);
+      this.checkoutService.updateShippingMethod(undefined);
+      this.checkoutService.updateStorePickup(undefined);
     }
   }
 

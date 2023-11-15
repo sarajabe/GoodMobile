@@ -310,7 +310,7 @@
                 </div>
                 <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
                     (isValidateClicked)="validatePersonStep($event)" [option]="option"
-                    [cart]="cart"></app-in-person-delivery-selector>
+                    [cart]="cart" [resetInPersonDelivery]="resetInPersonDelivery"></app-in-person-delivery-selector>
             </form>
         </section>
         <app-invisible-recaptcha (resolved)="resolvedCaptcha($event)" [siteKey]="SITE_ID" #reCaptcha
@@ -348,8 +348,8 @@
                 *ngIf="(!!successCehck || !!errorCheck ) && activeStep === 1" [class.disabled]="!!errorCheck"
                 [disabled]="!!errorCheck">Next</button>
             <button class="button primary" *ngIf="activeStep === 2"
-                [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
-                [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)"
+                [class.disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode) || (option === 'person' && !isPersonStepValidated)"
+                [disabled]="!option || (option === 'home' && (!isAddressVerified || (!!addressNoOptionSection && !addressOption))) || (option === 'store' && !barCode)|| (option === 'person' && !isPersonStepValidated)"
                 (click)="purchasePlan()" data-cy="nextBtn">Submit</button>
         </div>
         <div class="right end" *ngIf="!!planPurchased">
