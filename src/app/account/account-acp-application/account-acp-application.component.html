@@ -5,7 +5,8 @@
         <span>{{providerApplicationID}}</span>
     </p>
     <div class="actions-top" *ngIf="!showAcpApplicationCard">
-        <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View Application Form</a>
+        <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View
+            Application Form</a>
         <a data-cy="cancelApplication" (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
     <div class="acp-application-card" *ngIf="!!barCodeValue">
@@ -289,7 +290,7 @@
                             </button>
                             <button class="button thirdly"
                                 (click)="this[ACP_PLAN_DESCS[planActivationStatus]?.linkAction]()"
-                                *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.linkName">{{ACP_PLAN_DESCS[planActivationStatus]?.linkName}}
+                                *ngIf="!!ACP_PLAN_DESCS[planActivationStatus]?.linkName && !hideActionLink">{{ACP_PLAN_DESCS[planActivationStatus]?.linkName}}
                             </button>
                         </div>
                     </div>
