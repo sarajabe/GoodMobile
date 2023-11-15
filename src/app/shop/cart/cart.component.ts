@@ -86,7 +86,7 @@ export class CartComponent implements OnInit, OnDestroy {
         if (!!this.userCart && this.userCart.cartType === CART_TYPES.GENERIC_CART) {
          this.clearSession();
           this.isGenericType = true;
-          this.deviceImage = this.userCart.acpDevice.imgUrl;
+          this.deviceImage = this.userCart?.acpDevice?.imgUrl;
           if (!!this.userCart.activePlanId) {
             this.userPlanService.getUserPlan(this.userCart.activePlanId).then((plan) => {
               if (!!plan) {

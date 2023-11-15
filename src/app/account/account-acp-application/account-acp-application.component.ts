@@ -102,6 +102,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showDeviceOptions = false;
   public showDeviceCode = true;
   public showACPCodeSection = false;
+  public isInPersonDelivery = false;
+  public hideActionLink = false;
 
   private callBackUrl: string;
   private alive = true;
@@ -771,6 +773,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
               });
               this.appDetails.updatedAt = this.acpPlan?.updatedAt;
               this.planActivationStatus = 'ENROLLED';
+              this.hideActionLink = false;
               sessionStorage.removeItem('waitingAcpActivation');
             } else {
               this.appState.acpAppRes.subscribe(details => {
@@ -792,26 +795,38 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                       } else {
                         this.planActivationStatus = 'PENDING';
                       }
+                      this.hideActionLink = false;
                     } else {
                       if (!!this.acpPlan.orderId) {
                         this.appState.loading = true;
                         this.accountOrderService.getOrderById(this.acpPlan.orderId).then((order) => {
                           this.acpCancelled = !!order && order.status === 'CANCELED' ? true : false;
+                          if (!!order?.deliveryMethod && order?.deliveryMethod === 'inPersonDelivery') {
+                            this.isInPersonDelivery = true;
+                          } else {
+                            this.isInPersonDelivery = false;
+                          }
+                          this.showAttentionBanner = false;
+                          this.planActivationStatus = 'PENDING_ACTIVATION';
+                          if (!!this.isInPersonDelivery) {
+                            this.hideActionLink = true;
+                          } else {
+                            this.hideActionLink = false;
+                          }
+                          this.showAcpPlanActivationCard = true;
+                          // case specific for add existing plan flow
+                          const isWaitingAcpActivationResponse = sessionStorage.getItem('waitingAcpActivation');
+                          if (!!isWaitingAcpActivationResponse) {
+                            this.showAttentionBanner = false;
+                            this.planActivationStatus = 'WAITING_ACTIVATION_RESULT';
+                            this.hideActionLink = false;
+                            this.showAcpPlanActivationCard = true;
+                          }
                           this.appState.loading = false;
                         }, (error) => {
                           this.acpCancelled = false;
                           this.appState.loading = false;
                         });
-                      }
-                      this.showAttentionBanner = false;
-                      this.planActivationStatus = 'PENDING_ACTIVATION';
-                      this.showAcpPlanActivationCard = true;
-                      // case specific for add existing plan flow
-                      const isWaitingAcpActivationResponse = sessionStorage.getItem('waitingAcpActivation');
-                      if (!!isWaitingAcpActivationResponse) {
-                        this.showAttentionBanner = false;
-                        this.planActivationStatus = 'WAITING_ACTIVATION_RESULT';
-                        this.showAcpPlanActivationCard = true;
                       }
                     }
                     this.acpDeviceCase = 'PENDING_ACP_CASE';

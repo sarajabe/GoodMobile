@@ -103,7 +103,7 @@
                                                             }}</p>
                                                         <p class="quantity smaller">Quantity: 1</p>
                                                         <p class="action" (click)="scrollToDeliveryDetails()"
-                                                            *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">
+                                                            *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE' && !isInPersonDelivery">
                                                             {{!!orderInfo?.storePickup && !orderInfo?.paymentMethod ?
                                                             'Pick it Up' : 'Delivery Details'}}</p>
                                                     </div>
@@ -228,7 +228,7 @@
                                                 </p>
                                                 <p class="quantity smaller">Quantity: {{device?.quantity}}</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">{{orderInfo?.storePickup &&
+                                                    *ngIf="screenWidth < 1025 && !isInPersonDelivery">{{orderInfo?.storePickup &&
                                                     !orderInfo?.paymentMethod ? 'Pick it Up' : 'Delivery Details'}}</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
@@ -249,7 +249,7 @@
                                                 <p class="id smallest" *ngIf="sim?.itemId">Item #{{ sim?.itemId}}</p>
                                                 <p class="quantity smaller">Quantity: 1</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE'">
+                                                    *ngIf="screenWidth < 1025 && orderInfo?.skuNumber !== 'TE' && !isInPersonDelivery">
                                                     {{orderInfo?.storePickup && !orderInfo?.paymentMethod ? 'Pick it Up'
                                                     : 'Delivery Details'}}</p>
                                                 <p class="action" data-cy="cancel"
@@ -304,7 +304,7 @@
                                                 <p class="id smallest" *ngIf="sim?.itemId">Item # {{sim?.itemId}}</p>
                                                 <p class="quantity smaller">Quantity: 1</p>
                                                 <p class="action" (click)="scrollToDeliveryDetails()"
-                                                    *ngIf="screenWidth < 1025">{{orderInfo?.storePickup &&
+                                                    *ngIf="screenWidth < 1025 && !isInPersonDelivery">{{orderInfo?.storePickup &&
                                                     !orderInfo?.paymentMethod ? 'Pick it Up' : 'Delivery Details'}}</p>
                                                 <p class="action" data-cy="cancel"
                                                     *ngIf="orderInfo?.status === ORDER_STATUS.PENDING"
