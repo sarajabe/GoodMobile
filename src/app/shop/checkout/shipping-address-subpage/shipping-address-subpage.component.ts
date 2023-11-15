@@ -2,7 +2,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import {
   FirebaseUserProfileService, IAddress, IFirebaseAddress, IShippingMethod, IUser,
-  ShippingConfigurationService, AccountPaymentService, ActionsAnalyticsService, CustomizableMobilePlan, CART_TYPES
+  ShippingConfigurationService, AccountPaymentService, ActionsAnalyticsService, CustomizableMobilePlan, CART_TYPES, UserAccountService
 } from '@ztarmobile/zwp-service-backend';
 import { FadeInOutAnimation } from '../../../app.animations';
 import { Router } from '@angular/router';
@@ -81,7 +81,8 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     private analyticsService: ActionsAnalyticsService,
     private metaService: MetaService,
     public appState: AppState,
-    private pageScrollService: PageScrollService) {
+    private pageScrollService: PageScrollService,
+    private userAccountService: UserAccountService) {
     this.metaService.createCanonicalUrl();
     this.checkoutService.totalSubject.subscribe((t) => {
       this.total = t;
@@ -430,14 +431,20 @@ export class ShippingAddressSubpageComponent implements OnInit, OnDestroy, OnCha
     }
   }
   private addNewAddress(address): void {
-    this.addressesList.unshift(address);
-    this.pageScrollService.scroll({
-      document,
-      scrollTarget: "#addresses",
-      scrollOffset: 141,
-      speed: 200,
+    this.userAccountService.addShippingAddress(address).then((newAddressId) => {
+      address.id = newAddressId;
+       this.addressesList.unshift(address);
+      this.pageScrollService.scroll({
+        document,
+        scrollTarget: "#addresses",
+        scrollOffset: 141,
+        speed: 200,
+      });
+      this.appState.loading = false;
+    }, (error) => {
+      this.appState.loading = false;
+      this.toastHelper.showAlert(error.message);
     });
-
   }
   private checkExsitingAddresses(address): IFirebaseAddress {
     if (!!this.addressesList && this.addressesList.length > 0) {
