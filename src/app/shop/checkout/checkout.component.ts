@@ -1422,9 +1422,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
   private initFlowControl(): void {
     const hasActivationCode = (!!this.currentPlan.planDevice ? !!this.currentPlan.planDevice.activationCode : false) || !!this.currentPlan.activationCode || (!!this.currentPlan.eSIM && !this.currentPlan.phones);
-    this.hasShippingItems = (!hasActivationCode && (this.currentPlan.cartType === CART_TYPES.NEW_PLAN && !this.inPerson && !this.storePickup))
+    this.hasShippingItems = (!hasActivationCode && (this.currentPlan.cartType === CART_TYPES.NEW_PLAN || this.currentPlan.cartType === CART_TYPES.GENERIC_CART))
       || (this.currentPlan.simsQuantity > 0 && !this.currentPlan.eSIM);
-
     if (this.flowSettings.hasShippingMode === this.hasShippingItems) {
       return;
     }
@@ -1439,7 +1438,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     if (!this.isLoggedIn) {
       this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SIGN_IN);
     } else {
-      if ((!!this.hasShippingItems && this.storedShippingAddress == null) || !this.storePickup || !this.inPerson) { // no Activation code then there is a free SIM
+      if (!!this.hasShippingItems && this.storedShippingAddress == null && !this.storePickup && !this.inPerson) { // no Activation code then there is a free SIM
         this.currentStep = this.flowSettings.steps.find((step) => step.flowStepId === this.FLOW_STEPS_IDS.STEP_SHIPPING_ADDRESS);
 
         this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.SHIPPING_SECTION}`]);
