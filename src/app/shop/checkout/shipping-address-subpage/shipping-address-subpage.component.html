@@ -194,8 +194,7 @@
             <app-stores-list></app-stores-list>
           </div>
         </div>
-        <div class="info-banner default-background"
-          *ngIf="!!cart && cart.cartType !== CART_TYPES.GENERIC_CART">
+        <div class="info-banner default-background" *ngIf="!!cart && cart.cartType !== CART_TYPES.GENERIC_CART">
           <div class="flex">
             <img src="assets/icon/info-icon.svg" alt="Info Icon">
             <div class="banner-content">
@@ -213,8 +212,8 @@
         </div>
       </div>
       <app-in-person-delivery-selector (personOption)="selectPersonOption($event)"
-        (isValidateClicked)="validatePersonStep($event)" [option]="option"
-        [cart]="cart" [resetInPersonDelivery]="resetInPersonDelivery"></app-in-person-delivery-selector>
+        (isValidateClicked)="validatePersonStep($event)" [option]="option" [cart]="cart"
+        [resetInPersonDelivery]="resetInPersonDelivery"></app-in-person-delivery-selector>
     </form>
   </div>
 </section>

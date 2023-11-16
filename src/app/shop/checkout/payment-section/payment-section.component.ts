@@ -733,7 +733,7 @@ export class PaymentSectionComponent implements OnInit, OnDestroy, AfterViewInit
     this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CHECKOUT}/${CHECKOUT_ROUTE_URLS.PLACE_ORDER}`]);
   }
   public goBack(): void {
-    if (!!this.cart?.eSIM && (!this.cart?.phones || (!!this.cart?.phones && this.cart?.phones.length === 0)) || !!this.cart?.activationCode || (!!this.cart.addOns && this.cart?.addOns?.length > 0 && this.cart.simsQuantity < 1)) {
+    if (!!this.cart?.eSIM && (!this.cart?.phones || (!!this.cart?.phones && this.cart?.phones.length === 0)) || !!this.cart?.activationCode || (!!this.cart.addOns && this.cart?.addOns?.length > 0 && this.cart.simsQuantity < 1) || (this.cart.cartType === CART_TYPES.CHANGE_PLAN)) {
       this.checkoutService.setPayments({ card: !!this.payWithCard ? (!this.isNewPayment ? this.selectedPaymentMethod : this.paymentInfo) : null, balanceAmount: +this.balanceAmount, rewardsAmount: +this.rewardAmount, voucherAmount: this.voucherAmount, cash: !!this.payWithCash })
       this.router.navigate([`${SHOP_ROUTE_URLS.BASE}/${SHOP_ROUTE_URLS.CART}`]);
     } else {
