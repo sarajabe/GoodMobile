@@ -9,13 +9,13 @@ describe('Select plan as new user - shipping address assertions - required and i
         PageObjects.AccessControl.logoutFromAccount();
     });
     it('Should click on shop menu ', () => {
-        PageObjects.HomePage.clickOnShopMenu();
+        PageObjects.HomePage.clickOnPlans();
     });
     it('Should go to plans page', () => {
         PageObjects.TitleExpectations.goToPlansGMPage();
     });
-    it('Click on 6GB cart icon', () => {
-        PageObjects.Plans.clickOnCartIcon();
+    it('Click on 6GB add to cart', () => {
+        PageObjects.Plans.clickOn6GB_From_Plans_Page();
     });
     it('Should go check compatibility page', () => {
         PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
@@ -86,17 +86,14 @@ describe('Select plan as new user - shipping address assertions - required and i
     it('Click on home delivery', () => {
         PageObjects.ShippingPage.clickOnHomeDelivery();
     });
-    it('Click on add shipping address', () => {
-        PageObjects.ShippingPage.clickOnAddNewAddress();
-    });
     it('Should click on save btn', () => {
         PageObjects.ShippingPage.clickOnSaveBtn();
     });
     it('Should assert the required validation messages', () => {
-        cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Address name is a required field');
+        cy.get('[data-cy="addressNameRequiredMsg"]').should('have.text', 'Name is a required field');
         cy.get('[data-cy="addressRequiredMsg"]').should('have.text', 'Address is a Required Field');
         cy.get('[data-cy="cityIsRequired"]').should('have.text', 'City is a Required Field');
-        cy.get('[data-cy="stateIsRequired"]').should('have.text', 'State is a Required Field ');
+        cy.get('[data-cy="requiredStateMsg"]').should('have.text', 'State is a required field ');
         cy.get('[data-cy="postalIsRequired"]').should('have.text', 'Postal Code is a Required Field');
     });
     it('Should fill in invalid city, state, and postal code address data whith numbers', () => {
@@ -196,7 +193,7 @@ describe('Select plan as new user - shipping address assertions - required and i
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
     });
     it('Should assert that the delivery method', () => {
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery ');
     });
     it('Should click on change address', () => {
         PageObjects.PlaceOrder.clickOnChangeShippingAddress();
@@ -223,7 +220,7 @@ describe('Select plan as new user - shipping address assertions - required and i
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
     });
     it('Should assert that the delivery method', () => {
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup ');
     });
     it('should delete the plan', () => {
         PageObjects.PlaceOrder.deletePlan();
