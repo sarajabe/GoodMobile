@@ -587,7 +587,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
+        cy.get('.subtotal').should('have.text', ' Total: $23.36 ');
         PageObjects.PlaceOrder.assert6GBPersonDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -598,7 +598,7 @@ class PurchasedPlans {
         this.clickOnOrderDetails();
         PageObjects.TitleExpectations.goToOrderDetailsPage();
         cy.get('[data-cy="orderStatus"]').should('have.text', CONSTANT.ORDER_STATUS.SHIPPED);
-        cy.get('[data-cy="total"]').should('have.text', 'Total: $24.54');
+        cy.get('[data-cy="total"]').should('have.text', 'Total: $23.36');
         cy.get('[data-cy="shippingAddress"]').should('not.exist');
         cy.get('[data-cy="deliveryOption"]').should('have.text','In-Person Delivery');
         cy.get('[data-cy="simType"]').should('have.text','Physical SIM');
@@ -662,7 +662,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $35.09 ');
+        cy.get('.subtotal').should('have.text', ' Total: $33.90 ');
         PageObjects.PlaceOrder.assert15GBPersonDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -673,7 +673,7 @@ class PurchasedPlans {
         this.clickOnOrderDetails();
         PageObjects.TitleExpectations.goToOrderDetailsPage();
         cy.get('[data-cy="orderStatus"]').should('have.text', CONSTANT.ORDER_STATUS.SHIPPED);
-        cy.get('[data-cy="total"]').should('have.text', 'Total: $35.09');
+        cy.get('[data-cy="total"]').should('have.text', 'Total: $33.90');
         cy.get('[data-cy="shippingAddress"]').should('not.exist');
         cy.get('[data-cy="deliveryOption"]').should('have.text','In-Person Delivery');
         cy.get('[data-cy="simType"]').should('have.text','Physical SIM');
@@ -815,7 +815,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
+        cy.get('.subtotal').should('have.text', ' Total: $23.36 ');
         PageObjects.PlaceOrder.assert6GBPersonDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -827,7 +827,7 @@ class PurchasedPlans {
         this.clickOnOrderDetails();
         PageObjects.TitleExpectations.goToOrderDetailsPage();
         cy.get('[data-cy="orderStatus"]').should('have.text', CONSTANT.ORDER_STATUS.SHIPPED);
-        cy.get('[data-cy="total"]').should('have.text', 'Total: $24.54');
+        cy.get('[data-cy="total"]').should('have.text', 'Total: $23.36');
         cy.get('[data-cy="shippingAddress"]').should('not.exist');
         cy.get('[data-cy="deliveryOption"]').should('have.text','In-Person Delivery');
         cy.get('[data-cy="simType"]').should('have.text','Physical SIM');
