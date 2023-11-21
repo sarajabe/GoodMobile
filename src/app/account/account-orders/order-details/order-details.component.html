@@ -513,7 +513,7 @@
                         <h2 class="card-header">Pick-up Details</h2>
                     </div>
                     <div class="card-tab">
-                        <p class="tab-label no-after">{{!!isInPersonDelivery ? 'In-Person Delivery' : 'In Store
+                        <p class="tab-label no-after" data-cy="deliveryOption">{{!!isInPersonDelivery ? 'In-Person Delivery' : 'In Store
                             Pick-up'}}</p>
                         <div class="tab-content visible">
                             <div class="pick-up-items">
@@ -525,7 +525,7 @@
                                     </div>
                                     <div class="details">
                                         <p class="smaller primary-font-bold desktop">{{device?.description}}</p>
-                                        <p class="id smaller" *ngIf="device?.itemId">Item # <b>{{device?.itemId}}</b>
+                                        <p class="id smaller" data-cy="itemIdValue" *ngIf="device?.itemId">Item # <b>{{device?.itemId}}</b>
                                         </p>
                                         <p class="id smaller" *ngIf="!!isInPersonDelivery">IMEI: <b>{{device?.imei}}</b>
                                         </p>
@@ -565,10 +565,10 @@
                                             'Physical SIM' : 'SIM Card'}}</p>
                                     </div>
                                     <div class="details">
-                                        <p class="title smaller primary-font-bold mb-12 desktop">{{!!isInPersonDelivery
+                                        <p class="title smaller primary-font-bold mb-12 desktop" data-cy="simType">{{!!isInPersonDelivery
                                             ? 'Physical SIM' : 'SIM Card'}}</p>
-                                        <p class="id smaller" *ngIf="sim?.itemId">Item # <b>{{sim?.itemId}}</b></p>
-                                        <p class="id smaller"
+                                        <p class="id smaller" data-cy="itemIdValue" *ngIf="sim?.itemId">Item # <b>{{sim?.itemId}}</b></p>
+                                        <p class="id smaller" data-cy="activationCodeValue"
                                             *ngIf="!!isInPersonDelivery && !!orderInfo?.activationCode">
                                             Activation Code: <b>{{orderInfo?.activationCode}}</b></p>
                                         <div class="barCodes-details"
@@ -592,10 +592,10 @@
                                                 <img src="assets/icon/success-icon.svg" alt="Success Icon">
                                                 <div class="banner-content">
                                                     <h5 *ngIf="!isInPersonDelivery">Barcode Scan Successful!</h5>
-                                                    <p class="description smaller">You have <b>successfully collected
+                                                    <p class="description smaller" data-cy="successfullyCollectedDescription">You have <b>successfully collected
                                                             your SIM card</b> {{!!isInPersonDelivery ? 'from Goodwill
                                                         agent' : 'at the store'}}!</p>
-                                                    <p class="description smaller last">You can now <b>activate your
+                                                    <p class="description smaller last" data-cy="activatePlanDescription">You can now <b>activate your
                                                             plan</b> and enjoy your Good Mobile service! </p>
                                                 </div>
                                             </div>
