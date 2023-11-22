@@ -48,7 +48,7 @@
       <ng-container *ngIf="!!cart && cart.cartType === CART_TYPES.GENERIC_CART">
         <div class="payment-option">
           <label class="payment-container">
-            <input type="radio" [value]="true" [(ngModel)]="payWithCash" (change)="togglePayWithCash()" id="payWithCash">
+            <input type="radio" [value]="true" [(ngModel)]="payWithCash" (change)="togglePayWithCash()" data-cy="payWithCash" id="payWithCash">
             <img src="assets/icon/cash-icon.svg" alt="Cash Icon" />
             <h6 class="checkbox-label">Cash</h6>
           </label>
@@ -57,9 +57,9 @@
         <div class="checkout-card" *ngIf="!!payWithCash" id="pay-with-cash">
           <p class="card-title">Pay in Cash</p>
           <div class="card-content">
-            <h5 class="collect-title">Your payment will be collected {{!!isStorePickup ? 'at the store' : 'by the agent
+            <h5 class="collect-title" data-cy="collectTitle">Your payment will be collected {{!!isStorePickup ? 'at the store' : 'by the agent
               in cash'}}.</h5>
-            <p class="total-paid smaller">Total to be Paid: {{totalPaid | currency:'USD':'symbol':0}}.</p>
+            <p class="total-paid smaller" data-cy="totalPaid">Total to be Paid: {{totalPaid | currency:'USD':'symbol':0}}.</p>
           </div>
         </div>
       </ng-container>

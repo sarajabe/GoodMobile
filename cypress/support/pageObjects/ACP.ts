@@ -1276,14 +1276,22 @@ class Acp {
           cy.get('[data-cy="acpDevicePriceDiscount"]').should('have.text',' -$100.00 ');
           cy.get('[data-cy="subtotal"]').should('have.text','Item(s) price: $10.01');
           PageObjects.ReviewCart.clickOnCheckoutBtn();
-          PageObjects.TitleExpectations.goToACPCheckoutDevicesPage();
-          cy.get('[data-cy="storePickupTitle"]').should('have.text','In-Store Pickup');
-          cy.get('[data-cy="paymentCollectionInfo"]').should('have.text','Your payment will be collected at the store.');
-          cy.get('[data-cy="totalPaid"]').should('have.text','Total to be paid $10.01.');
-          cy.get('[data-cy="placeOrder"]').click();
-          cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
+          PageObjects.TitleExpectations.goToShippingPage();
+          PageObjects.ShippingPage.clickOnStorePickup();
+          PageObjects.ShippingPage.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToPaymentPage();
+          cy.get('[data-cy="creditCardPayment"]').should('not.exist');
+          PageObjects.Payment.assertPayByCashDescription();
+          PageObjects.Payment.clickOnNextBtn();
+          PageObjects.TitleExpectations.goToPlaceYourOrderPage();
+          cy.get('[data-cy="subtotal"]').should('have.text','$10.01');
+          cy.get('[data-cy="acpDeviceName"]').should('have.text','NUU TAB 8');
+          cy.get('[data-cy="paymentMethod"]').should('have.text','Cash');
+          cy.get('[data-cy="amountCollected"]').should('have.text','Collected Amount$10.01');
+          cy.get('[data-cy="pickupMethod"]').should('have.text','In-Store Pickup');
+          PageObjects.PlaceOrder.clickOnSubmitBtn();
           PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-          cy.get('.barcode').should('exist');
+          cy.get('[data-cy="barcode"]').should('exist');
           cy.get('[data-cy="storePickupDeviceSuccessful"]').should('have.text',' You can always find your In-Store Pickup barcode in your Order Details page, to provide it for the store clerk for your Device pickup. ');
           cy.get('[data-cy="viewStores"]').click();
           cy.get('[data-cy="cities"]').should('exist');
@@ -1291,7 +1299,7 @@ class Acp {
           cy.get('[data-cy="cities"]').should('not.exist');
           cy.get('[data-cy="orderDetailsBtn"]').click();
           PageObjects.TitleExpectations.goToOrderDetailsPage();
-          cy.get('[data-cy="orderStatus"]').should('have.text','Pending')
+          cy.get('[data-cy="orderStatus"]').should('have.text', CONSTANT.ORDER_STATUS.PENDING)
           cy.get('[data-cy="acpDeviceName"]').should('have.text','Nuu Tab 8');
           cy.get('[data-cy="acpDevicePrice"]').should('have.text','$10.01');
           cy.get('.barcode').should('exist');
