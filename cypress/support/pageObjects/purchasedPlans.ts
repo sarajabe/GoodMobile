@@ -43,9 +43,9 @@ class PurchasedPlans {
         return this;
     };
     purchasePlanWithStorePickupExistingCustomer(){
-        PageObjects.HomePage.clickOnShopMenu();
+        PageObjects.HomePage.clickOnPlans();
         PageObjects.TitleExpectations.goToPlansGMPage();
-        PageObjects.Plans.clickOnCartIcon();
+        PageObjects.Plans.clickOnPlan_2_GB_Plans_Page();
         PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
         PageObjects.Coverage.clickOnCheckCoverageBtn();
         PageObjects.Coverage.assertAddressIsRequired();
@@ -78,20 +78,20 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnBackBtnPaymentAssertPickupOptionShipping();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup ');
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        cy.get('[data-cy="storePickupSuccessful"]').should('have.text','Your Store pickup barcode is available in your purchased plans page.')
+        cy.get('[data-cy="storePickupSuccessful"]').should('have.text',' You can always find your SIM Card In-Store Pickup barcode in your Purchased Plans page, to provide it for the store clerk for your order pickup. ')
         cy.get('[data-cy="purchasedPlansBtn"]').click();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
     };
     assertPurchasedPlanWithStorePickupExistingCustomer(){
         PageObjects.AccountSummary.clickOnPurchasedPlans();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
-        cy.get('[data-cy="pendingPlans"]').should('have.text','6GB 4G LTE Plan');
-        cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 6GB Data');
+        cy.get('[data-cy="pendingPlans"]').should('have.text','2GB 4G LTE Plan');
+        cy.get('[data-cy="planTitle"]').should('have.text',' Unlimited Talk & text with 2GB Data');
         cy.get('[data-cy="simType"]').should('have.text','SIM Card');
-        cy.get('[data-cy="pickupBarCode"]').should('have.text','In-store Pickup Barcode');
+        cy.get('[data-cy="pickupBarCode"]').should('have.text','In-Store Pickup Barcode');
         cy.get('[data-cy="barcode"]').should('be.visible');
         cy.get('[data-cy="deliveryOption"]').should('have.text','Store Pickup');
     };
@@ -156,7 +156,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $13.02 '); 
+        cy.get('.subtotal').should('have.text', ' Total: $11.96 '); 
         PageObjects.PlaceOrder.assert2GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -204,7 +204,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
+        cy.get('.subtotal').should('have.text', ' Total: $23.36 ');
         PageObjects.PlaceOrder.assert6GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -251,7 +251,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $35.09 ');
+        cy.get('.subtotal').should('have.text', ' Total: $33.90 ');
         PageObjects.PlaceOrder.assert15GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -304,7 +304,7 @@ class PurchasedPlans {
             CONSTANT.SHIPPING.SHIPPING_DATA.POSTAL);
         PageObjects.ShippingPage.clickOnSaveBtn();
         PageObjects.ShippingPage.chooseVerifiedAddress();
-        PageObjects.ShippingPage.selectShippingAndFreeDelivery();
+        PageObjects.ShippingPage.selectShippingAndFreeDeliveryNewUser();
         PageObjects.ShippingPage.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPaymentPage();
         PageObjects.Payment.fillInPaymentInfo(CONSTANT.PAYMENT.CREDIT_CARD.INVALID_CARD.NAME_ON_CARD,
@@ -368,7 +368,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $13.02 '); 
+        cy.get('.subtotal').should('have.text', ' Total: $11.96 '); 
         PageObjects.PlaceOrder.assert2GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
@@ -417,7 +417,7 @@ class PurchasedPlans {
         PageObjects.Payment.selectFirstPaymentMethod();
         PageObjects.Payment.clickOnNextBtn();
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
-        cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
+        cy.get('.subtotal').should('have.text', ' Total: $23.36 ');
         PageObjects.PlaceOrder.assert6GBHomeDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();

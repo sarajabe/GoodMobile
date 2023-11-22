@@ -8,29 +8,17 @@ describe('Shop plan then assert and delete item', () => {
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_USER.EMAIL, CONSTANT.ACCESS.TEST_USER.PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page to edit payment method', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on shop menu ', () => {
-        PageObjects.HomePage.clickOnShopMenu();
+        PageObjects.HomePage.clickOnPlans();
     });
     it('Should go to plans page', () => {
         PageObjects.TitleExpectations.goToPlansGMPage();
     });
-    it('Click on 6GB cart icon', () => {
-        PageObjects.Plans.clickOnCartIcon();
+    it('Click on 6GB add to cart', () => {
+        PageObjects.Plans.clickOn6GB_From_Plans_Page();
     });
     it('Should go check compatibility page', () => {
         PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
@@ -72,17 +60,17 @@ describe('Shop plan then assert and delete item', () => {
     it('Should assert SIM quantity', () => {
         cy.get('[data-cy="simQuantity"]').should('have.text', 'Quantity: 1');
     });
-    it('Should assert that the plan price equals to  $30/m ', () => {
-        cy.get('[data-cy="planPrice"]').should('have.text', ' $30/m ');
+    it('Should assert that the plan price equals to  $20/mo ', () => {
+        cy.get('[data-cy="planPrice"]').should('have.text', ' $20/mo ');
     });
     it('Should assert that the sim price equals to $0', () => {
         cy.get('[data-cy="simPrice"]').should('have.text', '$0');
     });
-    it('Should assert that the Subtotal equals to $30.00', () => {
-        cy.get('[data-cy="subtotal"]').should('have.text', 'Item(s) price: $30.00');
+    it('Should assert that the Subtotal equals to $20.00', () => {
+        cy.get('[data-cy="subtotal"]').should('have.text', 'Item(s) price: $20.00');
     });
-    it('Should assert that the estimated equals to $30.00', () => {
-        cy.get('.estimated').should('have.text', 'Est. Total:  $30.00');
+    it('Should assert that the estimated equals to $20.00', () => {
+        cy.get('.estimated').should('have.text', 'Est. Total:  $20.00');
     });
     it('Click on empty cart', () => {
         PageObjects.ReviewCart.clickOnEmptyCart();
