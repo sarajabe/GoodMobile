@@ -95,5 +95,9 @@ class Payment {
         cy.get('[data-cy="cvvInvalidMsg"]').should('have.text','CVV is invalid. ');
         cy.get('[data-cy="invalidExpiryDateMsg"]').should('have.text',' Expiration date must be valid ');
     };
+    assertPayByCashDescription(){
+        cy.get('[data-cy="collectTitle"]').should('have.text','Your payment will be collected at the store.');
+        cy.get('[data-cy="totalPaid"]').should('have.text','Total to be Paid: $10.01.');
+    };
 };
 export default new Payment();
