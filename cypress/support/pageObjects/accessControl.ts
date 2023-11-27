@@ -68,7 +68,14 @@ class AccessControl {
                 PageObjects.TitleExpectations.goToLogInPage();
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_USER.EMAIL, CONSTANT.ACCESS.TEST_USER.PASSWORD);
                 PageObjects.AccessControl.logInButton();
-                PageObjects.TitleExpectations.goToAccountSummaryPage();
+                cy.get('[data-cy="acpSummary"]').then(($btn) => {
+                        if ($btn.hasClass('active')) {
+                          cy.get('[data-cy="accountSummary"]').click({force:true});
+                          PageObjects.TitleExpectations.goToAccountSummaryPage();
+                        } else {
+                          PageObjects.TitleExpectations.goToAccountSummaryPage();
+                        }
+                })
         };
         noAddOnsOrderAccount(){
                 PageObjects.HomePage.clickOnSignIn();

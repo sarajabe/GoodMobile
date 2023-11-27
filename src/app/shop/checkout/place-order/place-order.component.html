@@ -288,7 +288,7 @@
                   <div class="details">
                     <div class="detail">
                       <div class="detail-info">
-                        <p class="bold smaller">{{userCart?.acpDevice?.title}}</p>
+                        <p class="bold smaller" data-cy="acpDeviceName">{{userCart?.acpDevice?.title}}</p>
                         <p class="bold smallest text-orange">ACP Benefits</p>
                         <p class="smallest">ACP Promotion</p>
 
@@ -421,9 +421,9 @@
                     <div class="details">
                       <div class="details-flex">
                         <div class="flex">
-                          <p class="title smaller primary-font-bold">Cash</p>
+                          <p class="title smaller primary-font-bold" data-cy="paymentMethod">Cash</p>
                         </div>
-                        <div class="amount">
+                        <div class="amount" data-cy="amountCollected">
                           <p class="key smaller primary-font-bold">Collected Amount</p>
                           <p class="value">{{total | currency}}</p>
                         </div>
@@ -461,7 +461,7 @@
           <div class="card-tab">
             <div class="tab-content-show">
               <label class="sub-label address-change">
-                <span>{{!!isStorePickup? 'In-Store Pickup': 'In-person Delivery'}}</span>
+                <span data-cy="pickupMethod">{{!!isStorePickup? 'In-Store Pickup': 'In-person Delivery'}}</span>
               </label>
               <div class="delivery-methods-section">
                 <img [src]="deviceImage" alt="ACP device">

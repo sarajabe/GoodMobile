@@ -8,29 +8,17 @@ describe('Shop plan then assert, change, and delete item', () => {
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_USER.EMAIL, CONSTANT.ACCESS.TEST_USER.PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page to edit payment method', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on shop menu ', () => {
-        PageObjects.HomePage.clickOnShopMenu();
+        PageObjects.HomePage.clickOnPlans();
     });
     it('Should go to plans page', () => {
         PageObjects.TitleExpectations.goToPlansGMPage();
     });
-    it('Click on 6GB cart icon', () => {
-        PageObjects.Plans.clickOnCartIcon();
+    it('Click on 6GB add to cart', () => {
+        PageObjects.Plans.clickOn6GB_From_Plans_Page();
     });
     it('Should go check compatibility page', () => {
         PageObjects.TitleExpectations.goToCheckYourPhoneCompatibilityPage();
@@ -85,8 +73,8 @@ describe('Shop plan then assert, change, and delete item', () => {
         PageObjects.ShippingPage.selectShippingInfo();
     });
     it('Should select shipping address', () => {
-        cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
-        cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+        cy.get('select').eq(2).select('USPS', { force: true }).should('have.value', 'usps');
+        cy.get('select').eq(3).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
     });
     it('should click on next', () => {
         PageObjects.ShippingPage.clickOnNextBtn();
@@ -103,8 +91,8 @@ describe('Shop plan then assert, change, and delete item', () => {
     it('Should go to purchase successful page', () => {
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
     });
-    it('Should assert that the Subtotal equals to $30.00', () => {
-        cy.get('[data-cy="subtotal"]').should('have.text', '$30.00');
+    it('Should assert that the Subtotal equals to $20.00', () => {
+        cy.get('[data-cy="subtotal"]').should('have.text', '$20.00');
     });
     it('Should assert that the discount total equals to $0.00', () => {
         cy.get('[data-cy="discountValue"]').should('have.text', '$0.00');
@@ -113,10 +101,10 @@ describe('Shop plan then assert, change, and delete item', () => {
         cy.get('[data-cy="shippingFees"]').should('have.text', '$0.00');
     });
     it('Should assert that the taxes fees are calculated correctly', () => {
-        cy.get('[data-cy="taxesFees"]').should('have.text', '$0.41');
+        cy.get('[data-cy="taxesFees"]').should('have.text', '$2.36');
     });
-    it('Should assert that the total equals to  Total: $33.31', () => {
-        cy.get('.subtotal').should('have.text', ' Total: $33.31 ');
+    it('Should assert that the total equals to  Total: $24.54', () => {
+        cy.get('.subtotal').should('have.text', ' Total: $24.54 ');
     });
     it('Should assert plan title to have 6GB', () => {
         cy.get('[data-cy="basePlan"]').should('have.text', '6GB 4G LTE Plan');
@@ -130,11 +118,11 @@ describe('Shop plan then assert, change, and delete item', () => {
     it('Should assert SIM quantity', () => {
         cy.get('[data-cy="simQuantity"]').should('have.text', 'Quantity: 1');
     });
-    it('Should assert that the total equals to  Est. Total:$33.31', () => {
-        cy.get('[data-cy="total"]').should('have.text','Est. Total:$33.31');
+    it('Should assert that the total equals to  Total:$24.54', () => {
+        cy.get('[data-cy="total"]').should('have.text','Total:$24.54');
     });
     it('Should assert that the delivery method', () => {
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Home Delivery ');
     });
     it('Should assert that the shipping method ', () => {
         cy.get('[data-cy="shippingMethod"]').should('have.text', 'First Class Mail Shipping 3-7 Business days');
@@ -143,7 +131,7 @@ describe('Shop plan then assert, change, and delete item', () => {
         cy.get('[data-cy="cardBrand"]').should('have.text', 'Visa Card');
     });
     it('Should assert that the Billing Address full name and address', () => {
-        cy.get('[data-cy="billingAddressInfo"]').should('have.text', 'test user, 12300 BERMUDA RD');
+        cy.get('[data-cy="billingAddressInfo"]').should('have.text', 'TEST, 123 WILLIAM ST');
     });
     it('Should click on change address', () => {
         PageObjects.PlaceOrder.clickOnChangeShippingAddress();
@@ -164,7 +152,7 @@ describe('Shop plan then assert, change, and delete item', () => {
         PageObjects.TitleExpectations.goToPlaceYourOrderPage();
     });
     it('Should assert that the delivery method', () => {
-        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup');
+        cy.get('[data-cy="deliveryMethod"]').should('have.text', 'Store Pickup ');
     });
     it('should click on change payment', () => {
         PageObjects.PlaceOrder.clickOnChangePyment();
@@ -185,7 +173,7 @@ describe('Shop plan then assert, change, and delete item', () => {
         cy.get('[data-cy="cardBrand"]').should('have.text', 'Visa Card');
     });
     it('Should assert that the Billing Address full name and address', () => {
-        cy.get('[data-cy="billingAddressInfo"]').should('have.text', 'trial , 123 William St');
+        cy.get('[data-cy="billingAddressInfo"]').should('have.text', 'RANA HADDAD, 4445 ROCK QUARRY ROAD');
     });
     it('should delete the plan', () => {
         PageObjects.PlaceOrder.deletePlan();

@@ -184,6 +184,10 @@ class ShippingPage {
         cy.get('[data-cy="invalidPostalCodeMsg"]').should('have.text','Invalid Postal Code ');
     };
     selectShippingAndFreeDelivery(){
+        cy.get('select').eq(2).select('USPS', { force: true }).should('have.value', 'usps');
+        cy.get('select').eq(3).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+    };
+    selectShippingAndFreeDeliveryNewUser(){
         cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
         cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
     };
