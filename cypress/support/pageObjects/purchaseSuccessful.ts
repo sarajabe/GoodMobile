@@ -15,5 +15,8 @@ class PurchaseSuccessful {
     clickOnPurchasedPlans(){
         cy.get('[data-cy="purchasedPlans"]').click();
     };
+    clickOnAcpSummary(){
+        cy.get('[data-cy="acpSummary"]').click();
+    };
 };
 export default new PurchaseSuccessful();
