@@ -819,7 +819,6 @@ class PurchasedPlans {
         PageObjects.PlaceOrder.assert6GBPersonDelivery();
         PageObjects.PlaceOrder.clickOnSubmitBtn();
         PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
-        PageObjects.TitleExpectations.goToPurchaseSuccessfulPage();
         PageObjects.PurchaseSuccessful.assertPurchasedPlanSuccesfulWithPersonDelivery();
         PageObjects.PurchaseSuccessful.clickOnPurchasedPlans();
         PageObjects.TitleExpectations.goToPurchasedPlansPage();
@@ -889,7 +888,7 @@ class PurchasedPlans {
         PageObjects.Payment.fillInPaymentInfo(CONSTANT.PAYMENT.CREDIT_CARD.VALID.NAME_ON_CARD,
             CONSTANT.PAYMENT.CREDIT_CARD.VALID.PAN,
             CONSTANT.PAYMENT.CREDIT_CARD.VALID.CVV);
-        PageObjects.Payment.addValidMonthAndYear();
+        PageObjects.Payment.addValidMonthAndYear2();
         PageObjects.BillingPage.addBillingInfo1(CONSTANT.PAYMENT.BILLING_DATA.VALID.NAME,
             CONSTANT.PAYMENT.BILLING_DATA.VALID.ADDRESS,
             CONSTANT.PAYMENT.BILLING_DATA.VALID.SUITE_NO);
