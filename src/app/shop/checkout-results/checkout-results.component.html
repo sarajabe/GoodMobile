@@ -220,9 +220,9 @@
               </p>
             </div>
             <div *ngIf="!!purchasedPlan && !!isInPersonDelivery">
-              <p class="smaller last-note">
+              <p class="smaller last-note" data-cy="personDeliverySuccessful">
                 You may proceed to <b>activate your plan & SIM</b> in the next step, or from your <a *ngIf="!isAcpPlan"
-                  (click)="goToPurchasedPlans()"><b>Purchased Plans</b></a><a *ngIf="!!isAcpPlan"
+                  (click)="goToPurchasedPlans()"><b data-cy="purchasedPlans">Purchased Plans</b></a><a *ngIf="!!isAcpPlan"
                   (click)="goToAcpSummary()"><b>ACP Summary</b></a> page at
                 your convenience!
               </p>
@@ -238,10 +238,10 @@
               </p>
             </div>
             <div class="result-actions flex-actions" *ngIf="!!isInPersonDelivery">
-              <button class="button primary" data-cy="purchasedPlansBtn" (click)="goToActivation()">
+              <button class="button primary" data-cy="activationBtn" (click)="goToActivation()">
                 Activate Now
               </button>
-              <button class="button secondary" data-cy="purchasedPlansBtn" (click)="goToHome()">
+              <button class="button secondary" data-cy="doneBtn" (click)="goToHome()">
                 Done
               </button>
             </div>

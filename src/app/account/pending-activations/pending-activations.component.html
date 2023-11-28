@@ -24,7 +24,7 @@
             <div class="order-card-container">
                 <div class="card-header-section">
                     <h5 class="noMargin text-color-thridly ">Plan</h5>
-                    <button class="button thirdly noPadding" (click)="goToOrderDetails(pendingPlan?.orderId)">Order Details</button>
+                    <button class="button thirdly noPadding" data-cy="orderDetails" (click)="goToOrderDetails(pendingPlan?.orderId)">Order Details</button>
                 </div>
                 <div class="card-content shown">
                     <div class="item-details">

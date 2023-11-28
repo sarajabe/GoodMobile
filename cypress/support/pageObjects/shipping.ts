@@ -170,6 +170,9 @@ class ShippingPage {
     clickOnStorePickup(){
         cy.get('[data-cy="storePickup"]').click();
     }
+    clickOnPersonDelivery(){
+        cy.get('[data-cy="personDelivery"]').click();
+    }
     barCodeValNotChecked(){
         cy.get('#barCodeVal').should('not.be.checked');
         cy.get('[data-cy="nextBtn"]').blur;
@@ -187,6 +190,27 @@ class ShippingPage {
     selectShippingAndFreeDeliveryNewUser(){
         cy.get('select').eq(0).select('USPS', { force: true }).should('have.value', 'usps');
         cy.get('select').eq(1).select('First Class Mail Shipping 3-7 Business days', { force: true }).should('have.value', 'usps_first_class_mail/letter');
+    };
+    fillInAgentCode(agentCode){
+        cy.get('[data-cy="agentCode"]').click({ force : true });
+        cy.get('[data-cy="agentCode"]').clear();
+        cy.get('[data-cy="agentCode"]').type(agentCode);
+        return this;
+    };
+    clickOnValidateAgentCodeBtn(){
+        cy.get('[data-cy="validateAgentCode"]').click();
+        return this;
+    };
+    fillInActivationCode(activationCode){
+        cy.get('[data-cy="fulfilledItem"]').click({ force : true });
+        cy.get('[data-cy="fulfilledItem"]').clear({ force : true });
+        cy.get('[data-cy="fulfilledItem"]').click({ force : true });
+        cy.get('[data-cy="fulfilledItem"]').type(activationCode);
+        return this;
+    };
+    clickOnSubmitBtn(){
+        cy.get('[data-cy="submitBtn"]').click();
+        return this;
     };
 };
 export default new ShippingPage();

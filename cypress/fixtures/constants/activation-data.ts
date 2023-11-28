@@ -24,6 +24,10 @@ export const ACTIVATION = {
             POSTAL: '10029',
             ACCOUNT_PIN: '1254',
             CONFIRM_ACCOUNT_PIN: '1254'
+        },
+        IN_PERSON_DELIVERY_NUMBER: {
+            ACTIVATION_CODE: '1111111',
+            INVALID_ACTIVATION_CODE : '111',
         }
     }
 };

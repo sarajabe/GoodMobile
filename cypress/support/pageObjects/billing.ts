@@ -63,22 +63,23 @@ class BillingPage {
         return this;
     };
     addBillingInfo1(billingName, billingAddress, billingSuiteNo) {
-        cy.get('[data-cy="addressName"]').clear();
+        cy.get('[data-cy="addressName"]').clear({ force: true });
         cy.get('[data-cy="addressName"]').type(billingName);
-        cy.get('[data-cy="addressLookup"]').clear();
+        cy.get('[data-cy="addressLookup"]').clear({ force: true });
         cy.get('[data-cy="addressLookup"]').type(billingAddress);
-        cy.get('[data-cy="suiteNo"]').clear();
+        cy.get('.mat-option-text').first().click();
+        cy.get('[data-cy="suiteNo"]').clear({ force: true });
         cy.get('[data-cy="suiteNo"]').type(billingSuiteNo);
         return this;
     };
     addBillingInfo2(billingCity, billingState, billingPostal) {
-        cy.get('[data-cy="billingCity"]').clear();
+        cy.get('[data-cy="billingCity"]').clear({ force: true });
         cy.get('[data-cy="billingCity"]').type(billingCity);
-        cy.get('[data-cy=billingState]').clear();
+        cy.get('[data-cy=billingState]').clear({ force: true });
         cy.get('[data-cy=billingState]').type(billingState);
-        cy.get('[data-cy="billingPostal"]').clear();
+        cy.get('[data-cy="billingPostal"]').clear({ force: true });
         cy.get('[data-cy="billingPostal"]').type(billingPostal);
-        cy.get('[data-cy="billingCity"]').click();
+        cy.get('[data-cy="billingCity"]').click({ force: true });
         return this;
     };
     selectPaymentMethod() {

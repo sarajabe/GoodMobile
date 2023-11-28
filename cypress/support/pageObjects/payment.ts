@@ -61,6 +61,10 @@ class Payment {
             cy.get('select').eq(1).select($lastOption.val());
         });
     };
+    addValidMonthAndYear2(){
+        cy.get('select').eq(0).select('05', { force: true }).should('have.value', '05');
+        cy.get('select').eq(1).select('28', { force: true }).should('have.value', '28');
+    };
     clickOnSameAsShippingAddress() {
         cy.get('.billing-section > .container > .checkmark').click({force:true});
         return this;

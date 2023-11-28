@@ -13,6 +13,9 @@ import { URLS} from './urls';
 import { REFER_A_FRIEND} from './refer-a-friend';
 import {MDNS} from './3g-shutdown-mdns';
 import {PIN_CODES} from './pin-codes';
+import { AGENT_CODE } from './agent-code';
+import { ORDER_STATUS } from './order-status'
+
 export const CONSTANT = {
     PIN_CODES,
     MDNS,
@@ -28,5 +31,7 @@ export const CONSTANT = {
     SHIPPING,
     FAQS,
     TIME,
-    DATA_SETUP
+    DATA_SETUP,
+    AGENT_CODE,
+    ORDER_STATUS
 };
