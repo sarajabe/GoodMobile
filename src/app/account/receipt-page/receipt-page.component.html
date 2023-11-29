@@ -88,7 +88,7 @@
                     </div>
                     <div class="flex-display">
                         <p class="smaller">Govt. taxes & fees</p>
-                        <p class="smaller price" data-cy="govTax">{{order?.govtTaxesAndFees | currency}}</p>
+                        <p class="smaller price" data-cy="govTax">{{order?.govTaxesAndFees | currency}}</p>
                     </div>
                     <div class="flex-display">
                         <p class="smaller">Surcharges & fees</p>
@@ -111,13 +111,13 @@
                     </div>
                 </div>
                 <div class="payment-methods">
-                    <div class="methods-info" *ngIf="!!order?.paymentCard || !!order?.paymentTrxNumber">
+                    <div class="methods-info" *ngIf="!!order?.paymentCard && !!order?.paymentTrxNumber">
                         <div class="img-section">
                             <img src="assets/icon/credit-card.png" alt="Payment Card image" />
                         </div>
                         <div class="method-info">
                             <div class="details">
-                                <p class="smaller title">Visa Card </p>
+                                <p class="smaller title" *ngIf="!!order?.paymentProvider">{{order?.paymentProvider}}</p>
                                 <p class="smaller note" *ngIf="!!order?.paymentCard">{{order?.paymentCard}}</p>
                             </div>
                             <div class="payment-info">
@@ -143,8 +143,8 @@
                         </div>
                     </div>
                     <hr class="transactions-hr"
-                        *ngIf="!!order?.voucherAmount && order?.voucherAmount > 0 && (!!order?.balanceAmount || !!order?.paymentTrxNumber)">
-                    <div class="methods-info" *ngIf="!!order?.voucherAmount && order?.voucherAmount > 0">
+                        *ngIf="!!order?.voucher && order?.voucher?.amount > 0 && (!!order?.balanceAmount || !!order?.paymentTrxNumber)">
+                    <div class="methods-info" *ngIf="!!order?.voucher && order?.voucher?.amount > 0">
                         <div class="img-section">
                             <img src="assets/icon/voucher-illu.svg" alt="Voucher" />
                         </div>
@@ -154,7 +154,7 @@
                             </div>
                             <div class="payment-info">
                                 <p class="smallest sub-title">Deducted Amount</p>
-                                <p class="smaller price">-{{order?.voucherAmount | currency}}</p>
+                                <p class="smaller price">-{{order?.voucher?.amount | currency}}</p>
                             </div>
                         </div>
                     </div>
@@ -164,9 +164,10 @@
                         <h5 class="sub-header">Billing Address</h5>
                     </div>
                     <div class="billing-info">
-                        <p class="smaller">{{order?.billingAddress?.address1}} {{order?.billingAddress?.city}},
-                            {{order?.billingAddress?.state}}
-                            {{order?.billingAddress?.postalCode}}
+                        <p class="smaller">{{order?.billingAddress?.address1}}
+                            <span *ngIf="!!order?.billingAddress?.city">,{{order?.billingAddress?.city}},</span>
+                            <span *ngIf="!!order?.billingAddress?.state">{{order?.billingAddress?.state}}</span>
+                            <span *ngIf="!!order?.billingAddress?.postalCode">{{order?.billingAddress?.postalCode}}</span>
                         </p>
                     </div>
                 </div>

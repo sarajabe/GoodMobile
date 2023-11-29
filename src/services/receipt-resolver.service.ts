@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import { AccountPaymentService } from '@ztarmobile/zwp-service-backend';
 import { ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { ToastrHelperService } from './toast-helper.service';
+import { OrdersService } from '@ztarmobile/zwp-service-backend-v2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReceiptResolverService implements Resolve<any> {
 
-  constructor(private accountPaymentService: AccountPaymentService,
+  constructor(private ordersService: OrdersService,
               private toastHelper: ToastrHelperService,
               private appState: AppState,
               private router: Router) { }
   resolve(route: ActivatedRouteSnapshot): Promise<any> {
     const orderId = route.paramMap.get('id');
     this.appState.loading = true;
-    return this.accountPaymentService.getReceiptPaymentDetails(orderId).then((result) => {
+    return this.ordersService.getOrderReceipt(orderId).then((result) => {
       if (!!result) {
         this.appState.loading = false;
         return result;
