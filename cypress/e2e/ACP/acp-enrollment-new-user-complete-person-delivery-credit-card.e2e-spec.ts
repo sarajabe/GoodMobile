@@ -17,7 +17,7 @@ describe('Signup then enroll in ACP plan - new user - complete - person delivery
     it('Should purchase ACP plan with person delivery then activate', () =>{
         PageObjects.Acp.addNewLinePersonDeliveryActivate(); 
     });
-    it('Should purchase ACP device in person delivery - cash', () =>{
-        PageObjects.Acp.purchaseAcpDeviceInPersonDeliveryCash(); 
+    it('Should purchase ACP device in person delivery - credit card', () =>{
+        PageObjects.Acp.purchaseAcpDeviceInPersonDeliveryCreditCard(); 
     });
 });

@@ -103,5 +103,17 @@ class Payment {
         cy.get('[data-cy="collectTitle"]').should('have.text','Your payment will be collected at the store.');
         cy.get('[data-cy="totalPaid"]').should('have.text','Total to be Paid: $10.01.');
     };
+    clickOnCash(){
+        cy.get('[data-cy="payWithCash"]').click();
+        return this;
+    };
+    assertPayByCashDescriptionForInPersonDelivery(){
+        cy.get('[data-cy="collectTitle"]').should('have.text','Your payment will be collected by the agent in cash.');
+        cy.get('[data-cy="totalPaid"]').should('have.text','Total to be Paid: $10.01.');
+    };
+    clickOnCreditCard(){
+        cy.get('[data-cy="creditCardPayment"]').click();
+        return this;
+    };
 };
 export default new Payment();

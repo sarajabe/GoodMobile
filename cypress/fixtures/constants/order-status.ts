@@ -3,4 +3,5 @@ export const ORDER_STATUS = {
     PENDING: 'Pending',
     PURCHASED : 'Purchased',
     SHIPPED : 'Shipped',
+    COLLECTED : 'Collected',
 };
