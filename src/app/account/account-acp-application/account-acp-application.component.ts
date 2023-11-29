@@ -49,7 +49,9 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     PENDING: 'PENDING',
     IN_PROGRESS: 'IN_PROGRESS',
     PENDING_REVIEW: 'PENDING_REVIEW',
-    PENDING_CERT: 'PENDING_CERT'
+    PENDING_CERT: 'PENDING_CERT',
+    APP_CLOSED_OR_EXPIRED: 'APP_CLOSED_OR_EXPIRED',
+    APPLICATON_NOT_FOUND: 'APPLICATON_NOT_FOUND'
   };
   public STATUS_TITLE = {
     COMPLETE: 'Complete',
@@ -104,6 +106,8 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   public showACPCodeSection = false;
   public isInPersonDelivery = false;
   public hideActionLink = false;
+  public showCoECardNoFlow = false;
+  public showCoECardYesFlow = false;
 
   private callBackUrl: string;
   private alive = true;
@@ -866,12 +870,30 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
                   } else {
                     this.showNVOnHoldSection = false;
                   }
+                  if (this.verificationDetails?.status === this.ACP_STATUS.APP_CLOSED_OR_EXPIRED ||
+                    this.verificationDetails?.status === this.ACP_STATUS.APPLICATON_NOT_FOUND) {
+                    this.showNVCard = false;
+                    if (this.verificationDetails?.acpProvider?.toLowerCase() === 'internal') {
+                      this.showCoECardNoFlow = true;
+                      this.showCoECardYesFlow = false;
+                    } else if (this.verificationDetails?.acpProvider?.toLowerCase() === 'external') {
+                      this.showCoECardNoFlow = false;
+                      this.showCoECardYesFlow = true;
+                    }
+                  } else {
+                    this.showCoECardNoFlow = false;
+                    this.showCoECardYesFlow = false;
+                  }
                 } else {
                   this.showNVCard = true;
                   this.showAlert = true;
                   this.appState.acpAppErrorObs.subscribe(error => {
-                    if (!!error && error.error.errors[0].code === 'APP_CLOSED_OR_EXPIRED') {
+                    const code = error?.error?.errors[0]?.code;
+                    if (code === this.ACP_STATUS.APP_CLOSED_OR_EXPIRED ||
+                      code === this.ACP_STATUS.APPLICATON_NOT_FOUND) {
                       this.showExpiredSection = true;
+                      this.showCoECardNoFlow = true;
+                      this.showCoECardYesFlow = false;
                       this.nvStatus = 'EXPIRED';
                       if (!!this.acpPlan) {
                         // Get old data

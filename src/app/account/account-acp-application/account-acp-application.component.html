@@ -1,13 +1,43 @@
 <section class="acp-section col-xl-offset-1">
     <p class="summary-title">ACP Summary</p>
-    <p class="created-date smaller" *ngIf="!!createdDate">Creation Date: <span>{{createdDate | date}}</span></p>
-    <p class="created-date smaller space" *ngIf="!!providerApplicationID">ACP application ID:
-        <span>{{providerApplicationID}}</span>
-    </p>
-    <div class="actions-top" *ngIf="!showAcpApplicationCard">
+    <ng-container *ngIf="!showCoECardYesFlow && !showCoECardNoFlow">
+        <p class="created-date smaller" *ngIf="!!createdDate">Creation Date: <span>{{createdDate | date}}</span></p>
+        <p class="created-date smaller space" *ngIf="!!providerApplicationID">ACP application ID:
+            <span>{{providerApplicationID}}</span>
+        </p>
+    </ng-container>
+    <div class="actions-top" *ngIf="!showAcpApplicationCard && !showCoECardYesFlow && !showCoECardNoFlow">
         <a data-cy="viewApplicationForm" [routerLink]="[ACP_ROUTE_URLS.BASE + '/' + ACP_ROUTE_URLS.DETAILS]">View
             Application Form</a>
         <a data-cy="cancelApplication" (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
+    </div>
+    <div class="info-banner warning-background" *ngIf="!!showCoECardYesFlow">
+        <div class="flex">
+            <img src="assets/icon/warning-icon.svg" width="32" height="32" alt="Warning Icon">
+            <div class="banner-content">
+                <p class="title">Attention</p>
+                <p class="description bottom-8">We’ve noticed that an error occurred with your ACP Application.</p>
+                <p class="description last flex-p"><b>Don’t worry!</b> You can always start a new application with Good
+                    Mobile:</p>
+                <div class="actions">
+                    <button class="button primary">Start ACP Application</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="info-banner error-background" *ngIf="!!showCoECardNoFlow">
+        <div class="flex">
+            <img src="assets/icon/error-icon.svg" width="32" height="32" alt="Alert Icon">
+            <div class="banner-content">
+                <p class="title">Attention</p>
+                <p class="description bottom-8">We've noticed that an error occurred in your previous ACP application.
+                </p>
+                <p class="description bottom-8 flex-p"><b>Don’t worry!</b> We created a new one on your behalf!</p>
+                <p class="description bottom-8">You can start a new application with us to proceed:</p>
+                <p class="description last">For the latest updates on your application, please refresh the page or check
+                    again later.</p>
+            </div>
+        </div>
     </div>
     <div class="acp-application-card" *ngIf="!!barCodeValue">
         <div class="card-header-part" [class.border-radius]="hideCardContentUI === true">
