@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountPaymentService, IReceiptDetails } from '@ztarmobile/zwp-service-backend';
+import { AccountPaymentService } from '@ztarmobile/zwp-service-backend';
 import { ACCOUNT_ROUTE_URLS } from 'src/app/app.routes.names';
 import { AppState } from 'src/app/app.service';
 import { MetaService } from 'src/services/meta-service.service';
 import { ModalHelperService } from 'src/services/modal-helper.service';
 import { ToastrHelperService } from 'src/services/toast-helper.service';
 import { AccountHeaderService } from '../account-header.service';
+import { IReceiptDetails } from '@ztarmobile/zwp-service-backend-v2/lib/models';
 
 @Component({
   selector: 'app-receipt-page',
