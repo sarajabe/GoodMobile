@@ -43,10 +43,10 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
   public userHasPendingPlans = false;
   private alive = true;
   isSyncing: boolean;
-
+  private isApiCalled = false;
   constructor(private userAccountService: UserAccountService,
     private metaService: MetaService,
-    private router: Router,
+    public router: Router,
     private appState: AppState,
     private paymentService: AccountPaymentService,
     private userPlansService: UserPlansService,
@@ -56,6 +56,14 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
     private mobilePlansService: MobileCustomPlansService,
     private modalHelper: ModalHelperService,
     private analyticsService: ActionsAnalyticsService) {
+  }
+
+  public getDescription(): string {
+    return `<div class="page-description plan-selector-space">You can always update your account details and settings here. You can also manage
+      devices and activated accounts or add numbers to your existing account.</div>`;
+  }
+
+  ngOnInit(): void {
 
     this.userProfileService.userProfileObservable.pipe(takeWhile(() => this.alive)).subscribe((user) => this.user = user);
     this.userAccountService.selectedAccount.pipe(takeWhile(() => this.alive)).subscribe((account) => this.userAccount = account);
@@ -65,26 +73,22 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
       this.isSyncing = isSyncing;
     });
     this.accountHeaderService.setPageTitle('Payment History');
-    // this.paymentService.paymentHistory.pipe(takeWhile(() => this.alive)).subscribe((history) => {
-    //   setTimeout(() => {
-    //     this.toastHelper.updateIsProcessing(false);
-    //     this.paymentHistory = history;
-    //     this.config.totalItems = history.totalItems;
-    //   });
-    // });
-    // this.paymentService.paymentHistoryErrors.pipe(takeWhile(() => this.alive), filter((error) => !!error)).subscribe((error) => {
-    //   setTimeout(() => {
-    //     this.paymentHistory = { payments: [], totalItems: 0 };
-    //     this.toastHelper.updateIsProcessing(false);
-    //     console.warn(`Failed to get payment history: ${error.message}`, error);
-    //     this.toastHelper.showAlert(`Failed to get payment history: ${error.message}`);
-    //   }, 1000);
-    // });
     this.userPlansService.selectedUserPlanObservable.pipe(takeWhile(() => this.alive)).subscribe((plan) => {
       this.selectedPlan = plan;
-      this.selectedPlan = this.userPlansService.selectedUserPlan;
       this.paymentInfo = this.userPlansService.selectedPlanPaymentMethod;
-      this.getPaymentHistory();
+      this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
+        const pendingActivationPlans = plans.filter((plan) => !plan.mdn);
+        const activatedPlans = plans.filter((plan) => !!plan.mdn);
+        this.userHasActivePlans = (!!activatedPlans && activatedPlans.length > 0);
+        this.userHasPendingPlans = (!!pendingActivationPlans && pendingActivationPlans.length > 0);
+        if (!!this.selectedPlan) {
+          this.selectedPlan = this.userPlansService.selectedUserPlan;
+          this.selectedPlan = plans.find((plan) => plan?.id === this.selectedPlan?.id);
+        }
+        if (!!activatedPlans && activatedPlans.length === 0) {
+          this.appState.loading = false;
+        }
+      });
     });
     this.userPlansService.isSelectedPlanReady.pipe(takeWhile(() => this.alive)).subscribe((userPlanReady) => {
       if (userPlanReady && !!this.userPlansService.selectedUserPlan) {
@@ -93,18 +97,22 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
         if (!!this.userHasActivePlans && !isActivePlan) {
           this.userPlansService.selectFirstUserPlan(true);
         }
+        setTimeout(() => {
+          if (!!this.selectedPlan && !this.selectedPlan.portInRequestNumber && !this.isApiCalled) {
+            this.getPaymentHistory();
+          }
+        }, 500);
       } else {
         if (!!this.userHasActivePlans) {
           this.userPlansService.selectFirstUserPlan(true);
         }
+        // we have to add this case in case the user not have mdn as well as activated accounts so the userPlanReady will be false always 
+        if(!this.userHasActivePlans && !!this.userHasPendingPlans) {
+        if (!!this.selectedPlan && !this.selectedPlan.portInRequestNumber && !this.isApiCalled) {
+            this.getPaymentHistory();
+        }
+              }
       }
-    });
-    this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
-      const pendingActivationPlans = plans.filter((plan) => !plan.mdn);
-      const activatedPlans = plans.filter((plan) => !!plan.mdn);
-
-      this.userHasActivePlans = (!!activatedPlans && activatedPlans.length > 0);
-      this.userHasPendingPlans = (!!pendingActivationPlans && pendingActivationPlans.length > 0);
     });
     this.mobilePlansService.currentPlan.subscribe((cart) => {
       this.userCart = cart;
@@ -112,14 +120,6 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
         this.userPlansService.selectUserPlan(this.userCart.activePlanId);
       }
     });
-  }
-
-  public getDescription(): string {
-    return `<div class="page-description plan-selector-space">You can always update your account details and settings here. You can also manage
-      devices and activated accounts or add numbers to your existing account.</div>`;
-  }
-
-  ngOnInit(): void {
     this.metaService.createCanonicalUrl();
     this.accountHeaderService.setPageDescription(this.getDescription());
     this.accountHeaderService.setAccountMenuVisibility(true);
@@ -136,6 +136,7 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
   }
 
   public userPlanSelected(userPlan: IUserPlan): void {
+    this.isApiCalled = false;
     if (!!userPlan.mdn) {
       if (!this.selectedPlan || (!!userPlan && userPlan.id !== this.selectedPlan.id)) {
         if (!!this.userCart && this.userCart.cartType && this.userCart.cartType !== CART_TYPES.NEW_PLAN) {
@@ -223,6 +224,7 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
       this.appState.loading = true;
       this.paymentService.reloadPaymentHistory(this.selectedPlan?.mdn, this.selectedPlan?.orderId, this.config.itemsPerPage,
         this.config.currentPage, this.sortBy, this.sortDirection).then(history => {
+          this.isApiCalled = true;
           if (!!history) {
             this.toastHelper.updateIsProcessing(false);
             this.paymentHistory = history;
@@ -234,6 +236,7 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
               this.appState.loading = this.isSyncing;
             }
         }, error => {
+          this.isApiCalled = false;
           this.paymentHistory = { payments: [], totalItems: 0 };
           this.toastHelper.updateIsProcessing(false);
           console.warn(`Failed to get payment history: ${error.message}`, error);
@@ -242,6 +245,7 @@ export class AccountPaymentHistoryComponent implements OnInit, OnDestroy, Accoun
         });
       this.toastHelper.updateIsProcessing(false);
     } else {
+      this.isApiCalled = false;
       this.paymentHistory = { payments: [], totalItems: 0 };
       this.toastHelper.updateIsProcessing(false);
     }

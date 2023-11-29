@@ -5,8 +5,8 @@
                 <app-activated-plan-selector [user]="user" (userPlanSelected)="userPlanSelected($event)"
                     [selectedPlan]="selectedPlan"></app-activated-plan-selector>
             </ng-container>
-            <ng-container *ngIf="!userHasActivePlans">
-                <div class="plan-selector-override">
+            <ng-container *ngIf="!userHasActivePlans && (!paymentHistory || paymentHistory?.totalItems < 1)">
+                <div class="plan-selector-override" id="plan-selector-override">
                     <div class="account-status-message">
                         <p>You have no active phone number at the moment.</p>
                         <p *ngIf="userHasPendingPlans">Proceed to <a
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<ng-container *ngIf="!!userHasActivePlans">
+<ng-container *ngIf="!!userHasActivePlans || (!userHasActivePlans && !!paymentHistory && paymentHistory?.totalItems > 0)">
     <section class="account-section">
         <div class="container-flex section-container no-padding">
             <div class="container-flex-row account-info flex-center">
@@ -48,23 +48,23 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody
+                        <tbody id="table-content"
                             *ngIf="!!paymentHistory && !!paymentHistory.payments && paymentHistory.payments.length > 0">
                             <tr *ngFor="let payment of paymentHistory.payments | paginate: config"
                                 class="rectangle-container style-responsive">
-                                <td class="date" data-th="Payment Date">
+                                <td id="date" class="date" data-th="Payment Date">
                                     {{payment.dateTime | date: 'MM-dd-yy' }}<br>{{payment.dateTime | date: 'HH:MM a' }}
                                 </td>
-                                <td data-th="Status" style="text-transform: capitalize;"><span
+                                <td id="status" data-th="Status" style="text-transform: capitalize;"><span
                                         class="full-line status-color">{{payment.status | camelize}}</span></td>
-                                <td class="full-line" data-th="Payment Method">
+                                <td class="full-line" id="payment-method" data-th="Payment Method">
                                     {{payment.type === 'CC' ? 'Card ending in ' : ''}}
                                     {{payment.type ==='VOUCHER'? 'Voucher #': ''}}{{payment.method}}
                                 </td>
-                                <td class="full-line mobile-width" data-th="Confirmation No">
+                                <td id="confirmation-number" class="full-line mobile-width" data-th="Confirmation No">
                                     {{payment.confirmationNumber}}</td>
                                 <td class="full-line desktop-style" data-th="Amount">{{payment.amount | currency}} <a
-                                        (click)="goToReceiptDetails(payment?.orderId)" class="view-receipt"><img
+                                        (click)="goToReceiptDetails(payment?.orderId)" class="view-receipt" id="view-receipt-btn"><img
                                             src="/assets/icon/view-receipt-icon.svg" class="view-receipt-icon"><span
                                             class="tool-tip-text">View Receipt</span>
                                         <span class="view-receipt-text">View Receipt</span></a></td>
