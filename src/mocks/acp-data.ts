@@ -397,3 +397,6 @@ export const ACP_DOCUMENTS_MOCK_INCOME_GROUP_E50 = {
     text: [],
     category: [E50_E51_Pell_ELIGIBILiTY_CODES_DESCS[0].description]
 };
+export const COMPLETE_STATUS = {
+    status: 'COMPLETE'
+}

@@ -619,7 +619,6 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       if (!this.verifiedAddress.address1) {
         this.shippingService.verifyShippingAddress(shipping).then(
           (result) => {
-            this.appState.loading = false;
             if (!!result) {
               this.applicationAddress = result[0];
               this.applicationAddress.name = shipping?.name;
@@ -629,6 +628,13 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
               this.addressNoOptionSection = true;
               this.addressNoOptionNotVerfiedSection = false;
               this.addressOption = 'mail';
+              this.userAccountService.addShippingAddress(this.verifiedAddress).then((newAddressId) => {
+                this.verifiedAddress.id = newAddressId;
+                this.appState.loading = false;
+              }, (error) => {
+                this.appState.loading = false;
+                this.toastHelper.showAlert(error.message);
+              });
             }
           },
           (error) => {
