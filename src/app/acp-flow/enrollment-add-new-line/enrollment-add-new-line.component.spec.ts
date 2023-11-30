@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ENV_FIREBASE_CONFIG } from 'src/environments/environment';
-import { ActionsAnalyticsService, CART_TYPES, FirebaseUserProfileService, MobileCustomPlansService, MobilePlanItem, PlacesAutocompleteService, UserPlansService } from '@ztarmobile/zwp-service-backend';
+import { ActionsAnalyticsService, CART_TYPES, MobileCustomPlansService, MobilePlanItem, PlacesAutocompleteService } from '@ztarmobile/zwp-service-backend';
 import { EndpointUrl, IGoogleTagManagerEventsConfig, ZMP_G2G_BFF_ENDPOINT_URL } from '@ztarmobile/zwp-service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppState } from 'src/app/app.service';
@@ -19,9 +19,6 @@ import { PageScrollService } from 'ngx-page-scroll-core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ROUTE_URLS, SHOP_ROUTE_URLS } from 'src/app/app.routes.names';
 import { of } from 'rxjs';
-import { USER_WITH_EBBID } from 'src/mocks/user-profile';
-import { PLANS } from 'src/mocks/user-plans';
-import { COMPLETE_STATUS } from 'src/mocks/acp-data';
 
 fdescribe('EnrollmentAddNewLineComponent', () => {
 
@@ -32,16 +29,10 @@ fdescribe('EnrollmentAddNewLineComponent', () => {
 
   let mockAnalytics;
   let mockMobileCustomPlansService;
-  let mockUserProfileService;
-  let mockUserPlansService;
-  let mockAppState;
 
   beforeEach(async () => {
     mockAnalytics = jasmine.createSpyObj(['ActionsAnalyticsService', 'trackACPEvent', 'trackSucceededCheckout']);
     mockMobileCustomPlansService = jasmine.createSpyObj(['MobileCustomPlansService', 'setPlanDevice', 'setPlanExpectedDevice', 'setBasePlan', 'setCartType', 'setMarketingObject', 'seteSIM', 'setQrScanned', 'setStorePickup', 'setActivePlanId', 'clearUserCart', 'isConfigurationReady', 'currentPlan', 'allBasePlans']);
-    mockUserProfileService = jasmine.createSpyObj(['FirebaseUserProfileService', 'userProfileObservable']);
-    mockUserPlansService = jasmine.createSpyObj(['UserPlansService', 'userPlans']);
-    mockAppState = jasmine.createSpyObj(['AppState', 'acpAppResObs']);
 
     await TestBed.configureTestingModule({
       declarations: [EnrollmentAddNewLineComponent],
@@ -70,9 +61,6 @@ fdescribe('EnrollmentAddNewLineComponent', () => {
     TestBed.overrideProvider(PageScrollService, { useValue: {} });
     TestBed.overrideProvider(ActionsAnalyticsService, { useValue: mockAnalytics });
     TestBed.overrideProvider(MobileCustomPlansService, { useValue: mockMobileCustomPlansService });
-    TestBed.overrideProvider(FirebaseUserProfileService, { useValue: mockUserProfileService });
-    TestBed.overrideProvider(UserPlansService, { useValue: mockUserPlansService });
-    TestBed.overrideProvider(AppState, { useValue: mockAppState });
     TestBed.compileComponents();
 
     fixture = TestBed.createComponent(EnrollmentAddNewLineComponent);
@@ -84,14 +72,6 @@ fdescribe('EnrollmentAddNewLineComponent', () => {
     mockMobileCustomPlansService.currentPlan.and.returnValue(CART);
     mockMobileCustomPlansService.currentPlan = of(true);
     mockMobileCustomPlansService.allBasePlans = [{} as MobilePlanItem];
-
-    mockUserProfileService.userProfileObservable.and.returnValue(USER_WITH_EBBID);
-    mockUserProfileService.userProfileObservable = of(USER_WITH_EBBID);
-    mockUserPlansService.userPlans.and.returnValue(PLANS);
-    mockUserPlansService.userPlans = of(PLANS);
-
-    mockAppState.acpAppResObs.and.returnValue(COMPLETE_STATUS);
-    mockAppState.acpAppResObs = of(COMPLETE_STATUS);
 
     fixture.detectChanges();
   });
