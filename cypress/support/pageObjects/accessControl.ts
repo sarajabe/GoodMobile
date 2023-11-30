@@ -202,5 +202,13 @@ class AccessControl {
                 PageObjects.TitleExpectations.goToACPApplicationPage();
                 return this;
         };
+        logInUserWithOnlyPurchasedPlan() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_C_USER.EMAIL, CONSTANT.ACCESS.TEST_C_USER.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+                return this;
+        };
 }
 export default new AccessControl();

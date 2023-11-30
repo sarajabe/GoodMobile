@@ -190,7 +190,7 @@ class AccountSummary {
           return this;
      };
      clickOnPaymentHistory () {
-          cy.contains('a', 'Payment history').click({force: true});
+          cy.get('[data-cy="payment-history"]').click({force: true});
           return this;
      };
      clickOnAccountSummaryLink () {

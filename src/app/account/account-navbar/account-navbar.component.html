@@ -39,7 +39,7 @@
                                 routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Your
                                 orders</a></li>
                 <li class="menu-item" (click)="resetAll();isPaymentHistory= true;" [class.disabled]="!!isPortIn"><a
-                                class="items-link link-border-bottom"
+                                class="items-link link-border-bottom" data-cy="payment-history"
                                 [class.active]="pageSection == 'ACCOUNT_ROUTE_URLS.PAYMENTS'" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact: true}"
                                 [routerLink]=" [ACCOUNT_ROUTE_URLS.BASE + '/'+ACCOUNT_ROUTE_URLS.PAYMENTS]">Payment
