@@ -11,7 +11,7 @@
             Application Form</a>
         <a data-cy="cancelApplication" (click)="cancelApplication()" *ngIf="!acpPlan">Cancel Application</a>
     </div>
-    <div class="info-banner warning-background" *ngIf="!!showCoECardYesFlow">
+    <div class="info-banner warning-background" *ngIf="!!showCoECardYesFlow" id="coEcard-yesflow">
         <div class="flex">
             <img src="assets/icon/warning-icon.svg" width="32" height="32" alt="Warning Icon">
             <div class="banner-content">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="info-banner error-background" *ngIf="!!showCoECardNoFlow">
+    <div class="info-banner error-background" *ngIf="!!showCoECardNoFlow" id="coEcard-noflow">
         <div class="flex">
             <img src="assets/icon/error-icon.svg" width="32" height="32" alt="Alert Icon">
             <div class="banner-content">
