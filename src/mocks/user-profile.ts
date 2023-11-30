@@ -43,4 +43,25 @@ export const USER: IUser = {
     ],
     verified: false,
     fullName: 'Mirna Haddad'
+};
+
+export const USER_WITH_EBBID: IUser = {
+    customerId: 'MockedId',
+    firstName: 'William',
+    email: 'william.bawwab@pavocom.com',
+    lastName: 'Bawwab',
+    verified: true,
+    id: '123456789',
+    preferredLanguage: '',
+    ebbId: '123'
+}
+
+export const USER_PROFILE: IUser = {
+    customerId: 'MockedId',
+    firstName: 'William',
+    email: 'william.bawwab@pavocom.com',
+    lastName: 'Bawwab',
+    verified: true,
+    id: '123456789',
+    preferredLanguage: ''
 }
