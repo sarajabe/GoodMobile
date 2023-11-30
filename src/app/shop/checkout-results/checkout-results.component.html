@@ -108,14 +108,14 @@
         </div>
         <div class="result-info">
           <div>
-            <p class="smaller top-note">You have <b>successfully collected</b> your ACP Device from Goodwill’s agent.
+            <p class="smaller top-note" data-cy="acpDeviceCollectedSuccessful">You have <b>successfully collected</b> your ACP Device from Goodwill’s agent.
             </p>
             <p class="smaller last-note">Enjoy your service with Good Mobile!<br>
-              You can always view your ACP benefits details on your <a (click)="goToAcpSummary()"><b>ACP Summary</b></a>
+              You can always view your ACP benefits details on your <a (click)="goToAcpSummary()"><b data-cy="acpSummary">ACP Summary</b></a>
               page.</p>
           </div>
           <div class="result-actions">
-            <button class="button primary" (click)="goToHome()">
+            <button class="button primary" data-cy="doneBtn" (click)="goToHome()">
               Done
             </button>
           </div>
@@ -223,7 +223,7 @@
               <p class="smaller last-note" data-cy="personDeliverySuccessful">
                 You may proceed to <b>activate your plan & SIM</b> in the next step, or from your <a *ngIf="!isAcpPlan"
                   (click)="goToPurchasedPlans()"><b data-cy="purchasedPlans">Purchased Plans</b></a><a *ngIf="!!isAcpPlan"
-                  (click)="goToAcpSummary()"><b>ACP Summary</b></a> page at
+                  (click)="goToAcpSummary()"><b data-cy="acpSummary">ACP Summary</b></a> page at
                 your convenience!
               </p>
             </div>
@@ -256,10 +256,10 @@
             <p class="smaller last-note">You may now <b>proceed to activate</b> your plan and SIM in the next step!
               Or at your convenience from your <b>Purchased Plans</b> page at any time!</p>
             <div class="result-actions flex-actions">
-              <button class="button primary smaller" (click)="goToActivation()">
+              <button class="button primary smaller" data-cy="activateNowBtn" (click)="goToActivation()">
                 Activate Now
               </button>
-              <button class="button secondary smaller" (click)="goToPurchasedPlans()">
+              <button class="button secondary smaller" data-cy="purchasedPlanBtn" (click)="goToPurchasedPlans()">
                 Purchased Plans
               </button>
             </div>

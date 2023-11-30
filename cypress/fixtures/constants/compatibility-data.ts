@@ -65,5 +65,9 @@ export const COMPATIBILITY = {
     },
     EMBEDDED_SIM_NUMBER: {
         ESN: '03103541714'
+    },
+    ACP_IMEI: {
+        VALID: '676767676767',
+        INVALID: '6767'
     }
 };

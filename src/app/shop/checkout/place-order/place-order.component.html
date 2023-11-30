@@ -409,7 +409,7 @@
                           <p class="desc smaller">Ending in {{ !!cardInfo?.last4 ? cardInfo?.last4 :
                             (cardInfo?.cardNumber | slice:-4) }}</p>
                         </div>
-                        <div class="amount">
+                        <div class="amount" data-cy="deductedAmount">
                           <p class="key smaller primary-font-bold">Deducted Amount</p>
                           <p class="value">{{(total - balanceAmount) | currency}}</p>
                         </div>
