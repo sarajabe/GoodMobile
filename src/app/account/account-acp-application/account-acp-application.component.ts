@@ -123,12 +123,12 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
   nextPurchaseDate: Date;
 
   constructor(
+    public router: Router,
     private accountHeaderService: AccountHeaderService,
     private metaService: MetaService,
     private ebbService: EbbService,
     private userProfileService: FirebaseUserProfileService,
     private appState: AppState,
-    private router: Router,
     private toastHelper: ToastrHelperService,
     private userPlansService: UserPlansService,
     private userAccountService: UserAccountService,
@@ -152,7 +152,6 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
     }
     this.getVerificationDetails();
   }
-
 
   public hideSuccessBanner(): void {
     setInterval(() => {
@@ -687,7 +686,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
       this.appState.loading = false;
     });
   }
-  private getVerificationDetails(): void {
+  public getVerificationDetails(): void {
     this.userProfileService.userProfileObservable.subscribe((user) => {
       this.userProfile = user;
       this.barCodeValue = !!this.userProfile?.ebbId ? `${this.userProfile?.ebbId}` : null;
@@ -712,7 +711,7 @@ export class AccountAcpApplicationComponent implements OnInit, AfterContentCheck
         this.barCodeValue = this.userProfile.ebbId;
         this.userPlansService.userPlans.pipe(takeWhile(() => this.alive), filter((plans) => !!plans)).subscribe((plans) => {
           if (!!plans) {
-            this.acpPlan = plans.find((plan) => !!plan.basePlan.ebb && !plan.canceled);
+            this.acpPlan = plans.find((plan) => !!plan?.basePlan?.ebb && !plan?.canceled);
             this.isActivatedAcpPlan = !!this.acpPlan?.mdn ? true : false;
             this.activePlans = plans.filter(
               (plan) =>

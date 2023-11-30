@@ -25,6 +25,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
 import { IGoogleTagManagerEventsConfig, ZMP_G2G_BFF_ENDPOINT_URL } from '@ztarmobile/zwp-service';
 import { CommonModule } from '@angular/common';
+import { USER_PROFILE } from 'src/mocks/user-profile';
+import { PLANS } from 'src/mocks/user-plans';
+import { PAYMENT } from 'src/mocks/payment';
 
 fdescribe('AccountPaymentHistoryComponent', () => {
     let component: AccountPaymentHistoryComponent;
@@ -35,55 +38,11 @@ fdescribe('AccountPaymentHistoryComponent', () => {
     let mockUserPlansService;
     let mockMobileCustomPlansService;
     let mockAccountPaymentService;
-    const USER = {
-        customerId: 'MockedId', firstName: 'Rana', email: 'mirna.haddad@ztarmobile.com',
-        lastName: 'Haddad', verified: true, id: '123456789', preferredLanguage: ''
-    } as IUser;
+    
     const ACCOUNT = {} as IUserAccount;
     const USER_PLAN = true;
     const HISTORY = { payments: null, totalItems: 0 } as IPaymentHistory;
-    const mockUserDevice = {
-        brand: 'Apple',
-        equipmentType: '4GLTE',
-        compatible: true,
-        iccid: '8901240161103297611',
-        iccidRequired: true,
-        id: '353322079360104',
-        manufacturer: 'Apple Inc',
-        marketingName: 'Apple iPhone 6 (A1586)',
-        migrationSimOrderDate: undefined,
-        migrationSimOrderId: undefined,
-        model: 'iPhone 6 (A1586)',
-        network: 'tmo',
-        networkType: 'GSM',
-        os: 'ios',
-        portRequired: false,
-        postalCode: '73301',
-        reCaptcha: undefined,
-        serialType: 'imei',
-        simNumber: undefined,
-        skuIdentifier: 'T',
-        skuNumber: 'SIMMGTTMO4GLTE',
-        activationCode: '353322079360104',
-        pendingNewSim: false,
-        pendingMigrationSim: true,
-        updatedAt: 1624971943671,
-        updatedBy: 'ZRM'
-    } as IUserDevice;
-    const PLANS = [{ id: 'mockedPlanID', autoRenewPlan: true, planDevice: mockUserDevice } as IUserPlan];
     const CART = new CustomizableMobilePlan();
-    const PAYMENT = {
-        dateTime: '12-04-21',
-        nextPaymentDate: '12-04-22',
-        status: 'approved',
-        confirmationNumber: '8078953028148190894',
-        type: 'CC',
-        amount: 50,
-        method: '1111',
-        details: [],
-        orderId: 'AZCZLG8R3AYV217B',
-        approved: true
-    } as IPaymentRecord;
     const FILLED_HISTORY = { payments: Array(11).fill(PAYMENT), totalItems: 12 } as IPaymentHistory;
     const FILLED_HISTORY_1 = { payments: Array(1).fill(PAYMENT), totalItems: 1 } as IPaymentHistory;
 
@@ -139,8 +98,8 @@ fdescribe('AccountPaymentHistoryComponent', () => {
         fixture = TestBed.createComponent(AccountPaymentHistoryComponent);
         component = fixture.componentInstance;
         spyOn(component.router, 'navigate');
-        mockUserProfileService.userProfileObservable.and.returnValue(USER);
-        mockUserProfileService.userProfileObservable = of(USER);
+        mockUserProfileService.userProfileObservable.and.returnValue(USER_PROFILE);
+        mockUserProfileService.userProfileObservable = of(USER_PROFILE);
         mockUserAccountService.selectedAccount.and.returnValue(ACCOUNT);
         mockUserAccountService.selectedAccount = of(ACCOUNT);
         mockUserAccountService.isSyncingAccount.and.returnValue(true);
@@ -156,23 +115,27 @@ fdescribe('AccountPaymentHistoryComponent', () => {
         mockAccountPaymentService.reloadPaymentHistory.and.returnValue(Promise.resolve(HISTORY));
         fixture.detectChanges();
     });
-    it('should create', () => {
+
+    it('Should create', () => {
         expect(component).toBeTruthy();
     });
-    it('should check the initial view of the page when the user has no active mdn and no payments (no table should be shown or note just the plan selector) ', waitForAsync(() => {
+
+    it('Should check the initial view of the page when the user has no active mdn and no payments (no table Should be shown or note just the plan selector) ', waitForAsync(() => {
         component.userHasActivePlans = false;
         const accountStatusMessage = fixture.debugElement.query(By.css('#plan-selector-override')).nativeElement;
         fixture.detectChanges();
         expect(accountStatusMessage).toBeDefined();
     }));
-    it('should check if there is no Payment History yet but have active mdns ', waitForAsync(() => {
+
+    it('Should check if there is no Payment History yet but have active mdns ', waitForAsync(() => {
         component.userHasActivePlans = true;
         fixture.detectChanges();
         const emptyTable = fixture.debugElement.query(By.css('.width-120')).nativeElement;
         fixture.detectChanges();
         expect(emptyTable).toBeDefined();
     }));
-    it('should check if there is Payment History and user has no active mdns', waitForAsync(() => {
+
+    it('Should check if there is Payment History and user has no active mdns', waitForAsync(() => {
         component.userHasActivePlans = false;
         component.paymentHistory = FILLED_HISTORY_1;
         fixture.detectChanges();
@@ -180,7 +143,8 @@ fdescribe('AccountPaymentHistoryComponent', () => {
         fixture.detectChanges();
         expect(tableSection).toBeDefined();
     }));
-    it('should check if the pagination is shown when we have > 10 payment history', waitForAsync(() => {
+
+    it('Should check if the pagination is shown when we have > 10 payment history', waitForAsync(() => {
         component.userHasActivePlans = true;
         component.paymentHistory = FILLED_HISTORY;
         component.config.totalItems = FILLED_HISTORY.totalItems;
@@ -188,9 +152,9 @@ fdescribe('AccountPaymentHistoryComponent', () => {
         const paginationBar = fixture.debugElement.query(By.css('.right-action')).nativeElement;
         fixture.detectChanges();
         expect(paginationBar).toBeDefined();
-
     }));
-    it('should check the checks that the table is filled with the data and the reciept icon is shown', waitForAsync(() => {
+
+    it('Should check the checks that the table is filled with the data and the reciept icon is shown', waitForAsync(() => {
         component.userHasActivePlans = true;
         component.paymentHistory = FILLED_HISTORY;
         component.config.totalItems = FILLED_HISTORY.totalItems;
@@ -209,7 +173,8 @@ fdescribe('AccountPaymentHistoryComponent', () => {
         expect(paymentMethod.innerHTML.includes(component.paymentHistory.payments[0].method)).toBeTruthy();
         expect(confirmationNumber.innerHTML.includes(component.paymentHistory.payments[0].confirmationNumber)).toBeTruthy();
     }));
-    it('should check the click of the reciept icon functionality', waitForAsync(() => {
+
+    it('Should check the click of the reciept icon functionality', waitForAsync(() => {
         component.userHasActivePlans = true;
         component.paymentHistory = FILLED_HISTORY;
         component.config.totalItems = FILLED_HISTORY.totalItems;
