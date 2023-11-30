@@ -25,13 +25,13 @@ describe('Sign in with a user that already has purchased plans then go to paymen
         cy.get('[data-cy="confirmationNumber"]').should('exist');
         cy.get('[data-cy="amount"]').should('exist');
     });
-    // it('Should click on view receipt btn', () => {
-    //     cy.get('[data-cy="viewReceiptBtn"]').eq(0).click();
-    // });
-    // it('Should go to receipt page', () => {
-    //     PageObjects.TitleExpectations.goToReceiptDetailsPage();
-    // });
-    // it('Should assert order receipt page title', () => {
-    //     cy.get('[data-cy="orderReciptPageTitle"]').should('have.text','Order Reciept');
-    // });
+    it('Should click on view receipt btn', () => {
+        cy.get('[data-cy="viewReceiptBtn"]').eq(0).click();
+    });
+    it('Should go to receipt page', () => {
+        PageObjects.TitleExpectations.goToReceiptDetailsPage();
+    });
+    it('Should assert order receipt page title', () => {
+        cy.get('[data-cy="orderReciptPageTitle"]').should('have.text','Order Reciept');
+    });
 })

@@ -41,13 +41,16 @@ describe('SignUp -  Shop new plan from plans page with home delivery', () => {
         cy.get('[data-cy="confirmationNumber"]').should('exist');
         cy.get('[data-cy="amount"]').should('exist');
     });
-    // it('Should click on view receipt btn', () => {
-    //     cy.get('[data-cy="viewReceiptBtn"]').eq(0).click();
-    // });
-    // it('Should go to receipt page', () => {
-    //     PageObjects.TitleExpectations.goToReceiptDetailsPage();
-    // });
-    // it('Should assert order receipt page title', () => {
-    //     cy.get('[data-cy="orderReciptPageTitle"]').should('have.text','Order Reciept');
-    // });
+    it('Should click on view receipt btn', () => {
+        cy.get('[data-cy="viewReceiptBtn"]').eq(0).click();
+    });
+    it('Should go to receipt page', () => {
+        PageObjects.TitleExpectations.goToReceiptDetailsPage();
+    });
+    it('Should assert order receipt page title', () => {
+        cy.get('[data-cy="orderReciptPageTitle"]').should('have.text','Order Reciept');
+        cy.get('[data-cy="itemName"]').eq(0).should('have.text','Unlimited Talk & text with 2GB Data');
+        cy.get('[data-cy="itemPrice"]').eq(0).should('have.text','$10.00');
+        cy.get('[data-cy="total"]').should('have.text','Total:$13.06');
+    });
 })
