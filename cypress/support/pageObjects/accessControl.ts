@@ -77,6 +77,13 @@ class AccessControl {
                         }
                 })
         };
+        successfulLogin2(){
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_A_USER.EMAIL, CONSTANT.ACCESS.TEST_A_USER.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
+        };
         noAddOnsOrderAccount(){
                 PageObjects.HomePage.clickOnSignIn();
                 PageObjects.TitleExpectations.goToLogInPage();
@@ -200,6 +207,14 @@ class AccessControl {
                 PageObjects.AccessControl.logIn(CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.EMAIL, CONSTANT.ACCESS.ACCOUNT_WITH_SHIPPED_ACP_DEVICE.PASSWORD);
                 PageObjects.AccessControl.logInButton();
                 PageObjects.TitleExpectations.goToACPApplicationPage();
+                return this;
+        };
+        logInUserWithOnlyPurchasedPlan() {
+                PageObjects.HomePage.clickOnSignIn();
+                PageObjects.TitleExpectations.goToLogInPage();
+                PageObjects.AccessControl.logIn(CONSTANT.ACCESS.TEST_C_USER.EMAIL, CONSTANT.ACCESS.TEST_C_USER.PASSWORD);
+                PageObjects.AccessControl.logInButton();
+                PageObjects.TitleExpectations.goToAccountSummaryPage();
                 return this;
         };
 }

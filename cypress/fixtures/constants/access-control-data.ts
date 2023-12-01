@@ -348,4 +348,8 @@ export const ACCESS = {
         EMAIL: "testauser@ztarmobile.com",
         PASSWORD: "Abc123"
     },
+    TEST_C_USER: {
+        EMAIL: "testcuser@ztarmobile.com",
+        PASSWORD: "Abc123"
+    },
 };

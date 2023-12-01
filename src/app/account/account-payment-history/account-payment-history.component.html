@@ -8,7 +8,7 @@
             <ng-container *ngIf="!userHasActivePlans && (!paymentHistory || paymentHistory?.totalItems < 1)">
                 <div class="plan-selector-override" id="plan-selector-override">
                     <div class="account-status-message">
-                        <p>You have no active phone number at the moment.</p>
+                        <p data-cy="noActiveMdnMsg">You have no active phone number at the moment.</p>
                         <p *ngIf="userHasPendingPlans">Proceed to <a
                                 [routerLink]="[ACCOUNT_ROUTE_URLS.BASE + '/' + ACCOUNT_ROUTE_URLS.PENDING_ACTIVATIONS]">Purchased
                                 plans</a> to
@@ -26,7 +26,7 @@
         <div class="container-flex section-container no-padding">
             <div class="container-flex-row account-info flex-center">
                 <div class="table-align width-95">
-                    <h4 class="account-section-title">Your payment history</h4>
+                    <h4 class="account-section-title" data-cy="paymentHistoryTitle">Your payment history</h4>
                     <table class="responsive-table primary alignment-data" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
@@ -52,20 +52,20 @@
                             *ngIf="!!paymentHistory && !!paymentHistory.payments && paymentHistory.payments.length > 0">
                             <tr *ngFor="let payment of paymentHistory.payments | paginate: config"
                                 class="rectangle-container style-responsive">
-                                <td id="date" class="date" data-th="Payment Date">
+                                <td id="date" class="date" data-th="Payment Date" data-cy="paymentDate">
                                     {{payment.dateTime | date: 'MM-dd-yy' }}<br>{{payment.dateTime | date: 'HH:MM a' }}
                                 </td>
-                                <td id="status" data-th="Status" style="text-transform: capitalize;"><span
+                                <td id="status" data-th="Status" data-cy="status" style="text-transform: capitalize;"><span
                                         class="full-line status-color">{{payment.status | camelize}}</span></td>
-                                <td class="full-line" id="payment-method" data-th="Payment Method">
+                                <td class="full-line" id="payment-method" data-th="Payment Method" data-cy="paymentMethod">
                                     {{payment.type === 'CC' ? 'Card ending in ' : ''}}
                                     {{payment.type ==='VOUCHER'? 'Voucher #': ''}}{{payment.method}}
                                 </td>
-                                <td id="confirmation-number" class="full-line mobile-width" data-th="Confirmation No">
+                                <td id="confirmation-number" class="full-line mobile-width" data-th="Confirmation No" data-cy="confirmationNumber">
                                     {{payment.confirmationNumber}}</td>
-                                <td class="full-line desktop-style" data-th="Amount">{{payment.amount | currency}} <a
-                                        (click)="goToReceiptDetails(payment?.orderId)" class="view-receipt" id="view-receipt-btn"><img
-                                            src="/assets/icon/view-receipt-icon.svg" class="view-receipt-icon"><span
+                                <td class="full-line desktop-style" data-th="Amount" data-cy="amount">{{payment.amount | currency}} <a
+                                    data-cy="viewReceiptBtn" (click)="goToReceiptDetails(payment?.orderId)" class="view-receipt" id="view-receipt-btn"><img
+                                            src="/assets/icon/view-receipt-icon.svg" class="view-receipt-icon" ><span
                                             class="tool-tip-text">View Receipt</span>
                                         <span class="view-receipt-text">View Receipt</span></a></td>
                             </tr>

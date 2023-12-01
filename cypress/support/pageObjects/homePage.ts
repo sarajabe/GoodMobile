@@ -185,7 +185,7 @@ class HomePage {
         return this;
     };
     clickOnPaymentHistory() {
-        cy.get('[data-cy=payment-history-header]').click({ force: true });
+        cy.get('[data-cy="payment-history-header"]').click({ force: true });
         return this;
     };
     clickOnPlanAddOns() {
