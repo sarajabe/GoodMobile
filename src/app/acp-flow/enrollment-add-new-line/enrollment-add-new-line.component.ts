@@ -628,13 +628,15 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
               this.addressNoOptionSection = true;
               this.addressNoOptionNotVerfiedSection = false;
               this.addressOption = 'mail';
-              this.userAccountService.addShippingAddress(this.verifiedAddress).then((newAddressId) => {
-                this.verifiedAddress.id = newAddressId;
-                this.appState.loading = false;
-              }, (error) => {
-                this.appState.loading = false;
-                this.toastHelper.showAlert(error.message);
-              });
+              if(!this.verifiedAddress?.id) {
+                this.userAccountService.addShippingAddress(this.verifiedAddress).then((newAddressId) => {
+                  this.verifiedAddress.id = newAddressId;
+                  this.appState.loading = false;
+                }, (error) => {
+                  this.appState.loading = false;
+                  this.toastHelper.showAlert(error.message);
+                });
+              }
             }
           },
           (error) => {
@@ -648,6 +650,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
       } else {
         // We have to add this vrfied address to user profile for tracking and to get an ID for it
         this.appState.loading = true;
+        if(!this.verifiedAddress?.id) {
         this.userAccountService.addShippingAddress(this.verifiedAddress).then((newAddressId) => {
           this.verifiedAddress.id = newAddressId;
 
@@ -656,6 +659,7 @@ export class EnrollmentAddNewLineComponent implements OnInit, OnDestroy {
           this.appState.loading = false;
           this.toastHelper.showAlert(error.message);
         });
+      }
         this.isAddressVerified = true;
         this.addressNoOptionSection = true;
         this.addressNoOptionNotVerfiedSection = false;
