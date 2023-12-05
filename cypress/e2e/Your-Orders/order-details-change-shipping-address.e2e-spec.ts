@@ -11,6 +11,9 @@ describe('Sign in then go to your orders page,then the order details page to edi
     it('Should login successfully', () => {
         PageObjects.AccessControl.successfulLogin();
     });
+    it('Should 2GB purchase plan with home delivery', () => {
+        PageObjects.PurchasedPlans.purchase2GBPlanWithHomeDeliveryExistingCustomerPlansPage();
+    });
     it('Should click on your orders', () => {
         PageObjects.YouOrders.clickOnYourOrders();
     });
