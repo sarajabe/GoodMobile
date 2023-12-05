@@ -8,28 +8,16 @@ describe('Sign in then go to your orders page, select all filters and apply it, 
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.USER_KK_ACCOUNT.EMAIL, CONSTANT.ACCESS.USER_KK_ACCOUNT.PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on your orders', () => {
-        PageObjects.YouOrders.clickOnYourOrders7thChild();
+        PageObjects.YouOrders.clickOnYourOrders();
     });
     it('Should go to your orders page', () => {
         PageObjects.TitleExpectations.goToOrdersPage();
     });
-    it('Should click on need help?', () => {
+    it('Should click on filter', () => {
         PageObjects.YouOrders.clickOnFilter();
     });
     it('Should fill in start and end date', () => {
@@ -51,13 +39,13 @@ describe('Sign in then go to your orders page, select all filters and apply it, 
         PageObjects.YouOrders.clickOnAddOnsFilter();
     });
     it('Should check change plan checkBox', () => {
-        PageObjects.YouOrders.clickOnChangePlanCheckBox();
+        PageObjects.YouOrders.clickOnChangePlanFilter();
     });
-    it('Should check migration checkBox', () => {
-        PageObjects.YouOrders.clickOnMigrationFilter();
+    it('Should click on purchased filter', () => {
+        PageObjects.YouOrders.clickOnPurchasedFilter();
     });
-    it('Should check new phone checkBox', () => {
-        PageObjects.YouOrders.clickOnNewPhoneFilter();
+    it('Should click on vioded filter', () => {
+        PageObjects.YouOrders.clickOnVoided();
     });
     it('Should check new plan checkBox', () => {
         PageObjects.YouOrders.clickOnNewPlanFilter();
@@ -87,20 +75,17 @@ describe('Sign in then go to your orders page, select all filters and apply it, 
         PageObjects.YouOrders.clickOnFilter();
     });
     it('Should check that all checkboxes are unchecked and the filled date is empty', () => {
-        cy.get(':nth-child(6) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(2) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(1) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(1) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(3) > .filter-form > :nth-child(1) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(3) > .filter-form > :nth-child(3) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(3) > .filter-form > :nth-child(2) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(2) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(3) > .filter-form > :nth-child(4) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(3) > .filter-form > :nth-child(5) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(3) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(4) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(4) > .filter-form > :nth-child(5) > .filter-label > input').should('not.be.checked');
-        cy.get(':nth-child(7) > .filter-label > input').should('not.be.checked');
+        cy.get('[value="CANCELED"]').should('not.be.checked');
+        cy.get('[value="DELIVERED"]').should('not.be.checked');
+        cy.get('[value="PENDING"]').should('not.be.checked');
+        cy.get('[value="SVC_PURCHASED"]').should('not.be.checked');
+        cy.get('[value="SHIPPED"]').should('not.be.checked');
+        cy.get('[value="VOIDED"]').should('not.be.checked');
+        cy.get('[value="addon"]').should('not.be.checked');
+        cy.get('[value="change_plan"]').should('not.be.checked');
+        cy.get('[value="new"]').should('not.be.checked');
+        cy.get('[value="refill"]').should('not.be.checked');
+        cy.get('[value="replacement_sim"]').should('not.be.checked');
         cy.get('[data-cy="startDate"]').should('have.text', '');
         cy.get('[data-cy="endDate"]').should('have.text', '');
     });

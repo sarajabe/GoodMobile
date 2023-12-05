@@ -30,11 +30,11 @@ class PurchasedPlans {
         return this;
     };
     clickOnKeepCurrentAddress() {
-        cy.get('.display-block > [data-cy="action-button"]').click();
+        cy.get('[data-cy="okActionButton"]').click();
         return this;
     };
     clickOnUseVerifiedAddress() {
-        cy.get(':nth-child(3) > [data-cy="action-button"]').click();
+        cy.get('[data-cy="cancelActionButton"]').click();
         cy.wait(CONSTANT.TIME.SPEED_TIME.LEVEL2);
         return this;
     };

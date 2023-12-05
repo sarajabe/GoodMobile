@@ -8,23 +8,11 @@ describe('Sign in then go to your orders page,view invoice', () => {
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.USER_G_ACCOUNT.EMAIL, CONSTANT.ACCESS.USER_G_ACCOUNT.PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on your orders', () => {
-        PageObjects.YouOrders.clickOnYourOrders7thChild();
+        PageObjects.YouOrders.clickOnYourOrders();
     });
     it('Should go to your orders page', () => {
         PageObjects.TitleExpectations.goToOrdersPage();

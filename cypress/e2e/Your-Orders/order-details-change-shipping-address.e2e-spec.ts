@@ -8,28 +8,25 @@ describe('Sign in then go to your orders page,then the order details page to edi
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.PROFILE.MOCK_DATA.EMAIL, CONSTANT.PROFILE.MOCK_DATA.NEW_PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on your orders', () => {
-        PageObjects.YouOrders.clickOnYourOrders6thChild();
+        PageObjects.YouOrders.clickOnYourOrders();
     });
     it('Should go to your orders page', () => {
         PageObjects.TitleExpectations.goToOrdersPage();
     });
-    it('Should click on view invoice', () => {
+    it('Should click on filter', () => {
+        PageObjects.YouOrders.clickOnFilter();
+    });
+    it('Should checkte pending checkBox', () => {
+        PageObjects.YouOrders.clickOnPendingCheckBox();
+    });
+    it('Should click on apply btn', () => {
+        PageObjects.YouOrders.clickOnApplyBtn();
+    });
+    it('Should click on order details', () => {
         PageObjects.YouOrders.clickOnOrderDetails();
     });
     it('Should go to order details page', () => {
@@ -39,11 +36,11 @@ describe('Sign in then go to your orders page,then the order details page to edi
         PageObjects.YouOrders.clickOnChangeAddress();
     });
     it('Should fill in the new shipping address', () => {
-        PageObjects.YouOrders.editShippingAddress(CONSTANT.SHIPPING.SHIPPING_MOCK_DATA.NAME,
-            CONSTANT.SHIPPING.SHIPPING_MOCK_DATA.SHIPPING_ADDRESS,
-            CONSTANT.SHIPPING.SHIPPING_MOCK_DATA.CITY,
-            CONSTANT.SHIPPING.SHIPPING_MOCK_DATA.STATE,
-            CONSTANT.SHIPPING.SHIPPING_MOCK_DATA.POSTAL);
+        PageObjects.YouOrders.editShippingAddress(CONSTANT.SHIPPING.VALID.NAME,
+            CONSTANT.SHIPPING.VALID.ADDRESS,
+            CONSTANT.SHIPPING.VALID.CITY,
+            CONSTANT.SHIPPING.VALID.STATE,
+            CONSTANT.SHIPPING.VALID.POSTAL);
         cy.get('[data-cy="suiteNo"]').click();
     });
     it('Should click on save btn', () => {
@@ -54,5 +51,9 @@ describe('Sign in then go to your orders page,then the order details page to edi
     });
     it('Should go back to order details page', () => {
         PageObjects.TitleExpectations.goToOrderDetailsPage();
+    });
+    it('Should assert the shipping address', () => {
+        cy.get('[data-cy="shippingAddressName"]').should('have.text','Maroon Haddad, 12300 BERMUDA RD24');
+        cy.get('[data-cy="shippingAddressInfo"]').should('have.text','NV, 89044-8706 HENDERSON');
     });
 });

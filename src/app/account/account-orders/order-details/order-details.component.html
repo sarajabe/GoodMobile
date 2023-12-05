@@ -434,11 +434,11 @@
                                         src="assets/icon/arrow_circle.svg" alt="arrow icon">
                                 </label>
                                 <div class="sub-content shipping" *ngIf="!!address">
-                                    <p class="info">{{!!orderInfo?.shippingInfo?.shippingAddress?.shippingName ?
+                                    <p class="info" data-cy="shippingAddressName">{{!!orderInfo?.shippingInfo?.shippingAddress?.shippingName ?
                                         (orderInfo?.shippingInfo?.shippingAddress?.shippingName + ','): ''}}
                                         {{orderInfo?.shippingInfo?.shippingAddress?.address1}}{{!!orderInfo?.shippingInfo?.shippingAddress?.address2
                                         ? orderInfo?.shippingInfo?.shippingAddress?.address2 : ''}}</p>
-                                    <p class="info">{{orderInfo?.shippingInfo?.shippingAddress?.state}},
+                                    <p class="info" data-cy="shippingAddressInfo">{{orderInfo?.shippingInfo?.shippingAddress?.state}},
                                         {{orderInfo?.shippingInfo?.shippingAddress?.postalCode}}
                                         {{orderInfo?.shippingInfo?.shippingAddress?.city}}</p>
                                     <div class="method"

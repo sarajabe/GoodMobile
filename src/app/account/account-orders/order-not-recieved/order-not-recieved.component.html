@@ -21,7 +21,7 @@
 </section>
 <section class="navigation-section page-section" *ngIf="!showContactForm">
     <div class="page-section navs">
-        <p class="no-border" (click)="goToReportIssue()">Cancel</p>
+        <p class="no-border" data-cy="cancelBtn" (click)="goToReportIssue()">Cancel</p>
     </div>
 </section>
 <app-contact-form (backToMain)="goToReportIssue()" [orderInfo]="orderInfo" *ngIf="!!showContactForm">

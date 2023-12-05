@@ -55,7 +55,7 @@
 </section>
 <section class="navigation-section page-section">
     <div class="page-section navs">
-        <p class="no-border" (click)="backToReportIssue()" [class.hidden]="!!ticketSubmitted">Cancel</p>
+        <p class="no-border" data-cy="cancelBtn" (click)="backToReportIssue()" [class.hidden]="!!ticketSubmitted">Cancel</p>
         <div class="flex">
             <button class="button secondary" data-cy="backBtn" aria-label="back" (click)="back()"
                 *ngIf="hasBack && !ticketSubmitted">Back</button>

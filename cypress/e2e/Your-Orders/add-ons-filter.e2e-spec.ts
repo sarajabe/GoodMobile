@@ -8,28 +8,16 @@ describe('Sign in then go to your orders page, filter the results based on add o
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.USER_KK_ACCOUNT.EMAIL, CONSTANT.ACCESS.USER_KK_ACCOUNT.PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on your orders', () => {
-        PageObjects.YouOrders.clickOnYourOrders7thChild();
+        PageObjects.YouOrders.clickOnYourOrders();
     });
     it('Should go to your orders page', () => {
         PageObjects.TitleExpectations.goToOrdersPage();
     });
-    it('Should click on need help?', () => {
+    it('Should click on filter', () => {
         PageObjects.YouOrders.clickOnFilter();
     });
     it('Should fill in start and end date', () => {
@@ -44,7 +32,7 @@ describe('Sign in then go to your orders page, filter the results based on add o
     it('Should show the filtered results', () => {
         PageObjects.TitleExpectations.goToOrdersPage();
     });
-    it('Should click on order details btn', () => {
+    it('Should click on order details', () => {
         PageObjects.YouOrders.clickOnOrderDetails();
     });
     it('Should go to your order details page', () => {

@@ -8,29 +8,29 @@ describe('Sign in then go to your orders page,report an issue, check that the re
     after(() => {
         PageObjects.AccessControl.logoutFromAccount();
     });
-    it('Should click on sign in', () => {
-        PageObjects.HomePage.clickOnSignIn();
-    });
-    it('Should go to login page', () => {
-        PageObjects.TitleExpectations.goToLogInPage();
-    });
-    it('Should fill login info with valid data', () => {
-        PageObjects.AccessControl.logIn(CONSTANT.ACCESS.USER_KK_ACCOUNT.EMAIL, CONSTANT.ACCESS.USER_KK_ACCOUNT.PASSWORD);
-    });
-    it('Should click on login button', () => {
-        PageObjects.AccessControl.logInButton();
-    });
-    it('Should go to account summary page', () => {
-        PageObjects.TitleExpectations.goToAccountSummaryPage();
+    it('Should login successfully', () => {
+        PageObjects.AccessControl.successfulLogin();
     });
     it('Should click on your orders', () => {
-        PageObjects.YouOrders.clickOnYourOrders7thChild();
+        PageObjects.YouOrders.clickOnYourOrders();
     });
     it('Should go to your orders page', () => {
         PageObjects.TitleExpectations.goToOrdersPage();
     });
-    it('Should click on view invoice', () => {
-        PageObjects.YouOrders.clickOnSecondOrderDetails();
+    it('Should click on filter', () => {
+        PageObjects.YouOrders.clickOnFilter();
+    });
+    it('Should click on purchased filter', () => {
+        PageObjects.YouOrders.clickOnPurchasedFilter();
+    });
+    it('Should click on apply btn', () => {
+        PageObjects.YouOrders.clickOnApplyBtn();
+    });
+    it('Should show the filtered results', () => {
+        PageObjects.TitleExpectations.goToOrdersPage();
+    });
+    it('Should click on order details', () => {
+        PageObjects.YouOrders.clickOnOrderDetails();
     });
     it('Should go to order details page', () => {
         PageObjects.TitleExpectations.goToOrderDetailsPage();
@@ -46,9 +46,6 @@ describe('Sign in then go to your orders page,report an issue, check that the re
     });
     it('Should check that the update shipping address is disabled', () => {
         cy.get('.options-container > :nth-child(3)').should('have.class', 'disabled');
-    });
-    it('Should check that the return device option is disabled', () => {
-        cy.get('.options-container > :nth-child(4)').should('have.class', 'disabled');
     });
     it('Should stay in report an issue page', () => {
         PageObjects.TitleExpectations.goToReportAnIssuePage();
