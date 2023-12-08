@@ -27,7 +27,7 @@ describe('Sign in then go to your orders page,to cancel an order', () => {
         PageObjects.YouOrders.clickOnApplyBtn();
     });
     it('Should make sure that Pending status exists', () => {
-        cy.get('[data-cy="status"]').first().should('have.text',CONSTANT.ORDER_STATUS.PENDING);
+        cy.get('[data-cy="status"]').first().should('have.text', CONSTANT.ORDER_STATUS.PENDING);
     });
     it('Should click order details', () => {
         PageObjects.YouOrders.clickOnOrderDetails();
