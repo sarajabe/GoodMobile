@@ -29,6 +29,9 @@ describe('Sign in then go to your orders page,then the order details page to edi
     it('Should click on apply btn', () => {
         PageObjects.YouOrders.clickOnApplyBtn();
     });
+    it('Should make sure that Pending status exists', () => {
+        cy.get('[data-cy="status"]').first().should('have.text',CONSTANT.ORDER_STATUS.PENDING);
+    });
     it('Should click on order details', () => {
         PageObjects.YouOrders.clickOnOrderDetails();
     });
