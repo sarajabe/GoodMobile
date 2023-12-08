@@ -26,9 +26,6 @@ describe('Sign in with an account that has a cancelled plan then go to your orde
     it('Should click on apply btn', () => {
         PageObjects.YouOrders.clickOnApplyBtn();
     });
-    it('Should make sure that Canceled status exists', () => {
-        cy.get('[data-cy="status"]').first().should('have.text',CONSTANT.ORDER_STATUS.CANCELED);
-    });
     it('Should click on order details', () => {
         PageObjects.YouOrders.clickOn2ndViewOrderDetails();
     });

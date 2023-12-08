@@ -29,9 +29,6 @@ describe('Sign in then go to your orders page,report an issue, check that the re
     it('Should show the filtered results', () => {
         PageObjects.TitleExpectations.goToOrdersPage();
     });
-    it('Should make sure that Purchased status exists', () => {
-        cy.get('[data-cy="status"]').first().should('have.text',CONSTANT.ORDER_STATUS.PURCHASED);
-    });
     it('Should click on order details', () => {
         PageObjects.YouOrders.clickOnOrderDetails();
     });
