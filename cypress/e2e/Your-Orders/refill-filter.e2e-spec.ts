@@ -30,7 +30,7 @@ describe('Sign in then go to your orders page, filter the results based on refil
         PageObjects.TitleExpectations.goToOrdersPage();
     });
     it('Should make sure that Purchased status exists', () => {
-        cy.get('[data-cy="status"]').first().should('have.text', CONSTANT.ORDER_STATUS.PURCHASED);
+        cy.get('[data-cy="status"]').first().should('have.text',CONSTANT.ORDER_STATUS.PURCHASED);
     });
     it('Should click on order details btn', () => {
         PageObjects.YouOrders.clickOnOrderDetails();
