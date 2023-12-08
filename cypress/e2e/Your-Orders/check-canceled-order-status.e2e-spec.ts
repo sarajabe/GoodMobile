@@ -30,6 +30,6 @@ describe('Sign in then go to your orders page, filter the results based on cance
         PageObjects.TitleExpectations.goToOrdersPage();
     });
     it('Should make sure that Canceled status exists', () => {
-        cy.get('[data-cy="status"]').first().should('have.text', CONSTANT.ORDER_STATUS.CANCELED);
+        cy.get('[data-cy="status"]').first().should('have.text',CONSTANT.ORDER_STATUS.CANCELED);
     });
 });
